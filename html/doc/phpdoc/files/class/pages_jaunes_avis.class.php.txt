@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * CETTE CLASSE EST CONSIDÉRÉ COMME ILLEGALE D'APRES LA CNIL ! ELLE NE CONSTITUE PLUS QU'UN EXEMPLE, UN CAS D'ETUDE ...
+ * Cette classe permet de récuperer et d'afficher les avis et les notes d'un professionel sur le site pagesjaunes.fr
+ *
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
+ */
+class pages_jaunes_avis {
+
+    /**
+     * Données diverses (avis, note globale ...)
+     * @var array  Données diverses (avis, note globale ...)
+     */
+    private $_data = array();
+
+    /**
+     * ID du profesionel ( les "X" dans : https://www.pagesjaunes.fr/pros/XXXXXXXX)
+     * @var string ID du professionnel
+     */
+    private $_id;
+
+    /**
+     * Permet de vérifier que le fichier CSS a bien été appelé qu'une fois.
+     * @var boolean Permet de vérifier que le fichier CSS a bien été appelé qu'une fois.
+     */
+    private static $_css_called = false;
+
+    /**
+     * CETTE CLASSE EST CONSIDÉRÉ COMME ILLEGALE D'APRES LA CNIL ! ELLE NE CONSTITUE PLUS QU'UN EXEMPLE, UN CAS D'ETUDE ...
+     * Cette classe permet de récuperer et d'afficher les avis et les notes d'un professionel sur le site pagesjaunes.fr
+     * 
+     * @param string $id_pros ID du professionnel ( les "X" dans : https://www.pagesjaunes.fr/pros/XXXXXXXX)
+     */
+    public function __construct($id_pros) {
+        $this->_id = $id_pros;
+        if (file_exists("class/pagesjaunes/" . $this->_id . ".json")) {
+            $this->_data = json_decode(file_get_contents("class/pagesjaunes/" . $this->_id . ".json"), true);
+        }
+        if (!isset($this->_data["mt"]) or ( isset($this->_data["mt"]) and ( $this->_data["mt"] + 86400) < time())) {
+            $this->make_data();
+        }
+    }
+
+    /**
+     * Recupere les données et les enregistre dans un JSON
+     */
+    private function make_data() {
+        $html = file_get_contents($this->_data["url"] = "https://www.pagesjaunes.fr/pros/" . $this->_id);
+        $nbAvis = selectorDOM::select_elements("#blocAvis .header .nb-avis span", $html);
+        $this->_data["mt"] = time();
+        $this->_data["nbAvis"] = trim($nbAvis[0]["text"]);
+        $ratingValue = selectorDOM::select_elements("span[itemprop='ratingValue']", $html);
+        $this->_data["ratingValue"] = trim($ratingValue[0]["attributes"]["content"]);
+        $this->_data["Avis"] = array();
+        $liste_contributions = selectorDOM::select_elements("#liste-contributions li", $html);
+        foreach ($liste_contributions as $lc) {
+            if (isset($lc["attributes"]["id"]) and stristr($lc["attributes"]["id"], "Avis")) {
+                $avatar = "";
+                if (isset($lc["children"][0]["children"][0]["children"][0]["attributes"]["data-pjlazyload"])) {
+                    $avatar = json_decode($lc["children"][0]["children"][0]["children"][0]["attributes"]["data-pjlazyload"], true);
+                    $avatar = "data:image/png;base64," . base64_encode(file_get_contents($avatar["src"]));
+                }
+                $age = "";
+                if (stristr($lc["children"][0]["children"][0]["children"][1]["children"][2]["text"], "ans")) {
+                    $age = trim($lc["children"][0]["children"][0]["children"][1]["children"][2]["text"]);
+                }
+                if (isset($lc["children"][1]["children"][0]["children"][0]["children"][1]["children"][1]["text"])
+                        and ! empty(trim($lc["children"][1]["children"][0]["children"][0]["children"][1]["children"][1]["text"]))) {
+                    $avis_titre = trim($lc["children"][1]["children"][0]["children"][0]["children"][1]["children"][0]["text"]);
+                    $avis_corps = trim($lc["children"][1]["children"][0]["children"][0]["children"][1]["children"][1]["text"]);
+                } else {
+                    $avis_titre = "";
+                    $avis_corps = trim($lc["children"][1]["children"][0]["children"][0]["children"][1]["children"][0]["text"]);
+                }
+                $this->_data["Avis"][] = array(
+                    "avatar" => $avatar,
+                    "nom" => trim($lc["children"][0]["children"][0]["children"][1]["children"][0]["text"]),
+                    "ville" => trim($lc["children"][0]["children"][0]["children"][1]["children"][1]["text"]),
+                    "age" => $age,
+                    "rate" => trim($lc["children"][1]["children"][0]["children"][0]["children"][0]["children"][0]["children"][0]["attributes"]["content"]),
+                    "date" => trim($lc["children"][1]["children"][0]["children"][0]["children"][0]["children"][1]["children"][0]["attributes"]["content"]),
+                    "avis_titre" => $avis_titre,
+                    "avis_corps" => $avis_corps
+                );
+            }
+        }
+        if (!file_exists("class/pagesjaunes")) {
+            mkdir("class/pagesjaunes");
+        }
+        file_put_contents("class/pagesjaunes/" . $this->_id . ".json", json_encode($this->_data));
+    }
+
+    /**
+     * Retourne les données pour d'autre traitements eventuels
+     * @return array Données diverses (avis, note globale ...)
+     */
+    public function get_data() {
+        return $this->_data;
+    }
+
+    /**
+     * Affiche les avis et la note globale
+     */
+    public function render() {
+        if (!self::$_css_called) {
+            echo html_structures::link_in_body("../commun/src/css/pages_jaunes_avis.css");
+            self::$_css_called = true;
+        }
+        ?>
+        <div class="avis_pagesjaunes">
+            <div class="avis_pajesjaunes_head">
+                <p>Vos avis sur <a href="<?php echo $this->_data["url"] ?>" target="_blank">PagesJaunes.fr</a> 
+                    <small>(dernière mise à jour : <?php echo date("d/m/Y H:i:s", $this->_data["mt"]); ?>)</small></p>
+                <p>Note moyenne <?php echo $this->_data["ratingValue"]; ?> / 5 (<?php echo $this->_data["nbAvis"]; ?> avis)</p>
+            </div>
+            <div class="avis_pagejaunes_liste">
+                <?php
+                foreach ($this->_data["Avis"] as $avis) {
+                    ?>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <?php
+                            if (!empty($avis["avatar"])) {
+                                ?>
+                                <img class="img-circle" src="<?php echo $avis["avatar"]; ?>" alt="" />
+                                <?php
+                            } else {
+                                echo html_structures::glyphicon("user img-circle", "");
+                            }
+                            ?>
+                            <p>
+                                <span>Nom / Pseudo </span><?php echo $avis["nom"]; ?><br />
+                                <span>Ville </span><?php echo $avis["ville"]; ?>
+                                <?php
+                                if (!empty($avis["age"])) {
+                                    ?>
+                                    <br /><span>Age </span><?php echo $avis["age"]; ?>
+                                    <?php
+                                }
+                                ?>
+                            </p>
+                        </div>
+                        <div class="col-xs-10">
+                            <p>Note : <?php echo $avis["rate"]; ?> / 5 (publié le <?php echo $avis["date"]; ?>)</p>
+                            <p>
+                                <?php
+                                if (!empty($avis["avis_titre"])) {
+                                    ?><strong><?php echo $avis["avis_titre"]; ?></strong> <br /><?php
+                                }
+                                echo $avis["avis_corps"];
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <?php
+    }
+
+}

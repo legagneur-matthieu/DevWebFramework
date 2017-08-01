@@ -1,0 +1,6 @@
+.agenda{
+    margin-top: 20px;
+}
+.agenda>.col-xs-9{
+    border-left: black solid 1px;
+}

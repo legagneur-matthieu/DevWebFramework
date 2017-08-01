@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8"/>
+        <title>dwf-doc</title>
+        <meta name="author" content=""/>
+        <meta name="description" content=""/>
+        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/prism.css" rel="stylesheet" media="all"/>
+        <link href="../css/template.css" rel="stylesheet" media="all"/>
+        <!--[if lt IE 9]>
+        <script src="../js/html5.js"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.smooth-scroll.js"></script>
+        <script src="../js/prism.min.js"></script>
+        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+            function loadExternalCodeSnippets() {
+                Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                    var src = pre.getAttribute('data-src');
+                    var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                    var language = 'php';
+                    var code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', src, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status < 400 && xhr.responseText) {
+                                code.textContent = xhr.responseText;
+                                Prism.highlightElement(code);
+                            } else if (xhr.status >= 400) {
+                                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            } else {
+                                code.textContent = '✖ Error: File does not exist or is empty';
+                            }
+                        }
+                    };
+                    xhr.send(null);
+                });
+            }
+            $(document).ready(function () {
+                loadExternalCodeSnippets();
+            });
+            $('#source-view').on('shown', function () {
+                loadExternalCodeSnippets();
+            })
+        </script>
+        <link rel="shortcut icon" href="../images/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-ellipsis-vertical"></i>
+                    </a>
+                    <a class="brand" href="../index.html">dwf-doc</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="charts-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../graphs/class.html">
+                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="reports-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../reports/errors.html">
+                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/markers.html">
+                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/deprecated.html">
+                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="go_to_top">-->
+            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+            <!--</div>-->
+        </div>
+        <div id="___" class="container-fluid">
+            <section class="row-fluid">
+                <div class="span2 sidebar">
+                    <div class="accordion" style="margin-bottom: 0">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-965982090"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+                            </div>
+                            <div id="namespace-965982090" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <ul>
+                                        <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
+                                        <li class="class"><a href="../classes/application.html">application</a></li>
+                                        <li class="class"><a href="../classes/audio.html">audio</a></li>
+                                        <li class="class"><a href="../classes/auth.html">auth</a></li>
+                                        <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
+                                        <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
+                                        <li class="class"><a href="../classes/bdd.html">bdd</a></li>
+                                        <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
+                                        <li class="class"><a href="../classes/cards.html">cards</a></li>
+                                        <li class="class"><a href="../classes/citations.html">citations</a></li>
+                                        <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
+                                        <li class="class"><a href="../classes/cli.html">cli</a></li>
+                                        <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
+                                        <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
+                                        <li class="class"><a href="../classes/datatable.html">datatable</a></li>
+                                        <li class="class"><a href="../classes/ddg.html">ddg</a></li>
+                                        <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
+                                        <li class="class"><a href="../classes/debug.html">debug</a></li>
+                                        <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
+                                        <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
+                                        <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
+                                        <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
+                                        <li class="class"><a href="../classes/form.html">form</a></li>
+                                        <li class="class"><a href="../classes/freetile.html">freetile</a></li>
+                                        <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
+                                        <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
+                                        <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
+                                        <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
+                                        <li class="class"><a href="../classes/graphique.html">graphique</a></li>
+                                        <li class="class"><a href="../classes/html5.html">html5</a></li>
+                                        <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
+                                        <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
+                                        <li class="class"><a href="../classes/js.html">js</a></li>
+                                        <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
+                                        <li class="class"><a href="../classes/log_file.html">log_file</a></li>
+                                        <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
+                                        <li class="class"><a href="../classes/mail.html">mail</a></li>
+                                        <li class="class"><a href="../classes/math.html">math</a></li>
+                                        <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
+                                        <li class="class"><a href="../classes/modal.html">modal</a></li>
+                                        <li class="class"><a href="../classes/openweather.html">openweather</a></li>
+                                        <li class="class"><a href="../classes/pagination.html">pagination</a></li>
+                                        <li class="class"><a href="../classes/php_header.html">php_header</a></li>
+                                        <li class="class"><a href="../classes/phpmailerException.html">phpmailerException</a></li>
+                                        <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
+                                        <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
+                                        <li class="class"><a href="../classes/printer.html">printer</a></li>
+                                        <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
+                                        <li class="class"><a href="../classes/reveal.html">reveal</a></li>
+                                        <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
+                                        <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
+                                        <li class="class"><a href="../classes/service.html">service</a></li>
+                                        <li class="class"><a href="../classes/session.html">session</a></li>
+                                        <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
+                                        <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
+                                        <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
+                                        <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
+                                        <li class="class"><a href="../classes/ssl.html">ssl</a></li>
+                                        <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
+                                        <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
+                                        <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
+                                        <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
+                                        <li class="class"><a href="../classes/time.html">time</a></li>
+                                        <li class="class"><a href="../classes/trad.html">trad</a></li>
+                                        <li class="class"><a href="../classes/video.html">video</a></li>
+                                        <li class="class"><a href="../classes/vticker.html">vticker</a></li>
+                                        <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row-fluid">
+                <div class="span10 offset2">
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <nav>
+                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                            </nav>
+                            <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                            <h1><small>\</small>graphique</h1>
+                            <p><em>Cette classe permet de créér des graphiques.</em></p>
+                            <section id="summary">
+                                <h2>Summary</h2>
+                                <section class="row-fluid heading">
+                                    <section class="span4">
+                                        <a href="#methods">Methods</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#properties">Properties</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#constants">Constants</a>
+                                    </section>
+                                </section>
+                                <section class="row-fluid public">
+                                    <section class="span4">
+                                        <a href="../classes/graphique.html#method___construct" class="">__construct()</a><br />
+                                        <a href="../classes/phpGraph.html#method_getInstance" class="">getInstance()</a><br />
+                                        <a href="../classes/phpGraph.html#method_setCss" class="">setCss()</a><br />
+                                        <a href="../classes/phpGraph.html#method_draw" class="">draw()</a><br />
+                                        <a href="../classes/phpGraph.html#method_arraySort" class="">arraySort()</a><br />
+                                        <a href="../classes/phpGraph.html#method_svg2vml" class="">svg2vml()</a><br />
+                                        <a href="../classes/phpGraph.html#method_wmodeTransparent" class="">wmodeTransparent()</a><br />
+                                        <a href="../classes/phpGraph.html#method_svgToPng" class="">svgToPng()</a><br />
+                                        <a href="../classes/graphique.html#method_line" class="">line()</a><br />
+                                        <a href="../classes/graphique.html#method_pie" class="">pie()</a><br />
+                                        <a href="../classes/graphique.html#method_ring" class="">ring()</a><br />
+                                        <a href="../classes/graphique.html#method_cytoscape" class="">cytoscape()</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <a href="../classes/graphique.html#property__flot_called" class="">$_flot_called</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>No constants found</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid protected">
+                                    <section class="span4">
+                                        <a href="../classes/phpGraph.html#method___drawLine" class="">__drawLine()</a><br />
+                                        <a href="../classes/phpGraph.html#method___drawBar" class="">__drawBar()</a><br />
+                                        <a href="../classes/phpGraph.html#method___drawDisk" class="">__drawDisk()</a><br />
+                                        <a href="../classes/phpGraph.html#method___drawStock" class="">__drawStock()</a><br />
+                                        <a href="../classes/phpGraph.html#method___drawHstock" class="">__drawHstock()</a><br />
+                                        <a href="../classes/phpGraph.html#method___circle" class="">__circle()</a><br />
+                                        <a href="../classes/phpGraph.html#method___minMax" class="">__minMax()</a><br />
+                                        <a href="../classes/phpGraph.html#method___xAxisConfig" class="">__xAxisConfig()</a><br />
+                                        <a href="../classes/phpGraph.html#method___XAxisDef" class="">__XAxisDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___YAxisDef" class="">__YAxisDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___legendsDef" class="">__legendsDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___genColor" class="">__genColor()</a><br />
+                                        <a href="../classes/phpGraph.html#method___stockDef" class="">__stockDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___hstockDef" class="">__hstockDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___gradientDef" class="">__gradientDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___header" class="">__header()</a><br />
+                                        <a href="../classes/phpGraph.html#method___svgGrid" class="">__svgGrid()</a><br />
+                                        <a href="../classes/phpGraph.html#method___titleDef" class="">__titleDef()</a><br />
+                                        <a href="../classes/phpGraph.html#method___headerDimensions" class="">__headerDimensions()</a><br />
+                                        <a href="../classes/phpGraph.html#method___c" class="">__c()</a><br />
+                                        <a href="../classes/phpGraph.html#method_putInCache" class="">putInCache()</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <a href="../classes/phpGraph.html#property_colors" class="">$colors</a><br />
+                                        <a href="../classes/phpGraph.html#property_css" class="">$css</a><br />
+                                        <a href="../classes/phpGraph.html#property_options" class="">$options</a><br />
+                                        <a href="../classes/phpGraph.html#property_types" class="">$types</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid private">
+                                    <section class="span4">
+                                        <em>No private methods found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="../classes/phpGraph.html#property_instance" class="">$instance</a><br />
+                                        <a href="../classes/graphique.html#property__stroke" class="">$_stroke</a><br />
+                                        <a href="../classes/graphique.html#property__options" class="">$_options</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                            </section>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <dl>
+                                <dt>File</dt>
+                                <dd><a href="../files/class.graphique.class.html"><div class="path-wrapper">class\graphique.class.php</div></a></dd>
+                                <dt>Package</dt>
+                                <dd><div class="namespace-wrapper">Default</div></dd>
+                                <dt>Class hierarchy</dt>
+                                <dd class="hierarchy">
+                                    <div class="namespace-wrapper"><a href="../classes/phpGraph.html">\phpGraph</a></div>
+                                    <div class="namespace-wrapper">\graphique</div>
+                                </dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>BERNARD Rodolphe <a href="mailto:mr.rodolphe.bernard@gmail.com">mr.rodolphe.bernard@gmail.com</a></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="properties" name="properties"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <h2>Properties</h2>
+                        </div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__flot_called" name="property__flot_called" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="public ">$_flot_called</h3>
+                                <pre class="signature">$_flot_called : boolean</pre>
+                                <p><em>Permet de vérifier que la librairie flot a bien été appelée qu&#039;une fois.</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Permet de vérifier que la librairie flot a bien été appelée qu&#039;une fois.                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property_colors" name="property_colors" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="protected ">$colors</h3>
+                                <pre class="signature">$colors : </pre>
+                                <p><em></em></p>
+                                <h4>Type</h4>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property_css" name="property_css" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="protected ">$css</h3>
+                                <pre class="signature">$css : </pre>
+                                <p><em></em></p>
+                                <h4>Type</h4>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property_options" name="property_options" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="protected ">$options</h3>
+                                <pre class="signature">$options : </pre>
+                                <p><em></em></p>
+                                <h4>Type</h4>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property_types" name="property_types" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="protected ">$types</h3>
+                                <pre class="signature">$types : </pre>
+                                <p><em></em></p>
+                                <h4>Type</h4>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property_instance" name="property_instance" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$instance</h3>
+                                <pre class="signature">$instance : </pre>
+                                <p><em></em></p>
+                                <h4>Type</h4>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__stroke" name="property__stroke" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_stroke</h3>
+                                <pre class="signature">$_stroke : array</pre>
+                                <p><em>Parametrage des couleurs dans l&#039;ordre pour les graphiques</em></p>
+                                <h4>Type</h4>
+                                array
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__options" name="property__options" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_options</h3>
+                                <pre class="signature">$_options : array</pre>
+                                <p><em>Paramètres par défaut du graphique.</em></p>
+                                <h4>Type</h4>
+                                array
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="methods" name="methods"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class"><h2>Methods</h2></div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___construct" name="method___construct" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">__construct()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__construct(integer  <span class="argument">$width = 300</span>, integer  <span class="argument">$height = 300</span>, array  <span class="argument">$options = array()</span>) : \stdio</pre>
+                                <p><em>Cette classe permet de créér des graphiques.</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>integer</td>
+                                        <td>$width </td>
+                                        <td><p>Largeur du graohique</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>integer</td>
+                                        <td>$height </td>
+                                        <td><p>Hauteur du graphique</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$options </td>
+                                        <td><p>Paramètres du graphique.</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                \stdio
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_getInstance" name="method_getInstance" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">getInstance()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">getInstance() : \objet</pre>
+                                <p><em>Méthode qui se charger de créer le Singleton</em></p>
+                                <h4>Returns</h4>
+                                \objet
+                                &mdash; <p>retourne une instance de la classe</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Stephane F</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_setCss" name="method_setCss" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">setCss()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">setCss(  <span class="argument">$css</span>) : string</pre>
+                                <p><em>To add your own style</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$css </td>
+                                        <td><p>string your css</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>css</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_draw" name="method_draw" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">draw()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">draw(  <span class="argument">$data</span>,   <span class="argument">$options = array()</span>,   <span class="argument">$putInCache = false</span>,   <span class="argument">$id = false</span>,   <span class="argument">$minify = true</span>) : string</pre>
+                                <p><em>Main function</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Uni or bidimensionnal array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Array of options</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$putInCache </td>
+                                        <td><p>string path of directory where cache will be recorded</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td><p>string index of svg tag</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$minify </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>SVG</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_arraySort" name="method_arraySort" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">arraySort()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">arraySort(  <span class="argument">$array</span>,   <span class="argument">$keys</span>) : array</pre>
+                                <p><em>Méthode permettant de trier un tableau multidimensionnel sur un ou deux index</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$array </td>
+                                        <td><p>array le tableau à trier</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$keys </td>
+                                        <td><p>mixed (array ou string) l'index ou le tableau des deux index sur le(s)quel(s) va(vont) se faire le tri</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                array
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_svg2vml" name="method_svg2vml" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">svg2vml()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">svg2vml(  <span class="argument">$svg</span>,   <span class="argument">$vml</span>,   <span class="argument">$root</span>,   <span class="argument">$xsl = &#039;vendors/svg2vml/svg2vml.xsl&#039;</span>,   <span class="argument">$xslpath = &#039;/svg2vml/&#039;</span>) : \vml</pre>
+                                <p><em>Transform svg file into vml file for internet explorer</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$svg </td>
+                                        <td><p>string svg to transform</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$vml </td>
+                                        <td><p>string path to vml file</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$root </td>
+                                        <td><p>string path of root of app</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$xsl </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$xslpath </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                \vml
+                                &mdash; <p>string</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_wmodeTransparent" name="method_wmodeTransparent" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">wmodeTransparent()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">wmodeTransparent(  <span class="argument">$html</span>) : string</pre>
+                                <p><em>Méthode pour prendre en compte le mode transparent des iframes</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$html </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>chaine de caractères modifiée</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        parm
+                                    </th>
+                                    <td>
+                                        <p>html    chaine de caractères à scanner</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Stephane F</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_svgToPng" name="method_svgToPng" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">svgToPng()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">svgToPng(  <span class="argument">$svg</span>,   <span class="argument">$outputName = &#039;svg&#039;</span>,   <span class="argument">$outputDir = &#039;data/img/&#039;</span>,   <span class="argument">$width = 800</span>,   <span class="argument">$height = 600</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$svg </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$outputName </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$outputDir </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$width </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$height </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_line" name="method_line" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">line()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">line(array  <span class="argument">$data</span>, array  <span class="argument">$tricks = array()</span>, string  <span class="argument">$id = &quot;plot&quot;</span>) </pre>
+                                <p><em>Affiche un graphique (Librairie flot)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>array( <br />
+                                                array(&quot;label&quot;=> &quot;label1,<br />
+                                                &quot;data&quot;=> array(<br />
+                                                array(x1,y1),<br />
+                                                array(x2,y2),<br />
+                                                array(x3,y3),<br />
+                                                ...<br />
+                                                ),<br />
+                                                array(&quot;label&quot;=> &quot;label2,<br />
+                                                &quot;data&quot;=> array(<br />
+                                                array(x1,y1),<br />
+                                                array(x2,y2),<br />
+                                                array(x3,y3),<br />
+                                                ...<br />
+                                                ),<br />
+                                                ...<br />
+                                                );<br /></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$tricks </td>
+                                        <td><p>Tableau de subtitution pour les graduations de l'axe X : array(array(x,&quot;substitution&quot;), ...);</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS du graphique</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_pie" name="method_pie" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">pie()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">pie(array  <span class="argument">$data</span>, array  <span class="argument">$options = array()</span>) </pre>
+                                <p><em>Affiche un graphique &quot;en camenbert&quot; (Librairie phpgraph)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>Tableau associatif des données : array(&quot;label1&quot;=>valeur1,&quot;label2&quot;=>valeur2,...);</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$options </td>
+                                        <td><p>surcharge des options</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_ring" name="method_ring" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">ring()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">ring(array  <span class="argument">$data</span>, array  <span class="argument">$options = array()</span>) </pre>
+                                <p><em>Affiche un graphique &quot;en anneau&quot; (Librairie phpgraph)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>Tableau associatif des données : array(&quot;label1&quot;=>valeur1,&quot;label2&quot;=>valeur2,...);</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$options </td>
+                                        <td><p>surcharge des options</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_cytoscape" name="method_cytoscape" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">cytoscape()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">cytoscape(string  <span class="argument">$id</span>, array  <span class="argument">$data</span>) </pre>
+                                <p><em>Affiche un graphe d&#039;analyse et de visualisation (jquery cytoscape)
+                                        Requiert une régle CSS sur l&#039;ID CSS</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>ID CSS</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>Données du graphe exemple : array(&quot;A&quot;=>array(&quot;B&quot;,&quot;C&quot;), &quot;B&quot;=>array(&quot;C&quot;), &quot;C&quot;=>array(&quot;A&quot;));</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___drawLine" name="method___drawLine" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__drawLine()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__drawLine(  <span class="argument">$data</span>,   <span class="argument">$height</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$stepX</span>,   <span class="argument">$unitY</span>,   <span class="argument">$lenght</span>,   <span class="argument">$min</span>,   <span class="argument">$max</span>,   <span class="argument">$options</span>) : string</pre>
+                                <p><em>To draw lines</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Unidimensionnal array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$height </td>
+                                        <td><p>integer Height of grid</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer Height of grid + title + padding top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td><p>integer Unit of x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitY </td>
+                                        <td><p>integer Unit of y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer Size of data array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$min </td>
+                                        <td><p>integer Minimum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$max </td>
+                                        <td><p>integer Maximum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Options</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>Path of lines (with options)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___drawBar" name="method___drawBar" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__drawBar()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__drawBar(  <span class="argument">$data</span>,   <span class="argument">$height</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$stepX</span>,   <span class="argument">$unitY</span>,   <span class="argument">$lenght</span>,   <span class="argument">$min</span>,   <span class="argument">$max</span>,   <span class="argument">$options</span>) : string</pre>
+                                <p><em>To draw histograms</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Unidimensionnal array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$height </td>
+                                        <td><p>integer Height of grid</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer Height of grid + title + padding top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td><p>integer Unit of x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitY </td>
+                                        <td><p>integer Unit of y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer Size of data array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$min </td>
+                                        <td><p>integer Minimum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$max </td>
+                                        <td><p>integer Maximum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Options</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>Path of lines (with options)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___drawDisk" name="method___drawDisk" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__drawDisk()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__drawDisk(  <span class="argument">$data</span>,   <span class="argument">$options = array()</span>,   <span class="argument">$id = false</span>) : string</pre>
+                                <p><em>To draw pie diagrams</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Unidimensionnal array</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Options</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>Path of lines (with options)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___drawStock" name="method___drawStock" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__drawStock()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__drawStock(  <span class="argument">$data</span>,   <span class="argument">$height</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$stepX</span>,   <span class="argument">$unitY</span>,   <span class="argument">$lenght</span>,   <span class="argument">$min</span>,   <span class="argument">$max</span>,   <span class="argument">$options</span>,   <span class="argument">$i</span>,   <span class="argument">$labels</span>,   <span class="argument">$id</span>) : string</pre>
+                                <p><em>To draw vertical stock chart</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Array with structure equal to array('index'=> array('open'=>val,'close'=>val,'min'=>val,'max'=>val))</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$height </td>
+                                        <td><p>integer Height of grid</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer Height of grid + title + padding top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td><p>integer Distance between two graduations on x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitY </td>
+                                        <td><p>integer Unit of y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer Number of graduations on x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$min </td>
+                                        <td><p>integer Minimum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$max </td>
+                                        <td><p>integer Maximum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Options</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$i </td>
+                                        <td><p>integer index of current data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$labels </td>
+                                        <td><p>array labels of x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td><p>integer index of plotLimit</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>Path of lines (with options)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___drawHstock" name="method___drawHstock" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__drawHstock()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__drawHstock(  <span class="argument">$data</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$stepX</span>,   <span class="argument">$unitX</span>,   <span class="argument">$unitY</span>,   <span class="argument">$lenght</span>,   <span class="argument">$Xmin</span>,   <span class="argument">$Xmax</span>,   <span class="argument">$options</span>,   <span class="argument">$i</span>,   <span class="argument">$labels</span>,   <span class="argument">$id</span>) : string</pre>
+                                <p><em>To draw horizontal stock chart</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array Array with structure equal to array('index'=> array('open'=>val,'close'=>val,'min'=>val,'max'=>val))</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer Height of grid + title + padding top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td><p>integer Distance between two graduations on x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitX </td>
+                                        <td><p>integer Unit of x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitY </td>
+                                        <td><p>integer Unit of y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer Number of graduations on y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmin </td>
+                                        <td><p>integer Minimum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmax </td>
+                                        <td><p>integer Maximum value of data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array Options</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$i </td>
+                                        <td><p>integer index of current data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$labels </td>
+                                        <td><p>array labels of y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td><p>integer index of plotLimit</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>Path of lines (with options)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___circle" name="method___circle" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__circle()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__circle(  <span class="argument">$unitX</span>,   <span class="argument">$cx</span>,   <span class="argument">$cy</span>,   <span class="argument">$label</span>,   <span class="argument">$stroke</span>) : string</pre>
+                                <p><em>To add circles on histogram</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitX </td>
+                                        <td><p>integer index of current data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$cx </td>
+                                        <td><p>integer Distance between two graduations on x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$cy </td>
+                                        <td><p>integer Distance between two graduations on y-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$label </td>
+                                        <td><p>string label of tooltip</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stroke </td>
+                                        <td><p>string color of circle</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>path of circle</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___minMax" name="method___minMax" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__minMax()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__minMax(  <span class="argument">$data</span>,   <span class="argument">$type</span>) : array</pre>
+                                <p><em>To research min and max values of data depends on type of graph</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$data </td>
+                                        <td><p>array data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$type </td>
+                                        <td><p>string line, bar, pie, ring, stock or h-stock</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                array
+                                &mdash; <p>of variables needed for draw method</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___xAxisConfig" name="method___xAxisConfig" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__xAxisConfig()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__xAxisConfig(  <span class="argument">$type</span>,   <span class="argument">$width</span>,   <span class="argument">$max</span>,   <span class="argument">$Xmax</span>,   <span class="argument">$Xmin</span>,   <span class="argument">$lenght</span>,   <span class="argument">$options = false</span>) : array</pre>
+                                <p><em>Calcul of variables needed for x-axis configuration</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$type </td>
+                                        <td><p>string type of graph</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$width </td>
+                                        <td><p>integer width of grid</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$max </td>
+                                        <td><p>integer max of values in data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmax </td>
+                                        <td><p>integer max of values in x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmin </td>
+                                        <td><p>integer min of values in x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer distance between min and max values</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$options </td>
+                                        <td><p>array options</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                array
+                                &mdash; <p>of variables needed for draw method</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___XAxisDef" name="method___XAxisDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__XAxisDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__XAxisDef(  <span class="argument">$type</span>,   <span class="argument">$Xmin</span>,   <span class="argument">$Xmax</span>,   <span class="argument">$XM</span>,   <span class="argument">$stepX</span>,   <span class="argument">$unitX</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$paddingTop</span>,   <span class="argument">$titleHeight</span>,   <span class="argument">$labels</span>,   <span class="argument">$lenght</span>) : array</pre>
+                                <p><em>To draw x-axis of the grid</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$type </td>
+                                        <td><p>string type of graph</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmin </td>
+                                        <td><p>integer min of values in x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$Xmax </td>
+                                        <td><p>integer max of values in x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$XM </td>
+                                        <td><p>integer Max value to display in x axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td><p>integer Distance between two graduations on x-axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitX </td>
+                                        <td><p>integer index of current data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer height of the entire svg tag</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingTop </td>
+                                        <td><p>integer padding on top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$titleHeight </td>
+                                        <td><p>integer height of title</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$labels </td>
+                                        <td><p>array Array of labels</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td><p>integer distance between min and max values</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                array
+                                &mdash; <p>of variables needed for draw method</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___YAxisDef" name="method___YAxisDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__YAxisDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__YAxisDef(  <span class="argument">$type</span>,   <span class="argument">$width</span>,   <span class="argument">$min</span>,   <span class="argument">$max</span>,   <span class="argument">$steps</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$titleHeight</span>,   <span class="argument">$paddingTop</span>,   <span class="argument">$paddingLegendX</span>,   <span class="argument">$unitY</span>,   <span class="argument">$labels</span>) : array</pre>
+                                <p><em>To draw y-axis of the grid</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$type </td>
+                                        <td><p>string type of graph</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$width </td>
+                                        <td><p>integer width of grid</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$min </td>
+                                        <td><p>integer min of values in data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$max </td>
+                                        <td><p>integer max of values in data</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$steps </td>
+                                        <td><p>integer Distance between two graduations</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer height of the entire svg tag</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$titleHeight </td>
+                                        <td><p>integer height of title</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingTop </td>
+                                        <td><p>integer padding on top</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingLegendX </td>
+                                        <td><p>integer padding between legend and x axis</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$unitY </td>
+                                        <td><p>integer unit of y graduations</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$labels </td>
+                                        <td><p>array Array of labels</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                array
+                                &mdash; <p>of variables needed for draw method</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___legendsDef" name="method___legendsDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__legendsDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__legendsDef(  <span class="argument">$legends</span>,   <span class="argument">$type</span>,   <span class="argument">$stroke</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$paddingTop</span>) : string</pre>
+                                <p><em>To draw legends under the grid</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$legends </td>
+                                        <td><p>array Array of legends</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$type </td>
+                                        <td><p>string type of graph</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stroke </td>
+                                        <td><p>string color of legends</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td><p>integer height of the entire svg tag</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingTop </td>
+                                        <td><p>integer padding on top</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>path of legends</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___genColor" name="method___genColor" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__genColor()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__genColor() : string</pre>
+                                <p><em>To generate hexadecimal code for color</em></p>
+                                <h4>Returns</h4>
+                                string
+                                &mdash; <p>hexadecimal code</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___stockDef" name="method___stockDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__stockDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__stockDef() </pre>
+                                <p><em></em></p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___hstockDef" name="method___hstockDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__hstockDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__hstockDef() </pre>
+                                <p><em></em></p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___gradientDef" name="method___gradientDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__gradientDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__gradientDef(  <span class="argument">$gradient</span>,   <span class="argument">$id</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$gradient </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___header" name="method___header" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__header()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__header(  <span class="argument">$dimensions = array(&#039;width&#039; => &#039;100%&#039;, &#039;height&#039; => &#039;100%&#039;, &#039;widthViewBox&#039; => 685, &#039;heightViewBox&#039; => 420)</span>,   <span class="argument">$responsive = true</span>,   <span class="argument">$id = false</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$dimensions </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$responsive </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$id </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___svgGrid" name="method___svgGrid" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__svgGrid()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__svgGrid(  <span class="argument">$gradient</span>,   <span class="argument">$width</span>,   <span class="argument">$height</span>,   <span class="argument">$yHeight</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$gradient </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$width </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$height </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$yHeight </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___titleDef" name="method___titleDef" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__titleDef()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__titleDef(  <span class="argument">$title</span>,   <span class="argument">$width</span>,   <span class="argument">$titleHeight</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$title </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$width </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$titleHeight </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___headerDimensions" name="method___headerDimensions" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__headerDimensions()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__headerDimensions(  <span class="argument">$widthViewBox</span>,   <span class="argument">$HEIGHT</span>,   <span class="argument">$heightLegends</span>,   <span class="argument">$titleHeight</span>,   <span class="argument">$paddingTop</span>,   <span class="argument">$paddingLegendX</span>,   <span class="argument">$lenght</span>,   <span class="argument">$stepX</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$widthViewBox </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$HEIGHT </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$heightLegends </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$titleHeight </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingTop </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$paddingLegendX </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$lenght </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stepX </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___c" name="method___c" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">__c()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__c(  <span class="argument">$coordonnees</span>,   <span class="argument">$stroke</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$coordonnees </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$stroke </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_putInCache" name="method_putInCache" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="protected ">putInCache()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">putInCache(  <span class="argument">$svg</span>,   <span class="argument">$outputName = &#039;svg&#039;</span>,   <span class="argument">$outputDir = &#039;data/img/&#039;</span>) : boolean</pre>
+                                <p><em>Put svg file in cache</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>$svg </td>
+                                        <td><p>string svg to record</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$outputName </td>
+                                        <td><p>string name of svg file</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>$outputDir </td>
+                                        <td><p>string path of cache directory</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                boolean
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                                <dt>Inherited from</dt>
+                                <dd><a href="../classes/phpGraph.html"><div class="path-wrapper">\phpGraph</div></a></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>Cyril MAGUIRE</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+            <div id="source-view" class="modal hide fade" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="source-view-label">graphique.class.php</h3>
+                </div>
+                <div class="modal-body">
+                    <object type="text/html" data="../files/class.graphique.class.php.txt" style="width: 100%; height: 400px;"></object>
+                </div>
+            </div>
+            <footer class="row-fluid">
+                <section class="span10 offset2">
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <section class="row-fluid footer-sections">
+                                <section class="span4">
+                                    <h1><i class="icon-code"></i></h1>
+                                    <div>
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-bar-chart"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-pushpin"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../reports/errors.html">Errors</a></li>
+                                            <li><a href="../reports/markers.html">Markers</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <hr />
+                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                            on May 26th, 2017 at 11:03.
+                        </section>
+                    </section>
+                </section>
+            </footer>
+        </div>
+    </body>
+</html>

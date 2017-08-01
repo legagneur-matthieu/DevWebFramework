@@ -1,0 +1,12 @@
+body{
+    margin-bottom: 101px;
+}
+.fete_mere{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.fete_mere>img{
+    width: 100%;
+}

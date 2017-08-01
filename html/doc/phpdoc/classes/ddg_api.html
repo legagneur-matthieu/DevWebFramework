@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8"/>
+        <title>dwf-doc</title>
+        <meta name="author" content=""/>
+        <meta name="description" content=""/>
+        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/prism.css" rel="stylesheet" media="all"/>
+        <link href="../css/template.css" rel="stylesheet" media="all"/>
+        <!--[if lt IE 9]>
+        <script src="../js/html5.js"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.smooth-scroll.js"></script>
+        <script src="../js/prism.min.js"></script>
+        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+            function loadExternalCodeSnippets() {
+                Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                    var src = pre.getAttribute('data-src');
+                    var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                    var language = 'php';
+                    var code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', src, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status < 400 && xhr.responseText) {
+                                code.textContent = xhr.responseText;
+                                Prism.highlightElement(code);
+                            } else if (xhr.status >= 400) {
+                                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            } else {
+                                code.textContent = '✖ Error: File does not exist or is empty';
+                            }
+                        }
+                    };
+                    xhr.send(null);
+                });
+            }
+            $(document).ready(function () {
+                loadExternalCodeSnippets();
+            });
+            $('#source-view').on('shown', function () {
+                loadExternalCodeSnippets();
+            })
+        </script>
+        <link rel="shortcut icon" href="../images/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-ellipsis-vertical"></i>
+                    </a>
+                    <a class="brand" href="../index.html">dwf-doc</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="charts-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../graphs/class.html">
+                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="reports-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../reports/errors.html">
+                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/markers.html">
+                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/deprecated.html">
+                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="go_to_top">-->
+            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+            <!--</div>-->
+        </div>
+        <div id="___" class="container-fluid">
+            <section class="row-fluid">
+                <div class="span2 sidebar">
+                    <div class="accordion" style="margin-bottom: 0">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-864060722"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+                            </div>
+                            <div id="namespace-864060722" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <ul>
+                                        <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
+                                        <li class="class"><a href="../classes/application.html">application</a></li>
+                                        <li class="class"><a href="../classes/audio.html">audio</a></li>
+                                        <li class="class"><a href="../classes/auth.html">auth</a></li>
+                                        <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
+                                        <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
+                                        <li class="class"><a href="../classes/bdd.html">bdd</a></li>
+                                        <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
+                                        <li class="class"><a href="../classes/cards.html">cards</a></li>
+                                        <li class="class"><a href="../classes/citations.html">citations</a></li>
+                                        <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
+                                        <li class="class"><a href="../classes/cli.html">cli</a></li>
+                                        <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
+                                        <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
+                                        <li class="class"><a href="../classes/datatable.html">datatable</a></li>
+                                        <li class="class"><a href="../classes/ddg.html">ddg</a></li>
+                                        <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
+                                        <li class="class"><a href="../classes/debug.html">debug</a></li>
+                                        <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
+                                        <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
+                                        <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
+                                        <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
+                                        <li class="class"><a href="../classes/form.html">form</a></li>
+                                        <li class="class"><a href="../classes/freetile.html">freetile</a></li>
+                                        <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
+                                        <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
+                                        <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
+                                        <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
+                                        <li class="class"><a href="../classes/graphique.html">graphique</a></li>
+                                        <li class="class"><a href="../classes/html5.html">html5</a></li>
+                                        <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
+                                        <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
+                                        <li class="class"><a href="../classes/js.html">js</a></li>
+                                        <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
+                                        <li class="class"><a href="../classes/log_file.html">log_file</a></li>
+                                        <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
+                                        <li class="class"><a href="../classes/mail.html">mail</a></li>
+                                        <li class="class"><a href="../classes/math.html">math</a></li>
+                                        <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
+                                        <li class="class"><a href="../classes/modal.html">modal</a></li>
+                                        <li class="class"><a href="../classes/openweather.html">openweather</a></li>
+                                        <li class="class"><a href="../classes/pagination.html">pagination</a></li>
+                                        <li class="class"><a href="../classes/php_header.html">php_header</a></li>
+                                        <li class="class"><a href="../classes/phpmailerException.html">phpmailerException</a></li>
+                                        <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
+                                        <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
+                                        <li class="class"><a href="../classes/printer.html">printer</a></li>
+                                        <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
+                                        <li class="class"><a href="../classes/reveal.html">reveal</a></li>
+                                        <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
+                                        <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
+                                        <li class="class"><a href="../classes/service.html">service</a></li>
+                                        <li class="class"><a href="../classes/session.html">session</a></li>
+                                        <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
+                                        <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
+                                        <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
+                                        <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
+                                        <li class="class"><a href="../classes/ssl.html">ssl</a></li>
+                                        <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
+                                        <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
+                                        <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
+                                        <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
+                                        <li class="class"><a href="../classes/time.html">time</a></li>
+                                        <li class="class"><a href="../classes/trad.html">trad</a></li>
+                                        <li class="class"><a href="../classes/video.html">video</a></li>
+                                        <li class="class"><a href="../classes/vticker.html">vticker</a></li>
+                                        <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row-fluid">
+                <div class="span10 offset2">
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <nav>
+                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                            </nav>
+                            <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                            <h1><small>\</small>ddg_api</h1>
+                            <p><em>Cette classe contient les résultats d&#039;une requête à duckduckgo <br />
+                                    Il est recommandé de passer par (new ddg())->api() ou ddg_api::query() pour récuperer une instance de cette classe</em></p>
+                            <section id="summary">
+                                <h2>Summary</h2>
+                                <section class="row-fluid heading">
+                                    <section class="span4">
+                                        <a href="#methods">Methods</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#properties">Properties</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#constants">Constants</a>
+                                    </section>
+                                </section>
+                                <section class="row-fluid public">
+                                    <section class="span4">
+                                        <a href="../classes/ddg_api.html#method_query" class="">query()</a><br />
+                                        <a href="../classes/ddg_api.html#method___construct" class="">__construct()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Abstract" class="">get_Abstract()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_AbstractText" class="">get_AbstractText()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_AbstractSource" class="">get_AbstractSource()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_AbstractURL" class="">get_AbstractURL()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Image" class="">get_Image()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_ImageWidth" class="">get_ImageWidth()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Entity" class="">get_Entity()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_meta" class="">get_meta()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Heading" class="">get_Heading()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Answer" class="">get_Answer()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Redirect" class="">get_Redirect()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_AnswerType" class="">get_AnswerType()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Definition" class="">get_Definition()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_DefinitionSource" class="">get_DefinitionSource()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_DefinitionURL" class="">get_DefinitionURL()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_RelatedTopics" class="">get_RelatedTopics()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Results" class="">get_Results()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Type" class="">get_Type()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_Infobox" class="">get_Infobox()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_ImageIsLogo" class="">get_ImageIsLogo()</a><br />
+                                        <a href="../classes/ddg_api.html#method_get_ImageHeight" class="">get_ImageHeight()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Abstract" class="">set_Abstract()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_AbstractText" class="">set_AbstractText()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_AbstractSource" class="">set_AbstractSource()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_AbstractURL" class="">set_AbstractURL()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Image" class="">set_Image()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_ImageWidth" class="">set_ImageWidth()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Entity" class="">set_Entity()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_meta" class="">set_meta()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Heading" class="">set_Heading()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Answer" class="">set_Answer()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Redirect" class="">set_Redirect()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_AnswerType" class="">set_AnswerType()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Definition" class="">set_Definition()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_DefinitionSource" class="">set_DefinitionSource()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_DefinitionURL" class="">set_DefinitionURL()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_RelatedTopics" class="">set_RelatedTopics()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Results" class="">set_Results()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Type" class="">set_Type()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_Infobox" class="">set_Infobox()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_ImageIsLogo" class="">set_ImageIsLogo()</a><br />
+                                        <a href="../classes/ddg_api.html#method_set_ImageHeight" class="">set_ImageHeight()</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>No public properties found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>No constants found</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid protected">
+                                    <section class="span4">
+                                        <em>No protected methods found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>No protected properties found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid private">
+                                    <section class="span4">
+                                        <em>No private methods found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="../classes/ddg_api.html#property__Abstract" class="">$_Abstract</a><br />
+                                        <a href="../classes/ddg_api.html#property__AbstractText" class="">$_AbstractText</a><br />
+                                        <a href="../classes/ddg_api.html#property__AbstractSource" class="">$_AbstractSource</a><br />
+                                        <a href="../classes/ddg_api.html#property__AbstractURL" class="">$_AbstractURL</a><br />
+                                        <a href="../classes/ddg_api.html#property__Image" class="">$_Image</a><br />
+                                        <a href="../classes/ddg_api.html#property__ImageWidth" class="">$_ImageWidth</a><br />
+                                        <a href="../classes/ddg_api.html#property__Entity" class="">$_Entity</a><br />
+                                        <a href="../classes/ddg_api.html#property__meta" class="">$_meta</a><br />
+                                        <a href="../classes/ddg_api.html#property__Heading" class="">$_Heading</a><br />
+                                        <a href="../classes/ddg_api.html#property__Answer" class="">$_Answer</a><br />
+                                        <a href="../classes/ddg_api.html#property__Redirect" class="">$_Redirect</a><br />
+                                        <a href="../classes/ddg_api.html#property__AnswerType" class="">$_AnswerType</a><br />
+                                        <a href="../classes/ddg_api.html#property__Definition" class="">$_Definition</a><br />
+                                        <a href="../classes/ddg_api.html#property__DefinitionSource" class="">$_DefinitionSource</a><br />
+                                        <a href="../classes/ddg_api.html#property__DefinitionURL" class="">$_DefinitionURL</a><br />
+                                        <a href="../classes/ddg_api.html#property__RelatedTopics" class="">$_RelatedTopics</a><br />
+                                        <a href="../classes/ddg_api.html#property__Results" class="">$_Results</a><br />
+                                        <a href="../classes/ddg_api.html#property__Type" class="">$_Type</a><br />
+                                        <a href="../classes/ddg_api.html#property__Infobox" class="">$_Infobox</a><br />
+                                        <a href="../classes/ddg_api.html#property__ImageIsLogo" class="">$_ImageIsLogo</a><br />
+                                        <a href="../classes/ddg_api.html#property__ImageHeight" class="">$_ImageHeight</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                            </section>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <dl>
+                                <dt>File</dt>
+                                <dd><a href="../files/class.ddg_api.class.html"><div class="path-wrapper">class\ddg_api.class.php</div></a></dd>
+                                <dt>Package</dt>
+                                <dd><div class="namespace-wrapper">Default</div></dd>
+                                <dt>Class hierarchy</dt>
+                                <dd class="hierarchy">
+                                    <div class="namespace-wrapper">\ddg_api</div>
+                                </dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>LEGAGNEUR Matthieu <a href="mailto:legagneur.matthieu@gmail.com">legagneur.matthieu@gmail.com</a></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="properties" name="properties"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <h2>Properties</h2>
+                        </div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Abstract" name="property__Abstract" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Abstract</h3>
+                                <pre class="signature">$_Abstract : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__AbstractText" name="property__AbstractText" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_AbstractText</h3>
+                                <pre class="signature">$_AbstractText : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__AbstractSource" name="property__AbstractSource" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_AbstractSource</h3>
+                                <pre class="signature">$_AbstractSource : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__AbstractURL" name="property__AbstractURL" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_AbstractURL</h3>
+                                <pre class="signature">$_AbstractURL : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Image" name="property__Image" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Image</h3>
+                                <pre class="signature">$_Image : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__ImageWidth" name="property__ImageWidth" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_ImageWidth</h3>
+                                <pre class="signature">$_ImageWidth : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Entity" name="property__Entity" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Entity</h3>
+                                <pre class="signature">$_Entity : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__meta" name="property__meta" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_meta</h3>
+                                <pre class="signature">$_meta : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Heading" name="property__Heading" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Heading</h3>
+                                <pre class="signature">$_Heading : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Answer" name="property__Answer" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Answer</h3>
+                                <pre class="signature">$_Answer : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Redirect" name="property__Redirect" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Redirect</h3>
+                                <pre class="signature">$_Redirect : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__AnswerType" name="property__AnswerType" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_AnswerType</h3>
+                                <pre class="signature">$_AnswerType : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Definition" name="property__Definition" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Definition</h3>
+                                <pre class="signature">$_Definition : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__DefinitionSource" name="property__DefinitionSource" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_DefinitionSource</h3>
+                                <pre class="signature">$_DefinitionSource : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__DefinitionURL" name="property__DefinitionURL" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_DefinitionURL</h3>
+                                <pre class="signature">$_DefinitionURL : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__RelatedTopics" name="property__RelatedTopics" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_RelatedTopics</h3>
+                                <pre class="signature">$_RelatedTopics : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Results" name="property__Results" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Results</h3>
+                                <pre class="signature">$_Results : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Type" name="property__Type" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Type</h3>
+                                <pre class="signature">$_Type : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__Infobox" name="property__Infobox" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_Infobox</h3>
+                                <pre class="signature">$_Infobox : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__ImageIsLogo" name="property__ImageIsLogo" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_ImageIsLogo</h3>
+                                <pre class="signature">$_ImageIsLogo : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__ImageHeight" name="property__ImageHeight" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="private ">$_ImageHeight</h3>
+                                <pre class="signature">$_ImageHeight : boolean</pre>
+                                <p><em>Varibles retournées par l&#039;API de DuckDuckGo</em></p>
+                                <h4>Type</h4>
+                                boolean
+                                &mdash; Varibles retournées par l&#039;API de DuckDuckGo                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="methods" name="methods"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class"><h2>Methods</h2></div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_query" name="method_query" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">query()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">query(string  <span class="argument">$query</span>) : \ddg_api</pre>
+                                <p><em>Retourne un objet ddg_api contenant les résultats de la requête</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$query </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                <a href="../classes/ddg_api.html">\ddg_api</a>
+                                &mdash; <p>obget ddg_api</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method___construct" name="method___construct" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">__construct()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">__construct(array  <span class="argument">$data</span>) </pre>
+                                <p><em>Cette classe contient les résultats d&#039;une requête à duckduckgo <br />
+                                        il est recommandé de passer par (new ddg())->api() ou ddg_api::query() pour récuperer une instance de cette classe</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>données de retour de l'API de duckduckgo</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Abstract" name="method_get_Abstract" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Abstract()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Abstract() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_AbstractText" name="method_get_AbstractText" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_AbstractText()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_AbstractText() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_AbstractSource" name="method_get_AbstractSource" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_AbstractSource()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_AbstractSource() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_AbstractURL" name="method_get_AbstractURL" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_AbstractURL()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_AbstractURL() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Image" name="method_get_Image" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Image()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Image() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_ImageWidth" name="method_get_ImageWidth" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_ImageWidth()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_ImageWidth() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Entity" name="method_get_Entity" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Entity()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Entity() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_meta" name="method_get_meta" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_meta()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_meta() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Heading" name="method_get_Heading" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Heading()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Heading() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Answer" name="method_get_Answer" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Answer()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Answer() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Redirect" name="method_get_Redirect" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Redirect()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Redirect() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_AnswerType" name="method_get_AnswerType" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_AnswerType()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_AnswerType() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Definition" name="method_get_Definition" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Definition()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Definition() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_DefinitionSource" name="method_get_DefinitionSource" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_DefinitionSource()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_DefinitionSource() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_DefinitionURL" name="method_get_DefinitionURL" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_DefinitionURL()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_DefinitionURL() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_RelatedTopics" name="method_get_RelatedTopics" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_RelatedTopics()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_RelatedTopics() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Results" name="method_get_Results" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Results()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Results() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Type" name="method_get_Type" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Type()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Type() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_Infobox" name="method_get_Infobox" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_Infobox()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_Infobox() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_ImageIsLogo" name="method_get_ImageIsLogo" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_ImageIsLogo()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_ImageIsLogo() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_get_ImageHeight" name="method_get_ImageHeight" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">get_ImageHeight()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">get_ImageHeight() : \type</pre>
+                                <p><em></em></p>
+                                <h4>Returns</h4>
+                                \type
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Abstract" name="method_set_Abstract" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Abstract()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Abstract(\type  <span class="argument">$Abstract</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Abstract </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_AbstractText" name="method_set_AbstractText" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_AbstractText()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_AbstractText(\type  <span class="argument">$AbstractText</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$AbstractText </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_AbstractSource" name="method_set_AbstractSource" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_AbstractSource()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_AbstractSource(\type  <span class="argument">$AbstractSource</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$AbstractSource </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_AbstractURL" name="method_set_AbstractURL" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_AbstractURL()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_AbstractURL(\type  <span class="argument">$AbstractURL</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$AbstractURL </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Image" name="method_set_Image" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Image()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Image(\type  <span class="argument">$Image</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Image </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_ImageWidth" name="method_set_ImageWidth" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_ImageWidth()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_ImageWidth(\type  <span class="argument">$ImageWidth</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$ImageWidth </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Entity" name="method_set_Entity" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Entity()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Entity(\type  <span class="argument">$Entity</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Entity </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_meta" name="method_set_meta" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_meta()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_meta(\type  <span class="argument">$meta</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$meta </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Heading" name="method_set_Heading" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Heading()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Heading(\type  <span class="argument">$Heading</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Heading </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Answer" name="method_set_Answer" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Answer()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Answer(\type  <span class="argument">$Answer</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Answer </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Redirect" name="method_set_Redirect" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Redirect()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Redirect(\type  <span class="argument">$Redirect</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Redirect </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_AnswerType" name="method_set_AnswerType" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_AnswerType()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_AnswerType(\type  <span class="argument">$AnswerType</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$AnswerType </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Definition" name="method_set_Definition" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Definition()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Definition(\type  <span class="argument">$Definition</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Definition </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_DefinitionSource" name="method_set_DefinitionSource" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_DefinitionSource()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_DefinitionSource(\type  <span class="argument">$DefinitionSource</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$DefinitionSource </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_DefinitionURL" name="method_set_DefinitionURL" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_DefinitionURL()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_DefinitionURL(\type  <span class="argument">$DefinitionURL</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$DefinitionURL </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_RelatedTopics" name="method_set_RelatedTopics" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_RelatedTopics()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_RelatedTopics(\type  <span class="argument">$RelatedTopics</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$RelatedTopics </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Results" name="method_set_Results" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Results()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Results(\type  <span class="argument">$Results</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Results </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Type" name="method_set_Type" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Type()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Type(\type  <span class="argument">$Type</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Type </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_Infobox" name="method_set_Infobox" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_Infobox()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_Infobox(\type  <span class="argument">$Infobox</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$Infobox </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_ImageIsLogo" name="method_set_ImageIsLogo" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_ImageIsLogo()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_ImageIsLogo(\type  <span class="argument">$ImageIsLogo</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$ImageIsLogo </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_set_ImageHeight" name="method_set_ImageHeight" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">set_ImageHeight()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">set_ImageHeight(\type  <span class="argument">$ImageHeight</span>) </pre>
+                                <p><em></em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\type</td>
+                                        <td>$ImageHeight </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+            <div id="source-view" class="modal hide fade" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="source-view-label">ddg_api.class.php</h3>
+                </div>
+                <div class="modal-body">
+                    <object type="text/html" data="../files/class.ddg_api.class.php.txt" style="width: 100%; height: 400px;"></object>
+                </div>
+            </div>
+            <footer class="row-fluid">
+                <section class="span10 offset2">
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <section class="row-fluid footer-sections">
+                                <section class="span4">
+                                    <h1><i class="icon-code"></i></h1>
+                                    <div>
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-bar-chart"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-pushpin"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../reports/errors.html">Errors</a></li>
+                                            <li><a href="../reports/markers.html">Markers</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <hr />
+                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                            on May 26th, 2017 at 11:00.
+                        </section>
+                    </section>
+                </section>
+            </footer>
+        </div>
+    </body>
+</html>

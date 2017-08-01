@@ -1,0 +1,12 @@
+body{
+    margin-bottom: 91px;
+}
+.muguet{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.muguet>img{
+    width: 100%;
+}

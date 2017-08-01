@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * Cette classe affiche le logo de DevWebIT (au format SVG)
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
+class DevWebIT {
+
+    /**
+     * Cette classe affiche le logo de DevWebIT (au format SVG)
+     * @param int $width Largeur du logo en px
+     * @param string $id Id CSS de la div contenant le logo
+     */
+    public function __construct($width, $id = "DevWebIT") {
+        $height = ((int) ($width / 1.5));
+        ?>
+        <div id="<?php echo $id; ?>">
+            <svg version="1.1" id="<?php echo $id . "_svg"; ?>" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="<?php echo $width; ?>px" height="<?php echo $height; ?>px" viewBox="0 0 93.935 59.625" enable-background="new 0 0 93.935 59.625" xml:space="preserve"
+                 style="margin: 0 auto; display: inline;">
+            <defs><style type="text/css">@font-face {font-family: "RechargeRg-Bold";src: url('../commun/src/css/devwebit/recharge_bd.ttf');}</style></defs>
+            <text transform="matrix(1 0 0 1 -7.939674e-004 34.0811)" fill="#3E71B7" style="fill:#3E71B7;" font-family="'RechargeRg-Bold'" font-size="14.3548">DevWebIT</text>
+            <path fill="#69695E" d="M0.846,20.001h14.132c0,0,4.428-27.699,48.426-11.871c0,0-13.096-6.783-28.829-8.008
+                  C34.575,0.121,5.651-2.799,0.846,20.001z"/>
+            <path fill="#69695E" d="M21.762,41.181c0,0,27.126,25.052,56.965,16.675c0,0,19.228-6.383,12.366-27.126
+                  c0,0,4.787,23.137-25.212,21.382c0,0-15.398-1.117-28.802-10.93H21.762z"/>
+            </svg>
+        </div>
+        <?php
+    }
+
+}

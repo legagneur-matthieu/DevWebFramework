@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Cette classe permet de mettre à jour DWF à partir d'un dépôt. <br />
+ * Ce fichier doit être lancé en mode console !
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
+ */
+class update {
+
+    /**
+     * Cette classe permet de mettre à jour DWF à partir d'un dépôt. <br />
+     * Ce fichier doit être lancé en mode console !
+     */
+    public function __construct() {
+        if (isset($_SERVER["REMOTE_ADDR"])) {
+            echo 'You are not in CLI mode ! use the console\n';
+            exit();
+        }
+        $json = (array) (json_decode(file_get_contents("../version.json")));
+        echo ("Depot : " . $json["protocole"] . "://" . $json["depot"] . " \n(press ENTER to continue, type 'change' for switch) \n");
+        if (stristr(fgets(STDIN), "change")) {
+            do {
+                echo "\nProtocole (http | https | ftp | ftps)\n";
+                $protocole = fgets(STDIN);
+            } while (!(stristr($protocole, "http") or stristr($protocole, "https") or stristr($protocole, "ftp") or stristr($protocole, "ftps")));
+            $json["protocole"] = trim($protocole);
+            echo "\nDepot : (URL whithout \"http(s)://\" | \"ftp(s)://\")\n";
+            $json["depot"] = trim(fgets(STDIN));
+        }
+        $remote_json_path = $json["protocole"] . "://" . $json["depot"] . "/version.json";
+        $remote_zip_path = $json["protocole"] . "://" . $json["depot"] . "/dwf.zip";
+        $temp_zip = "../temp/dwf.zip";
+        $remote_json = ((array) json_decode(@file_get_contents($remote_json_path)));
+        if (!isset($remote_json["version"])) {
+            echo "Depot not found !";
+            exit();
+        }
+        echo "\nLocal version : " . $json["version"] . " \nRemote version : " . $remote_json["version"] . "\n";
+        if ($json["version"] < $remote_json["version"]) {
+            echo "\nUpdate ? [Y/n]";
+            if (stristr(fgets(STDIN), "n")) {
+                exit();
+            }
+            echo "\nDownloading ...\n";
+            file_put_contents($temp_zip, @file_get_contents($remote_zip_path));
+            if (filesize($temp_zip) <= 0) {
+                echo "\nDownload FAIL ! (archive not found)\n";
+                unlink($temp_zip);
+                exit();
+            }
+            echo "\nExtract ...\n";
+            $za = new ZipArchive();
+            $za->open($temp_zip);
+            $za->extractTo("../../");
+            $za->close($temp_zip);
+            echo "\nDelete downloaded archive ...\n";
+            unlink($temp_zip);
+            echo "\nUpdate version.json...\n";
+            file_put_contents("../version.json", file_get_contents($remote_json_path));
+            echo "\nCOMPLETE !\n";
+        } else {
+            echo "\nYou have the last version of DWF\n";
+        }
+    }
+
+}
+
+new update();

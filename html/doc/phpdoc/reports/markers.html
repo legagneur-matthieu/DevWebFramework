@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8"/>
+        <title>     &raquo; Markers
+        </title>
+        <meta name="author" content=""/>
+        <meta name="description" content=""/>
+        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/prism.css" rel="stylesheet" media="all"/>
+        <link href="../css/template.css" rel="stylesheet" media="all"/>
+        <!--[if lt IE 9]>
+        <script src="../js/html5.js"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.smooth-scroll.js"></script>
+        <script src="../js/prism.min.js"></script>
+        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <link rel="shortcut icon" href="../images/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-ellipsis-vertical"></i>
+                    </a>
+                    <a class="brand" href="../index.html">dwf-doc</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="charts-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../graphs/class.html">
+                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="reports-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../reports/errors.html">
+                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/markers.html">
+                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/deprecated.html">
+                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="go_to_top">-->
+            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+            <!--</div>-->
+        </div>
+        <div id="___" class="container-fluid">
+            <section class="row-fluid">
+                <div class="span2 sidebar">
+                    <ul class="side-nav nav nav-list">
+                        <li class="nav-header">Navigation</li>
+                        <li><a href="#class\dompdf\dompdf_config.inc.php"><i class="icon-file"></i> class\dompdf\dompdf_config.inc.php</a></li>
+                        <li><a href="#class\dompdf\include\attribute_translator.cls.php"><i class="icon-file"></i> class\dompdf\include\attribute_translator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\block_frame_decorator.cls.php"><i class="icon-file"></i> class\dompdf\include\block_frame_decorator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\block_frame_reflower.cls.php"><i class="icon-file"></i> class\dompdf\include\block_frame_reflower.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\canvas_factory.cls.php"><i class="icon-file"></i> class\dompdf\include\canvas_factory.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\cpdf_adapter.cls.php"><i class="icon-file"></i> class\dompdf\include\cpdf_adapter.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\css_color.cls.php"><i class="icon-file"></i> class\dompdf\include\css_color.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\dompdf.cls.php"><i class="icon-file"></i> class\dompdf\include\dompdf.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\frame_decorator.cls.php"><i class="icon-file"></i> class\dompdf\include\frame_decorator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\frame_factory.cls.php"><i class="icon-file"></i> class\dompdf\include\frame_factory.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\frame_reflower.cls.php"><i class="icon-file"></i> class\dompdf\include\frame_reflower.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\frame_tree.cls.php"><i class="icon-file"></i> class\dompdf\include\frame_tree.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\gd_adapter.cls.php"><i class="icon-file"></i> class\dompdf\include\gd_adapter.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\line_box.cls.php"><i class="icon-file"></i> class\dompdf\include\line_box.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\list_bullet_renderer.cls.php"><i class="icon-file"></i> class\dompdf\include\list_bullet_renderer.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\page_frame_decorator.cls.php"><i class="icon-file"></i> class\dompdf\include\page_frame_decorator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\page_frame_reflower.cls.php"><i class="icon-file"></i> class\dompdf\include\page_frame_reflower.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\pdflib_adapter.cls.php"><i class="icon-file"></i> class\dompdf\include\pdflib_adapter.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\style.cls.php"><i class="icon-file"></i> class\dompdf\include\style.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\stylesheet.cls.php"><i class="icon-file"></i> class\dompdf\include\stylesheet.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\table_cell_frame_decorator.cls.php"><i class="icon-file"></i> class\dompdf\include\table_cell_frame_decorator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\table_cell_frame_reflower.cls.php"><i class="icon-file"></i> class\dompdf\include\table_cell_frame_reflower.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\tcpdf_adapter.cls.php"><i class="icon-file"></i> class\dompdf\include\tcpdf_adapter.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\text_frame_decorator.cls.php"><i class="icon-file"></i> class\dompdf\include\text_frame_decorator.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\text_frame_reflower.cls.php"><i class="icon-file"></i> class\dompdf\include\text_frame_reflower.cls.php</a></li>
+                        <li><a href="#class\dompdf\include\text_renderer.cls.php"><i class="icon-file"></i> class\dompdf\include\text_renderer.cls.php</a></li>
+                        <li><a href="#class\dompdf\lib\class.pdf.php"><i class="icon-file"></i> class\dompdf\lib\class.pdf.php</a></li>
+                        <li><a href="#class\dompdf\lib\php-font-lib\classes\font_table_post.cls.php"><i class="icon-file"></i> class\dompdf\lib\php-font-lib\classes\font_table_post.cls.php</a></li>
+                        <li><a href="#class\elFinder\elFinder.class.php"><i class="icon-file"></i> class\elFinder\elFinder.class.php</a></li>
+                        <li><a href="#class\elFinder\elFinderVolumeDriver.class.php"><i class="icon-file"></i> class\elFinder\elFinderVolumeDriver.class.php</a></li>
+                        <li><a href="#class\elFinder\elFinderVolumeLocalFileSystem.class.php"><i class="icon-file"></i> class\elFinder\elFinderVolumeLocalFileSystem.class.php</a></li>
+                    </ul>
+                </div>
+                <div class="span10 offset2">
+                    <ul class="breadcrumb">
+                        <li><a href="../"><i class="icon-map-marker"></i></a><span class="divider">\</span></li>
+                        <li>Markers</li>
+                    </ul>
+                    <div id="marker-accordion">
+                        <div class="package-contents">
+                            <a name="class\dompdf\dompdf_config.inc.php" id="class\dompdf\dompdf_config.inc.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\dompdf_config.inc.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>52</td>
+                                        <td>Some function definitions rely on the constants defined by DOMPDF. However, might this location prove problematic?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\attribute_translator.cls.php" id="class\dompdf\include\attribute_translator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\attribute_translator.cls.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>342</td>
+                                        <td>unsupported
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>452</td>
+                                        <td>? we don&#039;t actually set the font size of anything here, just
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\block_frame_decorator.cls.php" id="class\dompdf\include\block_frame_decorator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\block_frame_decorator.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>91</td>
+                                        <td>change this this to better use the Line_Box object</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\block_frame_reflower.cls.php" id="class\dompdf\include\block_frame_reflower.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\block_frame_reflower.cls.php
+                                <small style="float: right;padding-right: 10px;">3</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>325</td>
+                                        <td>overflow hidden
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>334</td>
+                                        <td>this should probably be moved to a seperate function as per
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>506</td>
+                                        <td>?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\canvas_factory.cls.php" id="class\dompdf\include\canvas_factory.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\canvas_factory.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>46</td>
+                                        <td>The TCPDF adapter is not ready yet
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\cpdf_adapter.cls.php" id="class\dompdf\include\cpdf_adapter.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\cpdf_adapter.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>13</td>
+                                        <td>Need to sanity check inputs to this class
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\css_color.cls.php" id="class\dompdf\include\css_color.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\css_color.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>166</td>
+                                        <td>should/could verify this.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\dompdf.cls.php" id="class\dompdf\include\dompdf.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\dompdf.cls.php
+                                <small style="float: right;padding-right: 10px;">5</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>419</td>
+                                        <td>Determine character encoding, switch to UTF8, update meta tag. Need better http/file stream encoding detection, currently relies on text or meta tag.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>462</td>
+                                        <td>roll this into the encoding detection using UTF-8/16/32 BOM (http://us2.php.net/manual/en/function.mb-detect-encoding.php#91051)?
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>758</td>
+                                        <td>Handle other generated content (pseudo elements)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>775</td>
+                                        <td>handle generated content
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>416</td>
+                                        <td>use the $encoding variable</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\frame_decorator.cls.php" id="class\dompdf\include\frame_decorator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\frame_decorator.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>548</td>
+                                        <td>What version is the best : this one or the one in List_Bullet_Renderer ?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\frame_factory.cls.php" id="class\dompdf\include\frame_factory.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\frame_factory.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>147</td>
+                                        <td>should throw some sort of warning or something?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\frame_reflower.cls.php" id="class\dompdf\include\frame_reflower.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\frame_reflower.cls.php
+                                <small style="float: right;padding-right: 10px;">4</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>346</td>
+                                        <td>do something here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>349</td>
+                                        <td>do something else here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>352</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>354</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\frame_tree.cls.php" id="class\dompdf\include\frame_tree.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\frame_tree.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>137</td>
+                                        <td>find a better way to deal with it...
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\gd_adapter.cls.php" id="class\dompdf\include\gd_adapter.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\gd_adapter.cls.php
+                                <small style="float: right;padding-right: 10px;">4</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>193</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>593</td>
+                                        <td>word spacing
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>651</td>
+                                        <td>word spacing
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>679</td>
+                                        <td>word spacing
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\line_box.cls.php" id="class\dompdf\include\line_box.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\line_box.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>131</td>
+                                        <td>smelly hack
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\list_bullet_renderer.cls.php" id="class\dompdf\include\list_bullet_renderer.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\list_bullet_renderer.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>209</td>
+                                        <td>I thought it should be 2, but 4 gives better results
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\page_frame_decorator.cls.php" id="class\dompdf\include\page_frame_decorator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\page_frame_decorator.cls.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>330</td>
+                                        <td>Checking widows is tricky without having laid out the
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>427</td>
+                                        <td>If the row is taller than the page and 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\page_frame_reflower.cls.php" id="class\dompdf\include\page_frame_reflower.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\page_frame_reflower.cls.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>63</td>
+                                        <td>RTL
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>72</td>
+                                        <td>RTL
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\pdflib_adapter.cls.php" id="class\dompdf\include\pdflib_adapter.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\pdflib_adapter.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>518</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\style.cls.php" id="class\dompdf\include\style.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\style.cls.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>503</td>
+                                        <td>em:ex ratio?
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>1738</td>
+                                        <td>handle partial values
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\stylesheet.cls.php" id="class\dompdf\include\stylesheet.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\stylesheet.cls.php
+                                <small style="float: right;padding-right: 10px;">6</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>559</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>560</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>661</td>
+                                        <td>this will break if $value contains quoted strings
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>765</td>
+                                        <td>this is not particularly robust...
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>959</td>
+                                        <td>handle &#039;{&#039; within strings, e.g. [attr=&quot;string {}&quot;]
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>1098</td>
+                                        <td>Is this causing problems for imported CSS files? There are some &#039;./none&#039; references when running the test cases.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\table_cell_frame_decorator.cls.php" id="class\dompdf\include\table_cell_frame_decorator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\table_cell_frame_decorator.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>66</td>
+                                        <td>this isn&#039;t right
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\table_cell_frame_reflower.cls.php" id="class\dompdf\include\table_cell_frame_reflower.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\table_cell_frame_reflower.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>45</td>
+                                        <td>?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\tcpdf_adapter.cls.php" id="class\dompdf\include\tcpdf_adapter.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\tcpdf_adapter.cls.php
+                                <small style="float: right;padding-right: 10px;">15</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>235</td>
+                                        <td>ugh, need to handle different styles here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>263</td>
+                                        <td>ugh, need to handle styles here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>282</td>
+                                        <td>ugh, need to handle styles here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>311</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>330</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>347</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>364</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>368</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>377</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>390</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>416</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>427</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>436</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>446</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>456</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\text_frame_decorator.cls.php" id="class\dompdf\include\text_frame_decorator.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\text_frame_decorator.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>48</td>
+                                        <td>this should be in a child class (and is incorrect)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\text_frame_reflower.cls.php" id="class\dompdf\include\text_frame_reflower.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\text_frame_reflower.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>283</td>
+                                        <td>Include non-breaking spaces?
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\include\text_renderer.cls.php" id="class\dompdf\include\text_renderer.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\include\text_renderer.cls.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>71</td>
+                                        <td>Instead of using the tallest frame to position,
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\lib\class.pdf.php" id="class\dompdf\lib\class.pdf.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\lib\class.pdf.php
+                                <small style="float: right;padding-right: 10px;">5</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>2613</td>
+                                        <td>should actually keep track of states that have already been created...
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>3068</td>
+                                        <td>I don&#039;t know that this is sufficient for determining content length (i.e. what about transport compression?)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>3080</td>
+                                        <td>Is this the correct value ... spec says 1#range-unit
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>3819</td>
+                                        <td>- need to support Unicode
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FIXME</td>
+                                        <td>4258</td>
+                                        <td>The pixel transformation doesn&#039;t work well with 8bit PNGs
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\dompdf\lib\php-font-lib\classes\font_table_post.cls.php" id="class\dompdf\lib\php-font-lib\classes\font_table_post.cls.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\dompdf\lib\php-font-lib\classes\font_table_post.cls.php
+                                <small style="float: right;padding-right: 10px;">4</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>68</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>76</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>129</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>137</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\elFinder\elFinder.class.php" id="class\elFinder\elFinder.class.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\elFinder\elFinder.class.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>897</td>
+                                        <td>Add return statement here
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\elFinder\elFinderVolumeDriver.class.php" id="class\elFinder\elFinderVolumeDriver.class.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\elFinder\elFinderVolumeDriver.class.php
+                                <small style="float: right;padding-right: 10px;">4</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>3103</td>
+                                        <td>crypt path and return hash
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>3113</td>
+                                        <td>Add return statement here
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>3130</td>
+                                        <td>uncrypt hash and return path
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>3135</td>
+                                        <td>Add return statement here
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="package-contents">
+                            <a name="class\elFinder\elFinderVolumeLocalFileSystem.class.php" id="class\elFinder\elFinderVolumeLocalFileSystem.class.php"></a>
+                            <h3>
+                                <i class="icon-file"></i>
+                                class\elFinder\elFinderVolumeLocalFileSystem.class.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>TODO</td>
+                                        <td>1100</td>
+                                        <td>Add return statement here
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer class="row-fluid">
+                <section class="span10 offset2">
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <section class="row-fluid footer-sections">
+                                <section class="span4">
+                                    <h1><i class="icon-code"></i></h1>
+                                    <div>
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-bar-chart"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-pushpin"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../reports/errors.html">Errors</a></li>
+                                            <li><a href="../reports/markers.html">Markers</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <hr />
+                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                            on May 26th, 2017 at 11:13.
+                        </section>
+                    </section>
+                </section>
+            </footer>
+        </div>
+    </body>
+</html>

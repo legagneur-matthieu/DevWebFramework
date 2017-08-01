@@ -1,0 +1,1206 @@
+<?php
+
+class docPHP_natives {
+
+    private $_brush = "php; html-script: true";
+
+    public function __construct() {
+        js::accordion("accordion_classes_natives", true, true);
+        ?>
+        <p>
+            Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (doc technique) <br />
+            si une classe/fonction a mal été commentée ( ou pas du tout commentée) merci de nous le signaler. <br />
+            (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?php echo count(glob("../../dwf/class/*.class.php")); ?> classes natives)
+        </p>
+        <div id="accordion_classes_natives">
+            <?php
+            foreach (get_class_methods(__CLASS__) as $m) {
+                if ($m != __FUNCTION__) {
+                    ?>
+                    <h4><?php echo strtr($m, array("__" => ", ")); ?></h4>
+                    <div><?php $this->$m(); ?></div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+        <?php
+    }
+
+    private function admin_controle() {
+        ?>
+        <h4>admin_controle</h4>
+        <p>admin_controle est une classe permettant de créer une interface d'administration "user-friendly", <br />
+            Cette classe est destinée à être utilisée dans une partie "administration" du site. <br />
+            Cette classe affiche l'administration d'une table de la base de données, <br />
+            elle a besoin de l'entité de cette table pour fonctionner et sait gérer les relations entre les tables.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//affiche l'interface d'administration de la table 'rang'\n"
+                . "new admin_controle('rang');\n"
+                . "echo '<hr />'\n"
+                . "//affiche l'interface d'administration de la table 'user' avec la relation user.rang = rang.nom\n"
+                . "new admin_controle('user', array('rang'=>'nom'));\n"
+                . "?>", $this->_brush);
+    }
+
+    private function application() {
+        ?>
+        <p>Cette classe fait office de contrôleur et layout pour l'application, <br />
+            elle fait la liaison entre les routes et les pages (cf configuration et pages) <br />
+            et met à disposition quelques outils :</p>
+        <ul>
+            <li>Instancie la connexion à la base de données par un objet bdd accessible via application::$_bdd (cf bdd)</li>
+            <li>Permet d'utiliser des méthodes évènementielles à partir de application::event() (cf : méthodes évènementielles)</li>
+        </ul>
+        <?php
+    }
+
+    private function audio() {
+        ?>
+        <p>Cette classe permet de générer un lecteur audio.</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Créé un lecteur avec une seule source\n"
+                . "new audio($" . "src=\"./files/musiques/GM-The Search.mp3\", $" . "id=\"player\");\n\n"
+                . "//Créé un lecteur avec une playlist\n"
+                . "(new audio(\"\", \"player2\"))->playlit(array(\n"
+                . "    array(\"src\"=>\"./files/musiques/GM-The Search.mp3\", \"titre\"=>\"InYourDreams - The Search\"),\n"
+                . "    array(\"src\"=>\"./files/musiques/IYD-New World.mp3\", \"titre\"=>\"InYourDreams - New World\"),\n"
+                . "));\n"
+                . "?>", $this->_brush);
+        ?>
+        <div class="row">
+            <div class="col-xs-6">
+                <?php
+                new audio("./files/musiques/GM-The Search.mp3");
+                ?>
+            </div>
+            <div class="col-xs-6">
+                <?php
+                (new audio("", "player2"))->playlist(array(
+                    array("src" => "./files/musiques/GM-The Search.mp3", "titre" => "InYourDreams - The Search"),
+                    array("src" => "./files/musiques/IYD-New World.mp3", "titre" => "InYourDreams - New World")
+                ));
+                ?>
+            </div>
+        </div>
+        <p>Crédits : <a href="https://inyourdreams.newgrounds.com/" target="_blank">InYourDreams (Newgrounds)</a></p>
+        <?php
+    }
+
+    private function auth() {
+        ?>
+        <p>
+            Auth est la classe qui gère l'authentification des utilisateurs, <br />
+            il prend en paramètres : le nom de la table/entité utilisateur ( dans cette doc : 'user'), le nom du champ de login ('login'), le nom du champ de mot de passe ('psw'). <br />
+            auth utilise deux variables de sessions accessibles via la classe "session" <br />
+            (session::set_auth(),session::get_auth(),session::set_user() et session::get_user()) <br />
+            lorsque l'utilisateur est autentifié, session::get_auth() retourne true et session::get_user() contient l'identifiant de l'utilisateur (id de la base de données) <br />
+            sinon session::get_auth() et session::get_user() retourne false et auth affiche un formulaire d'authentification.
+
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//affiche le formulaire d'authentification si non authentifié\n"
+                . "new auth('user', 'login', 'psw');\n\n"
+                . "//version avec une sécurité (token)\n"
+                . "new auth('user', 'login', 'psw', true);\n"
+                . "?>", $this->_brush);
+    }
+
+    /* private function ban_ip() {
+
+      }
+
+      private function bbParser() {
+
+      }
+
+      private function bdd() {
+
+      } */
+
+    private function bootstrap_theme() {
+        ?>
+        <p>Cette classe permet de gèrer les thèmes de bootswatch,<br />
+            le thème par défaut peut être défini dans <em>config.class.php</em></p>        
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche une interface (modal) permettant à l'utilisateur de choisir un thème\n"
+                . "bootstrap_theme::user_custom();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function cards() {
+        ?>
+        <p>Cette classe permet de gèrer un paquet de 32, 52, 54 ou 78 cartes</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Génère un paquet de 52 cartes (par defaut)\n"
+                . "$" . "paquet = new cards();\n\n"
+                . "//Génère un paquet de 32 cartes\n"
+                . "$" . "paquet = new cards(32);\n\n"
+                . "//Mélange le paquet\n"
+                . "$" . "paquet->shuffle_deck();\n\n"
+                . "//Tire une carte du paquet, la carte est retirée du paquet.\n"
+                . "//retourne false si le paquet est vide\n"
+                . "$" . "card=$" . "paquet->drow_from_deck();\n"
+                . "?>", $this->_brush);
+        ?> <p>Contenu d'un paquet de 52 cartes :</p><p><?php
+            $deck = (new cards())->get_deck();
+            sort($deck);
+            foreach ($deck as $cards) {
+                echo $cards . " ";
+            }
+            ?></p><p>Contenu d'un paquet de 78 cartes :</p><p><?php
+            $deck = (new cards(78))->get_deck();
+            sort($deck);
+            foreach ($deck as $cards) {
+                echo $cards . " ";
+            }
+            ?>
+        </p>
+        <?php
+    }
+
+    private function citations() {
+        ?>
+        <p>Cette classe affiche une citation célèbre à chaque chargement de page. <br />
+            les citations se trouvent dans <em>dwf/class/citations/citations.json</em> <br />
+            Vos contributions sont les bienvenues.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "new citations();\n"
+                . "?>", $this->_brush);
+        ?>Resultat :<?php
+        new citations();
+    }
+
+    private function ckeditor() {
+        ?>
+        <p>Cette classe est exploitée par la classe form (cf. form)</p>
+        <?php
+    }
+
+    private function cli() {
+        ?>
+        <p>Cette classe est utile pour les CLI (cf. CLI)</p>
+        <?php
+    }
+
+    private function cookieaccept() {
+        ?>
+        <p>Cette classe permet d'afficher un message d'informations sur l'utilisation de cookies ou autre technologies similaires. <br />
+            Cette ligne est à placer dans <em>pages->header()</em>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "new cookieaccept();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function cytoscape() {
+        ?>
+        <p>Il est préférable d'appeler cette classe via <em>(new graphique())->cytoscape()</em> (cf. graphique)
+            Cette classe affiche un graphe d'analyse et de visualisation (utilise la librairie jquery cytoscape) <br />
+            (Requiert une règle CSS sur l'ID CSS)
+        </p>
+        <?php
+        js::syntaxhighlighter("<style type=\"text/css\">\n"
+                . "    #cytoscape{\n"
+                . "        width: 300px;\n"
+                . "        height: 300px;\n"
+                . "    }\n"
+                . "</style>\n"
+                . "<?php\n"
+                . "(new graphique())->cytoscape(\"cytoscape\",array(\n"
+                . "    'A'=>array('B','C'),\n"
+                . "    'B'=>array('C'),\n"
+                . "    'C'=>array('A')\n"
+                . "));\n"
+                . "?>", $this->_brush);
+    }
+
+    private function datatable() {
+        ?>
+        <p>Cette classe permet de convertir un tableau HTML en datatable (jquery) <br />
+            il est préférable de l'appeler via <em>js::datatable()</em> (cf js)
+        </p>
+        <?php
+    }
+
+    private function ddg__ddg_api() {
+        ?>
+        <p>La classe ddg permet d'exploiter le moteur de recherche DuckDuckGO</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche une searchbar de DuckDuckGO\n"
+                . "(new ddg())->print_searchbar();\n\n"
+                . "//retourne un objet ddg_api qui contient les résultats d'une recherche\n"
+                . "$" . "ddg_api=(new ddg())->api('DuckDuckGO');\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Résultat :</p>
+        <div class="row" style="overflow: visible; height: 300px;">
+            <div class="col-xs-5">
+                <style type="text/css">
+                    .ddg > form > input,
+                    .ddg > form > button{
+                        margin-top: -150px;
+                    }
+                </style>
+                <?php
+                (new ddg())->print_searchbar();
+                ?>
+            </div>
+            <div class="col-xs-7"> 
+                <style type="text/css">
+                    #ddg_api{
+                        border-left: black solid 1px;
+                        padding-left: 10px;
+                    }
+                    #ddg_api>pre{
+                        overflow-y: visible;
+                        height: 300px;
+                    }
+                </style>
+                <div id="ddg_api">
+                    <?php
+                    debug::print_r((new ddg())->api("DuckDuckGO"));
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    private function debug() {
+        ?>
+        <p>Cette classe est une boîte à outils de débogage</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche la structure d'une variable ( optimisé pour les arrays et objets )\n"
+                . "debug::print_r($" . "var)\n\n"
+                . "//Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booleans )\n"
+                . "debug::var_dump($" . "var)\n\n"
+                . "//Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)\n"
+                . "debug::get_trace()\n\n"
+                . "//Affiche le rapport d'activités de PHP en bas de page\n"
+                . "debug::show_report()\n"
+                . "?>", $this->_brush);
+    }
+
+    private function dwf_exception() {
+        ?> 
+        <p>Cette classe gère les exceptions du framework <br />
+            les codes d'erreurs des exceptions natives du framework sont compris entre 600 et 699 :</p>
+        <ul>
+            <li>les codes d'erreurs 60X concerne la base de données</li>
+            <li>les codes d'erreurs 61X concerne les routes et méthodes</li>
+            <li>les codes d'erreurs 62X concerne les services</li>
+            <li>les codes d'erreurs 63X concerne le système de fichiers</li>
+        </ul>
+        <p>Il est cependant possible pour vous de créer des exceptions personnalisées avec dwf_exeption :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "code_erreur=700;\n"
+                . "$" . "text_erreur=\"un message d'erreur\"\n"
+                . "//Affiche une exception qui n'interrompt pas le script en cours\n"
+                . "dwf_exception::warning_exception($" . "code_erreur,array(\"msg\"=>\"$" . "text_erreur\"));\n\n"
+                . "//Lance une exception qui interrompt le script en cours\n"
+                . "dwf_exception::dwf_exception::throw_exception($" . "code_erreur,array(\"msg\"=>\"$" . "text_erreur\"));\n\n"
+                . "//try catch pour gérer et afficher une exception\n"
+                . "try {\n"
+                . "    //conditions menant à une exception\n"
+                . "} catch (Exception $" . "e) {\n"
+                . "    dwf_exception::print_exception($" . "e);\n"
+                . "}\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Les exceptions sont toujours retranscries dans un log : <em>dwf/log/log_[votre_projet]_[date_format_us].txt</em></p>
+        <p>Exemple de <em>dwf_exception::warning_exception()</em> :</p>
+        <div class="alert alert-danger" role="alert">
+            <p>DWF EXCEPTION ! Code 700 : "Exemple d'exception"</p>
+            <pre><?php echo "#0 C:\wamp\www\myhomeframework\html\doc\class\docPHP_natives.class.php(294): dwf_exception::warning_exception('700', Array)
+#1 C:\wamp\www\myhomeframework\html\doc\class\docPHP_natives.class.php(21): docPHP_natives->dwf_exception()
+#2 C:\wamp\www\myhomeframework\html\doc\class\docPHP.class.php(427): docPHP_natives->__construct()
+#3 C:\wamp\www\myhomeframework\html\doc\class\docPHP.class.php(38): docPHP->classes_natives()
+#4 C:\wamp\www\myhomeframework\html\doc\class\pages.class.php(91): docPHP->__construct()
+#5 C:\wamp\www\myhomeframework\dwf\class\application.class.php(126): pages->web()
+#6 C:\wamp\www\myhomeframework\dwf\class\application.class.php(44): application->contenu()
+#7 C:\wamp\www\myhomeframework\dwf\index.php(20): application->__construct()
+#8 C:\wamp\www\myhomeframework\html\doc\index.php(18): index->__construct()
+#9 C:\wamp\www\myhomeframework\html\doc\index.php(40): website->__construct()
+#10 {main}"; ?></pre>
+        </div>
+        <?php
+    }
+
+    private function easteregg() {
+        ?><p>Cette classe permet d'afficher des "oeufs de Pâques" qui s'affichent à certaines dates de l'année. <br />
+            Liste des dates : </p>
+        <ul>
+            <li>31/12 et 01/01 : Jour de l'an, affiche une guirlande interactive (les ampoules éclatent au survol de la souris)</li>
+            <li>06/01 : Epiphanie, affiche une couronne des rois en pied de page</li>
+            <li>14/02 : Saint Valentin, une pluie de coeurs sur le site</li>
+            <li>21/03 : Printemps, des pétales de cerisiers tombent sur le site</li>
+            <li>01/04 : Poisson d'Avril ! un poisson animé traverse l'écran</li>
+            <li>01/05 : Fête du travail, une couronne de muguet en pied de page</li>
+            <li>Entre le 25/05 et 31/05 : Fête des mères (dernier dimanche de mai), un collier de nouilles "bonne fête maman" en pied de page</li>
+            <li>21/06 : Été, la lueur chaude du soleil apparait en pied de page</li>
+            <li>Entre le 16/05 et 22/06 : Fête des pères (troisième dimanche de mai) un modal avec le diplôme du père de l'année apparait (qu'une fois par session)</li>
+            <li>14/07 : Fête Nationale française, des feux d'artifice sont tirés sur le site</li>
+            <li>23/09 : Automne, des feuilles mortes tombent sur le site</li>
+            <li>25/11 : Sainte-Catherine, un chapeau de Sainte-Catherine en pied de page</li>
+            <li>Du 22/12 aux 25/15 : Hiver et Noel, des flocons de neiges tombent sur le site</li>
+        </ul>
+        <p>Astuce : une interface pour activer les eastereggs peut être affiché en tapant le "Konami code" : ↑ ↑ ↓ ↓ ← → ← → B A</p>
+        <p>Pour activer les eastereggs sur toutes les pages, placez cette ligne dans <em>pages->header()</em></p>
+        <?php
+        js::syntaxhighlighter("<?php new easteregg(); ?>", $this->_brush);
+    }
+
+    private function entity_generator() {
+        ?><p>(cf Entity)</p><?php
+    }
+
+    private function file_explorer() {
+        ?><p>Cette classe permet d'afficher et explorer une arborescence</p><?php
+        js::syntaxhighlighter("<?php new file_explorer(\"./files\"); ?>", $this->_brush);
+        ?> <p>Resultat :</p><?php
+        new file_explorer("./files");
+    }
+
+    private function form() {
+        ?>
+        <p>La classe form permet de créer des formulaires en php stylisé par bootstrap, accessible et respectant les normes W3C</p>
+        <?php
+        js::syntaxhighlighter(file_get_contents(__DIR__ . "/docform.php"), $this->_brush);
+        ?>
+        <p>Résultat (visuel uniquement, execution désactivée):</p>
+        <div class="row" style="border: 1px solid #ccc; border-radius: 4px;">
+            <div class="col-xs-3">
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".no-sub").submit(function (e) {
+                            e.preventDefault();
+                            return false;
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-xs-6">
+                <?php
+                form::new_form("no-sub");
+                form::input("Input de type text", "input_1");
+                form::input("Input de type password", "input_2", "password");
+                form::input("Input avec valeur initiale", "input_3", "text", "valeur initiale");
+                form::datepicker("Un datepicker", "datepicker_1");
+                form::select("Un selecteur", "select_1", array(
+                    array(1, "Abricots"),
+                    array(2, "Poires", true), //Poires est selectioné par défaut
+                    array(3, "Pommes"),
+                ));
+                form::textarea("Un textarea", "ta_1");
+                form::textarea("Un ckeditor", "ta_2");
+                $cke = js::ckeditor("ta_2");
+                form::submit("btn-default");
+                form::close_form();
+                ?>
+            </div>
+            <div class="col-xs-3"></div>
+        </div>
+        <?php
+    }
+
+    private function freetile() {
+        ?>
+        <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile". <br />
+            Il est préferable d'appeler cette librairie via <em>js::freetile()</em> <br />
+            Les sous éléments peuvent être des images ou des DIV de diverentes tailles.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php js::freetile('freetile'); ?>\n"
+                . "<div id=\"freetile\"></div>", $this->_brush);
+    }
+
+    private function ftp_explorer() {
+        ?> 
+        <p>Cette classe permet d'afficher et explorer une arborescence FTP <strong>PUBLIQUE</strong> <br />
+            le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucuns droits d'ajout/modification/suppression) <br />
+            le rendu est le même que <em>file_explorer()</em>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php new ftp_explorer($" . "host, $" . "user, $" . "psw, $" . "ssl=false); ?>", $this->_brush);
+    }
+
+    private function fullcalendar() {
+        ?>
+        <p>Cette classe permet d'afficher un Fullcalendar <br />
+            <a href="https://fullcalendar.io/">https://fullcalendar.io/</a>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche l'administration du Fullcalendar\n"
+                . "(new fullcalendar())->admin();\n\n"
+                . "//Affiche le fullcalendar avec les évènements et ressources enregistrés en base de données\n"
+                . "(new fullcalendar())->events(fullcalendar_event::get_table_array(), fullcalendar_resource::get_table_array());\n\n"
+                . "//Affiche le fullcalendar avec l'agenda d'un ou plusieurs comptes Google\n"
+                . "(new fullcalendar())->gcal($" . "api, array('abcd1234@group.calendar.google.com'));\n"
+                . "?>", $this->_brush);
+        ?><p>Exemple</p><?php
+        (new fullcalendar())->events(array(array("title" => "evenement de démonstation", "start" => date("Y-m-d") . "T" . date("H:i:s"))));
+    }
+
+    private function g_agenda() {
+        ?>
+        <p>Cette classe permet de gérer un agenda d'évènements minimaliste, <br />
+            souvent utilisé pour avertir des visiteurs des prochains évenements<br />
+            (salons, conventions, spectacles, ...)</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche l'interface d'administration\n"
+                . "(new g_agenda())->admin();\n\n"
+                . "//Affiche la liste d'évènements prévus (les 10 prochains par défaut)\n"
+                . "(new g_agenda())->agenda_page($" . "lim = 10);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function g_elFinder() {
+        ?>
+        <p>Cette classe affiche le gestionnaire de fichiers elFinder <br />
+            Il n'est pas recommandé de mettre deux instances de cette classe dans une même page<br />
+            Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);<br />
+            Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Sécurité via la varible de session\n"
+                . "session::set_val('elFinder', true);\n\n"
+                . "//Affiche le gestionnaire de fichiers elFinder\n"
+                . "new g_elFinder();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function gestion_article() {
+        ?>
+        <p>Cette classe permet de gérer et afficher des articles</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche l'administration des articles\n"
+                . "(new gestion_article())->admin();\n\n"
+                . "//Affiche le parcours des articles (pour les utilisateurs)\n"
+                . "(new gestion_article())->article();\n\n"
+                . "//Affiche un module avec les dernières actualités\n"
+                . "//Plusieurs modules peuvent être créés, chaque module est identifié par un nom,\n"
+                . "//possède une limite d'affichage et sont liés à une ou plusieurs catégories d'articles\n"
+                . "(new gestion_article())->module($" . "name='default')\n"
+                . "?>", $this->_brush);
+    }
+
+    private function git() {
+        ?>
+        <p>Utilisez git depuis PHP (requiert git sur le serveur) <a href="https://github.com/kbjr/Git.php">https://github.com/kbjr/Git.php</a></p>
+        <?php
+    }
+
+    private function graphique() {
+        ?>
+        <p>Cette classe permet de créér des graphiques.</p>
+        <?php
+        js::syntaxhighlighter("<style type=\"text/css\">\n"
+                . "    #plot{\n"
+                . "        width: 300px;\n"
+                . "        height:300px;\n"
+                . "    }\n"
+                . "</style>\n"
+                . "<?php\n"
+                . "$" . "data_line = array(\n"
+                . "    array('label' => 'label1',\n"
+                . "        'data' => array(array(\n"
+                . "            array(1, 0),\n"
+                . "            array(2, 10),\n"
+                . "            array(3, 5),\n"
+                . "            array(4, 7),\n"
+                . "            array(5, 1),\n"
+                . "            array(6, 8),\n"
+                . "            array(7, 3),\n"
+                . "            array(8, 9),\n"
+                . "            array(9, 2),\n"
+                . "            array(10, 6)\n"
+                . "        )\n"
+                . "    )\n"
+                . ");\n"
+                . "//Affiche un graphique (Librairie flot)\n"
+                . "(new graphique())->line($" . "data_line, array(), 'plot');\n"
+                . "$" . "data = array(\n"
+                . "    'Valeur 1' => 1,\n"
+                . "    'Valeur 2' => 10,\n"
+                . "    'Valeur 3' => 5,\n"
+                . "    'Valeur 4' => 7,\n"
+                . ");\n"
+                . "//Affiche un graphique \"en camenbert\" (Librairie phpgraph)\n"
+                . "(new graphique())->pie($" . "data);\n"
+                . "//Affiche un graphique \"en anneau\" (Librairie phpgraph)\n"
+                . "(new graphique())->ring($" . "data); \n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Résultats :</p>
+        <style type="text/css">
+            #plot{
+                width: 300px;
+                height:300px;
+            }
+        </style>
+        <div class="row">
+            <div class="col-xs-4">
+                <?php
+                $data_line = array(
+                    array("label" => "label1",
+                        "data" => array(
+                            array(1, 0),
+                            array(2, 10),
+                            array(3, 5),
+                            array(4, 7),
+                            array(5, 1),
+                            array(6, 8),
+                            array(7, 3),
+                            array(8, 9),
+                            array(9, 2),
+                            array(10, 6)
+                        )
+                    )
+                );
+                //Affiche un graphique (Librairie flot)
+                (new graphique())->line($data_line, array(), 'plot');
+                ?>
+            </div>
+            <div class="col-xs-4">
+                <?php
+                $data = array(
+                    "Valeur 1" => 1,
+                    "Valeur 2" => 10,
+                    "Valeur 3" => 5,
+                    "Valeur 4" => 7,
+                );
+                //Affiche un graphique "en camenbert" (Librairie phpgraph)
+                (new graphique())->pie($data);
+                ?>
+            </div>
+            <div class="col-xs-4">
+                <?php
+                //Affiche un graphique "en anneau" (Librairie phpgraph)
+                (new graphique())->ring($data);
+                ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    private function html5() {
+        ?>
+        <p>
+            Cette classe gère l'en-tête HTML5 et son pied de page. <br />
+            Cette classe est utilisé automatiquement par le framework dans <em>application.class.php</em>
+        </p>
+        <?php
+    }
+
+    private function html_structures() {
+        ?>
+        <p>html_structures est une classe qui permet de créer des structures HTML en PHP,<br />
+            Ces structures respectent les normes W3C et répondent à quelques normes d'accessibilité <br />
+            Exemple :
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//affiche une liste de deux liens\n"
+                . "//le premier affiche le glyphicon 'home' et renvoie vers l'accueil\n"
+                . "//le second affiche le glyphicon 'search' et ouvre un onglet vers DuckDuckGo\n"
+                . "echo html_structures::ul(array(\n"
+                . "    html_structures::a_link('index.php', html_structures::glyphicon('home','') . ' Retour à l\'accueil'),\n"
+                . "    html_structures::a_link('https://duckduckgo.com/', html_structures::glyphicon('search','') . ' Rechercher sur le web','','(nouvel onglet)', true),\n"
+                . "));\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Résultat :</p>
+        <?php
+        debug::print_r(
+                html_structures::ul(
+                        array(
+                            html_structures::a_link('index.php', html_structures::glyphicon('home', '') . ' Retour à l\'accueil'),
+                            html_structures::a_link('https://duckduckgo.com/', html_structures::glyphicon('search', '') . ' Rechercher sur le web', '', '(nouvel onglet)', true),
+                        )
+                )
+        );
+    }
+
+    private function ip_access() {
+        ?>
+        <p>Cette classe sert à blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//exemple : on bloque tout les access depuis les ip de localhost et on redirige vers DuckDuckGO\n"
+                . "new ip_access(array(array('127.0.0.0', '127.255.255.255')), 'http://duckduckgo.com');\n"
+                . "?>", $this->_brush);
+    }
+
+    private function js() {
+        new docPHP_natives_js();
+    }
+
+    private function leaflet() {
+        ?>
+        <p>Cette classe permet d'afficher une carte exploitant OSM (OpenStreetMap)</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Initialise le Leaflet\n"
+                . "$" . "leaflet=new leaflet(array(\"x\" => 48.85341, \"y\" => 2.3488, \"zoom\" => 13));\n"
+                . "//Ajoute des marqueurs\n"
+                . "$" . "leaflet->add_marker(48.85341, 2.3488, 'Paris');\n"
+                . "$" . "leaflet->add_marker(51.50853,  -0.12574, 'Londres');\n"
+                . "$" . "leaflet->add_marker(50.85045, 4.34878, 'Bruxelles');\n"
+                . "//Ajoute un cercle autour d'un point\n"
+                . "$" . "leaflet->add_circle(50.85045, 4.34878, 100000, 'Belgique');\n"
+                . "//Ajoute un polygone sur la carte\n"
+                . "$" . "leaflet->add_polygon(array(\n"
+                . "    array('x'=>'50.9519','y'=>'1.8689'),\n"
+                . "    array('x'=>'48.582325','y'=>'7.750871'),\n"
+                . "    array('x'=>'43.774483','y'=>'7.497540'),\n"
+                . "    array('x'=>' 43,3885129','y'=>'-1,6596374'),\n"
+                . "    array('x'=>'48,3905283','y'=>'-4,4860088'),\n"
+                . "), 'Hexagone');\n"
+                . "//Affiche la carte\n"
+                . "$" . "leaflet->print_map();\n"
+                . "//Trace l'itinéraire sans activer la position de l'utilisateur\n"
+                . "$" . "leaflet->tracer_itineraire($" . "add_client_marker=false);\n"
+                . "//Trace l'itinéraire en ajoutant la position de l'utilisateur par géolocalisation (droits demandés par le navigateur)\n"
+                . "$" . "leaflet->tracer_itineraire(true);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function log_file() {
+        ?>
+        <p>Cette classe permet de créer un log sous forme de fichiers. <br />
+            Elle vous permet d'enregistrer les comportements anormaux de votre application <br />
+            Selon vos paramètres, le log est écrit dans <em>dwf/log/log_[votre_projet]_[date_format_us].txt</em> ou <em>dwf/log/log_[votre_projet].txt</em>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//instencie l'objet de log\n"
+                . "$" . "log=new log_file($" . "a_log_a_day=false);\n"
+                . "//inscrits un message d'informations dans le log\n"
+                . "$" . "log->info($" . "message);\n"
+                . "//inscrit un message d'alerte dans le log\n"
+                . "$" . "log->warning($" . "message);\n"
+                . "//inscrit un message grave dans le log\n"
+                . "$" . "log->severe($" . "message);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function log_mail() {
+        ?>
+        <p>Cette classe permet de vous envoyer automatiquement un mail en cas de comportement anormal de votre application</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//instencie l'objet de log\n"
+                . "$" . "log=new log_mail($" . "from, $" . "to);\n"
+                . "//envoie un mail d'informations\n"
+                . "$" . "log->info($" . "message);\n"
+                . "//envoie un mail d'alerte\n"
+                . "$" . "log->warning($" . "message);\n"
+                . "//envoie un mail grave\n"
+                . "$" . "log->severe($" . "message);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function lorem_ipsum() {
+        ?>
+        <p>Cette classe permet de générer un faux texte (Lorem ipsum) <br />
+            Le texte est généré depuis le vocabulaire du texte de Cicero : De finibus. 
+            <br />Sources : <br />
+            <a href="http://www.thelatinlibrary.com/cicero/fin1.shtml">Liber Primus</a> <br />
+            <a href="http://www.thelatinlibrary.com/cicero/fin.shtml">Oeuvre compléte</a></p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Lorem Ipsum de 100 mots ne commencant pas par \"Lorem ipsum ...\"\n"
+                . "echo lorem_ipsum::generate(100);\n\n"
+                . "//Lorem Ipsum de 100 mots commencant par \n"
+                . "//\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n"
+                . "echo lorem_ipsum::generate(100, true);\n\n"
+                . "//Lorem Ipsum de 100 mots commencant par \n"
+                . "//\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n"
+                . "//et utilisant le vocalulaire de toute l'oeuvre\n"
+                . "//(10035 mots au lieu des 2732 mots du Liber Primus)\n"
+                . "echo lorem_ipsum::generate(100, true, true);\n"
+                . " ?>", $this->_brush);
+        ?>
+        <p>Resultat (<em>lorem_ipsum::generate(100, true)</em>) : </p>
+        <p>
+            <?php
+            echo lorem_ipsum::generate(100, true);
+            ?>
+        </p>
+        <?php
+    }
+
+    private function mail() {
+        ?>
+        <p>Cette classe vous permet d'envoyer un mail depuis votre application en une ligne de code (utilise les paramètres SMTP de <em>config.class.php</em>)</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "from='your.mail@your-smtp.com';\n"
+                . "$" . "from_name='Your Name';\n"
+                . "$" . "to='target@mail.com';\n"
+                . "$" . "subject='The Subject';\n"
+                . "$" . "msg='Hello World';\n"
+                . "(new mail())->send($" . "from, $" . "from_name, $" . "to, $" . "subject, $" . "msg);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function math() {
+        ?>
+        <p>Cette classe contient quelques méthodes statiques mathématiques de base ainsi que des fonctions pour vérifier le type de variables</p>
+        <?php
+    }
+
+    private function messageries() {
+        ?>
+        <p>Cette classe gère la messagerie, elle permet d'envoyer, de réceptionner ou de supprimer un message entre les utilisateurs de l'application.</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Purge les messages de plus de 2 ans\n"
+                . "messagerie::purge_msg($" . "table_msg, $" . "years = 2);\n"
+                . "//créé une interface de messagerie pour les utilisateurs\n"
+                . "new messagerie($" . "table_user, $" . "tuple_user);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function modal() {
+        ?>
+        <p>"Modal" est une classe permettant d'afficher des modals (appelés aussi layout ou pop-in). Une "modal" s'ouvre lors d'un clic sur un lien lui correspondant</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "a_text='Cliquez ici pour ouvrir la modal';\n"
+                . "$" . "id='demo_modal';\n"
+                . "$" . "title='(pop-up)';\n"
+                . "$" . "titre='Démonstartion';\n"
+                . "$" . "data='<p class=\"text-center\">Bienvenue sur la démonstration de modals</p>';\n"
+                . "$" . "class='';\n"
+                . "(new modal())->link_open_modal($" . "a_text, $" . "id, $" . "title, $" . "titre, $" . "data, $" . "class);\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Résultat :</p>
+        <?php
+        (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstartion", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
+    }
+
+    private function openweather() {
+        ?>
+        <p>Cette classe permet d'afficher la météo d'une ville en temps réel (utilise openweather et nécessite une clé API)</p>
+        <?php
+        js::syntaxhighlighter("<?php new openweather($" . "api_key, $" . "city); ?>", $this->_brush);
+        ?>
+        <p>Le resultat est le suivant (exemple fictif) :</p>        
+        <div class = "openwether">
+            <p>
+                <span class = "dt">Météo de [$city] (<?php date("d/m H:i"); ?>)</span><br>
+                <span class = "weather"><span><img src = "../commun/openweather/01d.png" alt = ""><span>
+                        </span>Ciel clair</span></span><br><span class = "temp">Température : 19°C</span><br>
+                <span class = "pressure">Pression : 1016 Hpa</span><br>
+                <span class = "humidity">Humidité : 51%</span><br>
+                <span class = "wind">Vent : 10km/h, 120.0° (Sud-Est)</span><br>
+            </p>
+        </div>
+        <?php
+    }
+
+    private function pagination() {
+        ?>
+        <p>Cette classe gère la pagination dans une page</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "get = 'p';\n"
+                . "$" . "per_page = 100;\n"
+                . "$" . "count_all = mon_entite::get_count();\n"
+                . "$" . "pagination = pagination::get_limits($" . "get, $" . "per_page, $" . "count_all);\n"
+                . "foreach (mon_entite::get_table_array('1=1 limit ' . $" . "pagination[0] . ',' . $" . "pagination[1] . ';') as $" . "value) {\n"
+                . "    //affichage des informations\n"
+                . "}\n"
+                . "pagination::print_pagination($" . "get, $" . "pagination[3]);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function phpQRCode__printcsv__printer() {
+        ?>
+        <p>Ces classes servent à afficher ou exporter des données en QRCode CSV ou PDF, ils utilisent les fichiers :</p>
+        <ul>
+            <li>html/commun/qrcode.php</li>
+            <li>html/commun/csv.php</li>
+            <li>html/commun/printer.php</li>
+        </ul>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Affiche le qrcode contenant le texte ou l'URL passé en paramètre\n"
+                . "phpQRCode::print_img('texte ou url');\n\n"
+                . "//Affiche le qrcode contenant l'URL de la page courante, utilise un modal !\n"
+                . "//utile pour les utilisateurs qui désirent continuer une lecture sur leur smartphone\n"
+                . "phpQRCode::this_page_to_qr();\n\n"
+                . "//Affiche un lien qui ouvre un onglet vers un export CSV des données passées en paramètre\n"
+                . "new printcsv($" . "data);\n\n"
+                . "//Affiche un bouton qui ouvre un onglet vers un export PDF\n"
+                . "$" . "pdf=new printer($" . "lib); //$" . "lib = html2pdf ou dompdf\n"
+                . "$" . "pdf->add_content($" . "content); //contenu HTML\n"
+                . "$" . "pdf->print_buton(); //affiche le bouton(formulaire)\n"
+                . "?>", $this->_brush);
+    }
+
+    private function php_header() {
+        ?>
+        <p></p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "// Renseigne le type (mime) du document. Renseignez juste l'extention du fichier ( par exemple \"json\" ou \"csv\"),\n"
+                . "// la fonction sera retrouvée le mime corespondant.\n"
+                . "(new php_header())->content_type($" . "type, $" . "force_upload_file=false);\n"
+                . "// Redirige l'utilisateur (immédiatement ou avec un délai)\n"
+                . "(new php_header())->redir($" . "url, $" . "second=0);\n"
+                . "// Définit le statut code de la page, si le statut code est invalide, le code 200 est utilisé par défaut\n"
+                . "(new php_header())->status_code($" . "code);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function ratioblocks() {
+        ?>
+        <p>Cette classe permet d'afficher un bloc css avec les proportions passées en paramètres.</p>
+        <?php
+        js::syntaxhighlighter("<?php new ratioblocks($" . "id, $" . "width, $" . "ratio, $" . "contenu); ?>", $this->_brush);
+    }
+
+    private function reveal() {
+        ?>
+        <p>
+            Cette classe permet de créer un diaporama avec la librairie reveal <br />
+            Il n'est pas recommandé d'avoir plusieurs diaporamas sur la même page !
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "reveal = new reveal($" . "width = 600, $" . "height = 600, $" . "theme = 'white');\n"
+                . "$" . "reveal->start_reveal();\n"
+                . "?>\n"
+                . "<section><p style=\"font-size: 48px;\">Ceci est un Reveal</p></section>\n"
+                . "<section>\n"
+                . "    <section><p style=\"font-size: 48px;\">Reveal est une librairie JS qui permet de faire des présentations en HTML</p></section>\n"
+                . "    <section><p style=\"font-size: 48px;\">Le PowerPoint est mort, vive le Reveal !</p></section>\n"
+                . "</section>\n"
+                . "<section><p style=\"font-size: 48px;\">Site officiel de Reveal : <br /><a href=\"http://lab.hakim.se/reveal-js/\">http://lab.hakim.se/reveal-js/</a></p></section>\n"
+                . "<?php\n"
+                . "$" . "reveal->close_reveal();\n"
+                . "?>", $this->_brush);
+        $reveal = new reveal($width = 600, $height = 600, $theme = 'white');
+        $reveal->start_reveal();
+        ?>
+        <section><p style="font-size: 48px;">Ceci est un Reveal</p></section>
+        <section>
+            <section><p style="font-size: 48px;">Reveal est une librairie JS qui permet de faire des présentations en HTML</p></section>
+            <section><p style="font-size: 48px;">Le PowerPoint est mort, vive le Reveal !</p></section>
+        </section>
+        <section>
+            <p style="font-size: 48px;">Site officiel de Reveal : <br /><a href="http://lab.hakim.se/reveal-js/">http://lab.hakim.se/reveal-js/</a></p>
+        </section>
+        <?php
+        $reveal->close_reveal();
+    }
+
+    private function robotstxt() {
+        ?>
+        <p>Cette classe permet de générer le robot.txt d'un site </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . '//$data : lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)'
+                . "\nnew robotstxt($" . "data=\"\");\n"
+                . "?>", $this->_brush);
+    }
+
+    private function selectorDOM() {
+        ?>
+        <p>Source <a href="https://github.com/tj/php-selector">https://github.com/tj/php-selector</a> <br />
+            "selectorDOM" permet de manipuler le DOM d'un document en PHP.
+        </p>
+        <div class="alert alert-danger" role="alert"><p>Attention à l'utilisation de cette classe sur des pages tiers ! <br />
+                La copie même partielle d'un site tiers sans autorisation préalable (et en dehors d'une utilisation strictement privée) est un délit ! <br />
+                (Article L.713-2 du Code de la propriété intellectuelle)</p></div>        
+
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//les selecteurs ont la même syntaxe que Jquery\n"
+                . "selectorDOM::select_elements('header', file_get_contents('http://" . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . "?page=index'));\n"
+                . "?>", $this->_brush);
+        ?><p>Résultat :</p><?php
+        debug::print_r(selectorDOM::select_elements('header', file_get_contents('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '?page=index')));
+    }
+
+    private function services() {
+        ?>
+        <p>
+            La classe service est une classe qui permet de communiquer avec des services web d'un tiers ou que vous aurez vous même créé.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//envoie une requête GET à un service et en retourne la réponse \n"
+                . "service::HTTP_GET($" . "url);\n\n"
+                . "//envoie une requête POST à un service et en retourne la réponse\n"
+                . "service::HTTP_POST_REQUEST($" . "url, $" . "params, $" . "ssl = false);\n\n"
+                . "//envoie une requête POST à un service SANS en retourner la réponse\n"
+                . "service::HTTP_POST($" . "url, $" . "params, $" . "ssl); //$" . "ssl \n\n"
+                . "//cette fonction est à utiliser pour filtrer les IP autorisées à acceder à votre script/service\n"
+                . "service::security_check($" . "ip_allow=array('localhost', '127.0.0.1', '::1'));\n\n"
+                . "//fonctions de conversion xml/csv -> json\n"
+                . "$" . "json=xml_to_json($" . "xml_string);\n"
+                . "$" . "json=csv_to_json($" . "csv_string);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function session() {
+        ?>
+        <p>La classe session permet de gérer les variables de sessions liées au projet courant,<br />
+            cette classe créée vos variables en exploitant config::$_prefix</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "session::get_user(); \n"
+                . "//equivaut à $" . "_SESSION[config::$" . "_prefix . '_user'];\n\n"
+                . "session::set_val($" . "key, $" . "value);\n"
+                . "//plus simple que $" . "_SESSION[config::$" . "_prefix . '_' . $" . "key] = $" . "value;\n\n"
+                . "session::get_val($" . "key);\n"
+                . "//plus simple que $" . "_SESSION[config::$" . "_prefix . '_' . $" . "key];\n"
+                . "?>", $this->_brush);
+    }
+
+    private function shuffle_letters() {
+        ?>
+        <p>(cf js)</p>
+        <?php
+    }
+
+    private function sitemap() {
+        ?>
+        <p>Cette classe gère les "sitemap" du site <br />
+            Pour les routes qui dépendent d'une variable, renseignez dans la route (par exemple): <br />
+            "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login") <br />
+            Le sitemap est généré automatiquement par <em>application.class.php</em> si <em>config::$_sitemap=true</em>
+        </p>
+        <?php
+    }
+
+    private function sms_gateway() {
+        ?>
+        <p>Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer et recevoir des SMS depuis une application Web. <br />
+            Cette classe a été conçue pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.<br />
+            <a href="https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway">https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway</a><br />
+            Si vous utilisez un autre programme, veillez à adapter les paramètres en conséquence.</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "sms_gateway = new sms_gateway($" . "gateway_host, $" . "password = '', $" . "gateway_port = 9090, $" . "gateway_page_send = 'sendmsg', $" . "gateway_page_index = '');\n"
+                . "//Retourne si le service répond ou non (true/false)\n"
+                . "$" . "sms_gateway->is_runing();\n"
+                . "//Envoi de SMS par URL\n"
+                . "$" . "sms_gateway->send_by_url(array('phone' => '0654321987', 'text' => 'le sms'), $" . "methode = 'get', $" . "ssl = false);\n"
+                . "//Affiche les messages reçus\n"
+                . "$" . "sms_gateway->incoming();\n"
+                . "//Affiche les messages envoyés\n"
+                . "$" . "sms_gateway->outcoming();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function sql_backup() {
+        ?>
+        <p>
+            La classe sql_backup permet de créer des backup quotidiens de la base de données <br />
+            les backup peuvent être stockés sur un disque dur (différent du disque de l'application) ou sur un (s)ftp distant <br />
+            il est recommandé de placer la ligne de sql_backup dans le constructeur de <em>pages.class.php</em>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//créé un backup quotidien dans un dossier\n"
+                . "(new sql_backup())->backup_to_path($" . "path);\n\n"
+                . "//créé un backup quotidien sur un (s)ftp distant\n"
+                . "(new sql_backup())->backup_to_ftp($" . "dir, $" . "host, $" . "login, $" . "psw, $" . "ssl);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function ssl() {
+        ?>
+        <p>Cette classe permet de chiffrer et déchiffrer des messages <br />
+            actuellement, un bug est connu dans la librairie JS: <br />
+            si <em>(new ssl())->ssl_js()</em> est utilisé pour que l'utilisateur puisse chiffrer ces messages,<br />
+            la taille de la clé limite la taille maximale du message à chiffrer : <br />
+        </p>
+        <ul>
+            <li>1024 bits = 117 caractères</li>
+            <li>2048 bits = 245 caractères</li>
+            <li>4096 bits = 501 caractères</li>
+        </ul>
+        <p>en attendant que le bug JS soit corrigé, cette classe reste très pratique pour échanger des messages chiffrés entre deux services PHP par exemple.</p>           
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//créé les clés publiques et privés\n"
+                . "$" . "ssl = new ssl($" . "bits = 1024);\n"
+                . "//retourne la clé publique\n"
+                . "$" . "ssl->get_public_key();\n"
+                . "//Chiffre un message avec la clé publique\n"
+                . "$" . "ssl->encrypt($" . "data);\n"
+                . "//Charge les librairie JS et chiffre la saisie des utilisateurs dans les formulaires de la page\n"
+                . "$" . "ssl->ssl_js();\n"
+                . "//Déchiffre les variables $" . "_POST ( cf $" . "ssl->ssl_js() )\n"
+                . "$" . "ssl->decrypt_post();\n"
+                . "?>", $this->_brush);
+        ?><p>Exemple, message à chiffrer : "Hello World"</p><?php
+        $ssl = new ssl();
+        ?><p>Clé publique ssl (<em>$ssl->get_public_key()</em>) :</p><?php
+        debug::print_r($ssl->get_public_key());
+        ?><p>Message chiffré (<em>$msg=$ssl->encrypt("Hello World")</em>) :</p><?php
+        debug::print_r($msg = $ssl->encrypt("Hello World"));
+        ?><p>Message déchiffré (<em>$ssl->decrypt($msg)</em>) :</p><?php
+        debug::print_r($ssl->decrypt($msg));
+    }
+
+    private function stalactite() {
+        ?>
+        <p>(cf js)</p>
+        <?php
+    }
+
+    private function statistiques() {
+        ?>
+        <p>Cette classe permet de recueillir et d'afficher des statistiques liés à l'activité des utilisateurs</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "stat=new statistiques();\n"
+                . "//Cette fonction permet d'enregistrer l'activité des utilisateurs sur la page actuelle\n"
+                . "$" . "stat->add_stat();\n"
+                . "//Cette fonction permet d'afficher les statistiques ( il est conseillé de ne pas appeler cette fonction sur une page \"publique\" )\n"
+                . "$" . "stat->get_stat();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function sub_menu() {
+        ?>
+        <p>La classe sub_menu vous permet de créer un sous_menu en utilisant un système de "sous-routes"</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "key = 'key'; //clé principale utilisé dans les sous-routes\n"
+                . "$" . "route = array(\n"
+                . "    array('key' => 'sous_route_1', 'title' => 'title 1', 'text' => 'texte 1'),\n"
+                . "    array('key' => 'sous_route_2', 'title' => 'title 2', 'text' => 'texte 2'),\n"
+                . "    array('key' => 'sous_route_masque', 'title' => 'title de la route masqué'),\n"
+                . ");\n"
+                . "$" . "route_default = 'sous_route_1'; //route par defaut\n"
+                . "new sub_menu($" . "this, $" . "route, $" . "key, $" . "route_default);\n"
+                . "//$" . "this est l'assesseur de la classe courante,\n"
+                . "//cette classe devra par la suite disposer de méthodes publiques ayant pour nom les valeurs des routes\n"
+                . "//ici notre classe devra contenir les méthodes publiques : \n"
+                . "//sous_route_1(), sous_route_2() et sous_route_masque()\n"
+                . "?>", $this->_brush);
+    }
+
+    private function syntaxhighlighter() {
+        ?>
+        <p>(cf js)</p>
+        <?php
+    }
+
+    private function time() {
+        ?>
+        <p>La classe "time" permet d'effectuer des calculs sur les dates et des conversions de format de dates US <=> FR</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Démarre un chronomètre pour chronometrer la durée d'éxécution d'un bout de code,\n"
+                . "//il est possible d'utiliser plusieurs chronomètres en leurs spécifiant un identifiant \n"
+                . "//l'identifiant peut être un nombre ou une chaine de caractères\n"
+                . "time::chronometer_start($" . "id = 0);\n\n"
+                . "//Retourne le temps mesuré par un chronomètre depuis son lancement\n"
+                . "time::chronometer_get($" . "id = 0);\n\n"
+                . "//retourne si une année est bisextile ou non.\n"
+                . "time::anne_bisextile($" . "an);\n\n"
+                . "//Retourne le mois \"en lettres\" du numéro de mois passé en paramètre\n"
+                . "time::convert_mois($" . "num_mois);\n\n"
+                . "//Convertit une date au format FR (dd/mm/yyyy) au format US (yyyy-mm-dd) \n"
+                . "time::date_fr_to_us($" . "dateFR);\n\n"
+                . "//Convertit une date au format US (yyyy-mm-dd) au format FR (dd/mm/yyyy)\n"
+                . "time::date_us_to_fr($" . "dateUS);\n\n"
+                . "//Cette fonction permet d'additioner ou de soustraire un nombre de mois à une date initiale\n"
+                . "time::date_plus_ou_moins_mois($" . "date, $" . "mois);\n\n"
+                . "//Affiche un élément de formulaire pour renseigner une date (jour/mois/année)\n"
+                . "//(il est plus commun d'utiliser un datepicker (cf form)\n"
+                . "time::form_date($" . "label, $" . "post, $" . "value = null);\n\n"
+                . "//Retourne la date saisie dans l'élément de formulaire time::form_date()\n"
+                . "time::get_form_date($" . "post);\n\n"
+                . "//Retourne un tableau d'information sur la date passée en paramètre\n"
+                . "time::get_info_from_date($" . "date_us);\n\n"
+                . "//Retourne le nombre de jours dans un mois \n"
+                . "//(l'année doit être renseignée pour gérer les années bisextiles)\n"
+                . "time::get_nb_jour($" . "num_mois, $" . "an);\n\n"
+                . "//Retourne l'âge actuel en fonction d'une date de naissance\n"
+                . "time::get_yers_old($" . "d, $" . "m, $" . "y);\n\n"
+                . "//Parse un temps en secondes en jours/heures/minutes/secondes \n"
+                . "//pour les temps inférieurs à 1 seconde, le parse peut se faire en millisecondes ou microsecondes\n"
+                . "time::parse_time($" . "secondes);\n\n"
+                . "//astuce pour afficher un chronomètre bien présenté\n"
+                . "echo time::parse_time(time::chronometer_get($" . "id));\n"
+                . "?>", $this->_brush);
+    }
+
+    private function trad() {
+        ?>
+        <p>Cette classe permet de créer des traductions à partir de clés, <br />
+            l'administration de clé=>traductions se fait par une interface à placer dans la partie administration de l'application. <br />
+            le langage de l'utilisateur est défini dans session::get_lang() (peut être modifié par session::set_lang()) <br />
+            Les traductions peuvent être gérées en base de données (par défaut) ou par des fichier JSON (cf paramètres du constructeur)
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//affiche l'interface d'administration\n"
+                . "(new trad())->admin();\n\n"
+                . "//affiche les traductions liées au clés 'CLE_1' et 'CLE_2'\n"
+                . "$" . "trad=new trad();\n"
+                . "echo $" . "trad->t('CLE_1');\n"
+                . "echo $" . "trad->t('CLE_2');\n"
+                . "?>", $this->_brush);
+    }
+
+    private function video() {
+        ?>
+        <p>Cette classe permet d'afficher une vidéo avec un player accessible</p>
+        <?php
+        js::syntaxhighlighter("<?php new video('./files/videos/nuagesMusicman921.webm',$" . "id='video-js'); ?>", $this->_brush);
+        new video('./files/videos/nuagesMusicman921.webm');
+        ?><p>Credit : <br />
+            Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />
+            Musique  : Dread (v2) - musicman921 <a href="https://musicman921.newgrounds.com/">https://musicman921.newgrounds.com/</a>
+        </p><?php
+    }
+
+    private function vticker() {
+        ?>
+        <p>(cf js)</p>
+        <?php
+    }
+
+    private function w3c_validate() {
+        ?>
+        <p>Inscrit les erreurs HTML du site dans le log. <br />
+            requiert que le sitemap soit actif, et que le site soit en ligne </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//vérifie si les pages du sites sont conformes W3C\n"
+                . "new w3c_validate();\n"
+                . "//Retourne le statut de la page passée en paramètre\n"
+                . "//(si la page est conforme W3C)\n"
+                . "w3c_validate::validate_from_url($" . "url);\n"
+                . "?>", $this->_brush);
+    }
+
+}

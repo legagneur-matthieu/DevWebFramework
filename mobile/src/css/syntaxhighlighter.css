@@ -1,0 +1,6 @@
+.syntaxhighlighter .container::before{
+    content: initial;
+}
+.syntaxhighlighter{
+    overflow: visible !important; 
+}

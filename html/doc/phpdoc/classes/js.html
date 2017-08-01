@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8"/>
+        <title>dwf-doc</title>
+        <meta name="author" content=""/>
+        <meta name="description" content=""/>
+        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/prism.css" rel="stylesheet" media="all"/>
+        <link href="../css/template.css" rel="stylesheet" media="all"/>
+        <!--[if lt IE 9]>
+        <script src="../js/html5.js"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.smooth-scroll.js"></script>
+        <script src="../js/prism.min.js"></script>
+        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+            function loadExternalCodeSnippets() {
+                Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                    var src = pre.getAttribute('data-src');
+                    var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                    var language = 'php';
+                    var code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', src, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status < 400 && xhr.responseText) {
+                                code.textContent = xhr.responseText;
+                                Prism.highlightElement(code);
+                            } else if (xhr.status >= 400) {
+                                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            } else {
+                                code.textContent = '✖ Error: File does not exist or is empty';
+                            }
+                        }
+                    };
+                    xhr.send(null);
+                });
+            }
+            $(document).ready(function () {
+                loadExternalCodeSnippets();
+            });
+            $('#source-view').on('shown', function () {
+                loadExternalCodeSnippets();
+            })
+        </script>
+        <link rel="shortcut icon" href="../images/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-ellipsis-vertical"></i>
+                    </a>
+                    <a class="brand" href="../index.html">dwf-doc</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="charts-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../graphs/class.html">
+                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="reports-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../reports/errors.html">
+                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/markers.html">
+                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/deprecated.html">
+                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="go_to_top">-->
+            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+            <!--</div>-->
+        </div>
+        <div id="___" class="container-fluid">
+            <section class="row-fluid">
+                <div class="span2 sidebar">
+                    <div class="accordion" style="margin-bottom: 0">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-978715564"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+                            </div>
+                            <div id="namespace-978715564" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <ul>
+                                        <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
+                                        <li class="class"><a href="../classes/application.html">application</a></li>
+                                        <li class="class"><a href="../classes/audio.html">audio</a></li>
+                                        <li class="class"><a href="../classes/auth.html">auth</a></li>
+                                        <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
+                                        <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
+                                        <li class="class"><a href="../classes/bdd.html">bdd</a></li>
+                                        <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
+                                        <li class="class"><a href="../classes/cards.html">cards</a></li>
+                                        <li class="class"><a href="../classes/citations.html">citations</a></li>
+                                        <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
+                                        <li class="class"><a href="../classes/cli.html">cli</a></li>
+                                        <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
+                                        <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
+                                        <li class="class"><a href="../classes/datatable.html">datatable</a></li>
+                                        <li class="class"><a href="../classes/ddg.html">ddg</a></li>
+                                        <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
+                                        <li class="class"><a href="../classes/debug.html">debug</a></li>
+                                        <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
+                                        <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
+                                        <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
+                                        <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
+                                        <li class="class"><a href="../classes/form.html">form</a></li>
+                                        <li class="class"><a href="../classes/freetile.html">freetile</a></li>
+                                        <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
+                                        <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
+                                        <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
+                                        <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
+                                        <li class="class"><a href="../classes/graphique.html">graphique</a></li>
+                                        <li class="class"><a href="../classes/html5.html">html5</a></li>
+                                        <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
+                                        <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
+                                        <li class="class"><a href="../classes/js.html">js</a></li>
+                                        <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
+                                        <li class="class"><a href="../classes/log_file.html">log_file</a></li>
+                                        <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
+                                        <li class="class"><a href="../classes/mail.html">mail</a></li>
+                                        <li class="class"><a href="../classes/math.html">math</a></li>
+                                        <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
+                                        <li class="class"><a href="../classes/modal.html">modal</a></li>
+                                        <li class="class"><a href="../classes/openweather.html">openweather</a></li>
+                                        <li class="class"><a href="../classes/pagination.html">pagination</a></li>
+                                        <li class="class"><a href="../classes/php_header.html">php_header</a></li>
+                                        <li class="class"><a href="../classes/phpmailerException.html">phpmailerException</a></li>
+                                        <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
+                                        <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
+                                        <li class="class"><a href="../classes/printer.html">printer</a></li>
+                                        <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
+                                        <li class="class"><a href="../classes/reveal.html">reveal</a></li>
+                                        <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
+                                        <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
+                                        <li class="class"><a href="../classes/service.html">service</a></li>
+                                        <li class="class"><a href="../classes/session.html">session</a></li>
+                                        <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
+                                        <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
+                                        <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
+                                        <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
+                                        <li class="class"><a href="../classes/ssl.html">ssl</a></li>
+                                        <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
+                                        <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
+                                        <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
+                                        <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
+                                        <li class="class"><a href="../classes/time.html">time</a></li>
+                                        <li class="class"><a href="../classes/trad.html">trad</a></li>
+                                        <li class="class"><a href="../classes/video.html">video</a></li>
+                                        <li class="class"><a href="../classes/vticker.html">vticker</a></li>
+                                        <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row-fluid">
+                <div class="span10 offset2">
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <nav>
+                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                            </nav>
+                            <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                            <h1><small>\</small>js</h1>
+                            <p><em>Cette classe gère des fonctions basiques de JavaScript</em></p>
+                            <section id="summary">
+                                <h2>Summary</h2>
+                                <section class="row-fluid heading">
+                                    <section class="span4">
+                                        <a href="#methods">Methods</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#properties">Properties</a>
+                                    </section>
+                                    <section class="span4">
+                                        <a href="#constants">Constants</a>
+                                    </section>
+                                </section>
+                                <section class="row-fluid public">
+                                    <section class="span4">
+                                        <a href="../classes/js.html#method_before_title" class="">before_title()</a><br />
+                                        <a href="../classes/js.html#method_alert" class="">alert()</a><br />
+                                        <a href="../classes/js.html#method_alertify_alert" class="">alertify_alert()</a><br />
+                                        <a href="../classes/js.html#method_alertify_alert_redir" class="">alertify_alert_redir()</a><br />
+                                        <a href="../classes/js.html#method_log_std" class="">log_std()</a><br />
+                                        <a href="../classes/js.html#method_log_success" class="">log_success()</a><br />
+                                        <a href="../classes/js.html#method_log_error" class="">log_error()</a><br />
+                                        <a href="../classes/js.html#method_redir" class="">redir()</a><br />
+                                        <a href="../classes/js.html#method_timer" class="">timer()</a><br />
+                                        <a href="../classes/js.html#method_ckeditor" class="">ckeditor()</a><br />
+                                        <a href="../classes/js.html#method_vTicker" class="">vTicker()</a><br />
+                                        <a href="../classes/js.html#method_datatable" class="">datatable()</a><br />
+                                        <a href="../classes/js.html#method_syntaxhighlighter" class="">syntaxhighlighter()</a><br />
+                                        <a href="../classes/js.html#method_freetile" class="">freetile()</a><br />
+                                        <a href="../classes/js.html#method_stalactite" class="">stalactite()</a><br />
+                                        <a href="../classes/js.html#method_shuffle_letters" class="">shuffle_letters()</a><br />
+                                        <a href="../classes/js.html#method_dialog" class="">dialog()</a><br />
+                                        <a href="../classes/js.html#method_accordion" class="">accordion()</a><br />
+                                        <a href="../classes/js.html#method_menu" class="">menu()</a><br />
+                                        <a href="../classes/js.html#method_tooltip" class="">tooltip()</a><br />
+                                        <a href="../classes/js.html#method_slider" class="">slider()</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <a href="../classes/js.html#property__real_title" class="">$_real_title</a><br />
+                                    </section>
+                                    <section class="span4">
+                                        <em>No constants found</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid protected">
+                                    <section class="span4">
+                                        <em>No protected methods found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>No protected properties found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                                <section class="row-fluid private">
+                                    <section class="span4">
+                                        <em>No private methods found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>No private properties found</em>
+                                    </section>
+                                    <section class="span4">
+                                        <em>N/A</em>
+                                    </section>
+                                </section>
+                            </section>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <dl>
+                                <dt>File</dt>
+                                <dd><a href="../files/class.js.class.html"><div class="path-wrapper">class\js.class.php</div></a></dd>
+                                <dt>Package</dt>
+                                <dd><div class="namespace-wrapper">Default</div></dd>
+                                <dt>Class hierarchy</dt>
+                                <dd class="hierarchy">
+                                    <div class="namespace-wrapper">\js</div>
+                                </dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>
+                                        author
+                                    </th>
+                                    <td>
+                                        <p>LEGAGNEUR Matthieu <a href="mailto:legagneur.matthieu@gmail.com">legagneur.matthieu@gmail.com</a></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="properties" name="properties"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <h2>Properties</h2>
+                        </div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="property__real_title" name="property__real_title" class="anchor"></a>
+                            <article class="property">
+                                <h3 class="public ">$_real_title</h3>
+                                <pre class="signature">$_real_title : string</pre>
+                                <p><em>Permet d&#039;afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)</em></p>
+                                <h4>Type</h4>
+                                string
+                                &mdash; Permet d&#039;afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <a id="methods" name="methods"></a>
+                    <div class="row-fluid">
+                        <div class="span8 content class"><h2>Methods</h2></div>
+                        <aside class="span4 detailsbar"></aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_before_title" name="method_before_title" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">before_title()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">before_title(string  <span class="argument">$text</span>) </pre>
+                                <p><em>Ajoute un préfixe au titre de la page en cours</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$text </td>
+                                        <td><p>Préfixe au titre</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_alert" name="method_alert" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">alert()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">alert(string  <span class="argument">$msg</span>) </pre>
+                                <p><em>Affiche un message à l&#039;écran de l&#039;utilisateur</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Message à afficher</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_alertify_alert" name="method_alertify_alert" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">alertify_alert()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">alertify_alert(string  <span class="argument">$msg</span>) </pre>
+                                <p><em>Affiche un message à l&#039;écran de l&#039;utilisateur</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Message à afficher</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_alertify_alert_redir" name="method_alertify_alert_redir" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">alertify_alert_redir()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">alertify_alert_redir(string  <span class="argument">$msg</span>, string  <span class="argument">$url</span>) </pre>
+                                <p><em>Affiche un message à l&#039;écran de l&#039;utilisateur avant redirection</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Message à afficher</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$url </td>
+                                        <td><p>URL de redirection</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_log_std" name="method_log_std" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">log_std()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">log_std(string  <span class="argument">$msg</span>) </pre>
+                                <p><em>Affiche un message de log à l&#039;écran de l&#039;utilisateur</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Log à afficher</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_log_success" name="method_log_success" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">log_success()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">log_success(string  <span class="argument">$msg</span>) </pre>
+                                <p><em>Affiche un message de log à l&#039;écran de l&#039;utilisateur</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Log à afficher</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_log_error" name="method_log_error" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">log_error()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">log_error(string  <span class="argument">$msg</span>) </pre>
+                                <p><em>Affiche un message de log à l&#039;écran de l&#039;utilisateur</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$msg </td>
+                                        <td><p>Log à afficher</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_redir" name="method_redir" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">redir()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">redir(string  <span class="argument">$url</span>) </pre>
+                                <p><em>Redirige l&#039;utilisateur vers l&#039;url renseigné en paramètre (peut être un chemin relatif)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$url </td>
+                                        <td><p>Url de redirection</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_timer" name="method_timer" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">timer()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">timer(integer  <span class="argument">$second</span>, string  <span class="argument">$p_id</span>, string  <span class="argument">$url</span>) </pre>
+                                <p><em>Affiche un timer avant redirection</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>integer</td>
+                                        <td>$second </td>
+                                        <td><p>Nombre de secondes avant redirection</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$p_id </td>
+                                        <td><p>Id de la balise P ou doit être affiché le timer</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$url </td>
+                                        <td><p>URL de redirection</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_ckeditor" name="method_ckeditor" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">ckeditor()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">ckeditor(array  <span class="argument">$id</span>, array  <span class="argument">$params = array()</span>) : \ckeditor</pre>
+                                <p><em>Applique un éditeur CKEditor (WYSIWYG) à un textarea</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$id </td>
+                                        <td><p>Id du textarea</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$params </td>
+                                        <td><p>Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                <a href="../classes/ckeditor.html">\ckeditor</a>
+                                &mdash; <p>Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_vTicker" name="method_vTicker" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">vTicker()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">vTicker(array  <span class="argument">$data</span>, string  <span class="argument">$id = &quot;vticker&quot;</span>, array  <span class="argument">$params = array()</span>) : \vticker</pre>
+                                <p><em>Créé un vTicker (suite de phrases qui défilent)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>Liste des phrases à afficher</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS du vTicker</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$params </td>
+                                        <td><p>Surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc ...)</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                <a href="../classes/vticker.html">\vticker</a>
+                                &mdash; <p>Créé un vTicker (suite de phrases qui défilent)</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_datatable" name="method_datatable" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">datatable()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">datatable(string  <span class="argument">$id = &quot;datatable&quot;</span>, string  <span class="argument">$params = array()</span>) : \datatable</pre>
+                                <p><em>Transforme un tableau HTML en Datatable</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS du datatable</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$params </td>
+                                        <td><p>Surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la doc)</p></td>
+                                    </tr>
+                                </table>
+                                <h4>Returns</h4>
+                                <a href="../classes/datatable.html">\datatable</a>
+                                &mdash; <p>Applique les fonctionnalitées de la librairie datatable à un tableau HTML</p>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_syntaxhighlighter" name="method_syntaxhighlighter" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">syntaxhighlighter()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">syntaxhighlighter(\strig  <span class="argument">$code</span>, string  <span class="argument">$brush = &quot;js&quot;</span>, string  <span class="argument">$theme = &quot;Default&quot;</span>) </pre>
+                                <p><em>Afficher du code formaté et stylisé par la librairie SyntaxHightlighter http://alexgorbatchev.com/SyntaxHighlighter/</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>\strig</td>
+                                        <td>$code </td>
+                                        <td><p>Le code à afficher</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$brush </td>
+                                        <td><p>Le brush est lié au langage à utiliser (js par deafaut)<br />
+                                                Astuce script html/php : &quot;php; html-script: true&quot; <br />
+                                                <a href="http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/">http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/</a></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$theme </td>
+                                        <td><p>Le theme de SyntaxHightlighter a utiliser <a href="http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/">http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/</a></p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_freetile" name="method_freetile" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">freetile()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">freetile(string  <span class="argument">$id</span>) </pre>
+                                <p><em>Organise dynamiquement les sous éléments d&#039;un conteneur avec la librairie jquery &quot;freetile&quot;</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>id CSS du conteneur freetile</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_stalactite" name="method_stalactite" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">stalactite()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">stalactite(string  <span class="argument">$id</span>) </pre>
+                                <p><em>Organise dynamiquement les sous éléments d&#039;un conteneur avec la librairie jquery &quot;stalactite&quot;</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>id CSS du conteneur stalactite</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_shuffle_letters" name="method_shuffle_letters" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">shuffle_letters()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">shuffle_letters(string  <span class="argument">$id</span>) </pre>
+                                <p><em>Applique l&#039;effet &quot;shuffleLetters&quot; à un élément au chargement de la page</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>id CSS de l'élément</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_dialog" name="method_dialog" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">dialog()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">dialog(string  <span class="argument">$name</span>, string  <span class="argument">$title</span>, string  <span class="argument">$html</span>) </pre>
+                                <p><em>REQUIERS JQUERY-UI
+                                        Affiche la boite de dialogue de jquery-ui</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$name </td>
+                                        <td><p>Som de la boite de dialogue</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$title </td>
+                                        <td><p>Titre de la boite de dialogue</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$html </td>
+                                        <td><p>Contenu de le boite de dialogue ( au format HTML)</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_accordion" name="method_accordion" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">accordion()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">accordion(string  <span class="argument">$id = &quot;accordion&quot;</span>, \boolan  <span class="argument">$collapsible = true</span>, \boolan  <span class="argument">$heightStyle = false</span>) </pre>
+                                <p><em>Applique un effet accordéon à une structure : div#$id>(h3+div)*X</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS de l'accordéon</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>\boolan</td>
+                                        <td>$collapsible </td>
+                                        <td><p>Si $collapible est passé à false , un volet de l'accordéon sera toujours ouvert, à true , tout les volets peuvent être fermés</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>\boolan</td>
+                                        <td>$heightStyle </td>
+                                        <td><p>La taille d'un volet doit-il être relatif à son contenu ? (true / false, false par defaut )</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_menu" name="method_menu" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">menu()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">menu(string  <span class="argument">$id = &quot;menu&quot;</span>) </pre>
+                                <p><em>Transforme une liste ul>li en menu</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS de la liste</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_tooltip" name="method_tooltip" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">tooltip()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">tooltip(string  <span class="argument">$id</span>) </pre>
+                                <p><em>Applique un toolpip à un élément ( transforme son &quot;title&quot; en infobulle rapide)</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id CSS de l'élément</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 content class">
+                            <a id="method_slider" name="method_slider" class="anchor"></a>
+                            <article class="method">
+                                <h3 class="public ">slider()</h3>
+                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                                <pre class="signature" style="margin-right: 54px;">slider(string  <span class="argument">$id</span>, array  <span class="argument">$data</span>) </pre>
+                                <p><em>Affiche le carousel/slide de bootstrap</em></p>
+                                <h4>Parameters</h4>
+                                <table class="table table-condensed table-hover">
+                                    <tr>
+                                        <td>string</td>
+                                        <td>$id </td>
+                                        <td><p>Id css du carousel/slide</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>array</td>
+                                        <td>$data </td>
+                                        <td><p>Tableau contenant les images, les alternatives et les caption,
+                                                format du tableau : array(array(&quot;img&quot;=>&quot;chamain/img.png&quot;,&quot;alt&quot;=>&quot;facultative&quot;,&quot;caption&quot;=>&quot;HTML facultative&quot;));</p></td>
+                                    </tr>
+                                </table>
+                            </article>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                            <dl>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+            <div id="source-view" class="modal hide fade" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="source-view-label">js.class.php</h3>
+                </div>
+                <div class="modal-body">
+                    <object type="text/html" data="../files/class.js.class.php.txt" style="width: 100%; height: 400px;"></object>
+                </div>
+            </div>
+            <footer class="row-fluid">
+                <section class="span10 offset2">
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <section class="row-fluid footer-sections">
+                                <section class="span4">
+                                    <h1><i class="icon-code"></i></h1>
+                                    <div>
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-bar-chart"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-pushpin"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../reports/errors.html">Errors</a></li>
+                                            <li><a href="../reports/markers.html">Markers</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <hr />
+                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                            on May 26th, 2017 at 11:04.
+                        </section>
+                    </section>
+                </section>
+            </footer>
+        </div>
+    </body>
+</html>

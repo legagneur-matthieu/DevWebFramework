@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8"/>
+        <title>dwf-doc</title>
+        <meta name="author" content=""/>
+        <meta name="description" content=""/>
+        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/prism.css" rel="stylesheet" media="all"/>
+        <link href="../css/template.css" rel="stylesheet" media="all"/>
+        <!--[if lt IE 9]>
+        <script src="../js/html5.js"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.smooth-scroll.js"></script>
+        <script src="../js/prism.min.js"></script>
+        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+            function loadExternalCodeSnippets() {
+                Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                    var src = pre.getAttribute('data-src');
+                    var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                    var language = 'php';
+                    var code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', src, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status < 400 && xhr.responseText) {
+                                code.textContent = xhr.responseText;
+                                Prism.highlightElement(code);
+                            } else if (xhr.status >= 400) {
+                                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            } else {
+                                code.textContent = '✖ Error: File does not exist or is empty';
+                            }
+                        }
+                    };
+                    xhr.send(null);
+                });
+            }
+            $(document).ready(function () {
+                loadExternalCodeSnippets();
+            });
+            $('#source-view').on('shown', function () {
+                loadExternalCodeSnippets();
+            })
+        </script>
+        <link rel="shortcut icon" href="../images/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-ellipsis-vertical"></i>
+                    </a>
+                    <a class="brand" href="../index.html">dwf-doc</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="charts-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../graphs/class.html">
+                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="reports-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../reports/errors.html">
+                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/markers.html">
+                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../reports/deprecated.html">
+                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="go_to_top">-->
+            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+            <!--</div>-->
+        </div>
+        <div id="___" class="container-fluid">
+            <section class="row-fluid">
+                <div class="span2 sidebar">
+                    <div class="accordion" style="margin-bottom: 0">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1766592467"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+                            </div>
+                            <div id="namespace-1766592467" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <ul>
+                                        <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
+                                        <li class="class"><a href="../classes/application.html">application</a></li>
+                                        <li class="class"><a href="../classes/audio.html">audio</a></li>
+                                        <li class="class"><a href="../classes/auth.html">auth</a></li>
+                                        <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
+                                        <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
+                                        <li class="class"><a href="../classes/bdd.html">bdd</a></li>
+                                        <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
+                                        <li class="class"><a href="../classes/cards.html">cards</a></li>
+                                        <li class="class"><a href="../classes/citations.html">citations</a></li>
+                                        <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
+                                        <li class="class"><a href="../classes/cli.html">cli</a></li>
+                                        <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
+                                        <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
+                                        <li class="class"><a href="../classes/datatable.html">datatable</a></li>
+                                        <li class="class"><a href="../classes/ddg.html">ddg</a></li>
+                                        <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
+                                        <li class="class"><a href="../classes/debug.html">debug</a></li>
+                                        <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
+                                        <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
+                                        <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
+                                        <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
+                                        <li class="class"><a href="../classes/form.html">form</a></li>
+                                        <li class="class"><a href="../classes/freetile.html">freetile</a></li>
+                                        <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
+                                        <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
+                                        <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
+                                        <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
+                                        <li class="class"><a href="../classes/graphique.html">graphique</a></li>
+                                        <li class="class"><a href="../classes/html5.html">html5</a></li>
+                                        <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
+                                        <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
+                                        <li class="class"><a href="../classes/js.html">js</a></li>
+                                        <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
+                                        <li class="class"><a href="../classes/log_file.html">log_file</a></li>
+                                        <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
+                                        <li class="class"><a href="../classes/mail.html">mail</a></li>
+                                        <li class="class"><a href="../classes/math.html">math</a></li>
+                                        <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
+                                        <li class="class"><a href="../classes/modal.html">modal</a></li>
+                                        <li class="class"><a href="../classes/openweather.html">openweather</a></li>
+                                        <li class="class"><a href="../classes/pagination.html">pagination</a></li>
+                                        <li class="class"><a href="../classes/php_header.html">php_header</a></li>
+                                        <li class="class"><a href="../classes/phpmailerException.html">phpmailerException</a></li>
+                                        <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
+                                        <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
+                                        <li class="class"><a href="../classes/printer.html">printer</a></li>
+                                        <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
+                                        <li class="class"><a href="../classes/reveal.html">reveal</a></li>
+                                        <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
+                                        <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
+                                        <li class="class"><a href="../classes/service.html">service</a></li>
+                                        <li class="class"><a href="../classes/session.html">session</a></li>
+                                        <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
+                                        <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
+                                        <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
+                                        <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
+                                        <li class="class"><a href="../classes/ssl.html">ssl</a></li>
+                                        <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
+                                        <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
+                                        <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
+                                        <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
+                                        <li class="class"><a href="../classes/time.html">time</a></li>
+                                        <li class="class"><a href="../classes/trad.html">trad</a></li>
+                                        <li class="class"><a href="../classes/video.html">video</a></li>
+                                        <li class="class"><a href="../classes/vticker.html">vticker</a></li>
+                                        <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row-fluid">
+                <div class="span10 offset2">
+                    <div class="row-fluid">
+                        <div class="span8 content file">
+                            <nav>
+                            </nav>
+                            <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                            <h1><small></small>TreeBuilder.php</h1>
+                            <p><em></em></p>
+                            <h2>Classes</h2>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td><a href="../classes/HTML5_TreeBuilder.html">HTML5_TreeBuilder</a></td>
+                                    <td><em></em></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <aside class="span4 detailsbar">
+                            <dl>
+                                <dt>Package</dt>
+                                <dd><div class="namespace-wrapper">\Default</div></dd>
+                            </dl>
+                            <h2>Tags</h2>
+                            <table class="table table-condensed">
+                                <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+            <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="source-view-label"></h3>
+                </div>
+                <div class="modal-body">
+                    <pre data-src="../files/class\dompdf\lib\html5lib\TreeBuilder.php.txt" class="language-php line-numbers"></pre>
+                </div>
+            </div>
+            <footer class="row-fluid">
+                <section class="span10 offset2">
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <section class="row-fluid footer-sections">
+                                <section class="span4">
+                                    <h1><i class="icon-code"></i></h1>
+                                    <div>
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-bar-chart"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                                <section class="span4">
+                                    <h1><i class="icon-pushpin"></i></h1>
+                                    <div>
+                                        <ul>
+                                            <li><a href="../reports/errors.html">Errors</a></li>
+                                            <li><a href="../reports/markers.html">Markers</a></li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="row-fluid">
+                        <section class="span10 offset1">
+                            <hr />
+                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                            on May 26th, 2017 at 11:07.
+                        </section>
+                    </section>
+                </section>
+            </footer>
+        </div>
+    </body>
+</html>

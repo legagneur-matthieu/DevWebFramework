@@ -125,7 +125,7 @@ class entity_generator {
         $class .= "\n/** Retourne le contenu de la table sout forme d'un objet json (utile pour les services) \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); \n* @return string Objet json */\n public static function get_json_object($" . "where = \"\") { return json_encode(" . $this->_table . "::get_table_ordored_array($" . "where)); }";
 
         //génére la fonction statique ( static ) delete_by_id
-        $class .= "\n/**Supprime l'entité*/public static function delete_by_id($" . "id) { application::$" . "_bdd->query(\"delete from " . $this->_table . " where id='\" . application::$" . "_bdd->protect_var($" . "id) . \"';\"); }";
+        $class .= "\n/**Supprime l'entité*/public static function delete_by_id($" . "id) { application::$" . "_bdd->query(\"delete from " . $this->_table . " where id='\" . application::$" . "_bdd->protect_var((int)$" . "id) . \"';\"); }";
 
         //génére la fonction de suppresion
         $class .= "\n/**Supprime l'entité a la fin du script*/public function delete() { $" . "this->_this_was_delete=true;}";

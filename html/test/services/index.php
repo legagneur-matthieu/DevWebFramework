@@ -4,11 +4,11 @@ class index_service { /** * Cette classe est la première appelée, elle ouvre l
 
     public function __construct() {
         try {
+            $this->classloader();
+            include "../class/config.class.php";
             if (isset($_REQUEST["service"])) {
                 date_default_timezone_set("Europe/Paris");
-                $this->classloader();
                 $this->entityloader();
-                include "../class/config.class.php";
                 application::$_bdd = new bdd();
                 session::start(false);
                 $this->serviceloader();
@@ -23,7 +23,7 @@ class index_service { /** * Cette classe est la première appelée, elle ouvre l
                 dwf_exception::throw_exception(621);
             }
         } catch (Exception $e) {
-            dwf_exception::print_exception($e);
+            dwf_exception::print_exception($e, "", true);
         }
     }
 

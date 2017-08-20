@@ -3,6 +3,7 @@ include_once 'graphique/phpGraph.class.php';
 
 /**
  * Cette classe permet de créér des graphiques.
+ * ATTENTION : Cette classe sera prochinement refaite intégralement !
  * 
  * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
  */
@@ -58,6 +59,12 @@ class graphique extends phpGraph {
     public function __construct($width = 300, $height = 300, $options = array()) {
 
         parent::__construct($width, $height, $options);
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function(){
+            $("svg + p.graph-tooltip, svg + g.graph-active, svg + circle.graph-pie").remove();
+            });</script>
+        <?php
     }
 
     /**

@@ -472,7 +472,7 @@ class phpGraph {
             $i++;
             //End tooltips
             if ($tooltips == true) {
-                $c .= "\n\t\t\t" . '<title class="graph-tooltip">' . (is_array($tooltipLegend) ? $tooltipLegend[$i] : $tooltipLegend) . $value . '</title>' . "\n\t\t" . '</g>';
+                $c .= "\n\t\t\t" . '<p class="graph-tooltip">' . (is_array($tooltipLegend) ? $tooltipLegend[$i] : $tooltipLegend) . $value . '</p>' . "\n\t\t" . '</g>';
             }
         }
         if ($opacity > 0.8 && $filled === true) {
@@ -637,7 +637,7 @@ class phpGraph {
             $i++;
             //End of tooltips
             if ($tooltips == true) {
-                $c .= '<title class="graph-tooltip">' . (is_array($tooltipLegend) ? $tooltipLegend[$i] : $tooltipLegend) . $value . '</title>' . "\n\t\t" . '</g>';
+                $c .= '<p class="graph-tooltip">' . (is_array($tooltipLegend) ? $tooltipLegend[$i] : $tooltipLegend) . $value . '</p>' . "\n\t\t" . '</g>';
             }
         }
         //Filling
@@ -820,7 +820,7 @@ class phpGraph {
                 }
                 //End tooltips
                 if ($tooltips == true) {
-                    $return .= '<title class="graph-tooltip">' . $deg[$i]['tooltipLegend'] . $deg[$i]['label'] . ' : ' . $deg[$i]['val'] . '</title>';
+                    $return .= '<p class="graph-tooltip">' . $deg[$i]['tooltipLegend'] . $deg[$i]['label'] . ' : ' . $deg[$i]['val'] . '</p>';
                     $return .= "\n\t\t" . '</g>';
                 }
                 //$i = $deg[$i]['label'];
@@ -885,7 +885,7 @@ class phpGraph {
             }
             //End tooltips
             if ($tooltips == true && $key < ($lenght - 1)) {
-                $return .= '<title class="graph-tooltip">' . $deg[$key + 1]['tooltipLegend'] . $deg[$key + 1]['label'] . ' : ' . $deg[$key + 1]['val'] . '</title>' . "\n\t\t" . '</g>';
+                $return .= '<p class="graph-tooltip">' . $deg[$key + 1]['tooltipLegend'] . $deg[$key + 1]['label'] . ' : ' . $deg[$key + 1]['val'] . '</p>' . "\n\t\t" . '</g>';
             }
         }
         if ($mainLegend) {
@@ -1065,7 +1065,7 @@ class phpGraph {
     protected function __circle($unitX, $cx, $cy, $label, $stroke) {
         $return = "\n\t\t" . '<g class="graph-active">';
         $return .= "\n\t\t\t" . '<circle cx="' . ($unitX * $cx + 50) . '" cy="' . $cy . '" r="1" stroke="' . $stroke . '" opacity="0" class="graph-point-active"/>';
-        $return .= "\n\t" . '<title class="graph-tooltip">' . $label . '</title>' . "\n\t\t" . '</g>';
+        $return .= "\n\t" . '<p class="graph-tooltip">' . $label . '</p>' . "\n\t\t" . '</g>';
         return $return;
     }
 
@@ -1281,7 +1281,7 @@ class phpGraph {
             }
             if ($stepY >= ($titleHeight + $paddingTop + $paddingLegendX)) {
                 if (is_array($type) && in_array('h-stock', $type) && isset($labels[$i - 1])) {
-                    $y .= "\t\t" . '<g class="graph-active"><text x="40" y="' . $stepY . '" text-anchor="end" baseline-shift="-1ex" dominant-baseline="middle" >' . ($i > 0 ? (strlen($labels[$i - 1]) > 3 ? substr($labels[$i - 1], 0, 3) . '.</text><title>' . $labels[$i - 1] . '</title>' : $labels[$i - 1] . '</text>') : '</text>') . "</g>\n";
+                    $y .= "\t\t" . '<g class="graph-active"><text x="40" y="' . $stepY . '" text-anchor="end" baseline-shift="-1ex" dominant-baseline="middle" >' . ($i > 0 ? (strlen($labels[$i - 1]) > 3 ? substr($labels[$i - 1], 0, 3) . '.</text><p>' . $labels[$i - 1] . '</p>' : $labels[$i - 1] . '</text>') : '</text>') . "</g>\n";
                 } else {
                     $y .= "\t\t" . '<text x="40" y="' . $stepY . '" text-anchor="end" baseline-shift="-1ex" dominant-baseline="middle" >' . $i . '</text>';
                 }
@@ -1416,7 +1416,7 @@ class phpGraph {
     }
 
     protected function __titleDef($title, $width, $titleHeight) {
-        $return = "\t" . '<title class="graph-tooltip">' . $title . '</title>' . "\n";
+        $return = "\t" . '<p class="graph-tooltip">' . $title . '</p>' . "\n";
         $return .= "\t" . '<text x="' . (($width / 2) + 50) . '" y="' . $titleHeight . '" text-anchor="middle" class="graph-title">' . $title . '</text>' . "\n";
         return $return;
     }

@@ -51,7 +51,7 @@ class sub_menu {
             if ($_GET[$key] == $value[$key]) {
                 $action_finded = true;
                 $v = $value[$key];
-                if (isset($value["title"])) {
+                if (isset($value["title"]) and !empty($value["title"])) {
                     js::before_title($value["title"] . " - ");
                 }
                 if (method_exists($this_class, $v)) {

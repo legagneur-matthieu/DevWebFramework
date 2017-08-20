@@ -13,6 +13,7 @@ class index {
      * redéfinit la time zone et fait appel à ces méthodes privées avant d'appeler la class application (IDEM __construct()...)
      */
     public function __construct() {
+        ini_set("user_agent", "PHP (".phpversion()."; DevWebFramwork)");
         date_default_timezone_set('Europe/Paris');
         $this->classloader();
         session::start();

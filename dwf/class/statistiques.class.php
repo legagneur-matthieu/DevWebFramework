@@ -16,6 +16,7 @@ class statistiques {
                 "stat_visitor" => array(
                     array("id", "int", true),
                     array("imat", "string", false),
+                    array("user_agent", "string", false),
                 ),
                 "stat_pages" => array(
                     array("id", "int", true),
@@ -35,9 +36,13 @@ class statistiques {
      */
     public function add_stat() {
         if (!in_array($_SERVER["REMOTE_ADDR"], array("localhost", "127.0.0.1", "::1")) and config::$_statistiques) {
-            $imat = hash("gost", session_id() . "@" . $_SERVER["REMOTE_ADDR"]);
+            if (session::get_val("stat_uid") == false) {
+                session::set_val("stat_uid", uniqid());
+            }
+            $imat = hash("gost", session::get_val("stat_uid") . "@" . $_SERVER["REMOTE_ADDR"]);
             if (stat_visitor::get_count("imat='" . $imat . "'") == 0) {
-                stat_visitor::ajout($imat);
+                stat_visitor::ajout($imat, (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Inconnu"));
+                (new log_file())->info(json_encode($_SERVER));
             }
             $visitor = stat_visitor::get_table_array("imat='" . $imat . "'");
             stat_pages::ajout($visitor[0]["id"], $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], date("Y-m-d H:i:s"));
@@ -48,7 +53,16 @@ class statistiques {
      * Cette fonction permet d'afficher les statistiques ( il est conseillé ne ne pas appeler cette fonction sur une page "publique" )
      */
     public function get_stat() {
-        echo html_structures::link_in_body("../commun/src/css/statistiques.css");
+        //echo html_structures::link_in_body("../commun/src/css/statistiques.css");
+        ?>
+        <script type="text/javascript">
+            $("head").append('<style type="text/css">' +
+                    '.plot{ width: 800px; min-height: 400px; margin: 0 auto; }' +
+                    '.stat_ring{ margin: 0 auto; width: 600px; height: 400px; margin-bottom: -100px; }' +
+                    '.graph-legend{ font-size: 10px; }' +
+                    '</style>');
+        </script>
+        <?php
         $key = "stat";
         $route = array(
             array($key => "get_stat_an", "title" => "Statistiques annuelles", "text" => "Statistiques annuelles"),
@@ -74,6 +88,11 @@ class statistiques {
         <h2 class="text-center"><small>Indicateur d'activité par heures</small></h2>
         <?php
         $this->get_activity_per_hours($default);
+        echo html_structures::hr();
+        ?>
+        <h2 class="text-center"><small>Navigateurs</small></h2>
+        <?php
+        $this->get_browser($default);
     }
 
     /**
@@ -229,6 +248,24 @@ class statistiques {
         return $data;
     }
 
+    private function get_browser($default) {
+        $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
+        if (($total = count($req)) != 0) {
+            $in = "id in(";
+            foreach ($req as $v) {
+                $in .= $v["visitor"] . ",";
+            }
+            $in .= "__)";
+            $in = strtr($in, array(",__" => ""));
+            $data = array();
+            foreach (application::$_bdd->fetch("select user_agent, count(*) as count from `stat_visitor`where " . $in . " group by user_agent;") as $key => $value) {
+                $data[] = [$value["user_agent"], $value["count"], $value["count"] / $total * 100];
+            }
+            js::datatable();
+            echo html_structures::table(["Navigateur", "Nombre d'utilisateur", "Pourcentage (%)"], $data, '', "datatable");
+        }
+    }
+
     /**
      * Fonction appelée par $this->get_stat(), à ne pas utiliser ! <br />
      * Affiche les statistiques détaillées d'un mois
@@ -236,12 +273,12 @@ class statistiques {
     public function consult() {
         if (isset($_GET["date"])) {
             $date = explode("_", $_GET["date"]);
-            sub_menu::add_active_tab("stat", time::convert_mois($date[1]) . " " . $date[0]);
-            js::before_title("Statistiques " . time::convert_mois($date[1]) . " " . $date[0]);
+            sub_menu::add_active_tab("stat", $stat = time::convert_mois($date[1]) . " " . $date[0]);
+            js::before_title("Statistiques " . $stat . " -");
             $date_debut = $date[0] . "-" . $date[1];
             $date_fin = $date_debut . "-31";
             $date_debut .= "-01";
-            $where = "date between '" . application::$_bdd->protect_var($date_debut) . "' and '" . application::$_bdd->protect_var($date_fin) . "';";
+            $where = "date between '" . application::$_bdd->protect_var($date_debut) . "' and '" . application::$_bdd->protect_var($date_fin) . "'";
             $req = application::$_bdd->fetch("select distinct visitor from stat_pages where " . $where);
             if (count($req) != 0) {
                 $in = "id in(";
@@ -252,44 +289,16 @@ class statistiques {
                 $in = strtr($in, array(",__" => ""));
                 $visitors = stat_visitor::get_table_ordored_array($in); //application::$_bdd->fetch("select imat from stat_visitor " . $in);
                 $nav = stat_pages::get_table_array("date between '" . $date_debut . "' and '" . $date_fin . "';");
-                $req = application::$_bdd->fetch("select distinct page from stat_pages where " . $where);
+                $req = application::$_bdd->fetch("select page, count(*) as count from stat_pages where " . $where . " group by page");
+                $data = array();
                 $titles = array();
                 foreach ($req as $page) {
-                    $titles[$page["page"]]["title"] = $this->get_real_title_from_url($page["page"]);
-                    $titles[$page["page"]]["count"] = stat_pages::get_count("page='" . application::$_bdd->protect_var($page["page"]) . "'");
+                    $titles[$page["page"]] = ["title" => $this->get_real_title_from_url($page["page"]), "count" => $page["count"]];
+                    $data[] = [$titles[$page["page"]]["title"], $page["page"], $page["count"]];
                 }
                 ?><h2 class="text-center"><small>Pages visitées</small></h2><?php
-                $data = array();
-                foreach ($titles as $key => $value) {
-                    $data[html_structures::a_link($key, $value["title"], "", $key)] = $value["count"];
-                }
-                ?>
-                <div class="stat_ring">
-                    <?php
-                    (new graphique())->ring($data, array('radius' => 50));
-                    ?>
-                </div>
-                <ul class="stat_ring_ul">
-                    <?php
-                    foreach ($data as $key => $value) {
-                        ?>
-                        <li>
-                            <?php
-                            echo $key . " : " . $value;
-                            if ($value > 1) {
-                                echo ' visites';
-                            } else {
-                                echo ' visite';
-                            }
-                            echo '<br />';
-                            ?>
-                        </li>
-                        <?php
-                    }
-                    ?>
-                </ul>
-                <?php
-                echo html_structures::hr();
+                js::datatable();
+                echo html_structures::table(["Page", "URL", "Visites"], $data, '', "datatable") . html_structures::hr();
                 ?><h2 class="text-center"><small>Historique des visiteurs</small></h2><?php
                 foreach ($nav as $link) {
                     $visitors[$link["visitor"]]["nav"][] = array("date" => $link["date"], "page" => strtr($link["page"], array($_SERVER["HTTP_HOST"] => "localhost")), "title" => $titles[$link["page"]]["title"]);

@@ -29,6 +29,7 @@ class html5 {
         if (empty($lang)) {
             $lang = "fr";
         }
+        ob_clean();
         ?><!DOCTYPE HTML>
         <html lang="<?php echo $lang ?>">
             <head>

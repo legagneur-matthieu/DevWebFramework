@@ -858,6 +858,16 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function php_finediff() {
+        ?>
+        <p>Permets d'afficher les différences entre deux chaines de caractères</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . 'echo php_finediff::DiffToHTML("Texte de départ", "Texte final");'
+                . "\n?>", $this->_brush);
+        debug::print_r(php_finediff::DiffToHTML("Texte de départ", "Texte final"));
+    }
+
     private function php_header() {
         ?>
         <p></p>
@@ -913,6 +923,19 @@ class docPHP_natives {
         </section>
         <?php
         $reveal->close_reveal();
+    }
+
+    private function reversoLib() {
+        ?>
+        <p>Cette classe utilise l'API de Reverso pour corriger un texte et 
+  vous affiche les corrections à appliquer au texte grace à la librairie finediff</p>
+        <?php
+        echo (new reversoLib())->correctionText("Un texte avec une grosse fote");
+        js::syntaxhighlighter("<?php\n"
+                . 'echo (new reversoLib())->correctionText("Un texte avec une grosse fote");'
+                . "\n"
+                . "?>", $this->_brush);
+        debug::print_r("Un texte avec une grosse <del>fote</del><ins>faute</ins>");
     }
 
     private function robotstxt() {

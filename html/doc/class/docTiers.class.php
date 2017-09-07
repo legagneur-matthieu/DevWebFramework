@@ -28,7 +28,6 @@ class docTiers {
             array("flot", "IOLA and Ole Laursen", "JS", $licences[0]),
             array("Freetile", "Ioannis (Yannis) Chatzikonstantinou", "JS", $licences[10]),
             array("Fullcalendar", "Adam Shaw", "JS", $licences[0]),
-            array("Graphique", "Cyril MAGUIRE", "PHP", $licences[5]),
             array("Html2pdf", "Laurent MINGUET", "PHP", $licences[2]),
             array("JQuery, JQuery-UI", "jQuery Foundation", "JS", $licences[0]),
             array("Jsencrypt.js", "Form.io", "JS", $licences[0]),

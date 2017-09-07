@@ -1,74 +1,50 @@
 <?php
-include_once 'graphique/phpGraph.class.php';
 
 /**
- * Cette classe permet de créér des graphiques.
- * ATTENTION : Cette classe sera prochinement refaite intégralement !
+ * Cette classe permet d'afficher un graphique 
  * 
- * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class graphique extends phpGraph {
+class graphique {
 
     /**
-     * Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
+     *
+     * @var type 
      */
-    public static $_flot_called = false;
+    private static $_called = false;
 
     /**
-     * Parametrage des couleurs dans l'ordre pour les graphiques
-     * @var array
+     *
+     * @var type 
      */
-    private $_stroke = array("yellow", "red", "cyan", "green", "blue", "darkgray", "gray", "gold", "darkmagenta", "darkred", "darkcyan", "darkgreen", "darkblue");
+    private $_id;
 
     /**
-     * Paramètres par défaut du graphique.
-     * @var array 
+     * Cette classe permet d'afficher un graphique 
+     * @param string $id Id CSS du graphique     * 
+     * @param array $size dimentions du graphique (par defaut : array("width"=>"600px","height"=>"300px")) 
      */
-    private $_options = array(
-        'paddingTop' => 10, // entier
-        'type' => 'line', // (string) ligne, barre, camembert, anneau, actions...
-        'steps' => 2, // (int) 2 graduations on y-axis are separated by $steps units. "steps" is automatically calculated but we can set the value with integer. No effect on stock and h-stock charts
-        'filled' => true, // (bool) pour remplir des lignes, des histogrammes, des disques
-        'tooltips' => true, // (bool) pour montrer des indicateurs
-        'circles' => true, // (bool) pour montrer des cercles sur le graphique(lignes ou histogrammes).
-        'background' => "#ffffff", // (string) Couleur de fond de grille. Ne pas employer la notation courte (#fff) en raison de $this->__genColor();
-        'opacity' => '0.45', // (float) Entre 0 et 1. 
-        'gradient' => null, // (array) 2 couleurs de gauche à droite
-        'titleHeight' => 1, // (int) Taille de titre principal
-        'tooltipLegend' => null, // (string ou array) Affichage des textes dans l'indicateur avec la valeur. Chaque texte peut être personnalisé utilisant un tableau. 
-        'legends' => null, // (string ou array or bool) Légende générale pour chaque ligne/histogramme/disque.
-        'title' => null, // (string) Titre principal.Le titre va être deployé dans un indicateur aussi.
-        'radius' => 100, // (int) rayon du camembert
-        'diskLegends' => true, // (bool)Pour montrer les légendes autour d'un camembert
-        'diskLegendsType' => 'label', // (string) Données, pourcentage ou label pour montrer autour d'un camembert comme légende.
-        'diskLegendsLineColor' => 'darkgrey', // (string) Couleur des lignes qui joignent le camembert aux légendes
-        'responsive' => true, // (bool) Pour éviter le svg pour être sensible (dimensions fixées)
-        'paddingLegendX' => 10, //Nous ajoutons 10 unités dans le viewbox pour montrer la légende de x correctement
-        'multi' => true, // Gérer le multi-affichage
-        'height' => null, // définit la hauteur
-    );
-
-    /**
-     * Cette classe permet de créér des graphiques.
-     * 
-     * @param int $width Largeur du graohique
-     * @param int $height Hauteur du graphique
-     * @param array $options Paramètres du graphique.
-     */
-    public function __construct($width = 300, $height = 300, $options = array()) {
-
-        parent::__construct($width, $height, $options);
+    public function __construct($id, $size = ["width" => "600px", "height" => "300px"]) {
+        if (!self::$_called) {
+            ?>
+            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.min.js"></script>
+            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.pie.min.js"></script>
+            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.resize.min.js"></script>
+            <script type="text/javascript">
+                function labelFormatter(label, series) {
+                    return "<p style='text-align:center; color:black; text-shadow:0 0 15px white'>" + label + " <br /> " + series.data[0][1] + " (" + Math.round(series.percent) + " %)</p>";
+                }
+            </script>
+            <?php
+            self::$_called = true;
+        }
         ?>
-        <script type="text/javascript">
-            $(document).ready(function(){
-            $("svg + p.graph-tooltip, svg + g.graph-active, svg + circle.graph-pie").remove();
-            });</script>
+        <div id="<?= $this->_id = $id ?>" style="width: <?= $size["width"] ?>;height:<?= $size["height"] ?>"></div>
         <?php
     }
 
     /**
-     * Affiche un graphique (Librairie flot)
+     * Affiche un graphique par points
      * @param array $data array( <br />
      * array("label"=> "label1,<br />
      * "data"=> array(<br />
@@ -86,115 +62,168 @@ class graphique extends phpGraph {
      * ),<br />
      * ...<br />
      * );<br />
-     * 
      * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
-     * @param string $id Id CSS du graphique
+     * @param boolean $show_points afficher les points sur le graphique ? (true/false, true par defaut)
      */
-    public function line($data, $tricks = array(), $id = "plot") {
-        if (!self::$_flot_called) {
-            ?> <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.js"></script> <?php
-            graphique::$_flot_called = TRUE;
-        }
-        $lim = array(
-            "xmin" => 2147483647,
-            "xmax" => -2147483647,
-            "ymin" => 2147483647,
-            "ymax" => -2147483647
-        );
-        foreach ($data as $d) {
-            foreach ($d["data"] as $value) {
-                if ($value[0] > $lim["xmax"]) {
-                    $lim["xmax"] = $value[0];
-                }
-                if ($value[0] < $lim["xmin"]) {
-                    $lim["xmin"] = $value[0];
-                }
-                if ($value[1] > $lim["ymax"]) {
-                    $lim["ymax"] = $value[1];
-                }
-                if ($value[1] < $lim["ymin"]) {
-                    $lim["ymin"] = $value[1];
-                }
-            }
-        }
-        ?> 
+    public function points($data, $ticks = []) {
+        ?>
         <script type="text/javascript">
             $(document).ready(function () {
-            options = {
-            series: {
-            lines: {show: true},
-                    points: {show: true}
-            },
-                    xaxis: {
-                    show: true,
-                            min: <?php echo $lim["xmin"]; ?>,
-                            max: <?php echo $lim["xmax"]; ?>,
-        <?php
-        if (count($tricks) > 0) {
-            ?>
-                        ticks: <?php echo json_encode($tricks); ?>
-            <?php
-        }
-        ?>
-                    },
-                    yaxis: {
-                    show: true,
-                            min: <?php echo $lim["ymin"]; ?>,
-                            max: <?php echo $lim["ymax"]; ?>
+                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
+                    series: {points: {show: true}},
+                    grid: {hoverable: true, clickable: true},
+                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
+                    yaxis: {show: true}
+                });
+                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
+                $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
+                    if (item) {
+                        $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
+                    } else {
+                        $("#<?= $this->_id ?>_tooltip").hide();
                     }
-            }
-            data = <?php echo json_encode($data); ?>;
-            $("#<?php echo $id; ?>").plot(data, options);
+                });
             });
         </script>
-        <div id="<?php echo $id; ?>" class="plot"></div>
         <?php
     }
 
     /**
-     * Affiche un graphique "en camenbert" (Librairie phpgraph)
-     * @param array $data Tableau associatif des données : array("label1"=>valeur1,"label2"=>valeur2,...);
-     * @param array $options surcharge des options
+     * Affiche un graphique lineaire
+     * @param array $data array( <br />
+     * array("label"=> "label1,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * array("label"=> "label2,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * ...<br />
+     * );<br />
+     * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
+     * @param boolean $show_points Afficher les points sur le graphique ? (true/false, true par defaut)
+     * @param boolean $fill La zone entre la ligne et l'abscisse doit-il être coloré  ? (true/false, false par defaut)
      */
-    public function pie($data, $options = array()) {
-        $datas = array();
-        foreach ($data as $key => $value) {
-            $datas[$key . " : " . $value] = $value;
-        }
-        foreach ($this->_options as $key => $value) {
-            if (!isset($options[$key])) {
-                $options[$key] = $value;
-            }
-        }
-        if (!isset($options["stroke"])) {
-            $options["stroke"] = $this->_stroke;
-        }
-        //$options["height"] = max($data);
-        $options["type"] = "pie";
-        echo $this->draw($datas, $options);
+    public function line($data, $ticks = [], $show_points = true, $fill = false) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
+                    series: {lines: {show: true<?= ($fill ? ", fill: true" : "") ?>}, <?= ($show_points ? "points: {show: true}," : "") ?>},
+                    grid: {hoverable: true, clickable: true},
+                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
+                    yaxis: {show: true}
+                });
+                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
+                $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
+                    if (item) {
+                        $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
+                    } else {
+                        $("#<?= $this->_id ?>_tooltip").hide();
+                    }
+                });
+            });
+        </script>
+        <?php
     }
 
     /**
-     * Affiche un graphique "en anneau" (Librairie phpgraph)
-     * @param array $data Tableau associatif des données : array("label1"=>valeur1,"label2"=>valeur2,...);
-     * @param array $options surcharge des options
+     * Affiche un graphique en bares
+     * @param array $data array( <br />
+     * array("label"=> "label1,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * array("label"=> "label2,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * ...<br />
+     * );<br />
+     * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
      */
-    public function ring($data, $options = array()) {
-        $datas = array();
-        foreach ($data as $key => $value) {
-            $datas[$key . " : " . $value] = $value;
-        }
-        foreach ($this->_options as $key => $value) {
-            if (!isset($options[$key])) {
-                $options[$key] = $value;
-            }
-        }
-        if (!isset($options["stroke"])) {
-            $options["stroke"] = $this->_stroke;
-        }
-        $options["height"] = max($data);
-        $options["type"] = "ring";
-        echo $this->draw($datas, $options);
+    public function bars($data, $ticks = []) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
+                    series: {bars: {show: true}},
+                    grid: {hoverable: true, clickable: true},
+                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
+                    yaxis: {show: true}
+                });
+                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
+                $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
+                    if (item) {
+                        $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
+                    } else {
+                        $("#<?= $this->_id ?>_tooltip").hide();
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+
+    /**
+     * Affiche un graphique en "camambert"
+     * @param array $data array( <br />
+     *     array("label"=>"label1", <br />
+     *         "data"=>10 <br />
+     *     ), <br />
+     *     array("label"=>"label2", <br />
+     *         "data"=>20 <br />
+     *     ) <br />
+     * )
+     */
+    public function pie($data) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
+                    series: {pie: {show: true, radius: 1, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
+                    grid: {hoverable: true, clickable: true}
+                });
+            });
+        </script>
+        <?php
+    }
+
+    /**
+     * Affiche un graphique en anneau
+     * @param array $data array( <br />
+     *     array("label"=>"label1", <br />
+     *         "data"=>10 <br />
+     *     ), <br />
+     *     array("label"=>"label2", <br />
+     *         "data"=>20 <br />
+     *     ) <br />
+     * )
+     */
+    public function ring($data) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
+                    series: {pie: {innerRadius: 0.5, show: true, radius: 1, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
+                    grid: {hoverable: true, clickable: true}
+                });
+            });
+        </script>
+        <?php
     }
 
     /**

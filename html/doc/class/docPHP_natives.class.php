@@ -511,89 +511,95 @@ class docPHP_natives {
         ?>
         <p>Cette classe permet de créér des graphiques.</p>
         <?php
-        js::syntaxhighlighter("<style type=\"text/css\">\n"
-                . "    #plot{\n"
-                . "        width: 300px;\n"
-                . "        height:300px;\n"
-                . "    }\n"
-                . "</style>\n"
-                . "<?php\n"
-                . "$" . "data_line = array(\n"
-                . "    array('label' => 'label1',\n"
-                . "        'data' => array(array(\n"
-                . "            array(1, 0),\n"
-                . "            array(2, 10),\n"
-                . "            array(3, 5),\n"
-                . "            array(4, 7),\n"
-                . "            array(5, 1),\n"
-                . "            array(6, 8),\n"
-                . "            array(7, 3),\n"
-                . "            array(8, 9),\n"
-                . "            array(9, 2),\n"
-                . "            array(10, 6)\n"
-                . "        )\n"
-                . "    )\n"
-                . ");\n"
-                . "//Affiche un graphique (Librairie flot)\n"
-                . "(new graphique())->line($" . "data_line, array(), 'plot');\n"
-                . "$" . "data = array(\n"
-                . "    'Valeur 1' => 1,\n"
-                . "    'Valeur 2' => 10,\n"
-                . "    'Valeur 3' => 5,\n"
-                . "    'Valeur 4' => 7,\n"
-                . ");\n"
-                . "//Affiche un graphique \"en camenbert\" (Librairie phpgraph)\n"
-                . "(new graphique())->pie($" . "data);\n"
-                . "//Affiche un graphique \"en anneau\" (Librairie phpgraph)\n"
-                . "(new graphique())->ring($" . "data); \n"
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "data = [\n"
+                . "    [\n"
+                . "        \"label\" => \"Nombres heureux\",\n"
+                . "        \"data\" => [[1, 1],[2, 7],[3, 10],[4, 13],[5, 19]]\n"
+                . "    ],\n"
+                . "    [\n"
+                . "        \"label\" => \"Nombres premiers\",\n"
+                . "        \"data\" => [[1, 2],[2, 3],[3, 5],[4, 7],[5, 11]]\n"
+                . "    ]\n"
+                . "];\n"
+                . "\n//Affiche un graphique en ligne/courbe\n"
+                . "(new graphique(\"graph1\", $" . "size = [\"width\" => \"600px\", \"height\" => \"300px\"]))->line($" . "data, $" . "ticks = [], $" . "show_points = true, $" . "fill = false);\n"
+                . "\n//Affiche un graphique en points\n"
+                . "(new graphique(\"graph2\")->points($" . "data);\n"
+                . "\n//Affiche un graphique en bars\n"
+                . "(new graphique(\"graph3\")->bars($" . "data);\n\n"
+                . "$" . "data = [\n"
+                . "    [\n"
+                . "        \"label\" => \"Allemagne\",\n"
+                . "        \"data\" => 3466.76\n"
+                . "    ],\n"
+                . "    [\n"
+                . "        \"label\" => \"Royaume uni\",\n"
+                . "        \"data\" => 2618.89\n"
+                . "    ],\n"
+                . "    [\n"
+                . "        \"label\" => \"France\",\n"
+                . "        \"data\" => 2465.45\n"
+                . "    ]\n"
+                . "];"
+                . "\n//Affiche un graphique en \"camembert\"\n"
+                . "(new graphique(\"graph4\")->pie($" . "data);\n"
+                . "\n//Affiche un graphique en anneau\n"
+                . "(new graphique(\"graph5\")->ring($" . "data);\n"
                 . "?>", $this->_brush);
+        $data = [
+            [
+                "label" => "Nombres heureux",
+                "data" => [[1, 1], [2, 7], [3, 10], [4, 13], [5, 19]]
+            ],
+            [
+                "label" => "Nombres premiers",
+                "data" => [[1, 2], [2, 3], [3, 5], [4, 7], [5, 11]]
+            ]
+        ];
+        $data2 = [
+            [
+                "label" => "Allemagne",
+                "data" => 3466.76
+            ],
+            [
+                "label" => "Royaume uni",
+                "data" => 2618.89
+            ],
+            [
+                "label" => "France",
+                "data" => 2465.45
+            ]
+        ];
         ?>
         <p>Résultats :</p>
-        <style type="text/css">
-            #plot{
-                width: 300px;
-                height:300px;
-            }
-        </style>
         <div class="row">
             <div class="col-xs-4">
                 <?php
-                $data_line = array(
-                    array("label" => "label1",
-                        "data" => array(
-                            array(1, 0),
-                            array(2, 10),
-                            array(3, 5),
-                            array(4, 7),
-                            array(5, 1),
-                            array(6, 8),
-                            array(7, 3),
-                            array(8, 9),
-                            array(9, 2),
-                            array(10, 6)
-                        )
-                    )
-                );
-                //Affiche un graphique (Librairie flot)
-                (new graphique())->line($data_line, array(), 'plot');
+                (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
                 ?>
             </div>
             <div class="col-xs-4">
                 <?php
-                $data = array(
-                    "Valeur 1" => 1,
-                    "Valeur 2" => 10,
-                    "Valeur 3" => 5,
-                    "Valeur 4" => 7,
-                );
-                //Affiche un graphique "en camenbert" (Librairie phpgraph)
-                (new graphique())->pie($data);
+                (new graphique("graph2", $size))->points($data);
                 ?>
             </div>
             <div class="col-xs-4">
                 <?php
-                //Affiche un graphique "en anneau" (Librairie phpgraph)
-                (new graphique())->ring($data);
+                (new graphique("graph3", $size))->bars($data);
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <p>PIB 2016</p>
+            <div class="col-xs-6">
+                <?php
+                (new graphique("graph4", $size))->pie($data2);
+                ?>
+            </div>
+            <div class="col-xs-6">
+                <?php
+                (new graphique("graph5", $size))->ring($data2);
                 ?>
             </div>
         </div>
@@ -928,7 +934,7 @@ class docPHP_natives {
     private function reversoLib() {
         ?>
         <p>Cette classe utilise l'API de Reverso pour corriger un texte et 
-  vous affiche les corrections à appliquer au texte grace à la librairie finediff</p>
+            vous affiche les corrections à appliquer au texte grace à la librairie finediff</p>
         <?php
         echo (new reversoLib())->correctionText("Un texte avec une grosse fote");
         js::syntaxhighlighter("<?php\n"

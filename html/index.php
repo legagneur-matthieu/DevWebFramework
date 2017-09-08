@@ -3,6 +3,12 @@
 class parcour_sites {
 
     public function __construct() {
+        if ($_SERVER["HTTP_HOST"] != "localhost") {
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Status: 301 Moved Permanently", false, 301);
+            header("Location: ./doc/index.php");
+            exit();
+        }
         ?>
         <!DOCTYPE HTML>
         <html lang="fr">

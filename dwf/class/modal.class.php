@@ -22,7 +22,7 @@ class modal {
             ?>
             <script type="text/javascript" src="../commun/src/js/modal/modal-window.js"></script>
             <div role="dialog" aria-hidden="true" id="modal" class="modal-content" style="display: none;">
-                <div style="max-height: 600px; overflow: auto;"></div>
+                <div style="max-height: 100%; overflow: auto;"></div>
                 <button id="modalCloseButton" class="modalCloseButton btn btn-default" title="Fermer la fenêtre"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
             <div tabindex="-1" id="modalOverlay" style="display: none;"></div>

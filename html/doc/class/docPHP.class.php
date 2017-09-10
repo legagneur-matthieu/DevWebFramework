@@ -18,6 +18,7 @@ class docPHP {
             "services_general",
             "services_interne",
             "CLI",
+            "mise_en_ligne",
         );
         js::accordion("accordion", true, true);
         ?>
@@ -29,7 +30,7 @@ class docPHP {
 
         </style>
         <h2>Framework PHP</h2>
-        <p><?php echo html_structures::a_link("phpdoc/index.html", "Documentation technique (PHPDoc)","","",true); ?></p>
+        <p><?php echo html_structures::a_link("phpdoc/index.html", "Documentation technique (PHPDoc)", "", "", true); ?></p>
         <div id="accordion">
             <?php
             foreach ($doc as $d) {
@@ -272,7 +273,7 @@ class docPHP {
                 . "        //cette méthode sera executée automatiquement par le framework lorsque \n"
                 . "        //toutes les classes métiers et les classes du framework sont chargées\n"
                 . "        //cette méthode ne doit pas générer de HTML !\n"
-                . "        //ne peux pas utiliser application:$"."_bdd donc ne peux pas utiliser d'entité !\n"
+                . "        //ne peux pas utiliser application:$" . "_bdd donc ne peux pas utiliser d'entité !\n"
                 . "    }\n\n"
                 . "    public static onhtml_head(){\n"
                 . "        //cette méthode sera executée automatiquement par le framework \n"
@@ -607,6 +608,19 @@ class docPHP {
         <p>Une fois que tout votre CLI métier est créé vous pouvez le lancer via la comande :</p>
         <?php
         js::syntaxhighlighter("php [chemain]/html/[votre-projet]/class/votre_cli.cli.php");
+    }
+
+    private function mise_en_ligne() {
+        ?>
+        <p>Lors de la mise en ligne de vos projets vous devrez définir votre "projet par deafut" pour cela : <br />
+        rendez vous dans le fichier <em>html/index.php</em> et modifiez la ligne suivante à votre convenance.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\nheader(\"Location: ./doc/index.php\"); \n ?>", $this->_brush);
+        ?>
+        <p>Par :</p>
+        <?php
+        js::syntaxhighlighter("<?php\nheader(\"Location: ./[Votre-projet-par-défaut]/index.php\"); \n?>", $this->_brush);
     }
 
 }

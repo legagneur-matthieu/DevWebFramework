@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet de gÃ¨rer les thÃ¨mes de bootswatch
+ * Cette classe permet de gèrer les thèmes de bootswatch
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class bootstrap_theme {
 
     /**
-     * ThÃ¨mes de bootswath
-     * @var array ThÃ¨mes de bootswath
+     * Thèmes de bootswath
+     * @var array Thèmes de bootswath
      */
     private static $_theme = array(
         "cerulean",
@@ -30,8 +30,8 @@ class bootstrap_theme {
     );
 
     /**
-     * Retourne le thÃ¨me renseignÃ© dans config ou en session si l'utilisateur 
-     * @return string ThÃ¨mes de bootswath
+     * Retourne le thème renseigné dans config ou en session si l'utilisateur 
+     * @return string Thèmes de bootswath
      */
     private static function get_theme() {
         $theme = "default";
@@ -45,8 +45,8 @@ class bootstrap_theme {
     }
 
     /**
-     * UtilisÃ© dans html5.class.php, 0 ne pas utiliser !
-     * Affiche les links des thÃ¨mes
+     * Utilisé dans html5.class.php, 0 ne pas utiliser !
+     * Affiche les links des thèmes
      */
     public static function link_theme() {
         if (in_array($theme = self::get_theme(), self::$_theme)) {
@@ -62,7 +62,7 @@ class bootstrap_theme {
     }
 
     /**
-     * Affiche une interface (modal) permettant Ã  l'utilisateur de choisir un thÃ¨me
+     * Affiche une interface (modal) permettant à l'utilisateur de choisir un thème
      */
     public static function user_custom() {
         if (isset($_POST["bootstrap_theme"])) {

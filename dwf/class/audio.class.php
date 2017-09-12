@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet de gÃ©nÃ©rer un lecteur audio.
+ * Cette classe permet de générer un lecteur audio.
  * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
  */
 class audio {
 
     /**
-     * Permet de vÃ©rifier que la librairie audio a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var bool Permet de vÃ©rifier que la librairie audio a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie audio a bien été appelée qu'une fois.
+     * @var bool Permet de vérifier que la librairie audio a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
@@ -19,8 +19,8 @@ class audio {
     private $_id;
 
     /**
-     * Cette fonction gÃ©nÃ¨re le lecteur audio.
-     * @param string $src Chemin d'accÃ¨s de la musique, possibilitÃ© de le laisser vide pour une playlist.
+     * Cette fonction génère le lecteur audio.
+     * @param string $src Chemin d'accès de la musique, possibilité de le laisser vide pour une playlist.
      * @param string $id Identifiant du lecteur audio.
      */
     public function __construct($src = "", $id = "player") {
@@ -55,8 +55,8 @@ class audio {
     }
 
     /**
-     * Cette fonction permet de gÃ©rer la liste des musiques.
-     * @param  array $playlist Tableau Ã  deux dimensions contenant le titre et la source de la musique.
+     * Cette fonction permet de gérer la liste des musiques.
+     * @param  array $playlist Tableau à deux dimensions contenant le titre et la source de la musique.
      * Forme du tableau : array(array("src"=>"source", "titre=>"titre"));
      */
     public function playlist($playlist) {

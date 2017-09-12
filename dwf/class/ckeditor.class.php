@@ -1,30 +1,30 @@
 <?php
 
 /**
- * Cette classe permet d'appliquer l'Ã©diteur CKEditor (WYSIWYG) Ã  un textarea 
+ * Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class ckeditor {
 
     /**
-     * Permet de vÃ©rifier que la librairie CKEditor a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie CKEditor a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie CKEditor a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie CKEditor a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * ParamÃ¨tres par dÃ©faut du CKEditor
+     * Paramètres par défaut du CKEditor
      * 
      * @var array
      */
     private $_params = array();
 
     /**
-     * Cette classe permet d'appliquer l'Ã©diteur CKEditor (WYSIWYG) Ã  un textarea 
+     * Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
      * 
      * @param array $id Id du textarea
-     * @param array $params Surcharge les paramÃ¨tres Ã  appliquer au CKEditor ( laissez par dÃ©faut ou voir la doc)
+     * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
      */
     public function __construct($id, $params = array()) {
         if (!self::$_called) {
@@ -59,10 +59,10 @@ class ckeditor {
     }
 
     /**
-     * Filtre de sÃ©curitÃ© Ã  utiliser lors de l'exÃ©cution d'un formulaire pour filter les balises utilisÃ©es dans CKEditor ( protection XSS )
+     * Filtre de sécurité à utiliser lors de l'exécution d'un formulaire pour filter les balises utilisées dans CKEditor ( protection XSS )
      * 
      * @param string $str Retour du CKEditor
-     * @param string $more_tags Ajouter des balises Ã  witelister
+     * @param string $more_tags Ajouter des balises à witelister
      */
     public function parse($str, $more_tags = "") {
         $tags = "<h1></h1><h2></h2><h3></h3><h4></h4><h5></h5><h6></h6><p></p><a></a><span></span><small></small><big></big><strong><em></em><u></u><s></s></strong><quote></quote><img><img/><sup></sup><sub></sub><div></div><ul></ul><ol></ol><li></li><dl></dl><dt></dt><dd></dd><time></time><br /><hr /><table></table><thead></thead><tbody></tbody><tfoot></tfoot><tr></tr><th></th><td></td><caption></caption><figure></figure><figcaption></figcaption>";

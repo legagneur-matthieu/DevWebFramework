@@ -29,7 +29,7 @@ class php_header {
     }
 
     /**
-     * DÃ©finit le statut code de la page, si le statut code est invalide, le code 200 est utilisÃ© par dÃ©faut
+     * Définit le statut code de la page, si le statut code est invalide, le code 200 est utilisé par défaut
      * @param int $code statut code
      */
     public function status_code($code) {
@@ -41,10 +41,10 @@ class php_header {
 
     /**
      * Renseigne le type (mime) du document.
-     * Renseignez juste l'extention du fichier ( par exemple "json" ou "csv"), la fonction sera retrouvÃ©e le mime corespondant.
+     * Renseignez juste l'extention du fichier ( par exemple "json" ou "csv"), la fonction sera retrouvée le mime corespondant.
      * @param string $type extension du fichier (sans le point "." ) ou le mime du fichier
-     * @param string $force_upload_file forcer le navigateur Ã  tÃ©lÃ©charger le fichier, si oui : renseigner le nom du fichier (avec son extention)
-     * @param string $charset charset du fichier, UTF-8 par dÃ©faut
+     * @param string $force_upload_file forcer le navigateur à télécharger le fichier, si oui : renseigner le nom du fichier (avec son extention)
+     * @param string $charset charset du fichier, UTF-8 par défaut
      */
     public function content_type($type, $force_upload_file = "", $charset = "UTF-8") {
         if (!empty($force_upload_file)) {
@@ -54,10 +54,10 @@ class php_header {
     }
 
     /**
-     * Redirige l'utilisateur (immÃ©diatement ou avec un dÃ©lai)
+     * Redirige l'utilisateur (immédiatement ou avec un délai)
      * 
      * @param string $url URL de redirection
-     * @param int $second dÃ©lai (0 par defaut)
+     * @param int $second délai (0 par defaut)
      */
     public function redir($url, $second = 0) {
         ($second > 0 ? header('Refresh: ' . $second . '; url=' . $url) : header('Location: ' . $url));

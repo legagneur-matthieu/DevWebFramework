@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet de recueillir et d'afficher des statistiques liÃ©s a l'activitÃ© des utilisateurs
+ * Cette classe permet de recueillir et d'afficher des statistiques liès a l'activitè des utilisateurs
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class statistiques {
 
     /**
-     * Cette classe permet de recueillir et d'afficher des statistiques liÃ©s a l'activitÃ© des utilisateurs
+     * Cette classe permet de recueillir et d'afficher des statistiques liès a l'activitè des utilisateurs
      */
     public function __construct() {
         if (config::$_statistiques) {
@@ -32,7 +32,7 @@ class statistiques {
     }
 
     /**
-     * Cette fonction permet d'enregistrer l'activitÃ© des utilisateurs sur la page actuelle
+     * Cette fonction permet d'enregistrer l'activitè des utilisateurs sur la page actuelle
      */
     public function add_stat() {
         if (!in_array($_SERVER["REMOTE_ADDR"], array("localhost", "127.0.0.1", "::1")) and config::$_statistiques) {
@@ -50,7 +50,7 @@ class statistiques {
     }
 
     /**
-     * Cette fonction permet d'afficher les statistiques ( il est conseillÃ© ne ne pas appeler cette fonction sur une page "publique" )
+     * Cette fonction permet d'afficher les statistiques ( il est conseillè ne ne pas appeler cette fonction sur une page "publique" )
      */
     public function get_stat() {
         //echo html_structures::link_in_body("../commun/src/css/statistiques.css");
@@ -73,19 +73,19 @@ class statistiques {
     }
 
     /**
-     * fonction appelÃ©e par $this->get_stat(), Ã  ne pas utiliser !
+     * fonction appelèe par $this->get_stat(), à ne pas utiliser !
      */
     public function get_stat_an() {
         $default = $this->check_form();
         $this->form($default);
         echo html_structures::hr();
         ?>
-        <h2 class="text-center"><small>Nombre de visiteurs unique <sup title="Un visiteur unique est dÃ©fini par son cookie de session et son ip">*</sup></small></h2>
+        <h2 class="text-center"><small>Nombre de visiteurs unique <sup title="Un visiteur unique est dèfini par son cookie de session et son ip">*</sup></small></h2>
         <?php
         $this->get_uniques_visitors($default);
         echo html_structures::hr();
         ?>
-        <h2 class="text-center"><small>Indicateur d'activitÃ© par heures</small></h2>
+        <h2 class="text-center"><small>Indicateur d'activitè par heures</small></h2>
         <?php
         $this->get_activity_per_hours($default);
         echo html_structures::hr();
@@ -117,7 +117,7 @@ class statistiques {
             array(8, "Septembre"),
             array(9, "Octobre"),
             array(10, "Novembre"),
-            array(11, "DÃ©cembre")
+            array(11, "Dècembre")
         );
         (new graphique())->line($data, $tricks, "stat_plot");
         ?>
@@ -170,13 +170,13 @@ class statistiques {
     }
 
     /**
-     * Affiche les statistiques d'activitÃ©s par heures
+     * Affiche les statistiques d'activitès par heures
      * @param array $default $this->check_form()
      */
     private function get_activity_per_hours($default) {
         $data = array(
             array(
-                "label" => "Pages visitÃ©es",
+                "label" => "Pages visitèes",
                 "data" => $this->get_plot_activity_per_hours($default)
             )
         );
@@ -214,7 +214,7 @@ class statistiques {
             for ($i = 0; $i < 24; $i++) {
                 ?>
                 <li>
-                    <?php echo $tricks[$i][1] . " : " . $data[0]["data"][$i][1] . " pages visitÃ©es"; ?>
+                    <?php echo $tricks[$i][1] . " : " . $data[0]["data"][$i][1] . " pages visitèes"; ?>
                 </li>
                 <?php
             }
@@ -224,9 +224,9 @@ class statistiques {
     }
 
     /**
-     * Retourne les donnÃ©es du graphique de $this->get_activity_per_hours();
+     * Retourne les donnèes du graphique de $this->get_activity_per_hours();
      * @param array $default $this->check_form()
-     * @return array DonnÃ©es du graphique de $this->get_activity_per_hours();
+     * @return array Donnèes du graphique de $this->get_activity_per_hours();
      */
     private function get_plot_activity_per_hours($default) {
         $pages = stat_pages::get_table_array("date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
@@ -248,6 +248,10 @@ class statistiques {
         return $data;
     }
 
+    /**
+     * Affiche les statistiques sur les navigateurs des visiteurs
+     * @param array $default $this->check_form()
+     */
     private function get_browser($default) {
         $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
         if (($total = count($req)) != 0) {
@@ -267,8 +271,8 @@ class statistiques {
     }
 
     /**
-     * Fonction appelÃ©e par $this->get_stat(), Ã  ne pas utiliser ! <br />
-     * Affiche les statistiques dÃ©taillÃ©es d'un mois
+     * Fonction appelèe par $this->get_stat(), à ne pas utiliser ! <br />
+     * Affiche les statistiques dètaillèes d'un mois
      */
     public function consult() {
         if (isset($_GET["date"])) {
@@ -296,7 +300,7 @@ class statistiques {
                     $titles[$page["page"]] = ["title" => $this->get_real_title_from_url($page["page"]), "count" => $page["count"]];
                     $data[] = [$titles[$page["page"]]["title"], $page["page"], $page["count"]];
                 }
-                ?><h2 class="text-center"><small>Pages visitÃ©es</small></h2><?php
+                ?><h2 class="text-center"><small>Pages visitèes</small></h2><?php
                 js::datatable();
                 echo html_structures::table(["Page", "URL", "Visites"], $data, '', "datatable") . html_structures::hr();
                 ?><h2 class="text-center"><small>Historique des visiteurs</small></h2><?php
@@ -330,7 +334,7 @@ class statistiques {
     }
 
     /**
-     * Affiche le formulaire de selection d'annÃ©es
+     * Affiche le formulaire de selection d'annèes
      * @param array $default $this->check_form()
      */
     private function form($default) {
@@ -341,13 +345,13 @@ class statistiques {
             $k = $y - $i;
             $option[] = array($k, $k, ($k == $default["an"]));
         }
-        form::select("AnnÃ©e", "stat_an", $option);
+        form::select("Annèe", "stat_an", $option);
         form::submit("btn-default", "Voir");
         form::close_form();
     }
 
     /**
-     * Retourne la valeur par default Ã  utiliser dans les statistiques
+     * Retourne la valeur par default à utiliser dans les statistiques
      * @return array retourne $default["an"]
      */
     private function check_form() {
@@ -361,7 +365,7 @@ class statistiques {
     }
 
     /**
-     * RÃ©cupÃ¨re le contenu de p#real_title sur l'url passÃ© en paramÃ¨tre 
+     * Récupére le contenu de p#real_title sur l'url passè en paramétre 
      * @param string $url URL
      * @return string contenu de p#real_title
      */

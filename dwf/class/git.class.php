@@ -6,7 +6,7 @@
  * This class enables the creating, reading, and manipulation
  * of git repositories.
  * 
- *A PHP git library
+ * A PHP git library
  * 
  * @class  Git
  * 
@@ -16,7 +16,6 @@
  * @copyright  Copyright 2013 James Brumond
  * @repo       http://github.com/kbjr/Git.php
  */
-
 class Git {
 
     /**
@@ -119,8 +118,22 @@ class Git {
  */
 class GitRepo {
 
+    /**
+     * repository path
+     * @var string repository path
+     */
     protected $repo_path = null;
+
+    /**
+     * $bare
+     * @var boolean $bare
+     */
     protected $bare = false;
+
+    /**
+     * $envopts
+     * @var array $envopts
+     */
     protected $envopts = array();
 
     /**
@@ -129,9 +142,9 @@ class GitRepo {
      * Accepts a creation path, and, optionally, a source path
      *
      * @access  public
-     * @param   string  repository path
-     * @param   string  directory to source
-     * @param   string  reference path
+     * @param   string  $repo_path repository path
+     * @param   string   $source directory to source
+     * @param   string  $remote_source reference path
      * @return  GitRepo
      */
     public static function &create_new($repo_path, $source = null, $remote_source = false, $reference = null) {
@@ -163,8 +176,8 @@ class GitRepo {
      * Accepts a repository path
      *
      * @access  public
-     * @param   string  repository path
-     * @param   bool    create if not exists?
+     * @param   string $repo_path repository path
+     * @param   bool  $create_new  create if not exists?
      * @return  void
      */
     public function __construct($repo_path = null, $create_new = false, $_init = true) {
@@ -179,9 +192,9 @@ class GitRepo {
      * Accepts the repository path
      *
      * @access  public
-     * @param   string  repository path
-     * @param   bool    create if not exists?
-     * @param   bool    initialize new Git repo if not exists?
+     * @param   string $repo_path repository path
+     * @param   bool  $create_new  create if not exists?
+     * @param   bool  $_init  initialize new Git repo if not exists?
      * @return  void
      */
     public function set_repo_path($repo_path, $create_new = false, $_init = true) {
@@ -270,7 +283,7 @@ class GitRepo {
      * Accepts a shell command to run
      *
      * @access  protected
-     * @param   string  command to run
+     * @param   string $command command to run
      * @return  string
      */
     protected function run_command($command) {
@@ -319,7 +332,7 @@ class GitRepo {
      * Accepts a git command to run
      *
      * @access  public
-     * @param   string  command to run
+     * @param   string $command command to run
      * @return  string
      */
     public function run($command) {
@@ -332,7 +345,7 @@ class GitRepo {
      * Accept a convert to HTML bool
      *
      * @access public
-     * @param bool  return string with <br />
+     * @param bool $html return string with <br />
      * @return string
      */
     public function status($html = false) {
@@ -349,7 +362,7 @@ class GitRepo {
      * Accepts a list of files to add
      *
      * @access  public
-     * @param   mixed   files to add
+     * @param   mixed  $files files to add
      * @return  string
      */
     public function add($files = "*") {
@@ -365,8 +378,8 @@ class GitRepo {
      * Accepts a list of files to remove
      *
      * @access  public
-     * @param   mixed    files to remove
-     * @param   Boolean  use the --cached flag?
+     * @param   mixed  $files  files to remove
+     * @param   Boolean $cached use the --cached flag?
      * @return  string
      */
     public function rm($files = "*", $cached = false) {
@@ -382,8 +395,8 @@ class GitRepo {
      * Accepts a commit message string
      *
      * @access  public
-     * @param   string  commit message
-     * @param   boolean  should all files be committed automatically (-a flag)
+     * @param   string $message commit message
+     * @param   boolean $commit_all should all files be committed automatically (-a flag)
      * @return  string
      */
     public function commit($message = "", $commit_all = true) {
@@ -398,7 +411,7 @@ class GitRepo {
      * Accepts a target directory
      *
      * @access  public
-     * @param   string  target directory
+     * @param   string $target target directory
      * @return  string
      */
     public function clone_to($target) {
@@ -412,7 +425,7 @@ class GitRepo {
      * Accepts a source directory
      *
      * @access  public
-     * @param   string  source directory
+     * @param   string $source source directory
      * @return  string
      */
     public function clone_from($source) {
@@ -426,8 +439,8 @@ class GitRepo {
      * Accepts a source url
      *
      * @access  public
-     * @param   string  source url
-     * @param   string  reference path
+     * @param   string $source source url
+     * @param   string $reference reference path
      * @return  string
      */
     public function clone_remote($source, $reference) {
@@ -440,8 +453,8 @@ class GitRepo {
      * Accepts a remove directories flag
      *
      * @access  public
-     * @param   bool    delete directories?
-     * @param   bool    force clean?
+     * @param   bool  $dirs  delete directories?
+     * @param   bool  $force  force clean?
      * @return  string
      */
     public function clean($dirs = false, $force = false) {
@@ -454,7 +467,7 @@ class GitRepo {
      * Accepts a name for the branch
      *
      * @access  public
-     * @param   string  branch name
+     * @param   string $branch branch name
      * @return  string
      */
     public function create_branch($branch) {
@@ -467,7 +480,8 @@ class GitRepo {
      * Accepts a name for the branch
      *
      * @access  public
-     * @param   string  branch name
+     * @param   string $branch branch name
+     * @param   bool $force force ?
      * @return  string
      */
     public function delete_branch($branch, $force = false) {
@@ -478,7 +492,7 @@ class GitRepo {
      * Runs a `git branch` call
      *
      * @access  public
-     * @param   bool    keep asterisk mark on active branch
+     * @param   bool  $keep_asterisk  keep asterisk mark on active branch
      * @return  array
      */
     public function list_branches($keep_asterisk = false) {
@@ -518,7 +532,7 @@ class GitRepo {
      * Returns name of active branch
      *
      * @access  public
-     * @param   bool    keep asterisk mark on branch name
+     * @param   bool   $keep_asterisk keep asterisk mark on branch name
      * @return  string
      */
     public function active_branch($keep_asterisk = false) {
@@ -538,7 +552,7 @@ class GitRepo {
      * Accepts a name for the branch
      *
      * @access  public
-     * @param   string  branch name
+     * @param   string $branch branch name
      * @return  string
      */
     public function checkout($branch) {
@@ -551,7 +565,7 @@ class GitRepo {
      * Accepts a name for the branch to be merged
      *
      * @access  public
-     * @param   string $branch
+     * @param   string $branch branch name
      * @return  string
      */
     public function merge($branch) {
@@ -573,8 +587,8 @@ class GitRepo {
      *
      * Accepts the name for the tag and the message
      *
-     * @param string $tag
-     * @param string $message
+     * @param string $tag tag
+     * @param string $message message
      * @return string
      */
     public function add_tag($tag, $message = null) {
@@ -610,8 +624,8 @@ class GitRepo {
      *
      * Accepts the name of the remote and local branch
      *
-     * @param string $remote
-     * @param string $branch
+     * @param string $remote remote
+     * @param string $branch branch
      * @return string
      */
     public function push($remote, $branch) {
@@ -623,8 +637,8 @@ class GitRepo {
      *
      * Accepts the name of the remote and local branch
      *
-     * @param string $remote
-     * @param string $branch
+     * @param string $remote remote
+     * @param string $branch branch
      * @return string
      */
     public function pull($remote, $branch) {
@@ -634,7 +648,7 @@ class GitRepo {
     /**
      * List log entries.
      *
-     * @param strgin $format
+     * @param string $format format
      * @return string
      */
     public function log($format = null) {
@@ -647,7 +661,7 @@ class GitRepo {
     /**
      * Sets the project description.
      *
-     * @param string $new
+     * @param string $new new
      */
     public function set_description($new) {
         $path = $this->git_directory_path();
@@ -667,8 +681,8 @@ class GitRepo {
     /**
      * Sets custom environment options for calling Git
      *
-     * @param string key
-     * @param string value
+     * @param string $key key
+     * @param string $value value
      */
     public function setenv($key, $value) {
         $this->envopts[$key] = $value;

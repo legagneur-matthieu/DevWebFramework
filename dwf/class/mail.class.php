@@ -8,8 +8,8 @@
 class mail {
 
     /**
-     * Permet de vÃ©rifier que la librairie flexslider a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie flexslider a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie flexslider a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie flexslider a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
@@ -44,11 +44,11 @@ class mail {
 
     /**
      * Envoi un mail
-     * @param string $from Email de l'Ã©metteur 
-     * @param string $from_name Nom / pseudo de l'Ã©metteur
+     * @param string $from Email de l'émetteur 
+     * @param string $from_name Nom / pseudo de l'émetteur
      * @param string $to Email du destinataire
      * @param string $subject Sujet du massage
-     * @param string $msg Contenu du message ( peut-Ãªtre en HTML )
+     * @param string $msg Contenu du message ( peut-être en HTML )
      * @return boolean Succes ou erreur
      */
     public function send($from, $from_name, $to, $subject, $msg) {
@@ -64,7 +64,7 @@ class mail {
 
     /**
      * Ajoute une piece jointe au mail
-     * @param string $path chemin d'acces du fichier Ã  joindre
+     * @param string $path chemin d'acces du fichier à joindre
      * @param string $name (facultatif) renomme le fichier avant envoi
      */
     public function join_file($path, $name = "") {

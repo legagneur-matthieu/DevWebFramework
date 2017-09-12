@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Cette classe gÃ¨re l'administration des articles
+ * Cette classe gère l'administration des articles
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class g_article {
 
     /**
-     * Cette classe gÃ¨re l'administration des articles
+     * Cette classe gère l'administration des articles
      */
     public function __construct() {
         if (isset($_GET["action"])) {
@@ -24,7 +24,7 @@ class g_article {
     }
 
     /**
-     * GÃ¨re la modification d'articles
+     * Gère la modification d'articles
      */
     private function g_article_modif() {
         if (article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
@@ -38,11 +38,11 @@ class g_article {
             form::new_form("", "#", "post", true);
             form::new_fieldset("Modifier un article");
             form::input("Titre de l'article", "titre", "text", $article->get_titre());
-            form::datetimepicker("DiffÃ©rer la publication ( laissez vide pour ne pas diffÃ©rer )", "date");
-            form::file("Image de prÃ©view", "img", false);
+            form::datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
+            form::file("Image de préview", "img", false);
             form::textarea("Contenu de l'article", "contenu", htmlspecialchars_decode(base64_decode($article->get_contenu())));
-            form::input("Tags (sÃ©parÃ© par des viruges)", "tags", "text", $article->get_tags());
-            form::select("CatÃ©gorie", "cat", $option);
+            form::input("Tags (séparé par des viruges)", "tags", "text", $article->get_tags());
+            form::select("Catégorie", "cat", $option);
             form::submit("btn-default");
             form::close_fieldset();
             form::close_form();
@@ -88,7 +88,7 @@ class g_article {
                 $article->set_titre(ucfirst($_POST["titre"]));
                 $article->set_tags($_POST["tags"]);
                 $article->set_categorie($_POST["cat"]);
-                js::alert("Votre article a bien Ã©tÃ© modifiÃ©");
+                js::alert("Votre article a bien été modifié");
                 js::redir("");
             }
         } else {
@@ -98,16 +98,16 @@ class g_article {
     }
 
     /**
-     * GÃ¨re la suppresion d'articles
+     * Gère la suppresion d'articles
      */
     private function g_article_supp() {
         application::$_bdd->query("delete from article where id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
-        js::alert("L'article a bien Ã©tÃ© supprimÃ©");
+        js::alert("L'article a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"] . "&admin=g_article");
     }
 
     /**
-     * GÃ¨re l'affichage et l'ajout d'articles
+     * Gère l'affichage et l'ajout d'articles
      */
     private function g_article_default() {
         $articles = article::get_table_array();
@@ -119,7 +119,7 @@ class g_article {
                 <tr>
                     <th>Titre</th>
                     <th>Date</th>
-                    <th>CatÃ©gorie</th>
+                    <th>Catégorie</th>
                     <th>Supprimer</th>
                 </tr>
             </thead>
@@ -152,11 +152,11 @@ class g_article {
         form::new_form("", "#", "post", true);
         form::new_fieldset("Ajouter un article");
         form::input("Titre de l'article", "titre");
-        form::datetimepicker("DiffÃ©rer la publication ( laissez vide pour ne pas diffÃ©rer )", "date");
-        form::file("Image de prÃ©view", "img", false);
+        form::datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
+        form::file("Image de préview", "img", false);
         form::textarea("Contenu de l'article", "contenu");
-        form::input("Tags (sÃ©parÃ© par des viruges)", "tags");
-        form::select("CatÃ©gorie", "cat", $option);
+        form::input("Tags (séparé par des viruges)", "tags");
+        form::select("Catégorie", "cat", $option);
         form::submit("btn-default");
         form::close_fieldset();
         form::close_form();
@@ -197,7 +197,7 @@ class g_article {
             }
             $contenu = base64_encode($cke->parse($_POST["contenu"]));
             article::ajout($date, ucfirst($_POST["titre"]), $img, $contenu, $_POST["tags"], $_POST["cat"]);
-            js::alert("Votre article a bien Ã©tÃ© crÃ©Ã©");
+            js::alert("Votre article a bien été créé");
             js::redir("");
         }
     }

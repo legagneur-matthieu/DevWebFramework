@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Cette classe permet de chiffrer et dÃ©chiffrer des messages<br />
- * la taille de la clÃ© limite la taille maximale du message Ã  chiffrer : <br />
- * 1024 bits = 117 caractÃ¨res <br />
- * 2048 bits = 245 caractÃ¨res <br />
- * 4096 bits = 501 caractÃ¨res
+ * Cette classe permet de chiffrer et déchiffrer des messages<br />
+ * la taille de la clé limite la taille maximale du message à chiffrer : <br />
+ * 1024 bits = 117 caractères <br />
+ * 2048 bits = 245 caractères <br />
+ * 4096 bits = 501 caractères
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.fr>
  */
@@ -18,18 +18,18 @@ class ssl {
     private $_RSA;
 
     /**
-     * Permet de vÃ©rifier que la librairie jsencrypt a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var array Permet de vÃ©rifier que la librairie flexslider a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie jsencrypt a bien été appelée qu'une fois.
+     * @var array Permet de vérifier que la librairie flexslider a bien été appelée qu'une fois.
      */
     private static $_called = array(false, false);
 
     /**
-     * Cette classe permet de chiffrer et dÃ©chiffrer des messages <br />
-     * la taille de la clÃ© limite la taille maximale du message Ã  chiffrer : <br />
-     * 1024 bits = 117 caractÃ¨res <br />
-     * 2048 bits = 245 caractÃ¨res <br />
-     * 4096 bits = 501 caractÃ¨res
-     * @param int $bits Longueur de la clÃ© ( en bits, 1024 par defaut)
+     * Cette classe permet de chiffrer et déchiffrer des messages <br />
+     * la taille de la clé limite la taille maximale du message à chiffrer : <br />
+     * 1024 bits = 117 caractères <br />
+     * 2048 bits = 245 caractères <br />
+     * 4096 bits = 501 caractères
+     * @param int $bits Longueur de la clé ( en bits, 1024 par defaut)
      */
     public function __construct($bits = 1024) {
         $this->init();
@@ -43,7 +43,7 @@ class ssl {
     }
 
     /**
-     * Charge les librairies PHP nÃ©cÃ©ssaires 
+     * Charge les librairies PHP nécéssaires 
      */
     private function init() {
         //include_once __DIR__.'/phpseclib/phpsec_loader.class.php';
@@ -57,17 +57,17 @@ class ssl {
     }
 
     /**
-     * Retourne la clÃ© publique
-     * @return string ClÃ© publique
+     * Retourne la clé publique
+     * @return string Clé publique
      */
     public function get_public_key() {
         return session::get_val("ssl_public_key");
     }
 
     /**
-     * Chiffre un message avec la clÃ© publique
-     * @param string $data message Ã  chiffrer
-     * @return string message chiffrÃ© (en binaire!)
+     * Chiffre un message avec la clé publique
+     * @param string $data message à chiffrer
+     * @return string message chiffré (en binaire!)
      */
     public function encrypt($data) {
         $this->_RSA->loadKey($this->get_public_key());
@@ -75,8 +75,8 @@ class ssl {
     }
 
     /**
-     * DÃ©chiffre un message avec la clÃ© privÃ©e
-     * @param string $data message Ã  dÃ©chiffrer
+     * Déchiffre un message avec la clé privée
+     * @param string $data message à déchiffrer
      * @return string Message en clair
      */
     public function decrypt($data) {
@@ -86,8 +86,8 @@ class ssl {
 
     /**
      * Charge les librairie JS et chiffre la saisie des utilisateurs dans les formulaires de la page
-     * ATTENTION : une saisie d'utilisateur ne doit pas excÃ©der 117 caractÃ¨res !
-     * @param boolean $enable_client_ssl l'utilisateur a t-il besoin d'une paire de clÃ©s pour lui aussi chiffrer/dÃ©chiffrer des messages du serveur ? (true/false, false par defaut)
+     * ATTENTION : une saisie d'utilisateur ne doit pas excéder 117 caractères !
+     * @param boolean $enable_client_ssl l'utilisateur a t-il besoin d'une paire de clés pour lui aussi chiffrer/déchiffrer des messages du serveur ? (true/false, false par defaut)
      */
     public function ssl_js($enable_client_ssl = false) {
         if (!self::$_called[0]) {
@@ -118,8 +118,8 @@ class ssl {
     }
 
     /**
-     * Affiche un message chiffrÃ© avec la clÃ© publique de l'utilisateur ( cf $this->ssl_js(TRUE) )
-     * @param string $html chaine HTML de longueur n'excÃ©dant pas 117 caractÃ¨res
+     * Affiche un message chiffré avec la clé publique de l'utilisateur ( cf $this->ssl_js(TRUE) )
+     * @param string $html chaine HTML de longueur n'excédant pas 117 caractères
      */
     public function encrypt_html($html) {
         if (session::get_val("client_ssl_public_key") and self::$_called[1]) {
@@ -129,7 +129,7 @@ class ssl {
             <?php
         } else {
             ?>
-            <div class="alert alert-danger" role="alert"><p>Une erreur est survenu, ce comptenu ne peux Ãªtre affichÃ©</p></div>
+            <div class="alert alert-danger" role="alert"><p>Une erreur est survenu, ce comptenu ne peux être affiché</p></div>
             <?php
         }
     }

@@ -30,7 +30,7 @@ class application {
 
     /**
      * Cette classe fait office de contrÃ´leur et layout pour l'application
-     * (dans le constructeur, les "DWF" sont Ã  modifier)
+     * (dans le constructeur, les "DWF" sont à modifier)
      */
     public function __construct() {
         if (!isset($_GET['page'])) {
@@ -45,33 +45,33 @@ class application {
     }
 
     /**
-     * Cette mÃ©thode gÃ¨re les routes de l'application en fonction de l'authentification (le prÃ©fixe d'autentification est celui que vous utiliserez avec auth (class/auth.class.php))<br />
+     * Cette méthode gère les routes de l'application en fonction de l'authentification (le préfixe d'autentification est celui que vous utiliserez avec auth (class/auth.class.php))<br />
      * LES ROUTES SONT A CONFIGURER DANS LA CLASS CONFIG (class/config.php) <br />
-     * Les Ã©lÃ©ments d'une route : <br />
+     * Les éléments d'une route : <br />
      * <ul>
-     *  <li>page : fait rÃ©fÃ©rence Ã  la fonction Ã  appeler dans la vue ( visible dans la variable $_GET["page"])</li>
-     *  <li>text : texte Ã  afficher dans le menu pour accÃ©der Ã  cette page ( si text n'est pas set ou est vide, cette route ne s'affichera pas dans le menu)</li>
-     *  <li>title : title Ã  attacher au texte</li>
+     *  <li>page : fait référence à la fonction à appeler dans la vue ( visible dans la variable $_GET["page"])</li>
+     *  <li>text : texte à afficher dans le menu pour accéder à cette page ( si text n'est pas set ou est vide, cette route ne s'affichera pas dans le menu)</li>
+     *  <li>title : title à attacher au texte</li>
      *  <li>description : meta description de la page (optionel pour les applications internes/intranet)</li>
      *  <li>keyword : meta keyword de la page (optionel pour les applications internes/intranet)</li>
      * </ul>
-     * au moins une route "index" est obligatoire, une fois une route crÃ©Ã©e, il faudra crÃ©er sa fonction correspondante dans la classe pages (class/pages.class.php)
+     * au moins une route "index" est obligatoire, une fois une route créée, il faudra créer sa fonction correspondante dans la classe pages (class/pages.class.php)
      * 
-     * @param string $prefix_auth prÃ©fixe des variables d'authentification
+     * @param string $prefix_auth préfixe des variables d'authentification
      */
     private function routes() {
         $this->_routes = (session::get_auth() ? config::$_route_auth : config::$_route_unauth);
     }
 
     /**
-     * Menu de l'application ( gÃ©nÃ©rÃ© en fonction des routes )
+     * Menu de l'application ( généré en fonction des routes )
      */
     private function menu() {
         ?>
         <nav class="navbar navbar-default">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">DÃ©rouler le menu</span>
+                    <span class="sr-only">Dérouler le menu</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -96,12 +96,12 @@ class application {
             </div>
         </nav>
 
-        <p class="min alert alert-info"><small><span class="glyphicon glyphicon-info-sign"><span class="sr-only">Information</span></span> Vous Ãªtes sur mobile ou tablette ? Tenez votre appareil Ã  l'horizontale !</small></p>
+        <p class="min alert alert-info"><small><span class="glyphicon glyphicon-info-sign"><span class="sr-only">Information</span></span> Vous êtes sur mobile ou tablette ? Tenez votre appareil à l'horizontale !</small></p>
         <?php
     }
 
     /**
-     * Affiche l'entÃªte, le menu, la vue demandÃ©e par l'utilisateur et le pied de page
+     * Affiche l'entête, le menu, la vue demandée par l'utilisateur et le pied de page
      */
     private function contenu() {
         $page_finded = false;
@@ -146,7 +146,7 @@ class application {
     /**
      * Cette fonction retourne les variables $_GET courante sous forme d'URL 
      * ("index.php?page=une_page&amp;variable_get=une_valeur&amp;")
-     * le paramÃ¨tre $skip_gets permet de ne pas retourner certaines variables indÃ©sirables ou rÃ©servÃ© Ã  une classe particuliÃ¨re
+     * le paramètre $skip_gets permet de ne pas retourner certaines variables indésirables ou réservé à une classe particulière
      * @param array $skip_gets tableau des variable $_GET a exclure
      * @return string Les variables $_GET courante sous forme d'URL 
      */
@@ -161,7 +161,7 @@ class application {
     }
 
     /**
-     * Declenche l'evenement dont le nom est passÃ© en paramÃ¨tre
+     * Declenche l'evenement dont le nom est passé en paramètre
      * @param string $event_name nom de l'evenement
      */
     public static function event($event_name) {

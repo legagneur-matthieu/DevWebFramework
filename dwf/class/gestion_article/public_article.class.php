@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Cette classe permet de gÃ©rer et afficher des articles.
+ * Cette classe permet de gérer et afficher des articles.
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class public_article {
 
     /**
-     * Cette classe permet de gÃ©rer et afficher des articles.
+     * Cette classe permet de gérer et afficher des articles.
      */
     public function __construct() {
         
     }
 
     /**
-     * Affiche un module avec les derniÃ¨re actualitÃ© ( les modules sont administrable depuis $this->admin() )
+     * Affiche un module avec les dernière actualité ( les modules sont administrable depuis $this->admin() )
      * @param string $name nom du module
      */
     public function module($name = "default") {
@@ -99,8 +99,8 @@ class public_article {
                     $date = time::convert_date($date[0]) . " " . $date[1];
                     ?>
                     <p>
-                        <small>PubliÃ© le <span><?php echo html_structures::time($article->get_date(), $date); ?></span> <br />
-                            CatÃ©gorie <span><?php echo html_structures::a_link(application::get_url(array("view", "id"))."view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
+                        <small>Publié le <span><?php echo html_structures::time($article->get_date(), $date); ?></span> <br />
+                            Catégorie <span><?php echo html_structures::a_link(application::get_url(array("view", "id"))."view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
                         </small>
                     </p>
                 <?php ?>
@@ -130,11 +130,11 @@ class public_article {
     }
 
     /**
-     * Affiche les catÃ©gories des articles
+     * Affiche les catégories des articles
      */
     private function categories() {
         ?>
-        <h2><small>Liste des catÃ©gories</small></h2>
+        <h2><small>Liste des catégories</small></h2>
         <ul class="nav nav-pills nav-stacked">
             <?php
             foreach (cat_article::get_table_array() as $cat) {
@@ -143,7 +143,7 @@ class public_article {
                     <?php
                     switch ($cat["id"]) {
                         case 1:
-                            $cat["nom"] = "Articles non catÃ©gorisÃ©";
+                            $cat["nom"] = "Articles non catégorisé";
                             break;
                         case 2:
                             $cat["nom"] = "Tout les articles";
@@ -160,7 +160,7 @@ class public_article {
     }
 
     /**
-     * Affiche une catÃ©gorie d'articles
+     * Affiche une catégorie d'articles
      */
     private function categorie() {
         if (isset($_GET["id"]) and math::is_int($_GET["id"]) and cat_article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") > 0) {
@@ -173,7 +173,7 @@ class public_article {
             }
             $cat = cat_article::get_from_id($_GET["id"]);
             ?>
-            <h2><small>CatÃ©gorie : <?php echo $cat->get_nom(); ?></small></h2>
+            <h2><small>Catégorie : <?php echo $cat->get_nom(); ?></small></h2>
             <?php
             $this->media($articles);
             pagination::print_pagination("p", $p[3]);

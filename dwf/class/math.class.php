@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe contient quelques fonctions mathÃ©matique de base ainsi que des fonctions pour verifier le type de variables
+ * Cette classe contient quelques fonctions mathématique de base ainsi que des fonctions pour verifier le type de variables
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class math {
 
     /**
-     * Retourne le PGCD de deux nombres ( calculÃ© par l'algorithme d'Euclide )
+     * Retourne le PGCD de deux nombres ( calculé par l'algorithme d'Euclide )
      * @param int $nb1 Nombre entier non nul superieur a $nb2
      * @param int $nb2 Nombre entier non nul inferieur a $nb1
      * @return int|boolean Retourne le PGCD ou false en cas d'erreur
@@ -53,7 +53,7 @@ class math {
     }
 
     /**
-     * Retourne le pÃ©rimÃ¨tre d'un cercle Ã  partir de son diamÃ¨tre
+     * Retourne le périmètre d'un cercle à partir de son diamètre
      * @param float $nb Diametre
      * @return float Perimetre
      */
@@ -62,7 +62,7 @@ class math {
     }
 
     /**
-     * Retourne le diamÃ¨tre d'un cercle Ã  partir de son perimÃ¨tre
+     * Retourne le diamètre d'un cercle à partir de son perimètre
      * @param float $nb Perimetre
      * @return float Diametre
      */
@@ -71,7 +71,7 @@ class math {
     }
 
     /**
-     * Calcule la distance entre deux points depuis leurs coordonÃ©es X (latitude) et Y (longitude)
+     * Calcule la distance entre deux points depuis leurs coordonées X (latitude) et Y (longitude)
      * @param float $xa
      * @param float $ya
      * @param float $xb
@@ -85,7 +85,7 @@ class math {
     /**
      * Calcule un pourcentage
      * @param float $nb Nombre de base
-     * @param float $percent Poucentage Ã  appliquer
+     * @param float $percent Poucentage à appliquer
      * @return float Pourcentage du nombre de base
      */
     public static function pourcentage($nb, $percent) {
@@ -95,14 +95,14 @@ class math {
     /**
      * $a=>$b <br />
      * $c=>$d <br />
-     * Effectue un produit en croix ( ou rÃ©gle de trois) <br />
-     * La valeur "null" doit etre appliquÃ©e Ã  la valeur recherchÃ©e (que retournera la fonction)
+     * Effectue un produit en croix ( ou régle de trois) <br />
+     * La valeur "null" doit etre appliquée à la valeur recherchée (que retournera la fonction)
      *
      * @param float|null $a Valeur a
      * @param float|null $b Valeur b
      * @param float|null $c Valeur c
      * @param float|null $d Valeur d
-     * @return float|boolean Retourne la valeur cherchÃ©e ou false en cas d'erreur ( gÃ©nÃ©ralement une division par 0)
+     * @return float|boolean Retourne la valeur cherchée ou false en cas d'erreur ( généralement une division par 0)
      */
     public static function produit_en_croix($a, $b, $c, $d) {
         if ($a == null and $d != 0) {
@@ -119,12 +119,12 @@ class math {
     }
 
     /**
-     * Applique le thÃ©oreme de Pythagore ($c est la longueur de l'hypotenuse)<br />
-     * La valeur "null" doit etre appliquÃ©e Ã  la valeur recherchÃ©e (que retournera la fonction)
-     * @param float|null $a Premier cotÃ© adjacent
-     * @param float|null $b Second cotÃ© adjacent
+     * Applique le théoreme de Pythagore ($c est la longueur de l'hypotenuse)<br />
+     * La valeur "null" doit etre appliquée à la valeur recherchée (que retournera la fonction)
+     * @param float|null $a Premier coté adjacent
+     * @param float|null $b Second coté adjacent
      * @param float|null $c Hypotenuse du triangle
-     * @return float|boolean Retourne la valeur cherchÃ©e ou false en cas d'erreur
+     * @return float|boolean Retourne la valeur cherchée ou false en cas d'erreur
      */
     public static function pythagore($a, $b, $c) {
         if ($a == null) {
@@ -160,12 +160,12 @@ class math {
     }
 
     /**
-     * Retourne si le nombre passÃ© en paramÃ¨tre est un nombre heureux ou non <br />
-     * S'il est heureux, alors la fonction retourne la liste de la suite logique dÃ©montrant que le nombre est heureux <br />
+     * Retourne si le nombre passé en paramètre est un nombre heureux ou non <br />
+     * S'il est heureux, alors la fonction retourne la liste de la suite logique démontrant que le nombre est heureux <br />
      * (exemple, 7:[49,97,130,10,1]) <br />
      * sinon la fonction retourne false
-     * @param float $nb Nombre a Ã©valuer
-     * @return array|boolean Liste de la suite logique dÃ©montrant que le nombre est heureux, false si le nombre est malheureux 
+     * @param float $nb Nombre a évaluer
+     * @return array|boolean Liste de la suite logique démontrant que le nombre est heureux, false si le nombre est malheureux 
      */
     public static function is_heureux($nb) {
         $nb = ((float) $nb);
@@ -189,9 +189,9 @@ class math {
     }
 
     /**
-     * Retourne si un nombre est polygonal ( triangulaire, carrÃ©, pentagonal ,hexagonal, heptagonal, octogonal...)
-     * @param int $nb Nombre entier Ã  Ã©valuer
-     * @param int $x_gonal Nombre de cotÃ© du polygone (minimum 3 ! )( 3 = triangulaire, 4 = carrÃ©...)
+     * Retourne si un nombre est polygonal ( triangulaire, carré, pentagonal ,hexagonal, heptagonal, octogonal...)
+     * @param int $nb Nombre entier à évaluer
+     * @param int $x_gonal Nombre de coté du polygone (minimum 3 ! )( 3 = triangulaire, 4 = carré...)
      * @return boolean True si le nombre est polygonal, false si non polygonal
      */
     public static function is_polygonal($nb, $x_gonal) {
@@ -212,9 +212,9 @@ class math {
     }
 
     /**
-     * Retourne si un nombre est tÃ©traÃ©drique
-     * @param int $nb Nombre entier a Ã©valuer
-     * @return boolean True si le nombre est tÃ©traÃ©drique, false si non tÃ©traÃ©drique
+     * Retourne si un nombre est tétraédrique
+     * @param int $nb Nombre entier a évaluer
+     * @return boolean True si le nombre est tétraédrique, false si non tétraédrique
      */
     public static function is_tetrahedral($nb) {
         if ($nb < 1 or ! self::is_int($nb)) {
@@ -231,9 +231,9 @@ class math {
     }
 
     /**
-     * Retourne si un nombre est pyramidal carrÃ©
-     * @param int $nb Nombre entier Ã  Ã©valuer
-     * @return boolean True si le nombre est pyramidal carrÃ©, false si non pyramidal carrÃ©
+     * Retourne si un nombre est pyramidal carré
+     * @param int $nb Nombre entier à évaluer
+     * @return boolean True si le nombre est pyramidal carré, false si non pyramidal carré
      */
     public static function is_square_pyramidal($nb) {
         if ($nb < 1 or ! self::is_int($nb)) {
@@ -250,11 +250,11 @@ class math {
     }
 
     /**
-     * Retourne le delta et les solution d'une Ã©quation du second degrÃ© dÃ©finit par axÂ²+bx+c <br />
+     * Retourne le delta et les solution d'une équation du second degré définit par axÂ²+bx+c <br />
      * resutat sous la forme : array("delta"=>$delta, "solutions"=> null|array($x1,$x2);
-     * @param float $a a de l'Ã©quation axÂ²+bx+c
-     * @param float $b b de l'Ã©quation axÂ²+bx+c
-     * @param float $c c de l'Ã©quation axÂ²+bx+c
+     * @param float $a a de l'équation axÂ²+bx+c
+     * @param float $b b de l'équation axÂ²+bx+c
+     * @param float $c c de l'équation axÂ²+bx+c
      * @return array array("delta"=>$delta, "solutions"=> null|array($x1,$x2);
      */
     public static function delta($a, $b, $c) {
@@ -284,7 +284,7 @@ class math {
     /**
      * Retourne true si la variable est un int, false dans le cas contraire
      * 
-     * @param int $nb Variable a Ã©valuer
+     * @param int $nb Variable a évaluer
      * @return boolean La variable est-il un int ? (true/false)
      */
     public static function is_int($nb) {
@@ -294,7 +294,7 @@ class math {
     /**
      * Retourne true si la variable est un float, false dans le cas contraire
      * 
-     * @param float $nb Variable Ã  Ã©valuer
+     * @param float $nb Variable à évaluer
      * @return boolean La variable est-il un float ? (true/false)
      */
     public static function is_float($nb) {
@@ -304,7 +304,7 @@ class math {
     /**
      * Retourne true si la variable est un boolean, false dans le cas contraire
      * 
-     * @param boolean $nb Variable Ã  Ã©valuer
+     * @param boolean $nb Variable à évaluer
      * @return boolean La variable est-il un boolean ? (true/false)
      */
     public static function is_bool($nb) {

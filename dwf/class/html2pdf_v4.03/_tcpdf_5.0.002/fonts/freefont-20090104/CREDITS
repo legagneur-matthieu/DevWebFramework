@@ -226,7 +226,7 @@ Netherlands, released a Devanagari font as Metafont source, available
 under the terms of GNU GPL. Later, Anshuman Pandey from the Washington
 University, Seattle, USA, took over the maintenance of font. Fonts can
 be found on CTAN, <ftp://ftp.dante.de/tex-archive/language/devanagari/>. I
-converted the font to Type 1 format using P茅ter Szab贸's TeXtrace
+converted the font to Type 1 format using P閠er Szab贸's TeXtrace
 program <http://www.inf.bme.hu/~pts/textrace/> and removed some
 redundant control points with PfaEdit.
 
@@ -281,7 +281,7 @@ maintain home page on the Ethiopic font project,
 <http://www.informatik.uni-hamburg.de/TGI/mitarbeiter/wimis/kummer/ethiop_eng.html>,
 and can be reached at <ethiop AT informatik.uni-hamburg.de>. The current
 version of fonts is 0.7 (1998), and they are released under GNU GPL. I
-converted the fonts to Type 1 format using P茅ter Szab贸's TeXtrace-A
+converted the fonts to Type 1 format using P閠er Szab贸's TeXtrace-A
 program <http://www.inf.bme.hu/~pts/textrace/> and removed some
 redundant control points with PfaEdit.
 

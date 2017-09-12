@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Cette classe permet la crÃ©ation et l'utilisation de services
+ * Cette classe permet la création et l'utilisation de services
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class service {
 
     /**
-     * Envoie une requÃªte par mÃ©thode POST sans attendre de rÃ©ponses !
+     * Envoie une requête par méthode POST sans attendre de réponses !
      * 
-     * @param string $url URL du service ( attention : les varibles GET sont ignorÃ©es !)
-     * @param array $params ParamÃ¨tres POST
+     * @param string $url URL du service ( attention : les varibles GET sont ignorées !)
+     * @param array $params Paramètres POST
      */
     public static function HTTP_POST($url, $params = array()) {
         ob_start();
@@ -32,12 +32,12 @@ class service {
     }
 
     /**
-     * Envoie une requÃªte par mÃ©thode POST et retourne la rÃ©ponse
+     * Envoie une requête par méthode POST et retourne la réponse
      * 
-     * @param string $url URL du service ( attention : les varibles GET sont ignorÃ©es !)
-     * @param array $params ParamÃ¨tres POST
+     * @param string $url URL du service ( attention : les varibles GET sont ignorées !)
+     * @param array $params Paramètres POST
      * @param boolean $ssl utiliser le protocole HTTPS ? (true ou false, false par default)
-     * @return string|boolean RÃ©ponse du service ou false en cas de problÃ¨me.
+     * @return string|boolean Réponse du service ou false en cas de problème.
      */
     public static function HTTP_POST_REQUEST($url, $params, $ssl = false) {
         $req = array(
@@ -50,10 +50,10 @@ class service {
     }
 
     /**
-     * Envoie une requÃªte par mÃ©thode GET et attend le rÃ©sultat du service
+     * Envoie une requête par méthode GET et attend le résultat du service
      * 
-     * @param string $url url du service (avec les paramÃ¨tres get)
-     * @return string|boolean RÃ©ponse du service ou false en cas de problÃ¨me.
+     * @param string $url url du service (avec les paramètres get)
+     * @return string|boolean Réponse du service ou false en cas de problème.
      */
     public static function HTTP_GET($url) {
         $str = "";
@@ -69,10 +69,10 @@ class service {
     }
 
     /**
-     * Retourne le statut d'une page (utile pour verifier l'Ã©tat d'un service)
+     * Retourne le statut d'une page (utile pour verifier l'état d'un service)
      * @param string $host adresse hÃ´te, exemple : www.duckduckgo.com
-     * @param string $port port Ã  verifier (80 par defaut)
-     * @param string $page page Ã  verifier (index.php par defaut)
+     * @param string $port port à verifier (80 par defaut)
+     * @param string $page page à verifier (index.php par defaut)
      * @return string statut code ( sous forme : "HTTP/1.1 404 Not Found")
      */
     public static function HTTP_get_STATUS($host, $port = 80, $page = "index.php") {
@@ -87,9 +87,9 @@ class service {
     }
 
     /**
-     * Fonction de whitelite Ã  mettre au dÃ©but du service , si une IP non autorisÃ©e tente d'acceder au service, le script s'arrÃªte sans executer la suite
+     * Fonction de whitelite à mettre au début du service , si une IP non autorisée tente d'acceder au service, le script s'arrête sans executer la suite
      * 
-     * @param array $IP_Allow liste des IP Ã  autoriser
+     * @param array $IP_Allow liste des IP à autoriser
      */
     public static function security_check($IP_Allow = array("localhost", "127.0.0.1", "::1")) {
         if (!in_array($_SERVER["REMOTE_ADDR"], $IP_Allow)) {

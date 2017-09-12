@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe gÃ¨re la messagerie, elle permet d'envoyer, de rÃ©ceptionner ou de supprimer un message.
+ * Cette classe gère la messagerie, elle permet d'envoyer, de réceptionner ou de supprimer un message.
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -26,7 +26,7 @@ class messagerie {
     private $_tuple_user;
 
     /**
-     * Cette classe gÃ¨re la messagerie, elle permet d'envoyer, de rÃ©ceptionner ou de supprimer un message. 
+     * Cette classe gère la messagerie, elle permet d'envoyer, de réceptionner ou de supprimer un message. 
      * 
      * @param string $table_user Nom de la table utilisateurs
      * @param string $tuple_user Nom du tuble de login/pseudo/nom de la table utilisateur
@@ -53,8 +53,8 @@ class messagerie {
     private function sub_menu() {
         $route = array(
             array("action" => "write", "title" => "Ecrire un message", "text" => "ECRIRE UN MESSAGE"),
-            array("action" => "get", "title" => "Boite de rÃ©ception", "text" => "BOITE DE RECEPTION"),
-            array("action" => "send", "title" => "Message envoyÃ©", "text" => "MESSAGE ENVOYE")
+            array("action" => "get", "title" => "Boite de réception", "text" => "BOITE DE RECEPTION"),
+            array("action" => "send", "title" => "Message envoyé", "text" => "MESSAGE ENVOYE")
         );
         if (!isset($_GET["action"])) {
             $_GET["action"] = "get";
@@ -113,7 +113,7 @@ class messagerie {
     }
 
     /**
-     * Vue de la boite de rÃ©ception
+     * Vue de la boite de réception
      */
     private function get() {
         if (isset($_GET["action"]) and isset($_GET["id"]) and $_GET["action"] == "supp") {
@@ -165,7 +165,7 @@ class messagerie {
         ?>
         <div class="datatable">
             <?php
-            echo html_structures::table(array("date", "Destinataire", "Message"), $data, "Messages envoyÃ©", "datatable");
+            echo html_structures::table(array("date", "Destinataire", "Message"), $data, "Messages envoyé", "datatable");
             ?>
         </div>
         <?php
@@ -174,7 +174,7 @@ class messagerie {
     /**
      * Fonction de nettoyage automatique des messages
      * @param string $table_msg Nom de la table des messages
-     * @param int $years DurÃ©e de vie (en annÃ©es) des messages avant suppression (2 par defaut)
+     * @param int $years Durée de vie (en années) des messages avant suppression (2 par defaut)
      */
     public static function purge_msg($table_msg, $years = 2) {
         $today_years = (date("Y") - $years) . "-" . date("m-d H:i:s");

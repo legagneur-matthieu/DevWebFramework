@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Cette classe permet de faire des backup (sauvegardes) de la base de donnÃ©es Ã  partir des entitÃ©s de l'application courante
+ * Cette classe permet de faire des backup (sauvegardes) de la base de données à partir des entités de l'application courante
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class sql_backup {
 
     /**
-     * Cette classe permet de faire des backup (sauvegardes) de la base de donnÃ©es Ã  partir des entitÃ©s de l'application courante
+     * Cette classe permet de faire des backup (sauvegardes) de la base de données à partir des entités de l'application courante
      */
     public function __construct() {
         
     }
 
     /**
-     * Cette fonction permet de crÃ©er un backup dans le dossier passÃ© en paramÃ¨tre <br />
-     * ( il est recommandÃ© de renseigner un chemin vers un disque dur de sauvegarde diffÃ©rent du disque dur du systÃ¨me !)
+     * Cette fonction permet de créer un backup dans le dossier passé en paramètre <br />
+     * ( il est recommandé de renseigner un chemin vers un disque dur de sauvegarde différent du disque dur du système !)
      * @param string $path chemin vers le dossier de sauvegarde ( ne doit pas se terminer par un '/' ou '\'
      */
     public function backup_to_path($path) {
@@ -34,7 +34,7 @@ class sql_backup {
     }
 
     /**
-     * Cette fonction permet de crÃ©er un backup dans un dossier sur un serveur FTP distant
+     * Cette fonction permet de créer un backup dans un dossier sur un serveur FTP distant
      * @param string $dir Chemin du dossier de sauvegarde sur le FTP
      * @param string $host Host du FTP
      * @param string $login Login du FTP
@@ -58,8 +58,8 @@ class sql_backup {
     }
 
     /**
-     * Retourne le contenu du fichier de sauvegarde Ã  enregistrer ( sous forme de requÃªtes SQL)
-     * @return string requÃªtes SQL
+     * Retourne le contenu du fichier de sauvegarde à enregistrer ( sous forme de requêtes SQL)
+     * @return string requêtes SQL
      */
     private function get_sql() {
         $from = array(

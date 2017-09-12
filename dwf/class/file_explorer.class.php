@@ -28,7 +28,7 @@ class file_explorer {
 
     /**
      * Explore et affiche l'arborescence
-     * @param string $dir Dossier Ã  explorer 
+     * @param string $dir Dossier à explorer 
      */
     private function explore($dir) {
         ?>

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Organise dynamiquement les sous Ã©lÃ©ments d'un conteneur avec la librairie jquery "stalactite"
+ * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "stalactite"
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class stalactite {
 
     /**
-     * Permet de vÃ©rifier que la librairie stalactite a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie stalactite a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie stalactite a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie stalactite a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * Organise dynamiquement les sous Ã©lÃ©ments d'un conteneur avec la librairie jquery "stalactite"
+     * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "stalactite"
      * 
      * @param string $id id CSS du conteneur stalactite
      */

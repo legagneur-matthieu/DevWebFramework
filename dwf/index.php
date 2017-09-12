@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Cette classe est la premiÃ¨re appelÃ©e, elle ouvre les variables de session, <br />
- * redÃ©finit la time zone et fait appel Ã  ces mÃ©thodes privÃ©es avant d'appeler la classe application (IDEM __construct()...)
+ * Cette classe est la première appelée, elle ouvre les variables de session, <br />
+ * redéfinit la time zone et fait appel à ces méthodes privées avant d'appeler la classe application (IDEM __construct()...)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class index {
 
     /**
-     * Cette classe est la premiÃ¨re appelÃ©e, elle ouvre les variables de session, <br />
-     * redÃ©finit la time zone et fait appel Ã  ces mÃ©thodes privÃ©es avant d'appeler la class application (IDEM __construct()...)
+     * Cette classe est la première appelée, elle ouvre les variables de session, <br />
+     * redéfinit la time zone et fait appel à ces méthodes privées avant d'appeler la class application (IDEM __construct()...)
      */
     public function __construct() {
         ini_set("user_agent", "PHP (".phpversion()."; DevWebFramwork)");
@@ -23,8 +23,8 @@ class index {
 
     /**
      * Inclut toutes les classes du dossier "class" se finissant par ".class.php". <br />
-     * Vous pouvez crÃ©er vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application. <br />
-     * Toutes les fonction statiques "onload()" sont appelÃ©es.
+     * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application. <br />
+     * Toutes les fonction statiques "onload()" sont appelées.
      */
     private function classloader() {
         foreach (glob(__DIR__ . "/class/*.class.php") as $class) {
@@ -36,8 +36,8 @@ class index {
 
     /**
      * Supprime tous les fichiers se terminant par .php~ (trill) dans le dossier "class". <br />
-     * Cette fonction est recommandÃ©e sur les serveurs de production Linux pour des raisons de sÃ©curitÃ©. <br />
-     * Certains hÃ©bergeurs tolÃ¨rent mal cette fonction, elle peut Ãªtre dÃ©sactivÃ©e en commentant la ligne "$this->security_purge();" dans le constructeur.
+     * Cette fonction est recommandée sur les serveurs de production Linux pour des raisons de sécurité. <br />
+     * Certains hébergeurs tolèrent mal cette fonction, elle peut être désactivée en commentant la ligne "$this->security_purge();" dans le constructeur.
      */
     private function security_purge() {
         foreach (glob(__DIR__ . "/class/*.php~") as $trill) {

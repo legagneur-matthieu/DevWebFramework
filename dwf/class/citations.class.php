@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe affiche une citation cÃ©lÃ©bre Ã  chaque chargement de page
+ * Cette classe affiche une citation célébre à chaque chargement de page
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class citations {
 
     /**
-     * Cette classe affiche une citation cÃ©lÃ©bre Ã  chaque chargement de page
+     * Cette classe affiche une citation célébre à chaque chargement de page
      * @param string $css css de la citation
      */
     public function __construct($css = "cite-block") {

@@ -8,23 +8,23 @@
 class datatable {
 
     /**
-     * Permet de vÃ©rifier que la librairie datatable a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie datatable a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie datatable a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie datatable a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * ParamÃ¨tres par dÃ©faut du flexslider
+     * Paramètres par défaut du flexslider
      * 
      * @var array
      */
     private $_params = array("responsive" => "true", "language" => "{url: '../commun/src/js/DataTables/lang/French.lang.json'}");
 
     /**
-     * Applique les fonctionnalitÃ©es de la librairie datatable Ã  un tableau HTML
+     * Applique les fonctionnalitées de la librairie datatable à un tableau HTML
      * 
      * @param string $id id du tableau HTML
-     * @param array $params surcharge les paramÃ¨tres Ã  appliquer au flexslider ( laissez par dÃ©faut ou voir la doc)
+     * @param array $params surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc)
      */
     public function __construct($id = "datatable", $params = array()) {
         if (!self::$_called) {

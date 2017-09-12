@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe g√®re l'authentification d'un utilisateur
+ * Cette classe gËre l'authentification d'un utilisateur
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -35,12 +35,12 @@ class auth {
     private $_use_token;
 
     /**
-     * Cette classe g√®re l'authentification d'un utilisateur
+     * Cette classe gËre l'authentification d'un utilisateur
      * 
      * @param string $table table des utilisateurs
      * @param string $tuple_login tuble du login
      * @param string $tuple_psw tuple du mot de passe
-     * @param boolean $use_token Le formulaire doit-il posseder un token (s√©curit√©, true/false, false par defaut)
+     * @param boolean $use_token Le formulaire doit-il posseder un token (sÈcuritÈ, true/false, false par defaut)
      * @param boolean $call_session_start l'application doit lancer un session_start() (true/false)
      */
     public function __construct($table, $tuple_login, $tuple_psw, $use_token = false, $call_session_start = FALSE) {
@@ -55,7 +55,7 @@ class auth {
     }
 
     /**
-     * Affiche le formulaire d'authentification si non authentifi√©
+     * Affiche le formulaire d'authentification si non authentifiÈ
      */
     private function denied_or_granted() {
         if (!session::get_auth()) {
@@ -95,7 +95,7 @@ class auth {
     }
 
     /**
-     * Ex√©cution du formulaire d'authentification
+     * ExÈcution du formulaire d'authentification
      */
     private function exec_auth() {
         $req = application::$_bdd->fetch("select count(*) as count from " . $this->_table . " where " . $this->_tuple_login . "='" . application::$_bdd->protect_var($_POST['auth_login']) . "';");
@@ -120,10 +120,10 @@ class auth {
     }
 
     /**
-     * V√©rifie le mot de passe (la fonction hash est √† modifier √† votre convenance )
+     * VÈrifie le mot de passe (la fonction hash est ‡ modifier ‡ votre convenance )
      * 
      * @param string $checkPass mot de passe re√ßu
-     * @param string $realPass mot de passe stock√©
+     * @param string $realPass mot de passe stockÈ
      * @return boolean
      */
     private function checkPassword($checkPass, $realPass) {
@@ -131,7 +131,7 @@ class auth {
     }
 
     /**
-     * M√©thode de d√©connexion de l'utilisateur
+     * MÈthode de dÈconnexion de l'utilisateur
      */
     public static function unauth() {
         session_destroy();

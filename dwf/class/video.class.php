@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Cette classe premet d'afficher une vidÃ©o avec un player accessible
+ * Cette classe premet d'afficher une vidéo avec un player accessible
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class video {
 
     /**
-     * Permet de vÃ©rifier que la librairie videojs a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie videojs a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie videojs a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie videojs a bien été appelée qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * Cette classe premet d'afficher une vidÃ©o avec un player accessible
-     * @param string $src Chemin d'accÃ¨s Ã  la vidÃ©o
+     * Cette classe premet d'afficher une vidéo avec un player accessible
+     * @param string $src Chemin d'accès à la vidéo
      * @param string $id ID css
      */
     public function __construct($src, $id = "video-js") {

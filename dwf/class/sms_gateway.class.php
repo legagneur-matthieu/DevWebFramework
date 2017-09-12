@@ -2,31 +2,31 @@
 
 /**
  * Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer et recevoir des SMS depuis une application Web.
- * Cette classe a √©t√© con√ßu pour fonctionner par d√©faut avec le logiciel SMS Gateway install√© sur un appareil Android.
+ * Cette classe a ÈtÈ con√ßu pour fonctionner par dÈfaut avec le logiciel SMS Gateway installÈ sur un appareil Android.
  * https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway
- * Si vous utilisez un autre progranme, veillez √† adapter les param√®tres en cons√©quence.
+ * Si vous utilisez un autre progranme, veillez ‡ adapter les paramËtres en consÈquence.
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class sms_gateway {
 
     /**
-     * Param√®tres du Gateway 
-     * @var array Param√®tres du Gateway 
+     * ParamËtres du Gateway 
+     * @var array ParamËtres du Gateway 
      */
     private $gateway;
 
     /**
      * Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer et recevoir des SMS depuis une application Web.
-     * Cette classe a √©t√© con√ßu pour fonctionner par d√©faut avec le logiciel SMS Gateway install√© sur un appareil Android.
+     * Cette classe a ÈtÈ con√ßu pour fonctionner par dÈfaut avec le logiciel SMS Gateway installÈ sur un appareil Android.
      * https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway
-     * Si vous utilisez un autre progranme, veillez √† adapter les param√®tres en cons√©quence.
+     * Si vous utilisez un autre progranme, veillez ‡ adapter les paramËtres en consÈquence.
      * 
      * @param string $gateway_host Adresse IP ou DNS du Gateway
      * @param string $password Mot de passe du Gateway
      * @param int $gateway_port Port du Gateway
-     * @param string $gateway_page_send Page du service d'envoi de SMS (correspond √† "sendmsg" dans http://host:port/sendmsg)
-     * @param string $gateway_page_index Page d'accueil du gateway servant √† verifier si le service est joignable (la page doit renvoyer un statut code 1xx, 2xx ou 3xx)
+     * @param string $gateway_page_send Page du service d'envoi de SMS (correspond ‡ "sendmsg" dans http://host:port/sendmsg)
+     * @param string $gateway_page_index Page d'accueil du gateway servant ‡ verifier si le service est joignable (la page doit renvoyer un statut code 1xx, 2xx ou 3xx)
      */
     public function __construct($gateway_host, $password = "", $gateway_port = 9090, $gateway_page_send = "sendsms", $gateway_page_index = "") {
         $this->gateway = array(
@@ -54,8 +54,8 @@ class sms_gateway {
     }
 
     /**
-     * Retourne si le service r√©pond ou non
-     * @return boolean Retourne si le service r√©pond ou non
+     * Retourne si le service rÈpond ou non
+     * @return boolean Retourne si le service rÈpond ou non
      */
     public function is_runing() {
         $statu = (int) strtr(service::HTTP_get_STATUS($this->gateway["host"], $this->gateway["port"], $this->gateway["page_index"]), array("HTTP/1.1 " => ""));
@@ -82,7 +82,7 @@ class sms_gateway {
     }
 
     /**
-     * Affiche les messages envoy√©s
+     * Affiche les messages envoyÈs
      */
     public function outcoming() {
         $this->make_service();
@@ -97,7 +97,7 @@ class sms_gateway {
                 $sms["msg"]
             );
         }
-        echo html_structures::table(array("Date", "Phone", "Envoy√©", "Message"), $data, '', 'sms_outcoming');
+        echo html_structures::table(array("Date", "Phone", "EnvoyÈ", "Message"), $data, '', 'sms_outcoming');
         js::datatable('sms_outcoming', array("order" => '[[ 0, "desc" ]]'));
     }
 
@@ -105,8 +105,8 @@ class sms_gateway {
      * Envoi de SMS par URL
      * @param array $params tableau contenant les informations d'envoi ( array("phone"=>"0654321987","text"=>"le sms") )
      * @param string $methode get ou post, get par defaut
-     * @param boolean $ssl utiliser le protocole HTTPS ? (true ou false, false par d√©faut)
-     * @return boolean succ√®s ou echec ( si echec, verifiez la configuration du gateway, le sms sera envoy√© √† la prochaine verification !)
+     * @param boolean $ssl utiliser le protocole HTTPS ? (true ou false, false par dÈfaut)
+     * @return boolean succËs ou echec ( si echec, verifiez la configuration du gateway, le sms sera envoyÈ ‡ la prochaine verification !)
      */
     public function send_by_url($params, $methode = "get", $ssl = false) {
         $return = false;
@@ -139,12 +139,12 @@ class sms_gateway {
     }
 
     /**
-     * cr√©√© le service du gateway (requiert que le projet soit cr√©√© avec la prise en charge de services )
+     * crÈÈ le service du gateway (requiert que le projet soit crÈÈ avec la prise en charge de services )
      */
     private function make_service() {
         $file_service = "./services/sms_service.service.php";
         if (!file_exists($file_service)) {
-            file_put_contents($file_service, '<?php /** * Service de reception et de renvois des SMS */ class sms_service { /** * Parametres du gateway * @var array Parametres du gateway */ private $_gateway = array( "host" => "' . $this->gateway["host"] . '", "port" => "' . $this->gateway["port"] . '", "page_send" => "' . $this->gateway["page_send"] . '", "page_index" => "' . $this->gateway["page_index"] . '", "password" => "' . $this->gateway["password"] . '" ); /** * SMS re√ßus par sms_service->receive() * @var array SMS re√ßus par sms_service->receive() */ private $_sms = array( "id" => 0, "phone" => "", "smscenter" => "", "text" => "" ); /** * Service de reception et de renvois des SMS */ public function __construct() { if (isset($_REQUEST["action"])) { switch ($_REQUEST["action"]) { case "receive": $this->receive(); break; case "send_unsended": $this->send_unsended(); break; default: dwf_exception::throw_exception(624, array("_s_" => __CLASS__, "_a_" => $_REQUEST["action"])); break; } } else { dwf_exception::throw_exception(623, array("_s_" => __CLASS__)); } } /** * Methode de r√©ception des SMS */ private function receive() { $this->_sms["phone"] = empty($_GET["phone"]) ? (isset($headers["phone"]) ? $headers["phone"] : false) : $_GET["phone"]; $this->_sms["smscenter"] = empty($_GET["smscenter"]) ? (isset($headers["smscenter"]) ? $headers["smscenter"] : false) : $_GET["smscenter"]; $this->_sms["text"] = empty($_GET["text"]) ? (isset($headers["text"]) ? rawurldecode($headers["text"]) : false) : rawurldecode($_GET["text"]); sms::ajout(0, 0, 0, $date = date("Y-m-d H:i:s"), $this->_sms["phone"], $this->_sms["smscenter"], $this->_sms["text"]); $sms = sms::get_table_array("date=\'" . application::$_bdd->protect_var($date) . "\' and phone=\'" . application::$_bdd->protect_var($this->_sms["phone"]) . "\' and smscenter=\'" . application::$_bdd->protect_var($this->_sms["smscenter"]) . "\' and msg=\'" . application::$_bdd->protect_var($this->_sms["text"]) . "\' order by id desc"); $this->_sms["id"] = $sms[0]["id"]; } /** * Methode d\'envois des sms en attente / non envoy√© ( suite a une d√©faillance du gateway) */ private function send_unsended() { $sms_gateway = new sms_gateway($this->_gateway["host"], $this->_gateway["port"], $this->_gateway["page_send"], $this->_gateway["page_index"]); $smss = sms::get_collection("sender=\'1\' and sended=\'0\'"); if (is_array($smss) and count($smss) > 0) { foreach ($smss as $sms) { if ($sms_gateway->send_by_url(array( "phone" => $sms->get_phone(), "text" => $sms->get_msg(), "password" => $sms_gateway["password"] ))) { $sms->set_sended(1); $sms->set_date(date("Y-m-d H:i:s")); } else { break;}}}}}');
+            file_put_contents($file_service, '<?php /** * Service de reception et de renvois des SMS */ class sms_service { /** * Parametres du gateway * @var array Parametres du gateway */ private $_gateway = array( "host" => "' . $this->gateway["host"] . '", "port" => "' . $this->gateway["port"] . '", "page_send" => "' . $this->gateway["page_send"] . '", "page_index" => "' . $this->gateway["page_index"] . '", "password" => "' . $this->gateway["password"] . '" ); /** * SMS re√ßus par sms_service->receive() * @var array SMS re√ßus par sms_service->receive() */ private $_sms = array( "id" => 0, "phone" => "", "smscenter" => "", "text" => "" ); /** * Service de reception et de renvois des SMS */ public function __construct() { if (isset($_REQUEST["action"])) { switch ($_REQUEST["action"]) { case "receive": $this->receive(); break; case "send_unsended": $this->send_unsended(); break; default: dwf_exception::throw_exception(624, array("_s_" => __CLASS__, "_a_" => $_REQUEST["action"])); break; } } else { dwf_exception::throw_exception(623, array("_s_" => __CLASS__)); } } /** * Methode de rÈception des SMS */ private function receive() { $this->_sms["phone"] = empty($_GET["phone"]) ? (isset($headers["phone"]) ? $headers["phone"] : false) : $_GET["phone"]; $this->_sms["smscenter"] = empty($_GET["smscenter"]) ? (isset($headers["smscenter"]) ? $headers["smscenter"] : false) : $_GET["smscenter"]; $this->_sms["text"] = empty($_GET["text"]) ? (isset($headers["text"]) ? rawurldecode($headers["text"]) : false) : rawurldecode($_GET["text"]); sms::ajout(0, 0, 0, $date = date("Y-m-d H:i:s"), $this->_sms["phone"], $this->_sms["smscenter"], $this->_sms["text"]); $sms = sms::get_table_array("date=\'" . application::$_bdd->protect_var($date) . "\' and phone=\'" . application::$_bdd->protect_var($this->_sms["phone"]) . "\' and smscenter=\'" . application::$_bdd->protect_var($this->_sms["smscenter"]) . "\' and msg=\'" . application::$_bdd->protect_var($this->_sms["text"]) . "\' order by id desc"); $this->_sms["id"] = $sms[0]["id"]; } /** * Methode d\'envois des sms en attente / non envoyÈ ( suite a une dÈfaillance du gateway) */ private function send_unsended() { $sms_gateway = new sms_gateway($this->_gateway["host"], $this->_gateway["port"], $this->_gateway["page_send"], $this->_gateway["page_index"]); $smss = sms::get_collection("sender=\'1\' and sended=\'0\'"); if (is_array($smss) and count($smss) > 0) { foreach ($smss as $sms) { if ($sms_gateway->send_by_url(array( "phone" => $sms->get_phone(), "text" => $sms->get_msg(), "password" => $sms_gateway["password"] ))) { $sms->set_sended(1); $sms->set_date(date("Y-m-d H:i:s")); } else { break;}}}}}');
         }
     }
 

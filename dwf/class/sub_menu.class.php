@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Cette classe permet de crÃ©er un sous-menu dans une autre classe et d'en gÃ©rer les routes
+ * Cette classe permet de créer un sous-menu dans une autre classe et d'en gérer les routes
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class sub_menu {
 
     /**
-     * Cette classe permet de crÃ©er un sous-menu dans une autre classe et d'en gÃ©rer les routes
+     * Cette classe permet de créer un sous-menu dans une autre classe et d'en gérer les routes
      * 
-     * @param object $this_class Dans ce parametre, c'est $this qui doit etre renseignÃ© !
-     * @param array $route Routes du sous menu sous la forme suivante ($key est Ã  remplacer par la valeur dÃ©finie dans $key ci-dessous) : <br />
+     * @param object $this_class Dans ce parametre, c'est $this qui doit etre renseigné !
+     * @param array $route Routes du sous menu sous la forme suivante ($key est à remplacer par la valeur définie dans $key ci-dessous) : <br />
      *              array(array("$key"=>"route1","title"=>"title1","text"=>"text1"),array("$key"=>"route2","title"=>"title2","text"=>"text2")); <br />
-     *              ATTENTION ! A chaque route renseignÃ©e, une fonction publique doit etre crÃ©Ã©e dans la classe appellante, cette fonction doit s'appeler comme le mot associÃ© Ã  "$key"
+     *              ATTENTION ! A chaque route renseignée, une fonction publique doit etre créée dans la classe appellante, cette fonction doit s'appeler comme le mot associé à "$key"
      * 
-     * @param string $key Mot clÃ© des routes
-     * @param string $route_default ClÃ©/fonction par defaut Ã  utiliser
-     * @param array $keys_route_sup contient la liste des clÃ©s des menus supÃ©rieurs
+     * @param string $key Mot clé des routes
+     * @param string $route_default Clé/fonction par defaut à utiliser
+     * @param array $keys_route_sup contient la liste des clés des menus supérieurs
      * @param string $css classe CSS du sous menu
      */
     public function __construct($this_class, $route, $key, $route_default, $keys_route_sup = array("page"), $css = "nav-tabs") {
@@ -67,7 +67,7 @@ class sub_menu {
     }
 
     /**
-     * Ajoute une tab active Ã  un sous menu
+     * Ajoute une tab active à un sous menu
      * @param string $sub_menu_key $key du sous menu
      * @param string $text Texte de l'onglet
      * @param string $title Title de l'onglet

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Cette classe permet de gÃ©rer des recherches sur DuckDuckGo
+ * Cette classe permet de gérer des recherches sur DuckDuckGo
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class ddg {
 
     /**
-     * Cette classe permet de gÃ©rer des recherches sur DuckDuckGo
+     * Cette classe permet de gérer des recherches sur DuckDuckGo
      */
     public function __construct() {
         
     }
 
     /**
-     * Retourne un objet ddg_api contenant les rÃ©sultats de la requÃªte
+     * Retourne un objet ddg_api contenant les résultats de la requête
      * @param string $query
      * @return ddg_api obget ddg_api
      */

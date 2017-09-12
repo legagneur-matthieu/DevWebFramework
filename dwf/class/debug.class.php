@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Cette classe est une boite Ã  outils de dÃ©bogage
+ * Cette classe est une boite à outils de débogage
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class debug {
 
     /**
-     * Permet de verifier si la fonction show_report() a Ã©tÃ© appelÃ©e pour afficher le rapport Ã  la fin de l'execution
-     * @var boolean Permet de verifier si la fonction show_report() a Ã©tÃ© appelÃ©
+     * Permet de verifier si la fonction show_report() a été appelée pour afficher le rapport à la fin de l'execution
+     * @var boolean Permet de verifier si la fonction show_report() a été appelé
      */
     private static $_show_report = false;
 
     /**
-     * Affiche la structure d'une variable ( optimisÃ© pour les arrays et objets )
-     * @param array|object $var variable Ã  verifier 
+     * Affiche la structure d'une variable ( optimisé pour les arrays et objets )
+     * @param array|object $var variable à verifier 
      */
     public static function print_r($var) {
         ?>
@@ -24,8 +24,8 @@ class debug {
     }
 
     /**
-     * Affiche le contenu et le type d'une variable ( optimisÃ© pour les type nombres, chaines de caractÃ¨res et les booleans )
-     * @param int|string|boolean|double|float $var variable Ã  verifier 
+     * Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booleans )
+     * @param int|string|boolean|double|float $var variable à verifier 
      */
     public static function var_dump($var) {
         ?>
@@ -34,14 +34,14 @@ class debug {
     }
 
     /**
-     * Affiche la trace de l'application pour arriver au point de dÃ©bug ( trace des fichiers et mÃ©thodes qui ont Ã©tÃ© appelÃ©s)
+     * Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)
      */
     public static function getTrace() {
         self::print_r((new dwf_exception("Trace"))->getTraceAsString());
     }
 
     /**
-     * Affiche le rapport d'activitÃ©s de PHP en bas de page
+     * Affiche le rapport d'activités de PHP en bas de page
      * NE PAS UTILISER EN PRODUCTION !
      */
     public static function show_report() {
@@ -49,7 +49,7 @@ class debug {
     }
 
     /**
-     * Evenementiel : Lance le chronomÃ¨tre d'exÃ©cution au chargement du framework
+     * Evenementiel : Lance le chronomètre d'exécution au chargement du framework
      */
     public static function onload() {
         time::chronometer_start("debug_exec");
@@ -104,29 +104,29 @@ class debug {
                 <div class="row" style="width: 98%; margin-left: 1%;">
                     <div class="col-xs-2">
                         <p>
-                            <strong>Classes chargÃ© : </strong><?php echo count(website::$_class); ?> <br />
+                            <strong>Classes chargé : </strong><?php echo count(website::$_class); ?> <br />
                             <strong>Temp d'execution : </strong><?php echo time::parse_time(time::chronometer_get("debug_exec")); ?>
                         </p>
                     </div>
                     <div class="col-xs-4">
                         <p>
-                            <strong>Memoire utilisÃ©e / limit : </strong>                              
+                            <strong>Memoire utilisée / limit : </strong>                              
                             <?php
                             echo number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o";
                             ?> <br />
-                            <strong>Memoire utilisÃ© (%) : </strong><?php echo memory_get_usage() / ((int) strtr($limit, $puissance)) . " %"; ?>
+                            <strong>Memoire utilisé (%) : </strong><?php echo memory_get_usage() / ((int) strtr($limit, $puissance)) . " %"; ?>
                         </p>
                     </div>
                     <div class="col-xs-4">
                         <p>
-                            <strong>Nombre de requÃªtes SQL : </strong><?php echo bdd::$_debug["nb_req"]; ?><br />
-                            <strong>Memoire utilisÃ© par PHP pour SQL : </strong><?php echo number_format(bdd::$_debug["memory"], 0, ".", " "); ?> Octet<br />
-                            <strong>Memoire utilisÃ© par PHP pour SQL (%) : </strong><?php echo number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " "); ?> %
+                            <strong>Nombre de requêtes SQL : </strong><?php echo bdd::$_debug["nb_req"]; ?><br />
+                            <strong>Memoire utilisé par PHP pour SQL : </strong><?php echo number_format(bdd::$_debug["memory"], 0, ".", " "); ?> Octet<br />
+                            <strong>Memoire utilisé par PHP pour SQL (%) : </strong><?php echo number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " "); ?> %
                         </p>
                     </div>
                     <div class="col-xs-2">
                         <?php
-                        (new modal())->link_open_modal("DonnÃ©es (post, get, session, ...)", "debug_data", "DonnÃ©es", "DonnÃ©es", $data, "");
+                        (new modal())->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
                         ?>
                     </div>
                 </div>

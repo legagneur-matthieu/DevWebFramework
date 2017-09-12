@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CrÃ©Ã© une interface d'administration 'user-friendly' pour une table 
+ * Créé une interface d'administration 'user-friendly' pour une table 
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -15,16 +15,16 @@ class admin_controle {
     private $_entity;
 
     /**
-     * Association entre une clÃ© Ã©trangÃ¨re et un tuple de la table Ã©trangÃ¨re : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
+     * Association entre une clé étrangère et un tuple de la table étrangère : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
      * exemple : array("rang"=>"nom");
      * 
-     * @var array association entre une clÃ© Ã©trangÃ¨re et un tuple de la table Ã©trangÃ¨re
+     * @var array association entre une clé étrangère et un tuple de la table étrangère
      */
     private $_relations;
 
     /**
-     * Tableau ordonnÃ© des relations 
-     * @var array Tableau ordonnÃ© des relations 
+     * Tableau ordonné des relations 
+     * @var array Tableau ordonné des relations 
      */
     private $_relations_data;
 
@@ -36,7 +36,7 @@ class admin_controle {
     private $_data;
 
     /**
-     * EntÃªte du tableau
+     * Entête du tableau
      * 
      * @var type 
      */
@@ -50,9 +50,9 @@ class admin_controle {
     private $_structure;
 
     /**
-     * CrÃ©Ã© une interface d'administration 'user-friendly' pour une table 
+     * Créé une interface d'administration 'user-friendly' pour une table 
      * @param string $entity Nom de l'entity
-     * @param array $relations association entre une clÃ© Ã©trangÃ¨re et un tuple de la table Ã©trangÃ¨re : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
+     * @param array $relations association entre une clé étrangère et un tuple de la table étrangère : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
      * exemple : array("rang"=>"nom");
      */
     public function __construct($entity, $relations = array()) {
@@ -116,7 +116,7 @@ class admin_controle {
         }
         $head = $this->_head;
         $head[] = "Modifier / Supprimer";
-        echo html_structures::table($head, $this->_data, "Tableau d'administration de l'entitÃ© : " . $this->_entity, "datatable") . "<hr />";
+        echo html_structures::table($head, $this->_data, "Tableau d'administration de l'entité : " . $this->_entity, "datatable") . "<hr />";
         $this->ajout_form();
     }
 
@@ -223,7 +223,7 @@ class admin_controle {
     }
 
     /**
-     * ExÃ©cution du formulaire de modification
+     * Exécution du formulaire de modification
      * 
      * @param object $object l'entity a modifier
      * @param string $url application::get_url(array("action","id"));
@@ -280,7 +280,7 @@ class admin_controle {
     }
 
     /**
-     * ExÃ©cution du formulaire de suppression
+     * Exécution du formulaire de suppression
      * 
      * @param string $url application::get_url(array("action","id"));
      */

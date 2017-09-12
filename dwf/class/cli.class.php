@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Cette classe constitue une "boite Ã  outils", utile pour les applications en PHP-CLI (console)
+ * Cette classe constitue une "boite à outils", utile pour les applications en PHP-CLI (console)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class cli {
 
     /**
-     * Taille de la derniÃ¨re chaine affichÃ©e
-     * @var int Taille de la derniÃ¨re chaine affichÃ©e
+     * Taille de la dernière chaine affichée
+     * @var int Taille de la dernière chaine affichée
      */
     private static $_len = 0;
 
@@ -44,7 +44,7 @@ class cli {
     }
 
     /**
-     * RÃ©Ã©crit la derniÃ¨re ligne
+     * Réécrit la dernière ligne
      * @param string $str
      */
     public static function rewrite($str) {
@@ -75,20 +75,20 @@ class cli {
 
     /**
      * Transforme les accents en leur forme hexa
-     * @param string $str Chaine avec accents Ã  transformer
-     * @return string Chaine avec accents transformÃ©s
+     * @param string $str Chaine avec accents à transformer
+     * @return string Chaine avec accents transformés
      */
     private static function accents($str) {
         return strtr($str, array(
             'Ã¼' => "\x81",
-            'Ã©' => "\x82",
+            'é' => "\x82",
             'Ã¢' => "\x83",
             'Ã¤' => "\x84",
-            'Ã ' => "\x85",
+            'à' => "\x85",
             'Ã§' => "\x87",
-            'Ãª' => "\x88",
+            'ê' => "\x88",
             'Ã«' => "\x89",
-            'Ã¨' => "\x8A",
+            'è' => "\x8A",
             'Ã¯' => "\x8B",
             'Ã®' => "\x8C",
             'Ã‰' => "\x90")

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Cette classe gÃ¨re la pagination dans une page
+ * Cette classe gère la pagination dans une page
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class pagination {
 
     /**
-     * Calcule toutes les valeurs nÃ©cessaires Ã  la pagination
+     * Calcule toutes les valeurs nécessaires à la pagination
      * 
-     * @param string $get nom de la variable get pour la pagination (gÃ©nÃ©ralement "p")
-     * @param int $per_page nombre d'items par page ( gÃ©nÃ©ralement 10, 20, 50 ou 100 selon la taille de chaque Ã©lÃ©ment)
-     * @param int $count_all nombre total d'items ( valeur retournÃ©e par un count en SQL ou PHP)
+     * @param string $get nom de la variable get pour la pagination (généralement "p")
+     * @param int $per_page nombre d'items par page ( généralement 10, 20, 50 ou 100 selon la taille de chaque élément)
+     * @param int $count_all nombre total d'items ( valeur retournée par un count en SQL ou PHP)
      * @return array array($lim1, $lim2, $count_all, $nb_page);
      */
     public static function get_limits($get, $per_page, $count_all) {

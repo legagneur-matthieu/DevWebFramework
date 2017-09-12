@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Permets d'afficher les diffÃ©rences entre deux chaines de caractÃ¨res
+ * Permets d'afficher les différences entre deux chaines de caractères
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class php_finediff {
 
     /**
-     * Permet de vÃ©rifier que la librairie finediff a bien Ã©tÃ© appelÃ©e qu'une fois.
-     * @var boolean Permet de vÃ©rifier que la librairie finediff a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * Permet de vérifier que la librairie finediff a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie finediff a bien été appelée qu'une fois.
      */
     private static $_called = false;
 

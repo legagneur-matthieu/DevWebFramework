@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Cette classe contient les rÃ©sultats d'une requÃªte Ã  duckduckgo <br />
- * Il est recommandÃ© de passer par (new ddg())->api() ou ddg_api::query() pour rÃ©cuperer une instance de cette classe
+ * Cette classe contient les résultats d'une requête à duckduckgo <br />
+ * Il est recommandé de passer par (new ddg())->api() ou ddg_api::query() pour récuperer une instance de cette classe
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class ddg_api {
 
     /**
-     * Varibles retournÃ©es par l'API de DuckDuckGo
-     * @var bool Varibles retournÃ©es par l'API de DuckDuckGo
+     * Varibles retournées par l'API de DuckDuckGo
+     * @var bool Varibles retournées par l'API de DuckDuckGo
      */
     private $_Abstract = false,
             $_AbstractText = false,
@@ -35,7 +35,7 @@ class ddg_api {
             $_ImageHeight = false;
 
     /**
-     * Retourne un objet ddg_api contenant les rÃ©sultats de la requÃªte
+     * Retourne un objet ddg_api contenant les résultats de la requête
      * @param string $query
      * @return ddg_api obget ddg_api
      */
@@ -44,9 +44,9 @@ class ddg_api {
     }
 
     /**
-     * Cette classe contient les rÃ©sultats d'une requÃªte Ã  duckduckgo <br />
-     * il est recommandÃ© de passer par (new ddg())->api() ou ddg_api::query() pour rÃ©cuperer une instance de cette classe
-     * @param array $data donnÃ©es de retour de l'API de duckduckgo
+     * Cette classe contient les résultats d'une requête à duckduckgo <br />
+     * il est recommandé de passer par (new ddg())->api() ou ddg_api::query() pour récuperer une instance de cette classe
+     * @param array $data données de retour de l'API de duckduckgo
      */
     public function __construct($data) {
         foreach ($data as $key => $value) {

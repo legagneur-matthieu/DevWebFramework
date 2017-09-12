@@ -1462,7 +1462,7 @@ class HTML2PDF_parsingCss {
             // if ok => it is a color
             if ($ok) {
                 $value['color'] = $color;
-                // else if transparent => no coloÃ r
+                // else if transparent => no coloàr
             } else if ($val == 'transparent') {
                 $value['color'] = null;
                 // else

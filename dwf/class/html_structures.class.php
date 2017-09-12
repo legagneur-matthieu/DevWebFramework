@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Ensemble de fonctions permettant de crÃ©er diverses structures HTML standardisÃ©es 
+ * Ensemble de fonctions permettant de créer diverses structures HTML standardisées 
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class html_structures {
 
     /**
-     * Retourne un tableau Ã  partir d'un array d'entÃªte et d'un array Ã  deux dimensions comprenant les donnÃ©es
+     * Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données
      * 
-     * @param array $head entÃªte du tableau html
-     * @param array $data donnÃ©es du tableau html
+     * @param array $head entête du tableau html
+     * @param array $data données du tableau html
      * @param string $summary description du tableau
      * @param string $id id css
      * @param string $class class css
-     * @param boolean $head_scope l'entÃªte du tableau doit Ãªtre accessible ? (true/false, true par defaut)
+     * @param boolean $head_scope l'entête du tableau doit être accessible ? (true/false, true par defaut)
      */
     public static function table($head, $data, $summary = '', $id = '', $class = "table", $head_scope = true) {
         $str = "";
@@ -51,9 +51,9 @@ class html_structures {
     }
 
     /**
-     * Retourne une liste au format HTML UL>LI Ã  partir d'un array ( prend en compte l'imbrication des array)
+     * Retourne une liste au format HTML UL>LI à partir d'un array ( prend en compte l'imbrication des array)
      * 
-     * @param array $data donnÃ©es de la liste
+     * @param array $data données de la liste
      * @param string $class class CSS de la liste 
      */
     public static function ul($data, $class = false) {
@@ -75,9 +75,9 @@ class html_structures {
     }
 
     /**
-     * Retourne une liste "ordonnÃ©e" au format HTML OL>LI Ã  partir d'un array ( prend en compte l'imbrication des array)
+     * Retourne une liste "ordonnée" au format HTML OL>LI à partir d'un array ( prend en compte l'imbrication des array)
      * 
-     * @param array $data donnÃ©es de la liste
+     * @param array $data données de la liste
      * @param string $class class CSS de la liste 
      */
     public static function ol($data, $class = false) {
@@ -103,9 +103,9 @@ class html_structures {
     }
 
     /**
-     * Retourne une liste DL>DT+DD Ã  partir d'un array associatif ( les clÃ©s seront les DT et les valeurs les DD)
+     * Retourne une liste DL>DT+DD à partir d'un array associatif ( les clés seront les DT et les valeurs les DD)
      * 
-     * @param array $data donnÃ©es de la liste
+     * @param array $data données de la liste
      * @param string $class class CSS de la liste 
      */
     public static function dl($data, $class = false) {
@@ -174,7 +174,7 @@ class html_structures {
         return $str;
     }
 
-    /** Retourne une figure ( illustration + lÃ©gende )
+    /** Retourne une figure ( illustration + légende )
      * 
      * @param string $src chemin de l'image
      * @param string $caption legende de l'image
@@ -201,10 +201,10 @@ class html_structures {
     }
 
     /**
-     * Retourne un area Ã  ajouter une image map
+     * Retourne un area à ajouter une image map
      * 
      * @param string $shape forme : rect,  ou poly
-     * @param string $coords coordonÃ©es des poins de l'area
+     * @param string $coords coordonées des poins de l'area
      * @param string $href lien cible
      * @param string $alt alternative
      * @param string $id id css / js
@@ -222,9 +222,9 @@ class html_structures {
     }
 
     /**
-     * Retourne les donnÃ©es passÃ©es en paramÃ¨tres sous forme de mÃ©dia (bootstrap)
+     * Retourne les données passées en paramètres sous forme de média (bootstrap)
      * 
-     * @param array $data Tableau de donnÃ©es sous la forme : array( array("img"=>"","title"=>,"","text"=>""),...);
+     * @param array $data Tableau de données sous la forme : array( array("img"=>"","title"=>,"","text"=>""),...);
      * @param int $width Largeur de l'image (en px)
      */
     public static function media($data, $width = 100) {
@@ -239,7 +239,7 @@ class html_structures {
      * Retourne un glyphicon (avec un texte alternative)
      * 
      * @param string $glyphicon nom du glyphicon (code : glyphicon glyphcon-$glyphicon )
-     * @param string $alt aleternative accessible aux synthÃ©ses vocales
+     * @param string $alt aleternative accessible aux synthéses vocales
      * @return string Glyphicon
      */
     public static function glyphicon($glyphicon, $alt) {
@@ -247,16 +247,16 @@ class html_structures {
     }
 
     /**
-     * Retourne un sÃ©parateur horizontal
+     * Retourne un séparateur horizontal
      * 
-     * @return string SÃ©parateur horizontal
+     * @return string Séparateur horizontal
      */
     public static function hr() {
         return '<hr />';
     }
 
     /**
-     * La balise time permet d'afficher une date avec une valeur SEO sÃ©mantique
+     * La balise time permet d'afficher une date avec une valeur SEO sémantique
      * @param string $datetime datetime de la balise time
      * @param string $text texte de la balise time
      * @return string balise time
@@ -266,8 +266,8 @@ class html_structures {
     }
 
     /**
-     * Permet de faire appel Ã  une balise LINK dans le body 
-     * (elle est injÃ©ctÃ©e dans le HEAD par Jquery, permet de passer la validation W3C)
+     * Permet de faire appel à une balise LINK dans le body 
+     * (elle est injéctée dans le HEAD par Jquery, permet de passer la validation W3C)
      * @param string $href lien du fichier CSS
      * @return string script d'injection
      */

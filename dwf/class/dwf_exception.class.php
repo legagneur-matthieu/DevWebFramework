@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe gÃ¨re les exceptions du framework
+ * Cette classe gère les exceptions du framework
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -12,29 +12,29 @@ class dwf_exception extends Exception {
      * @var array Liste des exceptions du framework 
      */
     private static $error = array(
-        // 60X : base de donnÃ©e
-        601 => "Connexion Ã  la base de donnÃ©es impossible",
-        602 => "RequÃªte SQL incorrect : \"__statement__\" ",
-        603 => "bdd->__m__() doit Ãªtre utilisÃ© pour cette requÃªte : \"__statement__\" ",
-        // 61X : routes et mÃ©thodes
+        // 60X : base de donnée
+        601 => "Connexion à la base de données impossible",
+        602 => "Requête SQL incorrect : \"__statement__\" ",
+        603 => "bdd->__m__() doit être utilisé pour cette requête : \"__statement__\" ",
+        // 61X : routes et méthodes
         611 => "Route index introuvable",
-        612 => "MÃ©thode page::__ introuvable",
-        613 => "MÃ©thode _1_::_2_ introuvable",
+        612 => "Méthode page::__ introuvable",
+        613 => "Méthode _1_::_2_ introuvable",
         // 62X : Services
-        621 => "Service non renseignÃ©",
+        621 => "Service non renseigné",
         622 => "Service _s_ introuvable",
-        623 => "Action du service _s_ non renseignÃ©",
+        623 => "Action du service _s_ non renseigné",
         624 => "Action _a_ du service _s_ introuvable",
         // 63X FS
-        631 => "Le fichier __ n'a pu Ãªtre crÃ©Ã© (problÃ¨mes de droits ou d'espace disque ?)",
+        631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
     );
 
     /**
      * Lance une exception qui interrompt le script en cours
-     * Il est possible de renseigner une exception personalisÃ©e comme par exemple : 
+     * Il est possible de renseigner une exception personalisée comme par exemple : 
      * dwf_exception::throw_exception($code_erreur,array("msg"=>"$text_erreur"));
      * @param int $errcode Erreur code de l'exception
-     * @param array $arg Argument de l'exception, sert Ã  completer les messages d'erreurs
+     * @param array $arg Argument de l'exception, sert à completer les messages d'erreurs
      * @throws dwf_exception
      */
     public static function throw_exception($errcode, $arg = array()) {
@@ -43,10 +43,10 @@ class dwf_exception extends Exception {
 
     /**
      * affiche une exception qui n'interrompt pasle script en cours
-     * Il est possible de renseigner une exception personalisÃ©e comme par exemple : 
+     * Il est possible de renseigner une exception personalisée comme par exemple : 
      * dwf_exception::warning_exception($code_erreur,array("msg"=>"$text_erreur"));
      * @param int $errcode Erreur code de l'exception
-     * @param array $arg Argument de l'exception, sert Ã  completer les messages d'erreurs
+     * @param array $arg Argument de l'exception, sert à completer les messages d'erreurs
      * @throws dwf_exception
      */
     public static function warning_exception($errcode, $arg = array()) {
@@ -56,7 +56,7 @@ class dwf_exception extends Exception {
     /**
      * Affiche l'exception si config::$_debug=true et note l'exception dans dwf/log/
      * @param dwf_exception $e
-     * @param string $moreinfo Affiche des informations complÃ©mentaires sur l'exception
+     * @param string $moreinfo Affiche des informations complémentaires sur l'exception
      * @param boolean $service l'exception survient-elle dans un service ? (true/false, false par defaut)
      */
     public static function print_exception(exception $e, $moreinfo = "", $service = false) {
@@ -94,7 +94,7 @@ class dwf_exception extends Exception {
     }
 
     /**
-     * VÃ©rifie si un fichier a pu Ãªtre Ã©crit correctement, renvoit une exception 631 dans le cas contraire
+     * Vérifie si un fichier a pu être écrit correctement, renvoit une exception 631 dans le cas contraire
      * @param string $file Chemain du fichier a verrifier.
      */
     public static function check_file_writed($file) {

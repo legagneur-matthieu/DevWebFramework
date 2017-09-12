@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent Ã  certaines dates de l'annÃ©e
+ * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent à certaines dates de l'année
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class easteregg {
 
     /**
-     * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent Ã  certaines dates de l'annÃ©e    * 
+     * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent à certaines dates de l'année    * 
      */
     public function __construct() {
         $date = date("dm");
@@ -26,7 +26,7 @@ class easteregg {
             case "1402": // Saint-Valentin
                 $this->valentin();
                 break;
-//            case "0003": // PÃ¢ques ? (dimanche qui suit la premiÃ¨re pleine lune aprÃ©s le 21 mars ?)
+//            case "0003": // PÃ¢ques ? (dimanche qui suit la première pleine lune aprés le 21 mars ?)
 //                break;
             case "2103": // Printemps
                 $this->printemp();
@@ -34,10 +34,10 @@ class easteregg {
             case "0104": // 1er avril
                 $this->fish();
                 break;
-            case "0105": // FÃªte du travail
+            case "0105": // Fête du travail
                 $this->muguet();
                 break;
-            case "2505": // FÃªte des mÃ¨res (dernier dimanche de mai) Ã  finir
+            case "2505": // Fête des mères (dernier dimanche de mai) à finir
             case "2605":
             case "2705":
             case "2805":
@@ -46,9 +46,9 @@ class easteregg {
             case "3105":
                 $this->fete_mere();
                 break;
-            case "2106": //EtÃ©
+            case "2106": //Eté
                 $this->ete();
-            case "1606": // FÃªte des pÃ¨res (3eme dimanche de juin) Ã  finir
+            case "1606": // Fête des pères (3eme dimanche de juin) à finir
             case "1706":
             case "1806":
             case "1906":
@@ -56,7 +56,7 @@ class easteregg {
             case "2206":
                 $this->fete_pere();
                 break;
-            case "1407": // FÃªte Nationale
+            case "1407": // Fête Nationale
                 $this->fete_national();
                 break;
             case "2309": // Automne
@@ -75,7 +75,7 @@ class easteregg {
 //                break;
 //            case "0805": // victoire 1945
 //                break;
-//            case "0005": // PentecÃ´te (49 jours aprÃ¨s PÃ¢ques)?
+//            case "0005": // PentecÃ´te (49 jours après PÃ¢ques)?
 //                break;
 //            case "1508": // Assomption
 //                break;
@@ -98,17 +98,17 @@ class easteregg {
             array("1402", "Saint Valentin"),
             array("2103", "Printemps"),
             array("0104", "1e Avril"),
-            array("0105", "FÃªte du travail"),
-            array("2505", "FÃªte des mÃ¨res (que le dimanche)"),
-            array("2106", "EtÃ© (et fÃªte des pÃ¨res le dimanche)"),
-            array("1407", "FÃªte nationale"),
+            array("0105", "Fête du travail"),
+            array("2505", "Fête des mères (que le dimanche)"),
+            array("2106", "Eté (et fête des pères le dimanche)"),
+            array("1407", "Fête nationale"),
             array("2309", "Automne"),
             array("2511", "Sainte Catherine"),
             array("2212", "Hiver")
         );
         ob_start();
         form::new_form();
-        form::select("Evenement Ã  activer", "eggday", $events);
+        form::select("Evenement à activer", "eggday", $events);
         form::submit("btn-default", "Activer");
         form::close_form();
         $data = ob_get_clean();
@@ -224,7 +224,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de la fete de mÃ¨res
+     * easteregg de la fete de mères
      */
     private function fete_mere() {
         if ($this->is_sunday()) {
@@ -237,11 +237,11 @@ class easteregg {
     }
 
     /**
-     * easteregg de la fete de pÃ¨res
+     * easteregg de la fete de pères
      */
     private function fete_pere() {
         if ($this->is_sunday()) {
-            (new modal())->link_open_modal("", "fete_pere", "", "Bonne fÃªte des pÃ©res", '<img src="../commun/src/js/eastereggs/fete_pere/fete_pere.jpg" alt="Diplome du meilleur pÃ¨re de l\'annÃ©e" style="width:100%" />', '');
+            (new modal())->link_open_modal("", "fete_pere", "", "Bonne fête des péres", '<img src="../commun/src/js/eastereggs/fete_pere/fete_pere.jpg" alt="Diplome du meilleur père de l\'année" style="width:100%" />', '');
             ?>
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -258,7 +258,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de l'Ã©tÃ©
+     * easteregg de l'été
      */
     private function ete() {
         echo html_structures::link_in_body('../commun/src/js/eastereggs/ete.css');

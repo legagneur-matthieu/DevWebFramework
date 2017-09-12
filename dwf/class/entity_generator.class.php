@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe gÃ©nÃ¨re les entitÃ©s destinÃ©es Ã  faire l'interface entre la base de donnÃ©es et le code <br />
+ * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
  * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSSEZ A application::$_bdd->protect_var();
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
@@ -9,29 +9,29 @@
 class entity_generator {
 
     /**
-     * Tableau de donnÃ©es Ã  deux dimensions (cf __construct())
+     * Tableau de données à deux dimensions (cf __construct())
      * 
-     * @var array Tableau de donnÃ©es Ã  deux dimensions (cf __construct())
+     * @var array Tableau de données à deux dimensions (cf __construct())
      */
     private $_data;
 
     /**
-     * Nom de la table correspondant aux entitÃ©s (cf __construct())
+     * Nom de la table correspondant aux entités (cf __construct())
      * 
-     * @var string Nom de la table correspondant aux entitÃ©s (cf __construct())
+     * @var string Nom de la table correspondant aux entités (cf __construct())
      */
     private $_table;
 
     /**
-     * Cette classe gÃ©nÃ¨re les entitÃ©s destinÃ©es Ã  faire l'interface entre la base de donnÃ©e et le code <br />
+     * Cette classe génère les entités destinées à faire l'interface entre la base de donnée et le code <br />
      * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSSEZ A application::$_bdd->protect_var();
      * 
-     * @param array $data tableau de donnÃ©es Ã  deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
+     * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
-     * le champ clÃ© primaire n'est qu'un boolean Ã  true ou false , si il est a true, ce tuple n'aura pas de "set_" (appelÃ© aussi seteur)
-     * @param string $table nom de la table correspondant aux entitÃ©s, ce nom sera Ã©galement le "type" des entitÃ©s gÃ©nÃ©rÃ©es
-     * @param boolean $overwrite le gÃ©nÃ©rateur doit-il Ã©craser les entitÃ©s gÃ©nÃ©rÃ©es dÃ©jÃ  existantes ? (true/false)
-     * @param boolean $create_table le gÃ©nÃ©rateur doit-il crÃ©er la table de l'entitÃ© dans la base de donnÃ©es ? (true/false)
+     * le champ clé primaire n'est qu'un boolean à true ou false , si il est a true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
+     * @param string $table nom de la table correspondant aux entités, ce nom sera également le "type" des entités générées
+     * @param boolean $overwrite le générateur doit-il écraser les entités générées déjà existantes ? (true/false)
+     * @param boolean $create_table le générateur doit-il créer la table de l'entité dans la base de données ? (true/false)
      */
     public function __construct($data, $table, $overwrite = false, $create_table = true) {
         $this->_data = $data;
@@ -43,30 +43,30 @@ class entity_generator {
     }
 
     /**
-     * GÃ©nÃ¨re le contenu de la classe entitÃ©
+     * Génère le contenu de la classe entité
      * 
-     * @return string la class gÃ©nÃ©rÃ©e
+     * @return string la class générée
      */
     private function get_class() {
-        //gÃ©nÃ©re la class
-        $class = " <?php \n/** EntitÃ© de la table " . $this->_table . " \n* @autor entity_generator by LEGAGNEUR Matthieu */\n class " . $this->_table . " { \n ";
+        //génére la class
+        $class = " <?php \n/** Entité de la table " . $this->_table . " \n* @autor entity_generator by LEGAGNEUR Matthieu */\n class " . $this->_table . " { \n ";
 
-        //gÃ©nÃ©re les atributs 
+        //génére les atributs 
         foreach ($this->_data as $tuple) {
             $class .= "\n/** " . $tuple[0] . " \n* @var " . $tuple[1] . ' ' . $tuple[0] . " */\n private $" . "_" . $tuple[0] . ';';
         }
-        $class .= "\n/** Indique si l'objet a Ã©tÃ© modifiÃ© ou non \n* @var boolean Indique si l'objet a Ã©tÃ© modifiÃ© ou non */\n private $" . "_this_was_modified;";
-        $class .= "\n/** Indique si l'objet a Ã©tÃ© supprimÃ© ou non \n* @var boolean Indique si l'objet a Ã©tÃ© supprimÃ© ou non */\n private $" . "_this_was_delete;";
+        $class .= "\n/** Indique si l'objet a été modifié ou non \n* @var boolean Indique si l'objet a été modifié ou non */\n private $" . "_this_was_modified;";
+        $class .= "\n/** Indique si l'objet a été supprimé ou non \n* @var boolean Indique si l'objet a été supprimé ou non */\n private $" . "_this_was_delete;";
 
-        //gÃ©nÃ©re le constructeur
-        $class .= "\n/** EntitÃ© de la table " . $this->_table . " */\n public function __construct($" . "data) { ";
+        //génére le constructeur
+        $class .= "\n/** Entité de la table " . $this->_table . " */\n public function __construct($" . "data) { ";
         foreach ($this->_data as $tuple) {
             $class .= "$" . "this->set_" . $tuple[0] . "($" . "data[\"" . $tuple[0] . "\"]);";
         }
         $class .= '$this->_this_was_modified = false; }';
 
-        //gÃ©nÃ©re la fonction statique ( static ) d'ajout
-        $class .= "\n/** Ajoute une entrÃ©e en base de donnÃ©e */\n public static function ajout(";
+        //génére la fonction statique ( static ) d'ajout
+        $class .= "\n/** Ajoute une entrée en base de donnée */\n public static function ajout(";
         $p = "1__";
         foreach ($this->_data as $tuple) {
             if (!$tuple[2]) {
@@ -105,32 +105,32 @@ class entity_generator {
 
         $class .= "\n/** Retourne la structure de l'entity au format json */\n public static function get_structure() {return json_decode('" . json_encode($this->_data) . "', true);}";
 
-        //gÃ©nÃ©re la fonction statiques ( static ) get_collection
+        //génére la fonction statiques ( static ) get_collection
         $class .= "\n/** Retourne le contenu de la table sout forme d'une collection \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_collection($" . "where = \"\" ) { $" . "data=" . $this->_table . "::get_table_array($" . "where); $" . "col=false; foreach ($" . "data as $" . "entity) { if ($" . "entity != FALSE) { $" . "col[]=new " . $this->_table . "($" . "entity); } } return $" . "col;}";
 
-        //gÃ©nÃ©re la fonction statique ( static ) get_table_array()
+        //génére la fonction statique ( static ) get_table_array()
         $class .= "\n/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_table_array($" . "where = \"\") { $" . "req = \"select * from " . $this->_table . "\"; if (!empty($" . "where)) { $" . "req.=\" where \" . $" . "where; } $" . "req.=\" ;\"; return application::$" . "_bdd->fetch($" . "req); }";
 
-        //gÃ©nÃ©re la fonction statique ( static ) get_table_ordored_array
-        $class .= "\n/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clÃ© est l'identifiant de l'entitÃ© \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_table_ordored_array($" . "where = \"\") { $" . "data = " . $this->_table . "::get_table_array($" . "where); $" . "datas = array(); foreach ($" . "data as $" . "value) { $" . "datas[$" . "value[\"id\"]] = $" . "value; unset($" . "datas[$" . "value[\"id\"]][\"id\"]); } return $" . "datas; }";
+        //génére la fonction statique ( static ) get_table_ordored_array
+        $class .= "\n/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clé est l'identifiant de l'entité \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_table_ordored_array($" . "where = \"\") { $" . "data = " . $this->_table . "::get_table_array($" . "where); $" . "datas = array(); foreach ($" . "data as $" . "value) { $" . "datas[$" . "value[\"id\"]] = $" . "value; unset($" . "datas[$" . "value[\"id\"]][\"id\"]); } return $" . "datas; }";
 
-        //gÃ©nÃ©re la fonction statique ( static ) get_count()
-        $class .= "\n/** Retourne le nombre d'entrÃ© \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_count($" . "where = \"\" ) { $" . "req = \"select count(*) as count from " . $this->_table . "\"; if (!empty($" . "where)) { $" . "req.=\" where \" . $" . "where; } $" . "req.=\" ;\"; $" . "data = application::$" . "_bdd->fetch($" . "req); return $" . "data[0]['count'];}";
+        //génére la fonction statique ( static ) get_count()
+        $class .= "\n/** Retourne le nombre d'entré \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */\n public static function get_count($" . "where = \"\" ) { $" . "req = \"select count(*) as count from " . $this->_table . "\"; if (!empty($" . "where)) { $" . "req.=\" where \" . $" . "where; } $" . "req.=\" ;\"; $" . "data = application::$" . "_bdd->fetch($" . "req); return $" . "data[0]['count'];}";
 
-        //gÃ©nÃ©re la fonction statique ( static ) get_from_id
-        $class .= "\n/** Retourne une entitÃ© sous forme d'objet a partir de son identifiant \n* @return " . $this->_table . "|boolean */\n";
+        //génére la fonction statique ( static ) get_from_id
+        $class .= "\n/** Retourne une entité sous forme d'objet a partir de son identifiant \n* @return " . $this->_table . "|boolean */\n";
         $class .= " public static function get_from_id($" . "id) { $" . "data = application::$" . "_bdd->fetch(\"select * from " . $this->_table . " where id = '\" . application::$" . "_bdd->protect_var($" . "id) . \"';\"); if (isset($" . "data[0]) and $" . "data[0] != FALSE) { return new " . $this->_table . "($" . "data[0]); } else { return false; } }";
 
-        //gÃ©nÃ©re la fonction statique ( static ) get_json_object
+        //génére la fonction statique ( static ) get_json_object
         $class .= "\n/** Retourne le contenu de la table sout forme d'un objet json (utile pour les services) \n* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); \n* @return string Objet json */\n public static function get_json_object($" . "where = \"\") { return json_encode(" . $this->_table . "::get_table_ordored_array($" . "where)); }";
 
-        //gÃ©nÃ©re la fonction statique ( static ) delete_by_id
-        $class .= "\n/**Supprime l'entitÃ©*/public static function delete_by_id($" . "id) { application::$" . "_bdd->query(\"delete from " . $this->_table . " where id='\" . application::$" . "_bdd->protect_var((int)$" . "id) . \"';\"); }";
+        //génére la fonction statique ( static ) delete_by_id
+        $class .= "\n/**Supprime l'entité*/public static function delete_by_id($" . "id) { application::$" . "_bdd->query(\"delete from " . $this->_table . " where id='\" . application::$" . "_bdd->protect_var((int)$" . "id) . \"';\"); }";
 
-        //gÃ©nÃ©re la fonction de suppresion
-        $class .= "\n/**Supprime l'entitÃ© a la fin du script*/public function delete() { $" . "this->_this_was_delete=true;}";
+        //génére la fonction de suppresion
+        $class .= "\n/**Supprime l'entité a la fin du script*/public function delete() { $" . "this->_this_was_delete=true;}";
 
-        //gÃ©nÃ©re les geteur avec leur type si besoin
+        //génére les geteur avec leur type si besoin
         foreach ($this->_data as $tuple) {
             if (!($tuple[1] == "int" or $tuple[1] == "integer" or $tuple[1] == "string" or $tuple[1] == "mail")) {
                 $class .= " /** @return " . $tuple[1] . " */";
@@ -138,7 +138,7 @@ class entity_generator {
 
             $class .= " public function get_" . $tuple[0] . "() { return $" . "this->_" . $tuple[0] . ";}";
 
-            //gÃ©nÃ©re les seteur
+            //génére les seteur
             $class .= $tuple[2] ? "private" : "public";
             $class .= " function set_" . $tuple[0] . "($" . $tuple[0] . ") {";
             if ($tuple[1] == "string") {
@@ -153,7 +153,7 @@ class entity_generator {
             $class .= ' $this->_this_was_modified = true; }';
         }
 
-        //gÃ©nÃ©re le destructeur
+        //génére le destructeur
         $class .= ' public function __destruct() { if ($this->_this_was_modified and !$this->_this_was_delete) { ';
         foreach ($this->_data as $tuple) {
             switch ($tuple[1]) {
@@ -182,7 +182,7 @@ class entity_generator {
     }
 
     /**
-     * Ã‰crit la class/entitÃ© gÃ©nÃ©rÃ©e dans un fichier
+     * Ã‰crit la class/entité générée dans un fichier
      * 
      * @param string $class
      * @param boolean $overwrite
@@ -205,9 +205,9 @@ class entity_generator {
     }
 
     /**
-     * Fonction servant Ã  l'Ã©criture de la classe dans un fichier
+     * Fonction servant à l'écriture de la classe dans un fichier
      * 
-     * @param string $file chemin et nom du fichier Ã  crÃ©er
+     * @param string $file chemin et nom du fichier à créer
      * @param string $class contenu du fichier a inscrire
      */
     private function write($file, $class) {
@@ -216,7 +216,7 @@ class entity_generator {
     }
 
     /**
-     * crÃ©Ã© la table de l'entitÃ© dans la base de donnÃ©es
+     * créé la table de l'entité dans la base de données
      */
     private function create_sql_table() {
         $query = "CREATE TABLE IF NOT EXISTS " . application::$_bdd->protect_var($this->_table) . " (id int(11) NOT NULL AUTO_INCREMENT, ";

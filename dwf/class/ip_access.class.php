@@ -2,16 +2,16 @@
 
 /**
  * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÃ‰E !
- * Cette classe sert Ã  blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
+ * Cette classe sert à blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class ip_access {
 
     /**
-     * Liste des plages d'adresses IP Ã  blacklister
+     * Liste des plages d'adresses IP à blacklister
      * 
-     * @var array Liste des plages d'adresses IP Ã  blacklister
+     * @var array Liste des plages d'adresses IP à blacklister
      */
     private $_ips;
 
@@ -24,10 +24,10 @@ class ip_access {
 
     /**
      * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÃ‰E !
-     * Cette classe sert Ã  blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
+     * Cette classe sert à blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
      * 
      * 
-     * @param array $array_ip liste des plages d'adresses IP Ã  blacklister array(array(dÃ©but,fin),...);
+     * @param array $array_ip liste des plages d'adresses IP à blacklister array(array(début,fin),...);
      * @param string $error_redir url de redirection (duckduckgo par defaut)
      */
     public function __construct($array_ip, $error_redir = "http://duckduckgo.com/") {
@@ -61,10 +61,10 @@ class ip_access {
     }
 
     /**
-     * Formate l'adresse IPv4 entrÃ©e en paramÃ¨tre
+     * Formate l'adresse IPv4 entrée en paramètre
      * 
-     * @param string $ip ip v4 Ã  formater
-     * @return string ip formatÃ©
+     * @param string $ip ip v4 à formater
+     * @return string ip formaté
      */
     private function ipv4_to_int($ip) {
         explode(".", $ip);
@@ -85,10 +85,10 @@ class ip_access {
     }
 
     /**
-     * Formate l'adresse IPv6 entrÃ©e en paramÃ¨tre
+     * Formate l'adresse IPv6 entrée en paramètre
      * 
-     * @param string $ip ip v6 Ã  formater
-     * @return string ip formatÃ©e
+     * @param string $ip ip v6 à formater
+     * @return string ip formatée
      */
     private function ipv6_to_int($ip) {
         $from = array(

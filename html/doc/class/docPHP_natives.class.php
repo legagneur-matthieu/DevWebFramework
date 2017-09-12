@@ -936,7 +936,6 @@ class docPHP_natives {
         <p>Cette classe utilise l'API de Reverso pour corriger un texte et 
             vous affiche les corrections à appliquer au texte grace à la librairie finediff</p>
         <?php
-        echo (new reversoLib())->correctionText("Un texte avec une grosse fote");
         js::syntaxhighlighter("<?php\n"
                 . 'echo (new reversoLib())->correctionText("Un texte avec une grosse fote");'
                 . "\n"

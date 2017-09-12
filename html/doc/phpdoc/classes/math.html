@@ -1,1009 +1,1162 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta charset="utf-8"/>
-        <title>dwf-doc</title>
-        <meta name="author" content=""/>
-        <meta name="description" content=""/>
-        <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/prism.css" rel="stylesheet" media="all"/>
-        <link href="../css/template.css" rel="stylesheet" media="all"/>
-        <!--[if lt IE 9]>
-        <script src="../js/html5.js"></script>
-        <![endif]-->
-        <script src="../js/jquery-1.11.0.min.js"></script>
-        <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/jquery.smooth-scroll.js"></script>
-        <script src="../js/prism.min.js"></script>
-        <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-        <script type="text/javascript">
-            function loadExternalCodeSnippets() {
-                Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-                    var src = pre.getAttribute('data-src');
-                    var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                    var language = 'php';
-                    var code = document.createElement('code');
-                    code.className = 'language-' + language;
-                    pre.textContent = '';
-                    code.textContent = 'Loading…';
-                    pre.appendChild(code);
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', src, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4) {
-                            if (xhr.status < 400 && xhr.responseText) {
-                                code.textContent = xhr.responseText;
-                                Prism.highlightElement(code);
-                            } else if (xhr.status >= 400) {
-                                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                            } else {
-                                code.textContent = '✖ Error: File does not exist or is empty';
-                            }
-                        }
-                    };
-                    xhr.send(null);
-                });
-            }
-            $(document).ready(function () {
-                loadExternalCodeSnippets();
-            });
-            $('#source-view').on('shown', function () {
-                loadExternalCodeSnippets();
-            })
-        </script>
-        <link rel="shortcut icon" href="../images/favicon.ico"/>
-        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
-        <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
-        <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
-    </head>
-    <body>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <i class="icon-ellipsis-vertical"></i>
-                    </a>
-                    <a class="brand" href="../index.html">dwf-doc</a>
-                    <div class="nav-collapse">
-                        <ul class="nav pull-right">
-                            <li class="dropdown" id="charts-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Charts <b class="caret"></b>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>class</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">class</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="../graphs/class.html">
-                                            <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown" id="reports-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Reports <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="../reports/errors.html">
-                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3703</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../reports/markers.html">
-                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">76</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../reports/deprecated.html">
-                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">17</span>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         </ul>
-                    </div>
-                </div>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">139</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <!--<div class="go_to_top">-->
-            <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-            <!--</div>-->
         </div>
-        <div id="___" class="container-fluid">
-            <section class="row-fluid">
-                <div class="span2 sidebar">
-                    <div class="accordion" style="margin-bottom: 0">
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2086287258"></a>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-883381346"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-                            </div>
-                            <div id="namespace-2086287258" class="accordion-body collapse in">
-                                <div class="accordion-inner">
-                                    <ul>
-                                        <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
-                                        <li class="class"><a href="../classes/application.html">application</a></li>
-                                        <li class="class"><a href="../classes/audio.html">audio</a></li>
-                                        <li class="class"><a href="../classes/auth.html">auth</a></li>
-                                        <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
-                                        <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
-                                        <li class="class"><a href="../classes/bdd.html">bdd</a></li>
-                                        <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
-                                        <li class="class"><a href="../classes/cards.html">cards</a></li>
-                                        <li class="class"><a href="../classes/citations.html">citations</a></li>
-                                        <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
-                                        <li class="class"><a href="../classes/cli.html">cli</a></li>
-                                        <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
-                                        <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
-                                        <li class="class"><a href="../classes/datatable.html">datatable</a></li>
-                                        <li class="class"><a href="../classes/ddg.html">ddg</a></li>
-                                        <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
-                                        <li class="class"><a href="../classes/debug.html">debug</a></li>
-                                        <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
-                                        <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
-                                        <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
-                                        <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
-                                        <li class="class"><a href="../classes/form.html">form</a></li>
-                                        <li class="class"><a href="../classes/freetile.html">freetile</a></li>
-                                        <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
-                                        <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
-                                        <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
-                                        <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
-                                        <li class="class"><a href="../classes/graphique.html">graphique</a></li>
-                                        <li class="class"><a href="../classes/html5.html">html5</a></li>
-                                        <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
-                                        <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
-                                        <li class="class"><a href="../classes/js.html">js</a></li>
-                                        <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
-                                        <li class="class"><a href="../classes/log_file.html">log_file</a></li>
-                                        <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
-                                        <li class="class"><a href="../classes/mail.html">mail</a></li>
-                                        <li class="class"><a href="../classes/math.html">math</a></li>
-                                        <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
-                                        <li class="class"><a href="../classes/modal.html">modal</a></li>
-                                        <li class="class"><a href="../classes/openweather.html">openweather</a></li>
-                                        <li class="class"><a href="../classes/pagination.html">pagination</a></li>
-                                        <li class="class"><a href="../classes/php_header.html">php_header</a></li>
-                                        <li class="class"><a href="../classes/phpmailerException.html">phpmailerException</a></li>
-                                        <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
-                                        <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
-                                        <li class="class"><a href="../classes/printer.html">printer</a></li>
-                                        <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
-                                        <li class="class"><a href="../classes/reveal.html">reveal</a></li>
-                                        <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
-                                        <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
-                                        <li class="class"><a href="../classes/service.html">service</a></li>
-                                        <li class="class"><a href="../classes/session.html">session</a></li>
-                                        <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
-                                        <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
-                                        <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
-                                        <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
-                                        <li class="class"><a href="../classes/ssl.html">ssl</a></li>
-                                        <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
-                                        <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
-                                        <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
-                                        <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
-                                        <li class="class"><a href="../classes/time.html">time</a></li>
-                                        <li class="class"><a href="../classes/trad.html">trad</a></li>
-                                        <li class="class"><a href="../classes/video.html">video</a></li>
-                                        <li class="class"><a href="../classes/vticker.html">vticker</a></li>
-                                        <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="row-fluid">
-                <div class="span10 offset2">
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <nav>
-                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
-                            </nav>
-                            <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
-                            <h1><small>\</small>math</h1>
-                            <p><em>Cette classe contient quelques fonctions mathématique de base ainsi que des fonctions pour verifier le type de variables</em></p>
-                            <section id="summary">
-                                <h2>Summary</h2>
-                                <section class="row-fluid heading">
-                                    <section class="span4">
-                                        <a href="#methods">Methods</a>
-                                    </section>
-                                    <section class="span4">
-                                        <a href="#properties">Properties</a>
-                                    </section>
-                                    <section class="span4">
-                                        <a href="#constants">Constants</a>
-                                    </section>
-                                </section>
-                                <section class="row-fluid public">
-                                    <section class="span4">
-                                        <a href="../classes/math.html#method_pgcd" class="">pgcd()</a><br />
-                                        <a href="../classes/math.html#method_factorielle" class="">factorielle()</a><br />
-                                        <a href="../classes/math.html#method_cercle_get_perimetre_from_diametre" class="">cercle_get_perimetre_from_diametre()</a><br />
-                                        <a href="../classes/math.html#method_cercle_get_diametre_from_perimetre" class="">cercle_get_diametre_from_perimetre()</a><br />
-                                        <a href="../classes/math.html#method_distance_entre_deux_points" class="">distance_entre_deux_points()</a><br />
-                                        <a href="../classes/math.html#method_pourcentage" class="">pourcentage()</a><br />
-                                        <a href="../classes/math.html#method_produit_en_croix" class="">produit_en_croix()</a><br />
-                                        <a href="../classes/math.html#method_pythagore" class="">pythagore()</a><br />
-                                        <a href="../classes/math.html#method_is_premier" class="">is_premier()</a><br />
-                                        <a href="../classes/math.html#method_is_heureux" class="">is_heureux()</a><br />
-                                        <a href="../classes/math.html#method_is_polygonal" class="">is_polygonal()</a><br />
-                                        <a href="../classes/math.html#method_is_tetrahedral" class="">is_tetrahedral()</a><br />
-                                        <a href="../classes/math.html#method_is_square_pyramidal" class="">is_square_pyramidal()</a><br />
-                                        <a href="../classes/math.html#method_delta" class="">delta()</a><br />
-                                        <a href="../classes/math.html#method_moyenne" class="">moyenne()</a><br />
-                                        <a href="../classes/math.html#method_is_int" class="">is_int()</a><br />
-                                        <a href="../classes/math.html#method_is_float" class="">is_float()</a><br />
-                                        <a href="../classes/math.html#method_is_bool" class="">is_bool()</a><br />
-                                    </section>
-                                    <section class="span4">
-                                        <em>No public properties found</em>
-                                    </section>
-                                    <section class="span4">
-                                        <em>No constants found</em>
-                                    </section>
-                                </section>
-                                <section class="row-fluid protected">
-                                    <section class="span4">
-                                        <em>No protected methods found</em>
-                                    </section>
-                                    <section class="span4">
-                                        <em>No protected properties found</em>
-                                    </section>
-                                    <section class="span4">
-                                        <em>N/A</em>
-                                    </section>
-                                </section>
-                                <section class="row-fluid private">
-                                    <section class="span4">
-                                        <em>No private methods found</em>
-                                    </section>
-                                    <section class="span4">
-                                        <em>No private properties found</em>
-                                    </section>
-                                    <section class="span4">
-                                        <em>N/A</em>
-                                    </section>
-                                </section>
-                            </section>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <dl>
-                                <dt>File</dt>
-                                <dd><a href="../files/class.math.class.html"><div class="path-wrapper">class\math.class.php</div></a></dd>
-                                <dt>Package</dt>
-                                <dd><div class="namespace-wrapper">Default</div></dd>
-                                <dt>Class hierarchy</dt>
-                                <dd class="hierarchy">
-                                    <div class="namespace-wrapper">\math</div>
-                                </dd>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr>
-                                    <th>
-                                        author
-                                    </th>
-                                    <td>
-                                        <p>LEGAGNEUR Matthieu <a href="mailto:legagneur.matthieu@gmail.com">legagneur.matthieu@gmail.com</a></p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <a id="methods" name="methods"></a>
-                    <div class="row-fluid">
-                        <div class="span8 content class"><h2>Methods</h2></div>
-                        <aside class="span4 detailsbar"></aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_pgcd" name="method_pgcd" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">pgcd()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">pgcd(integer  <span class="argument">$nb1</span>, integer  <span class="argument">$nb2</span>) : integer|boolean</pre>
-                                <p><em>Retourne le PGCD de deux nombres ( calculé par l&#039;algorithme d&#039;Euclide )</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb1 </td>
-                                        <td><p>Nombre entier non nul superieur a $nb2</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb2 </td>
-                                        <td><p>Nombre entier non nul inferieur a $nb1</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                integer|boolean
-                                &mdash; <p>Retourne le PGCD ou false en cas d'erreur</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_factorielle" name="method_factorielle" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">factorielle()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">factorielle(integer  <span class="argument">$nb</span>) : integer|boolean</pre>
-                                <p><em>Retourne le factoriel d&#039;un nombre</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre entier positif</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                integer|boolean
-                                &mdash; <p>Retourne le factoriel ou false en cas d'erreur</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_cercle_get_perimetre_from_diametre" name="method_cercle_get_perimetre_from_diametre" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">cercle_get_perimetre_from_diametre()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">cercle_get_perimetre_from_diametre(float  <span class="argument">$nb</span>) : float</pre>
-                                <p><em>Retourne le périmètre d&#039;un cercle à partir de son diamètre</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$nb </td>
-                                        <td><p>Diametre</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float
-                                &mdash; <p>Perimetre</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_cercle_get_diametre_from_perimetre" name="method_cercle_get_diametre_from_perimetre" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">cercle_get_diametre_from_perimetre()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">cercle_get_diametre_from_perimetre(float  <span class="argument">$nb</span>) : float</pre>
-                                <p><em>Retourne le diamètre d&#039;un cercle à partir de son perimètre</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$nb </td>
-                                        <td><p>Perimetre</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float
-                                &mdash; <p>Diametre</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_distance_entre_deux_points" name="method_distance_entre_deux_points" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">distance_entre_deux_points()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">distance_entre_deux_points(float  <span class="argument">$xa</span>, float  <span class="argument">$ya</span>, float  <span class="argument">$xb</span>, float  <span class="argument">$yb</span>) : float</pre>
-                                <p><em>Calcule la distance entre deux points depuis leurs coordonées X (latitude) et Y (longitude)</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$xa </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$ya </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$xb </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$yb </td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float
-                                &mdash; <p>distance entre les deux points</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_pourcentage" name="method_pourcentage" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">pourcentage()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">pourcentage(float  <span class="argument">$nb</span>, float  <span class="argument">$percent</span>) : float</pre>
-                                <p><em>Calcule un pourcentage</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre de base</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$percent </td>
-                                        <td><p>Poucentage à appliquer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float
-                                &mdash; <p>Pourcentage du nombre de base</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_produit_en_croix" name="method_produit_en_croix" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">produit_en_croix()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">produit_en_croix(float|null  <span class="argument">$a</span>, float|null  <span class="argument">$b</span>, float|null  <span class="argument">$c</span>, float|null  <span class="argument">$d</span>) : float|boolean</pre>
-                                <p><em>$a=>$b <br />
-                                        $c=>$d <br />
-                                        Effectue un produit en croix ( ou régle de trois) <br />
-                                        La valeur &quot;null&quot; doit etre appliquée à la valeur recherchée (que retournera la fonction)</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$a </td>
-                                        <td><p>Valeur a</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$b </td>
-                                        <td><p>Valeur b</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$c </td>
-                                        <td><p>Valeur c</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$d </td>
-                                        <td><p>Valeur d</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float|boolean
-                                &mdash; <p>Retourne la valeur cherchée ou false en cas d'erreur ( généralement une division par 0)</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_pythagore" name="method_pythagore" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">pythagore()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">pythagore(float|null  <span class="argument">$a</span>, float|null  <span class="argument">$b</span>, float|null  <span class="argument">$c</span>) : float|boolean</pre>
-                                <p><em>Applique le théoreme de Pythagore ($c est la longueur de l&#039;hypotenuse)<br />
-                                        La valeur &quot;null&quot; doit etre appliquée à la valeur recherchée (que retournera la fonction)</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$a </td>
-                                        <td><p>Premier coté adjacent</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$b </td>
-                                        <td><p>Second coté adjacent</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float|null</td>
-                                        <td>$c </td>
-                                        <td><p>Hypotenuse du triangle</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float|boolean
-                                &mdash; <p>Retourne la valeur cherchée ou false en cas d'erreur</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_premier" name="method_is_premier" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_premier()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_premier(integer  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne si le nombre est premier ou non (true/false) <br />
-                                        ATTENTION ! PEUT ETRE LONG !</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre entier positif</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>Le nombre est-il premier ? (true/false)</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_heureux" name="method_is_heureux" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_heureux()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_heureux(float  <span class="argument">$nb</span>) : array|boolean</pre>
-                                <p><em>Retourne si le nombre passé en paramètre est un nombre heureux ou non <br />
-                                        S&#039;il est heureux, alors la fonction retourne la liste de la suite logique démontrant que le nombre est heureux <br />
-                                        (exemple, 7:[49,97,130,10,1]) <br />
-                                        sinon la fonction retourne false</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre a évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                array|boolean
-                                &mdash; <p>Liste de la suite logique démontrant que le nombre est heureux, false si le nombre est malheureux</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_polygonal" name="method_is_polygonal" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_polygonal()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_polygonal(integer  <span class="argument">$nb</span>, integer  <span class="argument">$x_gonal</span>) : boolean</pre>
-                                <p><em>Retourne si un nombre est polygonal ( triangulaire, carré, pentagonal ,hexagonal, heptagonal, octogonal.</em></p>
-                                <p>..)</p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre entier à évaluer</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$x_gonal </td>
-                                        <td><p>Nombre de coté du polygone (minimum 3 ! )( 3 = triangulaire, 4 = carré...)</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>True si le nombre est polygonal, false si non polygonal</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_tetrahedral" name="method_is_tetrahedral" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_tetrahedral()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_tetrahedral(integer  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne si un nombre est tétraédrique</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre entier a évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>True si le nombre est tétraédrique, false si non tétraédrique</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_square_pyramidal" name="method_is_square_pyramidal" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_square_pyramidal()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_square_pyramidal(integer  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne si un nombre est pyramidal carré</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Nombre entier à évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>True si le nombre est pyramidal carré, false si non pyramidal carré</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_delta" name="method_delta" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">delta()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">delta(float  <span class="argument">$a</span>, float  <span class="argument">$b</span>, float  <span class="argument">$c</span>) : array</pre>
-                                <p><em>Retourne le delta et les solution d&#039;une équation du second degré définit par ax²+bx+c <br />
-                                        resutat sous la forme : array(&quot;delta&quot;=>$delta, &quot;solutions&quot;=> null|array($x1,$x2);</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$a </td>
-                                        <td><p>a de l'équation ax²+bx+c</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$b </td>
-                                        <td><p>b de l'équation ax²+bx+c</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$c </td>
-                                        <td><p>c de l'équation ax²+bx+c</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                array
-                                &mdash; <p>array(&quot;delta&quot;=>$delta, &quot;solutions&quot;=> null|array($x1,$x2);</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_moyenne" name="method_moyenne" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">moyenne()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">moyenne(array  <span class="argument">$array</span>) : float</pre>
-                                <p><em>Retourne la moyenne d&#039;une liste de nombres</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>array</td>
-                                        <td>$array </td>
-                                        <td><p>Liste de nombre : array(n1, n2, n3, ...)</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                float
-                                &mdash; <p>Moyenne</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_int" name="method_is_int" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_int()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_int(integer  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne true si la variable est un int, false dans le cas contraire</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>integer</td>
-                                        <td>$nb </td>
-                                        <td><p>Variable a évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>La variable est-il un int ? (true/false)</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_float" name="method_is_float" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_float()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_float(float  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne true si la variable est un float, false dans le cas contraire</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>float</td>
-                                        <td>$nb </td>
-                                        <td><p>Variable à évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>La variable est-il un float ? (true/false)</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span8 content class">
-                            <a id="method_is_bool" name="method_is_bool" class="anchor"></a>
-                            <article class="method">
-                                <h3 class="public ">is_bool()</h3>
-                                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                                <pre class="signature" style="margin-right: 54px;">is_bool(boolean  <span class="argument">$nb</span>) : boolean</pre>
-                                <p><em>Retourne true si la variable est un boolean, false dans le cas contraire</em></p>
-                                <h4>Parameters</h4>
-                                <table class="table table-condensed table-hover">
-                                    <tr>
-                                        <td>boolean</td>
-                                        <td>$nb </td>
-                                        <td><p>Variable à évaluer</p></td>
-                                    </tr>
-                                </table>
-                                <h4>Returns</h4>
-                                boolean
-                                &mdash; <p>La variable est-il un boolean ? (true/false)</p>
-                            </article>
-                        </div>
-                        <aside class="span4 detailsbar">
-                            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                            <dl>
-                            </dl>
-                            <h2>Tags</h2>
-                            <table class="table table-condensed">
-                                <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-                        </aside>
-                    </div>
-                </div>
-            </section>
-            <div id="source-view" class="modal hide fade" >
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="source-view-label">math.class.php</h3>
-                </div>
-                <div class="modal-body">
-                    <object type="text/html" data="../files/class.math.class.php.txt" style="width: 100%; height: 400px;"></object>
+            </div>
+            <div id="namespace-883381346" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/admin_controle.html">admin_controle</a></li>
+                                                    <li class="class"><a href="../classes/application.html">application</a></li>
+                                                    <li class="class"><a href="../classes/audio.html">audio</a></li>
+                                                    <li class="class"><a href="../classes/auth.html">auth</a></li>
+                                                    <li class="class"><a href="../classes/ban_ip.html">ban_ip</a></li>
+                                                    <li class="class"><a href="../classes/bbParser.html">bbParser</a></li>
+                                                    <li class="class"><a href="../classes/bdd.html">bdd</a></li>
+                                                    <li class="class"><a href="../classes/bootstrap_theme.html">bootstrap_theme</a></li>
+                                                    <li class="class"><a href="../classes/cards.html">cards</a></li>
+                                                    <li class="class"><a href="../classes/citations.html">citations</a></li>
+                                                    <li class="class"><a href="../classes/ckeditor.html">ckeditor</a></li>
+                                                    <li class="class"><a href="../classes/cli.html">cli</a></li>
+                                                    <li class="class"><a href="../classes/cookieaccept.html">cookieaccept</a></li>
+                                                    <li class="class"><a href="../classes/cytoscape.html">cytoscape</a></li>
+                                                    <li class="class"><a href="../classes/datatable.html">datatable</a></li>
+                                                    <li class="class"><a href="../classes/ddg.html">ddg</a></li>
+                                                    <li class="class"><a href="../classes/ddg_api.html">ddg_api</a></li>
+                                                    <li class="class"><a href="../classes/debug.html">debug</a></li>
+                                                    <li class="class"><a href="../classes/dwf_exception.html">dwf_exception</a></li>
+                                                    <li class="class"><a href="../classes/easteregg.html">easteregg</a></li>
+                                                    <li class="class"><a href="../classes/entity_generator.html">entity_generator</a></li>
+                                                    <li class="class"><a href="../classes/file_explorer.html">file_explorer</a></li>
+                                                    <li class="class"><a href="../classes/form.html">form</a></li>
+                                                    <li class="class"><a href="../classes/freetile.html">freetile</a></li>
+                                                    <li class="class"><a href="../classes/ftp_explorer.html">ftp_explorer</a></li>
+                                                    <li class="class"><a href="../classes/fullcalendar.html">fullcalendar</a></li>
+                                                    <li class="class"><a href="../classes/g_agenda.html">g_agenda</a></li>
+                                                    <li class="class"><a href="../classes/g_elFinder.html">g_elFinder</a></li>
+                                                    <li class="class"><a href="../classes/gestion_article.html">gestion_article</a></li>
+                                                    
+                                                    
+                                                    <li class="class"><a href="../classes/graphique.html">graphique</a></li>
+                                                    <li class="class"><a href="../classes/html5.html">html5</a></li>
+                                                    <li class="class"><a href="../classes/html_structures.html">html_structures</a></li>
+                                                    <li class="class"><a href="../classes/ip_access.html">ip_access</a></li>
+                                                    <li class="class"><a href="../classes/js.html">js</a></li>
+                                                    <li class="class"><a href="../classes/leaflet.html">leaflet</a></li>
+                                                    <li class="class"><a href="../classes/log_file.html">log_file</a></li>
+                                                    <li class="class"><a href="../classes/log_mail.html">log_mail</a></li>
+                                                    
+                                                    <li class="class"><a href="../classes/mail.html">mail</a></li>
+                                                    <li class="class"><a href="../classes/math.html">math</a></li>
+                                                    <li class="class"><a href="../classes/messagerie.html">messagerie</a></li>
+                                                    <li class="class"><a href="../classes/modal.html">modal</a></li>
+                                                    <li class="class"><a href="../classes/openweather.html">openweather</a></li>
+                                                    <li class="class"><a href="../classes/pagination.html">pagination</a></li>
+                                                    
+                                                    <li class="class"><a href="../classes/php_header.html">php_header</a></li>
+                                                    <li class="class"><a href="../classes/phpQRCode.html">phpQRCode</a></li>
+                                                    <li class="class"><a href="../classes/printcsv.html">printcsv</a></li>
+                                                    <li class="class"><a href="../classes/printer.html">printer</a></li>
+                                                    
+                                                    <li class="class"><a href="../classes/ratioblocks.html">ratioblocks</a></li>
+                                                    <li class="class"><a href="../classes/reveal.html">reveal</a></li>
+                                                    
+                                                    <li class="class"><a href="../classes/robotstxt.html">robotstxt</a></li>
+                                                    <li class="class"><a href="../classes/selectorDOM.html">selectorDOM</a></li>
+                                                    <li class="class"><a href="../classes/service.html">service</a></li>
+                                                    <li class="class"><a href="../classes/session.html">session</a></li>
+                                                    <li class="class"><a href="../classes/shuffle_letters.html">shuffle_letters</a></li>
+                                                    <li class="class"><a href="../classes/sitemap.html">sitemap</a></li>
+                                                    <li class="class"><a href="../classes/sms_gateway.html">sms_gateway</a></li>
+                                                    <li class="class"><a href="../classes/sql_backup.html">sql_backup</a></li>
+                                                    <li class="class"><a href="../classes/ssl.html">ssl</a></li>
+                                                    <li class="class"><a href="../classes/stalactite.html">stalactite</a></li>
+                                                    <li class="class"><a href="../classes/statistiques.html">statistiques</a></li>
+                                                    <li class="class"><a href="../classes/sub_menu.html">sub_menu</a></li>
+                                                    <li class="class"><a href="../classes/syntaxhighlighter.html">syntaxhighlighter</a></li>
+                                                    <li class="class"><a href="../classes/time.html">time</a></li>
+                                                    <li class="class"><a href="../classes/trad.html">trad</a></li>
+                                                    <li class="class"><a href="../classes/video.html">video</a></li>
+                                                    <li class="class"><a href="../classes/vticker.html">vticker</a></li>
+                                                    <li class="class"><a href="../classes/w3c_validate.html">w3c_validate</a></li>
+                                            </ul>
                 </div>
             </div>
-            <footer class="row-fluid">
-                <section class="span10 offset2">
-                    <section class="row-fluid">
-                        <section class="span10 offset1">
-                            <section class="row-fluid footer-sections">
-                                <section class="span4">
-                                    <h1><i class="icon-code"></i></h1>
-                                    <div>
-                                        <ul>
-                                        </ul>
-                                    </div>
-                                </section>
-                                <section class="span4">
-                                    <h1><i class="icon-bar-chart"></i></h1>
-                                    <div>
-                                        <ul>
-                                            <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
-                                        </ul>
-                                    </div>
-                                </section>
-                                <section class="span4">
-                                    <h1><i class="icon-pushpin"></i></h1>
-                                    <div>
-                                        <ul>
-                                            <li><a href="../reports/errors.html">Errors</a></li>
-                                            <li><a href="../reports/markers.html">Markers</a></li>
-                                        </ul>
-                                    </div>
-                                </section>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\</small>math</h1>
+                    <p><em>Cette classe contient quelques fonctions mathématique de base ainsi que des fonctions pour verifier le type de variables</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/math.html#method_pgcd" class="">pgcd()</a><br />
+                                                                    <a href="../classes/math.html#method_factorielle" class="">factorielle()</a><br />
+                                                                    <a href="../classes/math.html#method_cercle_get_perimetre_from_diametre" class="">cercle_get_perimetre_from_diametre()</a><br />
+                                                                    <a href="../classes/math.html#method_cercle_get_diametre_from_perimetre" class="">cercle_get_diametre_from_perimetre()</a><br />
+                                                                    <a href="../classes/math.html#method_distance_entre_deux_points" class="">distance_entre_deux_points()</a><br />
+                                                                    <a href="../classes/math.html#method_pourcentage" class="">pourcentage()</a><br />
+                                                                    <a href="../classes/math.html#method_produit_en_croix" class="">produit_en_croix()</a><br />
+                                                                    <a href="../classes/math.html#method_pythagore" class="">pythagore()</a><br />
+                                                                    <a href="../classes/math.html#method_is_premier" class="">is_premier()</a><br />
+                                                                    <a href="../classes/math.html#method_is_heureux" class="">is_heureux()</a><br />
+                                                                    <a href="../classes/math.html#method_is_polygonal" class="">is_polygonal()</a><br />
+                                                                    <a href="../classes/math.html#method_is_tetrahedral" class="">is_tetrahedral()</a><br />
+                                                                    <a href="../classes/math.html#method_is_square_pyramidal" class="">is_square_pyramidal()</a><br />
+                                                                    <a href="../classes/math.html#method_delta" class="">delta()</a><br />
+                                                                    <a href="../classes/math.html#method_moyenne" class="">moyenne()</a><br />
+                                                                    <a href="../classes/math.html#method_is_int" class="">is_int()</a><br />
+                                                                    <a href="../classes/math.html#method_is_float" class="">is_float()</a><br />
+                                                                    <a href="../classes/math.html#method_is_bool" class="">is_bool()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
                             </section>
                         </section>
                     </section>
-                    <section class="row-fluid">
-                        <section class="span10 offset1">
-                            <hr />
-                            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                            on May 26th, 2017 at 11:04.
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/math.class.html"><div class="path-wrapper">math.class.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\math</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>LEGAGNEUR Matthieu <a href="mailto:legagneur.matthieu@gmail.com">legagneur.matthieu@gmail.com</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_pgcd" name="method_pgcd" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">pgcd()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">pgcd(integer  <span class="argument">$nb1</span>, integer  <span class="argument">$nb2</span>) : integer|boolean</pre>
+                <p><em>Retourne le PGCD de deux nombres ( calculé par l&#039;algorithme d&#039;Euclide )</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb1 </td>
+                                <td><p>Nombre entier non nul superieur a $nb2</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb2 </td>
+                                <td><p>Nombre entier non nul inferieur a $nb1</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer|boolean
+                                            &mdash; <p>Retourne le PGCD ou false en cas d'erreur</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_factorielle" name="method_factorielle" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">factorielle()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">factorielle(integer  <span class="argument">$nb</span>) : integer|boolean</pre>
+                <p><em>Retourne le factoriel d&#039;un nombre</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Nombre entier positif</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer|boolean
+                                            &mdash; <p>Retourne le factoriel ou false en cas d'erreur</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_cercle_get_perimetre_from_diametre" name="method_cercle_get_perimetre_from_diametre" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">cercle_get_perimetre_from_diametre()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">cercle_get_perimetre_from_diametre(float  <span class="argument">$nb</span>) : float</pre>
+                <p><em>Retourne le périmètre d&#039;un cercle à partir de son diamètre</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$nb </td>
+                                <td><p>Diametre</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>Perimetre</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_cercle_get_diametre_from_perimetre" name="method_cercle_get_diametre_from_perimetre" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">cercle_get_diametre_from_perimetre()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">cercle_get_diametre_from_perimetre(float  <span class="argument">$nb</span>) : float</pre>
+                <p><em>Retourne le diamètre d&#039;un cercle à partir de son perimètre</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$nb </td>
+                                <td><p>Perimetre</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>Diametre</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_distance_entre_deux_points" name="method_distance_entre_deux_points" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">distance_entre_deux_points()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">distance_entre_deux_points(float  <span class="argument">$xa</span>, float  <span class="argument">$ya</span>, float  <span class="argument">$xb</span>, float  <span class="argument">$yb</span>) : float</pre>
+                <p><em>Calcule la distance entre deux points depuis leurs coordonées X (latitude) et Y (longitude)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$xa </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$ya </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$xb </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$yb </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>distance entre les deux points</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_pourcentage" name="method_pourcentage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">pourcentage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">pourcentage(float  <span class="argument">$nb</span>, float  <span class="argument">$percent</span>) : float</pre>
+                <p><em>Calcule un pourcentage</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$nb </td>
+                                <td><p>Nombre de base</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$percent </td>
+                                <td><p>Poucentage à appliquer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>Pourcentage du nombre de base</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_produit_en_croix" name="method_produit_en_croix" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">produit_en_croix()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">produit_en_croix(float|null  <span class="argument">$a</span>, float|null  <span class="argument">$b</span>, float|null  <span class="argument">$c</span>, float|null  <span class="argument">$d</span>) : float|boolean</pre>
+                <p><em>$a=>$b <br />
+$c=>$d <br />
+Effectue un produit en croix ( ou régle de trois) <br />
+La valeur &quot;null&quot; doit etre appliquée à la valeur recherchée (que retournera la fonction)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$a </td>
+                                <td><p>Valeur a</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$b </td>
+                                <td><p>Valeur b</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$c </td>
+                                <td><p>Valeur c</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$d </td>
+                                <td><p>Valeur d</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float|boolean
+                                            &mdash; <p>Retourne la valeur cherchée ou false en cas d'erreur ( généralement une division par 0)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_pythagore" name="method_pythagore" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">pythagore()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">pythagore(float|null  <span class="argument">$a</span>, float|null  <span class="argument">$b</span>, float|null  <span class="argument">$c</span>) : float|boolean</pre>
+                <p><em>Applique le théoreme de Pythagore ($c est la longueur de l&#039;hypotenuse)<br />
+La valeur &quot;null&quot; doit etre appliquée à la valeur recherchée (que retournera la fonction)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$a </td>
+                                <td><p>Premier coté adjacent</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$b </td>
+                                <td><p>Second coté adjacent</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float|null</td>
+                                <td>$c </td>
+                                <td><p>Hypotenuse du triangle</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float|boolean
+                                            &mdash; <p>Retourne la valeur cherchée ou false en cas d'erreur</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_premier" name="method_is_premier" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_premier()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_premier(integer  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne si le nombre est premier ou non (true/false) <br />
+ATTENTION ! PEUT ETRE LONG !</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Nombre entier positif</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Le nombre est-il premier ? (true/false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_heureux" name="method_is_heureux" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_heureux()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_heureux(float  <span class="argument">$nb</span>) : array|boolean</pre>
+                <p><em>Retourne si le nombre passé en paramètre est un nombre heureux ou non <br />
+S&#039;il est heureux, alors la fonction retourne la liste de la suite logique démontrant que le nombre est heureux <br />
+(exemple, 7:[49,97,130,10,1]) <br />
+sinon la fonction retourne false</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$nb </td>
+                                <td><p>Nombre a évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array|boolean
+                                            &mdash; <p>Liste de la suite logique démontrant que le nombre est heureux, false si le nombre est malheureux</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_polygonal" name="method_is_polygonal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_polygonal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_polygonal(integer  <span class="argument">$nb</span>, integer  <span class="argument">$x_gonal</span>) : boolean</pre>
+                <p><em>Retourne si un nombre est polygonal ( triangulaire, carré, pentagonal ,hexagonal, heptagonal, octogonal.</em></p>
+                <p>..)</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Nombre entier à évaluer</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$x_gonal </td>
+                                <td><p>Nombre de coté du polygone (minimum 3 ! )( 3 = triangulaire, 4 = carré...)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>True si le nombre est polygonal, false si non polygonal</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_tetrahedral" name="method_is_tetrahedral" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_tetrahedral()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_tetrahedral(integer  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne si un nombre est tétraédrique</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Nombre entier a évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>True si le nombre est tétraédrique, false si non tétraédrique</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_square_pyramidal" name="method_is_square_pyramidal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_square_pyramidal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_square_pyramidal(integer  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne si un nombre est pyramidal carré</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Nombre entier à évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>True si le nombre est pyramidal carré, false si non pyramidal carré</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_delta" name="method_delta" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">delta()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">delta(float  <span class="argument">$a</span>, float  <span class="argument">$b</span>, float  <span class="argument">$c</span>) : array</pre>
+                <p><em>Retourne le delta et les solution d&#039;une équation du second degré définit par axÂ²+bx+c <br />
+resutat sous la forme : array(&quot;delta&quot;=>$delta, &quot;solutions&quot;=> null|array($x1,$x2);</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$a </td>
+                                <td><p>a de l'équation axÂ²+bx+c</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$b </td>
+                                <td><p>b de l'équation axÂ²+bx+c</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>float</td>
+                                <td>$c </td>
+                                <td><p>c de l'équation axÂ²+bx+c</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>array(&quot;delta&quot;=>$delta, &quot;solutions&quot;=> null|array($x1,$x2);</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_moyenne" name="method_moyenne" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">moyenne()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">moyenne(array  <span class="argument">$array</span>) : float</pre>
+                <p><em>Retourne la moyenne d&#039;une liste de nombres</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>Liste de nombre : array(n1, n2, n3, ...)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>Moyenne</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_int" name="method_is_int" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_int()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_int(integer  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne true si la variable est un int, false dans le cas contraire</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nb </td>
+                                <td><p>Variable a évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>La variable est-il un int ? (true/false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_float" name="method_is_float" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_float()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_float(float  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne true si la variable est un float, false dans le cas contraire</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$nb </td>
+                                <td><p>Variable à évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>La variable est-il un float ? (true/false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_bool" name="method_is_bool" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_bool()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_bool(boolean  <span class="argument">$nb</span>) : boolean</pre>
+                <p><em>Retourne true si la variable est un boolean, false dans le cas contraire</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$nb </td>
+                                <td><p>Variable à évaluer</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>La variable est-il un boolean ? (true/false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" >
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">math.class.php</h3>
+        </div>
+        <div class="modal-body">
+            <object type="text/html" data="../files/math.class.php.txt" style="width: 100%; height: 400px;"></object>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
                         </section>
                     </section>
                 </section>
-            </footer>
-        </div>
-    </body>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on September 12th, 2017 at 01:34.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
 </html>

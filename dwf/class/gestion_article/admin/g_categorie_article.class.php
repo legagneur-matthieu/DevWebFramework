@@ -1,13 +1,13 @@
-<?php
+Ôªø<?php
 
 /**
- * Cette classe gËre l'administration des catÈgories d'articles
+ * Cette classe g√®re l'administration des cat√©gories d'articles
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class g_categorie_article {
 
     /**
-     * Cette classe gËre l'administration des catÈgories d'articles
+     * Cette classe g√®re l'administration des cat√©gories d'articles
      * @param bdd $bdd Instance de BDD
      */
     public function __construct(bdd $bdd) {
@@ -25,7 +25,7 @@ class g_categorie_article {
     }
 
     /**
-     * GËre la modification de catÈgories
+     * G√®re la modification de cat√©gories
      */
     private function g_categorie_modif() {
         if ($_GET["id"] != 1 and $_GET["id"] != 2 and math::is_int($_GET["id"])) {
@@ -33,27 +33,27 @@ class g_categorie_article {
                 $cat = cat_article::get_from_id($_GET["id"]);
                 form::new_form();
                 form::new_fieldset("Modifer une categorie");
-                form::input("Nom de la catÈgorie", "cat_nom", "", $cat->get_nom());
+                form::input("Nom de la cat√©gorie", "cat_nom", "", $cat->get_nom());
                 form::submit("btn-default", "Modifier");
                 form::close_fieldset();
                 form::close_form();
                 if (isset($_POST["cat_nom"])) {
                     $cat->set_nom($_POST["cat_nom"]);
-                    js::alert("La catÈgorie a bien ÈtÈ modifiÈ");
+                    js::alert("La cat√©gorie a bien √©t√© modifi√©");
                     js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
                 }
             } else {
-                js::alert("ERREUR : Cette catÈgorie n'existe pas !");
+                js::alert("ERREUR : Cette cat√©gorie n'existe pas !");
                 js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
             }
         } else {
-            js::alert("ERREUR : Cette catÈrogie est protÈgÈ !");
+            js::alert("ERREUR : Cette cat√©rogie est prot√©g√© !");
             js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
         }
     }
 
     /**
-     * GËre la suppresion de catÈgories
+     * G√®re la suppresion de cat√©gories
      */
     private function g_categorie_supp() {
         if ($_GET["id"] != 1 and $_GET["id"] != 2 and math::is_int($_GET["id"])) {
@@ -75,18 +75,18 @@ class g_categorie_article {
                     }
                 }
                 application::$_bdd->query("delete from cat_article where id='" . application::$_bdd->protect_var($cat[0]["id"]) . "';");
-                js::alert("La catÈgorie \"" . $cat[0]["nom"] . "\" a bien ÈtÈ supprimÈ");
+                js::alert("La cat√©gorie \"" . $cat[0]["nom"] . "\" a bien √©t√© supprim√©");
             } else {
-                js::alert("ERREUR : Cette catÈgorie n'existe pas !");
+                js::alert("ERREUR : Cette cat√©gorie n'existe pas !");
             }
         } else {
-            js::alert("ERREUR : Cette catÈrogie est protÈgÈ !");
+            js::alert("ERREUR : Cette cat√©rogie est prot√©g√© !");
         }
         js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
     }
 
     /**
-     * GËre l'affichage et l'ajout de catÈgories
+     * G√®re l'affichage et l'ajout de cat√©gories
      */
     private function g_categorie_default() {
         $categogies = cat_article::get_table_array();
@@ -127,17 +127,17 @@ class g_categorie_article {
         <?php
         form::new_form();
         form::new_fieldset("Ajouter une categorie");
-        form::input("Nom de la catÈgorie", "cat_nom");
+        form::input("Nom de la cat√©gorie", "cat_nom");
         form::submit("btn-default");
         form::close_fieldset();
         form::close_form();
         if (isset($_POST["cat_nom"])) {
             if (cat_article::get_count("nom='" . application::$_bdd->protect_var($_POST["cat_nom"]) . "'") == 0) {
                 cat_article::ajout($_POST["cat_nom"]);
-                js::alert("Votre catÈgorie a bien ÈtÈ ajoutÈ");
+                js::alert("Votre cat√©gorie a bien √©t√© ajout√©");
                 js::redir("");
             } else {
-                js::alert("ERREUR : Cette catÈgorie existe dÈj‡ !");
+                js::alert("ERREUR : Cette cat√©gorie existe d√©j√† !");
             }
         }
     }

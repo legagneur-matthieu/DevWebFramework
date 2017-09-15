@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * Cette classe permet d'afficher une carte exploitant OSM (OpenStreetMap)
@@ -8,8 +8,8 @@
 class leaflet {
 
     /**
-     * Permet de vérifier que la librairie leaflet a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie leaflet a bien été appelée qu'une fois.
+     * Permet de vÃ©rifier que la librairie leaflet a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie leaflet a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_called = false;
 
@@ -80,10 +80,10 @@ class leaflet {
 
     /**
      * Ajoute un marqueur sur la carte
-     * @param float $x coordoné X (latitide) du marqueur
-     * @param float $y coordoné Y (longitude) du marqueur
+     * @param float $x coordonÃ© X (latitide) du marqueur
+     * @param float $y coordonÃ© Y (longitude) du marqueur
      * @param string $desc Description HTML du marqueur (s'affiche en "popup")
-     * @param boolean $first Premier marqueur de l'itinéraire, à préciser si $this->optimise_itineraire() est utilisé
+     * @param boolean $first Premier marqueur de l'itinÃ©raire, Ã  prÃ©ciser si $this->optimise_itineraire() est utilisÃ©
      */
     public function add_marker($x, $y, $desc, $first = false) {
         $this->_markers[] = array("x" => $x, "y" => $y, "desc" => $desc, "first" => $first);
@@ -91,20 +91,20 @@ class leaflet {
 
     /**
      * Ajoute une zone circulaire sur la carte
-     * @param float $x Coordonnées X du centre du cercle
-     * @param float $y Coordonnées Y du centre du cercle
-     * @param int $rayon Rayon du cercle ( en métre )
+     * @param float $x CoordonnÃ©es X du centre du cercle
+     * @param float $y CoordonnÃ©es Y du centre du cercle
+     * @param int $rayon Rayon du cercle ( en mÃ©tre )
      * @param string $desc Description HTML du cercle (s'affiche en "popup")
      * @param string $color couleur du cercle (couleur CSS)
-     * @param float $opacity opacité du cercle ( entre 0 et 1 )
+     * @param float $opacity opacitÃ© du cercle ( entre 0 et 1 )
      */
     public function add_circle($x, $y, $rayon, $desc, $color = "lightblue", $opacity = "0.4") {
         $this->_circles[] = array("x" => $x, "y" => $y, "r" => $rayon, "desc" => $desc, "color" => $color, "opacity" => $opacity);
     }
 
     /**
-     * Ajoute un polygone à partir d'un tableau de coordonnées
-     * @param array $data tableau de coordonnées à 2 dimensions (associatif) : array( array("x"=>coordX,"y"=>coordY), array("x"=>coordX,"y"=>coordY))
+     * Ajoute un polygone Ã  partir d'un tableau de coordonnÃ©es
+     * @param array $data tableau de coordonnÃ©es Ã  2 dimensions (associatif) : array( array("x"=>coordX,"y"=>coordY), array("x"=>coordX,"y"=>coordY))
      * @param string $desc
      */
     public function add_polygon($data, $desc) {
@@ -112,15 +112,15 @@ class leaflet {
     }
 
     /**
-     * Optimise l'ordre des markers destinés à être affichés dans un itineraire 
+     * Optimise l'ordre des markers destinÃ©s Ã  Ãªtre affichÃ©s dans un itineraire 
      * A utiliser avant $this->print_map et $this->tracer_itineraire
      */
     public function optimise_itineraire() {
-        //on copie les données dans un tableau temporaire
+        //on copie les donnÃ©es dans un tableau temporaire
         $data_copy = $this->_markers;
         $data_distances = array();
 
-        //on créé un tableau qui contient toutes les combinaisons de traget et les distances entre chaque points
+        //on crÃ©Ã© un tableau qui contient toutes les combinaisons de traget et les distances entre chaque points
         foreach ($this->_markers as $key => $a) {
             if ($a["first"]) {
                 $first = $key;
@@ -134,8 +134,8 @@ class leaflet {
         //on recupere le premier point
         $points = array_keys($data_distances);
         $path[] = $k = (isset($first) ? $points[$first] : $points[0]);
-        // on construit le trajet le plus optimisé en prenant à chaque fois le trajet le plus petit entre deux points,
-        //  on supprime le point précédent pour ne pas y retourner
+        // on construit le trajet le plus optimisÃ© en prenant Ã  chaque fois le trajet le plus petit entre deux points,
+        //  on supprime le point prÃ©cÃ©dent pour ne pas y retourner
         for ($i = 1; $i < count($points); $i++) {
             $kt = array_keys($data_distances[$k], min($data_distances[$k]));
             unset($data_distances[$k]);
@@ -152,10 +152,10 @@ class leaflet {
     }
 
     /**
-     * Trace un itineraire à partir des markers
-     * attention : fonction à appeler après this->print_map !
-     * bug : le tracé est en conflit avec les bindPopup des markers
-     * @param boolean $add_client_marker ajouter un marqueur sur la géolocalisation du client (false par defaut)
+     * Trace un itineraire Ã  partir des markers
+     * attention : fonction Ã  appeler aprÃ¨s this->print_map !
+     * bug : le tracÃ© est en conflit avec les bindPopup des markers
+     * @param boolean $add_client_marker ajouter un marqueur sur la gÃ©olocalisation du client (false par defaut)
      */
     public function tracer_itineraire($add_client_marker = false) {
         if ($add_client_marker) {
@@ -163,10 +163,10 @@ class leaflet {
             <script type="text/javascript">
                 $(document).ready(function () {
                     navigator.geolocation.getCurrentPosition(function (pos) {
-                    L.marker([pos.coords.latitude, pos.coords.longitude]).bindPopup("Vous êtes ici").addTo(map<?php echo $this->_id; ?>);
+                    L.marker([pos.coords.latitude, pos.coords.longitude]).bindPopup("Vous Ãªtes ici").addTo(map<?php echo $this->_id; ?>);
                             L.Routing.control({
                             waypoints: [
-                                    L.Routing.waypoint(L.latLng(pos.coords.latitude, pos.coords.longitude), "Vous êtes ici"), <?php
+                                    L.Routing.waypoint(L.latLng(pos.coords.latitude, pos.coords.longitude), "Vous Ãªtes ici"), <?php
             foreach ($this->_markers as $markers) {
                 ?>
                                 L.Routing.waypoint(L.latLng(<?php echo $markers["x"]; ?>, <?php echo $markers["y"]; ?>), "<?php echo $markers["desc"]; ?>"), <?php
@@ -204,7 +204,7 @@ class leaflet {
     }
 
     /**
-     * Affiche la carte (les marqueurs, cercles et polygones doivent être ajoutés AVANT l'appel de cette fonction )
+     * Affiche la carte (les marqueurs, cercles et polygones doivent Ãªtre ajoutÃ©s AVANT l'appel de cette fonction )
      */
     public function print_map() {
         ?>

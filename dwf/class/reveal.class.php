@@ -1,19 +1,19 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de créer un diaporama avec la librairie reveal
- * Il n'est pas recommandé d'avoir plusieurs diaporamas sur la même page !
+ * Cette classe permet de crÃ©er un diaporama avec la librairie reveal
+ * Il n'est pas recommandÃ© d'avoir plusieurs diaporamas sur la mÃªme page !
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class reveal {
 
     /**
-     * Cette classe permet de créer un diaporama avec la librairie reveal, Il n'est pas recommandé d'avoir plusieurs diaporamas sur la même page !
+     * Cette classe permet de crÃ©er un diaporama avec la librairie reveal, Il n'est pas recommandÃ© d'avoir plusieurs diaporamas sur la mÃªme page !
      * Les diaporamas s'organisent avec des balises "section"
      * @param int $width Largeur en px des slides
      * @param int $height Hauteur en px des slides
-     * @param string $theme théme des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
+     * @param string $theme thÃ©me des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
      */
     public function __construct($width = 600, $height = 600, $theme = "white") {
         echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal.css");

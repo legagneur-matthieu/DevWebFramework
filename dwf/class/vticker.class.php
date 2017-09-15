@@ -1,23 +1,23 @@
-<?php
+ï»¿<?php
 
 /**
- * Créé un vTicker (suite de phrases qui défilent)
- * peut être appelé depuis la methode statique js::vTicker()
+ * CrÃ©Ã© un vTicker (suite de phrases qui dÃ©filent)
+ * peut Ãªtre appelÃ© depuis la methode statique js::vTicker()
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class vticker {
 
     /**
-     * Permet de vérifier que la librairie vTicker a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie vTicker a bien été appelée qu'une fois.
+     * Permet de vÃ©rifier que la librairie vTicker a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie vTicker a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * Paramètres par défaut du vTicker
+     * ParamÃ¨tres par dÃ©faut du vTicker
      * 
-     * @var array Paramètres par défaut du vTicker
+     * @var array ParamÃ¨tres par dÃ©faut du vTicker
      */
     private $_params = array(
         "speed" => '700',
@@ -34,11 +34,11 @@ class vticker {
     );
 
     /**
-     * Créé un vTicker (suite de phrases qui défilent)
+     * CrÃ©Ã© un vTicker (suite de phrases qui dÃ©filent)
      * 
-     * @param array $data liste des phrases à afficher
+     * @param array $data liste des phrases Ã  afficher
      * @param string $id id CSS du vTicker
-     * @param array $params surcharge les paramètres à appliquer au vTicker ( laissez par defaut ou voir la doc ...)
+     * @param array $params surcharge les paramÃ¨tres Ã  appliquer au vTicker ( laissez par defaut ou voir la doc ...)
      */
     public function __construct($data, $id = "vticker", $params = array()) {
         if (!self::$_called) {

@@ -1,22 +1,22 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe gère des fonctions basiques de JavaScript
+ * Cette classe gÃ¨re des fonctions basiques de JavaScript
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class js {
 
     /**
-     * Permet d'afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)
-     * @var string Permet d'afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)
+     * Permet d'afficher le p#real_title Ã  la fin des pages (utilisÃ© par statistiques.class.php)
+     * @var string Permet d'afficher le p#real_title Ã  la fin des pages (utilisÃ© par statistiques.class.php)
      */
     public static $_real_title = "";
 
     /**
-     * Ajoute un préfixe au titre de la page en cours
+     * Ajoute un prÃ©fixe au titre de la page en cours
      * 
-     * @param string $text Préfixe au titre
+     * @param string $text PrÃ©fixe au titre
      */
     public static function before_title($text) {
         ?>
@@ -33,9 +33,9 @@ class js {
     }
 
     /**
-     * Affiche un message à l'écran de l'utilisateur
+     * Affiche un message Ã  l'Ã©cran de l'utilisateur
      * 
-     * @param string $msg Message à afficher
+     * @param string $msg Message Ã  afficher
      */
     public static function alert($msg) {
         ?>
@@ -46,9 +46,9 @@ class js {
     }
 
     /**
-     * Affiche un message à l'écran de l'utilisateur
+     * Affiche un message Ã  l'Ã©cran de l'utilisateur
      * 
-     * @param string $msg Message à afficher
+     * @param string $msg Message Ã  afficher
      */
     public static function alertify_alert($msg) {
         ?>
@@ -59,9 +59,9 @@ class js {
     }
 
     /**
-     * Affiche un message à l'écran de l'utilisateur avant redirection
+     * Affiche un message Ã  l'Ã©cran de l'utilisateur avant redirection
      * 
-     * @param string $msg Message à afficher
+     * @param string $msg Message Ã  afficher
      * @param string $url URL de redirection
      */
     public static function alertify_alert_redir($msg, $url) {
@@ -74,9 +74,9 @@ class js {
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log Ã  l'Ã©cran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log Ã  afficher
      */
     public static function log_std($msg) {
         ?>
@@ -87,9 +87,9 @@ class js {
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log Ã  l'Ã©cran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log Ã  afficher
      */
     public static function log_success($msg) {
         ?>
@@ -100,9 +100,9 @@ class js {
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log Ã  l'Ã©cran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log Ã  afficher
      */
     public static function log_error($msg) {
         ?>
@@ -113,7 +113,7 @@ class js {
     }
 
     /**
-     * Redirige l'utilisateur vers l'url renseigné en paramètre (peut être un chemin relatif)
+     * Redirige l'utilisateur vers l'url renseignÃ© en paramÃ¨tre (peut Ãªtre un chemin relatif)
      * 
      * @param string $url Url de redirection
      */
@@ -129,7 +129,7 @@ class js {
      * Affiche un timer avant redirection
      * 
      * @param int $second Nombre de secondes avant redirection
-     * @param string $p_id Id de la balise P ou doit être affiché le timer
+     * @param string $p_id Id de la balise P ou doit Ãªtre affichÃ© le timer
      * @param string $url URL de redirection
      */
     public static function timer($second, $p_id, $url) {
@@ -168,22 +168,22 @@ class js {
     }
 
     /**
-     * Applique un éditeur CKEditor (WYSIWYG) à un textarea
+     * Applique un Ã©diteur CKEditor (WYSIWYG) Ã  un textarea
      * @param array $id Id du textarea
-     * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
-     * @return \ckeditor Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
+     * @param array $params Surcharge les paramÃ¨tres Ã  appliquer au CKEditor ( laissez par dÃ©faut ou voir la doc)
+     * @return \ckeditor Cette classe permet d'appliquer l'Ã©diteur CKEditor (WYSIWYG) Ã  un textarea 
      */
     public static function ckeditor($id, $params = array()) {
         return new ckeditor($id, $params);
     }
 
     /**
-     * Créé un vTicker (suite de phrases qui défilent)
+     * CrÃ©Ã© un vTicker (suite de phrases qui dÃ©filent)
      * 
-     * @param array $data Liste des phrases à afficher
+     * @param array $data Liste des phrases Ã  afficher
      * @param string $id Id CSS du vTicker
-     * @param array $params Surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc ...)
-     * @return \vticker Créé un vTicker (suite de phrases qui défilent)
+     * @param array $params Surcharge les paramÃ¨tres Ã  appliquer au flexslider ( laissez par dÃ©faut ou voir la doc ...)
+     * @return \vticker CrÃ©Ã© un vTicker (suite de phrases qui dÃ©filent)
      */
     public static function vTicker($data, $id = "vticker", $params = array()) {
         new vticker($data, $id, $params);
@@ -193,18 +193,18 @@ class js {
      * Transforme un tableau HTML en Datatable
      * 
      * @param string $id Id CSS du datatable
-     * @param string $params Surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la doc)
-     * @return \datatable Applique les fonctionnalitées de la librairie datatable à un tableau HTML
+     * @param string $params Surcharge les paramÃ¨tres Ã  appliquer au datatable ( laissez par dÃ©faut ou voir la doc)
+     * @return \datatable Applique les fonctionnalitÃ©es de la librairie datatable Ã  un tableau HTML
      */
     public static function datatable($id = "datatable", $params = array()) {
         new datatable($id, $params);
     }
 
     /**
-     * Afficher du code formaté et stylisé par la librairie SyntaxHightlighter http://alexgorbatchev.com/SyntaxHighlighter/
+     * Afficher du code formatÃ© et stylisÃ© par la librairie SyntaxHightlighter http://alexgorbatchev.com/SyntaxHighlighter/
      *
-     * @param strig $code Le code à afficher
-     * @param string $brush Le brush est lié au langage à utiliser (js par deafaut)<br />
+     * @param strig $code Le code Ã  afficher
+     * @param string $brush Le brush est liÃ© au langage Ã  utiliser (js par deafaut)<br />
      * Astuce script html/php : "php; html-script: true" <br />
      *  http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
      * @param string $theme Le theme de SyntaxHightlighter a utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/
@@ -214,7 +214,7 @@ class js {
     }
 
     /**
-     * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile"
+     * Organise dynamiquement les sous Ã©lÃ©ments d'un conteneur avec la librairie jquery "freetile"
      * 
      * @param string $id id CSS du conteneur freetile
      */
@@ -223,7 +223,7 @@ class js {
     }
 
     /**
-     * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "stalactite"
+     * Organise dynamiquement les sous Ã©lÃ©ments d'un conteneur avec la librairie jquery "stalactite"
      * 
      * @param string $id id CSS du conteneur stalactite
      */
@@ -232,9 +232,9 @@ class js {
     }
 
     /**
-     * Applique l'effet "shuffleLetters" à un élément au chargement de la page
+     * Applique l'effet "shuffleLetters" Ã  un Ã©lÃ©ment au chargement de la page
      * 
-     * @param string $id id CSS de l'élément
+     * @param string $id id CSS de l'Ã©lÃ©ment
      */
     public static function shuffle_letters($id) {
         new shuffle_letters($id);
@@ -258,10 +258,10 @@ class js {
     }
 
     /**
-     * Applique un effet accordéon à une structure : div#$id>(h3+div)*X
-     * @param string $id Id CSS de l'accordéon
-     * @param boolan $collapsible Si $collapible est passé à false , un volet de l'accordéon sera toujours ouvert, à true , tout les volets peuvent être fermés
-     * @param boolan $heightStyle La taille d'un volet doit-il être relatif à son contenu ? (true / false, false par defaut )
+     * Applique un effet accordÃ©on Ã  une structure : div#$id>(h3+div)*X
+     * @param string $id Id CSS de l'accordÃ©on
+     * @param boolan $collapsible Si $collapible est passÃ© Ã  false , un volet de l'accordÃ©on sera toujours ouvert, Ã  true , tout les volets peuvent Ãªtre fermÃ©s
+     * @param boolan $heightStyle La taille d'un volet doit-il Ãªtre relatif Ã  son contenu ? (true / false, false par defaut )
      */
     public static function accordion($id = "accordion", $collapsible = true, $heightStyle = false) {
         ?>
@@ -304,8 +304,8 @@ class js {
     }
 
     /**
-     * Applique un toolpip à un élément ( transforme son "title" en infobulle rapide)
-     * @param string $id Id CSS de l'élément
+     * Applique un toolpip Ã  un Ã©lÃ©ment ( transforme son "title" en infobulle rapide)
+     * @param string $id Id CSS de l'Ã©lÃ©ment
      */
     public static function tooltip($id) {
         ?>
@@ -361,7 +361,7 @@ class js {
             </div>
             <!-- Controls -->
             <a class="left carousel-control" href="#<?php echo $id; ?>" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">Précédent</span>
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">PrÃ©cÃ©dent</span>
             </a>
             <a class="right carousel-control" href="#<?php echo $id; ?>" role="button" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Suivant</span>

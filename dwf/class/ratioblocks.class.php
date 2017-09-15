@@ -1,20 +1,20 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet d'afficher un bloc css avec les proportions passées en paramètres.
+ * Cette classe permet d'afficher un bloc css avec les proportions passÃ©es en paramÃ¨tres.
  * 
  * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
  */
 class ratioblocks {
 
     /**
-     * Permet de vérifier que le fichier .css a bien été appellé.
-     * @var boolean Permet de vérifier que le fichier .css a bien été appellé.
+     * Permet de vÃ©rifier que le fichier .css a bien Ã©tÃ© appellÃ©.
+     * @var boolean Permet de vÃ©rifier que le fichier .css a bien Ã©tÃ© appellÃ©.
      */
     private static $_called = false;
 
     /**
-     * Cette classe permet d'afficher un bloc css avec les proportions passées en paramètres.
+     * Cette classe permet d'afficher un bloc css avec les proportions passÃ©es en paramÃ¨tres.
      * 
      * @param string $id CSS du bloc
      * @param int $width largeur du bloc en PX

@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * Cette classe permet de vous envoyer automatiquement un mail en cas de comportement anormal de votre application
@@ -36,9 +36,9 @@ class log_mail {
     private $_from;
 
     /**
-     * Email de réception
+     * Email de rÃ©ception
      * 
-     * @var string Email de réception
+     * @var string Email de rÃ©ception
      */
     private $_to;
 
@@ -54,7 +54,7 @@ class log_mail {
      * 
      * @param string $smtp adresse du serveur smtp
      * @param string $from email d'envoi
-     * @param string $to email de réception
+     * @param string $to email de rÃ©ception
      */
     public function __construct($from, $to) {
         $this->_mail = new mail();
@@ -65,10 +65,10 @@ class log_mail {
     }
 
     /**
-     * Fonction d'écriture du log
+     * Fonction d'Ã©criture du log
      * 
-     * @param string $type type de message / niveau de gravité du message
-     * @param string $message message à écrire dans le log
+     * @param string $type type de message / niveau de gravitÃ© du message
+     * @param string $message message Ã  Ã©crire dans le log
      */
     private function write_log($type, $message) {
         $msg = date("Y/m/d H:i:s") . " " . $type . " ( " . $this->_ip_client . " ) " . $message . "\n";
@@ -76,27 +76,27 @@ class log_mail {
     }
 
     /**
-     * Ã‰crit un message de type "info" dans le log
+     * Ãƒâ€°crit un message de type "info" dans le log
      * 
-     * @param string $message message à écrire dans le log
+     * @param string $message message Ã  Ã©crire dans le log
      */
     public function info($message) {
         $this->write_log('[Info]', $message);
     }
 
     /**
-     * Ã‰crit un message de type "warning" dans le log
+     * Ãƒâ€°crit un message de type "warning" dans le log
      * 
-     * @param string $message message à écrire dans le log
+     * @param string $message message Ã  Ã©crire dans le log
      */
     public function warning($message) {
         $this->write_log('[Warning]', $message);
     }
 
     /**
-     * Ã‰crit un message de type "sévère" dans le log
+     * Ãƒâ€°crit un message de type "sÃ©vÃ¨re" dans le log
      * 
-     * @param string $message message à écrire dans le log
+     * @param string $message message Ã  Ã©crire dans le log
      */
     public function severe($message) {
         $this->write_log('[Severe]', $message);

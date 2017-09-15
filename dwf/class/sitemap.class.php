@@ -1,9 +1,9 @@
-<?php
+Ôªø<?php
 
 /**
  * (Tests incomplets)
- * Cette classe gËre les "sitemap" du site <br />
- * Pour les routes qui dÈpendent d'une variable, renseignez dans la route (par exemple): <br />
+ * Cette classe g√®re les "sitemap" du site <br />
+ * Pour les routes qui d√©pendent d'une variable, renseignez dans la route (par exemple): <br />
  * "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login")
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.fr>
@@ -29,7 +29,7 @@ class sitemap {
     private static $_file_xml = "./sitemap.xml";
 
     /**
-     * Cette classe gËre les "sitemap" du site
+     * Cette classe g√®re les "sitemap" du site
      */
     public function __construct() {
         if (config::$_sitemap) {
@@ -56,7 +56,7 @@ class sitemap {
     }
 
     /**
-     * GÈnÈre le fichier JSON pour le XML et la vue HTML
+     * G√©n√©re le fichier JSON pour le XML et la vue HTML
      */
     private function json() {
         $json = (is_file(self::$_file_json) ? json_decode(file_get_contents(self::$_file_json)) : array());
@@ -69,7 +69,7 @@ class sitemap {
     }
 
     /**
-     * GÈnÈre le fichier XML
+     * G√©n√©re le fichier XML
      */
     private function XML() {
         $xml_file = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
@@ -125,7 +125,7 @@ class sitemap {
                 new sitemap();
                 self::html();
             } else {
-                new Exception("Sitemap non configurÈ !", 200);
+                new Exception("Sitemap non configur√© !", 200);
             }
         }
     }

@@ -1,8 +1,8 @@
-<?php
+ï»¿<?php
 
 /**
- * Cet objet gère la connexion et les traitements de la base de données
- * Quelques fonctions servent à vérifier ou protéger les données
+ * Cet objet gÃ¨re la connexion et les traitements de la base de donnÃ©es
+ * Quelques fonctions servent Ã  vÃ©rifier ou protÃ©ger les donnÃ©es
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -16,8 +16,8 @@ class bdd {
     private $_pdo;
     
     /**
-     * Tableau de débogage 
-     * @var array Tableau de débogage 
+     * Tableau de dÃ©bogage 
+     * @var array Tableau de dÃ©bogage 
      */
     public static $_debug = array(
         "nb_req" => 0,
@@ -26,8 +26,8 @@ class bdd {
     );
 
     /**
-     * Cet objet gère la connexion et les traitements de la base de données
-     * Quelques fonctions servent à vérifier ou protéger les données
+     * Cet objet gÃ¨re la connexion et les traitements de la base de donnÃ©es
+     * Quelques fonctions servent Ã  vÃ©rifier ou protÃ©ger les donnÃ©es
      *
      */
     public function __construct() {
@@ -60,32 +60,32 @@ class bdd {
     }
 
     /**
-     * Cette fonction sert à sécuriser une variable destinée à être enregistrée en base de données 
+     * Cette fonction sert Ã  sÃ©curiser une variable destinÃ©e Ã  Ãªtre enregistrÃ©e en base de donnÃ©es 
      * contre les attaques SQL et JavaScript.
-     * Cette fonction est systématiquement utilisée dans les méthodes "query" et "fetch" de la class bdd
+     * Cette fonction est systÃ©matiquement utilisÃ©e dans les mÃ©thodes "query" et "fetch" de la class bdd
      * 
-     * @param string $var variable à protégée
-     * @return string variable protégé
+     * @param string $var variable Ã  protÃ©gÃ©e
+     * @return string variable protÃ©gÃ©
      */
     public function protect_var($var) {
         return addslashes(htmlspecialchars(htmlspecialchars_decode($var)));
     }
 
     /**
-     * Cette fonction suprimme les protections de la fonction protect_var() afin que la variable puisse être 
-     * réexploitée sans problèmes.
+     * Cette fonction suprimme les protections de la fonction protect_var() afin que la variable puisse Ãªtre 
+     * rÃ©exploitÃ©e sans problÃ¨mes.
      * 
-     * @param string $var variable à afficher
-     * @return string variable affichée
+     * @param string $var variable Ã  afficher
+     * @return string variable affichÃ©e
      */
     public function unprotect_var($var) {
         return stripcslashes($var);
     }
 
     /**
-     * Vérifie la validité d'une adresse mail
+     * VÃ©rifie la validitÃ© d'une adresse mail
      * 
-     * @param string $email email à vérifier
+     * @param string $email email Ã  vÃ©rifier
      * @return boolean adresse valide : true/false
      */
     public function verif_email($email) {
@@ -93,10 +93,10 @@ class bdd {
     }
 
     /**
-     * Exécute une requête type update, insert ou delete.
-     * Pour plus de securité: voir la méthode protect_var.
+     * ExÃ©cute une requÃªte type update, insert ou delete.
+     * Pour plus de securitÃ©: voir la mÃ©thode protect_var.
      *
-     * @param string|statement $statement requête SQL
+     * @param string|statement $statement requÃªte SQL
      */
     public function query($statement) {
         self::$_debug["nb_req"] ++;
@@ -109,11 +109,11 @@ class bdd {
     }
 
     /**
-     * Exécute une requête type select et renvoie un tableau à 2 dimensions contenant les données.     * 
-     * Pour plus de securité: voir la méthode protect_var.
+     * ExÃ©cute une requÃªte type select et renvoie un tableau Ã  2 dimensions contenant les donnÃ©es.     * 
+     * Pour plus de securitÃ©: voir la mÃ©thode protect_var.
      * 
-     * @param string|statement $statement requête SQL
-     * @return array tableau à deux dimensions contenant les données 
+     * @param string|statement $statement requÃªte SQL
+     * @return array tableau Ã  deux dimensions contenant les donnÃ©es 
      */
     public function fetch($statement) {
         self::$_debug["nb_req"] ++;
@@ -129,9 +129,9 @@ class bdd {
     }
 
     /**
-     * Cette fonction permet de formater les requêtes initialement prévues pour MySQL en requêtes pour SQLite
-     * @param string $statement Requête MySQL
-     * @return string Requête SQLite
+     * Cette fonction permet de formater les requÃªtes initialement prÃ©vues pour MySQL en requÃªtes pour SQLite
+     * @param string $statement RequÃªte MySQL
+     * @return string RequÃªte SQLite
      */
     private function mysql_to_sqlite($statement) {
         $statement = strtr($statement, array(

@@ -1,14 +1,14 @@
-<?php
+Ôªø	<?php
 
 /**
- * Cette classe permet de gÈrer un systËme BBCode
+ * Cette classe permet de g√©rer un syst√®me BBCode
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class bbParser {
 
     /**
-     * Cette classe permet de gÈrer un systËme BBCode
+     * Cette classe permet de g√©rer un syst√®me BBCode
      */
     public function __construct() {
         ?>
@@ -17,9 +17,9 @@ class bbParser {
     }
 
     /**
-     * Applique une interface BBCode ‡ un textarea
+     * Applique une interface BBCode √† un textarea
      * 
-     * @param string $name id du textarea ‡ gÈrer
+     * @param string $name id du textarea √† g√©rer
      */
     public function texarea_to_bbeditor($name) {
         ?>
@@ -32,9 +32,9 @@ class bbParser {
     }
 
     /**
-     * Convertit une cha√Æne BBCode en HTML
+     * Convertit une cha√É¬Æne BBCode en HTML
      * 
-     * @param string $str code BBCode ‡ convertir en HTML
+     * @param string $str code BBCode √† convertir en HTML
      * @return string HTML
      */
     public function getHtml($str) {

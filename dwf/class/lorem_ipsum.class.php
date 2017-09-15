@@ -1,9 +1,9 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de générer un faux texte (Lorem ipsum)
+ * Cette classe permet de gÃ©nÃ©rer un faux texte (Lorem ipsum)
  * (https://fr.wikipedia.org/wiki/Faux-texte)
- * Le texte est généré depuis le vocabulaire du texte de Cicero : De finibus. 
+ * Le texte est gÃ©nÃ©rÃ© depuis le vocabulaire du texte de Cicero : De finibus. 
  * (http://www.thelatinlibrary.com/cicero/fin1.shtml)
  * http://www.thelatinlibrary.com/cicero/fin.shtml
  *
@@ -12,11 +12,11 @@
 class lorem_ipsum {
 
     /**
-     * Génére un Lorem ipsum
+     * GÃ©nÃ©re un Lorem ipsum
      * 
-     * @param int $nb_words Nombre de mots à générer
+     * @param int $nb_words Nombre de mots Ã  gÃ©nÃ©rer
      * @param boolean $first Le texte doit-il commencer par "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-     * @param boolean $full Utiliser uniquement le vocalulaire du Liber Primus (false, par défaut, 2732 mots) 
+     * @param boolean $full Utiliser uniquement le vocalulaire du Liber Primus (false, par dÃ©faut, 2732 mots) 
      * ou le vocalulaire de toute l'oeuvre (true, 10035 mots)"
      * @return string Lorem ipsum
      */

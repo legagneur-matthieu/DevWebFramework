@@ -1,20 +1,20 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette class permet de génerer un modal
+ * Cette class permet de gÃ©nerer un modal
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class modal {
 
     /**
-     * Permet de vérifier que la librairie modal a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie modal a bien été appelée qu'une fois.
+     * Permet de vÃ©rifier que la librairie modal a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie modal a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * Initialise tout ce qui est nécessaire pour la création de modals
+     * Initialise tout ce qui est nÃ©cessaire pour la crÃ©ation de modals
      */
     public function __construct() {
         if (!self::$_called) {
@@ -23,7 +23,7 @@ class modal {
             <script type="text/javascript" src="../commun/src/js/modal/modal-window.js"></script>
             <div role="dialog" aria-hidden="true" id="modal" class="modal-content" style="display: none;">
                 <div style="max-height: 100%; overflow: auto;"></div>
-                <button id="modalCloseButton" class="modalCloseButton btn btn-default" title="Fermer la fenêtre"><span class="glyphicon glyphicon-remove"></span></button>
+                <button id="modalCloseButton" class="modalCloseButton btn btn-default" title="Fermer la fenÃªtre"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
             <div tabindex="-1" id="modalOverlay" style="display: none;"></div>
             <?php
@@ -32,7 +32,7 @@ class modal {
     }
 
     /**
-     * Créé un lien avec les données que contiendra le modal
+     * CrÃ©Ã© un lien avec les donnÃ©es que contiendra le modal
      * @param string $a_text Texte du lien
      * @param string $id identifiant unique du lien
      * @param string $title Title du lien

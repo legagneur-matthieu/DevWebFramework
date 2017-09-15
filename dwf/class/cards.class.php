@@ -1,7 +1,7 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de gèrer un paquet de 32, 52, 54 ou 78 cartes
+ * Cette classe permet de gÃ¨rer un paquet de 32, 52, 54 ou 78 cartes
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -14,12 +14,12 @@ class cards {
     private $_deck = array();
 
     /**
-     * Cette classe permet de gérer un paquet de 32, 52, 54 ou 78 cartes
+     * Cette classe permet de gÃ©rer un paquet de 32, 52, 54 ou 78 cartes
      * 
      * @param array|int $deck Soit un paquet de cartes existant <br />
-     * soit le "type" de paquet a générer : <br />
+     * soit le "type" de paquet a gÃ©nÃ©rer : <br />
      * 32 : paquet de cartes pour la belote par exemple <br />
-     * 52 : paquet standard ( paquet par défaut) <br />
+     * 52 : paquet standard ( paquet par dÃ©faut) <br />
      * 54 : paquet standard, plus 2 jokers <br />
      * 78 : paquet de tarot
      */
@@ -70,7 +70,7 @@ class cards {
     }
 
     /**
-     * Redéfinit le paquet de cartes courant
+     * RedÃ©finit le paquet de cartes courant
      * @param array $deck Le paquet de carte
      */
     public function set_deck($deck) {
@@ -85,8 +85,8 @@ class cards {
     }
 
     /**
-     * Tire une carte du paquet ( la carte est retiré du paquet !)
-     * @return string|boolean La carte tiré, false si le paquet est vide
+     * Tire une carte du paquet ( la carte est retirÃ© du paquet !)
+     * @return string|boolean La carte tirÃ©, false si le paquet est vide
      */
     public function drow_from_deck() {
         if ($count = count($this->_deck) > 0) {

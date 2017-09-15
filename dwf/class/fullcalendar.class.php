@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * Cette classe permet d'afficher un Fullcalendar 
@@ -8,14 +8,14 @@
 class fullcalendar {
 
     /**
-     * Permet de vérifier que la librairie fullcalendar a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie fullcalendar a bien été appelée qu'une fois.
+     * Permet de vÃ©rifier que la librairie fullcalendar a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie fullcalendar a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_called = false;
 
     /**
-     * Permet de vérifier que la librairie fullcalendar-gcal a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie fullcalendar-gcal a bien été appelée qu'une fois.
+     * Permet de vÃ©rifier que la librairie fullcalendar-gcal a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie fullcalendar-gcal a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_gcal_called = false;
 
@@ -26,8 +26,8 @@ class fullcalendar {
     private $_id;
 
     /**
-     * Paramètres par défaut du Fullcalendar
-     * @var array Paramètres par défaut du Fullcalendar 
+     * ParamÃ¨tres par dÃ©faut du Fullcalendar
+     * @var array ParamÃ¨tres par dÃ©faut du Fullcalendar 
      */
     private $_params = array(
         "header" => "{left: 'prev,next today', center: 'title', right: 'month,agendaWeek,agendaDay,timelineDay'}",
@@ -35,10 +35,10 @@ class fullcalendar {
     );
 
     /**
-     * Créé un Fullcalendar
+     * CrÃ©Ã© un Fullcalendar
      * 
      * @param string $id id CSS du Fullcalendar
-     * @param array $params Surcharge les paramètres à appliquer au Fullcalendar ( laissez par defaut ou voir la doc ...)
+     * @param array $params Surcharge les paramÃ¨tres Ã  appliquer au Fullcalendar ( laissez par defaut ou voir la doc ...)
      */
     public function __construct($id = "fullcalendar", $params = array()) {
         $datas = array(
@@ -90,7 +90,7 @@ class fullcalendar {
     }
 
     /**
-     * Interconnecte le Fullcalendar à un ou plusieurs compte/groupe google
+     * Interconnecte le Fullcalendar Ã  un ou plusieurs compte/groupe google
      * @param string $api API Google
      * @param array $sourses array("abcd1234@group.calendar.google.com",...)
      */
@@ -128,7 +128,7 @@ class fullcalendar {
     }
 
     /**
-     * Ajoute des évènements et des ressources au Fullcalendar
+     * Ajoute des Ã©vÃ¨nements et des ressources au Fullcalendar
      * @param array $data array(
      *                        array("title"=>"titre",
      *                              "start"=>"yyyy-mm-ddThh:mm:ss",
@@ -194,7 +194,7 @@ class fullcalendar {
     }
 
     /**
-     * Gère les sous-routes et affiche l'administration du Fullcalendar
+     * GÃ¨re les sous-routes et affiche l'administration du Fullcalendar
      * @param array $keys_route_sup cf \sub_menu
      */
     public function admin($keys_route_sup = array("page")) {
@@ -205,7 +205,7 @@ class fullcalendar {
     }
 
     /**
-     * Fonction appelée par admin()
+     * Fonction appelÃ©e par admin()
      * Administre les ressources du Fullcalendar
      */
     public function res() {
@@ -215,7 +215,7 @@ class fullcalendar {
                 $id = application::$_bdd->protect_var((int) $_GET["id"]);
                 $resource = fullcalendar_resource::get_table_array("id='" . $id . "'");
                 ?>
-                <p class="text-center">ÃŠTES VOUS SUR DE VOULOIR SUPPRIMER CETTE Ã‰LÃ‰MENT :</p>
+                <p class="text-center">ÃƒÅ TES VOUS SUR DE VOULOIR SUPPRIMER CETTE Ãƒâ€°LÃƒâ€°MENT :</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -234,7 +234,7 @@ class fullcalendar {
                 if (isset($_POST["admin_form_supp"])) {
                     application::$_bdd->fetch("delete from fullcalendar_resource where id=" . $id . ";");
                     application::$_bdd->fetch("delete from fullcalendar_event where resourceId=" . $id . ";");
-                    js::alert("L'agenda a bien été supprimé");
+                    js::alert("L'agenda a bien Ã©tÃ© supprimÃ©");
                     js::redir(strtr($url, $from = array("&amp;" => "&")));
                 } else {
                     form::new_form("form-inline");
@@ -252,7 +252,7 @@ class fullcalendar {
                     $resource->set_eventColor($_POST["eventColor"]);
                     unset($_GET["action"]);
                     unset($_GET["id"]);
-                    js::alert("L'agenda a bien été modifié");
+                    js::alert("L'agenda a bien Ã©tÃ© modifiÃ©");
                     js::redir($url);
                 } else {
                     form::new_form();
@@ -265,7 +265,7 @@ class fullcalendar {
         } else {
             if (isset($_POST["title"])) {
                 fullcalendar_resource::ajout($_POST["title"], $_POST["eventColor"]);
-                js::alert("L'agenda a bien été ajouté");
+                js::alert("L'agenda a bien Ã©tÃ© ajoutÃ©");
                 js::redir("");
             } else {
                 $resource = fullcalendar_resource::get_table_array();
@@ -306,8 +306,8 @@ class fullcalendar {
     }
 
     /**
-     * Fonction appelée par admin()
-     * Administre les évènements du Fullcalendar
+     * Fonction appelÃ©e par admin()
+     * Administre les Ã©vÃ¨nements du Fullcalendar
      */
     public function event() {
         $url = application::get_url(array("action", "id"));
@@ -316,12 +316,12 @@ class fullcalendar {
                 $id = application::$_bdd->protect_var((int) $_GET["id"]);
                 $event = fullcalendar_event::get_table_array("id='" . $id . "'");
                 ?>
-                <p class="text-center">ÃŠTES VOUS SUR DE VOULOIR SUPPRIMER CETTE Ã‰LÃ‰MENT :</p>
+                <p class="text-center">ÃƒÅ TES VOUS SUR DE VOULOIR SUPPRIMER CETTE Ãƒâ€°LÃƒâ€°MENT :</p>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Titre</th>
-                            <th>Début</th>
+                            <th>DÃ©but</th>
                             <th>Fin</th>
                         </tr>
                     </thead>
@@ -336,7 +336,7 @@ class fullcalendar {
                 <?php
                 if (isset($_POST["admin_form_supp"])) {
                     application::$_bdd->fetch("delete from fullcalendar_event where id=" . $id . ";");
-                    js::alert("L'evenement a bien été supprimé");
+                    js::alert("L'evenement a bien Ã©tÃ© supprimÃ©");
                     js::redir(strtr($url, $from = array("&amp;" => "&")));
                 } else {
                     form::new_form("form-inline");
@@ -355,11 +355,11 @@ class fullcalendar {
                     $event->set_end(form::get_datetimepicker_us("end"));
                     $event->set_url($_POST["url"]);
                     $event->set_resourceId($_POST["resourceId"]);
-                    js::alert("L'evenement a bien été modifié");
+                    js::alert("L'evenement a bien Ã©tÃ© modifiÃ©");
                     js::redir($url);
                 } else {
                     $option = array(
-                        array("default", "- défaut -",)
+                        array("default", "- dÃ©faut -",)
                     );
                     foreach (fullcalendar_resource::get_table_array() as $res) {
                         $option[] = array($res["id"], $res["title"], ($res["id"] == $event->get_resourceId()));
@@ -378,7 +378,7 @@ class fullcalendar {
         } else {
             $data = array();
             $option = array(
-                array("default", "- défaut -",)
+                array("default", "- dÃ©faut -",)
             );
             $resources = array(
                 array("id" => "default", "title" => "- defaut -")
@@ -406,7 +406,7 @@ class fullcalendar {
             form::close_form();
             if (isset($_POST["title"])) {
                 fullcalendar_event::ajout($_POST["title"], form::get_datetimepicker_us("start"), form::get_datetimepicker_us("end"), $_POST["url"], $_POST["resourceId"]);
-                js::alert("L'evenement a bien été ajouté");
+                js::alert("L'evenement a bien Ã©tÃ© ajoutÃ©");
                 js::redir("");
             }
         }

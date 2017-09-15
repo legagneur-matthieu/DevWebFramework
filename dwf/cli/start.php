@@ -1,30 +1,30 @@
-<?php
+ï»¿<?php
 
 /**
- * Les CLI sont des scripts à exécuter en mode console, ils ne doivent pas être exécutable depuis un navigateur ! ( Pour cela, voir la condition isset($_SERVER["REMOTE_ADDR"].) <br />
- * Les CLI servent à exécuter un traitement PHP long. ( Potentiellement superieurs à 30 secondes. ) <br />
- * Pour créer un nouveau CLI, vous devez créer un fichier se terminant par ".cli.php" dans le dossier "cli". <br/>
- * (Il est recommandé de créer des classe instancier à la fin du fichier, mais ce n'est pas une obligation. ) <br />
- * Pour exécuter les CLI, la commande à taper dans la console est : <br />
+ * Les CLI sont des scripts Ã  exÃ©cuter en mode console, ils ne doivent pas Ãªtre exÃ©cutable depuis un navigateur ! ( Pour cela, voir la condition isset($_SERVER["REMOTE_ADDR"].) <br />
+ * Les CLI servent Ã  exÃ©cuter un traitement PHP long. ( Potentiellement superieurs Ã  30 secondes. ) <br />
+ * Pour crÃ©er un nouveau CLI, vous devez crÃ©er un fichier se terminant par ".cli.php" dans le dossier "cli". <br/>
+ * (Il est recommandÃ© de crÃ©er des classe instancier Ã  la fin du fichier, mais ce n'est pas une obligation. ) <br />
+ * Pour exÃ©cuter les CLI, la commande Ã  taper dans la console est : <br />
  * php [Chemain]/cli/start.php
  * 
- * Ce script (start.php) va exécuter les CLI les uns après les autres par ordre alphabétique. 
- * IL EST DONC DECONSEILLE DE CRÃ‰ER UN CRON AVEC UNE BOUCLE INFINI ! ( Sinon les CLI suivants ne pouront pas s'exécuter.)
+ * Ce script (start.php) va exÃ©cuter les CLI les uns aprÃ¨s les autres par ordre alphabÃ©tique. 
+ * IL EST DONC DECONSEILLE DE CRÃƒâ€°ER UN CRON AVEC UNE BOUCLE INFINI ! ( Sinon les CLI suivants ne pouront pas s'exÃ©cuter.)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class start {
 
 /**
- * Les CLI sont des scripts à exécuter en mode console, ils ne doivent pas être exécutable depuis un navigateur ! ( Pour cela, voir la condition isset($_SERVER["REMOTE_ADDR"].) <br />
- * Les CLI servent à exécuter un traitement PHP long. ( Potentiellement superieurs à 30 secondes. ) <br />
- * Pour créer un nouveau CLI, vous devez créer un fichier se terminant par ".cli.php" dans le dossier "cli". <br/>
- * (Il est recommandé de créer des classe instancier à la fin du fichier, mais ce n'est pas une obligation. ) <br />
- * Pour exécuter les CLI, la commande à taper dans la console est : <br />
+ * Les CLI sont des scripts Ã  exÃ©cuter en mode console, ils ne doivent pas Ãªtre exÃ©cutable depuis un navigateur ! ( Pour cela, voir la condition isset($_SERVER["REMOTE_ADDR"].) <br />
+ * Les CLI servent Ã  exÃ©cuter un traitement PHP long. ( Potentiellement superieurs Ã  30 secondes. ) <br />
+ * Pour crÃ©er un nouveau CLI, vous devez crÃ©er un fichier se terminant par ".cli.php" dans le dossier "cli". <br/>
+ * (Il est recommandÃ© de crÃ©er des classe instancier Ã  la fin du fichier, mais ce n'est pas une obligation. ) <br />
+ * Pour exÃ©cuter les CLI, la commande Ã  taper dans la console est : <br />
  * php [Chemain]/cli/start.php
  * 
- * Ce script (start.php) va exécuter les CLI les uns après les autres par ordre alphabétique. 
- * IL EST DONC DECONSEILLE DE CRÃ‰ER UN CRON AVEC UNE BOUCLE INFINI ! ( Sinon les CLI suivants ne pouront pas s'exécuter.)
+ * Ce script (start.php) va exÃ©cuter les CLI les uns aprÃ¨s les autres par ordre alphabÃ©tique. 
+ * IL EST DONC DECONSEILLE DE CRÃƒâ€°ER UN CRON AVEC UNE BOUCLE INFINI ! ( Sinon les CLI suivants ne pouront pas s'exÃ©cuter.)
  */
     public function __construct() {
         if (isset($_SERVER["REMOTE_ADDR"])) {

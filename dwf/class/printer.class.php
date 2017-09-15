@@ -1,14 +1,14 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)
+ * Cette classe permet la crÃ©ation d'un PDF (passe par printer.php et les classes html2pdf)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class printer {
 
     /**
-     * Librairie à utiliser 
+     * Librairie Ã  utiliser 
      * 
      * @var string Librairie a utiliser 
      */
@@ -22,7 +22,7 @@ class printer {
     private $_content;
 
     /**
-     * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)
+     * Cette classe permet la crÃ©ation d'un PDF (passe par printer.php et les classes html2pdf)
      * 
      * @param string $lib Librairie a utiliser (html2pdf ou dompdf)
      */
@@ -32,7 +32,7 @@ class printer {
     }
 
     /**
-     * Entête du PDF (le style CSS est à modifier à votre convenance)
+     * EntÃªte du PDF (le style CSS est Ã  modifier Ã  votre convenance)
      */
     private function init_printer() {
         switch ($this->_lib) {

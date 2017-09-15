@@ -1,15 +1,15 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de générer le robot.txt d'un site 
+ * Cette classe permet de gÃ©nÃ©rer le robot.txt d'un site 
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class robotstxt {
 
     /**
-     * Cette classe permet de générer le robot.txt d'un site 
-     * @param string $data lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)
+     * Cette classe permet de gÃ©nÃ©rer le robot.txt d'un site 
+     * @param string $data lignes Ã  ajouter au robot.txt (commencer par \n et sÃ©parer chaque ligne par \n)
      */
     public function __construct($data = "") {
         $robots_file = "./robots.txt";

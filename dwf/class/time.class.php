@@ -1,16 +1,16 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe gère des fonctions basiques basées sur le temps
+ * Cette classe gÃ¨re des fonctions basiques basÃ©es sur le temps
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class time {
 
     /**
-     * Array contenant les microtimes des chronometres utilisés
+     * Array contenant les microtimes des chronometres utilisÃ©s
      * 
-     * @var array Array contenant les microtimes des chronometres utilisés
+     * @var array Array contenant les microtimes des chronometres utilisÃ©s
      */
     private static $_chronometer;
 
@@ -33,7 +33,7 @@ class time {
     }
 
     /**
-     * (DEPPRECIÃ‰)
+     * (DEPPRECIÃƒâ€°)
      * Convertit une date du format US en format FR (mois en toutes lettres)
      * 
      * @param string $date date US
@@ -48,7 +48,7 @@ class time {
     }
 
     /**
-     * Retourne les mois avec leurs numéros (à 2 chiffres) comme clé
+     * Retourne les mois avec leurs numÃ©ros (Ã  2 chiffres) comme clÃ©
      * 
      * @return array tableau des mois
      */
@@ -69,9 +69,9 @@ class time {
     }
 
     /**
-     * Retourne le mois "en lettres" du numéro de mois passé en paramètre 
+     * Retourne le mois "en lettres" du numÃ©ro de mois passÃ© en paramÃ¨tre 
      * 
-     * @param string $num_mois numéro du mois ( à 2 chiffres)
+     * @param string $num_mois numÃ©ro du mois ( Ã  2 chiffres)
      * @return string mois "en lettres"
      */
     public static function convert_mois($num_mois) {
@@ -81,10 +81,10 @@ class time {
 
     /**
      * Retourne le nombre de jours dans un mois 
-     * (l'année doit être renseignée pour gérer les années bisextiles)
+     * (l'annÃ©e doit Ãªtre renseignÃ©e pour gÃ©rer les annÃ©es bisextiles)
      * 
-     * @param string $num_mois numéro du mois ( à 2 chiffres)
-     * @param string $an année du mois à évaluer
+     * @param string $num_mois numÃ©ro du mois ( Ã  2 chiffres)
+     * @param string $an annÃ©e du mois Ã  Ã©valuer
      * @return int nombre de jours dans le mois
      */
     public static function get_nb_jour($num_mois, $an) {
@@ -109,27 +109,27 @@ class time {
     }
 
     /**
-     * retourne si une année est bisextile ou non.
+     * retourne si une annÃ©e est bisextile ou non.
      * 
-     * @param int $an année à évaluer
-     * @return boolean l'année est bisextile ? true/false
+     * @param int $an annÃ©e Ã  Ã©valuer
+     * @return boolean l'annÃ©e est bisextile ? true/false
      */
     public static function anne_bisextile($an) {
         return ($an % 4 == 0 and $an % 100 != 0 or $an % 400 == 0);
     }
 
     /**
-     * Affiche un élément de formulaire pour renseigner une date (jour/mois/année)
+     * Affiche un Ã©lÃ©ment de formulaire pour renseigner une date (jour/mois/annÃ©e)
      * 
      * @param string $label label
-     * @param string $post préfixe des variables ($post."an",$post."mois",$post."jour")
-     * @param string $value date par défaut au format US (null par defaut : date actuelle )
+     * @param string $post prÃ©fixe des variables ($post."an",$post."mois",$post."jour")
+     * @param string $value date par dÃ©faut au format US (null par defaut : date actuelle )
      */
     public static function form_date($label, $post, $value = null) {
         $value = ($value == null ? array(date("Y"), date("m"), date("d")) : explode("-", $value));
         ?>
         <div class="form-group form_date">
-            <label for="<?php echo $post; ?>an"> <?php echo $label; ?> (jour/mois/année)</label>
+            <label for="<?php echo $post; ?>an"> <?php echo $label; ?> (jour/mois/annÃ©e)</label>
             <select name="<?php echo $post; ?>jour" class="form-control">
                 <?php
                 for ($index = 1; $index <= 31; $index++) {
@@ -167,9 +167,9 @@ class time {
     }
 
     /**
-     * Retourne la date saisie dans l'élément de formulaire ::form_date();
+     * Retourne la date saisie dans l'Ã©lÃ©ment de formulaire ::form_date();
      * 
-     * @param string $post le préfixe utilisé pour l'élément de formulaire
+     * @param string $post le prÃ©fixe utilisÃ© pour l'Ã©lÃ©ment de formulaire
      * @return string date au format US
      */
     public static function get_form_date($post) {
@@ -177,11 +177,11 @@ class time {
     }
 
     /**
-     * Retourne l'Ã¢ge actuel en fonction d'une date de naissance
+     * Retourne l'ÃƒÂ¢ge actuel en fonction d'une date de naissance
      * 
      * @param int $d jour de naissance
      * @param int $m mois de naissance
-     * @param int $y année de naissance
+     * @param int $y annÃ©e de naissance
      * @return int age
      */
     public static function get_yers_old($d, $m, $y) {
@@ -193,10 +193,10 @@ class time {
     }
 
     /**
-     * Cette fonction permet d'additioner ou de soustraire un nombre de mois à une date initiale
+     * Cette fonction permet d'additioner ou de soustraire un nombre de mois Ã  une date initiale
      * @param string $date date initiale au format us (yyyy-mm-dd)
-     * @param int $mois combien de mois faut-il ajouter ( ou soustraire ) (renseigner un nombre négatif pour soustraire )
-     * @return string date calculée au format US
+     * @param int $mois combien de mois faut-il ajouter ( ou soustraire ) (renseigner un nombre nÃ©gatif pour soustraire )
+     * @return string date calculÃ©e au format US
      */
     public static function date_plus_ou_moins_mois($date, $mois) {
         $date = explode("-", $date);
@@ -222,21 +222,21 @@ class time {
     }
 
     /**
-     * Démarre un chronomètre pour chronometrer la durée d'execution d'un bout de code,
-     * il est possible d'utiliser plusieurs chronomètres en leurs spécifiant un identifiant
-     * l'identifiant peut être un nombre ou une chaine de caractères
+     * DÃ©marre un chronomÃ¨tre pour chronometrer la durÃ©e d'execution d'un bout de code,
+     * il est possible d'utiliser plusieurs chronomÃ¨tres en leurs spÃ©cifiant un identifiant
+     * l'identifiant peut Ãªtre un nombre ou une chaine de caractÃ¨res
      * 
-     * @param int|string $id Id du chronomètre
+     * @param int|string $id Id du chronomÃ¨tre
      */
     public static function chronometer_start($id = 0) {
         time::$_chronometer[$id] = microtime(true);
     }
 
     /**
-     * Retourne le temps mesuré par un chronomètre depuis son lancement
+     * Retourne le temps mesurÃ© par un chronomÃ¨tre depuis son lancement
      * 
-     * @param int|string $id Id du chronomètre
-     * @return float Temps mesuré par le chronomètre
+     * @param int|string $id Id du chronomÃ¨tre
+     * @return float Temps mesurÃ© par le chronomÃ¨tre
      */
     public static function chronometer_get($id = 0) {
         return (microtime(true) - time::$_chronometer[$id]);
@@ -244,7 +244,7 @@ class time {
 
     /**
      * Parse un temps en secondes en jours/heures/minutes/secondes <br />
-     * pour les temps inférieurs à 1 seconde, le parse peut se faire en millisecondes ou microsecondes
+     * pour les temps infÃ©rieurs Ã  1 seconde, le parse peut se faire en millisecondes ou microsecondes
      * 
      * @param int|float $secondes Secondes
      * @return string Temps
@@ -252,7 +252,7 @@ class time {
     public static function parse_time($secondes) {
         if ($secondes < 1) {
             $ms = (int) ($secondes * 1000);
-            return ($ms < 1 ? ((int) ($secondes * 1000000)) . " Âµs" : $ms . " ms");
+            return ($ms < 1 ? ((int) ($secondes * 1000000)) . " Ã‚Âµs" : $ms . " ms");
         }
         if ($secondes < 60) {
             return $secondes . " s";
@@ -276,7 +276,7 @@ class time {
     }
 
     /**
-     * Retourne un tableau d'information sur la date passée en paramètre
+     * Retourne un tableau d'information sur la date passÃ©e en paramÃ¨tre
      * @param string $date_us Date au format US
      * @return array https://secure.php.net/manual/fr/function.getdate.php
      */

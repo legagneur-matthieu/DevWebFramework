@@ -1,10 +1,10 @@
-<?php
+ï»¿<?php
 
 /**
  * Cette classe affiche le gestionaire de fichiers elFinder
- * Il n'est pas recommandé de mettre deux instances de cette classe dans une même page
- * Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
- * Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)
+ * Il n'est pas recommandÃ© de mettre deux instances de cette classe dans une mÃªme page
+ * Pour autoriser un utilisateur Ã  utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
+ * Cf le fichier connector.php (gÃ©nÃ©rÃ© par cette classe) pour plus de dÃ©tails et options)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
@@ -12,11 +12,11 @@ class g_elFinder {
 
     /**
      * Cette classe affiche le gestionaire de fichiers elFinder
-     * Il n'est pas recommandé de mettre deux instances de cette classe dans une même page
-     * Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
-     * Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)
+     * Il n'est pas recommandÃ© de mettre deux instances de cette classe dans une mÃªme page
+     * Pour autoriser un utilisateur Ã  utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
+     * Cf le fichier connector.php (gÃ©nÃ©rÃ© par cette classe) pour plus de dÃ©tails et options)
      * 
-     * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
+     * @param string $conector_url URL du connecteur ( il est recommandÃ© de laisser par defaut )
      */
     public function __construct($conector_url = "connector.php") {
         ?>
@@ -38,8 +38,8 @@ class g_elFinder {
     }
 
     /**
-     * Créé le connecteur
-     * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
+     * CrÃ©Ã© le connecteur
+     * @param string $conector_url URL du connecteur ( il est recommandÃ© de laisser par defaut )
      */
     private function create_connector($connector_url) {
         $file = "<?php

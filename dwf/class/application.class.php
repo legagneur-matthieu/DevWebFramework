@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * Cette classe fait office de contrôleur et layout pour l'application

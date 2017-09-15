@@ -1,16 +1,16 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe gère les variables de sessions spécifiques à l'application actuelle
+ * Cette classe gÃ¨re les variables de sessions spÃ©cifiques Ã  l'application actuelle
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class session {
 
     /**
-     * Démarre la session avec vérification de l'ip et du navigateur
+     * DÃ©marre la session avec vÃ©rification de l'ip et du navigateur
      * 
-     * @param boolean $regenerate_id l'id de la session doit-il étre régénéré : à mettre à false si utilisé dans un service !
+     * @param boolean $regenerate_id l'id de la session doit-il Ã©tre rÃ©gÃ©nÃ©rÃ© : Ã  mettre Ã  false si utilisÃ© dans un service !
      */
     public static function start($regenerate_id = true) {
         session_start();
@@ -37,15 +37,15 @@ class session {
 
     /**
      * Set la valeur de $_SESSION[config::$_prefix . "_auth"] (true / false)
-     * @param bool $value L'utilisateur est-il authentifié ? (true / false)
+     * @param bool $value L'utilisateur est-il authentifiÃ© ? (true / false)
      */
     public static function set_auth($value) {
         $_SESSION[config::$_prefix . "_auth"] = $value;
     }
 
     /**
-     * Récupere la valeur de $_SESSION[config::$_prefix . "_auth"] (true / false)
-     * @return bool L'utilisateur est-il authentifié ? (true / false)
+     * RÃ©cupere la valeur de $_SESSION[config::$_prefix . "_auth"] (true / false)
+     * @return bool L'utilisateur est-il authentifiÃ© ? (true / false)
      */
     public static function get_auth() {
         return (isset($_SESSION[config::$_prefix . "_auth"]) ? $_SESSION[config::$_prefix . "_auth"] : false);
@@ -60,7 +60,7 @@ class session {
     }
 
     /**
-     * Récupere l'identifiant de l'utilisateur
+     * RÃ©cupere l'identifiant de l'utilisateur
      * @return int Identifiant de l'utilisateur
      */
     public static function get_user() {
@@ -76,7 +76,7 @@ class session {
     }
 
     /**
-     * Récupere la langue de l'utilisateur
+     * RÃ©cupere la langue de l'utilisateur
      * @return string Langue de l'utilisateur
      */
     public static function get_lang() {
@@ -84,8 +84,8 @@ class session {
     }
 
     /**
-     * Set une varible de session spécifique à l'application actuelle
-     * @param string $key Clé de la variable
+     * Set une varible de session spÃ©cifique Ã  l'application actuelle
+     * @param string $key ClÃ© de la variable
      * @param int|string|bool $value Valeur de la variable
      */
     public static function set_val($key, $value) {
@@ -93,8 +93,8 @@ class session {
     }
 
     /**
-     * Récupere une varible de session spécifique à l'application actuelle
-     * @param string $key Clé de la variable
+     * RÃ©cupere une varible de session spÃ©cifique Ã  l'application actuelle
+     * @param string $key ClÃ© de la variable
      * @return int|string|bool Valeur de la variable
      */
     public static function get_val($key) {

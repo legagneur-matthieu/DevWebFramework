@@ -1,7 +1,7 @@
-<?php
+Ôªø<?php
 
 /**
- * Cette classe permet de gÈrer des traductions sur le principe de "clÈs" afin de crÈer facilement des applications multilingues 
+ * Cette classe permet de g√©rer des traductions sur le principe de "cl√©s" afin de cr√©er facilement des applications multilingues 
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
@@ -14,16 +14,16 @@ class trad {
     private $_lang;
 
     /**
-     * SystËme utilisÈ pour gÈrer les traductions ( SQL ou JSON )
-     * @var string SystËme utilisÈ pour gÈrer les traductions ( SQL ou JSON )
+     * Syst√®me utilis√© pour g√©rer les traductions ( SQL ou JSON )
+     * @var string Syst√®me utilis√© pour g√©rer les traductions ( SQL ou JSON )
      */
     private $_type;
 
     /**
-     * Cette classe permet de gÈrer des traduction sur le principe de "clÈs" afin de crÈer facilement des applications multilingues 
+     * Cette classe permet de g√©rer des traduction sur le principe de "cl√©s" afin de cr√©er facilement des applications multilingues 
      * 
-     * @param string $lang_default Langue par dÈfaut de l'utilisateur ( fr par defaut )
-     * @param string $type Type de systËme utilisÈ pour les traductions (sql par defaut, ou json)
+     * @param string $lang_default Langue par d√©faut de l'utilisateur ( fr par defaut )
+     * @param string $type Type de syst√®me utilis√© pour les traductions (sql par defaut, ou json)
      */
     public function __construct($lang_default = "fr", $type = "sql") {
         if (!session::get_lang()) {
@@ -49,17 +49,17 @@ class trad {
     }
 
     /**
-     * Traduit un texte en fonction de la clÈ passÈe en parametre et la langue de l'utilisateur 
+     * Traduit un texte en fonction de la cl√© pass√©e en parametre et la langue de l'utilisateur 
      * 
-     * @param string $key ClÈ de traduction
-     * @return string Tradution associÈe selon la langue choisie 
+     * @param string $key Cl√© de traduction
+     * @return string Tradution associ√©e selon la langue choisie 
      */
     public function t($key) {
         return ((isset($this->_lang[$key]) or ! empty($this->_lang[$key]) ) ? $this->_lang[$key] : $key);
     }
 
     /**
-     * Affiche l'interface d'administration pour gÈrer les traductions
+     * Affiche l'interface d'administration pour g√©rer les traductions
      */
     public function admin() {
         switch ($this->_type) {
@@ -76,7 +76,7 @@ class trad {
                             }
                         }
                         file_put_contents("lang/" . $_GET["lang"] . ".json", json_encode($data));
-                        js::alert("Le fichier de traduction a bien ÈtÈ mis ‡ jour");
+                        js::alert("Le fichier de traduction a bien √©t√© mis √† jour");
                         js::redir(application::get_url(array("lang")));
                     } else {
                         if (file_exists($file = "lang/" . $_GET["lang"] . ".json")) {
@@ -142,7 +142,7 @@ class trad {
                                     });
                                 });
                             </script>
-                            <a href="#" id="addkey">Ajouter une clÈ</a>
+                            <a href="#" id="addkey">Ajouter une cl√©</a>
                             <?php
                             form::submit('btn-default');
                             form::close_form();
@@ -173,10 +173,10 @@ class trad {
                         $file = "lang/" . ($add_lang = strtr($_POST["add_lang"], array("." => "", "/" => "", "\\" => "", "'" => "", '"' => ""))) . ".json";
                         if (!file_exists($file)) {
                             file_put_contents($file, "{}");
-                            js::alert("Le fichier de traduction a bien ÈtÈ crÈÈ");
+                            js::alert("Le fichier de traduction a bien √©t√© cr√©√©");
                             js::redir(application::get_url() . "lang=" . $add_lang);
                         } else {
-                            js::alert("Le fichier de traduction existe dÈj‡ !");
+                            js::alert("Le fichier de traduction existe d√©j√† !");
                             js::redir(application::get_url() . "lang=" . $add_lang);
                         }
                     }

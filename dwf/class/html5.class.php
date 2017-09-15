@@ -1,25 +1,25 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe gère l'entête HTML5 et son pied de page.
- * Les métas descriptions et keyword sont à ajouter par vous même dans le constructeur
+ * Cette classe gÃ¨re l'entÃªte HTML5 et son pied de page.
+ * Les mÃ©tas descriptions et keyword sont Ã  ajouter par vous mÃªme dans le constructeur
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class html5 {
 
     /**
-     * Permet de vérifier si la classe html5 a déja été appellée.
-     * @var boolean Permet de vérifier si la classe html5 a déja été appellée.
+     * Permet de vÃ©rifier si la classe html5 a dÃ©ja Ã©tÃ© appellÃ©e.
+     * @var boolean Permet de vÃ©rifier si la classe html5 a dÃ©ja Ã©tÃ© appellÃ©e.
      */
     public static $_called = false;
 
     /**
-     * Cette classe gère l'entête HTML5 et son pied de page.
+     * Cette classe gÃ¨re l'entÃªte HTML5 et son pied de page.
      * 
      * @param string $title Titre du site
      * @param string $description Description de la page
-     * @param string $keyword Mots clés de la page
+     * @param string $keyword Mots clÃ©s de la page
      */
     public function __construct($description = "", $keywords = "") {
         self::$_called = true;
@@ -120,7 +120,7 @@ class html5 {
             }
 
             /**
-             * Fonction pour la compatibilité IE (à améliorer !)
+             * Fonction pour la compatibilitÃ© IE (Ã  amÃ©liorer !)
              */
             private function IE_support() {
                 ?>
@@ -133,7 +133,7 @@ class html5 {
             }
 
             /**
-             * Ferme le body et la balise html (et le système de chiffrement si activé)
+             * Ferme le body et la balise html (et le systÃ¨me de chiffrement si activÃ©)
              */
             public function __destruct() {
                 application::event("onhtml_body_end");

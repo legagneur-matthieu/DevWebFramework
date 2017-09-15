@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * Cette classe permet d'afficher et explorer une arborescence
@@ -28,7 +28,7 @@ class file_explorer {
 
     /**
      * Explore et affiche l'arborescence
-     * @param string $dir Dossier � explorer 
+     * @param string $dir Dossier à explorer 
      */
     private function explore($dir) {
         ?>

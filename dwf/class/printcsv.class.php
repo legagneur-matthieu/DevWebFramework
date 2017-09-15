@@ -1,15 +1,15 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet l'affichage de données dans un tableau à partir du fichier .csv
+ * Cette classe permet l'affichage de donnÃ©es dans un tableau Ã  partir du fichier .csv
  * 
  * @author Bernard Rodolphe <mr.rodolphe.bernard@gmail.com>
  */
 class printcsv {
 
     /**
-     * Cette classe permet l'affichage de données dans un tableau à partir du fichier .csv     * 
-     * @param array $data tableau de données a 2 dimensions
+     * Cette classe permet l'affichage de donnÃ©es dans un tableau Ã  partir du fichier .csv     * 
+     * @param array $data tableau de donnÃ©es a 2 dimensions
      */
     public function __construct($data) {
         $csv = "";

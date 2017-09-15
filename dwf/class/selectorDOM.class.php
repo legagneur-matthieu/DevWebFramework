@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * https://github.com/tj/php-selector v1.1.6
@@ -38,11 +38,11 @@ class selectorDOM {
     }
 
     /**
-     * Retourne les éléments du DOM indiqué par le selecteur 
-     * (les selecteurs ont la même syntaxe que Jquery)
+     * Retourne les Ã©lÃ©ments du DOM indiquÃ© par le selecteur 
+     * (les selecteurs ont la mÃªme syntaxe que Jquery)
      * @param string $selector Selecteur dans le DOM
-     * @param boolean $as_array le resultat doit-il être sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
-     * @return array|DOMNodeList éléments du DOM indiqué par le selecteur 
+     * @param boolean $as_array le resultat doit-il Ãªtre sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
+     * @return array|DOMNodeList Ã©lÃ©ments du DOM indiquÃ© par le selecteur 
      */
     public function select($selector, $as_array = true) {
         $elements = $this->xpath->evaluate($this->selector_to_xpath($selector));
@@ -63,9 +63,9 @@ class selectorDOM {
      *      
      * @param string $selector Selecteur dans le DOM
      * @param string $html HTML
-     * @param boolean $as_array le resultat doit-il être sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
-     * @return array|DOMNodeList éléments du DOM indiqué par le selecteur 
-     * @return array|DOMNodeList éléments du DOM indiqué par le selecteur
+     * @param boolean $as_array le resultat doit-il Ãªtre sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
+     * @return array|DOMNodeList Ã©lÃ©ments du DOM indiquÃ© par le selecteur 
+     * @return array|DOMNodeList Ã©lÃ©ments du DOM indiquÃ© par le selecteur
      */
     public static function select_elements($selector, $html, $as_array = true) {
         $dom = new SelectorDOM($html);

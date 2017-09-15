@@ -1,13 +1,13 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de gérer et afficher des articles.
+ * Cette classe permet de gÃ©rer et afficher des articles.
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class gestion_article {
 
     /**
-     * Cette classe permet de gérer et afficher des articles.
+     * Cette classe permet de gÃ©rer et afficher des articles.
      * @param bdd $bdd instance de BDD
      */
     public function __construct() {
@@ -70,7 +70,7 @@ class gestion_article {
     }
 
     /**
-     * Ne pas appeler cette fontion : géré par $this->admin();
+     * Ne pas appeler cette fontion : gÃ©rÃ© par $this->admin();
      * Affiche l'administration des articles
      */
     public function g_article() {
@@ -78,15 +78,15 @@ class gestion_article {
     }
 
     /**
-     * Ne pas appeler cette fontion : géré par $this->admin();
-     * Affiche l'administration des catégories d'articles
+     * Ne pas appeler cette fontion : gÃ©rÃ© par $this->admin();
+     * Affiche l'administration des catÃ©gories d'articles
      */
     public function g_categorie() {
         (new g_categorie_article());
     }
 
     /**
-     * Ne pas appeler cette fontion : géré par $this->admin();
+     * Ne pas appeler cette fontion : gÃ©rÃ© par $this->admin();
      * Affiche l'administration des modules 
      */
     public function g_module() {
@@ -94,7 +94,7 @@ class gestion_article {
     }
 
     /**
-     * Affiche un module avec les dernières actualités
+     * Affiche un module avec les derniÃ¨res actualitÃ©s
      * @param string $name Nom du module
      */
     public function module($name = "default") {

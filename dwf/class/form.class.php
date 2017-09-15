@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * Cette classe gère l'affichage d'un formulaire

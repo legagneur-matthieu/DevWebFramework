@@ -1,18 +1,18 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe offre une légère protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supérieur à 2.
- * Si l'ip est bannie, l'exécution est interrompue là oÃ¹ ban_ip a été instancié !
- * Il est donc recommandé de placer cette fonction dans le constructeur de "page.class.php"
+ * Cette classe offre une lÃ©gÃ¨re protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supÃ©rieur Ã  2.
+ * Si l'ip est bannie, l'exÃ©cution est interrompue lÃ  oÃƒÂ¹ ban_ip a Ã©tÃ© instanciÃ© !
+ * Il est donc recommandÃ© de placer cette fonction dans le constructeur de "page.class.php"
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class ban_ip {
 
     /**
-     * Cette classe offre une légère protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supérieur à 2.
-     * Si l'ip est bannie, l'exécution est interrompue là oÃ¹ ban_ip a été instancié !
-     * Il est donc recommandé de placer cette fonction dans le constructeur de "page.class.php"
+     * Cette classe offre une lÃ©gÃ¨re protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supÃ©rieur Ã  2.
+     * Si l'ip est bannie, l'exÃ©cution est interrompue lÃ  oÃƒÂ¹ ban_ip a Ã©tÃ© instanciÃ© !
+     * Il est donc recommandÃ© de placer cette fonction dans le constructeur de "page.class.php"
      * 
      * @param int $ban_time Temps de bannisement de l'IP
      */

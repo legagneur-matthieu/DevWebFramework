@@ -1,8 +1,8 @@
-<?php
+ï»¿<?php
 
 /**
- * Cette classe permet de gérer un agenda d'evenements minimaliste,
- * souvent utilisé pour avertir des visiteurs des prochains évenements
+ * Cette classe permet de gÃ©rer un agenda d'evenements minimaliste,
+ * souvent utilisÃ© pour avertir des visiteurs des prochains Ã©venements
  * (salons, conventions, spectacles, ...)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
@@ -10,8 +10,8 @@
 class g_agenda {
 
     /**
-     * Cette classe permet de gérer un agenda d'evenements minimaliste,
-     * souvent utilisé pour avertir des visiteurs des prochains évenements
+     * Cette classe permet de gÃ©rer un agenda d'evenements minimaliste,
+     * souvent utilisÃ© pour avertir des visiteurs des prochains Ã©venements
      * (salons, conventions, spectacles, ...)
      */
     public function __construct() {
@@ -33,16 +33,16 @@ class g_agenda {
     }
 
     /**
-     * Affiche la liste d'évènements prévus
-     * @param int $lim nombre limite d'évènements à afficher (10 par défaut)
+     * Affiche la liste d'Ã©vÃ¨nements prÃ©vus
+     * @param int $lim nombre limite d'Ã©vÃ¨nements Ã  afficher (10 par dÃ©faut)
      */
     public function agenda_page($lim = 10) {
         (isset($_GET["agenda"]) ? $this->agenda_envent($_GET["agenda"]) : $this->agenda_liste($lim));
     }
 
     /**
-     * Affiche la liste d'évènements prévus
-     * @param int $lim nombre limite d'évènements à afficher (10 par défaut)
+     * Affiche la liste d'Ã©vÃ¨nements prÃ©vus
+     * @param int $lim nombre limite d'Ã©vÃ¨nements Ã  afficher (10 par dÃ©faut)
      */
     private function agenda_liste($lim) {
         $events = agenda::get_table_array("date_fin>='" . date("Y-m-d") . " 23:59' order by date_debut limit 0," . application::$_bdd->protect_var((int) $lim));
@@ -65,8 +65,8 @@ class g_agenda {
     }
 
     /**
-     * Affiche un évènement précis
-     * @param int $id Id de l'évènement
+     * Affiche un Ã©vÃ¨nement prÃ©cis
+     * @param int $id Id de l'Ã©vÃ¨nement
      */
     private function agenda_envent($id) {
         $event = agenda::get_from_id($id);
@@ -95,7 +95,7 @@ class g_agenda {
     }
 
     /**
-     * Affiche la liste des évènements dans l'administration
+     * Affiche la liste des Ã©vÃ¨nements dans l'administration
      */
     private function agenda_admin_list() {
         $option = array();
@@ -133,7 +133,7 @@ class g_agenda {
                     </div>
                     <div class="col-xs-9">
                         <a href="index.php?page=<?php echo $_GET["page"]; ?>&amp;agenda=<?php echo $event["id"]; ?>"><?php echo $event["titre"]; ?></a>
-                        <?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;agenda_supp=" . $event["id"], html_structures::glyphicon("remove", "Supprimer l'évenement"), "btn btn-danger btn-xs"); ?>
+                        <?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;agenda_supp=" . $event["id"], html_structures::glyphicon("remove", "Supprimer l'Ã©venement"), "btn btn-danger btn-xs"); ?>
                     </div>
                 </div>
                 <hr />
@@ -144,7 +144,7 @@ class g_agenda {
             <?php
             form::new_form();
             form::hidden("agenda_my", $_POST["agenda_my"]);
-            form::datetimepicker("Date de début", "date_debut", date("d/m/Y H:i"));
+            form::datetimepicker("Date de dÃ©but", "date_debut", date("d/m/Y H:i"));
             form::datetimepicker("Date de fin", "date_fin", date("d/m/Y H:i"));
             form::input("Titre", "titre");
             $cke = js::ckeditor("texte");
@@ -153,14 +153,14 @@ class g_agenda {
             form::close_form();
             if (isset($_POST["titre"])) {
                 agenda::ajout(form::get_datetimepicker_us("date_debut"), form::get_datetimepicker_us("date_fin"), $_POST["titre"], $cke->parse($_POST["texte"]));
-                js::alert("L'événement a bien été ajouté");
+                js::alert("L'Ã©vÃ©nement a bien Ã©tÃ© ajoutÃ©");
                 js::redir("");
             }
         }
     }
 
     /**
-     * Modification d'un évènement dans l'administration
+     * Modification d'un Ã©vÃ¨nement dans l'administration
      */
     private function agenda_admin_modif() {
         $event = agenda::get_from_id($_GET["agenda"]);
@@ -171,7 +171,7 @@ class g_agenda {
         $fin = explode(" ", $event->get_date_fin());
         $fin[0] = explode("-", $fin[0]);
         $fin = $fin[0][2] . "/" . $fin[0][1] . "/" . $fin[0][0] . " " . $fin[1];
-        form::datetimepicker("Date de début", "date_debut", $debut);
+        form::datetimepicker("Date de dÃ©but", "date_debut", $debut);
         form::datetimepicker("Date de fin", "date_fin", $fin);
         form::input("Titre", "titre", "text", $event->get_titre());
         $cke = js::ckeditor("texte");
@@ -183,17 +183,17 @@ class g_agenda {
             $event->set_date_fin(form::get_datetimepicker_us("date_fin"));
             $event->set_titre($_POST["titre"]);
             $event->set_texte($cke->parse($_POST["texte"]));
-            js::alert("L'événement a bien été ajouté");
+            js::alert("L'Ã©vÃ©nement a bien Ã©tÃ© ajoutÃ©");
             js::redir("index.php?page=" . $_GET["page"]);
         }
     }
 
     /**
-     * Suppresion d'un évènement dans l'administration
+     * Suppresion d'un Ã©vÃ¨nement dans l'administration
      */
     private function agenda_admin_supp() {
         application::$_bdd->query("delete from agenda where id='" . application::$_bdd->protect_var($_GET["agenda_supp"]) . "';");
-        js::alert("L'événement a bien été supprimé");
+        js::alert("L'Ã©vÃ©nement a bien Ã©tÃ© supprimÃ©");
         js::redir("index.php?page=" . $_GET["page"]);
     }
 

@@ -1,23 +1,23 @@
-<?php
+Ôªø<?php
 
 /**
  * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
- * Requirer une rÈgle CSS sur l'ID CSS
+ * Requirer une r√©gle CSS sur l'ID CSS
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class cytoscape {
 
     /**
-     * Permet de vÈrifier que la librairie cytoscape a bien ÈtÈ appelÈe qu'une fois.
-     * @var boolean Permet de vÈrifier que la librairie cytoscape a bien ÈtÈ appelÈe qu'une fois.
+     * Permet de v√©rifier que la librairie cytoscape a bien √©t√© appel√©e qu'une fois.
+     * @var boolean Permet de v√©rifier que la librairie cytoscape a bien √©t√© appel√©e qu'une fois.
      */
     private static $_called = false;
 
     /**
      * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
-     * Requirer une rÈgle CSS sur l'ID CSS
+     * Requirer une r√©gle CSS sur l'ID CSS
      * @param string $id ID CSS
-     * @param array $data DonnÈes du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
+     * @param array $data Donn√©es du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      */
     public function __construct($id, $data) {
         if (!self::$_called) {
@@ -45,9 +45,9 @@ class cytoscape {
     }
 
     /**
-     * Fonction recursive qui formate les donnÈes pour le graphe
-     * @param array $data DonnÈes du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
-     * @param string $kp clÈ parente
+     * Fonction recursive qui formate les donn√©es pour le graphe
+     * @param array $data Donn√©es du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
+     * @param string $kp cl√© parente
      * @return string cytoscape.elements
      */
     private function mk_graf($data, $kp = "") {

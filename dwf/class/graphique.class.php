@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * Cette classe permet d'afficher un graphique 
@@ -8,8 +8,8 @@
 class graphique {
 
     /**
-     *Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
-     * @var boolean Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
+     *Permet de vÃ©rifier que la librairie flot a bien Ã©tÃ© appelÃ©e qu'une fois.
+     * @var boolean Permet de vÃ©rifier que la librairie flot a bien Ã©tÃ© appelÃ©e qu'une fois.
      */
     private static $_called = false;
 
@@ -109,7 +109,7 @@ class graphique {
      * );<br />
      * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
      * @param boolean $show_points Afficher les points sur le graphique ? (true/false, true par defaut)
-     * @param boolean $fill La zone entre la ligne et l'abscisse doit-il être coloré  ? (true/false, false par defaut)
+     * @param boolean $fill La zone entre la ligne et l'abscisse doit-il Ãªtre colorÃ©  ? (true/false, false par defaut)
      */
     public function line($data, $ticks = [], $show_points = true, $fill = false) {
         ?>
@@ -228,9 +228,9 @@ class graphique {
 
     /**
      * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
-     * Requiert une régle CSS sur l'ID CSS
+     * Requiert une rÃ©gle CSS sur l'ID CSS
      * @param string $id ID CSS
-     * @param array $data Données du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
+     * @param array $data DonnÃ©es du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      */
     public function cytoscape($id, $data) {
         new cytoscape($id, $data);

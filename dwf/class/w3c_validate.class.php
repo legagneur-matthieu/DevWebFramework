@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /**
  * Inscrit les erreurs HTML du site dans le log.
@@ -28,8 +28,8 @@ class w3c_validate {
     }
 
     /**
-     * Retourne le statut de la page passé en paramètre
-     * @param string $url url à evaluer
+     * Retourne le statut de la page passÃ© en paramÃ¨tre
+     * @param string $url url Ã  evaluer
      * @return string statut de la page au format JSON
      */
     public static function validate_from_url($url) {

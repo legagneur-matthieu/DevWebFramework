@@ -54,7 +54,7 @@ class docTiers {
         echo html_structures::table(array("Libairie", "Auteur", "Langage", "Licence"), $lib, "", "datatable") . html_structures::hr();
         ?>
         <p>Du au fait que certaines librairies tiers soient sous <a href="http://www.gnu.org/licenses/gpl.html">licence GNU GPL</a>, le DevWebFramework est diffusé sous la même licence. <br />
-            L'auteur vous remercie pour tous les crédits que vous porterez à son travail.
+            L'auteur vous remercie pour tous crédits que vous porterez à son travail.
         </p>
         <?php
 

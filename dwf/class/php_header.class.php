@@ -63,4 +63,12 @@ class php_header {
         ($second > 0 ? header('Refresh: ' . $second . '; url=' . $url) : header('Location: ' . $url));
     }
 
+    /**
+     * Access-Control-Allow-Origin
+     * @param string $origin (defualt : "*")
+     */
+    public function Access_Control_Allow_Origin($origin = "*") {
+        header('Access-Control-Allow-Origin: ' . $origin);
+    }
+
 }

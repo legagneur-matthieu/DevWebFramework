@@ -3,7 +3,7 @@
 class parcour_sites {
 
     public function __construct() {
-        if ($_SERVER["HTTP_HOST"] != "localhost") {
+        if (!in_array($_SERVER["REMOTE_ADDR"], array("localhost", "127.0.0.1", "::1"))) {
             header("HTTP/1.1 301 Moved Permanently");
             header("Status: 301 Moved Permanently", false, 301);
             header("Location: ./doc/index.php");
@@ -24,7 +24,7 @@ class parcour_sites {
             </head>
             <body>
                 <header class="page-header label-info">
-                    <h1>Parcours des sites <br /><small>Liste des sites présent dans DWF</small></h1>
+                    <h1>Parcours des projets <br /><small>Liste des projets présent dans DWF</small></h1>
                 </header>
                 <main class="contenu">
                     <ul>
@@ -38,6 +38,7 @@ class parcour_sites {
                         }
                         ?>
                     </ul>
+                    <p><a href="commun/new_app.php"> <span class="glyphicon glyphicon-plus"></span> Ajouter un projet</a></p>
                 </main>
                 <footer> <hr /> </footer>
             </body>

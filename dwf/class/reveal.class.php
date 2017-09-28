@@ -20,18 +20,14 @@ class reveal {
         echo html_structures::link_in_body("../commun/src/js/reveal/css/theme/" . $theme . ".css");
         echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal_correctif.css");
         ?>
-        <style type="text/css">
-
-            .reveal,.slides{
-                width: <?php echo $width; ?>px;
-                height: <?php echo $height; ?>px;
-
-            }
-            .reveal .controls{
-                margin-top: <?php echo (-800 + $height); ?>px;
-                margin-left: <?php echo ($width - 100); ?>px;
-            }
-        </style>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".reveal .controls").ready(function () {
+                    $(".reveal,.slides").css("width", "<?php echo $width; ?>px").css("height", "<?php echo $height; ?>px");
+                    $(".reveal .controls").css("margin-top", "<?php echo (-800 + $height); ?>px").css("margin-left", "<?php echo ($width - 100); ?>px");
+                });
+            });
+        </script>
         <script type="text/javascript" src="../commun/src/js/reveal/lib/js/classList.js"></script>
         <script type="text/javascript" src="../commun/src/js/reveal/lib/js/head.min.js"></script>
         <script type="text/javascript" src="../commun/src/js/reveal/js/reveal.js"></script>

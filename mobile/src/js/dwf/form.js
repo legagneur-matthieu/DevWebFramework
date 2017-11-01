@@ -44,7 +44,7 @@ function dwf_form(id) {
      * @returns {undefined}
      */
     this.datalist = function (list, data) {
-        str = '<datalist id="' + list + '">';
+        var str = '<datalist id="' + list + '">';
         $.each(data, function (k, v) {
             str += '<option label="' + v["label"] + '" value="' + v["value"] + '" />';
         });
@@ -94,6 +94,7 @@ function dwf_form(id) {
                     $_post += "],";
                 } else {
                     if (isset($(this).attr("data-picker"))) {
+                        var date,time;
                         switch ($(this).attr("data-picker")) {
                             case "date":
                                 date = explode("/", $(this).val());
@@ -128,7 +129,7 @@ function dwf_form(id) {
      * @returns {undefined}
      */
     this.checkbox = function (label, name, value, class_css, checked) {
-        _id = name + '_' + value;
+        var _id = name + '_' + value;
         this.append('<div class="form-group"><label for="' + _id + '"><input type="checkbox" name="' + name + '" id="' + _id + '" value="' + value +
                 '" class="' + (!isset(class_css) ? "" : class_css) + '"' + (isset(checked) && checked ? ' checked="checked"' : "") +
                 ' />' + label + '</label> </div>');
@@ -142,7 +143,7 @@ function dwf_form(id) {
      * @returns {undefined}
      */
     this.radio = function (label, name, radios) {
-        str = '<fieldset> <legend>' + label + '</legend>';
+        var str = '<fieldset> <legend>' + label + '</legend>';
         $.each(radios, function (k, v) {
             str += '<div class="radio"><label><input type="radio" name="' + name + '" id="' + name + v[0] + '" value="' + v[0] + '"' +
                     (isset(v[2]) && v[2] == true ? ' checked="checked"' : "") + '>' + v[1] + '</label></div>';
@@ -193,7 +194,7 @@ function dwf_form(id) {
      * @returns {undefined}
      */
     this.options = function (option) {
-        str = '';
+        var str = '';
         options = this.options;
         $.each(option, function (k, v) {
             str += (!is_int(k) ? '<optgroup label="' + k + '">' + options(v) + '</optgroup>' :
@@ -285,25 +286,24 @@ function dwf_form(id) {
      */
     this.file = function (label, name, required, multiple) {
         $("#" + this.id).attr("enctype", "multipart/form-data");
-        id = name;
         this.input(label, name, "file", "", (isset(required) && required), "");
         if (isset(multiple) && multiple) {
-            $("#" + id).attr("multiple", "true");
+            $("#" + name).attr("multiple", "true");
         }
-        $("#" + id).removeAttr("class");
-        $("#" + id).change(function () {
-            $("#" + id).parent("form").children("input[type='submit']").attr("disabled", "disabled");
-            reader = [];
-            $.each($("#" + id)[0].files, function (k, v) {
-                reader[this.name] = new FileReader();
-                reader[this.name].onloadend = function () {
-                    $("#" + id).parent("form").children("input[type='submit']").attr("disabled", "disabled");
-                    $("#" + id)[0].files[k].data = this.result;
-                    $("#" + id).parent("form").children("input[type='submit']").removeAttr("disabled");
+        $("#" + name).removeAttr("class");
+        $("#" + name).change(function () {
+            $("#" + name).parent("form").children("input[type='submit']").attr("disabled", "disabled");
+            var reader = [];
+            $.each($("#" + name)[0].files, function (k, v) {
+                reader[name] = new FileReader();
+                reader[name].onloadend = function () {
+                    $("#" + name).parent("form").children("input[type='submit']").attr("disabled", "disabled");
+                    $("#" + name)[0].files[k].data = this.result;
+                    $("#" + name).parent("form").children("input[type='submit']").removeAttr("disabled");
                 };
-                reader[this.name].readAsDataURL($("#" + id)[0].files[k]);
+                reader[name].readAsDataURL($("#" + id)[0].files[k]);
             });
-            $("#" + id).parent("form").children("input[type='submit']").removeAttr("disabled");
+            $("#" + name).parent("form").children("input[type='submit']").removeAttr("disabled");
         });
     };
 }

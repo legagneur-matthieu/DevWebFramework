@@ -5,7 +5,7 @@
  */
 function dwf_time() {
 
-    this._chronometer = {};
+    var chronometer = {};
 
     /**
      * Convertit une date du format US en format FR
@@ -14,7 +14,7 @@ function dwf_time() {
      * @return {boolean|string} date FR ou false
      */
     this.convert_date = function (date) {
-        us = explode("-", date);
+        var us = explode("-", date);
         if (!isset(us[0]) || !isset(us[1]) || !isset(us[2])) {
             return false;
         }
@@ -49,7 +49,7 @@ function dwf_time() {
      * @return {string} mois "en lettre"
      */
     this.convert_mois = function (num_mois) {
-        mois = this.get_mois();
+        var mois = this.get_mois();
         return mois[num_mois];
     };
 
@@ -62,7 +62,7 @@ function dwf_time() {
      * @return {int} nombre de jours dans le mois
      */
     this.get_nb_jour = function (num_mois, an) {
-        nb = {
+        var nb = {
             "01": 31,
             "02": 28,
             "03": 31,
@@ -101,7 +101,7 @@ function dwf_time() {
      * @return {int} age
      */
     this.get_yers_old = function (d, m, y) {
-        yo = date("Y") - y;
+        var yo = date("Y") - y;
         if (date("md") < (m + "" + d)) {
             yo--;
         }
@@ -117,7 +117,7 @@ function dwf_time() {
      */
     this.date_plus_ou_moins_mois = function (date, mois) {
         date = explode("-", date);
-        point = abs(mois % 12);
+        var point = abs(mois % 12);
         if (point == 0) {
             point = 12;
         }
@@ -148,7 +148,7 @@ function dwf_time() {
      * @param {int|string} id Id du chronomètre
      */
     this.chronometer_start = function (id) {
-        this._chronometer[(!isset(id) ? 0 : id)] = microtime(true);
+        chronometer[(!isset(id) ? 0 : id)] = microtime(true);
     };
 
     /**
@@ -158,7 +158,7 @@ function dwf_time() {
      * @return {float} Temps mesuré par le chronomètre
      */
     this.chronometer_get = function (id) {
-        return (microtime(true) - this._chronometer[(!isset(id) ? 0 : id)]);
+        return (microtime(true) - chronometer[(!isset(id) ? 0 : id)]);
     };
 
     /**
@@ -170,23 +170,23 @@ function dwf_time() {
      */
     this.parse_time = function (secondes) {
         if (secondes < 1) {
-            ms = parceInt((secondes * 1000));
+            var ms = parseInt((secondes * 1000));
             return(ms < 1 ? parseInt(secondes * 1000000) + " µs" : ms + " ms");
         }
         if (secondes < 60) {
             return secondes + " s";
         } else {
-            min = parseInt(secondes / 60);
+            var min = parseInt(secondes / 60);
             secondes %= 60;
             if (min < 60) {
                 return min + " min " + secondes + " s";
             } else {
-                h = parseInt(min / 60);
+                var h = parseInt(min / 60);
                 min %= 60;
                 if (h < 24) {
                     return h + " h " + min + " min " + secondes + " s";
                 } else {
-                    j = parseInt(h / 24);
+                    var j = parseInt(h / 24);
                     h %= 24;
                     return j + " J " + h + " h " + min + " min " + secondes + " s";
                 }

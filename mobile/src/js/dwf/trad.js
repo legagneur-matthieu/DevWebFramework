@@ -5,7 +5,7 @@
  */
 function dwf_trad(lang) {
 
-    this.lang = json_decode(file_get_contents("src/js/dwf/lang/" + lang + ".json"));
+    lang = json_decode(file_get_contents("src/js/dwf/lang/" + lang + ".json"));
 
     /**
      * Retourne la traduction lié a la clé passé en patrametre 
@@ -13,7 +13,6 @@ function dwf_trad(lang) {
      * @returns {string} Traduction
      */
     this.trad = function (k) {
-        console.log(this.lang);
-        return this.lang[k];
+        return lang[k];
     };
 }

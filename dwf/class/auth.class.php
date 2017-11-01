@@ -69,7 +69,7 @@ class auth {
     private function form_auth() {
         if (isset($_POST['auth_login'])) {
             if ($this->_use_token) {
-                if ($form->validate_token()) {
+                if ((new form())->validate_token()) {
                     $this->exec_auth();
                 } else {
                     js::alertify_alert_redir("Token invalide!","");

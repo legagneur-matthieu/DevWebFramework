@@ -72,8 +72,7 @@ class auth {
                 if ($form->validate_token()) {
                     $this->exec_auth();
                 } else {
-                    js::alert("Token invalide!");
-                    js::redir("");
+                    js::alertify_alert_redir("Token invalide!","");
                 }
             } else {
                 $this->exec_auth();
@@ -98,36 +97,16 @@ class auth {
      * Exécution du formulaire d'authentification
      */
     private function exec_auth() {
-        $req = application::$_bdd->fetch("select count(*) as count from " . $this->_table . " where " . $this->_tuple_login . "='" . application::$_bdd->protect_var($_POST['auth_login']) . "';");
-        $report = false;
-        if ($req[0]["count"] != 0) {
-            $req = application::$_bdd->fetch("select * from " . $this->_table . " where " . $this->_tuple_login . "='" . application::$_bdd->protect_var($_POST['auth_login']) . "';");
-            if ($this->checkPassword($_POST['auth_psw'], $req[0][$this->_tuple_psw])) {
-                session::set_auth(true);
-                session::set_user($req[0]['id']);
-                js::redir("");
-            } else {
-                js::alert("Votre mot de passe est invalide !");
-                $report = true;
-            }
+        $table= $this->_table;
+        if ($req = $table::get_table_array($this->_tuple_login . "='" . application::$_bdd->protect_var($_POST['auth_login']) . "' and " .
+                $this->_tuple_psw . "='" . application::$_bdd->protect_var(hash(config::$_hash_algo, $_POST['auth_psw'])) . "';")) {
+            session::set_auth(true);
+            session::set_user($req[0]['id']);
+            js::redir("");
         } else {
-            js::alert("Votre login est invalide !");
-            $report = true;
-        }
-        if ($report) {
             $_POST["auth_psw"] = "********";
+            js::alertify_alert_redir("Votre login ou mot de passe est invalide !", "");
         }
-    }
-
-    /**
-     * Vérifie le mot de passe (la fonction hash est à modifier à votre convenance )
-     * 
-     * @param string $checkPass mot de passe reÃ§u
-     * @param string $realPass mot de passe stocké
-     * @return boolean
-     */
-    private function checkPassword($checkPass, $realPass) {
-        return $realPass == hash(config::$_hash_algo, $checkPass);
     }
 
     /**

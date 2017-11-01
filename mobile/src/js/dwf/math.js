@@ -11,6 +11,7 @@ function dwf_math() {
      * @returns {int|boolean} Retourne le PGCD ou false en cas d'erreur
      */
     this.pgcd = function (nb1, nb2) {
+        var res;
         if (nb1 > 0 && nb2 > 0) {
             if (nb1 < nb2) {
                 res = nb1;
@@ -36,6 +37,7 @@ function dwf_math() {
      * @returns {int} Retourne le factorielle ou false en cas d'erreur
      */
     this.factorielle = function (nb) {
+        var res;
         nb = sqrt(pow((nb), 2));
         if (nb > 0) {
             res = 1;
@@ -142,7 +144,7 @@ function dwf_math() {
         if (nb < 2) {
             return false;
         }
-        i = 2;
+        var i = 2;
         while (i < ((parseInt((nb / 2) + 1)))) {
             if (nb % i == 0) {
                 return false;
@@ -164,9 +166,9 @@ function dwf_math() {
         if (nb == 0) {
             return false;
         }
-        res = [];
+        var res = [];
         while (true) {
-            a = str_split(nb);
+            var a = str_split(nb);
             nb = 0;
             $.each(a, function (k, v) {
                 nb += pow(v, 2);
@@ -175,7 +177,7 @@ function dwf_math() {
             if (nb == 1) {
                 return res;
             } else {
-                if (in_array(nb, array(4, 16, 37, 58, 89, 145, 42, 20))) {
+                if (in_array(nb, [4, 16, 37, 58, 89, 145, 42, 20])) {
                     return false;
                 }
             }
@@ -192,9 +194,10 @@ function dwf_math() {
         if (x_gonal < 3) {
             return false;
         } else {
-            a = x_gonal - 2;
-            b = -x_gonal + 4;
-            i = 1;
+            var a = x_gonal - 2;
+            var b = -x_gonal + 4;
+            var i = 1;
+            var c;
             while ((c = (i / 2) * (a * i + b)) <= nb) {
                 if (c == nb) {
                     return true;
@@ -214,7 +217,8 @@ function dwf_math() {
         if (nb < 1) {
             return false;
         }
-        i = 1;
+        var i = 1;
+        var c;
         while ((c = ((i * (i + 1) * (i + 2)) / 6)) <= nb) {
             if (c == nb) {
                 return true;
@@ -232,7 +236,8 @@ function dwf_math() {
         if (nb < 1) {
             return false;
         }
-        i = 1;
+        var i = 1;
+        var c;
         while ((c = ((i * (i + 1) * ((i * 2) + 2)) / 6)) <= nb) {
             if (c == nb) {
                 return true;
@@ -250,18 +255,18 @@ function dwf_math() {
      * @returns {array} {"delta":delta, "solutions":null|array(x1,x2)}
      */
     this.delta = function (a, b, c) {
-        res = {};
-        res.delta = (pow(b, 2) + (4 * a * c));
-        if (res.delta == 0) {
-            x = ((-b) / 2 * a);
-            res.solution = array(x);
+        var res = {};
+        res["delta"] = (pow(b, 2) - (4 * a * c));
+        if (res["delta"] == 0) {
+            var x = ((-b) / 2 * a);
+            res["solution"] = array(x);
         } else {
-            if (res.delta > 0) {
-                x1 = ((b + sqrt(res.delta)) / 2 * a);
-                x2 = ((b - sqrt(res.delta)) / 2 * a);
-                res.solution = [x1, x2];
+            if (res["delta"] > 0) {
+                var x1 = ((b + sqrt(res["delta"])) / 2 * a);
+                var x2 = ((b - sqrt(res["delta"])) / 2 * a);
+                res["solution"] = [x1, x2];
             } else {
-                res.solution = null;
+                res["solution"] = null;
             }
         }
         return res;

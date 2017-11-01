@@ -250,15 +250,15 @@ class math {
     }
 
     /**
-     * Retourne le delta et les solution d'une équation du second degré définit par axÂ²+bx+c <br />
+     * Retourne le delta et les solution d'une équation du second degré définit par ax²+bx+c <br />
      * resutat sous la forme : array("delta"=>$delta, "solutions"=> null|array($x1,$x2);
-     * @param float $a a de l'équation axÂ²+bx+c
-     * @param float $b b de l'équation axÂ²+bx+c
-     * @param float $c c de l'équation axÂ²+bx+c
+     * @param float $a a de l'équation ax²+bx+c
+     * @param float $b b de l'équation ax²+bx+c
+     * @param float $c c de l'équation ax²+bx+c
      * @return array array("delta"=>$delta, "solutions"=> null|array($x1,$x2);
      */
     public static function delta($a, $b, $c) {
-        $res["delta"] = (pow($b, 2) + (4 * $a * $c));
+        $res["delta"] = (pow($b, 2) - (4 * $a * $c));
         if ($res["delta"] == 0) {
             $x = ((-$b) / 2 * $a);
             $res["solution"] = array($x);

@@ -4,11 +4,8 @@ function animate(id) {
         $("head").append('<link rel="stylesheet" href="../commun/src/js/animate/animate.css" />');
         $animate_called = true;
     }
-    this.id = "#" + id;
-    this.infini = "";
+    var _id = "#" + id;
     this.class = [
-        "animated",
-        "infinite",
         "bounce",
         "flash",
         "pulse",
@@ -85,697 +82,543 @@ function animate(id) {
         "rollIn",
         "rollOut"
     ];
-
+    $(_id).addClass("animated");
     this.rm_animate = function () {
-        id = this.id;
         $.each(this.class, function (k, v) {
-            $(id).removeClass(v);
+            $(_id).removeClass(v);
         });
     };
 
     this.infinite = function () {
-        $(this.id).addClass("infinite");
-        this.infini = "infinite ";
+        $(_id).addClass("infinite");
     };
     this.once = function () {
-        $(this.id).removeClass("infinite");
-        this.infini = "";
+        $(_id).removeClass("infinite");
     };
 
     this.bounce = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounce");
+            $(_id).addClass("bounce");
         }, 10);
     };
 
     this.flash = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "flash");
+            $(_id).addClass("flash");
         }, 10);
     };
 
     this.pulse = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "pulse");
+            $(_id).addClass("pulse");
         }, 10);
     };
 
     this.rubberBand = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rubberBand");
+            $(_id).addClass("rubberBand");
         }, 10);
     };
 
     this.shake = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "shake");
+            $(_id).addClass("shake");
         }, 10);
     };
 
     this.headShake = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "headShake");
+            $(_id).addClass("headShake");
         }, 10);
     };
 
     this.swing = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "swing");
+            $(_id).addClass("swing");
         }, 10);
     };
 
     this.tada = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "tada");
+            $(_id).addClass("tada");
         }, 10);
     };
 
     this.wobble = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "wobble");
+            $(_id).addClass("wobble");
         }, 10);
     };
 
     this.jello = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "jello");
+            $(_id).addClass("jello");
         }, 10);
     };
 
     this.bounceIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceIn");
+            $(_id).addClass("bounceIn");
         }, 10);
     };
 
     this.bounceInDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceInDown");
+            $(_id).addClass("bounceInDown");
         }, 10);
     };
 
     this.bounceInLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceInLeft");
+            $(_id).addClass("bounceInLeft");
         }, 10);
     };
 
     this.bounceInRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceInRight");
+            $(_id).addClass("bounceInRight");
         }, 10);
     };
 
     this.bounceInUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceInUp");
+            $(_id).addClass("bounceInUp");
         }, 10);
     };
 
     this.bounceOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceOut");
+            $(_id).addClass("bounceOut");
         }, 10);
     };
 
     this.bounceOutDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceOutDown");
+            $(_id).addClass("bounceOutDown");
         }, 10);
     };
 
     this.bounceOutLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceOutLeft");
+            $(_id).addClass("bounceOutLeft");
         }, 10);
     };
 
     this.bounceOutRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceOutRight");
+            $(_id).addClass("bounceOutRight");
         }, 10);
     };
 
     this.bounceOutUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "bounceOutUp");
+            $(_id).addClass("bounceOutUp");
         }, 10);
     };
 
     this.fadeIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeIn");
+            $(_id).addClass("fadeIn");
         }, 10);
     };
 
     this.fadeInDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInDown");
+            $(_id).addClass("fadeInDown");
         }, 10);
     };
 
     this.fadeInDownBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInDownBig");
+            $(_id).addClass("fadeInDownBig");
         }, 10);
     };
 
     this.fadeInLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInLeft");
+            $(_id).addClass("fadeInLeft");
         }, 10);
     };
 
     this.fadeInLeftBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInLeftBig");
+            $(_id).addClass("fadeInLeftBig");
         }, 10);
     };
 
     this.fadeInRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInRight");
+            $(_id).addClass("fadeInRight");
         }, 10);
     };
 
     this.fadeInRightBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInRightBig");
+            $(_id).addClass("fadeInRightBig");
         }, 10);
     };
 
     this.fadeInUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInUp");
+            $(_id).addClass("fadeInUp");
         }, 10);
     };
 
     this.fadeInUpBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeInUpBig");
+            $(_id).addClass("fadeInUpBig");
         }, 10);
     };
 
     this.fadeOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOut");
+            $(_id).addClass("fadeOut");
         }, 10);
     };
 
     this.fadeOutDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutDown");
+            $(_id).addClass("fadeOutDown");
         }, 10);
     };
 
     this.fadeOutDownBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutDownBig");
+            $(_id).addClass("fadeOutDownBig");
         }, 10);
     };
 
     this.fadeOutLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutLeft");
+            $(_id).addClass("fadeOutLeft");
         }, 10);
     };
 
     this.fadeOutLeftBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutLeftBig");
+            $(_id).addClass("fadeOutLeftBig");
         }, 10);
     };
 
     this.fadeOutRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutRight");
+            $(_id).addClass("fadeOutRight");
         }, 10);
     };
 
     this.fadeOutRightBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutRightBig");
+            $(_id).addClass("fadeOutRightBig");
         }, 10);
     };
 
     this.fadeOutUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutUp");
+            $(_id).addClass("fadeOutUp");
         }, 10);
     };
 
     this.fadeOutUpBig = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "fadeOutUpBig");
+            $(_id).addClass("fadeOutUpBig");
         }, 10);
     };
 
     this.flipInX = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "flipInX");
+            $(_id).addClass("flipInX");
         }, 10);
     };
 
     this.flipInY = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "flipInY");
+            $(_id).addClass("flipInY");
         }, 10);
     };
 
     this.flipOutX = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "flipOutX");
+            $(_id).addClass("flipOutX");
         }, 10);
     };
 
     this.flipOutY = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "flipOutY");
+            $(_id).addClass("flipOutY");
         }, 10);
     };
 
     this.lightSpeedIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "lightSpeedIn");
+            $(_id).addClass("lightSpeedIn");
         }, 10);
     };
 
     this.lightSpeedOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "lightSpeedOut");
+            $(_id).addClass("lightSpeedOut");
         }, 10);
     };
 
     this.rotateIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateIn");
+            $(_id).addClass("rotateIn");
         }, 10);
     };
 
     this.rotateInDownLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateInDownLeft");
+            $(_id).addClass("rotateInDownLeft");
         }, 10);
     };
 
     this.rotateInDownRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateInDownRight");
+            $(_id).addClass("rotateInDownRight");
         }, 10);
     };
 
     this.rotateInUpLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateInUpLeft");
+            $(_id).addClass("rotateInUpLeft");
         }, 10);
     };
 
     this.rotateInUpRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateInUpRight");
+            $(_id).addClass("rotateInUpRight");
         }, 10);
     };
 
     this.rotateOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateOut");
+            $(_id).addClass("rotateOut");
         }, 10);
     };
 
     this.rotateOutDownLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateOutDownLeft");
+            $(_id).addClass("rotateOutDownLeft");
         }, 10);
     };
 
     this.rotateOutDownRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateOutDownRight");
+            $(_id).addClass("rotateOutDownRight");
         }, 10);
     };
 
     this.rotateOutUpLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateOutUpLeft");
+            $(_id).addClass("rotateOutUpLeft");
         }, 10);
     };
 
     this.rotateOutUpRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rotateOutUpRight");
+            $(_id).addClass("rotateOutUpRight");
         }, 10);
     };
 
     this.hinge = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "hinge");
+            $(_id).addClass("hinge");
         }, 10);
     };
 
     this.rollIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rollIn");
+            $(_id).addClass("rollIn");
         }, 10);
     };
 
     this.rollOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "rollOut");
+            $(_id).addClass("rollOut");
         }, 10);
     };
 
     this.zoomIn = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomIn");
+            $(_id).addClass("zoomIn");
         }, 10);
     };
 
     this.zoomInDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "");
+            $(_id).addClass("");
         }, 10);
     };
 
     this.zoomInLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomInDown");
+            $(_id).addClass("zoomInDown");
         }, 10);
     };
 
     this.zoomInRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomInRight");
+            $(_id).addClass("zoomInRight");
         }, 10);
     };
 
     this.zoomInUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomInUp");
+            $(_id).addClass("zoomInUp");
         }, 10);
     };
 
     this.zoomOut = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomOut");
+            $(_id).addClass("zoomOut");
         }, 10);
     };
 
     this.zoomOutDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomOutDown");
+            $(_id).addClass("zoomOutDown");
         }, 10);
     };
 
     this.zoomOutLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomOutLeft");
+            $(_id).addClass("zoomOutLeft");
         }, 10);
     };
 
     this.zoomOutRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomOutRight");
+            $(_id).addClass("zoomOutRight");
         }, 10);
     };
 
     this.zoomOutUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "zoomOutUp");
+            $(_id).addClass("zoomOutUp");
         }, 10);
     };
 
     this.slideInDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideInDown");
+            $(_id).addClass("slideInDown");
         }, 10);
     };
 
     this.slideInLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideInLeft");
+            $(_id).addClass("slideInLeft");
         }, 10);
     };
 
     this.slideInRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideInRight");
+            $(_id).addClass("slideInRight");
         }, 10);
     };
 
     this.slideInUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideInUp");
+            $(_id).addClass("slideInUp");
         }, 10);
     };
 
     this.slideOutDown = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideOutDown");
+            $(_id).addClass("slideOutDown");
         }, 10);
     };
 
     this.slideOutLeft = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideOutLeft");
+            $(_id).addClass("slideOutLeft");
         }, 10);
     };
 
     this.slideOutRight = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideOutRight");
+            $(_id).addClass("slideOutRight");
         }, 10);
     };
 
     this.slideOutUp = function () {
         this.rm_animate();
-        id = this.id;
-        infini = this.infini;
         setTimeout(function () {
-            $(id).addClass("animated " + infini + "slideOutUp");
+            $(_id).addClass("slideOutUp");
         }, 10);
     };
-
 
 }

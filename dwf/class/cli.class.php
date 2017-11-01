@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe constitue une "boite à outils", utile pour les applications en PHP-CLI (console)
@@ -80,18 +80,18 @@ class cli {
      */
     private static function accents($str) {
         return strtr($str, array(
-            'Ã¼' => "\x81",
+            'ü' => "\x81",
             'é' => "\x82",
-            'Ã¢' => "\x83",
-            'Ã¤' => "\x84",
+            'â' => "\x83",
+            'ä' => "\x84",
             'à' => "\x85",
-            'Ã§' => "\x87",
+            'ç' => "\x87",
             'ê' => "\x88",
-            'Ã«' => "\x89",
+            'ë' => "\x89",
             'è' => "\x8A",
-            'Ã¯' => "\x8B",
-            'Ã®' => "\x8C",
-            'Ã‰' => "\x90")
+            'ï' => "\x8B",
+            'î' => "\x8C",
+            'É' => "\x90")
         );
     }
 

@@ -301,7 +301,7 @@ class docPHP_natives {
             <li>les codes d'erreurs 60X concerne la base de données</li>
             <li>les codes d'erreurs 61X concerne les routes et méthodes</li>
             <li>les codes d'erreurs 62X concerne les services</li>
-            <li>les codes d'erreurs 63X concerne le système de fichiers</li>
+            <li>les codes d'erreurs 63X concerne le système</li>
         </ul>
         <p>Il est cependant possible pour vous de créer des exceptions personnalisées avec dwf_exeption :</p>
         <?php
@@ -1197,6 +1197,20 @@ class docPHP_natives {
                 . "echo $" . "trad->t('CLE_1');\n"
                 . "echo $" . "trad->t('CLE_2');\n"
                 . "?>", $this->_brush);
+    }
+
+    private function update_dwf() {
+        ?>
+        <p>Cette classe permet de gérer les mises à jour de DWF (a plasser dans une inerface d'administration) <br />
+        ATTENTION ! Git doit être installé sur la machine hôte !
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php new update_dwf(); ?>", $this->_brush);
+        echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Status / Mise à jour"], [
+            ["git version 2.7.4", "21.17.11", "21.17.11", "Already up-to-date."],
+            ["OU", "", "", ""],
+            ["git version 2.7.4", "21.17.10", "21.17.11", '<input type="submit" class="btn btn-block btn-primary" value="Update from 21.17.10 to 21.17.11" />']
+        ]);
     }
 
     private function video() {

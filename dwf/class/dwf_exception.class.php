@@ -25,8 +25,9 @@ class dwf_exception extends Exception {
         622 => "Service _s_ introuvable",
         623 => "Action du service _s_ non renseigné",
         624 => "Action _a_ du service _s_ introuvable",
-        // 63X FS
+        // 63X FS / système
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
+        632 => "Git ne semble pas être installé sur la machine hôte.",
     );
 
     /**

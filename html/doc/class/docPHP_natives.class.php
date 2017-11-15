@@ -840,6 +840,62 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function paypal() {
+        ?>
+        <p>Cette classe permet de créer, verifier et executer des payment via l'API REST de PayPal</p>
+        <p>Exemple d'utilisation :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//liste des produit que veux acheter l'utilisateur\n"
+                . "$" . "item_list = [\n"
+                . "    [\n"
+                . "        'Name' => 'produit1',\n"
+                . "        'Price' => 10.50,\n"
+                . "        'Quantity' => 1\n"
+                . "    ],\n"
+                . "    [\n"
+                . "        'Name' => 'produit2',\n"
+                . "        'Price' => 1.99,\n"
+                . "        'Quantity' => 5\n"
+                . "    ]\n"
+                . "];\n\n"
+                . "//Id et Secret renseigné dans l'application de l'API REST de PayPal\n"
+                . "$" . "clientId='Votre-clientId';\n"
+                . "$" . "clientSecret='Votre-clientSecret';\n"
+                . "$" . "paypal = new paypal($" . "clientId, $" . "clientSecret);\n\n"
+                . "if (!isset($" . "_GET['paypal_action'])) {\n"
+                . "    $" . "_GET['paypal_action'] = '';\n"
+                . "}\n"
+                . "switch ($" . "_GET['paypal_action']) {\n"
+                . "    case 'return':\n"
+                . "        $" . "payment = $" . "paypal->get_payment($" . "_GET['paymentId']);\n"
+                . "        //TODO: verifier les données du payment\n"
+                . "        //Execute le payment\n"
+                . "        $" . "paypal->execute_payment($" . "payment);\n"
+                . "        //TODO : envoyer une copie de la facture par mail\n"
+                . "        js::alertify_alert_redir('Payment accepté! retour a l\'accueil', 'index.php');\n"
+                . "        break;\n"
+                . "    case 'cancel':\n"
+                . "        js::alertify_alert_redir('Vous avez annulé le payment, retour a l\'accueil', 'index.php');\n"
+                . "        break;\n"
+                . "    default:\n"
+                . "        $" . "url = 'http://monsite.fr/' . strtr(application::get_url(['paypal_action']), ['&amp;' => '&']);\n"
+                . "        //créé le payment et retourne le lien de payment pour l'utilisateur ou false en cas d'erreur\n"
+                . "        if ($" . "link = $" . "paypal->create_payment(\n"
+                . "                $" . "item_list, 20, 'Ventes de monsite.fr', $" . "url . 'paypal_action = return', $" . "url . 'paypal_action = cancel'\n"
+                . "                )) {\n"
+                . "            //affiche le lien pour le payment ( à fournir à l'utilisateur)\n"
+                . "            //A adapter si vous voulez afficher un bouton PayPal \"officiel\"\n"
+                . "            echo html_structures::a_link($" . "link, 'Payer');\n"
+                . "        }\n"
+                . "        break;\n"
+                . "}\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Plus de renseignements dans la doc technique et sur <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a></p>
+        <?php
+    }
+
     private function phpQRCode__printcsv__printer() {
         ?>
         <p>Ces classes servent à afficher ou exporter des données en QRCode CSV ou PDF, ils utilisent les fichiers :</p>
@@ -1202,7 +1258,7 @@ class docPHP_natives {
     private function update_dwf() {
         ?>
         <p>Cette classe permet de gérer les mises à jour de DWF (a plasser dans une inerface d'administration) <br />
-        ATTENTION ! Git doit être installé sur la machine hôte !
+            ATTENTION ! Git doit être installé sur la machine hôte !
         </p>
         <?php
         js::syntaxhighlighter("<?php new update_dwf(); ?>", $this->_brush);

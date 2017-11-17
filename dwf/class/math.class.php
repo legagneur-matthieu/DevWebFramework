@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe contient quelques fonctions mathématique de base ainsi que des fonctions pour verifier le type de variables

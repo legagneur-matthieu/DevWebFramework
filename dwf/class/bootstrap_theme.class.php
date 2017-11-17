@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de gèrer les thèmes de bootswatch

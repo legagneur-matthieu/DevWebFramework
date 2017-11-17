@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de gérer des traductions sur le principe de "clés" afin de créer facilement des applications multilingues 

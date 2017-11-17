@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent à certaines dates de l'année

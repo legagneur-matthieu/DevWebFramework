@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cet objet gère la connexion et les traitements de la base de données

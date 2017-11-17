@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Cette classe permet de gerer des QRCode 
  * (communique avec /commun/qrcode_printer.php)

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Inscrit les erreurs HTML du site dans le log.

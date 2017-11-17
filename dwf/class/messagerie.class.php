@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe gère la messagerie, elle permet d'envoyer, de réceptionner ou de supprimer un message.

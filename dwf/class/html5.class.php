@@ -1,5 +1,4 @@
-﻿<?php
-
+<?php
 /**
  * Cette classe gère l'entête HTML5 et son pied de page.
  * Les métas descriptions et keyword sont à ajouter par vous même dans le constructeur
@@ -54,6 +53,11 @@ class html5 {
                 ?>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <?php
+                if (isset(config::$_title)and config::$_title != "") {
+                    ?>
+                    <title><?php echo config::$_title; ?></title>
+                    <?php
+                }
                 if (isset(config::$_favicon)and config::$_favicon != "") {
                     ?> 
                     <link rel="icon" href="<?php echo config::$_favicon; ?>" />
@@ -62,12 +66,6 @@ class html5 {
                 $this->css();
                 $this->js();
                 $this->IE_support();
-                application::event("onhtml_head");
-                if (isset(config::$_title)and config::$_title != "") {
-                    ?>
-                    <title><?php echo config::$_title; ?></title>
-                    <?php
-                }
                 ?>
             </head>
             <body>

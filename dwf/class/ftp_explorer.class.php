@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'afficher et explorer une arborescence FTP <strong>PUBLIQUE</strong>

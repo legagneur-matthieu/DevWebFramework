@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe affiche le gestionaire de fichiers elFinder

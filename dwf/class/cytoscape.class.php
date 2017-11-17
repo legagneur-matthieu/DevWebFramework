@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)

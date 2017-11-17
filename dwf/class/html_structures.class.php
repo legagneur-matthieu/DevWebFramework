@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Ensemble de fonctions permettant de créer diverses structures HTML standardisées 

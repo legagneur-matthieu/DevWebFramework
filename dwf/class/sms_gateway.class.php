@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer et recevoir des SMS depuis une application Web.

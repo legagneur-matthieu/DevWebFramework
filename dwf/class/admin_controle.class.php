@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Créé une interface d'administration 'user-friendly' pour une table 

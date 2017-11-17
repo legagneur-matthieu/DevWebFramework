@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Permets d'afficher les différences entre deux chaines de caractères

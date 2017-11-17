@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe affiche une citation célébre à chaque chargement de page

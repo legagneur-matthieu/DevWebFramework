@@ -270,12 +270,14 @@ class docPHP {
         js::syntaxhighlighter("<?php\n"
                 . "class ma_classe_metier{\n\n"
                 . "    public static onload(){\n"
+                . "        //Supprimé depuis la verssion 21.17.12\n"
                 . "        //cette méthode sera executée automatiquement par le framework lorsque \n"
                 . "        //toutes les classes métiers et les classes du framework sont chargées\n"
                 . "        //cette méthode ne doit pas générer de HTML !\n"
                 . "        //ne peux pas utiliser application:$" . "_bdd donc ne peux pas utiliser d'entité !\n"
                 . "    }\n\n"
                 . "    public static onhtml_head(){\n"
+                . "        //DEPRECIÉ depuis la verssion 21.17.12\n"
                 . "        //cette méthode sera executée automatiquement par le framework \n"
                 . "        // juste avant la balise </head>\n"
                 . "        // cette méthode permet de rajouter des balises meta, link ou script\n"
@@ -294,6 +296,10 @@ class docPHP {
         <p>
             Comme indiqué, ces fonctions doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités ! <br />
             Ces méthodes ne prennent pas de paramètres et ne retourne rien.
+        </p>
+        <p class="alert alert-warning">ATTENTION : Depuis la version 21.17.12, <br />
+            pour que les fonction evenementielles ce déclanchent, la classe concerné doit avoir été appelé au moins une fois avant le déclancheur ! <br />
+            (instanciation ou appel d'une fonction static)
         </p>
         <h4>Créer un déclencheur</h4>
         <p>
@@ -613,7 +619,7 @@ class docPHP {
     private function mise_en_ligne() {
         ?>
         <p>Lors de la mise en ligne de vos projets vous devrez définir votre "projet par deafut" pour cela : <br />
-        rendez vous dans le fichier <em>html/index.php</em> et modifiez la ligne suivante à votre convenance.
+            rendez vous dans le fichier <em>html/index.php</em> et modifiez la ligne suivante à votre convenance.
         </p>
         <?php
         js::syntaxhighlighter("<?php\nheader(\"Location: ./doc/index.php\"); \n ?>", $this->_brush);

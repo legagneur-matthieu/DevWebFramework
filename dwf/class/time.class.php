@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe gère des fonctions basiques basées sur le temps
@@ -252,7 +252,7 @@ class time {
     public static function parse_time($secondes) {
         if ($secondes < 1) {
             $ms = (int) ($secondes * 1000);
-            return ($ms < 1 ? ((int) ($secondes * 1000000)) . " Âµs" : $ms . " ms");
+            return ($ms < 1 ? ((int) ($secondes * 1000000)) . " µs" : $ms . " ms");
         }
         if ($secondes < 60) {
             return $secondes . " s";

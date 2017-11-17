@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe gère les variables de sessions spécifiques à l'application actuelle

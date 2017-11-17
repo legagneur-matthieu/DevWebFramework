@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'afficher la météo d'une ville en temps réel (utilise openweather et nécéssite une clé API)

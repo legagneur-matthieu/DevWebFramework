@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe utilise l'API de Reverso pour corriger un texte et 

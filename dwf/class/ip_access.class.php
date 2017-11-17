@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÃ‰E !

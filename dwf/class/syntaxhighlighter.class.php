@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'afficher du code formaté et stylisé par la librairie SyntaxHightlighter

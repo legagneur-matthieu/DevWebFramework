@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe gère des fonctions basiques de JavaScript

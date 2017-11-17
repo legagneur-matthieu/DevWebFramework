@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette class permet de génerer un modal

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet l'affichage de données dans un tableau à partir du fichier .csv

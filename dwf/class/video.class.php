@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe premet d'afficher une vidéo avec un player accessible

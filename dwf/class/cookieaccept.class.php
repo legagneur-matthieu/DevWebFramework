@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'afficher un message d'informations sur l'utilisation de cookies ou autre technologies similaires

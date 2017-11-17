@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Applique l'effet "shuffleLetters" à un élément au chargement de la page

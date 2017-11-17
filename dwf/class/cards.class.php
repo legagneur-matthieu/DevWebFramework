@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de gèrer un paquet de 32, 52, 54 ou 78 cartes

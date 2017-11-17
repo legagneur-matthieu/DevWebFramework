@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe contient les résultats d'une requête à duckduckgo <br />

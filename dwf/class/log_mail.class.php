@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de vous envoyer automatiquement un mail en cas de comportement anormal de votre application

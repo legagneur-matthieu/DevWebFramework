@@ -49,13 +49,6 @@ class debug {
     }
 
     /**
-     * Evenementiel : Lance le chronomètre d'exécution au chargement du framework
-     */
-    public static function onload() {
-        time::chronometer_start("debug_exec");
-    }
-
-    /**
      * Evenementiel : Affiche le rapport ( utilisez debug::show_report() !)
      */
     public static function onhtml_body_end() {
@@ -93,6 +86,12 @@ class debug {
                 $data .= '<li title="' . $value["trace"] . '"><p>' . $value["req"] . '</p></li>';
             }
             $data .= '</ol>';
+            $cl = "<dl class='dl-horizontal'>";
+            foreach (website::$_class as $key => $value) {
+                $cl .= "<dt>" . $value . "</dt><dd>" . $key . "</dd>";
+            }
+            $cl .= "</dl>";
+            $modal = new modal();
             ?>
             <div style="position: fixed; bottom: 0; width: 100%;margin: 0; padding: 0;margin-top: 600px;" class="alert alert-info">
                 <script type="text/javascript">
@@ -104,8 +103,11 @@ class debug {
                 <div class="row" style="width: 98%; margin-left: 1%;">
                     <div class="col-xs-2">
                         <p>
-                            <strong>Classes chargé : </strong><?php echo count(website::$_class); ?> <br />
-                            <strong>Temp d'execution : </strong><?php echo time::parse_time(time::chronometer_get("debug_exec")); ?>
+                            <?php
+                            $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, "")
+                            ?>
+                            <br />
+                            <strong>Temp d'execution : </strong><?= time::parse_time(time::chronometer_get("debug_exec")); ?>
                         </p>
                     </div>
                     <div class="col-xs-4">
@@ -114,19 +116,19 @@ class debug {
                             <?php
                             echo number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o";
                             ?> <br />
-                            <strong>Memoire utilisé (%) : </strong><?php echo memory_get_usage() / ((int) strtr($limit, $puissance)) . " %"; ?>
+                            <strong>Memoire utilisé (%) : </strong><?= memory_get_usage() / ((int) strtr($limit, $puissance)) . " %"; ?>
                         </p>
                     </div>
                     <div class="col-xs-4">
                         <p>
-                            <strong>Nombre de requêtes SQL : </strong><?php echo bdd::$_debug["nb_req"]; ?><br />
-                            <strong>Memoire utilisé par PHP pour SQL : </strong><?php echo number_format(bdd::$_debug["memory"], 0, ".", " "); ?> Octet<br />
-                            <strong>Memoire utilisé par PHP pour SQL (%) : </strong><?php echo number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " "); ?> %
+                            <strong>Nombre de requêtes SQL : </strong><?= bdd::$_debug["nb_req"]; ?><br />
+                            <strong>Memoire utilisé par PHP pour SQL : </strong><?= number_format(bdd::$_debug["memory"], 0, ".", " "); ?> Octet<br />
+                            <strong>Memoire utilisé par PHP pour SQL (%) : </strong><?= number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " "); ?> %
                         </p>
                     </div>
                     <div class="col-xs-2">
                         <?php
-                        (new modal())->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
+                        $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
                         ?>
                     </div>
                 </div>

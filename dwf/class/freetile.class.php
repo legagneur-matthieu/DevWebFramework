@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile"

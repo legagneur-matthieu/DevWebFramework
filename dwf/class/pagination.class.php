@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe gère la pagination dans une page

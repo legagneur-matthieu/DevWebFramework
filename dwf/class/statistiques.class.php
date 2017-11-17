@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de recueillir et d'afficher des statistiques liès a l'activitè des utilisateurs

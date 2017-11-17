@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Créé un vTicker (suite de phrases qui défilent)

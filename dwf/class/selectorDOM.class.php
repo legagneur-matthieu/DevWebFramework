@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * https://github.com/tj/php-selector v1.1.6

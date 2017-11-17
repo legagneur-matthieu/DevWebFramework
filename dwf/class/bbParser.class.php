@@ -1,4 +1,4 @@
-﻿	<?php
+<?php
 
 /**
  * Cette classe permet de gérer un système BBCode

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)

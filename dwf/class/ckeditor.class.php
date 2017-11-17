@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 

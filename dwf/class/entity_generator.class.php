@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />

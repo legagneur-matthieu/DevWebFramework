@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe offre une légère protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supérieur à 2.

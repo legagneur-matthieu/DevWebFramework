@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de créer un sous-menu dans une autre classe et d'en gérer les routes

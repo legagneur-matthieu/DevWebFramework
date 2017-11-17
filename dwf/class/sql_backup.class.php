@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet de faire des backup (sauvegardes) de la base de données à partir des entités de l'application courante

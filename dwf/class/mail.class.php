@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe permet d'envoyer des mails, la configuration du SMTP se fait dans la classe config.class.php

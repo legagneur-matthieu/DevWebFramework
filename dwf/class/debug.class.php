@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe est une boite à outils de débogage
@@ -79,7 +79,7 @@ class debug {
             }
             $data .= '</pre><p>$_SESSION</p><pre>';
             foreach ($_SESSION as $key => $value) {
-                $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
+                $data .= $key . " => " . (!is_array($value) ? $value : htmlspecialchars(json_encode($value))) . "\n";
             }
             $data .= '</pre><p>STATEMENTS</p><ol>';
             foreach (bdd::$_debug["statements"] as $key => $value) {

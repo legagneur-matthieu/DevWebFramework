@@ -133,6 +133,27 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function cache() {
+        ?>
+        <p>Cette classe permet de gerer une mise en cache ( coté serveur ) <br />
+            utilise session::set_val("cache",[ ]) et session::get_val("cache")</p>        
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "if($" . "contenu= cache::get('ma_cle')){\n"
+                . "    echo $" . "contenu;\n"
+                . "}else{\n"
+                . "    //Fonction longue à executer\n"
+                . "    echo ($" . "contenu = fonction_longue_a_executer()); \n"
+                . "    //Stock le resultat de la fonction longue en cache pour 5 minutes\n"
+                . "    cache::set('ma_cle', $" . "contenu, 600);\n"
+                . "}\n"
+                . "//Supprimer une valeur dans le cache \n"
+                . "cache::del('ma_cle');\n"
+                . "//Supprimer toutes les valeurs dans le cache \n"
+                . "cache::del();\n"
+                . "?>", $this->_brush);
+    }
+
     private function cards() {
         ?>
         <p>Cette classe permet de gèrer un paquet de 32, 52, 54 ou 78 cartes</p>
@@ -1067,6 +1088,28 @@ class docPHP_natives {
         ?>
         <p>(cf js)</p>
         <?php
+    }
+
+    private function singleton() {
+        ?>
+        <p>
+            Cette classe sert de base pour créer des singleton. <br />
+            la methode "get_instance" retournera toujours la même instance.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "class ma_classe extends singleton{\n"
+                . "    public function une_fonction(){\n"
+                . "        return true;\n"
+                . "    }\n\n"
+                . "    public static function une_fonction_static(){\n"
+                . "        //usage en interne\n"
+                . "        return self::get_instance()->une_fonction();\n"
+                . "    }\n"
+                . "}\n"
+                . "//usage en externe\n"
+                . "ma_class::get_instance()->une_fonction();"
+                . "?>", $this->_brush);
     }
 
     private function sitemap() {

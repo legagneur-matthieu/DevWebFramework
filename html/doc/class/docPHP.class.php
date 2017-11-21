@@ -96,11 +96,12 @@ class docPHP {
                         <ul>
                             <li><?php echo $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier !)</em></li>
                             <li><?php echo $dir_glyph; ?> class
-                            <li><?php echo $arrow_glyph; ?> <em>Contient vos classes specifiques au projet ainsi que le fichier de configuration</em></li>
-                            <ul>
-                                <li><?php echo $dir_glyph; ?> entity</li>
-                                <li><?php echo $arrow_glyph; ?> <em>Contient les entités de votre projet</em></li>
-                            </ul>
+                            <li><?php echo $arrow_glyph; ?> <em>Contient vos classes specifiques au projet ainsi que le fichier de configuration</em>
+                                <ul>
+                                    <li><?php echo $dir_glyph; ?> entity</li>
+                                    <li><?php echo $arrow_glyph; ?> <em>Contient les entités de votre projet</em></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -132,7 +133,7 @@ class docPHP {
     private function nouveau_projet() {
         ?>
         <p>
-            La création d'un nouveau projet est automatisé par le fichier <a href="../commun/new_app.php" target="__blank"><em>/html/commun/new_app.php</em></a> accédez à ce fichier par votre navigateur -> localhost <br />
+            La création d'un nouveau projet est automatisé par le fichier <a href="../commun/new_app.php" target="_blank"><em>/html/commun/new_app.php</em></a> accédez à ce fichier par votre navigateur -> localhost <br />
             Ce fichier ne peut se lancer que depuis votre localhost ! il n'est pas possible de s'en servir à distance sans en modifier le code. <br />
             Une fois l'interface de création de projet ouvert, remplissez les champs correctement. Ces paramètres seront modifiable dans <em>config.class.php</em>
         </p>
@@ -262,6 +263,11 @@ class docPHP {
 
     private function methodes_evenementielles() {
         ?>
+        <p class="alert alert-warning">
+            Pour créer des evenements lié a votre application, previligiez l'utilisation de <em>event.class.php</em>. <br />
+            Elle permet de créer et déclancher des evenement de manière plus stable et avec un meilleur contrôle. <br />
+            (cf classes natives > event)
+        </p>
         <h4>Utiliser les méthodes événementielles</h4>
         <p>
             Les méthodes événementielles sont des méthodes qui seront appelées lors d'un événement précis du framework, utilisation :            
@@ -271,16 +277,9 @@ class docPHP {
                 . "class ma_classe_metier{\n\n"
                 . "    public static onload(){\n"
                 . "        //Supprimé depuis la verssion 21.17.12\n"
-                . "        //cette méthode sera executée automatiquement par le framework lorsque \n"
-                . "        //toutes les classes métiers et les classes du framework sont chargées\n"
-                . "        //cette méthode ne doit pas générer de HTML !\n"
-                . "        //ne peux pas utiliser application:$" . "_bdd donc ne peux pas utiliser d'entité !\n"
                 . "    }\n\n"
                 . "    public static onhtml_head(){\n"
-                . "        //DEPRECIÉ depuis la verssion 21.17.12\n"
-                . "        //cette méthode sera executée automatiquement par le framework \n"
-                . "        // juste avant la balise </head>\n"
-                . "        // cette méthode permet de rajouter des balises meta, link ou script\n"
+                . "        //Supprimé depuis la verssion 21.17.12\n"
                 . "    }\n\n"
                 . "    public static onhtml_body_end(){\n"
                 . "        //cette méthode sera executée automatiquement par le framework \n"
@@ -294,12 +293,12 @@ class docPHP {
                 . "}\n?>", $this->_brush);
         ?>
         <p>
-            Comme indiqué, ces fonctions doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités ! <br />
+            Comme indiqué, ces methodes doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités ! <br />
             Ces méthodes ne prennent pas de paramètres et ne retourne rien.
         </p>
         <p class="alert alert-warning">ATTENTION : Depuis la version 21.17.12, <br />
-            pour que les fonction evenementielles ce déclanchent, la classe concerné doit avoir été appelé au moins une fois avant le déclancheur ! <br />
-            (instanciation ou appel d'une fonction static)
+            pour que les methodes evenementielles ce déclanchent, la classe concerné doit avoir été appelé au moins une fois avant le déclancheur ! <br />
+            (instanciation ou appel d'une methode static)
         </p>
         <h4>Créer un déclencheur</h4>
         <p>

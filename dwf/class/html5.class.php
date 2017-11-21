@@ -30,7 +30,7 @@ class html5 {
         }
         ob_clean();
         ?><!DOCTYPE HTML>
-        <html lang="<?php echo $lang ?>">
+        <html lang="<?= $lang; ?>">
             <head>
                 <meta charset="UTF-8">
                 <?php
@@ -41,12 +41,12 @@ class html5 {
                     <?php
                     if ($description != "") {
                         ?>
-                        <meta name="description" content="<?php echo $description; ?>">
+                        <meta name="description" content="<?= $description; ?>">
                         <?php
                     }
                     if ($keywords != "") {
                         ?>
-                        <meta name="keywords" content="<?php echo $keywords; ?>">
+                        <meta name="keywords" content="<?= $keywords; ?>">
                         <?php
                     }
                 }
@@ -55,12 +55,12 @@ class html5 {
                 <?php
                 if (isset(config::$_title)and config::$_title != "") {
                     ?>
-                    <title><?php echo config::$_title; ?></title>
+                    <title><?= config::$_title; ?></title>
                     <?php
                 }
                 if (isset(config::$_favicon)and config::$_favicon != "") {
                     ?> 
-                    <link rel="icon" href="<?php echo config::$_favicon; ?>" />
+                    <link rel="icon" href="<?= config::$_favicon; ?>" />
                     <?php
                 }
                 $this->css();
@@ -136,7 +136,7 @@ class html5 {
             public function __destruct() {
                 application::event("onhtml_body_end");
                 ?>
-                <p id="real_title" class="hidden"><?php echo js::$_real_title; ?></p>
+                <p id="real_title" class="hidden"><?= js::$_real_title; ?></p>
             </body>
         </html>
         <?php

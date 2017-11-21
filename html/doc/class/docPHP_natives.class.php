@@ -388,6 +388,36 @@ class docPHP_natives {
         ?><p>(cf Entity)</p><?php
     }
 
+    private function event() {
+        ?>
+        <p>
+            Cette classe permet de créer des événements (listener et emiter) <br />
+            l'utilisation de cette classe différe des "méthodes événementielles" dans la mesure ou ces dernières font appel à des methodes "static" d'autres classes.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Definit un listener et une action associé\n"
+                . "event::on('mon_listener',function(){\n"
+                . "    //do somthings\n"
+                . "}\n\n"
+                . "//Ajoute une autre action au listener associé\n"
+                . "event::on('mon_listener',function(){\n"
+                . "    //do another somthings\n"
+                . "}\n\n"
+                . "//Déclanche l'événement (emiter)\n"
+                . "event::run('mon_listener');\n\n"
+                . "//autre exemple avec des parametres\n"
+                . "event::on('alert.warning',function($" . "text){\n"
+                . "    ?>\n"
+                . "        <p class='alert alert-warning'>\n"
+                . "            <?= $" . "text; ?>\n"
+                . "        </p>\n"
+                . "    <?php\n"
+                . "}\n"
+                . "event::run('alert.warning','Attention !');\n"
+                . "?>", $this->_brush);
+    }
+
     private function file_explorer() {
         ?><p>Cette classe permet d'afficher et explorer une arborescence</p><?php
         js::syntaxhighlighter("<?php new file_explorer(\"./files\"); ?>", $this->_brush);
@@ -473,7 +503,7 @@ class docPHP_natives {
                 . "(new fullcalendar())->gcal($" . "api, array('abcd1234@group.calendar.google.com'));\n"
                 . "?>", $this->_brush);
         ?><p>Exemple</p><?php
-        (new fullcalendar())->events(array(array("title" => "evenement de démonstation", "start" => date("Y-m-d") . "T" . date("H:i:s"))));
+        (new fullcalendar())->events(array(array("title" => "événement de démonstation", "start" => date("Y-m-d") . "T" . date("H:i:s"))));
     }
 
     private function g_agenda() {

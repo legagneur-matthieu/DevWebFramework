@@ -36,7 +36,7 @@ class application {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 'index';
         }
-        self::$_bdd = new bdd();
+        self::$_bdd = bdd::get_instance();
         self::event("onbdd_connected");
         $this->_pages = new pages();
         $this->routes();
@@ -161,7 +161,7 @@ class application {
     }
 
     /**
-     * Declenche l'evenement dont le nom est passé en paramètre
+     * Declenche les methodes evenementielle dont le nom est passé en paramètre
      * @param string $event_name nom de l'evenement
      */
     public static function event($event_name) {

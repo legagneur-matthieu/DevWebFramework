@@ -6,7 +6,7 @@
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class bdd {
+class bdd extends singleton{
 
     /**
      * Instance de PDO

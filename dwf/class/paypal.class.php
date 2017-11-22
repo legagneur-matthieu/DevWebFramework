@@ -25,8 +25,8 @@ class paypal {
     private $_payment_method;
 
     /**
-     * Permet de vérifier que le SDK PayPaj a bien été appelé qu'une fois.
-     * @var boolean Permet de vérifier que le SDK PayPaj a bien été appelé qu'une fois.
+     * Permet de vérifier que le SDK PayPal a bien été appelé qu'une fois.
+     * @var boolean Permet de vérifier que le SDK PayPal a bien été appelé qu'une fois.
      */
     private static $_called = false;
 

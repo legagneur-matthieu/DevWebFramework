@@ -418,6 +418,34 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function fb() {
+        ?>
+        <p>
+            Cette classe permet de gérer une autentification via FaceBook. <br />
+            Requière la création d'une application sur https://developers.facebook.com/ <br />
+            Exemple d'usage :
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//execution en cas de Logout\n"
+                . "if(isset($" . "_GET['fb']) and $" . "_GET['fb']=='logout'){\n"
+                . "    session_destroy();\n"
+                . "    js::redir('index.php');\n"
+                . "}\n\n"
+                . "$" . "fb = new fb($" . "app_id, $" . "app_secret);\n"
+                . "if ($" . "fb->getAccessToken_session()) {\n"
+                . "    //Bouton logout\n"
+                . "    echo html_structures::a_link($" . "fb->getLogoutUrl('http://mon-site/index.php?fb=logout'), 'logout');\n\n"
+                . "    //Donnés de l'utilisateur FB\n"
+                . "    debug::print_r($" . "fb->getGraphUser());\n\n"
+                . "    //TODO : utilisez session::set_auth(true) et requetes SQL\n"
+                . "} else {\n"
+                . "    //Bouton login\n"
+                . "    echo html_structures::a_link($" . "fb->getLoginUrl('http://mon-site/index.php'), 'login');\n"
+                . "}\n"
+                . "?>", $this->_brush);
+    }
+
     private function file_explorer() {
         ?><p>Cette classe permet d'afficher et explorer une arborescence</p><?php
         js::syntaxhighlighter("<?php new file_explorer(\"./files\"); ?>", $this->_brush);

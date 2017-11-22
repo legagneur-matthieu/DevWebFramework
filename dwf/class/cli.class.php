@@ -17,11 +17,12 @@ class cli {
      * Charge les classes du framework pour le cli 
      */
     public static function classloader() {
-        foreach (glob(__DIR__ . "\*.class.php") as $class) {
-            if (!stripos($class, "cli.class.php")) {
-                include $class;
+        spl_autoload_register(function ($class) {
+            $file = __DIR__ . "/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
             }
-        }
+        });
     }
 
     /**

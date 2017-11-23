@@ -29,23 +29,32 @@ class index_service { /** * Cette classe est la première appelée, elle ouvre l
 
     /**     * Inclut toutes les classes du framework */
     private function classloader() {
-        foreach (glob("../../../dwf/class/*.class.php") as $class) {
-            include_once $class;
-        }
+        spl_autoload_register(function($class) {
+            $file = __DIR__ . "/../../../dwf/class/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
     }
 
     /**     * Inclut les entités du projet */
     private function entityloader() {
-        foreach (glob("../class/entity/*.class.php") as $class) {
-            include_once $class;
-        }
+        spl_autoload_register(function($class) {
+            $file = __DIR__ . "/../class/entity/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
     }
 
     /**     * Inclut toutes les classes du dossier "service" se finissant par ".service.php" */
     private function serviceloader() {
-        foreach (glob("*.service.php") as $class) {
-            include_once $class;
-        }
+        spl_autoload_register(function($class) {
+            $file = __DIR__ . "/" . $class . ".service.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
     }
 
     /**     * Supprime tous les fichiers se terminant par .php~ (trill) dans le dossier "service" <br /> * Cette fonction est recommandée sur les serveurs de production Linux pour des raisons de sécurité <br /> * certains hébergeurs tolèrent mal cette fonction, elle peut être désactivée en commentant la ligne "$this->security_purge();" dans le constructeur. */

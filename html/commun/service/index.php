@@ -34,9 +34,12 @@ class index_service {
      * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application
      */
     private function classloader() {
-        foreach (glob("../../../dwf/class/*.class.php") as $class) {
-            include_once $class;
-        }
+        spl_autoload_register(function($class) {
+            $file = __DIR__ . "/../../../dwf/class/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
     }
 
     /**
@@ -44,9 +47,12 @@ class index_service {
      * pour générer les entités voir "class/entity_generator.php"
      */
     private function serviceloader() {
-        foreach (glob("*.service.php") as $class) {
-            include_once $class;
-        }
+        spl_autoload_register(function($class) {
+            $file = __DIR__ . "/" . $class . ".service.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
     }
 
     /**

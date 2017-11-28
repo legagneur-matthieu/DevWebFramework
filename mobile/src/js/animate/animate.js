@@ -1,7 +1,7 @@
 $animate_called = false;
 function animate(id) {
     if (!$animate_called) {
-        $("head").append('<link rel="stylesheet" href="src/js/animate/animate.css" />');
+        $("head").append('<link rel="stylesheet" href="../commun/src/js/animate/animate.css" />');
         $animate_called = true;
     }
     var _id = "#" + id;
@@ -11,6 +11,7 @@ function animate(id) {
         "pulse",
         "rubberBand",
         "shake",
+        "headShake",
         "swing",
         "tada",
         "wobble",
@@ -60,14 +61,10 @@ function animate(id) {
         "rotateOutDownRight",
         "rotateOutUpLeft",
         "rotateOutUpRight",
-        "slideInUp",
-        "slideInDown",
-        "slideInLeft",
-        "slideInRight",
-        "slideOutUp",
-        "slideOutDown",
-        "slideOutLeft",
-        "slideOutRight",
+        "hinge",
+        "jackInTheBox",
+        "rollIn",
+        "rollOut",
         "zoomIn",
         "zoomInDown",
         "zoomInLeft",
@@ -78,9 +75,14 @@ function animate(id) {
         "zoomOutLeft",
         "zoomOutRight",
         "zoomOutUp",
-        "hinge",
-        "rollIn",
-        "rollOut"
+        "slideInDown",
+        "slideInLeft",
+        "slideInRight",
+        "slideInUp",
+        "slideOutDown",
+        "slideOutLeft",
+        "slideOutRight",
+        "slideOutUp"
     ];
     $(_id).addClass("animated");
     this.rm_animate = function () {
@@ -480,6 +482,13 @@ function animate(id) {
             $(_id).addClass("hinge");
         }, 10);
     };
+    
+    this.jackInTheBox = function () {
+        this.rm_animate();
+        setTimeout(function () {
+            $(_id).addClass("jackInTheBox");
+        }, 10);
+    };
 
     this.rollIn = function () {
         this.rm_animate();
@@ -620,6 +629,5 @@ function animate(id) {
             $(_id).addClass("slideOutUp");
         }, 10);
     };
-
 
 }

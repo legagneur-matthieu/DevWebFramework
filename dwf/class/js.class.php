@@ -214,6 +214,20 @@ class js {
     }
 
     /**
+     * Permet l'affichage de galeries photo et vidéos via la librairie Fancybox
+     * @param string $id Id du conteneur et nom de la galerie
+     * @param array $data tableau de donnée de la galerie :
+     * [ 
+     *     [ "small"=>"minature.jpg", "big"=>"photo.jpg", "caption"=>"description HTML facultative" ],
+     *     [ "small"=>"minature2.png", "big"=>"video.webm", "caption"=>"description HTML facultative" ],
+     *     [ "small"=>"minature3.jpg", "big"=>"url youtube ou autre"]
+     * ]
+     */
+    public static function fancybox($id, $data) {
+        new fancybox($id, $data);
+    }
+
+    /**
      * Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile"
      * 
      * @param string $id id CSS du conteneur freetile
@@ -353,7 +367,7 @@ class js {
                             echo $d["alt"];
                         }
                         ?>"> 
-                        <?php if (isset($d["caption"])) { ?><div class="carousel-caption"><?php echo $d["caption"]; ?></div><?php } ?>
+                    <?php if (isset($d["caption"])) { ?><div class="carousel-caption"><?php echo $d["caption"]; ?></div><?php } ?>
                     </div>
                     <?php
                 }

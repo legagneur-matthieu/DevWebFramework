@@ -75,6 +75,20 @@ $dwf = new (
                 alertify.error(msg);
             };
 
+            var fancybox_called = false;
+            this.fancybox = function (id, data) {
+                if (!fancybox_called) {
+                    this.include_link("src/js/fancybox/jquery.fancybox.min.css")
+                    this.include_script("src/js/fancybox/jquery.fancybox.min.js")
+                    fancybox_called = true;
+                }
+                $.each(data, function (key, value) {
+                    data_caption = (isset(value["caption"]) ? 'data-caption="' + (caption = value["caption"]) + '"' : caption = "")
+                    $("#" + id).append('<a data-fancybox="' + id + '" ' + data_caption +
+                            ' href="' + value["big"] + '"><img src="' + value["small"] + '" alt="' + caption + '" /></a>');
+                });
+            }
+
             var freetile_called = false;
 
             /**

@@ -7,7 +7,7 @@ class docPHP_natives_js {
     public function __construct() {
         js::accordion("accordion_classes_natives_js", true, true);
         ?>
-        <p>La classe js permet d'exploiter un grand nombre de librairies javascript intégrées à DWF notamment pour les appliquér à des éléments html de la page.</p>
+        <p>La classe js permet d'exploiter un grand nombre de librairies javascript intégrées à DWF notamment pour les appliquer à des éléments html de la page.</p>
         <div id="accordion_classes_natives_js">
             <?php
             foreach (get_class_methods(__CLASS__) as $m) {
@@ -155,6 +155,46 @@ class docPHP_natives_js {
                 . "echo $" . "a;\n"
                 . "?>", $this->_brush);
         ?><p>(Vous l'aurez compris, cette documentation utilise beaucoup de syntaxhighlighter)</p><?php
+    }
+
+    public function fancybox() {
+        ?>
+        <p>Cette classe permet l'affichage de galeries photo et vidéos via la librairie Fancybox <br />
+            la clé "caption" dans le tableau $data est facultative.
+        </p>
+        <?php
+        js::syntaxhighlighter("<style type='text/css'>\n"
+                . "    #doc_fancybox {\n"
+                . "        margin: 0 auto;\n"
+                . "        width: 650px;\n"
+                . "    }\n"
+                . "    #doc_fancybox img {\n"
+                . "        width : 300px;\n"
+                . "        margin: 0 auto;\n"
+                . "    }\n"
+                . "</style>\n\n"
+                . "<?php\n"
+                . "js::fancybox('doc_fancybox', [\n"
+                . "    ['small'=>'img/php.png', 'big'=>'img/php.png', 'caption'=>'<p>Logo PHP</p>' ],\n"
+                . "    ['small'=>'img/cordova.png', 'big'=>'img/cordova.png', 'caption'=>'<p>Logo Cordova</p>']\n"
+                . "]);\n"
+                . "?>", $this->_brush);
+        ?>
+        <style type='text/css'>
+            #doc_fancybox {
+                margin: 0 auto;
+                width: 650px;
+            }
+            #doc_fancybox img {
+                width : 300px;
+                margin: 0 auto;
+            }
+        </style>
+        <?php
+        js::fancybox('doc_fancybox', [
+            ['small' => 'img/php.png', 'big' => 'img/php.png', 'caption' => '<p>Logo PHP</p>'],
+            ['small' => 'img/cordova.png', 'big' => 'img/cordova.png', 'caption' => '<p>Logo Cordova</p>']
+        ]);
     }
 
     public function freetile() {

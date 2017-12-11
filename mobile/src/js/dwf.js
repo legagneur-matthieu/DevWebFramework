@@ -76,6 +76,18 @@ $dwf = new (
             };
 
             var fancybox_called = false;
+
+            /**
+             * Permet l'affichage de galeries photo et vidéos via la librairie Fancybox
+             * @param {string} $id Id du conteneur et nom de la galerie
+             * @param {array} $data tableau de donnée de la galerie :
+             * [ 
+             *     [ "small"=>"minature.jpg", "big"=>"photo.jpg", "caption"=>"description HTML facultative" ],
+             *     [ "small"=>"minature2.png", "big"=>"video.webm", "caption"=>"description HTML facultative" ],
+             *     [ "small"=>"minature3.jpg", "big"=>"url youtube ou autre"]
+             * ]
+             * @returns {undefined}
+             */
             this.fancybox = function (id, data) {
                 if (!fancybox_called) {
                     this.include_link("src/js/fancybox/jquery.fancybox.min.css")

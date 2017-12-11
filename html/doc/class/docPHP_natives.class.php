@@ -418,6 +418,12 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function fancybox() {
+        ?>
+        <p>(cf js)</p>
+        <?php
+    }
+
     private function fb() {
         ?>
         <p>

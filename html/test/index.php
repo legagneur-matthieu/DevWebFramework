@@ -31,6 +31,12 @@ class website {
         if (file_exists($file)) {
             require_once $file;
             self::$_class[$file] = $class;
+        }else {
+            $file = __DIR__ . "/class/entity/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
+                self::$_class[$file] = $class;
+            }
         }
     }
 

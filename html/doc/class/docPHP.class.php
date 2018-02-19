@@ -365,6 +365,24 @@ class docPHP {
                 . "}\n"
                 . "?>", $this->_brush);
         ?>
+        <h4>MAJ 21.18.02</h4>
+        <p>Depuis la version 21.18.02 il est possible de créer l'enssemble de vos entités ainsi :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "entity_generator::generate([\n"
+                . "    'rang'=>[ //on créé une entité rang\n"
+                . "        ['id','int',true],\n"
+                . "        ['nom','string',false],\n"
+                . "    ],\n"
+                . "    'user'=>[ //on créé une entité user\n"
+                . "        ['id','int',true],\n"
+                . "        ['login','string',false],\n"
+                . "        ['psw','string',false],\n"
+                . "        ['rang','rang',false], //on met en relation le fait qu'un user a un rang (de type 'rang')\n"
+                . "    ],\n"
+                . "]);\n"
+                . "?>", $this->_brush);
+        ?>
         <h4>Utilisation des entités</h4>
         <p>Une fois les entités créées, elles peuvent être utilisées (nous utiliserons l'exemple des 'user' et 'rang')</p>
         <?php

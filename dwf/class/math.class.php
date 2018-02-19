@@ -282,6 +282,14 @@ class math {
     }
 
     /**
+     * Retourne Phy (le nombre d'or)
+     * @return float Phy (nombre d'or)
+     */
+    public static function phy() {
+        return ((1 + sqrt(5)) / 2);
+    }
+
+    /**
      * Retourne true si la variable est un int, false dans le cas contraire
      * 
      * @param int $nb Variable a évaluer

@@ -35,20 +35,23 @@ class audio {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                audio("<?php echo $id; ?>");
+                audio("<?= $id; ?>");
+                $("<?= $id; ?>_player_ctrl_volume").on("input", function () {
+                    $('#<?= $id; ?>_player_ctrl_volume_affichage').text($(this).val());
+                });
             });
         </script>
         <div class="player_ctrl">
-            <audio id="<?php echo $id; ?>" src="<?php echo $src; ?>" ></audio> 
-            <input title="Ligne de temps de la musique" id="<?php echo $id; ?>_player_ctrl_timeline" type="range" min="0" max="0" value="0" step="1"/>
-            <button class="btn btn-xs btn-default" id="<?php echo $id; ?>_player_ctrl_play" type="button"><span class="glyphicon glyphicon-play"><span class="sr-only">Lecture</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?php echo $id; ?>_player_ctrl_stop" type="button"><span class="glyphicon glyphicon-pause"><span class="sr-only">Pause</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?php echo $id; ?>_player_ctrl_mute" type="button"><span class="glyphicon glyphicon-volume-off"><span class="sr-only">Muet</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?php echo $id; ?>_player_ctrl_volume_down" type="range"><span class="glyphicon glyphicon-volume-down"><span class="sr-only">Diminuer le volume</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?php echo $id; ?>_player_ctrl_volume_up" type="range"><span class="glyphicon glyphicon-volume-up"><span class="sr-only">Augmenter le volume</span></span></button>
+            <audio id="<?= $id; ?>" src="<?= $src; ?>" ></audio> 
+            <input title="Ligne de temps de la musique" id="<?= $id; ?>_player_ctrl_timeline" type="range" min="0" max="0" value="0" step="1"/>
+            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_play"><span class="glyphicon glyphicon-play"><span class="sr-only">Lecture</span></span></button>
+            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_stop"><span class="glyphicon glyphicon-pause"><span class="sr-only">Pause</span></span></button>
+            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_mute"><span class="glyphicon glyphicon-volume-off"><span class="sr-only">Muet</span></span></button>
+            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_volume_down"><span class="glyphicon glyphicon-volume-down"><span class="sr-only">Diminuer le volume</span></span></button>
+            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_volume_up"><span class="glyphicon glyphicon-volume-up"><span class="sr-only">Augmenter le volume</span></span></button>
             <div class="player_ctrl_volume_div">
-                <input id="<?php echo $id; ?>_player_ctrl_volume" class="player_ctrl_volume" type="range" title="volume" min="0" max="10" value="10" oninput="$('#<?php echo $id; ?>_player_ctrl_volume_affichage').text($('#<?php echo $id; ?>_player_ctrl_volume').val());" />
-                <p class="player_ctrl_volume_affichage" id="<?php echo $id; ?>_player_ctrl_volume_affichage">10</p>
+                <input id="<?= $id; ?>_player_ctrl_volume" class="player_ctrl_volume" type="range" title="volume" min="0" max="10" value="10" />
+                <p class="player_ctrl_volume_affichage" id="<?= $id; ?>_player_ctrl_volume_affichage">10</p>
             </div>
         </div>
         <?php
@@ -64,7 +67,7 @@ class audio {
         <ul class="playlist">
             <?php
             foreach ($playlist as $t) {
-                ?> <li> <a href="#<?php echo $this->_id; ?>" data-id="<?php echo $this->_id; ?>" data-src="<?php echo $t["src"]; ?>"><?php echo html_structures::glyphicon("music", "") . " " . $t["titre"]; ?></a></li>  <?php
+                ?> <li> <a href="#<?= $this->_id; ?>" data-id="<?= $this->_id; ?>" data-src="<?= $t["src"]; ?>"><?= html_structures::glyphicon("music", "") . " " . $t["titre"]; ?></a></li>  <?php
             }
             ?>
         </ul>

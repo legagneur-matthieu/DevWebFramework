@@ -55,7 +55,7 @@ class admin_controle {
      * @param array $relations association entre une clé étrangère et un tuple de la table étrangère : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
      * exemple : array("rang"=>"nom");
      */
-    public function __construct($entity, $relations = array()) {
+    public function __construct($entity, $relations = []) {
         $this->_entity = $entity;
         $this->_relations = $relations;
         foreach (array_keys($this->_relations)as $key) {
@@ -63,7 +63,7 @@ class admin_controle {
         }
         $this->_data = $entity::get_table_array();
         $this->_structure = $entity::get_structure();
-        $url = application::get_url(array("action", "id"));
+        $url = application::get_url(["action", "id"]);
         foreach ($this->_structure as $value) {
             if (!$value[2]) {
                 $this->_head[] = ucfirst($value[0]);
@@ -141,9 +141,9 @@ class admin_controle {
                 } else {
                     $elem = $element[1];
                     $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
-                    $option = array();
+                    $option = [];
                     foreach ($elem as $e) {
-                        $option[] = array($e["id"], $e[$this->_relations[$element[0]]]);
+                        $option[] = [$e["id"], $e[$this->_relations[$element[0]]]];
                     }
                     form::select(ucfirst($element[0]), $element[0], $option);
                 }
@@ -173,7 +173,7 @@ class admin_controle {
                 }
             }
             $req .= $key . "1) VALUES (" . $value . "1);";
-            $req = strtr($req, $from = array(",1)" => ")"));
+            $req = strtr($req, $from = [",1)" => ")"]);
             application::$_bdd->query($req);
             js::redir("");
         }
@@ -183,7 +183,7 @@ class admin_controle {
      * Affiche le formulaire de modification
      */
     private function modif_form() {
-        $url = application::get_url(array("action", "id"));
+        $url = application::get_url(["action", "id"]);
         $entity = $this->_entity;
         $object = $entity::get_from_id($_GET["id"]);
         $this->modif_exec($object, $url);
@@ -205,13 +205,13 @@ class admin_controle {
                 } else {
                     $elem = $element[1];
                     $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
-                    $option = array();
+                    $option = [];
                     foreach ($elem as $e) {
                         $selected = false;
                         if ($e["id"] == $object->$geter()->get_id()) {
                             $selected = true;
                         }
-                        $option[] = array($e["id"], $e[$this->_relations[$element[0]]], $selected);
+                        $option[] = [$e["id"], $e[$this->_relations[$element[0]]], $selected];
                     }
                     form::select(ucfirst($element[0]), $element[0], $option);
                 }
@@ -242,7 +242,7 @@ class admin_controle {
                     }
                 }
             }
-            js::redir(strtr($url, $from = array("&amp;" => "&")));
+            js::redir(strtr($url, ["&amp;" => "&"]));
         }
     }
 
@@ -250,7 +250,7 @@ class admin_controle {
      * Affiche le formulaire de suppression (pour confirmation)
      */
     private function supp_form() {
-        $url = application::get_url(array("action", "id"));
+        $url = application::get_url(["action", "id"]);
         $this->supp_exec($url);
         $entity = $this->_entity;
         $data = $entity::get_table_array("id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
@@ -262,12 +262,12 @@ class admin_controle {
                         break;
                     }
                 }
-                $this->_data[$key][$k] = $this->_relations_data[$k][$this->_data[$key][$k]][$v];
+                $data[$key][$k] = $this->_data[$key][$k];
             }
             unset($data[$key]['id']);
         }
         ?>
-        <p class="text-center">ÃŠTES VOUS SUR DE VOULOIR SUPPRIMER CETTE Ã‰LÃ‰MENT :</p>
+        <p class="text-center">ÊSTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :</p>
         <?php
 
         js::datatable();
@@ -288,7 +288,7 @@ class admin_controle {
         if (isset($_POST["admin_form_supp"])) {
             $entity = $this->_entity;
             $entity::delete_by_id($_GET["id"]);
-            js::redir(strtr($url, $from = array("&amp;" => "&")));
+            js::redir(strtr($url, ["&amp;" => "&"]));
         }
     }
 

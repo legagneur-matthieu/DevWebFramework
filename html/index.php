@@ -38,7 +38,10 @@ class parcour_sites {
                         }
                         ?>
                     </ul>
-                    <p><a href="commun/new_app.php"> <span class="glyphicon glyphicon-plus"></span> Ajouter un projet</a></p>
+                    <p>
+                        <a href="commun/new_app.php"> <span class="glyphicon glyphicon-plus"></span> Ajouter un projet</a> <br />
+                        <a href="http://localhost/phpmyadmin/"> <span class="glyphicon glyphicon-hdd"></span> PHPMyAdmin</a>
+                    </p>
                 </main>
                 <footer> <hr /> </footer>
             </body>

@@ -6,7 +6,7 @@
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class bdd extends singleton{
+class bdd extends singleton {
 
     /**
      * Instance de PDO
@@ -14,7 +14,7 @@ class bdd extends singleton{
      * @var PDO Instance de PDO
      */
     private $_pdo;
-    
+
     /**
      * Tableau de débogage 
      * @var array Tableau de débogage 
@@ -90,6 +90,16 @@ class bdd extends singleton{
      */
     public function verif_email($email) {
         return boolval(filter_var($email, FILTER_VALIDATE_EMAIL));
+    }
+
+    /**
+     * Convertis un json provenant de la base de donné en tableau
+     * 
+     * @param string $json json provenant de la base de donné
+     * @return array Tableau de donnée
+     */
+    public function json_decode($json) {
+        return json_decode(strtr($json, ["&quot;" => '"']), true);
     }
 
     /**

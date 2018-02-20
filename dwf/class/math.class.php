@@ -282,10 +282,10 @@ class math {
     }
 
     /**
-     * Retourne Phy (le nombre d'or)
-     * @return float Phy (nombre d'or)
+     * Retourne Phi (le nombre d'or)
+     * @return float Phi (nombre d'or)
      */
-    public static function phy() {
+    public static function phi() {
         return ((1 + sqrt(5)) / 2);
     }
 

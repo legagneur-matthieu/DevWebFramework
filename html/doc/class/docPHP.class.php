@@ -332,7 +332,7 @@ class docPHP {
         js::syntaxhighlighter("<?php\n"
                 . "$" . "data=array(                         //$" . "data est un tableau à deux dimensions qui definit\n"
                 . "                                     //la structure de l'entité et de sa table dans la base de données\n\n"
-                . "    array('id','int',true),          //créé un champ/attribu nommé 'id' de type entier,\n"
+                . "    array('id','int',true),          //créé un champ/attribut nommé 'id' de type entier,\n"
                 . "                                     //le 'true' indique une clé primaire, le setter de 'id' sera en privé\n"
                 . "    array('login','string',false),\n"
                 . "    array('psw','string',false),\n"
@@ -421,7 +421,15 @@ class docPHP {
             - des injections XSS <br />
             pensez egalement à la fonction <a href="https://secure.php.net/manual/fr/function.strip-tags.php" target="_blank">strip_tags</a> en cas de besoin.
         </p>
+        <h4>Les types de champ/attribut</h4>
         <?php
+        echo html_structures::table(["Type (code PHP)","Type (SQL)","Description"], [
+            ["int, integer","int(11)","un champ de nombre entier"],
+            ["string","text","un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
+            ["mail","text","un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de donnée"],
+            ["array","text","(depuis la version 21.18.03) un champ de texte JSON, les converssions de array (coté PHP) en JSON (coté SQL) et inversement son géré en PHP par l'entité. <br />"
+                . "Inutile donc d'utiliser json_encode() et json_decode()"],
+        ]);
     }
 
     private function bdd() {

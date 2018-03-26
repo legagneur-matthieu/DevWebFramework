@@ -107,7 +107,7 @@ class graphique {
      * ),<br />
      * ...<br />
      * );<br />
-     * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
+     * @param array $ticks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
      * @param boolean $show_points Afficher les points sur le graphique ? (true/false, true par defaut)
      * @param boolean $fill La zone entre la ligne et l'abscisse doit-il être coloré  ? (true/false, false par defaut)
      */

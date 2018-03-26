@@ -18,25 +18,9 @@ class html_structures {
      * @param boolean $head_scope l'entête du tableau doit être accessible ? (true/false, true par defaut)
      */
     public static function table($head, $data, $summary = '', $id = '', $class = "table", $head_scope = true) {
-        $str = "";
-        $str .= '<table ';
-        if (!empty($summary)) {
-            $str .= 'summary="' . $summary . '" ';
-        }
-        if (!empty($id)) {
-            $str .= 'id="' . $id . '" ';
-        }
-        if (!empty($class)) {
-            $str .= 'class="' . $class . '" ';
-        }
-        $str .= '> <thead> <tr>';
-
+        $str = '<table' . (!empty($summary) ? ' summary="' . $summary . '"' : '') . (!empty($id) ? ' id="' . $id . '"' : '') . (!empty($class) ? ' class="' . $class . '"' : '') . '><thead><tr>';
         foreach ($head as $h) {
-            $str .= '<th ';
-            if ($head_scope) {
-                $str .= 'scope="col"';
-            }
-            $str .= '>' . $h . '</th>';
+            $str .= '<th' . ($head_scope ? ' scope="col"' : '') . '>' . $h . '</th>';
         }
         $str .= '</tr> </thead> <tbody>';
         foreach ($data as $row) {
@@ -46,8 +30,7 @@ class html_structures {
             }
             $str .= '</tr>';
         }
-        $str .= '</tbody></table>';
-        return $str;
+        return ($str . '</tbody></table>');
     }
 
     /**
@@ -57,21 +40,11 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function ul($data, $class = false) {
-        $str = "";
-        $str .= "<ul ";
-        if ($class) {
-            $str .= 'class="' . $class . '"';
+        $str = "<ul" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        foreach ($data as $value) {
+            $str .= "<li>" . (is_array($value) ? self::ul($value) : $value) . "</li>";
         }
-        $str .= " >";
-        $i = 0;
-        while (isset($data[$i])) {
-            $str .= "<li>";
-            $str .= (is_array($data[$i]) ? self::ul($data[$i]) : $data[$i]);
-            $str .= "</li>";
-            $i++;
-        }
-        $str .= "</ul>";
-        return $str;
+        return ($str . "</ul>");
     }
 
     /**
@@ -81,25 +54,11 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function ol($data, $class = false) {
-        $str = "";
-        $str .= "<ol ";
-        if ($class) {
-            $str .= 'class="' . $class . '"';
+        $str = "<ol" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        foreach ($data as $value) {
+            $str .= "<li>" . (isset($data[$i][0]) and $data[$i] === (array) $data[$i] ? html_structures::ul($data[$i]) : $data[$i]) . "</li>";
         }
-        $str .= " >";
-        $i = 0;
-        while (isset($data[$i])) {
-            $str .= "<li>";
-            if (isset($data[$i][0]) and $data[$i] === (array) $data[$i]) {
-                $str .= html_structures::ul($data[$i]);
-            } else {
-                $str .= $data[$i];
-            }
-            $str .= "</li>";
-            $i++;
-        }
-        $str .= "</ol>";
-        return $str;
+        return ($str . "</ol>");
     }
 
     /**
@@ -109,17 +68,11 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function dl($data, $class = false) {
-        $str = "";
-        $str .= "<dl ";
-        if ($class) {
-            $str .= 'class="' . $class . '"';
-        }
-        $str .= " >";
+        $str .= "<dl" . ($class ? ' class="' . $class . '" ' : "") . ">";
         foreach ($data as $key => $value) {
             $str .= "<dt>" . $key . "</dt><dd>" . $value . "</dd>";
         }
-        $str .= "</dl>";
-        return $str;
+        return ($str . "</dl>");
     }
 
     /**
@@ -133,19 +86,7 @@ class html_structures {
      * @return string lien
      */
     public static function a_link($href, $text, $class = "", $title = "", $target_blank = false) {
-        $str = "";
-        $str .= '<a href="' . $href . '"';
-        if (!empty($class)) {
-            $str .= ' class="' . $class . '" ';
-        }
-        if (!empty($title)) {
-            $str .= ' title="' . $title . '" ';
-        }
-        if ($target_blank) {
-            $str .= ' target="_blank" ';
-        }
-        $str .= ">" . $text . "</a>";
-        return $str;
+        return '<a href="' . $href . '"' . (!empty($class) ? ' class="' . $class . '"' : "") . (!empty($title) ? ' title="' . $title . '"' : "") . ($target_blank ? ' target="_blank" ' : "") . ">" . $text . "</a>";
     }
 
     /**
@@ -166,12 +107,7 @@ class html_structures {
      * @param string $usemap pour maper l'image
      */
     public static function img($src, $alt = "", $usemap = "") {
-        $str = '<img src="' . $src . '" alt="' . $alt . '" ';
-        if (!empty($usemap)) {
-            $str .= 'usemap="' . $usemap . '" ';
-        }
-        $str .= '/>';
-        return $str;
+        return '<img src="' . $src . '" alt="' . $alt . '"' . (!empty($usemap) ? ' usemap="' . $usemap . '" ' : "") . '/>';
     }
 
     /** Retourne une figure ( illustration + légende )
@@ -211,14 +147,7 @@ class html_structures {
      * @param string $class class css /js
      */
     public function area($shape, $coords, $href, $alt = "", $id = "", $class = "") {
-        $str = '<area shape="' . $shape . '" coords="' . $coords . '" href="' . $href . '" alt="' . $alt . '" ';
-        if (!empty($id)) {
-            $str .= 'id="' . $shape . '" ';
-        } if (!empty($class)) {
-            $str .= 'class="' . $shape . '" ';
-        }
-        $str .= '/>';
-        return $str;
+        return '<area shape="' . $shape . '" coords="' . $coords . '" href="' . $href . '" alt="' . $alt . '"' . (!empty($id) ? ' id="' . $shape . '"' : "") . (!empty($class) ? ' class="' . $shape . '"' : "") . '/>';
     }
 
     /**

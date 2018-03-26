@@ -68,7 +68,7 @@ class bdd extends singleton {
      * @return string variable protégé
      */
     public function protect_var($var) {
-        return addslashes(htmlspecialchars(htmlspecialchars_decode($var)));
+        return addslashes(htmlspecialchars(htmlspecialchars_decode($var),ENT_NOQUOTES));
     }
 
     /**
@@ -93,6 +93,10 @@ class bdd extends singleton {
     }
 
     /**
+     * ATTENTION : cette fonction a été créé temporairement en attendant la refonte
+     * de entity_generator.class.php (qui a été faite en version 21.18.03 afin de gérer proprement des JSON en base de donnée)
+     * cette fonction sera supprimé dans la version 21.18.04 de DWF !
+     * 
      * Convertis un json provenant de la base de donné en tableau
      * 
      * @param string $json json provenant de la base de donné

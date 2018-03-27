@@ -56,7 +56,7 @@ class html_structures {
     public static function ol($data, $class = false) {
         $str = "<ol" . ($class ? ' class="' . $class . '" ' : "") . ">";
         foreach ($data as $value) {
-            $str .= "<li>" . (isset($data[$i][0]) and $data[$i] === (array) $data[$i] ? html_structures::ul($data[$i]) : $data[$i]) . "</li>";
+            $str .= "<li>" . (is_array($value) ? html_structures::ul($value) : $value) . "</li>";
         }
         return ($str . "</ol>");
     }

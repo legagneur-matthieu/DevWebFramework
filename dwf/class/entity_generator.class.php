@@ -85,7 +85,7 @@ class entity_generator {
         $p = "1__";
         $tuple_ajout = "";
         $tuple_etter = "";
-        $tuple_destruct="";
+        $tuple_destruct = "";
         foreach (self::$_data as $tuple) {
             //génére les atributs 
             $class .= "/** " . $tuple[0] . " " . $n
@@ -210,7 +210,19 @@ class entity_generator {
         $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_table_array($" . "where = \"\") {" . $n
-                . "    return application::$"."_bdd->fetch(\"select * from test\" . (!empty($"."where) ? \" where \" . $"."where : \"\") . \";\");" . $n
+                . "    $" . "data = application::$" . "_bdd->fetch(\"select * from " . self::$_table . "\" . (!empty($" . "where) ? \" where \" . $" . "where : \"\") . \";\");" . $n
+                . "    $" . "tuples_array = [];" . $n
+                . "    foreach (self::get_structure() as $" . "s) {" . $n
+                . "        if ($" . "s[1] == \"array\") {" . $n
+                . "            $" . "tuples_array[] = $" . "s[0];" . $n
+                . "        }" . $n
+                . "    }" . $n
+                . "    foreach ($" . "data as $" . "key => $" . "value) {" . $n
+                . "        foreach ($" . "tuples_array as $" . "t) {" . $n
+                . "            $" . "data[$" . "key][$" . "t] = json_decode(stripslashes($" . "data[$" . "key][$" . "t]), true);" . $n
+                . "        }" . $n
+                . "    }" . $n
+                . "    return $" . "data;" . $n
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_table_ordored_array
@@ -229,7 +241,7 @@ class entity_generator {
         $class .= "/** Retourne le nombre d'entré " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_count($" . "where = \"\" ) {" . $n
-                . "    $"."data = application::$"."_bdd->fetch(\"select count(*) as count from test\".(!empty($"."where)?\" where \" . $"."where:\"\").\";\");" . $n
+                . "    $" . "data = application::$" . "_bdd->fetch(\"select count(*) as count from " . self::$_table . "\".(!empty($" . "where)?\" where \" . $" . "where:\"\").\";\");" . $n
                 . "    return $" . "data[0]['count'];" . $n
                 . "}" . $n;
 
@@ -237,8 +249,8 @@ class entity_generator {
         $class .= "/** Retourne une entité sous forme d'objet a partir de son identifiant " . $n
                 . "* @return " . self::$_table . "|boolean */" . $n
                 . "public static function get_from_id($" . "id) {" . $n
-                . "    $" . "data = application::$" . "_bdd->fetch(\"select * from " . self::$_table . " where id = '\" . application::$" . "_bdd->protect_var($" . "id) . \"';\");" . $n
-                . "    return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? new test($" . "data[0]) : false);" . $n
+                . "    $" . "data = self::get_table_array(\"id='\" . application::$" . "_bdd->protect_var($" . "id) . \"'\");" . $n
+                . "    return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? new " . self::$_table . "($" . "data[0]) : false);" . $n
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_json_object
@@ -266,7 +278,7 @@ class entity_generator {
 
         //génére le destructeur
         $class .= ' public function __destruct() { if ($this->_this_was_modified and !$this->_this_was_delete) { ' . $n;
-        $class.=$tuple_destruct;
+        $class .= $tuple_destruct;
         $class .= " application::$" . "_bdd->query(\"update " . self::$_table . " set ";
         $i = 0;
         while (isset(self::$_data[$i][0])) {

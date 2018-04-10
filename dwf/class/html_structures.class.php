@@ -68,7 +68,7 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function dl($data, $class = false) {
-        $str .= "<dl" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        $str = "<dl" . ($class ? ' class="' . $class . '" ' : "") . ">";
         foreach ($data as $key => $value) {
             $str .= "<dt>" . $key . "</dt><dd>" . $value . "</dd>";
         }

@@ -265,7 +265,7 @@ class docPHP {
         ?>
         <p class="alert alert-warning">
             Pour créer des evenements lié a votre application, previligiez l'utilisation de <em>event.class.php</em>. <br />
-            Elle permet de créer et déclancher des evenement de manière plus stable et avec un meilleur contrôle. <br />
+            Elle permet de créer et déclancher des evenements de manière plus stable et avec un meilleur contrôle. <br />
             (cf classes natives > event)
         </p>
         <h4>Utiliser les méthodes événementielles</h4>
@@ -577,7 +577,7 @@ class docPHP {
         <ol>
             <li>Les fichiers doivent être nomé comme suis : <em>[nom_du_cli]</em><strong>.cli.php</strong></li>
             <li>Les script ne doivent pas utiliser de boucles infini</li>
-            <li>les fichier veuvent contenir un script procédurale n'utilisant pas de classe (pas de POO), mais il est recomandé d'en utiliser comme ceci :
+            <li>les fichier peuvent contenir un script procédurale n'utilisant pas de classe (pas de POO), mais il est recomandé d'en utiliser comme ceci :
                 <?php
                 js::syntaxhighlighter("<?php\n"
                         . "class mon_cli {\n"
@@ -643,7 +643,7 @@ class docPHP {
 
     private function mise_en_ligne() {
         ?>
-        <p>Lors de la mise en ligne de vos projets vous devrez définir votre "projet par deafut" pour cela : <br />
+        <p>Lors de la mise en ligne de vos projets vous devrez définir votre "projet par defaut" pour cela : <br />
             rendez vous dans le fichier <em>html/index.php</em> et modifiez la ligne suivante à votre convenance.
         </p>
         <?php

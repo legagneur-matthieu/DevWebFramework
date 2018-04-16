@@ -304,13 +304,37 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche la structure d'une variable ( optimisé pour les arrays et objets )\n"
-                . "debug::print_r($" . "var)\n\n"
+                . "debug::print_r($" . "var);\n\n"
                 . "//Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booleans )\n"
-                . "debug::var_dump($" . "var)\n\n"
+                . "debug::var_dump($" . "var);\n\n"
                 . "//Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)\n"
-                . "debug::get_trace()\n\n"
+                . "debug::get_trace();\n\n"
                 . "//Affiche le rapport d'activités de PHP en bas de page\n"
-                . "debug::show_report()\n"
+                . "debug::show_report();\n"
+                . "?>", $this->_brush);
+    }
+
+    private function dlc() {
+        ?><p>Cette classe permet de générer des fichiers :</p><?php
+        echo html_structures::ul([
+            "DLC (Download Link Container, recomandé)",
+            "CCF (CryptLoad Container File)",
+            "RSDF (RapidShare Download File)"
+        ]);
+        ?><p>Servant de librairie de téléchargement pour des logiciels comme <?= html_structures::a_link("http://jdownloader.org", "JDownloader")?></p><?php
+        
+        js::syntaxhighlighter("<?php\n"
+                . "$"."data=[\n"
+                . "    'http://url/image1.jpg',\n"
+                . "    'http://url/image2.jpg',\n"
+                . "    'http://url/image3.jpg'\n"
+                . "];\n"
+                . "//Genere un fichier DLC\n"
+                . "dlc::generate_DLC('monDLC.dlc', $"."data);\n\n"
+                . "//Genere un fichier CCF\n"
+                . "dlc::generate_CCF('monCCF.ccf', $"."data);\n\n"
+                . "//Genere un fichier RSDF\n"
+                . "dlc::generate_RSDF('monRSDF.rsdf', $"."data);\n"                
                 . "?>", $this->_brush);
     }
 
@@ -332,7 +356,7 @@ class docPHP_natives {
                 . "//Affiche une exception qui n'interrompt pas le script en cours\n"
                 . "dwf_exception::warning_exception($" . "code_erreur,array(\"msg\"=>\"$" . "text_erreur\"));\n\n"
                 . "//Lance une exception qui interrompt le script en cours\n"
-                . "dwf_exception::dwf_exception::throw_exception($" . "code_erreur,array(\"msg\"=>\"$" . "text_erreur\"));\n\n"
+                . "dwf_exception::throw_exception($" . "code_erreur,array(\"msg\"=>\"$" . "text_erreur\"));\n\n"
                 . "//try catch pour gérer et afficher une exception\n"
                 . "try {\n"
                 . "    //conditions menant à une exception\n"

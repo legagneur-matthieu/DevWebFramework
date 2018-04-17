@@ -321,20 +321,19 @@ class docPHP_natives {
             "CCF (CryptLoad Container File)",
             "RSDF (RapidShare Download File)"
         ]);
-        ?><p>Servant de librairie de téléchargement pour des logiciels comme <?= html_structures::a_link("http://jdownloader.org", "JDownloader")?></p><?php
-        
+        ?><p>Servant de librairie de téléchargement pour des logiciels comme <?= html_structures::a_link("http://jdownloader.org", "JDownloader") ?></p><?php
         js::syntaxhighlighter("<?php\n"
-                . "$"."data=[\n"
+                . "$" . "data=[\n"
                 . "    'http://url/image1.jpg',\n"
                 . "    'http://url/image2.jpg',\n"
                 . "    'http://url/image3.jpg'\n"
                 . "];\n"
                 . "//Genere un fichier DLC\n"
-                . "dlc::generate_DLC('monDLC.dlc', $"."data);\n\n"
+                . "dlc::generate_DLC('monDLC.dlc', $" . "data);\n\n"
                 . "//Genere un fichier CCF\n"
-                . "dlc::generate_CCF('monCCF.ccf', $"."data);\n\n"
+                . "dlc::generate_CCF('monCCF.ccf', $" . "data);\n\n"
                 . "//Genere un fichier RSDF\n"
-                . "dlc::generate_RSDF('monRSDF.rsdf', $"."data);\n"                
+                . "dlc::generate_RSDF('monRSDF.rsdf', $" . "data);\n"
                 . "?>", $this->_brush);
     }
 
@@ -1325,6 +1324,51 @@ class docPHP_natives {
         ?>
         <p>(cf js)</p>
         <?php
+    }
+
+    private function template() {
+        ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        <p>Les templates doivent étre créé dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
+            ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
+            le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
+            les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donné au service web
+        </p>
+        <p>exemple, ficher <em>mon_template.tpl</em></p>
+        <?php
+        js::syntaxhighlighter(""
+                . "<p>Bienvenu { $" . "name}</p>\n"
+                . "<div class=\"row\">\n"
+                . "    <div class=\"col-xs-6\">\n"
+                . "        <ul>\n"
+                . "            {foreach from=$" . "list item=value}\n"
+                . "                <li>{ $" . "value}</li>\n"
+                . "            {/foreach}\n"
+                . "        </ul>\n"
+                . "    </div>\n"
+                . "    <div class=\"col-xs-6\">\n"
+                . "        <dl class=\"dl-horizontal\">\n"
+                . "            {foreach from=$" . "list_asso key=key item=value}\n"
+                . "                <dt>{ $" . "key}</dt> <dd>{ $"."value}</dd>\n"
+                . "            {/foreach}\n"
+                . "        </dl>\n"
+                . "    </div>\n"
+                . "</div>"
+                . "", $this->_brush);
+                ?>
+        <p>Appel du template dans le code php (pages.class.php par exemple)</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "new template('mon_template', [\n"
+                . "    'name' => 'Matthieu',\n"
+                . "    'list' => ['une','simple','liste'],\n"
+                . "    'list_asso' => [\n"
+                . "        'une liste'=>'associatif',\n"
+                . "        'tel'=>'0123456789',\n"
+                . "        'mail'=>'mon.mail@monfai.fr'\n"
+                . "        ]\n"
+                . "])\n"
+                . "?>", $this->_brush);
     }
 
     private function time() {

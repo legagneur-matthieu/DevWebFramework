@@ -17,7 +17,7 @@ class form {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                document.getElementById('<?php echo $name; ?>').focus();
+                document.getElementById('<?= $name; ?>').focus();
             });
         </script>
         <?php
@@ -37,13 +37,13 @@ class form {
     public static function input($label, $name, $type = "text", $value = null, $required = true, $class = "", $list = null) {
         if (!empty($class)) {
             ?>
-            <div class="<?php echo $class; ?>">            
+            <div class="<?= $class; ?>">            
                 <?php
             }
             ?>
             <div class="form-group">
-                <label for="<?php echo $name; ?>"><?php echo $label; ?></label>
-                <input id="<?php echo $name; ?>" type="<?php echo $type; ?>" name="<?php echo $name; ?>" <?php if ($value != null) { ?>value="<?php echo $value; ?>" <?php } ?> class="form-control" <?php if ($list != null) { ?>list="<?php echo $list; ?>" <?php } ?> <?php if ($required) { ?>required="required"<?php } ?>/>
+                <label for="<?= $name; ?>"><?= $label; ?></label>
+                <input id="<?= $name; ?>" type="<?= $type; ?>" name="<?= $name; ?>" <?php if ($value != null) { ?>value="<?= $value; ?>" <?php } ?> class="form-control" <?php if ($list != null) { ?>list="<?= $list; ?>" <?php } ?> <?php if ($required) { ?>required="required"<?php } ?>/>
             </div>
             <?php
             if (!empty($class)) {
@@ -61,11 +61,11 @@ class form {
      */
     public static function datalist($list, $data) {
         ?>
-        <datalist id="<?php echo $list ?>">
+        <datalist id="<?= $list ?>">
             <?php
             foreach ($data as $value) {
                 ?>
-                <option label="<?php echo $value["label"]; ?>" value="<?php echo $value["value"]; ?>" />
+                <option label="<?= $value["label"]; ?>" value="<?= $value["value"]; ?>" />
                 <?php
             }
             ?>
@@ -84,13 +84,13 @@ class form {
     public static function file($label, $name, $required = true, $class = "", $multiple = false) {
         if (!empty($class)) {
             ?>
-            <div class="<?php echo $class; ?>">            
+            <div class="<?= $class; ?>">            
                 <?php
             }
             ?>
             <div class="form-group">
-                <label for="<?php echo $name; ?>"><?php echo $label; ?></label>
-                <input id="<?php echo $name; ?>" type="file" name="<?php
+                <label for="<?= $name; ?>"><?= $label; ?></label>
+                <input id="<?= $name; ?>" type="file" name="<?php
                 echo $name;
                 if ($multiple) {
                     ?>[]<?php } ?>" <?php if ($multiple) { ?>multiple="true" <?php } ?> <?php if ($required) { ?>required="required"<?php } ?>/>
@@ -104,7 +104,7 @@ class form {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#<?php echo $name; ?>").parents("form").attr("enctype", "multipart/form-data");
+                $("#<?= $name; ?>").parents("form").attr("enctype", "multipart/form-data");
             });
         </script>
         <?php
@@ -432,7 +432,7 @@ class form {
     public static function hidden($name, $value) {
         ?>
         <div class="form-group">
-            <input type="hidden" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo $value; ?>" />
+            <input type="hidden" name="<?= $name; ?>" id="<?= $name; ?>" value='<?= $value; ?>' />
         </div>
         <?php
     }
@@ -448,14 +448,14 @@ class form {
     public static function checkbox($label, $name, $value, $class = "", $checked = false) {
         if (!empty($class)) {
             ?>
-            <div class="<?php echo $class; ?>">            
+            <div class="<?= $class; ?>">            
                 <?php
             }
             ?>
             <div class="form-group checkbox">
-                <label for="<?php echo $name; ?>">
-                    <input type="checkbox" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo $value; ?>" <?php if ($checked) { ?>checked="checked" <?php } ?>/>
-                    <?php echo $label; ?></label>
+                <label for="<?= $name; ?>">
+                    <input type="checkbox" name="<?= $name; ?>" id="<?= $name; ?>" value="<?= $value; ?>" <?php if ($checked) { ?>checked="checked" <?php } ?>/>
+                    <?= $label; ?></label>
             </div>
             <?php
             if (!empty($class)) {
@@ -474,19 +474,19 @@ class form {
      */
     public static function radios($label, $name, $radios, $class = "") {
         ?>
-        <div class="form_radio <?php echo $class; ?>">
+        <div class="form_radio <?= $class; ?>">
             <?php
             form::new_fieldset($label);
             foreach ($radios as $value) {
                 ?>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="<?php echo $name; ?>" id="<?php echo $name . $value[0]; ?>" value="<?php echo $value[0]; ?>" <?php
+                        <input type="radio" name="<?= $name; ?>" id="<?= $name . $value[0]; ?>" value="<?= $value[0]; ?>" <?php
                         if (isset($value[2]) and $value[2] == true) {
                             ?>checked="checked" <?php
                                }
                                ?>>
-                               <?php echo $value[1]; ?>
+                               <?= $value[1]; ?>
                     </label>
                 </div>
                 <?php
@@ -511,10 +511,10 @@ class form {
         ?>
         <script>
             $(document).ready(function () {
-                $("#<?php echo $name ?>").datetimepicker($.timepicker.regional["fr"]);
-                $("#<?php echo $name ?>").datetimepicker({dateFormat: "dd/mm/yy"});
-                $("#<?php echo $name ?>").attr("readonly", true);
-                $("#<?php echo $name ?>").attr("placeholder", "Cliquez pour choisir une date");
+                $("#<?= $name ?>").datetimepicker($.timepicker.regional["fr"]);
+                $("#<?= $name ?>").datetimepicker({dateFormat: "dd/mm/yy"});
+                $("#<?= $name ?>").attr("readonly", true);
+                $("#<?= $name ?>").attr("placeholder", "Cliquez pour choisir une date");
             });
         </script>
         <?php
@@ -531,11 +531,7 @@ class form {
         $date = explode(" ", $_POST[$name]);
         $time = $date[1];
         $date = explode("/", $date[0]);
-        if (isset($date[2])) {
-            return $date[2] . "-" . $date[1] . "-" . $date[0] . " " . $time;
-        } else {
-            return FALSE;
-        }
+        return (isset($date[2]) ? $date[2] . "-" . $date[1] . "-" . $date[0] . " " . $time : false);
     }
 
     /**
@@ -552,10 +548,10 @@ class form {
         ?>
         <script>
             $(document).ready(function () {
-                $("#<?php echo $name ?>").datepicker($.timepicker.regional["fr"]);
-                $("#<?php echo $name ?>").datepicker({dateFormat: "dd/mm/yy"});
-                $("#<?php echo $name ?>").attr("readonly", true);
-                $("#<?php echo $name ?>").attr("placeholder", "Cliquez pour choisir une date");
+                $("#<?= $name ?>").datepicker($.timepicker.regional["fr"]);
+                $("#<?= $name ?>").datepicker({dateFormat: "dd/mm/yy"});
+                $("#<?= $name ?>").attr("readonly", true);
+                $("#<?= $name ?>").attr("placeholder", "Cliquez pour choisir une date");
             });
         </script>
         <?php
@@ -570,11 +566,7 @@ class form {
      */
     public static function get_datepicker_us($name) {
         $date = explode("/", $_POST[$name]);
-        if (isset($date[2])) {
-            return $date[2] . "-" . $date[1] . "-" . $date[0];
-        } else {
-            return FALSE;
-        }
+        return (isset($date[2]) ? $date[2] . "-" . $date[1] . "-" . $date[0] : false);
     }
 
     /**
@@ -591,10 +583,10 @@ class form {
         ?>
         <script>
             $(document).ready(function () {
-                $("#<?php echo $name ?>").timepicker($.timepicker.regional["fr"]);
-                $("#<?php echo $name ?>").timepicker();
-                $("#<?php echo $name ?>").attr("readonly", true);
-                $("#<?php echo $name ?>").attr("placeholder", "Cliquez pour choisir une date");
+                $("#<?= $name ?>").timepicker($.timepicker.regional["fr"]);
+                $("#<?= $name ?>").timepicker();
+                $("#<?= $name ?>").attr("readonly", true);
+                $("#<?= $name ?>").attr("placeholder", "Cliquez pour choisir une date");
             });
         </script>
         <?php
@@ -610,7 +602,7 @@ class form {
     public static function submit($class, $value = null) {
         ?>
         <div class="form-group">
-            <input type="submit" class="btn <?php echo $class; ?>" <?php if ($value != null) { ?>value="<?php echo $value; ?>" <?php } ?> />
+            <input type="submit" class="btn <?= $class; ?>" <?php if ($value != null) { ?>value="<?= $value; ?>" <?php } ?> />
         </div>
         <?php
     }
@@ -628,13 +620,13 @@ class form {
     public static function select($label, $name, $option, $required = true, $class = "") {
         if (!empty($class)) {
             ?>
-            <div class="<?php echo $class; ?>">            
+            <div class="<?= $class; ?>">            
                 <?php
             }
             ?>
             <div class="form-group">
-                <label for="<?php echo $name; ?>"><?php echo $label; ?></label>
-                <select id="<?php echo $name; ?>" name="<?php echo $name; ?>" class="form-control" <?php if ($required) { ?>required="required"<?php } ?>>
+                <label for="<?= $name; ?>"><?= $label; ?></label>
+                <select id="<?= $name; ?>" name="<?= $name; ?>" class="form-control" <?php if ($required) { ?>required="required"<?php } ?>>
                     <?php
                     form::options($option);
                     ?>
@@ -658,7 +650,7 @@ class form {
         foreach ($option as $key => $value) {
             if (!is_int($key)) {
                 ?>
-                <optgroup label="<?php echo $key; ?>">
+                <optgroup label="<?= $key; ?>">
                     <?php
                     form::options($value);
                     ?>
@@ -666,7 +658,7 @@ class form {
                 <?php
             } else {
                 ?>
-                <option value="<?php echo $value[0]; ?>" <?php if (isset($value[2]) and $value[2] == true) { ?> selected="selected" <?php } ?>><?php echo $value[1]; ?></option>
+                <option value="<?= $value[0]; ?>" <?php if (isset($value[2]) and $value[2] == true) { ?> selected="selected" <?php } ?>><?= $value[1]; ?></option>
                 <?php
             }
         }
@@ -686,9 +678,9 @@ class form {
     public static function textarea($label, $name, $value = null, $required = true, $class = "", $cols = 30, $rows = 10) {
         ?>
         <div class="form-group">
-            <label for="<?php echo $name; ?>"><?php echo $label; ?></label>
+            <label for="<?= $name; ?>"><?= $label; ?></label>
             <div>
-                <textarea name="<?php echo $name; ?>" id="<?php echo $name; ?>" cols="<?php echo $cols; ?>" rows="<?php echo $rows; ?>" class="form-control <?php echo $class; ?>" <?php if ($required) { ?>required="required"<?php } ?>><?php
+                <textarea name="<?= $name; ?>" id="<?= $name; ?>" cols="<?= $cols; ?>" rows="<?= $rows; ?>" class="form-control <?= $class; ?>" <?php if ($required) { ?>required="required"<?php } ?>><?php
                     if ($value != null) {
                         echo $value;
                     }
@@ -708,7 +700,7 @@ class form {
     public static function new_fieldset($legend) {
         ?>
         <fieldset>
-            <legend><?php echo $legend; ?></legend>
+            <legend><?= $legend; ?></legend>
             <?php
         }
 
@@ -746,7 +738,7 @@ class form {
      */
     public static function new_form($class = "", $action = "#", $method = "post") {
         ?>
-        <form action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($class != "") { ?> class="<?php echo $class; ?>" <?php } ?> > 
+        <form action="<?= $action; ?>" method="<?= $method; ?>" <?php if ($class != "") { ?> class="<?= $class; ?>" <?php } ?> > 
             <?php
         }
 

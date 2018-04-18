@@ -43,6 +43,13 @@ class docPHP_natives {
                 . "//affiche l'interface d'administration de la table 'user' avec la relation user.rang = rang.nom\n"
                 . "new admin_controle('user', array('rang'=>'nom'));\n"
                 . "?>", $this->_brush);
+        ?>
+        <p>
+            Si l'entité contient un champ "array", ce champ n’apparaitra pas dans les datatables. <br />
+            Dans les formulaires les données de ce champ seront accessible en JSON dans un input de type hidden. <br />
+            Vous devrez créer une interface en JavaScript pour administrer ce champ à votre convenance (en manipulant la chaine JSON). 
+        </p>
+        <?php
     }
 
     private function application() {
@@ -1349,13 +1356,13 @@ class docPHP_natives {
                 . "    <div class=\"col-xs-6\">\n"
                 . "        <dl class=\"dl-horizontal\">\n"
                 . "            {foreach from=$" . "list_asso key=key item=value}\n"
-                . "                <dt>{ $" . "key}</dt> <dd>{ $"."value}</dd>\n"
+                . "                <dt>{ $" . "key}</dt> <dd>{ $" . "value}</dd>\n"
                 . "            {/foreach}\n"
                 . "        </dl>\n"
                 . "    </div>\n"
                 . "</div>"
                 . "", $this->_brush);
-                ?>
+        ?>
         <p>Appel du template dans le code php (pages.class.php par exemple)</p>
         <?php
         js::syntaxhighlighter("<?php\n"

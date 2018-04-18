@@ -58,15 +58,23 @@ class admin_controle {
     public function __construct($entity, $relations = []) {
         $this->_entity = $entity;
         $this->_relations = $relations;
+        $this->_structure = $entity::get_structure();
         foreach (array_keys($this->_relations)as $key) {
-            $this->_relations_data[$key] = $key::get_table_ordored_array();
+            foreach ($this->_structure as $value) {
+                if ($key == $value[0]) {
+                    $this->_relations_data[$key] = $value[1]::get_table_ordored_array();
+                }
+            }
         }
         $this->_data = $entity::get_table_array();
-        $this->_structure = $entity::get_structure();
         $url = application::get_url(["action", "id"]);
         foreach ($this->_structure as $value) {
-            if (!$value[2]) {
+            if (!$value[2] and $value[1] != "array") {
                 $this->_head[] = ucfirst($value[0]);
+            } elseif ($value[1] == "array") {
+                foreach ($this->_data as $key => $row) {
+                    unset($this->_data[$key][$value[0]]);
+                }
             }
         }
         foreach ($this->_data as $key => $row) {
@@ -79,12 +87,6 @@ class admin_controle {
             $m_d .= html_structures::a_link($url . "action=supp&amp;id=" . $row["id"], html_structures::glyphicon("remove", "Supprimer") . " Supprimer", "btn btn-xs btn-danger navbar-right");
             $this->_data[$key]["m_d"] = $m_d;
             foreach ($this->_relations as $k => $v) {
-                foreach ($this->_structure as $ks => $vs) {
-                    if ($vs[0] == $k) {
-                        $rs = $vs[1];
-                        break;
-                    }
-                }
                 $this->_data[$key][$k] = $this->_relations_data[$k][$this->_data[$key][$k]][$v];
             }
             unset($this->_data[$key]["id"]);
@@ -128,24 +130,33 @@ class admin_controle {
         form::new_form();
         foreach ($this->_structure as $element) {
             if (!$element[2]) {
-                if ($element[1] == "int" or $element[1] == "integer") {
-                    form::input(ucfirst($element[0]), $element[0], "number");
-                } elseif ($element[1] == "mail") {
-                    form::input(ucfirst($element[0]), $element[0], "email");
-                } elseif ($element[1] == "string") {
-                    if ($element[0] == "psw" or $element[0] == "password") {
-                        form::input(ucfirst($element[0]), $element[0], "password");
-                    } else {
-                        form::input(ucfirst($element[0]), $element[0]);
-                    }
-                } else {
-                    $elem = $element[1];
-                    $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
-                    $option = [];
-                    foreach ($elem as $e) {
-                        $option[] = [$e["id"], $e[$this->_relations[$element[0]]]];
-                    }
-                    form::select(ucfirst($element[0]), $element[0], $option);
+                switch ($element[1]) {
+                    case "int":
+                    case "interger":
+                        form::input(ucfirst($element[0]), $element[0], "number");
+                        break;
+                    case "mail":
+                        form::input(ucfirst($element[0]), $element[0], "email");
+                        break;
+                    case "string":
+                        if ($element[0] == "psw" or $element[0] == "password") {
+                            form::input(ucfirst($element[0]), $element[0], "password");
+                        } else {
+                            form::input(ucfirst($element[0]), $element[0]);
+                        }
+                        break;
+                    case "array":
+                        form::hidden($element[0], "[]");
+                        break;
+                    default:
+                        $elem = $element[1];
+                        $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
+                        $option = [];
+                        foreach ($elem as $e) {
+                            $option[] = [$e["id"], $e[$this->_relations[$element[0]]]];
+                        }
+                        form::select(ucfirst($element[0]), $element[0], $option);
+                        break;
                 }
             }
         }
@@ -192,28 +203,37 @@ class admin_controle {
         foreach ($this->_structure as $element) {
             if (!$element[2]) {
                 $geter = "get_" . $element[0];
-                if ($element[1] == "int" or $element[1] == "integer") {
-                    form::input(ucfirst($element[0]), $element[0], "number", $object->$geter());
-                } elseif ($element[1] == "mail") {
-                    form::input(ucfirst($element[0]), $element[0], "email", $object->$geter());
-                } elseif ($element[1] == "string") {
-                    if ($element[0] == "psw" or $element[0] == "password") {
-                        form::input(ucfirst($element[0]), $element[0], "password");
-                    } else {
-                        form::input(ucfirst($element[0]), $element[0], "text", $object->$geter());
-                    }
-                } else {
-                    $elem = $element[1];
-                    $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
-                    $option = [];
-                    foreach ($elem as $e) {
-                        $selected = false;
-                        if ($e["id"] == $object->$geter()->get_id()) {
-                            $selected = true;
+                switch ($element[1]) {
+                    case "int":
+                    case "interger":
+                        form::input(ucfirst($element[0]), $element[0], "number", $object->$geter());
+                        break;
+                    case "mail":
+                        form::input(ucfirst($element[0]), $element[0], "email", $object->$geter());
+                        break;
+                    case "string":
+                        if ($element[0] == "psw" or $element[0] == "password") {
+                            form::input(ucfirst($element[0]), $element[0], "password");
+                        } else {
+                            form::input(ucfirst($element[0]), $element[0], "text", $object->$geter());
                         }
-                        $option[] = [$e["id"], $e[$this->_relations[$element[0]]], $selected];
-                    }
-                    form::select(ucfirst($element[0]), $element[0], $option);
+                        break;
+                    case "array":
+                        form::hidden($element[0], json_encode($object->$geter()));
+                        break;
+                    default:
+                        $elem = $element[1];
+                        $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
+                        $option = [];
+                        foreach ($elem as $e) {
+                            $selected = false;
+                            if ($e["id"] == $object->$geter()->get_id()) {
+                                $selected = true;
+                            }
+                            $option[] = [$e["id"], $e[$this->_relations[$element[0]]], $selected];
+                        }
+                        form::select(ucfirst($element[0]), $element[0], $option);
+                        break;
                 }
             }
         }
@@ -250,28 +270,40 @@ class admin_controle {
      * Affiche le formulaire de suppression (pour confirmation)
      */
     private function supp_form() {
+        /*
+          foreach ($this->_structure as $value) {
+          if (!$value[2] and $value[1] != "array") {
+          $this->_head[] = ucfirst($value[0]);
+          } elseif ($value[1] == "array") {
+          foreach ($this->_data as $key => $row) {
+          unset($this->_data[$key][$value[0]]);
+          }
+          }
+          }
+         *          */
         $url = application::get_url(["action", "id"]);
         $this->supp_exec($url);
         $entity = $this->_entity;
         $data = $entity::get_table_array("id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
         foreach ($data as $key => $value) {
             foreach ($this->_relations as $k => $v) {
-                foreach ($this->_structure as $ks => $vs) {
-                    if ($vs[0] == $k) {
-                        $rs = $vs[1];
-                        break;
-                    }
-                }
                 $data[$key][$k] = $this->_data[$key][$k];
             }
             unset($data[$key]['id']);
         }
+        foreach ($this->_structure as $value) {
+            if ($value[1] == "array") {
+                foreach ($data as $key => $row) {
+                    unset($data[$key][$value[0]]);
+                }
+            }
+        }
         ?>
-        <p class="text-center">ÊSTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :</p>
+        <p class="text-center">ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :</p>
         <?php
 
-        js::datatable();
-        echo html_structures::table($this->_head, $data, "datatable");
+        js::datatable("supp_datatable");
+        echo html_structures::table($this->_head, $data, "supp_datatable");
         form::new_form("form-inline");
         form::hidden("admin_form_supp", "1");
         form::submit("btn-danger", "Oui");

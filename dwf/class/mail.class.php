@@ -24,12 +24,12 @@ class mail {
      */
     public function __construct() {
         if (!self::$_called) {
-            foreach (glob(__DIR__ . "/phpmailer/class.*.php") as $phpmailer_class) {
+            foreach (glob(__DIR__ . "/PHPMailer/src/*.php") as $phpmailer_class) {
                 include_once $phpmailer_class;
             }
             self::$_called = true;
         }
-        $this->_phpmailer = new PHPMailer(true);
+        $this->_phpmailer = new \PHPMailer\PHPMailer\PHPMailer(true);
         $this->_phpmailer->Host = config::$_SMTP_host;
         if ($this->_phpmailer->SMTPAuth = config::$_SMTP_auth) {
             $this->_phpmailer->Username = config::$_SMTP_login;

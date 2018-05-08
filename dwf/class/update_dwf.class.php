@@ -14,15 +14,15 @@ class update_dwf {
      * Cette classe permet de gérer les mises à jour de DWF
      * (a plasser dans une inerface d'administration)
      */
-    public function __construct() {
+    public function __construct($path = "../../") {
         set_time_limit(0);
         $out = [];
         exec("git --version", $out);
         if (count($out) > 0) {
-            if (!file_exists("../../.git")) {
-                $this->create_git();
+            if (!file_exists($path . '.git')) {
+                $this->create_git($path);
             }
-            $dwf_path = dirname(realpath("../../.git"));
+            $dwf_path = dirname(realpath($path . ".git"));
             exec("cd \"" . $dwf_path . "\"");
             if (isset($_POST["dwf_update"])) {
                 exec("git pull " . $this->_dwf_repo);
@@ -54,8 +54,8 @@ class update_dwf {
     /**
      *  Créé le dossier .git si il n'existe pas
      */
-    private function create_git() {
-        $dwf_path = dirname(realpath("../../dwf"));
+    private function create_git($path) {
+        $dwf_path = dirname(realpath($path . "dwf"));
         exec("cd \"" . $dwf_path . "\"");
         exec("git init");
         exec("git remote add origin " . $this->_dwf_repo);
@@ -73,7 +73,7 @@ class update_dwf {
     private function compare_version($local_tags, $remote_tags) {
         $remote_tags = explode("/", $remote_tags[count($remote_tags) - 1]);
         $remote_tags = $remote_tags[count($remote_tags) - 1];
-        $local_tags = explode("-", $local_tags[count($local_tags) - 1]);
+        $local_tags = (count($local_tags) == 0 ? ["Unkown"] : explode("-", $local_tags[count($local_tags) - 1]));
         $from = [
             "." => ""
         ];

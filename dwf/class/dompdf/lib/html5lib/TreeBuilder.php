@@ -107,8 +107,9 @@ class HTML5_TreeBuilder {
             $r = new ReflectionClass('HTML5_TreeBuilder');
             $consts = $r->getConstants();
             foreach ($consts as $const => $num) {
-                if (!is_int($num))
+                if (!is_int($num)) {
                     continue;
+                }
                 $lookup[$num] = $const;
             }
         }
@@ -138,6 +139,9 @@ class HTML5_TreeBuilder {
     const SCOPE_LISTITEM = 1;
     const SCOPE_TABLE = 2;
 
+    /**
+     * HTML5_TreeBuilder constructor.
+     */
     public function __construct() {
         $this->mode = self::INITIAL;
         $this->dom = new DOMDocument;
@@ -152,13 +156,20 @@ class HTML5_TreeBuilder {
         return $this->quirks_mode;
     }
 
-    // Process tag tokens
+    /**
+     * Process tag tokens
+     *
+     * @param $token
+     * @param null $mode
+     */
     public function emitToken($token, $mode = null) {
         // XXX: ignore parse errors... why are we emitting them, again?
-        if ($token['type'] === HTML5_Tokenizer::PARSEERROR)
+        if ($token['type'] === HTML5_Tokenizer::PARSEERROR) {
             return;
-        if ($mode === null)
+        }
+        if ($mode === null) {
             $mode = $this->mode;
+        }
 
         /*
           $backtrace = debug_backtrace();
@@ -173,12 +184,12 @@ class HTML5_TreeBuilder {
           if ($this->flag_frameset_ok) echo "  -> frameset ok\n";
          */
 
-        if ($this->ignore_lf_token)
+        if ($this->ignore_lf_token) {
             $this->ignore_lf_token--;
+        }
         $this->ignored = false;
-        // indenting is a little wonky, this can be changed later on
-        switch ($mode) {
 
+        switch ($mode) {
             case self::INITIAL:
 
                 /* A character token that is one of U+0009 CHARACTER TABULATION,
@@ -211,10 +222,12 @@ class HTML5_TreeBuilder {
                      * appropriate. Associate the DocumentType node with the
                      * Document object so that it is returned as the value of the
                      * doctype attribute of the Document object. */
-                    if (!isset($token['public']))
+                    if (!isset($token['public'])) {
                         $token['public'] = null;
-                    if (!isset($token['system']))
+                    }
+                    if (!isset($token['system'])) {
                         $token['system'] = null;
+                    }
                     // XDOM
                     // Yes this is hacky. I'm kind of annoyed that I can't appendChild
                     // a doctype to DOMDocument. Maybe I haven't chanted the right
@@ -319,16 +332,18 @@ class HTML5_TreeBuilder {
                                         break;
                                     }
                                 }
-                                if (!is_null($this->quirks_mode))
+                                if (!is_null($this->quirks_mode)) {
                                     break;
+                                }
                                 foreach ($publicStartsWithAndSystemForLimitedQuirks as $x) {
                                     if (strncmp($public, $x, strlen($x)) === 0) {
                                         $this->quirks_mode = self::LIMITED_QUIRKS_MODE;
                                         break;
                                     }
                                 }
-                                if (!is_null($this->quirks_mode))
+                                if (!is_null($this->quirks_mode)) {
                                     break;
+                                }
                             }
                             foreach ($publicSetToForQuirks as $x) {
                                 if ($public === $x) {
@@ -336,15 +351,17 @@ class HTML5_TreeBuilder {
                                     break;
                                 }
                             }
-                            if (!is_null($this->quirks_mode))
+                            if (!is_null($this->quirks_mode)) {
                                 break;
+                            }
                             foreach ($publicStartsWithForLimitedQuirks as $x) {
                                 if (strncmp($public, $x, strlen($x)) === 0) {
                                     $this->quirks_mode = self::LIMITED_QUIRKS_MODE;
                                 }
                             }
-                            if (!is_null($this->quirks_mode))
+                            if (!is_null($this->quirks_mode)) {
                                 break;
+                            }
                             if ($system === "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd") {
                                 $this->quirks_mode = self::QUIRKS_MODE;
                                 break;
@@ -372,7 +389,6 @@ class HTML5_TreeBuilder {
                 break;
 
             case self::BEFORE_HTML:
-
                 /* A DOCTYPE token */
                 if ($token['type'] === HTML5_Tokenizer::DOCTYPE) {
                     // Parse error. Ignore the token.
@@ -395,8 +411,8 @@ class HTML5_TreeBuilder {
 
                     /* A start tag whose tag name is "html" */
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG && $token['name'] == 'html') {
-                    /* Create an element for the token in the HTML namespace. Append it 
-                     * to the Document  object. Put this element in the stack of open 
+                    /* Create an element for the token in the HTML namespace. Append it
+                     * to the Document  object. Put this element in the stack of open
                      * elements. */
                     // XDOM
                     $html = $this->insertElement($token, false);
@@ -420,7 +436,6 @@ class HTML5_TreeBuilder {
                 break;
 
             case self::BEFORE_HEAD:
-
                 /* A character token that is one of one of U+0009 CHARACTER TABULATION,
                   U+000A LINE FEED (LF), U+000B LINE TABULATION, U+000C FORM FEED (FF),
                   or U+0020 SPACE */
@@ -492,7 +507,6 @@ class HTML5_TreeBuilder {
                 break;
 
             case self::IN_HEAD:
-
                 /* A character token that is one of one of U+0009 CHARACTER TABULATION,
                   U+000A LINE FEED (LF), U+000B LINE TABULATION, U+000C FORM FEED (FF),
                   or U+0020 SPACE. */
@@ -541,7 +555,7 @@ class HTML5_TreeBuilder {
                     // then change the encoding to the encoding given by the value of
                     // the charset attribute.
                     //
-            // Otherwise, if the element has a content attribute, and applying
+                    // Otherwise, if the element has a content attribute, and applying
                     // the algorithm for extracting an encoding from a Content-Type to
                     // its value returns a supported encoding encoding, and the
                     // confidence is currently tentative, then change the encoding to
@@ -569,11 +583,11 @@ class HTML5_TreeBuilder {
                     // Uhhh... XSCRIPT
 
                     /* 3. If the parser was originally created for the HTML
-                     * fragment parsing algorithm, then mark the script element as 
+                     * fragment parsing algorithm, then mark the script element as
                      * "already executed". (fragment case) */
                     // ditto... XSCRIPT
 
-                    /* 4. Append the new element to the current node  and push it onto 
+                    /* 4. Append the new element to the current node  and push it onto
                      * the stack of open elements.  */
                     end($this->stack)->appendChild($node);
                     $this->stack[] = $node;
@@ -816,14 +830,14 @@ class HTML5_TreeBuilder {
                                     $this->ignored = true;
                                     // Ignore
                                 } else {
-                                    /* 1. Remove the second element on the stack of open 
+                                    /* 1. Remove the second element on the stack of open
                                      * elements from its parent node, if it has one.  */
                                     if ($this->stack[1]->parentNode) {
                                         $this->stack[1]->parentNode->removeChild($this->stack[1]);
                                     }
 
-                                    /* 2. Pop all the nodes from the bottom of the stack of 
-                                     * open elements, from the current node up to the root 
+                                    /* 2. Pop all the nodes from the bottom of the stack of
+                                     * open elements, from the current node up to the root
                                      * html element. */
                                     array_splice($this->stack, 1);
 
@@ -1029,13 +1043,15 @@ class HTML5_TreeBuilder {
                                         ));
                                         if (in_array($a, $this->a_formatting)) {
                                             $a_i = array_search($a, $this->a_formatting, true);
-                                            if ($a_i !== false)
+                                            if ($a_i !== false) {
                                                 array_splice($this->a_formatting, $a_i, 1);
+                                            }
                                         }
                                         if (in_array($a, $this->stack)) {
                                             $a_i = array_search($a, $this->stack, true);
-                                            if ($a_i !== false)
+                                            if ($a_i !== false) {
                                                 array_splice($this->stack, $a_i, 1);
+                                            }
                                         }
                                         break;
                                     }
@@ -1136,9 +1152,9 @@ class HTML5_TreeBuilder {
 
                             /* A start tag whose tag name is "table" */
                             case 'table':
-                                /* If the Document is not set to quirks mode, and the 
-                                 * stack of open elements has a p element in scope, then 
-                                 * act as if an end tag with the tag name "p" had been 
+                                /* If the Document is not set to quirks mode, and the
+                                 * stack of open elements has a p element in scope, then
+                                 * act as if an end tag with the tag name "p" had been
                                  * seen. */
                                 if ($this->quirks_mode !== self::QUIRKS_MODE &&
                                         $this->elementInScope('p')) {
@@ -1274,8 +1290,9 @@ class HTML5_TreeBuilder {
                                     $attr = array();
                                     foreach ($token['attr'] as $keypair) {
                                         if ($keypair['name'] === 'name' || $keypair['name'] === 'action' ||
-                                                $keypair['name'] === 'prompt')
+                                                $keypair['name'] === 'prompt') {
                                             continue;
+                                        }
                                         $attr[] = $keypair;
                                     }
                                     $attr[] = array('name' => 'name', 'value' => 'isindex');
@@ -1409,9 +1426,9 @@ class HTML5_TreeBuilder {
                                 }
                                 $peek = false;
                                 do {
-                                    if ($peek) {
-                                        // parse error
-                                    }
+                                    /* if ($peek) {
+                                      // parse error
+                                      } */
                                     $peek = array_pop($this->stack);
                                 } while ($peek->tagName !== 'ruby');
                                 $this->stack[] = $peek; // we popped one too many
@@ -1470,19 +1487,19 @@ class HTML5_TreeBuilder {
                         switch ($token['name']) {
                             /* An end tag with the tag name "body" */
                             case 'body':
-                                /* If the stack of open elements does not have a body 
-                                 * element in scope, this is a parse error; ignore the 
+                                /* If the stack of open elements does not have a body
+                                 * element in scope, this is a parse error; ignore the
                                  * token. */
                                 if (!$this->elementInScope('body')) {
                                     $this->ignored = true;
 
-                                    /* Otherwise, if there is a node in the stack of open 
-                                     * elements that is not either a dc element, a dd element, 
-                                     * a ds element, a dt element, an li element, an optgroup 
-                                     * element, an option element, a p element, an rp element, 
-                                     * an rt element, a tbody element, a td element, a tfoot 
-                                     * element, a th element, a thead element, a tr element, 
-                                     * the body element, or the html element, then this is a 
+                                    /* Otherwise, if there is a node in the stack of open
+                                     * elements that is not either a dc element, a dd element,
+                                     * a ds element, a dt element, an li element, an optgroup
+                                     * element, an option element, a p element, an rp element,
+                                     * an rt element, a tbody element, a td element, a tfoot
+                                     * element, a th element, a thead element, a tr element,
+                                     * the body element, or the html element, then this is a
                                      * parse error.
                                      */
                                 } else {
@@ -1503,8 +1520,9 @@ class HTML5_TreeBuilder {
                                     'type' => HTML5_Tokenizer::ENDTAG
                                 ));
 
-                                if (!$this->ignored)
+                                if (!$this->ignored) {
                                     $this->emitToken($token);
+                                }
                                 break;
 
                             case 'address': case 'article': case 'aside': case 'blockquote':
@@ -1541,7 +1559,7 @@ class HTML5_TreeBuilder {
                                 $node = $this->form_pointer;
                                 /* Set the form element pointer  to null. */
                                 $this->form_pointer = null;
-                                /* If node is null or the stack of open elements does not 
+                                /* If node is null or the stack of open elements does not
                                  * have node in scope, then this is a parse error; ignore the token. */
                                 if ($node === null || !in_array($node, $this->stack)) {
                                     // parse error
@@ -1606,9 +1624,10 @@ class HTML5_TreeBuilder {
                                     do {
                                         $node = array_pop($this->stack);
                                     } while ($node->tagName !== $token['name']);
-                                } else {
-                                    // XERROR: parse error
                                 }
+                                /* else {
+                                  // XERROR: parse error
+                                  } */
                                 break;
 
                             /* An end tag whose tag name is "dc", "dd", "ds", "dt" */
@@ -1626,9 +1645,10 @@ class HTML5_TreeBuilder {
                                     do {
                                         $node = array_pop($this->stack);
                                     } while ($node->tagName !== $token['name']);
-                                } else {
-                                    // XERROR: parse error
                                 }
+                                /* else {
+                                  // XERROR: parse error
+                                  } */
                                 break;
 
                             /* An end tag whose tag name is one of: "h1", "h2", "h3", "h4",
@@ -1653,9 +1673,10 @@ class HTML5_TreeBuilder {
                                     do {
                                         $node = array_pop($this->stack);
                                     } while (!in_array($node->tagName, $elements));
-                                } else {
-                                    // parse error
                                 }
+                                /* else {
+                                  // parse error
+                                  } */
                                 break;
 
                             /* An end tag whose tag name is one of: "a", "b", "big", "em",
@@ -1687,8 +1708,12 @@ class HTML5_TreeBuilder {
                                       also in the stack of open elements but the element
                                       is not in scope, then this is a parse error. Abort
                                       these steps. The token is ignored. */
-                                    if (!isset($formatting_element) || ($in_stack &&
-                                            !$this->elementInScope($token['name']))) {
+                                    if (
+                                            !isset($formatting_element) || (
+                                            $in_stack &&
+                                            !$this->elementInScope($token['name'])
+                                            )
+                                    ) {
                                         $this->ignored = true;
                                         break;
 
@@ -1914,9 +1939,10 @@ class HTML5_TreeBuilder {
                                     for ($n = count($this->a_formatting) - 1; $n > $marker; $n--) {
                                         array_pop($this->a_formatting);
                                     }
-                                } else {
-                                    // parse error
                                 }
+                                /* else {
+                                  // parse error
+                                  } */
                                 break;
 
                             case 'br':
@@ -2095,8 +2121,9 @@ class HTML5_TreeBuilder {
                         'type' => HTML5_Tokenizer::ENDTAG
                     ));
 
-                    if (!$this->ignored)
+                    if (!$this->ignored) {
                         $this->emitToken($token);
+                    }
 
                     /* An end tag whose tag name is "table" */
                 } elseif ($token['type'] === HTML5_Tokenizer::ENDTAG &&
@@ -2106,8 +2133,6 @@ class HTML5_TreeBuilder {
                       Ignore the token. (fragment case) */
                     if (!$this->elementInScope($token['name'], self::SCOPE_TABLE)) {
                         $this->ignored = true;
-
-                        /* Otherwise: */
                     } else {
                         do {
                             $node = array_pop($this->stack);
@@ -2168,17 +2193,17 @@ class HTML5_TreeBuilder {
                     /* Anything else */
                 } else {
                     if ($this->pendingTableCharacters !== '' && is_string($this->pendingTableCharacters)) {
-                        /* If any of the tokens in the pending table character tokens list 
-                         * are character tokens that are not one of U+0009 CHARACTER 
-                         * TABULATION, U+000A LINE FEED (LF), U+000C FORM FEED (FF), or 
-                         * U+0020 SPACE, then reprocess those character tokens using the 
-                         * rules given in the "anything else" entry in the in table" 
+                        /* If any of the tokens in the pending table character tokens list
+                         * are character tokens that are not one of U+0009 CHARACTER
+                         * TABULATION, U+000A LINE FEED (LF), U+000C FORM FEED (FF), or
+                         * U+0020 SPACE, then reprocess those character tokens using the
+                         * rules given in the "anything else" entry in the in table"
                          * insertion mode. */
                         if ($this->pendingTableCharactersDirty) {
-                            /* Parse error. Process the token using the rules for the 
-                             * "in body" insertion mode, except that if the current 
-                             * node is a table, tbody, tfoot, thead, or tr element, 
-                             * then, whenever a node would be inserted into the current 
+                            /* Parse error. Process the token using the rules for the
+                             * "in body" insertion mode, except that if the current
+                             * node is a table, tbody, tfoot, thead, or tr element,
+                             * then, whenever a node would be inserted into the current
                              * node, it must instead be foster parented. */
                             // XERROR
                             $old = $this->foster_parent;
@@ -2190,7 +2215,7 @@ class HTML5_TreeBuilder {
                             $this->processWithRulesFor($text_token, self::IN_BODY);
                             $this->foster_parent = $old;
 
-                            /* Otherwise, insert the characters given by the pending table 
+                            /* Otherwise, insert the characters given by the pending table
                              * character tokens list into the current node. */
                         } else {
                             $this->insertText($this->pendingTableCharacters);
@@ -2199,7 +2224,7 @@ class HTML5_TreeBuilder {
                         $this->pendingTableCharactersNull = null;
                     }
 
-                    /* Switch the insertion mode to the original insertion mode and 
+                    /* Switch the insertion mode to the original insertion mode and
                      * reprocess the token.
                      */
                     $this->mode = $this->original_mode;
@@ -2254,8 +2279,9 @@ class HTML5_TreeBuilder {
                         'type' => HTML5_Tokenizer::ENDTAG
                     ));
 
-                    if (!$this->ignored)
+                    if (!$this->ignored) {
                         $this->emitToken($token);
+                    }
 
                     /* An end tag whose tag name is one of: "body", "col", "colgroup",
                       "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
@@ -2263,8 +2289,6 @@ class HTML5_TreeBuilder {
                             'thead', 'tr'))) {
                     // Parse error. Ignore the token.
                     $this->ignored = true;
-
-                    /* Anything else */
                 } else {
                     /* Process the token as if the insertion mode was "in body". */
                     $this->processWithRulesFor($token, self::IN_BODY);
@@ -2283,7 +2307,7 @@ class HTML5_TreeBuilder {
                 } elseif ($token['type'] === HTML5_Tokenizer::COMMENT) {
                     /* Append a Comment node to the current node with the data
                       attribute set to the data given in the comment token. */
-                    $this->insertToken($token['data']);
+                    $this->insertComment($token['data']);
                 } elseif ($token['type'] === HTML5_Tokenizer::DOCTYPE) {
                     // parse error
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG && $token['name'] === 'html') {
@@ -2332,8 +2356,9 @@ class HTML5_TreeBuilder {
                         'type' => HTML5_Tokenizer::ENDTAG
                     ));
 
-                    if (!$this->ignored)
+                    if (!$this->ignored) {
                         $this->emitToken($token);
+                    }
                 }
                 break;
 
@@ -2450,8 +2475,6 @@ class HTML5_TreeBuilder {
                     if (!$this->elementInScope($token['name'], self::SCOPE_TABLE)) {
                         // Ignore.
                         $this->ignored = true;
-
-                        /* Otherwise: */
                     } else {
                         /* Clear the stack back to a table row context. */
                         $this->clearStackToTableContext($clear);
@@ -2473,8 +2496,9 @@ class HTML5_TreeBuilder {
                         'name' => 'tr',
                         'type' => HTML5_Tokenizer::ENDTAG
                     ));
-                    if (!$this->ignored)
+                    if (!$this->ignored) {
                         $this->emitToken($token);
+                    }
 
                     /* An end tag whose tag name is one of: "tbody", "tfoot", "thead" */
                 } elseif ($token['type'] === HTML5_Tokenizer::ENDTAG &&
@@ -2612,7 +2636,7 @@ class HTML5_TreeBuilder {
                 } elseif ($token['type'] === HTML5_Tokenizer::DOCTYPE) {
                     // parse error
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG && $token['name'] === 'html') {
-                    $this->processWithRulesFor($token, self::INBODY);
+                    $this->processWithRulesFor($token, self::IN_BODY);
 
                     /* A start tag token whose tag name is "option" */
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG &&
@@ -2823,9 +2847,9 @@ class HTML5_TreeBuilder {
                         ) || $token['type'] === HTML5_Tokenizer::ENDTAG
                 ) {
                     $this->processWithRulesFor($token, $this->secondary_mode);
-                    /* If, after doing so, the insertion mode is still "in foreign 
-                     * content", but there is no element in scope that has a namespace 
-                     * other than the HTML namespace, switch the insertion mode to the 
+                    /* If, after doing so, the insertion mode is still "in foreign
+                     * content", but there is no element in scope that has a namespace
+                     * other than the HTML namespace, switch the insertion mode to the
                      * secondary insertion mode. */
                     if ($this->mode === self::IN_FOREIGN_CONTENT) {
                         $found = false;
@@ -3005,9 +3029,9 @@ class HTML5_TreeBuilder {
                           elements. */
                         array_pop($this->stack);
 
-                        /* If the parser was not originally created as part of the HTML 
-                         * fragment parsing algorithm  (fragment case), and the current 
-                         * node is no longer a frameset element, then switch the 
+                        /* If the parser was not originally created as part of the HTML
+                         * fragment parsing algorithm  (fragment case), and the current
+                         * node is no longer a frameset element, then switch the
                          * insertion mode to "after frameset". */
                         $this->mode = self::AFTER_FRAMESET;
                     }
@@ -3123,7 +3147,6 @@ class HTML5_TreeBuilder {
                 }
                 break;
         }
-        // end funky indenting
     }
 
     private function insertElement($token, $append = true) {
@@ -3131,7 +3154,7 @@ class HTML5_TreeBuilder {
 
         if (!empty($token['attr'])) {
             foreach ($token['attr'] as $attr) {
-                if (!$el->hasAttribute($attr['name'])) {
+                if (!$el->hasAttribute($attr['name']) && preg_match("/^[a-zA-Z_:]/", $attr['name'])) {
                     $el->setAttribute($attr['name'], $attr['value']);
                 }
             }
@@ -3144,37 +3167,58 @@ class HTML5_TreeBuilder {
         return $el;
     }
 
+    /**
+     * @param $data
+     */
     private function insertText($data) {
-        if ($data === '')
+        if ($data === '') {
             return;
+        }
         if ($this->ignore_lf_token) {
             if ($data[0] === "\n") {
                 $data = substr($data, 1);
-                if ($data === false)
+                if ($data === false) {
                     return;
+                }
             }
         }
         $text = $this->dom->createTextNode($data);
         $this->appendToRealParent($text);
     }
 
+    /**
+     * @param $data
+     */
     private function insertComment($data) {
         $comment = $this->dom->createComment($data);
         $this->appendToRealParent($comment);
     }
 
+    /**
+     * @param $node
+     */
     private function appendToRealParent($node) {
         // this is only for the foster_parent case
         /* If the current node is a table, tbody, tfoot, thead, or tr
           element, then, whenever a node would be inserted into the current
           node, it must instead be inserted into the foster parent element. */
-        if (!$this->foster_parent || !in_array(end($this->stack)->tagName, array('table', 'tbody', 'tfoot', 'thead', 'tr'))) {
+        if (
+                !$this->foster_parent ||
+                !in_array(
+                        end($this->stack)->tagName, array('table', 'tbody', 'tfoot', 'thead', 'tr')
+                )
+        ) {
             end($this->stack)->appendChild($node);
         } else {
             $this->fosterParent($node);
         }
     }
 
+    /**
+     * @param $el
+     * @param int $scope
+     * @return bool|null
+     */
     private function elementInScope($el, $scope = self::SCOPE) {
         if (is_array($el)) {
             foreach ($el as $element) {
@@ -3222,8 +3266,14 @@ class HTML5_TreeBuilder {
               will always terminate in the previous step if the top of the stack
               is reached.) */
         }
+
+        // To fix warning. This never happens or should return true/false
+        return null;
     }
 
+    /**
+     * @return bool
+     */
     private function reconstructActiveFormattingElements() {
         /* 1. If there are no entries in the list of active formatting elements,
           then there is nothing to reconstruct; stop this algorithm. */
@@ -3293,8 +3343,14 @@ class HTML5_TreeBuilder {
                 break;
             }
         }
+
+        // Return value not in use ATM. Would just make sense to also return true here.
+        return true;
     }
 
+    /**
+     *
+     */
     private function clearTheActiveFormattingElementsUpToTheLastMarker() {
         /* When the steps below require the UA to clear the list of active
           formatting elements up to the last marker, the UA must perform the
@@ -3316,11 +3372,14 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     * @param array $exclude
+     */
     private function generateImpliedEndTags($exclude = array()) {
-        /* When the steps below require the UA to generate implied end tags, 
-         * then, while the current node is a dc element, a dd element, a ds 
-         * element, a dt element, an li element, an option element, an optgroup 
-         * element, a p element, an rp element, or an rt element, the UA must 
+        /* When the steps below require the UA to generate implied end tags,
+         * then, while the current node is a dc element, a dd element, a ds
+         * element, a dt element, an li element, an option element, an optgroup
+         * element, a p element, an rp element, or an rt element, the UA must
          * pop the current node off the stack of open elements. */
         $node = end($this->stack);
         $elements = array_diff(array('dc', 'dd', 'ds', 'dt', 'li', 'p', 'td', 'th', 'tr'), $exclude);
@@ -3330,22 +3389,29 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     * @param $node
+     * @return int
+     */
     private function getElementCategory($node) {
-        if (!is_object($node))
+        if (!is_object($node)) {
             debug_print_backtrace();
+        }
         $name = $node->tagName;
-        if (in_array($name, $this->special))
+        if (in_array($name, $this->special)) {
             return self::SPECIAL;
-
-        elseif (in_array($name, $this->scoping))
+        } elseif (in_array($name, $this->scoping)) {
             return self::SCOPING;
-
-        elseif (in_array($name, $this->formatting))
+        } elseif (in_array($name, $this->formatting)) {
             return self::FORMATTING;
-        else
+        } else {
             return self::PHRASING;
+        }
     }
 
+    /**
+     * @param $elements
+     */
     private function clearStackToTableContext($elements) {
         /* When the steps above require the UA to clear the stack back to a
           table context, it means that the UA must, while the current node is not
@@ -3362,6 +3428,9 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     * @param null $context
+     */
     private function resetInsertionMode($context = null) {
         /* 1. Let last be false. */
         $last = false;
@@ -3371,8 +3440,8 @@ class HTML5_TreeBuilder {
             /* 2. Let node be the last node in the stack of open elements. */
             $node = $this->stack[$n];
 
-            /* 3. If node is the first node in the stack of open elements, then 
-             * set last to true and set node to the context  element. (fragment 
+            /* 3. If node is the first node in the stack of open elements, then
+             * set last to true and set node to the context  element. (fragment
              * case) */
             if ($this->stack[0]->isSameNode($node)) {
                 $last = true;
@@ -3421,9 +3490,9 @@ class HTML5_TreeBuilder {
                 $this->mode = self::IN_TABLE;
                 break;
 
-                /* 11. If node is an element from the MathML namespace or the SVG 
-                 * namespace, then switch the insertion mode to "in foreign 
-                 * content", let the secondary insertion mode be "in body", and 
+                /* 11. If node is an element from the MathML namespace or the SVG
+                 * namespace, then switch the insertion mode to "in foreign
+                 * content", let the secondary insertion mode be "in body", and
                  * abort these steps. */
             } elseif ($node->namespaceURI === self::NS_SVG ||
                     $node->namespaceURI === self::NS_MATHML) {
@@ -3468,6 +3537,9 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     *
+     */
     private function closeCell() {
         /* If the stack of open elements has a td or th element in table scope,
           then act as if an end tag token with that tag name had been seen. */
@@ -3483,15 +3555,22 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     * @param $token
+     * @param $mode
+     */
     private function processWithRulesFor($token, $mode) {
         /* "using the rules for the m insertion mode", where m is one of these
          * modes, the user agent must use the rules described under the m
          * insertion mode's section, but must leave the insertion mode
          * unchanged unless the rules in m themselves switch the insertion mode
          * to a new value. */
-        return $this->emitToken($token, $mode);
+        $this->emitToken($token, $mode);
     }
 
+    /**
+     * @param $token
+     */
     private function insertCDATAElement($token) {
         $this->insertElement($token);
         $this->original_mode = $this->mode;
@@ -3499,6 +3578,9 @@ class HTML5_TreeBuilder {
         $this->content_model = HTML5_Tokenizer::CDATA;
     }
 
+    /**
+     * @param $token
+     */
     private function insertRCDATAElement($token) {
         $this->insertElement($token);
         $this->original_mode = $this->mode;
@@ -3506,21 +3588,31 @@ class HTML5_TreeBuilder {
         $this->content_model = HTML5_Tokenizer::RCDATA;
     }
 
+    /**
+     * @param $token
+     * @param $key
+     * @return bool
+     */
     private function getAttr($token, $key) {
-        if (!isset($token['attr']))
+        if (!isset($token['attr'])) {
             return false;
+        }
         $ret = false;
         foreach ($token['attr'] as $keypair) {
-            if ($keypair['name'] === $key)
+            if ($keypair['name'] === $key) {
                 $ret = $keypair['value'];
+            }
         }
         return $ret;
     }
 
+    /**
+     * @return mixed
+     */
     private function getCurrentTable() {
-        /* The current table is the last table  element in the stack of open 
-         * elements, if there is one. If there is no table element in the stack 
-         * of open elements (fragment case), then the current table is the 
+        /* The current table is the last table  element in the stack of open
+         * elements, if there is one. If there is no table element in the stack
+         * of open elements (fragment case), then the current table is the
          * first element in the stack of open elements (the html element). */
         for ($i = count($this->stack) - 1; $i >= 0; $i--) {
             if ($this->stack[$i]->tagName === 'table') {
@@ -3530,6 +3622,9 @@ class HTML5_TreeBuilder {
         return $this->stack[0];
     }
 
+    /**
+     * @return mixed
+     */
     private function getFosterParent() {
         /* The foster parent element is the parent element of the last
           table element in the stack of open elements, if there is a
@@ -3557,17 +3652,22 @@ class HTML5_TreeBuilder {
                 $table->parentNode->nodeType !== XML_ELEMENT_NODE)) {
             return $this->stack[$n - 1];
         }
+
+        return null;
     }
 
+    /**
+     * @param $node
+     */
     public function fosterParent($node) {
         $foster_parent = $this->getFosterParent();
         $table = $this->getCurrentTable(); // almost equivalent to last table element, except it can be html
         /* When a node node is to be foster parented, the node node must be
          * be inserted into the foster parent element. */
-        /* If the foster parent element is the parent element of the last table 
-         * element in the stack of open elements, then node must be inserted 
-         * immediately before the last table element in the stack of open 
-         * elements in the foster parent element; otherwise, node must be 
+        /* If the foster parent element is the parent element of the last table
+         * element in the stack of open elements, then node must be inserted
+         * immediately before the last table element in the stack of open
+         * elements in the foster parent element; otherwise, node must be
          * appended to the foster parent element. */
         if ($table->tagName === 'table' && $table->parentNode->isSameNode($foster_parent)) {
             $foster_parent->insertBefore($node, $table);
@@ -3591,24 +3691,31 @@ class HTML5_TreeBuilder {
      * For debugging, prints active formatting elements
      */
     private function printActiveFormattingElements() {
-        if (!$this->a_formatting)
+        if (!$this->a_formatting) {
             return;
+        }
         $names = array();
         foreach ($this->a_formatting as $node) {
-            if ($node === self::MARKER)
+            if ($node === self::MARKER) {
                 $names[] = 'MARKER';
-            else
+            } else {
                 $names[] = $node->tagName;
+            }
         }
         echo "  -> active formatting [" . implode(', ', $names) . "]\n";
     }
 
+    /**
+     * @return bool
+     */
     public function currentTableIsTainted() {
         return !empty($this->getCurrentTable()->tainted);
     }
 
     /**
      * Sets up the tree constructor for building a fragment.
+     *
+     * @param null $context
      */
     public function setupContext($context = null) {
         $this->fragment = true;
@@ -3637,14 +3744,14 @@ class HTML5_TreeBuilder {
             $this->root = $root;
             /* 4.3 Append the element root to the Document node created above. */
             $this->dom->appendChild($root);
-            /* 4.4 Set up the parser's stack of open elements so that it 
+            /* 4.4 Set up the parser's stack of open elements so that it
              * contains just the single element root. */
             $this->stack = array($root);
             /* 4.5 Reset the parser's insertion mode appropriately. */
             $this->resetInsertionMode($context);
-            /* 4.6 Set the parser's form element pointer  to the nearest node 
-             * to the context element that is a form element (going straight up 
-             * the ancestor chain, and including the element itself, if it is a 
+            /* 4.6 Set the parser's form element pointer  to the nearest node
+             * to the context element that is a form element (going straight up
+             * the ancestor chain, and including the element itself, if it is a
              * form element), or, if there is no such form element, to null. */
             $node = $context;
             do {
@@ -3656,6 +3763,10 @@ class HTML5_TreeBuilder {
         }
     }
 
+    /**
+     * @param $token
+     * @return mixed
+     */
     public function adjustMathMLAttributes($token) {
         foreach ($token['attr'] as &$kp) {
             if ($kp['name'] === 'definitionurl') {
@@ -3665,6 +3776,10 @@ class HTML5_TreeBuilder {
         return $token;
     }
 
+    /**
+     * @param $token
+     * @return mixed
+     */
     public function adjustSVGAttributes($token) {
         static $lookup = array(
             'attributename' => 'attributeName',
@@ -3738,6 +3853,10 @@ class HTML5_TreeBuilder {
         return $token;
     }
 
+    /**
+     * @param $token
+     * @return mixed
+     */
     public function adjustForeignAttributes($token) {
         static $lookup = array(
             'xlink:actuate' => array('xlink', 'actuate', self::NS_XLINK),
@@ -3761,8 +3880,13 @@ class HTML5_TreeBuilder {
         return $token;
     }
 
+    /**
+     * @param $token
+     * @param $namespaceURI
+     */
     public function insertForeignElement($token, $namespaceURI) {
         $el = $this->dom->createElementNS($namespaceURI, $token['name']);
+
         if (!empty($token['attr'])) {
             foreach ($token['attr'] as $kp) {
                 $attr = $kp['name'];
@@ -3788,13 +3912,16 @@ class HTML5_TreeBuilder {
         $this->appendToRealParent($el);
         $this->stack[] = $el;
         // XERROR: see below
-        /* If the newly created element has an xmlns attribute in the XMLNS 
-         * namespace  whose value is not exactly the same as the element's 
-         * namespace, that is a parse error. Similarly, if the newly created 
-         * element has an xmlns:xlink attribute in the XMLNS namespace whose 
+        /* If the newly created element has an xmlns attribute in the XMLNS
+         * namespace  whose value is not exactly the same as the element's
+         * namespace, that is a parse error. Similarly, if the newly created
+         * element has an xmlns:xlink attribute in the XMLNS namespace whose
          * value is not the XLink Namespace, that is a parse error. */
     }
 
+    /**
+     * @return DOMDocument|DOMNodeList
+     */
     public function save() {
         $this->dom->normalize();
         if (!$this->fragment) {

@@ -35,16 +35,22 @@
 class HTML5_Tokenizer {
 
     /**
+     * @var HTML5_InputStream
+     *
      * Points to an InputStream object.
      */
     protected $stream;
 
     /**
+     * @var HTML5_TreeBuilder
+     *
      * Tree builder that the tokenizer emits token to.
      */
     private $tree;
 
     /**
+     * @var int
+     *
      * Current content model we are parsing as.
      */
     protected $content_model;
@@ -80,17 +86,22 @@ class HTML5_Tokenizer {
     const WHITESPACE = "\t\n\x0c ";
 
     /**
-     * @param $data Data to parse
+     * @param $data | Data to parse
+     * @param HTML5_TreeBuilder|null $builder
      */
     public function __construct($data, $builder = null) {
         $this->stream = new HTML5_InputStream($data);
-        if (!$builder)
+        if (!$builder) {
             $this->tree = new HTML5_TreeBuilder;
-        else
+        } else {
             $this->tree = $builder;
+        }
         $this->content_model = self::PCDATA;
     }
 
+    /**
+     * @param null $context
+     */
     public function parseFragment($context = null) {
         $this->tree->setupContext($context);
         if ($this->tree->content_model) {
@@ -135,8 +146,9 @@ class HTML5_Tokenizer {
                     /* Consume the next input character */
                     $char = $this->stream->char();
                     $lastFourChars .= $char;
-                    if (strlen($lastFourChars) > 4)
+                    if (strlen($lastFourChars) > 4) {
                         $lastFourChars = substr($lastFourChars, -4);
+                    }
 
                     // see below for meaning
                     $hyp_cond = !$escape &&
@@ -163,7 +175,7 @@ class HTML5_Tokenizer {
                             $this->content_model === self::CDATA
                             );
 
-                    if ($char === '&' && $amp_cond) {
+                    if ($char === '&' && $amp_cond === true) {
                         /* U+0026 AMPERSAND (&)
                           When the content model flag is set to one of the PCDATA or RCDATA
                           states and the escape flag is false: switch to the
@@ -172,7 +184,7 @@ class HTML5_Tokenizer {
                         $state = 'character reference data';
                     } elseif (
                             $char === '-' &&
-                            $hyp_cond &&
+                            $hyp_cond === true &&
                             $lastFourChars === '<!--'
                     ) {
                         /*
@@ -194,7 +206,7 @@ class HTML5_Tokenizer {
                         // We do the "any case" part as part of "anything else".
 
                         /* U+003C LESS-THAN SIGN (<) */
-                    } elseif ($char === '<' && $lt_cond) {
+                    } elseif ($char === '<' && $lt_cond === true) {
                         /* When the content model flag is set to the PCDATA state: switch
                           to the tag open state.
 
@@ -208,7 +220,7 @@ class HTML5_Tokenizer {
                         /* U+003E GREATER-THAN SIGN (>) */
                     } elseif (
                             $char === '>' &&
-                            $gt_cond &&
+                            $gt_cond === true &&
                             substr($lastFourChars, 1) === '-->'
                     ) {
                         /* If the content model flag is set to either the RCDATA state or
@@ -242,8 +254,9 @@ class HTML5_Tokenizer {
                             'data' => $char . $chars
                         ));
                         $lastFourChars .= $chars;
-                        if (strlen($lastFourChars) > 4)
+                        if (strlen($lastFourChars) > 4) {
                             $lastFourChars = substr($lastFourChars, -4);
+                        }
                     } else {
                         /* Anything else
                           THIS IS AN OPTIMIZATION: Get as many character that
@@ -251,14 +264,18 @@ class HTML5_Tokenizer {
                           as a single character token. Stay in the data state. */
 
                         $mask = '';
-                        if ($hyp_cond)
+                        if ($hyp_cond === true) {
                             $mask .= '-';
-                        if ($amp_cond)
+                        }
+                        if ($amp_cond === true) {
                             $mask .= '&';
-                        if ($lt_cond)
+                        }
+                        if ($lt_cond === true) {
                             $mask .= '<';
-                        if ($gt_cond)
+                        }
+                        if ($gt_cond === true) {
                             $mask .= '>';
+                        }
 
                         if ($mask === '') {
                             $chars = $this->stream->remainingChars();
@@ -272,8 +289,9 @@ class HTML5_Tokenizer {
                         ));
 
                         $lastFourChars .= $chars;
-                        if (strlen($lastFourChars) > 4)
+                        if (strlen($lastFourChars) > 4) {
                             $lastFourChars = substr($lastFourChars, -4);
+                        }
 
                         $state = 'data';
                     }
@@ -2003,6 +2021,8 @@ class HTML5_Tokenizer {
 
     /**
      * Returns a serialized representation of the tree.
+     *
+     * @return DOMDocument|DOMNodeList
      */
     public function save() {
         return $this->tree->save();
@@ -2017,11 +2037,18 @@ class HTML5_Tokenizer {
 
     /**
      * Returns the input stream.
+     *
+     * @return HTML5_InputStream
      */
     public function stream() {
         return $this->stream;
     }
 
+    /**
+     * @param bool $allowed
+     * @param bool $inattr
+     * @return string
+     */
     private function consumeCharacterReference($allowed = false, $inattr = false) {
         // This goes quite far against spec, and is far closer to the Python
         // impl., mainly because we don't do the large unconsuming the spec
@@ -2135,8 +2162,8 @@ class HTML5_Tokenizer {
                     ));
                     return HTML5_Data::utf8chr($new_codepoint);
                 } else {
-                    /* Otherwise, if the number is greater than 0x10FFFF, then 
-                     * this is a parse error. Return a U+FFFD REPLACEMENT 
+                    /* Otherwise, if the number is greater than 0x10FFFF, then
+                     * this is a parse error. Return a U+FFFD REPLACEMENT
                      * CHARACTER. */
                     if ($codepoint > 0x10FFFF) {
                         $this->emitToken(array(
@@ -2145,16 +2172,16 @@ class HTML5_Tokenizer {
                         ));
                         return "\xEF\xBF\xBD";
                     }
-                    /* Otherwise, return a character token for the Unicode 
-                     * character whose code point is that number.  If the 
-                     * number is in the range 0x0001 to 0x0008,    0x000E to 
-                     * 0x001F,  0x007F  to 0x009F, 0xD800 to 0xDFFF, 0xFDD0 to 
-                     * 0xFDEF, or is one of 0x000B, 0xFFFE, 0xFFFF, 0x1FFFE, 
-                     * 0x1FFFF, 0x2FFFE, 0x2FFFF, 0x3FFFE, 0x3FFFF, 0x4FFFE, 
-                     * 0x4FFFF, 0x5FFFE, 0x5FFFF, 0x6FFFE, 0x6FFFF, 0x7FFFE, 
-                     * 0x7FFFF, 0x8FFFE, 0x8FFFF, 0x9FFFE, 0x9FFFF, 0xAFFFE, 
-                     * 0xAFFFF, 0xBFFFE, 0xBFFFF, 0xCFFFE, 0xCFFFF, 0xDFFFE, 
-                     * 0xDFFFF, 0xEFFFE, 0xEFFFF, 0xFFFFE, 0xFFFFF, 0x10FFFE, 
+                    /* Otherwise, return a character token for the Unicode
+                     * character whose code point is that number.  If the
+                     * number is in the range 0x0001 to 0x0008,    0x000E to
+                     * 0x001F,  0x007F  to 0x009F, 0xD800 to 0xDFFF, 0xFDD0 to
+                     * 0xFDEF, or is one of 0x000B, 0xFFFE, 0xFFFF, 0x1FFFE,
+                     * 0x1FFFF, 0x2FFFE, 0x2FFFF, 0x3FFFE, 0x3FFFF, 0x4FFFE,
+                     * 0x4FFFF, 0x5FFFE, 0x5FFFF, 0x6FFFE, 0x6FFFF, 0x7FFFE,
+                     * 0x7FFFF, 0x8FFFE, 0x8FFFF, 0x9FFFE, 0x9FFFF, 0xAFFFE,
+                     * 0xAFFFF, 0xBFFFE, 0xBFFFF, 0xCFFFE, 0xCFFFF, 0xDFFFE,
+                     * 0xDFFFF, 0xEFFFE, 0xEFFFF, 0xFFFFE, 0xFFFFF, 0x10FFFE,
                      * or 0x10FFFF, then this is a parse error. */
                     // && has higher precedence than ||
                     if (
@@ -2264,6 +2291,9 @@ class HTML5_Tokenizer {
         }
     }
 
+    /**
+     * @param bool $allowed
+     */
     private function characterReferenceInAttributeValue($allowed = false) {
         /* Attempt to consume a character reference. */
         $entity = $this->consumeCharacterReference($allowed, true);
@@ -2284,9 +2314,13 @@ class HTML5_Tokenizer {
 
     /**
      * Emits a token, passing it on to the tree builder.
+     *
+     * @param $token
+     * @param bool $checkStream
+     * @param bool $dry
      */
     protected function emitToken($token, $checkStream = true, $dry = false) {
-        if ($checkStream) {
+        if ($checkStream === true) {
             // Emit errors from input stream.
             while ($this->stream->errors) {
                 $this->emitToken(array_shift($this->stream->errors), false);
@@ -2321,12 +2355,12 @@ class HTML5_Tokenizer {
             }
         }
 
-        if (!$dry) {
+        if ($dry === false) {
             // the current structure of attributes is not a terribly good one
             $this->tree->emitToken($token);
         }
 
-        if (!$dry && is_int($this->tree->content_model)) {
+        if ($dry === false && is_int($this->tree->content_model)) {
             $this->content_model = $this->tree->content_model;
             $this->tree->content_model = null;
         } elseif ($token['type'] === self::ENDTAG) {

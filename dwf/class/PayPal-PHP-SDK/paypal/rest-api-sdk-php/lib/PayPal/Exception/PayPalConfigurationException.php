@@ -7,8 +7,7 @@ namespace PayPal\Exception;
  *
  * @package PayPal\Exception
  */
-class PayPalConfigurationException extends \Exception
-{
+class PayPalConfigurationException extends \Exception {
 
     /**
      * Default Constructor
@@ -16,8 +15,8 @@ class PayPalConfigurationException extends \Exception
      * @param string|null $message
      * @param int  $code
      */
-    public function __construct($message = null, $code = 0)
-    {
+    public function __construct($message = null, $code = 0) {
         parent::__construct($message, $code);
     }
+
 }

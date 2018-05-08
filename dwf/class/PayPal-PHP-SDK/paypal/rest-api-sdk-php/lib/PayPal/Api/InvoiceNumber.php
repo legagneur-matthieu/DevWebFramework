@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string number
  */
-class InvoiceNumber extends PayPalModel
-{
+class InvoiceNumber extends PayPalModel {
+
     /**
      * The next invoice number.
      *
@@ -35,4 +35,5 @@ class InvoiceNumber extends PayPalModel
     public function getNumber() {
         return $this->number;
     }
+
 }

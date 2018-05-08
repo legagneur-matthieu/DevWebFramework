@@ -16,8 +16,8 @@ use PayPal\Validation\NumericValidator;
  * @property string currency
  * @property string value
  */
-class Currency extends PayPalModel
-{
+class Currency extends PayPalModel {
+
     /**
      * 3 letter currency code as defined by ISO 4217.
      *
@@ -25,8 +25,7 @@ class Currency extends PayPalModel
      * 
      * @return $this
      */
-    public function setCurrency($currency)
-    {
+    public function setCurrency($currency) {
         $this->currency = $currency;
         return $this;
     }
@@ -36,8 +35,7 @@ class Currency extends PayPalModel
      *
      * @return string
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->currency;
     }
 
@@ -48,8 +46,7 @@ class Currency extends PayPalModel
      * 
      * @return $this
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         NumericValidator::validate($value, "Value");
         $value = FormatConverter::formatToPrice($value, $this->getCurrency());
         $this->value = $value;
@@ -61,8 +58,7 @@ class Currency extends PayPalModel
      *
      * @return string
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 

@@ -20,8 +20,8 @@ use PayPal\Common\PayPalModel;
  * @property string normalization_status
  * @property string status
  */
-class BaseAddress extends PayPalModel
-{
+class BaseAddress extends PayPalModel {
+
     /**
      * Line 1 of the Address (eg. number, street, etc).
      *
@@ -29,8 +29,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setLine1($line1)
-    {
+    public function setLine1($line1) {
         $this->line1 = $line1;
         return $this;
     }
@@ -40,8 +39,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getLine1()
-    {
+    public function getLine1() {
         return $this->line1;
     }
 
@@ -52,8 +50,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setLine2($line2)
-    {
+    public function setLine2($line2) {
         $this->line2 = $line2;
         return $this;
     }
@@ -63,8 +60,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getLine2()
-    {
+    public function getLine2() {
         return $this->line2;
     }
 
@@ -75,8 +71,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->city = $city;
         return $this;
     }
@@ -86,8 +81,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
@@ -98,8 +92,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setCountryCode($country_code)
-    {
+    public function setCountryCode($country_code) {
         $this->country_code = $country_code;
         return $this;
     }
@@ -109,8 +102,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getCountryCode()
-    {
+    public function getCountryCode() {
         return $this->country_code;
     }
 
@@ -121,8 +113,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setPostalCode($postal_code)
-    {
+    public function setPostalCode($postal_code) {
         $this->postal_code = $postal_code;
         return $this;
     }
@@ -132,8 +123,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getPostalCode()
-    {
+    public function getPostalCode() {
         return $this->postal_code;
     }
 
@@ -144,8 +134,7 @@ class BaseAddress extends PayPalModel
      * 
      * @return $this
      */
-    public function setState($state)
-    {
+    public function setState($state) {
         $this->state = $state;
         return $this;
     }
@@ -155,8 +144,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getState()
-    {
+    public function getState() {
         return $this->state;
     }
 
@@ -168,8 +156,7 @@ class BaseAddress extends PayPalModel
      *
      * @return $this
      */
-    public function setNormalizationStatus($normalization_status)
-    {
+    public function setNormalizationStatus($normalization_status) {
         $this->normalization_status = $normalization_status;
         return $this;
     }
@@ -179,8 +166,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getNormalizationStatus()
-    {
+    public function getNormalizationStatus() {
         return $this->normalization_status;
     }
 
@@ -192,8 +178,7 @@ class BaseAddress extends PayPalModel
      *
      * @return $this
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
         return $this;
     }
@@ -203,8 +188,7 @@ class BaseAddress extends PayPalModel
      *
      * @return string
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 

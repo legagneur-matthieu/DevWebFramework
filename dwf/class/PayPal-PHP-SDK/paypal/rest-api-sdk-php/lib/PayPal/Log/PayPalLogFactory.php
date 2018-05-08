@@ -4,8 +4,8 @@ namespace PayPal\Log;
 
 use Psr\Log\LoggerInterface;
 
-interface PayPalLogFactory
-{
+interface PayPalLogFactory {
+
     /**
      * Returns logger instance implementing LoggerInterface.
      *

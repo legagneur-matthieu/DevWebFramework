@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property string invoice_number
  * @property bool refund_advice
  */
-class RefundRequest extends PayPalModel
-{
+class RefundRequest extends PayPalModel {
+
     /**
      * Details including both refunded amount (to payer) and refunded fee (to payee).
      *
@@ -27,8 +27,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -38,8 +37,7 @@ class RefundRequest extends PayPalModel
      *
      * @return \PayPal\Api\Amount
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 
@@ -50,8 +48,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
         return $this;
     }
@@ -61,8 +58,7 @@ class RefundRequest extends PayPalModel
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -74,8 +70,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setRefundSource($refund_source)
-    {
+    public function setRefundSource($refund_source) {
         $this->refund_source = $refund_source;
         return $this;
     }
@@ -85,8 +80,7 @@ class RefundRequest extends PayPalModel
      *
      * @return string
      */
-    public function getRefundSource()
-    {
+    public function getRefundSource() {
         return $this->refund_source;
     }
 
@@ -97,8 +91,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setReason($reason)
-    {
+    public function setReason($reason) {
         $this->reason = $reason;
         return $this;
     }
@@ -108,8 +101,7 @@ class RefundRequest extends PayPalModel
      *
      * @return string
      */
-    public function getReason()
-    {
+    public function getReason() {
         return $this->reason;
     }
 
@@ -120,8 +112,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setInvoiceNumber($invoice_number)
-    {
+    public function setInvoiceNumber($invoice_number) {
         $this->invoice_number = $invoice_number;
         return $this;
     }
@@ -131,8 +122,7 @@ class RefundRequest extends PayPalModel
      *
      * @return string
      */
-    public function getInvoiceNumber()
-    {
+    public function getInvoiceNumber() {
         return $this->invoice_number;
     }
 
@@ -143,8 +133,7 @@ class RefundRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setRefundAdvice($refund_advice)
-    {
+    public function setRefundAdvice($refund_advice) {
         $this->refund_advice = $refund_advice;
         return $this;
     }
@@ -154,8 +143,7 @@ class RefundRequest extends PayPalModel
      *
      * @return bool
      */
-    public function getRefundAdvice()
-    {
+    public function getRefundAdvice() {
         return $this->refund_advice;
     }
 

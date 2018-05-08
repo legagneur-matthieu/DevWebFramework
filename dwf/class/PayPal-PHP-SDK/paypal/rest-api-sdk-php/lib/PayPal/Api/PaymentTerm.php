@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string term_type
  * @property string due_date
  */
-class PaymentTerm extends PayPalModel
-{
+class PaymentTerm extends PayPalModel {
+
     /**
      * The terms by which the invoice payment is due.
      * Valid Values: ["DUE_ON_RECEIPT", "DUE_ON_DATE_SPECIFIED", "NET_10", "NET_15", "NET_30", "NET_45", "NET_60", "NET_90", "NO_DUE_DATE"]
@@ -24,8 +24,7 @@ class PaymentTerm extends PayPalModel
      * 
      * @return $this
      */
-    public function setTermType($term_type)
-    {
+    public function setTermType($term_type) {
         $this->term_type = $term_type;
         return $this;
     }
@@ -35,8 +34,7 @@ class PaymentTerm extends PayPalModel
      *
      * @return string
      */
-    public function getTermType()
-    {
+    public function getTermType() {
         return $this->term_type;
     }
 
@@ -47,8 +45,7 @@ class PaymentTerm extends PayPalModel
      * 
      * @return $this
      */
-    public function setDueDate($due_date)
-    {
+    public function setDueDate($due_date) {
         $this->due_date = $due_date;
         return $this;
     }
@@ -58,8 +55,7 @@ class PaymentTerm extends PayPalModel
      *
      * @return string
      */
-    public function getDueDate()
-    {
+    public function getDueDate() {
         return $this->due_date;
     }
 

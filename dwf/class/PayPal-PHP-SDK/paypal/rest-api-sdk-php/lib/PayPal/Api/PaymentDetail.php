@@ -19,8 +19,8 @@ use PayPal\Common\PayPalModel;
  * @property string note
  * @property \PayPal\Api\Currency amount
  */
-class PaymentDetail extends PayPalModel
-{
+class PaymentDetail extends PayPalModel {
+
     /**
      * The PayPal payment detail. Indicates whether payment was made in an invoicing flow through PayPal or externally. In the case of the mark-as-paid API, the supported payment type is `EXTERNAL`. For backward compatibility, the `PAYPAL` payment type is still supported.
      * Valid Values: ["PAYPAL", "EXTERNAL"]
@@ -29,8 +29,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
         return $this;
     }
@@ -40,8 +39,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -52,8 +50,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setTransactionId($transaction_id)
-    {
+    public function setTransactionId($transaction_id) {
         $this->transaction_id = $transaction_id;
         return $this;
     }
@@ -63,8 +60,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getTransactionId()
-    {
+    public function getTransactionId() {
         return $this->transaction_id;
     }
 
@@ -76,8 +72,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setTransactionType($transaction_type)
-    {
+    public function setTransactionType($transaction_type) {
         $this->transaction_type = $transaction_type;
         return $this;
     }
@@ -87,8 +82,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getTransactionType()
-    {
+    public function getTransactionType() {
         return $this->transaction_type;
     }
 
@@ -99,8 +93,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
         return $this;
     }
@@ -110,8 +103,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -123,8 +115,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         $this->method = $method;
         return $this;
     }
@@ -134,8 +125,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getMethod()
-    {
+    public function getMethod() {
         return $this->method;
     }
 
@@ -146,8 +136,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setNote($note)
-    {
+    public function setNote($note) {
         $this->note = $note;
         return $this;
     }
@@ -157,8 +146,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return string
      */
-    public function getNote()
-    {
+    public function getNote() {
         return $this->note;
     }
 
@@ -169,8 +157,7 @@ class PaymentDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -180,8 +167,7 @@ class PaymentDetail extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 

@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Currency amount
  * @property \PayPal\Api\Tax tax
  */
-class ShippingCost extends PayPalModel
-{
+class ShippingCost extends PayPalModel {
+
     /**
      * The shipping cost, as an amount. Valid range is from 0 to 999999.99.
      *
@@ -23,8 +23,7 @@ class ShippingCost extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -34,8 +33,7 @@ class ShippingCost extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 
@@ -46,8 +44,7 @@ class ShippingCost extends PayPalModel
      * 
      * @return $this
      */
-    public function setTax($tax)
-    {
+    public function setTax($tax) {
         $this->tax = $tax;
         return $this;
     }
@@ -57,8 +54,7 @@ class ShippingCost extends PayPalModel
      *
      * @return \PayPal\Api\Tax
      */
-    public function getTax()
-    {
+    public function getTax() {
         return $this->tax;
     }
 

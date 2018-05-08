@@ -8,15 +8,14 @@ namespace PayPal\Common;
  *
  * @package PayPal\Common
  */
-class ArrayUtil
-{
+class ArrayUtil {
+
     /**
      *
      * @param array $arr
      * @return true if $arr is an associative array
      */
-    public static function isAssocArray(array $arr)
-    {
+    public static function isAssocArray(array $arr) {
         foreach ($arr as $k => $v) {
             if (is_int($k)) {
                 return false;
@@ -24,4 +23,5 @@ class ArrayUtil
         }
         return true;
     }
+
 }

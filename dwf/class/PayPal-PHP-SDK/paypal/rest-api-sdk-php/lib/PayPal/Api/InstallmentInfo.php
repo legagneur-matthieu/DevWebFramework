@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property string issuer
  * @property \PayPal\Api\InstallmentOption[] installment_options
  */
-class InstallmentInfo extends PayPalModel
-{
+class InstallmentInfo extends PayPalModel {
+
     /**
      * Installment id.
      *
@@ -25,8 +25,7 @@ class InstallmentInfo extends PayPalModel
      * 
      * @return $this
      */
-    public function setInstallmentId($installment_id)
-    {
+    public function setInstallmentId($installment_id) {
         $this->installment_id = $installment_id;
         return $this;
     }
@@ -36,8 +35,7 @@ class InstallmentInfo extends PayPalModel
      *
      * @return string
      */
-    public function getInstallmentId()
-    {
+    public function getInstallmentId() {
         return $this->installment_id;
     }
 
@@ -49,8 +47,7 @@ class InstallmentInfo extends PayPalModel
      * 
      * @return $this
      */
-    public function setNetwork($network)
-    {
+    public function setNetwork($network) {
         $this->network = $network;
         return $this;
     }
@@ -60,8 +57,7 @@ class InstallmentInfo extends PayPalModel
      *
      * @return string
      */
-    public function getNetwork()
-    {
+    public function getNetwork() {
         return $this->network;
     }
 
@@ -72,8 +68,7 @@ class InstallmentInfo extends PayPalModel
      * 
      * @return $this
      */
-    public function setIssuer($issuer)
-    {
+    public function setIssuer($issuer) {
         $this->issuer = $issuer;
         return $this;
     }
@@ -83,8 +78,7 @@ class InstallmentInfo extends PayPalModel
      *
      * @return string
      */
-    public function getIssuer()
-    {
+    public function getIssuer() {
         return $this->issuer;
     }
 
@@ -95,8 +89,7 @@ class InstallmentInfo extends PayPalModel
      * 
      * @return $this
      */
-    public function setInstallmentOptions($installment_options)
-    {
+    public function setInstallmentOptions($installment_options) {
         $this->installment_options = $installment_options;
         return $this;
     }
@@ -106,8 +99,7 @@ class InstallmentInfo extends PayPalModel
      *
      * @return \PayPal\Api\InstallmentOption[]
      */
-    public function getInstallmentOptions()
-    {
+    public function getInstallmentOptions() {
         return $this->installment_options;
     }
 
@@ -117,13 +109,12 @@ class InstallmentInfo extends PayPalModel
      * @param \PayPal\Api\InstallmentOption $installmentOption
      * @return $this
      */
-    public function addInstallmentOption($installmentOption)
-    {
+    public function addInstallmentOption($installmentOption) {
         if (!$this->getInstallmentOptions()) {
             return $this->setInstallmentOptions(array($installmentOption));
         } else {
             return $this->setInstallmentOptions(
-                array_merge($this->getInstallmentOptions(), array($installmentOption))
+                            array_merge($this->getInstallmentOptions(), array($installmentOption))
             );
         }
     }
@@ -134,10 +125,9 @@ class InstallmentInfo extends PayPalModel
      * @param \PayPal\Api\InstallmentOption $installmentOption
      * @return $this
      */
-    public function removeInstallmentOption($installmentOption)
-    {
+    public function removeInstallmentOption($installmentOption) {
         return $this->setInstallmentOptions(
-            array_diff($this->getInstallmentOptions(), array($installmentOption))
+                        array_diff($this->getInstallmentOptions(), array($installmentOption))
         );
     }
 

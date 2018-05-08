@@ -1,4 +1,5 @@
 <?php
+
 namespace PayPal\Transport;
 
 use PayPal\Core\PayPalHttpConfig;
@@ -11,9 +12,7 @@ use PayPal\Rest\ApiContext;
  *
  * @package PayPal\Transport
  */
-class PayPalRestCall
-{
-
+class PayPalRestCall {
 
     /**
      * Paypal Logger
@@ -29,14 +28,12 @@ class PayPalRestCall
      */
     private $apiContext;
 
-
     /**
      * Default Constructor
      *
      * @param ApiContext $apiContext
      */
-    public function __construct(ApiContext $apiContext)
-    {
+    public function __construct(ApiContext $apiContext) {
         $this->apiContext = $apiContext;
         $this->logger = PayPalLoggingManager::getInstance(__CLASS__);
     }
@@ -50,21 +47,25 @@ class PayPalRestCall
      * @return mixed
      * @throws \PayPal\Exception\PayPalConnectionException
      */
-    public function execute($handlers = array(), $path, $method, $data = '', $headers = array())
-    {
+    public function execute($handlers = array(), $path, $method, $data = '', $headers = array()) {
         $config = $this->apiContext->getConfig();
         $httpConfig = new PayPalHttpConfig(null, $method, $config);
         $headers = $headers ? $headers : array();
         $httpConfig->setHeaders($headers +
-            array(
-                'Content-Type' => 'application/json'
-            )
+                array(
+                    'Content-Type' => 'application/json'
+                )
         );
+
+        // if proxy set via config, add it
+        if (!empty($config['http.Proxy'])) {
+            $httpConfig->setHttpProxy($config['http.Proxy']);
+        }
 
         /** @var \Paypal\Handler\IPayPalHandler $handler */
         foreach ($handlers as $handler) {
             if (!is_object($handler)) {
-                $fullHandler = "\\" . (string)$handler;
+                $fullHandler = "\\" . (string) $handler;
                 $handler = new $fullHandler($this->apiContext);
             }
             $handler->handle($httpConfig, $data, array('path' => $path, 'apiContext' => $this->apiContext));
@@ -74,4 +75,5 @@ class PayPalRestCall
 
         return $response;
     }
+
 }

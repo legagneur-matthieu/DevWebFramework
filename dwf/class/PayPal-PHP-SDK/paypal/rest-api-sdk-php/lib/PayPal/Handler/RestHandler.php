@@ -1,4 +1,5 @@
 <?php
+
 /**
  * API handler for all REST API calls
  */
@@ -17,8 +18,8 @@ use PayPal\Exception\PayPalMissingCredentialException;
 /**
  * Class RestHandler
  */
-class RestHandler implements IPayPalHandler
-{
+class RestHandler implements IPayPalHandler {
+
     /**
      * Private Variable
      *
@@ -31,8 +32,7 @@ class RestHandler implements IPayPalHandler
      *
      * @param \Paypal\Rest\ApiContext $apiContext
      */
-    public function __construct($apiContext)
-    {
+    public function __construct($apiContext) {
         $this->apiContext = $apiContext;
     }
 
@@ -45,8 +45,7 @@ class RestHandler implements IPayPalHandler
      * @throws PayPalInvalidCredentialException
      * @throws PayPalMissingCredentialException
      */
-    public function handle($httpConfig, $request, $options)
-    {
+    public function handle($httpConfig, $request, $options) {
         $credential = $this->apiContext->getCredential();
         $config = $this->apiContext->getConfig();
 
@@ -67,8 +66,8 @@ class RestHandler implements IPayPalHandler
         }
 
         $httpConfig->setUrl(
-            rtrim(trim($this->_getEndpoint($config)), '/') .
-            (isset($options['path']) ? $options['path'] : '')
+                rtrim(trim($this->_getEndpoint($config)), '/') .
+                (isset($options['path']) ? $options['path'] : '')
         );
 
         // Overwrite Expect Header to disable 100 Continue Issue
@@ -100,8 +99,7 @@ class RestHandler implements IPayPalHandler
      * @return string
      * @throws \PayPal\Exception\PayPalConfigurationException
      */
-    private function _getEndpoint($config)
-    {
+    private function _getEndpoint($config) {
         if (isset($config['service.EndPoint'])) {
             return $config['service.EndPoint'];
         } elseif (isset($config['mode'])) {
@@ -121,4 +119,5 @@ class RestHandler implements IPayPalHandler
             return PayPalConstants::REST_SANDBOX_ENDPOINT;
         }
     }
+
 }

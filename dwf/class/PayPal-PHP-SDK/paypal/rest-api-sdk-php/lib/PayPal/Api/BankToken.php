@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property string external_customer_id
  * @property string mandate_reference_number
  */
-class BankToken extends PayPalModel
-{
+class BankToken extends PayPalModel {
+
     /**
      * ID of a previously saved Bank resource using /vault/bank API.
      *
@@ -24,8 +24,7 @@ class BankToken extends PayPalModel
      * 
      * @return $this
      */
-    public function setBankId($bank_id)
-    {
+    public function setBankId($bank_id) {
         $this->bank_id = $bank_id;
         return $this;
     }
@@ -35,8 +34,7 @@ class BankToken extends PayPalModel
      *
      * @return string
      */
-    public function getBankId()
-    {
+    public function getBankId() {
         return $this->bank_id;
     }
 
@@ -47,8 +45,7 @@ class BankToken extends PayPalModel
      * 
      * @return $this
      */
-    public function setExternalCustomerId($external_customer_id)
-    {
+    public function setExternalCustomerId($external_customer_id) {
         $this->external_customer_id = $external_customer_id;
         return $this;
     }
@@ -58,8 +55,7 @@ class BankToken extends PayPalModel
      *
      * @return string
      */
-    public function getExternalCustomerId()
-    {
+    public function getExternalCustomerId() {
         return $this->external_customer_id;
     }
 
@@ -70,8 +66,7 @@ class BankToken extends PayPalModel
      * 
      * @return $this
      */
-    public function setMandateReferenceNumber($mandate_reference_number)
-    {
+    public function setMandateReferenceNumber($mandate_reference_number) {
         $this->mandate_reference_number = $mandate_reference_number;
         return $this;
     }
@@ -81,8 +76,7 @@ class BankToken extends PayPalModel
      *
      * @return string
      */
-    public function getMandateReferenceNumber()
-    {
+    public function getMandateReferenceNumber() {
         return $this->mandate_reference_number;
     }
 

@@ -17,8 +17,8 @@ use PayPal\Common\PayPalModel;
  * @property bool send_to_payer
  * @property string[] cc_emails
  */
-class CancelNotification extends PayPalModel
-{
+class CancelNotification extends PayPalModel {
+
     /**
      * Subject of the notification.
      *
@@ -26,8 +26,7 @@ class CancelNotification extends PayPalModel
      * 
      * @return $this
      */
-    public function setSubject($subject)
-    {
+    public function setSubject($subject) {
         $this->subject = $subject;
         return $this;
     }
@@ -37,8 +36,7 @@ class CancelNotification extends PayPalModel
      *
      * @return string
      */
-    public function getSubject()
-    {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -49,8 +47,7 @@ class CancelNotification extends PayPalModel
      * 
      * @return $this
      */
-    public function setNote($note)
-    {
+    public function setNote($note) {
         $this->note = $note;
         return $this;
     }
@@ -60,8 +57,7 @@ class CancelNotification extends PayPalModel
      *
      * @return string
      */
-    public function getNote()
-    {
+    public function getNote() {
         return $this->note;
     }
 
@@ -72,8 +68,7 @@ class CancelNotification extends PayPalModel
      * 
      * @return $this
      */
-    public function setSendToMerchant($send_to_merchant)
-    {
+    public function setSendToMerchant($send_to_merchant) {
         $this->send_to_merchant = $send_to_merchant;
         return $this;
     }
@@ -83,8 +78,7 @@ class CancelNotification extends PayPalModel
      *
      * @return bool
      */
-    public function getSendToMerchant()
-    {
+    public function getSendToMerchant() {
         return $this->send_to_merchant;
     }
 
@@ -95,8 +89,7 @@ class CancelNotification extends PayPalModel
      * 
      * @return $this
      */
-    public function setSendToPayer($send_to_payer)
-    {
+    public function setSendToPayer($send_to_payer) {
         $this->send_to_payer = $send_to_payer;
         return $this;
     }
@@ -106,8 +99,7 @@ class CancelNotification extends PayPalModel
      *
      * @return bool
      */
-    public function getSendToPayer()
-    {
+    public function getSendToPayer() {
         return $this->send_to_payer;
     }
 
@@ -118,8 +110,7 @@ class CancelNotification extends PayPalModel
      * 
      * @return $this
      */
-    public function setCcEmails($cc_emails)
-    {
+    public function setCcEmails($cc_emails) {
         $this->cc_emails = $cc_emails;
         return $this;
     }
@@ -129,8 +120,7 @@ class CancelNotification extends PayPalModel
      *
      * @return string[]
      */
-    public function getCcEmails()
-    {
+    public function getCcEmails() {
         return $this->cc_emails;
     }
 
@@ -140,13 +130,12 @@ class CancelNotification extends PayPalModel
      * @param string $string
      * @return $this
      */
-    public function addCcEmail($string)
-    {
+    public function addCcEmail($string) {
         if (!$this->getCcEmails()) {
             return $this->setCcEmails(array($string));
         } else {
             return $this->setCcEmails(
-                array_merge($this->getCcEmails(), array($string))
+                            array_merge($this->getCcEmails(), array($string))
             );
         }
     }
@@ -157,10 +146,9 @@ class CancelNotification extends PayPalModel
      * @param string $string
      * @return $this
      */
-    public function removeCcEmail($string)
-    {
+    public function removeCcEmail($string) {
         return $this->setCcEmails(
-            array_diff($this->getCcEmails(), array($string))
+                        array_diff($this->getCcEmails(), array($string))
         );
     }
 

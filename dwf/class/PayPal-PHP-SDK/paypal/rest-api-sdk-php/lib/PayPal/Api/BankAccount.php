@@ -36,8 +36,8 @@ use PayPal\Common\PayPalModel;
  * @property string valid_until
  * @property \PayPal\Api\Links[] links
  */
-class BankAccount extends PayPalModel
-{
+class BankAccount extends PayPalModel {
+
     /**
      * ID of the bank account being saved for later use.
      * @deprecated Not publicly available
@@ -45,8 +45,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
@@ -56,8 +55,7 @@ class BankAccount extends PayPalModel
      * @deprecated Not publicly available
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -68,8 +66,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAccountNumber($account_number)
-    {
+    public function setAccountNumber($account_number) {
         $this->account_number = $account_number;
         return $this;
     }
@@ -79,8 +76,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAccountNumber()
-    {
+    public function getAccountNumber() {
         return $this->account_number;
     }
 
@@ -92,8 +88,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAccountNumberType($account_number_type)
-    {
+    public function setAccountNumberType($account_number_type) {
         $this->account_number_type = $account_number_type;
         return $this;
     }
@@ -103,8 +98,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAccountNumberType()
-    {
+    public function getAccountNumberType() {
         return $this->account_number_type;
     }
 
@@ -115,8 +109,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setRoutingNumber($routing_number)
-    {
+    public function setRoutingNumber($routing_number) {
         $this->routing_number = $routing_number;
         return $this;
     }
@@ -126,8 +119,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getRoutingNumber()
-    {
+    public function getRoutingNumber() {
         return $this->routing_number;
     }
 
@@ -139,8 +131,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAccountType($account_type)
-    {
+    public function setAccountType($account_type) {
         $this->account_type = $account_type;
         return $this;
     }
@@ -150,8 +141,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAccountType()
-    {
+    public function getAccountType() {
         return $this->account_type;
     }
 
@@ -162,8 +152,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAccountName($account_name)
-    {
+    public function setAccountName($account_name) {
         $this->account_name = $account_name;
         return $this;
     }
@@ -173,8 +162,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAccountName()
-    {
+    public function getAccountName() {
         return $this->account_name;
     }
 
@@ -186,8 +174,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setCheckType($check_type)
-    {
+    public function setCheckType($check_type) {
         $this->check_type = $check_type;
         return $this;
     }
@@ -197,8 +184,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getCheckType()
-    {
+    public function getCheckType() {
         return $this->check_type;
     }
 
@@ -210,8 +196,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAuthType($auth_type)
-    {
+    public function setAuthType($auth_type) {
         $this->auth_type = $auth_type;
         return $this;
     }
@@ -221,8 +206,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAuthType()
-    {
+    public function getAuthType() {
         return $this->auth_type;
     }
 
@@ -233,8 +217,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setAuthCaptureTimestamp($auth_capture_timestamp)
-    {
+    public function setAuthCaptureTimestamp($auth_capture_timestamp) {
         $this->auth_capture_timestamp = $auth_capture_timestamp;
         return $this;
     }
@@ -244,8 +227,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getAuthCaptureTimestamp()
-    {
+    public function getAuthCaptureTimestamp() {
         return $this->auth_capture_timestamp;
     }
 
@@ -256,8 +238,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setBankName($bank_name)
-    {
+    public function setBankName($bank_name) {
         $this->bank_name = $bank_name;
         return $this;
     }
@@ -267,8 +248,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getBankName()
-    {
+    public function getBankName() {
         return $this->bank_name;
     }
 
@@ -279,8 +259,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setCountryCode($country_code)
-    {
+    public function setCountryCode($country_code) {
         $this->country_code = $country_code;
         return $this;
     }
@@ -290,8 +269,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getCountryCode()
-    {
+    public function getCountryCode() {
         return $this->country_code;
     }
 
@@ -302,8 +280,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setFirstName($first_name)
-    {
+    public function setFirstName($first_name) {
         $this->first_name = $first_name;
         return $this;
     }
@@ -313,8 +290,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->first_name;
     }
 
@@ -325,8 +301,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setLastName($last_name)
-    {
+    public function setLastName($last_name) {
         $this->last_name = $last_name;
         return $this;
     }
@@ -336,8 +311,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getLastName()
-    {
+    public function getLastName() {
         return $this->last_name;
     }
 
@@ -348,8 +322,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setBirthDate($birth_date)
-    {
+    public function setBirthDate($birth_date) {
         $this->birth_date = $birth_date;
         return $this;
     }
@@ -359,8 +332,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getBirthDate()
-    {
+    public function getBirthDate() {
         return $this->birth_date;
     }
 
@@ -371,8 +343,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setBillingAddress($billing_address)
-    {
+    public function setBillingAddress($billing_address) {
         $this->billing_address = $billing_address;
         return $this;
     }
@@ -382,8 +353,7 @@ class BankAccount extends PayPalModel
      *
      * @return \PayPal\Api\Address
      */
-    public function getBillingAddress()
-    {
+    public function getBillingAddress() {
         return $this->billing_address;
     }
 
@@ -395,8 +365,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setState($state)
-    {
+    public function setState($state) {
         $this->state = $state;
         return $this;
     }
@@ -406,8 +375,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getState()
-    {
+    public function getState() {
         return $this->state;
     }
 
@@ -419,8 +387,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setConfirmationStatus($confirmation_status)
-    {
+    public function setConfirmationStatus($confirmation_status) {
         $this->confirmation_status = $confirmation_status;
         return $this;
     }
@@ -430,8 +397,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getConfirmationStatus()
-    {
+    public function getConfirmationStatus() {
         return $this->confirmation_status;
     }
 
@@ -442,8 +408,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setPayerId($payer_id)
-    {
+    public function setPayerId($payer_id) {
         $this->payer_id = $payer_id;
         return $this;
     }
@@ -453,8 +418,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getPayerId()
-    {
+    public function getPayerId() {
         return $this->payer_id;
     }
 
@@ -465,8 +429,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setExternalCustomerId($external_customer_id)
-    {
+    public function setExternalCustomerId($external_customer_id) {
         $this->external_customer_id = $external_customer_id;
         return $this;
     }
@@ -476,8 +439,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getExternalCustomerId()
-    {
+    public function getExternalCustomerId() {
         return $this->external_customer_id;
     }
 
@@ -488,8 +450,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setMerchantId($merchant_id)
-    {
+    public function setMerchantId($merchant_id) {
         $this->merchant_id = $merchant_id;
         return $this;
     }
@@ -499,8 +460,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getMerchantId()
-    {
+    public function getMerchantId() {
         return $this->merchant_id;
     }
 
@@ -511,8 +471,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setCreateTime($create_time)
-    {
+    public function setCreateTime($create_time) {
         $this->create_time = $create_time;
         return $this;
     }
@@ -522,8 +481,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getCreateTime()
-    {
+    public function getCreateTime() {
         return $this->create_time;
     }
 
@@ -534,8 +492,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setUpdateTime($update_time)
-    {
+    public function setUpdateTime($update_time) {
         $this->update_time = $update_time;
         return $this;
     }
@@ -545,8 +502,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getUpdateTime()
-    {
+    public function getUpdateTime() {
         return $this->update_time;
     }
 
@@ -557,8 +513,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setValidUntil($valid_until)
-    {
+    public function setValidUntil($valid_until) {
         $this->valid_until = $valid_until;
         return $this;
     }
@@ -568,8 +523,7 @@ class BankAccount extends PayPalModel
      *
      * @return string
      */
-    public function getValidUntil()
-    {
+    public function getValidUntil() {
         return $this->valid_until;
     }
 
@@ -580,8 +534,7 @@ class BankAccount extends PayPalModel
      * 
      * @return $this
      */
-    public function setLinks($links)
-    {
+    public function setLinks($links) {
         $this->links = $links;
         return $this;
     }
@@ -591,8 +544,7 @@ class BankAccount extends PayPalModel
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks()
-    {
+    public function getLinks() {
         return $this->links;
     }
 
@@ -602,13 +554,12 @@ class BankAccount extends PayPalModel
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function addLink($links)
-    {
+    public function addLink($links) {
         if (!$this->getLinks()) {
             return $this->setLinks(array($links));
         } else {
             return $this->setLinks(
-                array_merge($this->getLinks(), array($links))
+                            array_merge($this->getLinks(), array($links))
             );
         }
     }
@@ -619,10 +570,9 @@ class BankAccount extends PayPalModel
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function removeLink($links)
-    {
+    public function removeLink($links) {
         return $this->setLinks(
-            array_diff($this->getLinks(), array($links))
+                        array_diff($this->getLinks(), array($links))
         );
     }
 

@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\CreditCardToken credit_card_token
  * @property \PayPal\Api\Billing billing
  */
-class FundingInstrument extends PayPalModel
-{
+class FundingInstrument extends PayPalModel {
+
     /**
      * Credit Card instrument.
      *
@@ -24,8 +24,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setCreditCard($credit_card)
-    {
+    public function setCreditCard($credit_card) {
         $this->credit_card = $credit_card;
         return $this;
     }
@@ -35,8 +34,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return \PayPal\Api\CreditCard
      */
-    public function getCreditCard()
-    {
+    public function getCreditCard() {
         return $this->credit_card;
     }
 
@@ -47,8 +45,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setCreditCardToken($credit_card_token)
-    {
+    public function setCreditCardToken($credit_card_token) {
         $this->credit_card_token = $credit_card_token;
         return $this;
     }
@@ -58,8 +55,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return \PayPal\Api\CreditCardToken
      */
-    public function getCreditCardToken()
-    {
+    public function getCreditCardToken() {
         return $this->credit_card_token;
     }
 
@@ -70,8 +66,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setPaymentCard($payment_card)
-    {
+    public function setPaymentCard($payment_card) {
         $this->payment_card = $payment_card;
         return $this;
     }
@@ -81,8 +76,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return \PayPal\Api\PaymentCard
      */
-    public function getPaymentCard()
-    {
+    public function getPaymentCard() {
         return $this->payment_card;
     }
 
@@ -93,8 +87,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setBankAccount($bank_account)
-    {
+    public function setBankAccount($bank_account) {
         $this->bank_account = $bank_account;
         return $this;
     }
@@ -104,8 +97,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\ExtendedBankAccount
      */
-    public function getBankAccount()
-    {
+    public function getBankAccount() {
         return $this->bank_account;
     }
 
@@ -116,8 +108,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setBankAccountToken($bank_account_token)
-    {
+    public function setBankAccountToken($bank_account_token) {
         $this->bank_account_token = $bank_account_token;
         return $this;
     }
@@ -127,8 +118,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\BankToken
      */
-    public function getBankAccountToken()
-    {
+    public function getBankAccountToken() {
         return $this->bank_account_token;
     }
 
@@ -139,8 +129,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setCredit($credit)
-    {
+    public function setCredit($credit) {
         $this->credit = $credit;
         return $this;
     }
@@ -150,8 +139,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\Credit
      */
-    public function getCredit()
-    {
+    public function getCredit() {
         return $this->credit;
     }
 
@@ -162,8 +150,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setIncentive($incentive)
-    {
+    public function setIncentive($incentive) {
         $this->incentive = $incentive;
         return $this;
     }
@@ -173,8 +160,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\Incentive
      */
-    public function getIncentive()
-    {
+    public function getIncentive() {
         return $this->incentive;
     }
 
@@ -185,8 +171,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setExternalFunding($external_funding)
-    {
+    public function setExternalFunding($external_funding) {
         $this->external_funding = $external_funding;
         return $this;
     }
@@ -196,8 +181,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\ExternalFunding
      */
-    public function getExternalFunding()
-    {
+    public function getExternalFunding() {
         return $this->external_funding;
     }
 
@@ -208,8 +192,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setCarrierAccountToken($carrier_account_token)
-    {
+    public function setCarrierAccountToken($carrier_account_token) {
         $this->carrier_account_token = $carrier_account_token;
         return $this;
     }
@@ -219,8 +202,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\CarrierAccountToken
      */
-    public function getCarrierAccountToken()
-    {
+    public function getCarrierAccountToken() {
         return $this->carrier_account_token;
     }
 
@@ -231,8 +213,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setCarrierAccount($carrier_account)
-    {
+    public function setCarrierAccount($carrier_account) {
         $this->carrier_account = $carrier_account;
         return $this;
     }
@@ -242,8 +223,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\CarrierAccount
      */
-    public function getCarrierAccount()
-    {
+    public function getCarrierAccount() {
         return $this->carrier_account;
     }
 
@@ -254,8 +234,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setPrivateLabelCard($private_label_card)
-    {
+    public function setPrivateLabelCard($private_label_card) {
         $this->private_label_card = $private_label_card;
         return $this;
     }
@@ -265,8 +244,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\PrivateLabelCard
      */
-    public function getPrivateLabelCard()
-    {
+    public function getPrivateLabelCard() {
         return $this->private_label_card;
     }
 
@@ -277,8 +255,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setBilling($billing)
-    {
+    public function setBilling($billing) {
         $this->billing = $billing;
         return $this;
     }
@@ -288,8 +265,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return \PayPal\Api\Billing
      */
-    public function getBilling()
-    {
+    public function getBilling() {
         return $this->billing;
     }
 
@@ -301,8 +277,7 @@ class FundingInstrument extends PayPalModel
      *
      * @return $this
      */
-    public function setAlternatePayment($alternate_payment)
-    {
+    public function setAlternatePayment($alternate_payment) {
         $this->alternate_payment = $alternate_payment;
         return $this;
     }
@@ -313,8 +288,7 @@ class FundingInstrument extends PayPalModel
      * @deprecated Not publicly available
      * @return \PayPal\Api\AlternatePayment
      */
-    public function getAlternatePayment()
-    {
+    public function getAlternatePayment() {
         return $this->alternate_payment;
     }
 

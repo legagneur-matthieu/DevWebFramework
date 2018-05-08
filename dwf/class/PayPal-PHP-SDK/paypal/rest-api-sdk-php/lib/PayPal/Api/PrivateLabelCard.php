@@ -17,8 +17,8 @@ use PayPal\Common\PayPalModel;
  * @property string issuer_name
  * @property string image_key
  */
-class PrivateLabelCard extends PayPalModel
-{
+class PrivateLabelCard extends PayPalModel {
+
     /**
      * encrypted identifier of the private label card instrument.
      *
@@ -26,8 +26,7 @@ class PrivateLabelCard extends PayPalModel
      * 
      * @return $this
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
@@ -37,8 +36,7 @@ class PrivateLabelCard extends PayPalModel
      *
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -49,8 +47,7 @@ class PrivateLabelCard extends PayPalModel
      * 
      * @return $this
      */
-    public function setCardNumber($card_number)
-    {
+    public function setCardNumber($card_number) {
         $this->card_number = $card_number;
         return $this;
     }
@@ -60,8 +57,7 @@ class PrivateLabelCard extends PayPalModel
      *
      * @return string
      */
-    public function getCardNumber()
-    {
+    public function getCardNumber() {
         return $this->card_number;
     }
 
@@ -72,8 +68,7 @@ class PrivateLabelCard extends PayPalModel
      * 
      * @return $this
      */
-    public function setIssuerId($issuer_id)
-    {
+    public function setIssuerId($issuer_id) {
         $this->issuer_id = $issuer_id;
         return $this;
     }
@@ -83,8 +78,7 @@ class PrivateLabelCard extends PayPalModel
      *
      * @return string
      */
-    public function getIssuerId()
-    {
+    public function getIssuerId() {
         return $this->issuer_id;
     }
 
@@ -95,8 +89,7 @@ class PrivateLabelCard extends PayPalModel
      * 
      * @return $this
      */
-    public function setIssuerName($issuer_name)
-    {
+    public function setIssuerName($issuer_name) {
         $this->issuer_name = $issuer_name;
         return $this;
     }
@@ -106,8 +99,7 @@ class PrivateLabelCard extends PayPalModel
      *
      * @return string
      */
-    public function getIssuerName()
-    {
+    public function getIssuerName() {
         return $this->issuer_name;
     }
 
@@ -118,8 +110,7 @@ class PrivateLabelCard extends PayPalModel
      * 
      * @return $this
      */
-    public function setImageKey($image_key)
-    {
+    public function setImageKey($image_key) {
         $this->image_key = $image_key;
         return $this;
     }
@@ -129,8 +120,7 @@ class PrivateLabelCard extends PayPalModel
      *
      * @return string
      */
-    public function getImageKey()
-    {
+    public function getImageKey() {
         return $this->image_key;
     }
 

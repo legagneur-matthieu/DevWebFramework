@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string field
  * @property string issue
  */
-class ErrorDetails extends PayPalModel
-{
+class ErrorDetails extends PayPalModel {
+
     /**
      * Name of the field that caused the error.
      *
@@ -23,8 +23,7 @@ class ErrorDetails extends PayPalModel
      * 
      * @return $this
      */
-    public function setField($field)
-    {
+    public function setField($field) {
         $this->field = $field;
         return $this;
     }
@@ -34,8 +33,7 @@ class ErrorDetails extends PayPalModel
      *
      * @return string
      */
-    public function getField()
-    {
+    public function getField() {
         return $this->field;
     }
 
@@ -46,8 +44,7 @@ class ErrorDetails extends PayPalModel
      * 
      * @return $this
      */
-    public function setIssue($issue)
-    {
+    public function setIssue($issue) {
         $this->issue = $issue;
         return $this;
     }
@@ -57,8 +54,7 @@ class ErrorDetails extends PayPalModel
      *
      * @return string
      */
-    public function getIssue()
-    {
+    public function getIssue() {
         return $this->issue;
     }
 
@@ -69,8 +65,7 @@ class ErrorDetails extends PayPalModel
      * 
      * @return $this
      */
-    public function setPurchaseUnitReferenceId($purchase_unit_reference_id)
-    {
+    public function setPurchaseUnitReferenceId($purchase_unit_reference_id) {
         $this->purchase_unit_reference_id = $purchase_unit_reference_id;
         return $this;
     }
@@ -80,8 +75,7 @@ class ErrorDetails extends PayPalModel
      * @deprecated Not publicly available
      * @return string
      */
-    public function getPurchaseUnitReferenceId()
-    {
+    public function getPurchaseUnitReferenceId() {
         return $this->purchase_unit_reference_id;
     }
 
@@ -92,8 +86,7 @@ class ErrorDetails extends PayPalModel
      * 
      * @return $this
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
         return $this;
     }
@@ -103,8 +96,7 @@ class ErrorDetails extends PayPalModel
      * @deprecated Not publicly available
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 

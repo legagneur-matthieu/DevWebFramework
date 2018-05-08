@@ -22,8 +22,8 @@ use PayPal\Validation\UrlValidator;
  * @property string type
  * @property string terms
  */
-class Incentive extends PayPalModel
-{
+class Incentive extends PayPalModel {
+
     /**
      * Identifier of the instrument in PayPal Wallet
      *
@@ -31,8 +31,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
@@ -42,8 +41,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -54,8 +52,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
         return $this;
     }
@@ -65,8 +62,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -77,8 +73,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
         return $this;
     }
@@ -88,8 +83,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -100,8 +94,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
         return $this;
     }
@@ -111,8 +104,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -123,8 +115,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setMinimumPurchaseAmount($minimum_purchase_amount)
-    {
+    public function setMinimumPurchaseAmount($minimum_purchase_amount) {
         $this->minimum_purchase_amount = $minimum_purchase_amount;
         return $this;
     }
@@ -134,8 +125,7 @@ class Incentive extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getMinimumPurchaseAmount()
-    {
+    public function getMinimumPurchaseAmount() {
         return $this->minimum_purchase_amount;
     }
 
@@ -146,8 +136,7 @@ class Incentive extends PayPalModel
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setLogoImageUrl($logo_image_url)
-    {
+    public function setLogoImageUrl($logo_image_url) {
         UrlValidator::validate($logo_image_url, "LogoImageUrl");
         $this->logo_image_url = $logo_image_url;
         return $this;
@@ -158,8 +147,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getLogoImageUrl()
-    {
+    public function getLogoImageUrl() {
         return $this->logo_image_url;
     }
 
@@ -170,8 +158,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setExpiryDate($expiry_date)
-    {
+    public function setExpiryDate($expiry_date) {
         $this->expiry_date = $expiry_date;
         return $this;
     }
@@ -181,8 +168,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getExpiryDate()
-    {
+    public function getExpiryDate() {
         return $this->expiry_date;
     }
 
@@ -194,8 +180,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
         return $this;
     }
@@ -205,8 +190,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -217,8 +201,7 @@ class Incentive extends PayPalModel
      * 
      * @return $this
      */
-    public function setTerms($terms)
-    {
+    public function setTerms($terms) {
         $this->terms = $terms;
         return $this;
     }
@@ -228,8 +211,7 @@ class Incentive extends PayPalModel
      *
      * @return string
      */
-    public function getTerms()
-    {
+    public function getTerms() {
         return $this->terms;
     }
 

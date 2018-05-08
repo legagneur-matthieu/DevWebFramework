@@ -7,8 +7,8 @@ namespace PayPal\Exception;
  *
  * @package PayPal\Exception
  */
-class PayPalConnectionException extends \Exception
-{
+class PayPalConnectionException extends \Exception {
+
     /**
      * The url that was being connected to when the exception occured
      *
@@ -30,8 +30,7 @@ class PayPalConnectionException extends \Exception
      * @param string    $message
      * @param int    $code
      */
-    public function __construct($url, $message, $code = 0)
-    {
+    public function __construct($url, $message, $code = 0) {
         parent::__construct($message, $code);
         $this->url = $url;
     }
@@ -41,8 +40,7 @@ class PayPalConnectionException extends \Exception
      *
      * @param $data
      */
-    public function setData($data)
-    {
+    public function setData($data) {
         $this->data = $data;
     }
 
@@ -51,8 +49,7 @@ class PayPalConnectionException extends \Exception
      *
      * @return string
      */
-    public function getData()
-    {
+    public function getData() {
         return $this->data;
     }
 
@@ -61,8 +58,8 @@ class PayPalConnectionException extends \Exception
      *
      * @return string
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
+
 }

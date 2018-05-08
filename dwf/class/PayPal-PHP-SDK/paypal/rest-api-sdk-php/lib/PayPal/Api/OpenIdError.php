@@ -1,4 +1,5 @@
 <?php
+
 namespace PayPal\Api;
 
 use PayPal\Common\PayPalModel;
@@ -12,8 +13,7 @@ use PayPal\Common\PayPalModel;
  * @property string error_description
  * @property string error_uri
  */
-class OpenIdError extends PayPalModel
-{
+class OpenIdError extends PayPalModel {
 
     /**
      * A single ASCII error code from the following enum.
@@ -21,8 +21,7 @@ class OpenIdError extends PayPalModel
      * @param string $error
      * @return self
      */
-    public function setError($error)
-    {
+    public function setError($error) {
         $this->error = $error;
         return $this;
     }
@@ -32,8 +31,7 @@ class OpenIdError extends PayPalModel
      *
      * @return string
      */
-    public function getError()
-    {
+    public function getError() {
         return $this->error;
     }
 
@@ -43,8 +41,7 @@ class OpenIdError extends PayPalModel
      * @param string $error_description
      * @return self
      */
-    public function setErrorDescription($error_description)
-    {
+    public function setErrorDescription($error_description) {
         $this->error_description = $error_description;
         return $this;
     }
@@ -54,8 +51,7 @@ class OpenIdError extends PayPalModel
      *
      * @return string
      */
-    public function getErrorDescription()
-    {
+    public function getErrorDescription() {
         return $this->error_description;
     }
 
@@ -65,8 +61,7 @@ class OpenIdError extends PayPalModel
      * @param string $error_uri
      * @return self
      */
-    public function setErrorUri($error_uri)
-    {
+    public function setErrorUri($error_uri) {
         $this->error_uri = $error_uri;
         return $this;
     }
@@ -76,10 +71,8 @@ class OpenIdError extends PayPalModel
      *
      * @return string
      */
-    public function getErrorUri()
-    {
+    public function getErrorUri() {
         return $this->error_uri;
     }
-
 
 }

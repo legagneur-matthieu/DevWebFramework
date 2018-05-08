@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property string payment_debit_date
  * @property string processing_type
  */
-class FundingDetail extends PayPalModel
-{
+class FundingDetail extends PayPalModel {
+
     /**
      * Expected clearing time
      *
@@ -25,8 +25,7 @@ class FundingDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setClearingTime($clearing_time)
-    {
+    public function setClearingTime($clearing_time) {
         $this->clearing_time = $clearing_time;
         return $this;
     }
@@ -36,8 +35,7 @@ class FundingDetail extends PayPalModel
      *
      * @return string
      */
-    public function getClearingTime()
-    {
+    public function getClearingTime() {
         return $this->clearing_time;
     }
 
@@ -48,8 +46,7 @@ class FundingDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setPaymentHoldDate($payment_hold_date)
-    {
+    public function setPaymentHoldDate($payment_hold_date) {
         $this->payment_hold_date = $payment_hold_date;
         return $this;
     }
@@ -59,8 +56,7 @@ class FundingDetail extends PayPalModel
      *
      * @return string
      */
-    public function getPaymentHoldDate()
-    {
+    public function getPaymentHoldDate() {
         return $this->payment_hold_date;
     }
 
@@ -71,8 +67,7 @@ class FundingDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setPaymentDebitDate($payment_debit_date)
-    {
+    public function setPaymentDebitDate($payment_debit_date) {
         $this->payment_debit_date = $payment_debit_date;
         return $this;
     }
@@ -82,8 +77,7 @@ class FundingDetail extends PayPalModel
      *
      * @return string
      */
-    public function getPaymentDebitDate()
-    {
+    public function getPaymentDebitDate() {
         return $this->payment_debit_date;
     }
 
@@ -95,8 +89,7 @@ class FundingDetail extends PayPalModel
      * 
      * @return $this
      */
-    public function setProcessingType($processing_type)
-    {
+    public function setProcessingType($processing_type) {
         $this->processing_type = $processing_type;
         return $this;
     }
@@ -106,8 +99,7 @@ class FundingDetail extends PayPalModel
      *
      * @return string
      */
-    public function getProcessingType()
-    {
+    public function getProcessingType() {
         return $this->processing_type;
     }
 

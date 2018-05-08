@@ -12,6 +12,6 @@ use PayPal\Common\PayPalModel;
  * @package PayPal\Api
  *
  */
-class BillingAgreementToken extends PayPalModel
-{
+class BillingAgreementToken extends PayPalModel {
+    
 }

@@ -8,8 +8,7 @@ namespace PayPal\Common;
  *
  * @package PayPal\Common
  */
-class PayPalUserAgent
-{
+class PayPalUserAgent {
 
     /**
      * Returns the value of the User-Agent header
@@ -19,8 +18,7 @@ class PayPalUserAgent
      * @param string $sdkVersion
      * @return string
      */
-    public static function getValue($sdkName, $sdkVersion)
-    {
+    public static function getValue($sdkName, $sdkVersion) {
         $featureList = array(
             'platform-ver=' . PHP_VERSION,
             'bit=' . self::_getPHPBit(),
@@ -43,8 +41,7 @@ class PayPalUserAgent
      *
      * @return int|string
      */
-    private static function _getPHPBit()
-    {
+    private static function _getPHPBit() {
         switch (PHP_INT_SIZE) {
             case 4:
                 return '32';
@@ -54,4 +51,5 @@ class PayPalUserAgent
                 return PHP_INT_SIZE;
         }
     }
+
 }

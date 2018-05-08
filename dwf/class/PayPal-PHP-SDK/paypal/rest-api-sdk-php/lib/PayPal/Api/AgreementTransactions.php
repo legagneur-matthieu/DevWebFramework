@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property \PayPal\Api\AgreementTransaction[] agreement_transaction_list
  */
-class AgreementTransactions extends PayPalModel
-{
+class AgreementTransactions extends PayPalModel {
+
     /**
      * Array of agreement_transaction object.
      *
@@ -22,8 +22,7 @@ class AgreementTransactions extends PayPalModel
      * 
      * @return $this
      */
-    public function setAgreementTransactionList($agreement_transaction_list)
-    {
+    public function setAgreementTransactionList($agreement_transaction_list) {
         $this->agreement_transaction_list = $agreement_transaction_list;
         return $this;
     }
@@ -33,8 +32,7 @@ class AgreementTransactions extends PayPalModel
      *
      * @return \PayPal\Api\AgreementTransaction[]
      */
-    public function getAgreementTransactionList()
-    {
+    public function getAgreementTransactionList() {
         return $this->agreement_transaction_list;
     }
 
@@ -44,13 +42,12 @@ class AgreementTransactions extends PayPalModel
      * @param \PayPal\Api\AgreementTransaction $agreementTransaction
      * @return $this
      */
-    public function addAgreementTransactionList($agreementTransaction)
-    {
+    public function addAgreementTransactionList($agreementTransaction) {
         if (!$this->getAgreementTransactionList()) {
             return $this->setAgreementTransactionList(array($agreementTransaction));
         } else {
             return $this->setAgreementTransactionList(
-                array_merge($this->getAgreementTransactionList(), array($agreementTransaction))
+                            array_merge($this->getAgreementTransactionList(), array($agreementTransaction))
             );
         }
     }
@@ -61,10 +58,9 @@ class AgreementTransactions extends PayPalModel
      * @param \PayPal\Api\AgreementTransaction $agreementTransaction
      * @return $this
      */
-    public function removeAgreementTransactionList($agreementTransaction)
-    {
+    public function removeAgreementTransactionList($agreementTransaction) {
         return $this->setAgreementTransactionList(
-            array_diff($this->getAgreementTransactionList(), array($agreementTransaction))
+                        array_diff($this->getAgreementTransactionList(), array($agreementTransaction))
         );
     }
 

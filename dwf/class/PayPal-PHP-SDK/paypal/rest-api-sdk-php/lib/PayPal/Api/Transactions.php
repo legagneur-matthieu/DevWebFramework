@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property \PayPal\Api\Amount amount
  */
-class Transactions extends PayPalModel
-{
+class Transactions extends PayPalModel {
+
     /**
      * Amount being collected.
      * 
@@ -23,8 +23,7 @@ class Transactions extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -34,8 +33,7 @@ class Transactions extends PayPalModel
      *
      * @return \PayPal\Api\Amount
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 

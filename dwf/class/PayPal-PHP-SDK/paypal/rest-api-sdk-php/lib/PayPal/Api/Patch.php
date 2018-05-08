@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property mixed value
  * @property string from
  */
-class Patch extends PayPalModel
-{
+class Patch extends PayPalModel {
+
     /**
      * The operation to perform.
      * Valid Values: ["add", "remove", "replace", "move", "copy", "test"]
@@ -26,8 +26,7 @@ class Patch extends PayPalModel
      * 
      * @return $this
      */
-    public function setOp($op)
-    {
+    public function setOp($op) {
         $this->op = $op;
         return $this;
     }
@@ -37,8 +36,7 @@ class Patch extends PayPalModel
      *
      * @return string
      */
-    public function getOp()
-    {
+    public function getOp() {
         return $this->op;
     }
 
@@ -49,8 +47,7 @@ class Patch extends PayPalModel
      * 
      * @return $this
      */
-    public function setPath($path)
-    {
+    public function setPath($path) {
         $this->path = $path;
         return $this;
     }
@@ -60,8 +57,7 @@ class Patch extends PayPalModel
      *
      * @return string
      */
-    public function getPath()
-    {
+    public function getPath() {
         return $this->path;
     }
 
@@ -72,8 +68,7 @@ class Patch extends PayPalModel
      * 
      * @return $this
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         $this->value = $value;
         return $this;
     }
@@ -83,8 +78,7 @@ class Patch extends PayPalModel
      *
      * @return mixed
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -95,8 +89,7 @@ class Patch extends PayPalModel
      * 
      * @return $this
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         $this->from = $from;
         return $this;
     }
@@ -106,8 +99,7 @@ class Patch extends PayPalModel
      *
      * @return string
      */
-    public function getFrom()
-    {
+    public function getFrom() {
         return $this->from;
     }
 

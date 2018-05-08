@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property string eci_submitted
  * @property string vpas
  */
-class ProcessorResponse extends PayPalModel
-{
+class ProcessorResponse extends PayPalModel {
+
     /**
      * Paypal normalized response code, generated from the processor's specific response code
      *
@@ -27,8 +27,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setResponseCode($response_code)
-    {
+    public function setResponseCode($response_code) {
         $this->response_code = $response_code;
         return $this;
     }
@@ -38,8 +37,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getResponseCode()
-    {
+    public function getResponseCode() {
         return $this->response_code;
     }
 
@@ -50,8 +48,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setAvsCode($avs_code)
-    {
+    public function setAvsCode($avs_code) {
         $this->avs_code = $avs_code;
         return $this;
     }
@@ -61,8 +58,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getAvsCode()
-    {
+    public function getAvsCode() {
         return $this->avs_code;
     }
 
@@ -73,8 +69,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setCvvCode($cvv_code)
-    {
+    public function setCvvCode($cvv_code) {
         $this->cvv_code = $cvv_code;
         return $this;
     }
@@ -84,8 +79,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getCvvCode()
-    {
+    public function getCvvCode() {
         return $this->cvv_code;
     }
 
@@ -97,8 +91,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setAdviceCode($advice_code)
-    {
+    public function setAdviceCode($advice_code) {
         $this->advice_code = $advice_code;
         return $this;
     }
@@ -108,8 +101,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getAdviceCode()
-    {
+    public function getAdviceCode() {
         return $this->advice_code;
     }
 
@@ -120,8 +112,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setEciSubmitted($eci_submitted)
-    {
+    public function setEciSubmitted($eci_submitted) {
         $this->eci_submitted = $eci_submitted;
         return $this;
     }
@@ -131,8 +122,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getEciSubmitted()
-    {
+    public function getEciSubmitted() {
         return $this->eci_submitted;
     }
 
@@ -143,8 +133,7 @@ class ProcessorResponse extends PayPalModel
      * 
      * @return $this
      */
-    public function setVpas($vpas)
-    {
+    public function setVpas($vpas) {
         $this->vpas = $vpas;
         return $this;
     }
@@ -154,8 +143,7 @@ class ProcessorResponse extends PayPalModel
      *
      * @return string
      */
-    public function getVpas()
-    {
+    public function getVpas() {
         return $this->vpas;
     }
 

@@ -32,8 +32,8 @@ use PayPal\Common\PayPalModel;
  * @property bool total_count_required
  * @property bool archived
  */
-class Search extends PayPalModel
-{
+class Search extends PayPalModel {
+
     /**
      * The initial letters of the email address.
      *
@@ -41,8 +41,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
         return $this;
     }
@@ -52,8 +51,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -64,8 +62,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setRecipientFirstName($recipient_first_name)
-    {
+    public function setRecipientFirstName($recipient_first_name) {
         $this->recipient_first_name = $recipient_first_name;
         return $this;
     }
@@ -75,8 +72,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getRecipientFirstName()
-    {
+    public function getRecipientFirstName() {
         return $this->recipient_first_name;
     }
 
@@ -87,8 +83,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setRecipientLastName($recipient_last_name)
-    {
+    public function setRecipientLastName($recipient_last_name) {
         $this->recipient_last_name = $recipient_last_name;
         return $this;
     }
@@ -98,8 +93,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getRecipientLastName()
-    {
+    public function getRecipientLastName() {
         return $this->recipient_last_name;
     }
 
@@ -110,8 +104,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setRecipientBusinessName($recipient_business_name)
-    {
+    public function setRecipientBusinessName($recipient_business_name) {
         $this->recipient_business_name = $recipient_business_name;
         return $this;
     }
@@ -121,8 +114,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getRecipientBusinessName()
-    {
+    public function getRecipientBusinessName() {
         return $this->recipient_business_name;
     }
 
@@ -133,8 +125,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setNumber($number)
-    {
+    public function setNumber($number) {
         $this->number = $number;
         return $this;
     }
@@ -144,8 +135,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getNumber()
-    {
+    public function getNumber() {
         return $this->number;
     }
 
@@ -157,8 +147,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
         return $this;
     }
@@ -168,8 +157,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -180,8 +168,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setLowerTotalAmount($lower_total_amount)
-    {
+    public function setLowerTotalAmount($lower_total_amount) {
         $this->lower_total_amount = $lower_total_amount;
         return $this;
     }
@@ -191,8 +178,7 @@ class Search extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getLowerTotalAmount()
-    {
+    public function getLowerTotalAmount() {
         return $this->lower_total_amount;
     }
 
@@ -203,8 +189,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setUpperTotalAmount($upper_total_amount)
-    {
+    public function setUpperTotalAmount($upper_total_amount) {
         $this->upper_total_amount = $upper_total_amount;
         return $this;
     }
@@ -214,8 +199,7 @@ class Search extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getUpperTotalAmount()
-    {
+    public function getUpperTotalAmount() {
         return $this->upper_total_amount;
     }
 
@@ -226,8 +210,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setStartInvoiceDate($start_invoice_date)
-    {
+    public function setStartInvoiceDate($start_invoice_date) {
         $this->start_invoice_date = $start_invoice_date;
         return $this;
     }
@@ -237,8 +220,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getStartInvoiceDate()
-    {
+    public function getStartInvoiceDate() {
         return $this->start_invoice_date;
     }
 
@@ -249,8 +231,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setEndInvoiceDate($end_invoice_date)
-    {
+    public function setEndInvoiceDate($end_invoice_date) {
         $this->end_invoice_date = $end_invoice_date;
         return $this;
     }
@@ -260,8 +241,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getEndInvoiceDate()
-    {
+    public function getEndInvoiceDate() {
         return $this->end_invoice_date;
     }
 
@@ -272,8 +252,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setStartDueDate($start_due_date)
-    {
+    public function setStartDueDate($start_due_date) {
         $this->start_due_date = $start_due_date;
         return $this;
     }
@@ -283,8 +262,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getStartDueDate()
-    {
+    public function getStartDueDate() {
         return $this->start_due_date;
     }
 
@@ -295,8 +273,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setEndDueDate($end_due_date)
-    {
+    public function setEndDueDate($end_due_date) {
         $this->end_due_date = $end_due_date;
         return $this;
     }
@@ -306,8 +283,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getEndDueDate()
-    {
+    public function getEndDueDate() {
         return $this->end_due_date;
     }
 
@@ -318,8 +294,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setStartPaymentDate($start_payment_date)
-    {
+    public function setStartPaymentDate($start_payment_date) {
         $this->start_payment_date = $start_payment_date;
         return $this;
     }
@@ -329,8 +304,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getStartPaymentDate()
-    {
+    public function getStartPaymentDate() {
         return $this->start_payment_date;
     }
 
@@ -341,8 +315,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setEndPaymentDate($end_payment_date)
-    {
+    public function setEndPaymentDate($end_payment_date) {
         $this->end_payment_date = $end_payment_date;
         return $this;
     }
@@ -352,8 +325,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getEndPaymentDate()
-    {
+    public function getEndPaymentDate() {
         return $this->end_payment_date;
     }
 
@@ -364,8 +336,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setStartCreationDate($start_creation_date)
-    {
+    public function setStartCreationDate($start_creation_date) {
         $this->start_creation_date = $start_creation_date;
         return $this;
     }
@@ -375,8 +346,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getStartCreationDate()
-    {
+    public function getStartCreationDate() {
         return $this->start_creation_date;
     }
 
@@ -387,8 +357,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setEndCreationDate($end_creation_date)
-    {
+    public function setEndCreationDate($end_creation_date) {
         $this->end_creation_date = $end_creation_date;
         return $this;
     }
@@ -398,8 +367,7 @@ class Search extends PayPalModel
      *
      * @return string
      */
-    public function getEndCreationDate()
-    {
+    public function getEndCreationDate() {
         return $this->end_creation_date;
     }
 
@@ -410,8 +378,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setPage($page)
-    {
+    public function setPage($page) {
         $this->page = $page;
         return $this;
     }
@@ -421,8 +388,7 @@ class Search extends PayPalModel
      *
      * @return \PayPal\Api\number
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
@@ -433,8 +399,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setPageSize($page_size)
-    {
+    public function setPageSize($page_size) {
         $this->page_size = $page_size;
         return $this;
     }
@@ -444,8 +409,7 @@ class Search extends PayPalModel
      *
      * @return \PayPal\Api\number
      */
-    public function getPageSize()
-    {
+    public function getPageSize() {
         return $this->page_size;
     }
 
@@ -456,8 +420,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setTotalCountRequired($total_count_required)
-    {
+    public function setTotalCountRequired($total_count_required) {
         $this->total_count_required = $total_count_required;
         return $this;
     }
@@ -467,8 +430,7 @@ class Search extends PayPalModel
      *
      * @return bool
      */
-    public function getTotalCountRequired()
-    {
+    public function getTotalCountRequired() {
         return $this->total_count_required;
     }
 
@@ -479,8 +441,7 @@ class Search extends PayPalModel
      * 
      * @return $this
      */
-    public function setArchived($archived)
-    {
+    public function setArchived($archived) {
         $this->archived = $archived;
         return $this;
     }
@@ -490,8 +451,7 @@ class Search extends PayPalModel
      *
      * @return bool
      */
-    public function getArchived()
-    {
+    public function getArchived() {
         return $this->archived;
     }
 

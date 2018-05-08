@@ -9,8 +9,8 @@ namespace PayPal\Security;
  *
  * @package PayPal\Security
  */
-class Cipher
-{
+class Cipher {
+
     private $secretKey;
 
     /**
@@ -18,8 +18,7 @@ class Cipher
      */
     const IV_SIZE = 16;
 
-    public function __construct($secretKey)
-    {
+    public function __construct($secretKey) {
         $this->secretKey = $secretKey;
     }
 
@@ -29,8 +28,7 @@ class Cipher
      * @param $input
      * @return string
      */
-    public function encrypt($input)
-    {
+    public function encrypt($input) {
         // Create a random IV. Not using mcrypt to generate one, as to not have a dependency on it.
         $iv = substr(uniqid("", true), 0, Cipher::IV_SIZE);
         // Encrypt the data
@@ -45,8 +43,7 @@ class Cipher
      * @param $input
      * @return string
      */
-    public function decrypt($input)
-    {
+    public function decrypt($input) {
         // Decode the IV + data
         $input = base64_decode($input);
         // Remove the IV
@@ -54,4 +51,5 @@ class Cipher
         // Return Decrypted Data
         return openssl_decrypt(substr($input, Cipher::IV_SIZE), "AES-256-CBC", $this->secretKey, 0, $iv);
     }
+
 }

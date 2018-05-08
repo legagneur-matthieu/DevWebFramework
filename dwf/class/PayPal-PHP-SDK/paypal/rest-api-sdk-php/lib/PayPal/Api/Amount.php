@@ -17,8 +17,8 @@ use PayPal\Validation\NumericValidator;
  * @property string total
  * @property \PayPal\Api\Details details
  */
-class Amount extends PayPalModel
-{
+class Amount extends PayPalModel {
+
     /**
      * 3-letter [currency code](https://developer.paypal.com/docs/integration/direct/rest_api_payment_country_currency_support/). PayPal does not support all currencies.
      *
@@ -26,8 +26,7 @@ class Amount extends PayPalModel
      * 
      * @return $this
      */
-    public function setCurrency($currency)
-    {
+    public function setCurrency($currency) {
         $this->currency = $currency;
         return $this;
     }
@@ -37,8 +36,7 @@ class Amount extends PayPalModel
      *
      * @return string
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->currency;
     }
 
@@ -49,8 +47,7 @@ class Amount extends PayPalModel
      * 
      * @return $this
      */
-    public function setTotal($total)
-    {
+    public function setTotal($total) {
         NumericValidator::validate($total, "Total");
         $total = FormatConverter::formatToPrice($total, $this->getCurrency());
         $this->total = $total;
@@ -62,8 +59,7 @@ class Amount extends PayPalModel
      *
      * @return string
      */
-    public function getTotal()
-    {
+    public function getTotal() {
         return $this->total;
     }
 
@@ -74,8 +70,7 @@ class Amount extends PayPalModel
      * 
      * @return $this
      */
-    public function setDetails($details)
-    {
+    public function setDetails($details) {
         $this->details = $details;
         return $this;
     }
@@ -85,8 +80,7 @@ class Amount extends PayPalModel
      *
      * @return \PayPal\Api\Details
      */
-    public function getDetails()
-    {
+    public function getDetails() {
         return $this->details;
     }
 

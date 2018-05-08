@@ -7,8 +7,7 @@ namespace PayPal\Validation;
  *
  * @package PayPal\Validation
  */
-class ArgumentValidator
-{
+class ArgumentValidator {
 
     /**
      * Helper method for validating an argument that will be used by this API in any requests.
@@ -18,8 +17,7 @@ class ArgumentValidator
      *                      This will be placed in the exception message for easy reference
      * @return bool
      */
-    public static function validate($argument, $argumentName = null)
-    {
+    public static function validate($argument, $argumentName = null) {
         if ($argument === null) {
             // Error if Object Null
             throw new \InvalidArgumentException("$argumentName cannot be null");
@@ -29,4 +27,5 @@ class ArgumentValidator
         }
         return true;
     }
+
 }

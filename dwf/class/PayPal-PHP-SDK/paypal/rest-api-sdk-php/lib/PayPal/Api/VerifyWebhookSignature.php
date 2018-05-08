@@ -23,8 +23,8 @@ use PayPal\Validation\UrlValidator;
  * @property string webhook_id
  * @property \PayPal\Api\WebhookEvent webhook_event
  */
-class VerifyWebhookSignature extends PayPalResourceModel
-{
+class VerifyWebhookSignature extends PayPalResourceModel {
+
     /**
      * The algorithm that PayPal uses to generate the signature and that you can use to verify the signature. Extract this value from the `PAYPAL-AUTH-ALGO` response header, which is received with the webhook notification.
      *
@@ -32,8 +32,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setAuthAlgo($auth_algo)
-    {
+    public function setAuthAlgo($auth_algo) {
         $this->auth_algo = $auth_algo;
         return $this;
     }
@@ -43,8 +42,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getAuthAlgo()
-    {
+    public function getAuthAlgo() {
         return $this->auth_algo;
     }
 
@@ -55,8 +53,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setCertUrl($cert_url)
-    {
+    public function setCertUrl($cert_url) {
         UrlValidator::validate($cert_url, "CertUrl");
         $this->cert_url = $cert_url;
         return $this;
@@ -67,8 +64,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getCertUrl()
-    {
+    public function getCertUrl() {
         return $this->cert_url;
     }
 
@@ -79,8 +75,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setTransmissionId($transmission_id)
-    {
+    public function setTransmissionId($transmission_id) {
         $this->transmission_id = $transmission_id;
         return $this;
     }
@@ -90,8 +85,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getTransmissionId()
-    {
+    public function getTransmissionId() {
         return $this->transmission_id;
     }
 
@@ -102,8 +96,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setTransmissionSig($transmission_sig)
-    {
+    public function setTransmissionSig($transmission_sig) {
         $this->transmission_sig = $transmission_sig;
         return $this;
     }
@@ -113,8 +106,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getTransmissionSig()
-    {
+    public function getTransmissionSig() {
         return $this->transmission_sig;
     }
 
@@ -125,8 +117,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setTransmissionTime($transmission_time)
-    {
+    public function setTransmissionTime($transmission_time) {
         $this->transmission_time = $transmission_time;
         return $this;
     }
@@ -136,8 +127,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getTransmissionTime()
-    {
+    public function getTransmissionTime() {
         return $this->transmission_time;
     }
 
@@ -148,8 +138,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setWebhookId($webhook_id)
-    {
+    public function setWebhookId($webhook_id) {
         $this->webhook_id = $webhook_id;
         return $this;
     }
@@ -159,8 +148,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getWebhookId()
-    {
+    public function getWebhookId() {
         return $this->webhook_id;
     }
 
@@ -171,8 +159,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setWebhookEvent($webhook_event)
-    {
+    public function setWebhookEvent($webhook_event) {
         $this->webhook_event = $webhook_event;
         return $this;
     }
@@ -182,8 +169,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return \PayPal\Api\WebhookEvent
      */
-    public function getWebhookEvent()
-    {
+    public function getWebhookEvent() {
         return $this->webhook_event;
     }
 
@@ -194,8 +180,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return $this
      */
-    public function setRequestBody($request_body)
-    {
+    public function setRequestBody($request_body) {
         $this->request_body = $request_body;
         return $this;
     }
@@ -205,8 +190,7 @@ class VerifyWebhookSignature extends PayPalResourceModel
      *
      * @return string
      */
-    public function getRequestBody()
-    {
+    public function getRequestBody() {
         return $this->request_body;
     }
 
@@ -217,25 +201,18 @@ class VerifyWebhookSignature extends PayPalResourceModel
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
      * @return VerifyWebhookSignatureResponse
      */
-    public function post($apiContext = null, $restCall = null)
-    {
+    public function post($apiContext = null, $restCall = null) {
         $payLoad = $this->toJSON();
 
         $json = self::executeCall(
-            "/v1/notifications/verify-webhook-signature",
-            "POST",
-            $payLoad,
-            null,
-            $apiContext,
-            $restCall
+                        "/v1/notifications/verify-webhook-signature", "POST", $payLoad, null, $apiContext, $restCall
         );
         $ret = new VerifyWebhookSignatureResponse();
         $ret->fromJson($json);
         return $ret;
     }
 
-    public function toJSON($options = 0)
-    {
+    public function toJSON($options = 0) {
         if (!is_null($this->request_body)) {
             $valuesToEncode = $this->toArray();
             unset($valuesToEncode['webhook_event']);
@@ -253,4 +230,5 @@ class VerifyWebhookSignature extends PayPalResourceModel
             return $payLoad;
         }
     }
+
 }

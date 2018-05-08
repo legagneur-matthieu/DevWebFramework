@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property bool payer_acceptance
  * @property bool cart_amount_immutable
  */
-class CreditFinancingOffered extends PayPalModel
-{
+class CreditFinancingOffered extends PayPalModel {
+
     /**
      * This is the estimated total payment amount including interest and fees the user will pay during the lifetime of the loan.
      *
@@ -27,8 +27,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setTotalCost($total_cost)
-    {
+    public function setTotalCost($total_cost) {
         $this->total_cost = $total_cost;
         return $this;
     }
@@ -38,8 +37,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getTotalCost()
-    {
+    public function getTotalCost() {
         return $this->total_cost;
     }
 
@@ -50,8 +48,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setTerm($term)
-    {
+    public function setTerm($term) {
         $this->term = $term;
         return $this;
     }
@@ -61,8 +58,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return \PayPal\Api\number
      */
-    public function getTerm()
-    {
+    public function getTerm() {
         return $this->term;
     }
 
@@ -73,8 +69,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setMonthlyPayment($monthly_payment)
-    {
+    public function setMonthlyPayment($monthly_payment) {
         $this->monthly_payment = $monthly_payment;
         return $this;
     }
@@ -84,8 +79,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getMonthlyPayment()
-    {
+    public function getMonthlyPayment() {
         return $this->monthly_payment;
     }
 
@@ -96,8 +90,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setTotalInterest($total_interest)
-    {
+    public function setTotalInterest($total_interest) {
         $this->total_interest = $total_interest;
         return $this;
     }
@@ -107,8 +100,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getTotalInterest()
-    {
+    public function getTotalInterest() {
         return $this->total_interest;
     }
 
@@ -119,8 +111,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setPayerAcceptance($payer_acceptance)
-    {
+    public function setPayerAcceptance($payer_acceptance) {
         $this->payer_acceptance = $payer_acceptance;
         return $this;
     }
@@ -130,8 +121,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return bool
      */
-    public function getPayerAcceptance()
-    {
+    public function getPayerAcceptance() {
         return $this->payer_acceptance;
     }
 
@@ -142,8 +132,7 @@ class CreditFinancingOffered extends PayPalModel
      * 
      * @return $this
      */
-    public function setCartAmountImmutable($cart_amount_immutable)
-    {
+    public function setCartAmountImmutable($cart_amount_immutable) {
         $this->cart_amount_immutable = $cart_amount_immutable;
         return $this;
     }
@@ -153,8 +142,7 @@ class CreditFinancingOffered extends PayPalModel
      *
      * @return bool
      */
-    public function getCartAmountImmutable()
-    {
+    public function getCartAmountImmutable() {
         return $this->cart_amount_immutable;
     }
 

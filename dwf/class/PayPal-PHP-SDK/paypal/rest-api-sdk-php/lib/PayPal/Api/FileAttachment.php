@@ -15,8 +15,8 @@ use PayPal\Validation\UrlValidator;
  * @property string name
  * @property string url
  */
-class FileAttachment extends PayPalModel
-{
+class FileAttachment extends PayPalModel {
+
     /**
      * Name of the file attached.
      *
@@ -24,8 +24,7 @@ class FileAttachment extends PayPalModel
      * 
      * @return $this
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
         return $this;
     }
@@ -35,8 +34,7 @@ class FileAttachment extends PayPalModel
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -47,8 +45,7 @@ class FileAttachment extends PayPalModel
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         UrlValidator::validate($url, "Url");
         $this->url = $url;
         return $this;
@@ -59,8 +56,7 @@ class FileAttachment extends PayPalModel
      *
      * @return string
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 

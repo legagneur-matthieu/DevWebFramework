@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string note
  * @property \PayPal\Api\Currency amount
  */
-class AgreementStateDescriptor extends PayPalModel
-{
+class AgreementStateDescriptor extends PayPalModel {
+
     /**
      * Reason for changing the state of the agreement.
      *
@@ -23,8 +23,7 @@ class AgreementStateDescriptor extends PayPalModel
      * 
      * @return $this
      */
-    public function setNote($note)
-    {
+    public function setNote($note) {
         $this->note = $note;
         return $this;
     }
@@ -34,8 +33,7 @@ class AgreementStateDescriptor extends PayPalModel
      *
      * @return string
      */
-    public function getNote()
-    {
+    public function getNote() {
         return $this->note;
     }
 
@@ -46,8 +44,7 @@ class AgreementStateDescriptor extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -57,8 +54,7 @@ class AgreementStateDescriptor extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 

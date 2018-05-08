@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string carrier_account_id
  * @property string external_customer_id
  */
-class CarrierAccountToken extends PayPalModel
-{
+class CarrierAccountToken extends PayPalModel {
+
     /**
      * ID of a previously saved carrier account resource.
      *
@@ -23,8 +23,7 @@ class CarrierAccountToken extends PayPalModel
      * 
      * @return $this
      */
-    public function setCarrierAccountId($carrier_account_id)
-    {
+    public function setCarrierAccountId($carrier_account_id) {
         $this->carrier_account_id = $carrier_account_id;
         return $this;
     }
@@ -34,8 +33,7 @@ class CarrierAccountToken extends PayPalModel
      *
      * @return string
      */
-    public function getCarrierAccountId()
-    {
+    public function getCarrierAccountId() {
         return $this->carrier_account_id;
     }
 
@@ -46,8 +44,7 @@ class CarrierAccountToken extends PayPalModel
      * 
      * @return $this
      */
-    public function setExternalCustomerId($external_customer_id)
-    {
+    public function setExternalCustomerId($external_customer_id) {
         $this->external_customer_id = $external_customer_id;
         return $this;
     }
@@ -57,8 +54,7 @@ class CarrierAccountToken extends PayPalModel
      *
      * @return string
      */
-    public function getExternalCustomerId()
-    {
+    public function getExternalCustomerId() {
         return $this->external_customer_id;
     }
 

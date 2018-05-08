@@ -10,8 +10,7 @@ use PayPal\Transport\PayPalRestCall;
  *
  * @package PayPal\Api
  */
-class FuturePayment extends Payment
-{
+class FuturePayment extends Payment {
 
     /**
      * Extends the Payment object to create future payments
@@ -21,8 +20,7 @@ class FuturePayment extends Payment
      * @param PayPalRestCall|null $restCall is the Rest Call Service that is used to make rest calls
      * @return $this
      */
-    public function create($apiContext = null, $clientMetadataId = null, $restCall = null)
-    {
+    public function create($apiContext = null, $clientMetadataId = null, $restCall = null) {
         $headers = array();
         if ($clientMetadataId != null) {
             $headers = array(
@@ -31,12 +29,7 @@ class FuturePayment extends Payment
         }
         $payLoad = $this->toJSON();
         $json = self::executeCall(
-            "/v1/payments/payment",
-            "POST",
-            $payLoad,
-            $headers,
-            $apiContext,
-            $restCall
+                        "/v1/payments/payment", "POST", $payLoad, $headers, $apiContext, $restCall
         );
         $this->fromJson($json);
         return $this;
@@ -49,8 +42,7 @@ class FuturePayment extends Payment
      * @param ApiContext $apiContext
      * @return string|null refresh token
      */
-    public static function getRefreshToken($authorizationCode, $apiContext = null)
-    {
+    public static function getRefreshToken($authorizationCode, $apiContext = null) {
         $apiContext = $apiContext ? $apiContext : new ApiContext(self::$credential);
         $credential = $apiContext->getCredential();
         return $credential->getRefreshToken($apiContext->getConfig(), $authorizationCode);

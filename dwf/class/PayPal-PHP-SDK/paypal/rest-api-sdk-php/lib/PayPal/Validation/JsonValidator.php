@@ -7,8 +7,7 @@ namespace PayPal\Validation;
  *
  * @package PayPal\Validation
  */
-class JsonValidator
-{
+class JsonValidator {
 
     /**
      * Helper method for validating if string provided is a valid json.
@@ -17,8 +16,7 @@ class JsonValidator
      * @param bool $silent Flag to not throw \InvalidArgumentException
      * @return bool
      */
-    public static function validate($string, $silent = false)
-    {
+    public static function validate($string, $silent = false) {
         @json_decode($string);
         if (json_last_error() != JSON_ERROR_NONE) {
             if ($string === '' || $string === null) {
@@ -32,4 +30,5 @@ class JsonValidator
         }
         return true;
     }
+
 }

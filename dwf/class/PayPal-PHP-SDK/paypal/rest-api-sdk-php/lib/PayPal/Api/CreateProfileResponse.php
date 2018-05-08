@@ -11,8 +11,8 @@ namespace PayPal\Api;
  *
  * @property string id
  */
-class CreateProfileResponse extends WebProfile
-{
+class CreateProfileResponse extends WebProfile {
+
     /**
      * ID of the payment web experience profile.
      * 
@@ -21,8 +21,7 @@ class CreateProfileResponse extends WebProfile
      * 
      * @return $this
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
@@ -32,8 +31,7 @@ class CreateProfileResponse extends WebProfile
      *
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 

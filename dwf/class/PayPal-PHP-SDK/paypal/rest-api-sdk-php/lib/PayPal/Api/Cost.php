@@ -16,8 +16,8 @@ use PayPal\Validation\NumericValidator;
  * @property string percent
  * @property \PayPal\Api\Currency amount
  */
-class Cost extends PayPalModel
-{
+class Cost extends PayPalModel {
+
     /**
      * Cost in percent. Range of 0 to 100.
      *
@@ -25,8 +25,7 @@ class Cost extends PayPalModel
      * 
      * @return $this
      */
-    public function setPercent($percent)
-    {
+    public function setPercent($percent) {
         NumericValidator::validate($percent, "Percent");
         $percent = FormatConverter::formatToNumber($percent);
         $this->percent = $percent;
@@ -38,8 +37,7 @@ class Cost extends PayPalModel
      *
      * @return string
      */
-    public function getPercent()
-    {
+    public function getPercent() {
         return $this->percent;
     }
 
@@ -50,8 +48,7 @@ class Cost extends PayPalModel
      * 
      * @return $this
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
         return $this;
     }
@@ -61,8 +58,7 @@ class Cost extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 

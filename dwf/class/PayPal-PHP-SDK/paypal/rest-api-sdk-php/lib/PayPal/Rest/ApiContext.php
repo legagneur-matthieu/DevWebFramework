@@ -12,8 +12,7 @@ use PayPal\Core\PayPalCredentialManager;
  *
  * @package PayPal\Rest
  */
-class ApiContext
-{
+class ApiContext {
 
     /**
      * Unique request id to be used for this call
@@ -32,15 +31,13 @@ class ApiContext
      */
     private $credential;
 
-
     /**
      * Construct
      *
      * @param \PayPal\Auth\OAuthTokenCredential $credential
      * @param string|null                       $requestId
      */
-    public function __construct($credential = null, $requestId = null)
-    {
+    public function __construct($credential = null, $requestId = null) {
         $this->requestId = $requestId;
         $this->credential = $credential;
     }
@@ -50,16 +47,14 @@ class ApiContext
      *
      * @return \PayPal\Auth\OAuthTokenCredential
      */
-    public function getCredential()
-    {
+    public function getCredential() {
         if ($this->credential == null) {
             return PayPalCredentialManager::getInstance()->getCredentialObject();
         }
         return $this->credential;
     }
 
-    public function getRequestHeaders()
-    {
+    public function getRequestHeaders() {
         $result = PayPalConfigManager::getInstance()->get('http.headers');
         $headers = array();
         foreach ($result as $header => $value) {
@@ -69,8 +64,7 @@ class ApiContext
         return $headers;
     }
 
-    public function addRequestHeader($name, $value)
-    {
+    public function addRequestHeader($name, $value) {
         // Determine if the name already has a 'http.headers' prefix. If not, add one.
         if (!(substr($name, 0, strlen('http.headers')) === 'http.headers')) {
             $name = 'http.headers.' . $name;
@@ -83,8 +77,7 @@ class ApiContext
      *
      * @return string
      */
-    public function getRequestId()
-    {
+    public function getRequestId() {
         return $this->requestId;
     }
 
@@ -93,8 +86,7 @@ class ApiContext
      *
      * @param string $requestId the PayPal-Request-Id value to use
      */
-    public function setRequestId($requestId)
-    {
+    public function setRequestId($requestId) {
         $this->requestId = $requestId;
     }
 
@@ -106,8 +98,7 @@ class ApiContext
      *
      * @return string
      */
-    public function resetRequestId()
-    {
+    public function resetRequestId() {
         $this->requestId = $this->generateRequestId();
         return $this->getRequestId();
     }
@@ -117,8 +108,7 @@ class ApiContext
      *
      * @param array $config SDK configuration parameters
      */
-    public function setConfig(array $config)
-    {
+    public function setConfig(array $config) {
         PayPalConfigManager::getInstance()->addConfigs($config);
     }
 
@@ -127,8 +117,7 @@ class ApiContext
      *
      * @return array
      */
-    public function getConfig()
-    {
+    public function getConfig() {
         return PayPalConfigManager::getInstance()->getConfigHashmap();
     }
 
@@ -138,8 +127,7 @@ class ApiContext
      * @param $searchKey
      * @return mixed
      */
-    public function get($searchKey)
-    {
+    public function get($searchKey) {
         return PayPalConfigManager::getInstance()->get($searchKey);
     }
 
@@ -151,8 +139,7 @@ class ApiContext
      *
      * @return string
      */
-    private function generateRequestId()
-    {
+    private function generateRequestId() {
         static $pid = -1;
         static $addr = -1;
 
@@ -170,4 +157,5 @@ class ApiContext
 
         return $addr . $pid . $_SERVER['REQUEST_TIME'] . mt_rand(0, 0xffff);
     }
+
 }

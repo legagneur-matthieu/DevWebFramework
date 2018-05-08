@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string value
  * @property string unit
  */
-class Measurement extends PayPalModel
-{
+class Measurement extends PayPalModel {
+
     /**
      * Value this measurement represents.
      *
@@ -23,8 +23,7 @@ class Measurement extends PayPalModel
      * 
      * @return $this
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         $this->value = $value;
         return $this;
     }
@@ -34,8 +33,7 @@ class Measurement extends PayPalModel
      *
      * @return string
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -46,8 +44,7 @@ class Measurement extends PayPalModel
      * 
      * @return $this
      */
-    public function setUnit($unit)
-    {
+    public function setUnit($unit) {
         $this->unit = $unit;
         return $this;
     }
@@ -57,8 +54,7 @@ class Measurement extends PayPalModel
      *
      * @return string
      */
-    public function getUnit()
-    {
+    public function getUnit() {
         return $this->unit;
     }
 

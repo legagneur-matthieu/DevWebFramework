@@ -10,8 +10,8 @@ namespace PayPal\Api;
  * @package PayPal\Api
  *
  */
-class ExtendedBankAccount extends BankAccount
-{
+class ExtendedBankAccount extends BankAccount {
+
     /**
      * Identifier of the direct debit mandate to validate. Currently supported only for EU bank accounts(SEPA).
      * @deprecated Not publicly available
@@ -19,8 +19,7 @@ class ExtendedBankAccount extends BankAccount
      * 
      * @return $this
      */
-    public function setMandateReferenceNumber($mandate_reference_number)
-    {
+    public function setMandateReferenceNumber($mandate_reference_number) {
         $this->mandate_reference_number = $mandate_reference_number;
         return $this;
     }
@@ -30,8 +29,7 @@ class ExtendedBankAccount extends BankAccount
      * @deprecated Not publicly available
      * @return string
      */
-    public function getMandateReferenceNumber()
-    {
+    public function getMandateReferenceNumber() {
         return $this->mandate_reference_number;
     }
 

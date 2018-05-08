@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property \PayPal\Api\Patch[] patches
  */
-class PatchRequest extends PayPalModel
-{
+class PatchRequest extends PayPalModel {
+
     /**
      * Placeholder for holding array of patch objects
      *
@@ -22,8 +22,7 @@ class PatchRequest extends PayPalModel
      * 
      * @return $this
      */
-    public function setPatches($patches)
-    {
+    public function setPatches($patches) {
         $this->patches = $patches;
         return $this;
     }
@@ -33,8 +32,7 @@ class PatchRequest extends PayPalModel
      *
      * @return \PayPal\Api\Patch[]
      */
-    public function getPatches()
-    {
+    public function getPatches() {
         return $this->patches;
     }
 
@@ -44,13 +42,12 @@ class PatchRequest extends PayPalModel
      * @param \PayPal\Api\Patch $patch
      * @return $this
      */
-    public function addPatch($patch)
-    {
+    public function addPatch($patch) {
         if (!$this->getPatches()) {
             return $this->setPatches(array($patch));
         } else {
             return $this->setPatches(
-                array_merge($this->getPatches(), array($patch))
+                            array_merge($this->getPatches(), array($patch))
             );
         }
     }
@@ -61,10 +58,9 @@ class PatchRequest extends PayPalModel
      * @param \PayPal\Api\Patch $patch
      * @return $this
      */
-    public function removePatch($patch)
-    {
+    public function removePatch($patch) {
         return $this->setPatches(
-            array_diff($this->getPatches(), array($patch))
+                        array_diff($this->getPatches(), array($patch))
         );
     }
 
@@ -75,12 +71,12 @@ class PatchRequest extends PayPalModel
      * @param int $options
      * @return mixed|string
      */
-    public function toJSON($options = 0)
-    {
+    public function toJSON($options = 0) {
         $json = array();
         foreach ($this->getPatches() as $patch) {
             $json[] = $patch->toArray();
         }
         return str_replace('\\/', '/', json_encode($json, $options));
     }
+
 }

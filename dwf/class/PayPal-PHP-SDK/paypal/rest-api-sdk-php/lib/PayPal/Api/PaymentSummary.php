@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Currency paypal
  * @property \PayPal\Api\Currency other
  */
-class PaymentSummary extends PayPalModel
-{
+class PaymentSummary extends PayPalModel {
+
     /**
      * Total Amount paid/refunded via PayPal.
      *
@@ -23,8 +23,7 @@ class PaymentSummary extends PayPalModel
      * 
      * @return $this
      */
-    public function setPaypal($paypal)
-    {
+    public function setPaypal($paypal) {
         $this->paypal = $paypal;
         return $this;
     }
@@ -34,8 +33,7 @@ class PaymentSummary extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getPaypal()
-    {
+    public function getPaypal() {
         return $this->paypal;
     }
 
@@ -46,8 +44,7 @@ class PaymentSummary extends PayPalModel
      * 
      * @return $this
      */
-    public function setOther($other)
-    {
+    public function setOther($other) {
         $this->other = $other;
         return $this;
     }
@@ -57,8 +54,7 @@ class PaymentSummary extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getOther()
-    {
+    public function getOther() {
         return $this->other;
     }
 

@@ -21,8 +21,8 @@ use PayPal\Validation\UrlValidator;
  * @property bool conversion_type_changeable
  * @property \PayPal\Api\Links[] links
  */
-class CurrencyConversion extends PayPalModel
-{
+class CurrencyConversion extends PayPalModel {
+
     /**
      * Date of validity for the conversion rate.
      *
@@ -30,8 +30,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setConversionDate($conversion_date)
-    {
+    public function setConversionDate($conversion_date) {
         $this->conversion_date = $conversion_date;
         return $this;
     }
@@ -41,8 +40,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getConversionDate()
-    {
+    public function getConversionDate() {
         return $this->conversion_date;
     }
 
@@ -53,8 +51,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setFromCurrency($from_currency)
-    {
+    public function setFromCurrency($from_currency) {
         $this->from_currency = $from_currency;
         return $this;
     }
@@ -64,8 +61,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getFromCurrency()
-    {
+    public function getFromCurrency() {
         return $this->from_currency;
     }
 
@@ -76,8 +72,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setFromAmount($from_amount)
-    {
+    public function setFromAmount($from_amount) {
         $this->from_amount = $from_amount;
         return $this;
     }
@@ -87,8 +82,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getFromAmount()
-    {
+    public function getFromAmount() {
         return $this->from_amount;
     }
 
@@ -99,8 +93,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setToCurrency($to_currency)
-    {
+    public function setToCurrency($to_currency) {
         $this->to_currency = $to_currency;
         return $this;
     }
@@ -110,8 +103,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getToCurrency()
-    {
+    public function getToCurrency() {
         return $this->to_currency;
     }
 
@@ -122,8 +114,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setToAmount($to_amount)
-    {
+    public function setToAmount($to_amount) {
         $this->to_amount = $to_amount;
         return $this;
     }
@@ -133,8 +124,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getToAmount()
-    {
+    public function getToAmount() {
         return $this->to_amount;
     }
 
@@ -146,8 +136,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setConversionType($conversion_type)
-    {
+    public function setConversionType($conversion_type) {
         $this->conversion_type = $conversion_type;
         return $this;
     }
@@ -157,8 +146,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return string
      */
-    public function getConversionType()
-    {
+    public function getConversionType() {
         return $this->conversion_type;
     }
 
@@ -169,8 +157,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setConversionTypeChangeable($conversion_type_changeable)
-    {
+    public function setConversionTypeChangeable($conversion_type_changeable) {
         $this->conversion_type_changeable = $conversion_type_changeable;
         return $this;
     }
@@ -180,8 +167,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return bool
      */
-    public function getConversionTypeChangeable()
-    {
+    public function getConversionTypeChangeable() {
         return $this->conversion_type_changeable;
     }
 
@@ -193,8 +179,7 @@ class CurrencyConversion extends PayPalModel
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setWebUrl($web_url)
-    {
+    public function setWebUrl($web_url) {
         UrlValidator::validate($web_url, "WebUrl");
         $this->web_url = $web_url;
         return $this;
@@ -205,8 +190,7 @@ class CurrencyConversion extends PayPalModel
      * @deprecated Not publicly available
      * @return string
      */
-    public function getWebUrl()
-    {
+    public function getWebUrl() {
         return $this->web_url;
     }
 
@@ -217,8 +201,7 @@ class CurrencyConversion extends PayPalModel
      * 
      * @return $this
      */
-    public function setLinks($links)
-    {
+    public function setLinks($links) {
         $this->links = $links;
         return $this;
     }
@@ -228,8 +211,7 @@ class CurrencyConversion extends PayPalModel
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks()
-    {
+    public function getLinks() {
         return $this->links;
     }
 
@@ -239,13 +221,12 @@ class CurrencyConversion extends PayPalModel
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function addLink($links)
-    {
+    public function addLink($links) {
         if (!$this->getLinks()) {
             return $this->setLinks(array($links));
         } else {
             return $this->setLinks(
-                array_merge($this->getLinks(), array($links))
+                            array_merge($this->getLinks(), array($links))
             );
         }
     }
@@ -256,10 +237,9 @@ class CurrencyConversion extends PayPalModel
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function removeLink($links)
-    {
+    public function removeLink($links) {
         return $this->setLinks(
-            array_diff($this->getLinks(), array($links))
+                        array_diff($this->getLinks(), array($links))
         );
     }
 

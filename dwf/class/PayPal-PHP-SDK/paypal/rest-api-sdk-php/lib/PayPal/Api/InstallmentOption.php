@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Currency discount_amount
  * @property string discount_percentage
  */
-class InstallmentOption extends PayPalModel
-{
+class InstallmentOption extends PayPalModel {
+
     /**
      * Number of installments
      *
@@ -25,8 +25,7 @@ class InstallmentOption extends PayPalModel
      * 
      * @return $this
      */
-    public function setTerm($term)
-    {
+    public function setTerm($term) {
         $this->term = $term;
         return $this;
     }
@@ -36,8 +35,7 @@ class InstallmentOption extends PayPalModel
      *
      * @return int
      */
-    public function getTerm()
-    {
+    public function getTerm() {
         return $this->term;
     }
 
@@ -48,8 +46,7 @@ class InstallmentOption extends PayPalModel
      * 
      * @return $this
      */
-    public function setMonthlyPayment($monthly_payment)
-    {
+    public function setMonthlyPayment($monthly_payment) {
         $this->monthly_payment = $monthly_payment;
         return $this;
     }
@@ -59,8 +56,7 @@ class InstallmentOption extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getMonthlyPayment()
-    {
+    public function getMonthlyPayment() {
         return $this->monthly_payment;
     }
 
@@ -71,8 +67,7 @@ class InstallmentOption extends PayPalModel
      * 
      * @return $this
      */
-    public function setDiscountAmount($discount_amount)
-    {
+    public function setDiscountAmount($discount_amount) {
         $this->discount_amount = $discount_amount;
         return $this;
     }
@@ -82,8 +77,7 @@ class InstallmentOption extends PayPalModel
      *
      * @return \PayPal\Api\Currency
      */
-    public function getDiscountAmount()
-    {
+    public function getDiscountAmount() {
         return $this->discount_amount;
     }
 
@@ -94,8 +88,7 @@ class InstallmentOption extends PayPalModel
      * 
      * @return $this
      */
-    public function setDiscountPercentage($discount_percentage)
-    {
+    public function setDiscountPercentage($discount_percentage) {
         $this->discount_percentage = $discount_percentage;
         return $this;
     }
@@ -105,8 +98,7 @@ class InstallmentOption extends PayPalModel
      *
      * @return string
      */
-    public function getDiscountPercentage()
-    {
+    public function getDiscountPercentage() {
         return $this->discount_percentage;
     }
 

@@ -1,12 +1,11 @@
 <?php
-namespace PayPal\Api;
 
+namespace PayPal\Api;
 
 use PayPal\Core\PayPalConstants;
 use PayPal\Rest\ApiContext;
 
-class OpenIdSession
-{
+class OpenIdSession {
 
     /**
      * Returns the PayPal URL to which the user must be redirected to
@@ -23,8 +22,7 @@ class OpenIdSession
      * @param ApiContext $apiContext Optional API Context
      * @return string Authorization URL
      */
-    public static function getAuthorizationUrl($redirectUri, $scope, $clientId, $nonce = null, $state = null, $apiContext = null)
-    {
+    public static function getAuthorizationUrl($redirectUri, $scope, $clientId, $nonce = null, $state = null, $apiContext = null) {
         $apiContext = $apiContext ? $apiContext : new ApiContext();
         $config = $apiContext->getConfig();
 
@@ -56,7 +54,6 @@ class OpenIdSession
         return sprintf("%s/signin/authorize?%s", self::getBaseUrl($config), http_build_query($params));
     }
 
-
     /**
      * Returns the URL to which the user must be redirected to
      * logout from the OpenID provider (i.e. PayPal)
@@ -67,8 +64,7 @@ class OpenIdSession
      * @param ApiContext $apiContext    Optional API Context
      * @return string logout URL
      */
-    public static function getLogoutUrl($redirectUri, $idToken, $apiContext = null)
-    {
+    public static function getLogoutUrl($redirectUri, $idToken, $apiContext = null) {
 
         if (is_null($apiContext)) {
             $apiContext = new ApiContext();
@@ -89,8 +85,7 @@ class OpenIdSession
      * @param $config
      * @return null|string
      */
-    private static function getBaseUrl($config)
-    {
+    private static function getBaseUrl($config) {
 
         if (array_key_exists('openid.RedirectUri', $config)) {
             return $config['openid.RedirectUri'];
@@ -104,4 +99,5 @@ class OpenIdSession
         }
         return null;
     }
+
 }

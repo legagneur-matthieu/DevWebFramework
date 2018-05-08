@@ -48,6 +48,13 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
     protected $archiveSize = 0;
 
     /**
+     * Is checking stat owner
+     *
+     * @var        boolean
+     */
+    protected $statOwner = false;
+
+    /**
      * Constructor
      * Extend options with required fields
      *
@@ -62,6 +69,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         $this->options['followSymLinks'] = true;
         $this->options['detectDirIcon'] = '';         // file name that is detected as a folder icon e.g. '.diricon.png'
         $this->options['keepTimestamp'] = array('copy', 'move'); // keep timestamp at inner filesystem allowed 'copy', 'move' and 'upload'
+        $this->options['substituteImg'] = true;       // support substitute image with dim command
     }
 
     /*     * ****************************************************************** */
@@ -81,6 +89,11 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
                 if (!empty($this->options[$key])) {
                     $this->options[$key] = str_replace('/', DIRECTORY_SEPARATOR, $this->options[$key]);
                 }
+            }
+            // PHP >= 7.1 Supports UTF-8 path on Windows
+            if (version_compare(PHP_VERSION, '7.1', '>=')) {
+                $this->options['encoding'] = '';
+                $this->options['locale'] = '';
             }
         }
         if (!$cwd = getcwd()) {
@@ -190,6 +203,8 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         if (!empty($this->options['keepTimestamp'])) {
             $this->options['keepTimestamp'] = array_flip($this->options['keepTimestamp']);
         }
+
+        $this->statOwner = (!empty($this->options['statOwner']));
     }
 
     /**
@@ -430,12 +445,6 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _stat($path) {
-
-        static $statOwner;
-        if (is_null($statOwner)) {
-            $statOwner = (!empty($this->options['statOwner']));
-        }
-
         $stat = array();
 
         if (!file_exists($path) && !is_link($path)) {
@@ -469,14 +478,19 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
             $stat['alias'] = $this->_path($target);
             $stat['target'] = $target;
         }
-        $size = sprintf('%u', filesize($path));
-        $stat['ts'] = filemtime($path);
-        if ($statOwner) {
-            $fstat = stat($path);
-            $uid = $fstat['uid'];
-            $gid = $fstat['gid'];
-            $stat['perm'] = substr((string) decoct($fstat['mode']), -4);
-            $stat = array_merge($stat, $this->getOwnerStat($uid, $gid));
+
+        $readable = is_readable($path);
+
+        if ($readable) {
+            $size = sprintf('%u', filesize($path));
+            $stat['ts'] = filemtime($path);
+            if ($this->statOwner) {
+                $fstat = stat($path);
+                $uid = $fstat['uid'];
+                $gid = $fstat['gid'];
+                $stat['perm'] = substr((string) decoct($fstat['mode']), -4);
+                $stat = array_merge($stat, $this->getOwnerStat($uid, $gid));
+            }
         }
 
         if (($dir = is_dir($path)) && $this->options['detectDirIcon']) {
@@ -490,11 +504,15 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
             $stat['mime'] = $dir ? 'directory' : $this->mimetype($path);
         }
         //logical rights first
-        $stat['read'] = ($linkreadable || is_readable($path)) ? null : false;
+        $stat['read'] = ($linkreadable || $readable) ? null : false;
         $stat['write'] = is_writable($path) ? null : false;
 
         if (is_null($stat['read'])) {
-            $stat['size'] = $dir ? 0 : $size;
+            if ($dir) {
+                $stat['size'] = 0;
+            } else if (isset($size)) {
+                $stat['size'] = $size;
+            }
         }
 
         return $stat;
@@ -564,6 +582,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
             if (class_exists('FilesystemIterator', false)) {
                 $dirItr = new ParentIterator(
                         new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS |
+                        FilesystemIterator::CURRENT_AS_SELF |
                         (defined('RecursiveDirectoryIterator::FOLLOW_SYMLINKS') ?
                         RecursiveDirectoryIterator::FOLLOW_SYMLINKS : 0)
                         )
@@ -572,7 +591,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
                 if ($dirItr->hasChildren()) {
                     $dirs = true;
                     $name = $dirItr->getSubPathName();
-                    while ($name) {
+                    while ($dirItr->valid()) {
                         if (!$this->attr($path . DIRECTORY_SEPARATOR . $name, 'read', null, true)) {
                             $dirs = false;
                             $dirItr->next();
@@ -638,10 +657,10 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _scandir($path) {
+        elFinder::checkAborted();
         $files = array();
         $cache = array();
         $dirWritable = is_writable($path);
-        $statOwner = (!empty($this->options['statOwner']));
         $dirItr = array();
         $followSymLinks = $this->options['followSymLinks'];
         try {
@@ -702,7 +721,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
                 $size = sprintf('%u', $file->getSize());
                 $stat['ts'] = $file->getMTime();
                 if (!$br) {
-                    if ($statOwner && !$linkreadable) {
+                    if ($this->statOwner && !$linkreadable) {
                         $uid = $file->getOwner();
                         $gid = $file->getGroup();
                         $stat['perm'] = substr((string) decoct($file->getPerms()), -4);
@@ -775,7 +794,6 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
 
         if (mkdir($path)) {
             chmod($path, $this->options['dirMode']);
-            clearstatcache();
             return $path;
         }
 
@@ -796,7 +814,6 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         if (($fp = fopen($path, 'w'))) {
             fclose($fp);
             chmod($path, $this->options['fileMode']);
-            clearstatcache();
             return $path;
         }
         return false;
@@ -829,7 +846,6 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         $target = $this->_joinPath($targetDir, $name);
         if ($ret = copy($source, $target)) {
             isset($this->options['keepTimestamp']['copy']) && $mtime && touch($target, $mtime);
-            clearstatcache();
         }
         return $ret;
     }
@@ -850,7 +866,6 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         $target = $this->_joinPath($targetDir, $name);
         if ($ret = rename($source, $target) ? $target : false) {
             isset($this->options['keepTimestamp']['move']) && $mtime && touch($target, $mtime);
-            clearstatcache();
         }
         return $ret;
     }
@@ -863,9 +878,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _unlink($path) {
-        $ret = unlink($path);
-        $ret && clearstatcache();
-        return $ret;
+        return is_file($path) && unlink($path);
     }
 
     /**
@@ -876,9 +889,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _rmdir($path) {
-        $ret = rmdir($path);
-        $ret && clearstatcache();
-        return $ret;
+        return rmdir($path);
     }
 
     /**
@@ -897,7 +908,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
 
         $meta = stream_get_meta_data($fp);
         $uri = isset($meta['uri']) ? $meta['uri'] : '';
-        if ($uri && !preg_match('#^[a-zA-Z0-9]+://#', $uri)) {
+        if ($uri && !preg_match('#^[a-zA-Z0-9]+://#', $uri) && !is_link($uri)) {
             fclose($fp);
             $mtime = filemtime($uri);
             $isCmdPaste = ($this->ARGS['cmd'] === 'paste');
@@ -906,24 +917,16 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
                 return false;
             }
             // keep timestamp on upload
-            if ($mtime && $this->ARGS['cmd'] === 'upload' && isset($this->options['keepTimestamp']['upload'])) {
-                touch($path, $mtime);
+            if ($mtime && $this->ARGS['cmd'] === 'upload') {
+                touch($path, isset($this->options['keepTimestamp']['upload']) ? $mtime : time());
             }
-            // re-create the source file for remove processing of paste command
-            $isCmdPaste && !$isCmdCopy && touch($uri);
         } else {
             if (file_put_contents($path, $fp, LOCK_EX) === false) {
                 return false;
             }
         }
 
-        if (is_link($path)) {
-            unlink($path);
-            return $this->setError(elFinder::ERROR_SAVE, $name);
-        }
-
         chmod($path, $this->options['fileMode']);
-        clearstatcache();
         return $path;
     }
 
@@ -947,11 +950,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _filePutContents($path, $content) {
-        if (file_put_contents($path, $content, LOCK_EX) !== false) {
-            clearstatcache();
-            return true;
-        }
-        return false;
+        return (file_put_contents($path, $content, LOCK_EX) !== false);
     }
 
     /**
@@ -973,9 +972,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      */
     protected function _chmod($path, $mode) {
         $modeOct = is_string($mode) ? octdec($mode) : octdec(sprintf("%04o", $mode));
-        $ret = chmod($path, $modeOct);
-        $ret && clearstatcache();
-        return $ret;
+        return chmod($path, $modeOct);
     }
 
     /**
@@ -1003,7 +1000,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         if ($this->quarantine) {
 
             $dir = $this->quarantine . DIRECTORY_SEPARATOR . md5(basename($path) . mt_rand());
-            $archive = $dir . DIRECTORY_SEPARATOR . basename($path);
+            $archive = (isset($arc['toSpec']) || $arc['cmd'] === 'phpfunction') ? '' : $dir . DIRECTORY_SEPARATOR . basename($path);
 
             if (!mkdir($dir)) {
                 return false;
@@ -1015,12 +1012,12 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
             chmod($dir, 0777);
 
             // copy in quarantine
-            if (!copy($path, $archive)) {
+            if (!is_readable($path) || ($archive && !copy($path, $archive))) {
                 return false;
             }
 
             // extract in quarantine
-            $this->unpackArchive($archive, $arc);
+            $this->unpackArchive($path, $arc, $archive ? true : $dir);
 
             // get files list
             $ls = self::localScandir($dir);
@@ -1061,10 +1058,8 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
                 // for several files - create new directory
                 // create unique name for directory
                 $src = $dir;
-                $name = basename($path);
-                if (preg_match('/\.((tar\.(gz|bz|bz2|z|lzo))|cpio\.gz|ps\.gz|xcf\.(gz|bz2)|[a-z0-9]{1,4})$/i', $name, $m)) {
-                    $name = substr($name, 0, strlen($name) - strlen($m[0]));
-                }
+                $splits = elFinder::splitFileExtention(basename($path));
+                $name = $splits[0];
                 $test = dirname($path) . DIRECTORY_SEPARATOR . $name;
                 if (file_exists($test) || is_link($test)) {
                     $name = $this->uniqueName(dirname($path), $name, '-', false);
@@ -1139,6 +1134,21 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
         return $this->rmdirRecursive($localpath);
     }
 
+    /**
+     * Return fileinfo based on filename
+     * For item ID based path file system
+     * Please override if needed on each drivers
+     *
+     * @param  string  $path  file cache
+     * @return array
+     */
+    protected function isNameExists($path) {
+        $exists = file_exists($this->convEncIn($path));
+        // restore locale
+        $this->convEncOut();
+        return $exists ? $this->stat($path) : false;
+    }
+
     /*     * ****************** Over write (Optimized) functions ************************ */
 
     /**
@@ -1152,8 +1162,8 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
      * @author Naoki Sawada
      * */
     protected function doSearch($path, $q, $mimes) {
-        if ($this->encoding || !class_exists('FilesystemIterator', false)) {
-            // non UTF-8 use elFinderVolumeDriver::doSearch()
+        if (!empty($this->doSearchCurrentQuery['matchMethod']) || $this->encoding || !class_exists('FilesystemIterator', false)) {
+            // has custom match method or non UTF-8, use elFinderVolumeDriver::doSearch()
             return parent::doSearch($path, $q, $mimes);
         }
 

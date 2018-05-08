@@ -41,7 +41,7 @@ class elFinderConnector {
      * 
      * @var string
      */
-    protected static $contentType = 'Content-Type: application/json';
+    protected static $contentType = 'Content-Type: application/json; charset=utf-8';
 
     /**
      * Constructor
@@ -55,7 +55,7 @@ class elFinderConnector {
         $this->elFinder = $elFinder;
         $this->reqMethod = strtoupper($_SERVER["REQUEST_METHOD"]);
         if ($debug) {
-            self::$contentType = 'Content-Type: text/html; charset=utf-8';
+            self::$contentType = 'Content-Type: text/plain; charset=utf-8';
         }
     }
 
@@ -67,7 +67,7 @@ class elFinderConnector {
      * */
     public function run() {
         $isPost = $this->reqMethod === 'POST';
-        $src = $isPost ? $_POST : $_GET;
+        $src = $isPost ? array_merge($_GET, $_POST) : $_GET;
         $maxInputVars = (!$src || isset($src['targets'])) ? ini_get('max_input_vars') : null;
         if ((!$src || $maxInputVars) && $rawPostData = file_get_contents('php://input')) {
             // for max_input_vars and supports IE XDomainRequest()
@@ -153,7 +153,14 @@ class elFinderConnector {
             $args['FILES'] = $_FILES;
         }
 
-        $this->output($this->elFinder->exec($cmd, $args));
+        try {
+            $this->output($this->elFinder->exec($cmd, $args));
+        } catch (elFinderAbortException $e) {
+            // connection aborted
+            // unlock session data for multiple access
+            $this->elFinder->getSession()->close();
+            exit();
+        }
     }
 
     /**
@@ -174,6 +181,9 @@ class elFinderConnector {
         }
 
         if (isset($data['pointer'])) {
+            // set time limit to 0
+            elFinder::extendTimeLimit(0);
+
             // send optional header
             if (!empty($data['header'])) {
                 self::sendHeader($data['header']);
@@ -186,7 +196,8 @@ class elFinderConnector {
 
             $toEnd = true;
             $fp = $data['pointer'];
-            if (($this->reqMethod === 'GET' || $this->reqMethod === 'HEAD') && elFinder::isSeekableStream($fp) && (array_search('Accept-Ranges: none', headers_list()) === false)) {
+            $sendData = !($this->reqMethod === 'HEAD' || !empty($data['info']['xsendfile']));
+            if (($this->reqMethod === 'GET' || !$sendData) && elFinder::isSeekableStream($fp) && (array_search('Accept-Ranges: none', headers_list()) === false)) {
                 header('Accept-Ranges: bytes');
                 $psize = null;
                 if (!empty($_SERVER['HTTP_RANGE'])) {
@@ -213,11 +224,24 @@ class elFinderConnector {
                             header('Content-Length: ' . $psize);
                             header('Content-Range: bytes ' . $start . '-' . $end . '/' . $size);
 
-                            fseek($fp, $start);
+                            // Apache mod_xsendfile dose not support range request
+                            if (isset($data['info']['xsendfile']) && strtolower($data['info']['xsendfile']) === 'x-sendfile') {
+                                if (function_exists('header_remove')) {
+                                    header_remove($data['info']['xsendfile']);
+                                } else {
+                                    header($data['info']['xsendfile'] . ':');
+                                }
+                                unset($data['info']['xsendfile']);
+                                if ($this->reqMethod !== 'HEAD') {
+                                    $sendData = true;
+                                }
+                            }
+
+                            $sendData && fseek($fp, $start);
                         }
                     }
                 }
-                if (is_null($psize)) {
+                if ($sendData && is_null($psize)) {
                     elFinder::rewind($fp);
                 }
             } else {
@@ -231,9 +255,15 @@ class elFinderConnector {
                 }
             }
 
-            if ($reqMethod !== 'HEAD') {
+            if ($sendData) {
                 if ($toEnd) {
-                    fpassthru($fp);
+                    // PHP < 5.6 has a bug of fpassthru
+                    // see https://bugs.php.net/bug.php?id=66736
+                    if (version_compare(PHP_VERSION, '5.6', '<')) {
+                        file_put_contents('php://output', $fp);
+                    } else {
+                        fpassthru($fp);
+                    }
                 } else {
                     $out = fopen('php://output', 'wb');
                     stream_copy_to_stream($fp, $out, $psize);
@@ -301,7 +331,7 @@ class elFinderConnector {
 
         unset($data['header']);
 
-        if (!empty($data['raw']) && !empty($data['error'])) {
+        if (!empty($data['raw']) && isset($data['error'])) {
             $out = $data['error'];
         } else {
             if (isset($data['debug']) && isset($data['debug']['phpErrors'])) {

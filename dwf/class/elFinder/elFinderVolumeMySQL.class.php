@@ -53,6 +53,13 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
     protected $dbError = '';
 
     /**
+     * This root has parent id
+     *
+     * @var        boolean
+     */
+    protected $rootHasParent = false;
+
+    /**
      * Constructor
      * Extend options with required fields
      *
@@ -116,6 +123,9 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
 
         $this->updateCache($this->options['path'], $this->_stat($this->options['path']));
 
+        // enable command archive
+        $this->options['useRemoteArchive'] = true;
+
         return true;
     }
 
@@ -141,7 +151,8 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
             $this->tmpPath = $tmp;
         }
 
-        if (!$this->tmpPath && $this->tmbPath && $this->tmbPathWritable) {
+        // fallback of $this->tmp
+        if (!$this->tmpPath && $this->tmbPathWritable) {
             $this->tmpPath = $this->tmbPath;
         }
 
@@ -200,8 +211,8 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function make($path, $name, $mime) {
-        $sql = 'INSERT INTO %s (`parent_id`, `name`, `size`, `mtime`, `mime`, `content`, `read`, `write`) VALUES (\'%s\', \'%s\', 0, %d, \'%s\', \'\', \'%d\', \'%d\')';
-        $sql = sprintf($sql, $this->tbf, $path, $this->db->real_escape_string($name), time(), $mime, $this->defaults['read'], $this->defaults['write']);
+        $sql = 'INSERT INTO %s (`parent_id`, `name`, `size`, `mtime`, `mime`, `content`, `read`, `write`, `locked`, `hidden`, `width`, `height`) VALUES (\'%s\', \'%s\', 0, %d, \'%s\', \'\', \'%d\', \'%d\', \'%d\', \'%d\', 0, 0)';
+        $sql = sprintf($sql, $this->tbf, $path, $this->db->real_escape_string($name), time(), $mime, $this->defaults['read'], $this->defaults['write'], $this->defaults['locked'], $this->defaults['hidden']);
         // echo $sql;
         return $this->query($sql) && $this->db->affected_rows > 0;
     }
@@ -224,13 +235,13 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
 				FROM ' . $this->tbf . ' AS f 
 				LEFT JOIN ' . $this->tbf . ' AS ch ON ch.parent_id=f.id AND ch.mime=\'directory\'
 				WHERE f.parent_id=\'' . $path . '\'
-				GROUP BY f.id';
+				GROUP BY f.id, ch.id';
 
         $res = $this->query($sql);
         if ($res) {
             while ($row = $res->fetch_assoc()) {
                 $id = $row['id'];
-                if ($row['parent_id']) {
+                if ($row['parent_id'] && $id != $this->root) {
                     $row['phash'] = $this->encode($row['parent_id']);
                 }
 
@@ -304,10 +315,15 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function doSearch($path, $q, $mimes) {
+        if (!empty($this->doSearchCurrentQuery['matchMethod'])) {
+            // has custom match method use elFinderVolumeDriver::doSearch()
+            return parent::doSearch($path, $q, $mimes);
+        }
+
         $dirs = array();
         $timeout = $this->options['searchTimeout'] ? $this->searchStart + $this->options['searchTimeout'] : 0;
 
-        if ($path != $this->root) {
+        if ($path != $this->root || $this->rootHasParent) {
             $dirs = $inpath = array(intval($path));
             while ($inpath) {
                 $in = '(' . join(',', $inpath) . ')';
@@ -337,7 +353,7 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
             }
             $whr = join(' OR ', $whrs);
         } else {
-            $whr = sprintf('f.name RLIKE \'%s\'', $this->db->real_escape_string($q));
+            $whr = sprintf('f.name LIKE \'%%%s%%\'', $this->db->real_escape_string($q));
         }
         if ($dirs) {
             $whr = '(' . $whr . ') AND (`parent_id` IN (' . join(',', $dirs) . '))';
@@ -360,7 +376,10 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
                     continue;
                 }
                 $id = $row['id'];
-                if ($row['parent_id']) {
+                if ($id == $this->root) {
+                    continue;
+                }
+                if ($row['parent_id'] && $id != $this->root) {
                     $row['phash'] = $this->encode($row['parent_id']);
                 }
                 $row['path'] = $this->_path($id);
@@ -380,7 +399,6 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
                 }
             }
         }
-
         return $result;
     }
 
@@ -516,15 +534,18 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
     protected function _stat($path) {
         $sql = 'SELECT f.id, f.parent_id, f.name, f.size, f.mtime AS ts, f.mime, f.read, f.write, f.locked, f.hidden, f.width, f.height, IF(ch.id, 1, 0) AS dirs
 				FROM ' . $this->tbf . ' AS f 
-				LEFT JOIN ' . $this->tbf . ' AS p ON p.id=f.parent_id
 				LEFT JOIN ' . $this->tbf . ' AS ch ON ch.parent_id=f.id AND ch.mime=\'directory\'
 				WHERE f.id=\'' . $path . '\'
-				GROUP BY f.id';
+				GROUP BY f.id, ch.id';
 
         $res = $this->query($sql);
 
         if ($res) {
             $stat = $res->fetch_assoc();
+            if ($stat['id'] == $this->root) {
+                $this->rootHasParent = true;
+                $stat['parent_id'] = '';
+            }
             if ($stat['parent_id']) {
                 $stat['phash'] = $this->encode($stat['parent_id']);
             }
@@ -533,6 +554,9 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
                 unset($stat['height']);
                 $stat['size'] = 0;
             } else {
+                if (!$stat['mime']) {
+                    unset($stat['mime']);
+                }
                 unset($stat['dirs']);
             }
             unset($stat['id']);
@@ -588,7 +612,7 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _fopen($path, $mode = 'rb') {
-        $fp = $this->tmbPath ? fopen($this->getTempFile($path), 'w+') : tmpfile();
+        $fp = $this->tmbPath ? fopen($this->getTempFile($path), 'w+') : $this->tmpfile();
 
 
         if ($fp) {
@@ -613,9 +637,10 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      */
     protected function _fclose($fp, $path = '') {
-        fclose($fp);
+        is_resource($fp) && fclose($fp);
         if ($path) {
-            unlink($this->getTempFile($path));
+            $file = $this->getTempFile($path);
+            is_file($file) && unlink($file);
         }
     }
 
@@ -642,7 +667,7 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _mkfile($path, $name) {
-        return $this->make($path, $name, 'text/plain') ? $this->_joinPath($path, $name) : false;
+        return $this->make($path, $name, '') ? $this->_joinPath($path, $name) : false;
     }
 
     /**

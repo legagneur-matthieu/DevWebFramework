@@ -73,9 +73,11 @@ class elFinder_connector {
         }
     }
     private function classloader() {
-        foreach (glob(__DIR__ . '/../../dwf/class/*.class.php') as $" . "class) {
-            include_once $" . "class;
-        }
+        spl_autoload_register(function($" . "class){
+            if(file_exists($" . "filename=__DIR__ . '/../../dwf/class/'.$" . "class.'.class.php')){
+                include_once $" . "filename;
+            }
+        });
         include __DIR__ . '/class/config.class.php';
         include __DIR__ . '/../../dwf/class/elFinder/autoload.php';
     }

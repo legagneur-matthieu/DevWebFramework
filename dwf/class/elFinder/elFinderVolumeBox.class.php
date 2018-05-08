@@ -201,7 +201,7 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
      * @return true|string error message
      */
     protected function _bd_refreshToken() {
-        if ($this->token->expires < time()) {
+        if (!property_exists($this->token, 'expires') || $this->token->expires < time()) {
             if (!$token = $this->session->get('BoxTokens')) {
                 $token = $this->token;
             }
@@ -489,10 +489,9 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
         list(, $itemId) = $this->_bd_splitPath($path);
 
         try {
-            $url = self::API_URL . '/files/' . $itemId . '/content';
+            $url = self::API_URL . '/files/' . $itemId . '/thumbnail.png?min_height=' . $this->tmbSize . '&min_width=' . $this->tmbSize;
 
             $contents = $this->_bd_fetch($url, true);
-
             return $contents;
         } catch (Exception $e) {
             return false;
@@ -717,6 +716,20 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
         return true;
     }
 
+    /**
+     * Return debug info for client.
+     *
+     * @return array
+     * */
+    public function debug() {
+        $res = parent::debug();
+        if (!empty($this->options['accessToken'])) {
+            $res['accessToken'] = $this->options['accessToken'];
+        }
+
+        return $res;
+    }
+
     /*     * ****************************************************************** */
     /*                        INIT AND CONFIGURE                         */
     /*     * ****************************************************************** */
@@ -778,9 +791,6 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
             }
         }
 
-        if (!$this->tmp && is_writable($this->options['tmbPath'])) {
-            $this->tmp = $this->options['tmbPath'];
-        }
         if (!$this->tmp && ($tmp = elFinder::getStaticVar('commonTempPath'))) {
             $this->tmp = $tmp;
         }
@@ -790,6 +800,9 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
 
         // 'lsPlSleep' minmum 10 sec
         $this->options['lsPlSleep'] = max(10, $this->options['lsPlSleep']);
+
+        // enable command archive
+        $this->options['useRemoteArchive'] = true;
 
         return true;
     }
@@ -802,8 +815,10 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
     protected function configure() {
         parent::configure();
 
-        $this->disabled[] = 'archive';
-        $this->disabled[] = 'extract';
+        // fallback of $this->tmp
+        if (!$this->tmp && $this->tmbPathWritable) {
+            $this->tmp = $this->tmbPath;
+        }
     }
 
     /*     * ****************************************************************** */
@@ -986,7 +1001,10 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
 
         // copy image into tmbPath so some drivers does not store files on local fs
         if (!$data = $this->_bd_getThumbnail($path)) {
-            return false;
+            // try get full contents as fallback
+            if (!$data = $this->_getContents($path)) {
+                return false;
+            }
         }
         if (!file_put_contents($tmb, $data)) {
             return false;
@@ -1056,7 +1074,7 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
      * */
     protected function getSharedWebContentLink($raw) {
         $fExtension = pathinfo($raw->name, PATHINFO_EXTENSION);
-        $fType = explode('/', self::mimetypeInternalDetect($raw->name))[0];
+        list($fType) = explode('/', self::mimetypeInternalDetect($raw->name));
 
         if ($raw->shared_link->url && ($fType == 'image' || $fType == 'video' || $fType == 'audio')) {
             if ($fExtension == 'jpg' && $fType == 'image') {
@@ -1094,6 +1112,13 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
      * @author Naoki Sawada
      * */
     public function getContentUrl($hash, $options = array()) {
+        if (!empty($options['temporary'])) {
+            // try make temporary file
+            $url = parent::getContentUrl($hash, $options);
+            if ($url) {
+                return $url;
+            }
+        }
         if (($file = $this->file($hash)) == false || !$file['url'] || $file['url'] == 1) {
             $path = $this->decode($hash);
 
@@ -1318,7 +1343,11 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
             if ($size = @getimagesize($work)) {
                 $cache['width'] = $size[0];
                 $cache['height'] = $size[1];
-                $ret = $size[0] . 'x' . $size[1];
+                $ret = array('dim' => $size[0] . 'x' . $size[1]);
+                $srcfp = fopen($work, 'rb');
+                if ($subImgLink = $this->getSubstituteImgLink(elFinder::$currentArgs['target'], $size, $srcfp)) {
+                    $ret['url'] = $subImgLink;
+                }
             }
         }
         is_file($work) && @unlink($work);
@@ -1427,7 +1456,7 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
      * @author Dmitry (dio) Levashov
      * */
     protected function _mkfile($path, $name) {
-        return $this->_save(tmpfile(), $path, $name, array());
+        return $this->_save($this->tmpfile(), $path, $name, array());
     }
 
     /**
@@ -1603,7 +1632,7 @@ class elFinderVolumeBox extends elFinderVolumeDriver {
             $tmpFilePath = isset($metaDatas['uri']) ? $metaDatas['uri'] : '';
             // remote contents
             if (!$tmpFilePath || empty($metaDatas['seekable'])) {
-                $tmpHandle = tmpfile();
+                $tmpHandle = $this->tmpfile();
                 stream_copy_to_stream($fp, $tmpHandle);
                 $metaDatas = stream_get_meta_data($tmpHandle);
                 $tmpFilePath = $metaDatas['uri'];

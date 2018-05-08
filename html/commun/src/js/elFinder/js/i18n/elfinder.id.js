@@ -1,7 +1,8 @@
 /**
- * Indonesian translation
+ * Bahasa Indonesia translation
  * @author Suyadi <1441177004009@student.unsika.ac.id>
- * @version 2015-07-27
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @version 2017-05-28
  */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -13,11 +14,12 @@
     }
 }(this, function (elFinder) {
     elFinder.prototype.i18.id = {
-        translator: 'Suyadi &lt;1441177004009@student.unsika.ac.id&gt;',
+        translator: 'Suyadi &lt;1441177004009@student.unsika.ac.id&gt;, Ammar Faizi &lt;ammarfaizi2@gmail.com&gt;',
         language: 'Bahasa Indonesia',
         direction: 'ltr',
-        dateFormat: 'j F, Y H:i',
-        fancyDateFormat: '$1 H:i',
+        dateFormat: 'j F, Y H:i', // Mar 13, 2012 05:27 PM
+        fancyDateFormat: '$1 H:i', // will produce smth like: Today 12:25 PM
+        nonameDateFormat: 'd m Y - H : i : s', // to apply if upload file is noname: 120513172700
         messages: {
 
             /********************************** errors **********************************/
@@ -49,6 +51,7 @@
             'errLocked': '"$1" ini terkunci dan tak dapat dipidahkan, diubah atau dihapus.',
             'errExists': 'Berkas bernama "$1" sudah ada.',
             'errInvName': 'Nama berkas tidak valid.',
+            'errInvDirname': 'Nama folder salah.', // from v2.1.24 added 12.4.2017
             'errFolderNotFound': 'Folder tidak ditemukan.',
             'errFileNotFound': 'Berkas tidak ditemukan.',
             'errTrgFolderNotFound': 'Folder tujuan "$1" tidak ditemukan.',
@@ -58,13 +61,15 @@
             'errRename': 'Tidak dapat mengubah nama "$1".',
             'errCopyFrom': 'Tidak diizinkan menyalin berkas dari volume "$1".',
             'errCopyTo': 'tidak diizinkan menyalin berkas ke volume "$1".',
-            'errUpload': 'Kesalahan saat mengunggah.',
-            'errUploadFile': 'Tidak dapat mengunggah "$1".',
+            'errMkOutLink': 'Tidak dapat membuat tautan diluar volume root.', // from v2.1 added 03.10.2015
+            'errUpload': 'Kesalahan saat mengunggah.', // old name - errUploadCommon
+            'errUploadFile': 'Tidak dapat mengunggah "$1".', // old name - errUpload
             'errUploadNoFiles': 'Tak ada berkas untuk diunggah.',
-            'errUploadTotalSize': 'Data melampaui ukuran yang diperbolehkan.',
-            'errUploadFileSize': 'Berkas melampaui ukuran yang diperbolehkan.',
+            'errUploadTotalSize': 'Data melampaui ukuran yang diperbolehkan.', // old name - errMaxSize
+            'errUploadFileSize': 'Berkas melampaui ukuran yang diperbolehkan.', //  old name - errFileMaxSize
             'errUploadMime': 'Jenis berkas ini tidak diijinkan.',
             'errUploadTransfer': 'Kesalahan transfer "$1".',
+            'errUploadTemp': 'Tidak dapat membuat file sementara untuk diupload.', // from v2.1 added 26.09.2015
             'errNotReplace': 'Obyek "$1" sudah ada di lokasi ini dan tidak dapat ditimpa oleh obyek jenis lain.', // new
             'errReplace': 'Tidak dapat menimpa "$1".',
             'errSave': 'Tidak dapat menyimpan "$1".',
@@ -72,6 +77,7 @@
             'errMove': 'Tidak dapat memindahkan "$1".',
             'errCopyInItself': 'Tidak dapat menyalin "$1" ke dirinya sendiri.',
             'errRm': 'Tidak dapat menghapus "$1".',
+            'errTrash': 'Tidak dapat masuk ke tempat sampah.', // from v2.1.24 added 30.4.2017
             'errRmSrc': 'Tidak dapat menghapus sumber berkas.',
             'errExtract': 'Tidak dapat mengekstrak berkas dari "$1".',
             'errArchive': 'Tidak dapat membuat arsip.',
@@ -82,16 +88,16 @@
             'errArcSymlinks': 'Untuk keamanan tak diijinkan mengekstrak arsip berisi symlink atau jenis berkas yang tak diijinkan.', // edited 24.06.2012
             'errArcMaxSize': 'Arsip ini melampaui ukuran yang diijinkan.',
             'errResize': 'Tidak dapat mengubah ukuran "$1".',
-            'errResizeDegree': 'Derajat putaran tidak valid.',
-            'errResizeRotate': 'Citra tidak diputar.',
-            'errResizeSize': 'Ukuran citra tidak valid.',
-            'errResizeNoChange': 'Ukuran citra tidak diubah.',
+            'errResizeDegree': 'Derajat putaran tidak valid.', // added 7.3.2013
+            'errResizeRotate': 'Citra tidak diputar.', // added 7.3.2013
+            'errResizeSize': 'Ukuran citra tidak valid.', // added 7.3.2013
+            'errResizeNoChange': 'Ukuran citra tidak diubah.', // added 7.3.2013
             'errUsupportType': 'Jenis berkas tidak didukung.',
-            'errNotUTF8Content': 'Berkas "$1" tidak dalam format UTF-8 dan tidak dapat disunting.',
-            'errNetMount': 'Tidak dapat membaca susunan "$1".',
-            'errNetMountNoDriver': 'Protokol tidak didukung.',
-            'errNetMountFailed': 'Tidak dapat membaca susunannya.',
-            'errNetMountHostReq': 'Host harus ada.',
+            'errNotUTF8Content': 'Berkas "$1" tidak dalam format UTF-8 dan tidak dapat disunting.', // added 9.11.2011
+            'errNetMount': 'Tidak dapat membaca susunan "$1".', // added 17.04.2012
+            'errNetMountNoDriver': 'Protokol tidak didukung.', // added 17.04.2012
+            'errNetMountFailed': 'Tidak dapat membaca susunannya.', // added 17.04.2012
+            'errNetMountHostReq': 'Host harus ada.', // added 18.04.2012
             'errSessionExpires': 'Sesi anda telah kadaluwarsa karena lama tidak aktif.',
             'errCreatingTempDir': 'Tidak dapat membuat direktori sementara: "$1"',
             'errFtpDownloadFile': 'Tidak dapat mengunduh berkas dari FTP: "$1"',
@@ -99,6 +105,14 @@
             'errFtpMkdir': 'Tidak dapat membuat remot direktori dari FTP: "$1"',
             'errArchiveExec': 'Kesalahan saat mengarsipkan berkas: "$1"',
             'errExtractExec': 'Kesalahan saat mengekstrak berkas: "$1"',
+            'errNetUnMount': 'Tidak dapat melakukan mount.', // from v2.1 added 30.04.2012
+            'errConvUTF8': 'Tidak cocok untuk konversi ke UTF-8', // from v2.1 added 08.04.2014
+            'errFolderUpload': 'Coba dengan browser yang modern, Jika akan mengupload folder.', // from v2.1 added 26.6.2015
+            'errSearchTimeout': 'Waktu habis selama melakukan pencarian "$1". Hasil sementara.', // from v2.1 added 12.1.2016
+            'errReauthRequire': 'Re-authorization dibutuhkan.', // from v2.1.10 added 24.3.2016
+            'errMaxTargets': 'Berkas maksimal yang dipilih adalah $1.', // from v2.1.17 added 17.10.2016
+            'errRestore': 'Tidak dapat mengembalikan berkas dari tempat sampah. Tujuan tidak ditemukan.', // from v2.1.24 added 3.5.2017
+            'errEditorNotFound': 'Tidak ditemukan editor untuk file tipe ini.', // from v2.1.25 added 23.5.2017
 
             /******************************* commands names ********************************/
             'cmdarchive': 'Buat arsip',
@@ -115,6 +129,7 @@
             'cmdhome': 'Rumah',
             'cmdinfo': 'Dapatkan info',
             'cmdmkdir': 'Buat folder',
+            'cmdmkdirin': 'Masuk ke folder baru', // from v2.1.7 added 19.2.2016
             'cmdmkfile': 'Buat berkas teks',
             'cmdopen': 'Buka',
             'cmdpaste': 'Tempel',
@@ -122,6 +137,8 @@
             'cmdreload': 'Muat-ulang',
             'cmdrename': 'Ganti nama',
             'cmdrm': 'Hapus',
+            'cmdtrash': 'Sampahkan', //from v2.1.24 added 29.4.2017
+            'cmdrestore': 'Kembalikan', //from v2.1.24 added 3.5.2017
             'cmdsearch': 'Cari berkas',
             'cmdup': 'Ke direktori utama',
             'cmdupload': 'Unggah berkas',
@@ -129,6 +146,13 @@
             'cmdresize': 'Ubah ukuran & Putar',
             'cmdsort': 'Urutkan',
             'cmdnetmount': 'Baca-susun volume jaringan', // added 18.04.2012
+            'cmdnetunmount': 'Unmount', // from v2.1 added 30.04.2012
+            'cmdplaces': 'Ke Tempat', // added 28.12.2014
+            'cmdchmod': 'Mode mengubah', // from v2.1 added 20.6.2015
+            'cmdopendir': 'Membuka folder', // from v2.1 added 13.1.2016
+            'cmdcolwidth': 'Reset column width', // from v2.1.13 added 12.06.2016
+            'cmdfullscreen': 'Layar Penuh', // from v2.1.15 added 03.08.2016
+            'cmdmove': 'Pindah', // from v2.1.15 added 21.08.2016
 
             /*********************************** buttons ***********************************/
             'btnClose': 'Tutup',
@@ -138,7 +162,23 @@
             'btnCancel': 'Batal',
             'btnNo': 'Tidak',
             'btnYes': 'Ya',
-            'btnMount': 'Baca susunan',
+            'btnMount': 'Baca susunan', // added 18.04.2012
+            'btnApprove': 'Menuju ke $1 & setujui', // from v2.1 added 26.04.2012
+            'btnUnmount': 'Unmount', // from v2.1 added 30.04.2012
+            'btnConv': 'Konversi', // from v2.1 added 08.04.2014
+            'btnCwd': 'Disini', // from v2.1 added 22.5.2015
+            'btnVolume': 'Volume', // from v2.1 added 22.5.2015
+            'btnAll': 'Semua', // from v2.1 added 22.5.2015
+            'btnMime': 'MIME Type', // from v2.1 added 22.5.2015
+            'btnFileName': 'Nama file', // from v2.1 added 22.5.2015
+            'btnSaveClose': 'Simpan & Tutup', // from v2.1 added 12.6.2015
+            'btnBackup': 'Backup', // fromv2.1 added 28.11.2015
+            'btnRename': 'Ubah nama', // from v2.1.24 added 6.4.2017
+            'btnRenameAll': 'Ubah nama(Semua)', // from v2.1.24 added 6.4.2017
+            'btnPrevious': 'Sebelumnya ($1/$2)', // from v2.1.24 added 11.5.2017
+            'btnNext': 'Selanjutnya ($1/$2)', // from v2.1.24 added 11.5.2017
+            'btnSaveAs': 'Simpan sebagai', // from v2.1.25 added 24.5.2017
+
             /******************************** notifications ********************************/
             'ntfopen': 'Buka folder',
             'ntffile': 'Buka berkas',
@@ -159,15 +199,29 @@
             'ntfresize': 'Mengubah ukuran citra',
             'ntfsmth': 'Melakukan sesuatu',
             'ntfloadimg': 'Memuat citra',
-            'ntfnetmount': 'Membaca susunan volume jaringan',
-            'ntfdim': 'Mendapatkan dimensi citra',
+            'ntfnetmount': 'Membaca susunan volume jaringan', // added 18.04.2012
+            'ntfnetunmount': 'Unmounting network volume', // from v2.1 added 30.04.2012
+            'ntfdim': 'Mendapatkan dimensi citra', // added 20.05.2013
+            'ntfreaddir': 'Membaca informasi folder', // from v2.1 added 01.07.2013
+            'ntfurl': 'Mendapatkan URL dari link', // from v2.1 added 11.03.2014
+            'ntfchmod': 'Dalam mode mengubah', // from v2.1 added 20.6.2015
+            'ntfpreupload': 'Sedang memverifikasi nama file yang diupload', // from v2.1 added 31.11.2015
+            'ntfzipdl': 'Membuat file untuk didownload', // from v2.1.7 added 23.1.2016
+            'ntfparents': 'Mengambil informasi path', // from v2.1.17 added 2.11.2016
+            'ntfchunkmerge': 'Sedang mengupload file', // from v2.1.17 added 2.11.2016
+            'ntftrash': 'Sedang melempar ke tempat sampah', // from v2.1.24 added 2.5.2017
+            'ntfrestore': 'Sedang mengembalikan dari tempat sampah', // from v2.1.24 added 3.5.2017
+            'ntfchkdir': 'Mengecek folder tujuan', // from v2.1.24 added 3.5.2017
+
+            /*********************************** volumes *********************************/
+            'volume_Trash': 'Sampah', //from v2.1.24 added 29.4.2017
 
             /************************************ dates **********************************/
             'dateUnknown': 'tak diketahui',
             'Today': 'Hari ini',
             'Yesterday': 'Kemarin',
             'msJan': 'Jan',
-            'msFeb': 'Peb',
+            'msFeb': 'Feb',
             'msMar': 'Mar',
             'msApr': 'Apr',
             'msMay': 'Mei',
@@ -211,11 +265,26 @@
             'sortsize': 'menurut ukuran',
             'sortdate': 'menurut tanggal',
             'sortFoldersFirst': 'Utamakan folder',
+            'sortperm': 'menurut perizinan', // from v2.1.13 added 13.06.2016
+            'sortmode': 'menurut mode', // from v2.1.13 added 13.06.2016
+            'sortowner': 'menurut pemilik', // from v2.1.13 added 13.06.2016
+            'sortgroup': 'menurut grup', // from v2.1.13 added 13.06.2016
+            'sortAlsoTreeview': 'Also Treeview', // from v2.1.15 added 01.08.2016
+
+            /********************************** new items **********************************/
+            'untitled file.txt': 'FileBaru.txt', // added 10.11.2015
+            'untitled folder': 'FolderBaru', // added 10.11.2015
+            'Archive': 'ArsipBaru', // from v2.1 added 10.11.2015
 
             /********************************** messages **********************************/
             'confirmReq': 'Diperlukan konfirmasi',
             'confirmRm': 'Anda yakin akan menghapus berkas?<br/>Ini tidak dapat kembalikan!',
             'confirmRepl': 'Timpa berkas lama dengan yang baru?',
+            'confirmRest': 'Timpa berkas yang ada dengan berkas dari sampah?', // fromv2.1.24 added 5.5.2017
+            'confirmConvUTF8': 'Bukan UTF-8<br/>Konversi ke UTF-8?<br/>Konten akan berubah menjadi UTF-8 ketika disimpan dengan konversi.', // from v2.1 added 08.04.2014
+            'confirmNonUTF8': 'Character encoding of this file couldn\'t be detected. It need to temporarily convert to UTF-8 for editting.<br/>Please select character encoding of this file.', // from v2.1.19 added 28.11.2016
+            'confirmNotSave': 'Telah terjadi perubahan.<br/>Kehilangan perkerjaan jika kamu tidak menyimpan.', // from v2.1 added 15.7.2015
+            'confirmTrash': 'Anda yakin untuk membuang berkas ke tempat sampah?', //from v2.1.24 added 29.4.2017
             'apllyAll': 'Terapkan ke semua',
             'name': 'Nama',
             'size': 'Ukuran',
@@ -272,6 +341,7 @@
             'selectForUpload': 'Pilih berkas untuk diunggah',
             'moveFiles': 'Pindahkan berkas',
             'copyFiles': 'Salin berkas',
+            'restoreFiles': 'Kembalikan berkas', // from v2.1.24 added 5.5.2017
             'rmFromPlaces': 'Hapus dari lokasi',
             'aspectRatio': 'Aspek rasio',
             'scale': 'Skala',
@@ -283,15 +353,68 @@
             'rotate-cw': 'Putar 90 derajat ke kanan',
             'rotate-ccw': 'Putar 90 derajat ke kiri',
             'degree': '°',
-            'netMountDialogTitle': 'Baca susunan volume jaringan',
-            'protocol': 'Protokol',
-            'host': 'Host',
-            'port': 'Port',
-            'user': 'Pengguna',
-            'pass': 'Sandi',
+            'netMountDialogTitle': 'Baca susunan volume jaringan', // added 18.04.2012
+            'protocol': 'Protokol', // added 18.04.2012
+            'host': 'Host', // added 18.04.2012
+            'port': 'Port', // added 18.04.2012
+            'user': 'Pengguna', // added 18.04.2012
+            'pass': 'Sandi', // added 18.04.2012
+            'confirmUnmount': 'Apakah anda unmount $1?', // from v2.1 added 30.04.2012
+            'dropFilesBrowser': 'Seret atau Tempel file dari browser', // from v2.1 added 30.05.2012
+            'dropPasteFiles': 'Seret file, Tempel URL atau gambar dari clipboard', // from v2.1 added 07.04.2014
+            'encoding': 'Encoding', // from v2.1 added 19.12.2014
+            'locale': 'Lokasi', // from v2.1 added 19.12.2014
+            'searchTarget': 'Target: $1', // from v2.1 added 22.5.2015
+            'searchMime': 'Mencari berdasarkan inpu MIME Type', // from v2.1 added 22.5.2015
+            'owner': 'Pemilik', // from v2.1 added 20.6.2015
+            'group': 'Grup', // from v2.1 added 20.6.2015
+            'other': 'Lainnya', // from v2.1 added 20.6.2015
+            'execute': 'Eksekusi', // from v2.1 added 20.6.2015
+            'perm': 'Izin', // from v2.1 added 20.6.2015
+            'mode': 'Mode', // from v2.1 added 20.6.2015
+            'emptyFolder': 'Folder kosong', // from v2.1.6 added 30.12.2015
+            'emptyFolderDrop': 'Folder kosong\\A Seret untuk tambahkan berkas', // from v2.1.6 added 30.12.2015
+            'emptyFolderLTap': 'Folder kosong\\A Tekan yang lama untuk tambahkan berkas', // from v2.1.6 added 30.12.2015
+            'quality': 'Kualitas', // from v2.1.6 added 5.1.2016
+            'autoSync': 'Sinkronasi Otomatis', // from v2.1.6 added 10.1.2016
+            'moveUp': 'Pindah ke atas', // from v2.1.6 added 18.1.2016
+            'getLink': 'Mendepatkan URL link', // from v2.1.7 added 9.2.2016
+            'selectedItems': '($1) berkas dipilih', // from v2.1.7 added 2.19.2016
+            'folderId': 'ID Folder', // from v2.1.10 added 3.25.2016
+            'offlineAccess': 'Izin akses offline', // from v2.1.10 added 3.25.2016
+            'reAuth': 'To re-authenticate', // from v2.1.10 added 3.25.2016
+            'nowLoading': 'Sedang memuat...', // from v2.1.12 added 4.26.2016
+            'openMulti': 'Membuka file bersamaan', // from v2.1.12 added 5.14.2016
+            'openMultiConfirm': 'Anda mencoba membuka file $1. Apakah anda ingin membuka di browser?', // from v2.1.12 added 5.14.2016
+            'emptySearch': 'Hasil pencarian kosong dalam target', // from v2.1.12 added 5.16.2016
+            'editingFile': 'Sedang mengedit file', // from v2.1.13 added 6.3.2016
+            'hasSelected': 'Anda memilih $1 berkas', // from v2.1.13 added 6.3.2016
+            'hasClipboard': 'Kamu mempunyai $i berkas di clipboard', // from v2.1.13 added 6.3.2016
+            'incSearchOnly': 'Hanya pencarian bertamah untuk menampilkan tampilan sekarang', // from v2.1.13 added 6.30.2016
+            'reinstate': 'Reinstate', // from v2.1.15 added 3.8.2016
+            'complete': '$1 selesai', // from v2.1.15 added 21.8.2016
+            'contextmenu': 'Context menu', // from v2.1.15 added 9.9.2016
+            'pageTurning': 'Page turning', // from v2.1.15 added 10.9.2016
+            'volumeRoots': 'Volume roots', // from v2.1.16 added 16.9.2016
+            'reset': 'Reset', // from v2.1.16 added 1.10.2016
+            'bgcolor': 'Warna background', // from v2.1.16 added 1.10.2016
+            'colorPicker': 'Mengambil warna', // from v2.1.16 added 1.10.2016
+            '8pxgrid': '8px Grid', // from v2.1.16 added 4.10.2016
+            'enabled': 'Diaktifkan', // from v2.1.16 added 4.10.2016
+            'disabled': 'Nonaktifkan', // from v2.1.16 added 4.10.2016
+            'emptyIncSearch': 'Search results is empty in current view.\\APress [Enter] to expand search target.', // from v2.1.16 added 5.10.2016
+            'emptyLetSearch': 'First letter search results is empty in current view.', // from v2.1.23 added 24.3.2017
+            'textLabel': 'Text label', // from v2.1.17 added 13.10.2016
+            'minsLeft': '$1 mins left', // from v2.1.17 added 13.11.2016
+            'openAsEncoding': 'Reopen with selected encoding', // from v2.1.19 added 2.12.2016
+            'saveAsEncoding': 'Save with the selected encoding', // from v2.1.19 added 2.12.2016
+            'selectFolder': 'Select folder', // from v2.1.20 added 13.12.2016
+            'firstLetterSearch': 'First letter search', // from v2.1.23 added 24.3.2017
+            'presets': 'Presets', // from v2.1.25 added 26.5.2017
 
             /********************************** mimetypes **********************************/
             'kindUnknown': 'Tak diketahui',
+            'kindRoot': 'Volume Root', // from v2.1.16 added 16.10.2016
             'kindFolder': 'Folder',
             'kindAlias': 'Nama lain',
             'kindAliasBroken': 'Nama lain rusak',
@@ -304,7 +427,7 @@
             'kindMsPP': 'Dokumen Ms. Powerpoint',
             'kindOO': 'Dokumen Open Office',
             'kindAppFlash': 'Aplikasi Flash',
-            'kindPDF': 'Portable Document Format (PDF)',
+            'kindPDF': 'Portable Dokumen Format (PDF)',
             'kindTorrent': 'Berkas Bittorrent',
             'kind7z': 'Arsip 7z',
             'kindTAR': 'Arsip TAR',
@@ -339,6 +462,7 @@
             'kindAWK': 'Kode-sumber AWK',
             'kindCSV': 'Dokumen CSV',
             'kindDOCBOOK': 'Dokumen Docbook XML',
+            'kindMarkdown': 'Markdown text', // added 20.7.2015
             // images
             'kindImage': 'Citra',
             'kindBMP': 'Citra BMP',
@@ -371,3 +495,4 @@
         }
     };
 }));
+

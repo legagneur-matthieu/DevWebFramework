@@ -1,11 +1,11 @@
 <?php
 
-use \Kunnu\Dropbox\DropboxApp;
-use \Kunnu\Dropbox\Dropbox;
-use \Kunnu\Dropbox\DropboxFile;
-use \Kunnu\Dropbox\Models\FolderMetadata;
-use \Kunnu\Dropbox\Models\FileMetadata;
-use \Kunnu\Dropbox\Exceptions\DropboxClientException;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxFile;
+use Kunnu\Dropbox\Models\FolderMetadata;
+use Kunnu\Dropbox\Models\FileMetadata;
+use Kunnu\Dropbox\Exceptions\DropboxClientException;
 
 elFinder::$netDrivers['dropbox2'] = 'Dropbox2';
 
@@ -223,6 +223,39 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
      */
     protected function _db_joinName($dir, $displayName) {
         return rtrim($dir, '/') . '/' . $displayName;
+    }
+
+    /**
+     * Get OAuth2 access token form OAuth1 tokens.
+     *
+     * @param string $app_key
+     * @param string $app_secret
+     * @param string $oauth1_token
+     * @param string $oauth1_secret
+     *
+     * @return string|false
+     */
+    public static function getTokenFromOauth1($app_key, $app_secret, $oauth1_token, $oauth1_secret) {
+        $data = [
+            'oauth1_token' => $oauth1_token,
+            'oauth1_token_secret' => $oauth1_secret,
+        ];
+        $auth = base64_encode($app_key . ':' . $app_secret);
+
+        $ch = curl_init('https://api.dropboxapi.com/2/auth/token/from_oauth1');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Basic ' . $auth,
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $res = $result ? json_decode($result, true) : [];
+
+        return isset($res['oauth2_token']) ? $res['oauth2_token'] : false;
     }
 
     /*     * ****************************************************************** */
@@ -492,9 +525,6 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
             }
         }
 
-        if (!$this->tmp && is_writable($this->options['tmbPath'])) {
-            $this->tmp = $this->options['tmbPath'];
-        }
         if (!$this->tmp && ($tmp = elFinder::getStaticVar('commonTempPath'))) {
             $this->tmp = $tmp;
         }
@@ -504,6 +534,9 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
 
         // 'lsPlSleep' minmum 10 sec
         $this->options['lsPlSleep'] = max(10, $this->options['lsPlSleep']);
+
+        // enable command archive
+        $this->options['useRemoteArchive'] = true;
 
         return true;
     }
@@ -516,8 +549,10 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
     protected function configure() {
         parent::configure();
 
-        $this->disabled[] = 'archive';
-        $this->disabled[] = 'extract';
+        // fallback of $this->tmp
+        if (!$this->tmp && $this->tmbPathWritable) {
+            $this->tmp = $this->tmbPath;
+        }
 
         if ($this->isMyReload()) {
             //$this->_db_getDirectoryData(false);
@@ -583,7 +618,8 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
      * @author Naoki Sawada
      * */
     protected function doSearch($path, $q, $mimes) {
-        if ($mimes) {
+        if (!empty($this->doSearchCurrentQuery['matchMethod']) || $mimes) {
+            // has custom match method or mimes, use elFinderVolumeDriver::doSearch()
             return parent::doSearch($path, $q, $mimes);
         }
 
@@ -782,6 +818,13 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
      * @author Naoki Sawada
      */
     public function getContentUrl($hash, $options = []) {
+        if (!empty($options['temporary'])) {
+            // try make temporary file
+            $url = parent::getContentUrl($hash, $options);
+            if ($url) {
+                return $url;
+            }
+        }
         $file = $this->file($hash);
         if (($file = $this->file($hash)) !== false && (!$file['url'] || $file['url'] == 1)) {
             $path = $this->decode($hash);
@@ -1036,7 +1079,11 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
             file_put_contents($tmp, $data);
             $size = getimagesize($tmp);
             if ($size) {
-                return $size[0] . 'x' . $size[1];
+                $ret = array('dim' => $size[0] . 'x' . $size[1]);
+                $srcfp = fopen($tmp, 'rb');
+                if ($subImgLink = $this->getSubstituteImgLink(elFinder::$currentArgs['target'], $size, $srcfp)) {
+                    $ret['url'] = $subImgLink;
+                }
             }
         }
 
@@ -1130,7 +1177,7 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
      * @author Naoki Sawada
      * */
     protected function _mkfile($path, $name) {
-        return $this->_save(tmpfile(), $path, $name, []);
+        return $this->_save($this->tmpfile(), $path, $name, []);
     }
 
     /**
@@ -1249,11 +1296,8 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
             }
             $dropboxFile = new DropboxFile($filepath);
             if ($name === '') {
-                $dir = $this->_dirname($path);
-                $name = $this->_basename($path);
                 $fullpath = $path;
             } else {
-                $dir = $path;
                 $fullpath = $this->_db_joinName($path, $name);
             }
 
@@ -1301,7 +1345,14 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver {
         if ($local = $this->getTempFile($path)) {
             if (file_put_contents($local, $content, LOCK_EX) !== false && ($fp = fopen($local, 'rb'))) {
                 clearstatcache();
-                $res = $this->_save($fp, $path, '', []);
+                $name = '';
+                $stat = $this->stat($path);
+                if ($stat) {
+                    // keep real name
+                    $path = $this->_dirname($path);
+                    $name = $stat['name'];
+                }
+                $res = $this->_save($fp, $path, $name, []);
                 fclose($fp);
             }
             file_exists($local) && unlink($local);

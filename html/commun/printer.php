@@ -14,13 +14,6 @@ class print_pdf {
      */
     public function __construct($lib, $content) {
         switch ($lib) {
-            case "html2pdf":
-                include_once '../../dwf/class/html2pdf_v4.03/html2pdf.class.php';
-                $html2pdf = new HTML2PDF();
-                $html2pdf->writeHTML($content);
-                ob_end_clean();
-                $html2pdf->Output();
-                break;
             case "dompdf":
                 include_once '../../dwf/class/dompdf/dompdf_config.inc.php';
                 $dompdf = new DOMPDF();

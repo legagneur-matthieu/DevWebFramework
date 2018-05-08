@@ -24,9 +24,9 @@ class printer {
     /**
      * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)
      * 
-     * @param string $lib Librairie a utiliser (html2pdf ou dompdf)
+     * @param string $lib Librairie a utiliser (dompdf ou debug)
      */
-    public function __construct($lib) {
+    public function __construct($lib="dompdf") {
         $this->_lib = $lib;
         $this->init_printer();
     }
@@ -36,9 +36,6 @@ class printer {
      */
     private function init_printer() {
         switch ($this->_lib) {
-            case "html2pdf":
-                $this->_content = '<page>';
-                break;
             case "dompdf":
                 $this->_content = '<html><body>';
                 break;
@@ -59,9 +56,6 @@ class printer {
      */
     private function return_content() {
         switch ($this->_lib) {
-            case "html2pdf":
-                $this->_content .= '</page>';
-                break;
             case "dompdf":
                 $this->_content .= '</body></html>';
                 break;

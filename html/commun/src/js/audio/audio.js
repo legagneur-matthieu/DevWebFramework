@@ -7,16 +7,14 @@
 function audio($id) {
     document.getElementById($id).onplay = function () {
         setTimeout(function () {
-            $("#" + $id + "_player_ctrl_timeline").attr("step", 1);
-            $("#" + $id + "_player_ctrl_timeline").attr("max", document.getElementById($id).duration * 1000);
+            $("#" + $id + "_player_ctrl_timeline").attr("step", 1).attr("max", document.getElementById($id).duration * 1000);
         }, 1);
     };
     document.getElementById($id).onpause = function () {
         $("#" + $id + "_player_ctrl_timeline").attr("step", 10000);
     };
     document.getElementById($id).ontimeupdate = function () {
-        $("#" + $id + "_player_ctrl_timeline").attr("max", document.getElementById($id).duration * 1000);
-        $("#" + $id + "_player_ctrl_timeline").val(document.getElementById($id).currentTime * 1000);
+        $("#" + $id + "_player_ctrl_timeline").attr("max", document.getElementById($id).duration * 1000).val(document.getElementById($id).currentTime * 1000);
     };
     $("#" + $id + "_player_ctrl_timeline").on('input', function () {
         document.getElementById($id).currentTime = parseInt($("#" + $id + "_player_ctrl_timeline").val()) / 1000;
@@ -46,12 +44,9 @@ function audio($id) {
     });
 
     $(".playlist a").click(function () {
-        data = $(this).attr("data-src");
         id = $(this).attr("data-id");
-        console.log(id);
-        $("#" + id).attr("src", data);
+        $("#" + id).attr("src", $(this).attr("data-src"));
         document.getElementById(id).play();
-
     });
     $("ul.playlist").menu();
 

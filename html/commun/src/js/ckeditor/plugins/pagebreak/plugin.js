@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
         /**
@@ -14,7 +14,7 @@
     CKEDITOR.plugins.add('pagebreak', {
         requires: 'fakeobjects',
         // jscs:disable maximumLineLength
-        lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+        lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
         // jscs:enable maximumLineLength
         icons: 'pagebreak,pagebreak-rtl', // %REMOVE_LINE_CORE%
         hidpi: true, // %REMOVE_LINE_CORE%
@@ -33,6 +33,7 @@
             // Add the style that renders our placeholder.
             CKEDITOR.addCss('div.cke_pagebreak{' + cssStyles + '}');
         },
+
         init: function (editor) {
             if (editor.blockless)
                 return;
@@ -56,6 +57,7 @@
                 });
             });
         },
+
         afterInit: function (editor) {
             // Register a filter to displaying placeholders after mode change.
             var dataProcessor = editor.dataProcessor,
@@ -97,7 +99,7 @@
                             // The "internal form" of a pagebreak is pasted from clipboard.
                             // ACF may have distorted the HTML because "internal form" is
                             // different than "data form". Make sure that element remains valid
-                            // by re-upcasting it (#11133).
+                            // by re-upcasting it (https://dev.ckeditor.com/ticket/11133).
                             if (element.attributes[ 'data-cke-pagebreak' ])
                                 upcastPageBreak(element);
 

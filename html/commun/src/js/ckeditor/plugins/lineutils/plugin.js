@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -118,6 +118,7 @@
                 moveBuffer.reset();
             });
         },
+
         /**
          * Stops observing mouse events attached by {@link #start}.
          */
@@ -126,6 +127,7 @@
                 this.listener.removeListener();
             }
         },
+
         /**
          * Returns a range representing the relation, according to its element
          * and type.
@@ -148,6 +150,7 @@
                 return range;
             };
         })(),
+
         /**
          * Stores given relation in a {@link #relations} object. Processes the relation
          * to normalize and avoid duplicates.
@@ -186,6 +189,7 @@
                 merge(el, type, this.relations);
             };
         })(),
+
         /**
          * Traverses the DOM tree towards root, checking all ancestors
          * with lookup rules, avoiding duplicates. Stores positive relations
@@ -220,6 +224,7 @@
                 }
             } while (!isLimit(el) && (el = el.getParent()));
         },
+
         /**
          * Iterates vertically pixel-by-pixel within a given element starting
          * from given coordinates, searching for elements in the neighborhood.
@@ -351,6 +356,7 @@
                 }
             };
         })(),
+
         /**
          * Unlike {@link #traverseSearch}, it collects **all** elements from editable's DOM tree
          * and runs lookups for every one of them, collecting relations.
@@ -371,7 +377,7 @@
                     continue;
                 }
 
-                // On IE8 element.getElementsByTagName returns comments... sic! (#13176)
+                // On IE8 element.getElementsByTagName returns comments... sic! (https://dev.ckeditor.com/ticket/13176)
                 if (el.type != CKEDITOR.NODE_ELEMENT) {
                     continue;
                 }
@@ -515,6 +521,7 @@
                 return this.locations;
             };
         })(),
+
         /**
          * Calculates distances from every location to given vertical coordinate
          * and sorts locations according to that distance.
@@ -567,6 +574,7 @@
                 }
             };
         })(),
+
         /**
          * Stores the location in a collection.
          *
@@ -715,6 +723,7 @@
                 delete this.visible[ l ];
             }
         },
+
         /**
          * Hides a given line.
          *
@@ -728,6 +737,7 @@
             this.hidden[ uid ] = line;
             delete this.visible[ uid ];
         },
+
         /**
          * Shows a given line.
          *
@@ -741,6 +751,7 @@
             this.visible[ uid ] = line;
             delete this.hidden[ uid ];
         },
+
         /**
          * Hides all visible lines.
          */
@@ -749,6 +760,7 @@
                 this.hideLine(this.visible[ l ]);
             }
         },
+
         /**
          * Shows a line at given location.
          *
@@ -798,6 +810,7 @@
 
             callback && callback(line);
         },
+
         /**
          * Creates a style set to be used by the line, representing a particular
          * relation (location).
@@ -823,7 +836,7 @@
 
             // Let's calculate the vertical position of the line.
             if (this.inline) {
-                // (#13155)
+                // (https://dev.ckeditor.com/ticket/13155)
                 styles.top = loc + this.winTopScroll.y - this.rect.relativeY;
             } else {
                 styles.top = this.rect.top + this.winTopScroll.y + loc;
@@ -836,7 +849,7 @@
 
             // Now let's calculate the horizontal alignment (left and width).
             if (this.inline) {
-                // (#13155)
+                // (https://dev.ckeditor.com/ticket/13155)
                 styles.left = rel.elementRect.left - this.rect.relativeX;
             } else {
                 if (rel.elementRect.left > 0)
@@ -864,6 +877,7 @@
 
             return styles;
         },
+
         /**
          * Adds a new line to DOM.
          *
@@ -876,6 +890,7 @@
 
             return line;
         },
+
         /**
          * Assigns a unique hash to the instance that is later used
          * to tell unwanted lines from new ones. This method **must** be called
@@ -892,6 +907,7 @@
             this.locations = locations;
             this.hash = Math.random();
         },
+
         /**
          * Hides all visible lines that do not belong to current hash
          * and no longer represent relations (locations).
@@ -909,6 +925,7 @@
                 }
             }
         },
+
         /**
          * Queries dimensions of the viewport, editable, frame etc.
          * that are used for correct positioning of the line.
@@ -918,12 +935,13 @@
             this.winTopScroll = this.winTop.getScrollPosition();
             this.winTopPane = this.winTop.getViewPaneSize();
 
-            // (#13155)
+            // (https://dev.ckeditor.com/ticket/13155)
             this.rect = this.getClientRect(this.inline ? this.editable : this.frame);
         },
+
         /**
          * Returns `boundingClientRect` of an element, shifted by the position
-         * of `container` when the container is not `static` (#13155).
+         * of `container` when the container is not `static` (https://dev.ckeditor.com/ticket/13155).
          *
          * See also: {@link CKEDITOR.dom.element#getClientRect}.
          *

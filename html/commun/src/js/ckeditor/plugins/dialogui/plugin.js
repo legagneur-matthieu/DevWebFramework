@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -50,15 +50,19 @@ CKEDITOR.plugins.add('dialogui', {
                     isChanged: function () {
                         return this.getValue() != this.getInitValue();
                     },
+
                     reset: function (noChangeEvent) {
                         this.setValue(this.getInitValue(), noChangeEvent);
                     },
+
                     setInitValue: function () {
                         this._.initValue = this.getValue();
                     },
+
                     resetInitValue: function () {
                         this._.initValue = this._[ 'default' ];
                     },
+
                     getInitValue: function () {
                         return this._.initValue;
                     }
@@ -68,7 +72,7 @@ CKEDITOR.plugins.add('dialogui', {
                         if (!this._.domOnChangeRegistered) {
                             dialog.on('load', function () {
                                 this.getInputElement().on('change', function () {
-                                    // Make sure 'onchange' doesn't get fired after dialog closed. (#5719)
+                                    // Make sure 'onchange' doesn't get fired after dialog closed. (https://dev.ckeditor.com/ticket/5719)
                                     if (!dialog.parts.dialog.isVisible())
                                         return;
 
@@ -186,6 +190,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 CKEDITOR.ui.dialog.uiElement.call(this, dialog, elementDefinition, htmlList, 'div', null, attributes, innerHTML);
             },
+
             /**
              * A text input with a label. This UI element class represents both the
              * single-line text inputs and password inputs in dialog boxes.
@@ -235,7 +240,7 @@ CKEDITOR.plugins.add('dialogui', {
                             keyPressedOnMe = true;
                     });
 
-                    // Lower the priority this 'keyup' since 'ok' will close the dialog.(#3749)
+                    // Lower the priority this 'keyup' since 'ok' will close the dialog.(https://dev.ckeditor.com/ticket/3749)
                     me.getInputElement().on('keyup', function (evt) {
                         if (evt.data.getKeystroke() == 13 && keyPressedOnMe) {
                             dialog.getButton('ok') && setTimeout(function () {
@@ -268,6 +273,7 @@ CKEDITOR.plugins.add('dialogui', {
                 };
                 CKEDITOR.ui.dialog.labeledElement.call(this, dialog, elementDefinition, htmlList, innerHTML);
             },
+
             /**
              * A text area with a label at the top or on the left.
              *
@@ -329,6 +335,7 @@ CKEDITOR.plugins.add('dialogui', {
                 };
                 CKEDITOR.ui.dialog.labeledElement.call(this, dialog, elementDefinition, htmlList, innerHTML);
             },
+
             /**
              * A single checkbox with a label on the right.
              *
@@ -390,6 +397,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 CKEDITOR.ui.dialog.uiElement.call(this, dialog, elementDefinition, htmlList, 'span', null, null, innerHTML);
             },
+
             /**
              * A group of radio buttons.
              *
@@ -460,7 +468,7 @@ CKEDITOR.plugins.add('dialogui', {
                         if (typeof inputDefinition.inputStyle != 'undefined')
                             inputDefinition.style = inputDefinition.inputStyle;
 
-                        // Make inputs of radio type focusable (#10866).
+                        // Make inputs of radio type focusable (https://dev.ckeditor.com/ticket/10866).
                         inputDefinition.keyboardFocusable = true;
 
                         children.push(new CKEDITOR.ui.dialog.uiElement(dialog, inputDefinition, inputHtml, 'input', null, inputAttributes));
@@ -487,6 +495,7 @@ CKEDITOR.plugins.add('dialogui', {
                 CKEDITOR.ui.dialog.labeledElement.call(this, dialog, elementDefinition, htmlList, innerHTML);
                 this._.children = children;
             },
+
             /**
              * A button with a label inside.
              *
@@ -524,7 +533,7 @@ CKEDITOR.plugins.add('dialogui', {
                     (function () {
                         element.on('click', function (evt) {
                             me.click();
-                            // #9958
+                            // https://dev.ckeditor.com/ticket/9958
                             evt.data.preventDefault();
                         });
 
@@ -555,6 +564,7 @@ CKEDITOR.plugins.add('dialogui', {
                         CKEDITOR.tools.htmlEncode(elementDefinition.label) +
                         '</span>');
             },
+
             /**
              * A select box.
              *
@@ -630,6 +640,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 CKEDITOR.ui.dialog.labeledElement.call(this, dialog, elementDefinition, htmlList, innerHTML);
             },
+
             /**
              * A file upload input.
              *
@@ -671,7 +682,7 @@ CKEDITOR.plugins.add('dialogui', {
                                 ' src="javascript:void('
                     ];
 
-                    // Support for custom document.domain on IE. (#10165)
+                    // Support for custom document.domain on IE. (https://dev.ckeditor.com/ticket/10165)
                     html.push(CKEDITOR.env.ie ?
                             '(function(){' + encodeURIComponent(
                                     'document.open();' +
@@ -696,6 +707,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 CKEDITOR.ui.dialog.labeledElement.call(this, dialog, elementDefinition, htmlList, innerHTML);
             },
+
             /**
              * A button for submitting the file in a file upload input.
              *
@@ -727,8 +739,15 @@ CKEDITOR.plugins.add('dialogui', {
                 myDefinition.className = (myDefinition.className ? myDefinition.className + ' ' : '') + 'cke_dialog_ui_button';
                 myDefinition.onClick = function (evt) {
                     var target = elementDefinition[ 'for' ]; // [ pageId, elementId ]
-                    if (!onClick || onClick.call(this, evt) !== false) {
-                        dialog.getContentElement(target[ 0 ], target[ 1 ]).submit();
+
+                    // If exists onClick in elementDefinition, then it is called and checked response type.
+                    // If it's possible, then XHR is used, what prevents of using submit.
+                    var responseType = onClick ? onClick.call(this, evt) : false;
+
+                    if (responseType !== false) {
+                        if (responseType !== 'xhr') {
+                            dialog.getContentElement(target[ 0 ], target[ 1 ]).submit();
+                        }
                         this.disable();
                     }
                 };
@@ -739,6 +758,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 CKEDITOR.ui.dialog.button.call(this, dialog, myDefinition, htmlList);
             },
+
             html: (function () {
                 var myHtmlRe = /^\s*<[\w:]+\s+([^>]*)?>/,
                         theirHtmlRe = /^(\s*<[\w:]+(?:\s+[^>]*)?)((?:.|\r|\n)+)$/,
@@ -800,6 +820,7 @@ CKEDITOR.plugins.add('dialogui', {
                     htmlList.push([theirMatch[ 1 ], ' ', myMatch[ 1 ] || '', theirMatch[ 2 ]].join(''));
                 };
             })(),
+
             /**
              * Form fieldset for grouping dialog UI elements.
              *
@@ -856,6 +877,7 @@ CKEDITOR.plugins.add('dialogui', {
                     node.getChild(0).$.nodeValue = label;
                 return this;
             },
+
             /**
              * Retrieves the current label text of the elment.
              *
@@ -868,6 +890,7 @@ CKEDITOR.plugins.add('dialogui', {
                 else
                     return node.getChild(0).getText();
             },
+
             /**
              * Defines the `onChange` event for UI element definitions.
              * @property {Object}
@@ -887,6 +910,7 @@ CKEDITOR.plugins.add('dialogui', {
                     return this.fire('click', {dialog: this._.dialog});
                 return false;
             },
+
             /**
              * Enables the button.
              */
@@ -895,6 +919,7 @@ CKEDITOR.plugins.add('dialogui', {
                 var element = this.getElement();
                 element && element.removeClass('cke_disabled');
             },
+
             /**
              * Disables the button.
              */
@@ -902,6 +927,7 @@ CKEDITOR.plugins.add('dialogui', {
                 this._.disabled = true;
                 this.getElement().addClass('cke_disabled');
             },
+
             /**
              * Checks whether a field is visible.
              *
@@ -910,6 +936,7 @@ CKEDITOR.plugins.add('dialogui', {
             isVisible: function () {
                 return this.getElement().getFirst().isVisible();
             },
+
             /**
              * Checks whether a field is enabled. Fields can be disabled by using the
              * {@link #disable} method and enabled by using the {@link #enable} method.
@@ -919,6 +946,7 @@ CKEDITOR.plugins.add('dialogui', {
             isEnabled: function () {
                 return !this._.disabled;
             },
+
             /**
              * Defines the `onChange` event and `onClick` for button element definitions.
              *
@@ -931,6 +959,7 @@ CKEDITOR.plugins.add('dialogui', {
                     });
                 }
             }, true),
+
             /**
              * Handler for the element's access key up event. Simulates a click to
              * the button.
@@ -938,6 +967,7 @@ CKEDITOR.plugins.add('dialogui', {
             accessKeyUp: function () {
                 this.click();
             },
+
             /**
              * Handler for the element's access key down event. Simulates a mouse
              * down to the button.
@@ -945,6 +975,7 @@ CKEDITOR.plugins.add('dialogui', {
             accessKeyDown: function () {
                 this.focus();
             },
+
             keyboardFocusable: true
         }, true);
 
@@ -958,6 +989,7 @@ CKEDITOR.plugins.add('dialogui', {
             getInputElement: function () {
                 return CKEDITOR.document.getById(this._.inputId);
             },
+
             /**
              * Puts focus into the text input.
              */
@@ -970,6 +1002,7 @@ CKEDITOR.plugins.add('dialogui', {
                     element && element.$.focus();
                 }, 0);
             },
+
             /**
              * Selects all the text in the text input.
              */
@@ -985,6 +1018,7 @@ CKEDITOR.plugins.add('dialogui', {
                     }
                 }, 0);
             },
+
             /**
              * Handler for the text input's access key up event. Makes a `select()`
              * call to the text input.
@@ -992,6 +1026,7 @@ CKEDITOR.plugins.add('dialogui', {
             accessKeyUp: function () {
                 this.select();
             },
+
             /**
              * Sets the value of this text input object.
              *
@@ -1019,6 +1054,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 return CKEDITOR.ui.dialog.uiElement.prototype.setValue.apply(this, arguments);
             },
+
             /**
              * Gets the value of this text input object.
              *
@@ -1036,6 +1072,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 return value;
             },
+
             /**
              * Sets the text direction marker and the `dir` attribute of the input element.
              *
@@ -1056,6 +1093,7 @@ CKEDITOR.plugins.add('dialogui', {
                     inputElement.removeAttributes(['dir', 'data-cke-dir-marker']);
                 }
             },
+
             /**
              * Gets the value of the text direction marker.
              *
@@ -1065,6 +1103,7 @@ CKEDITOR.plugins.add('dialogui', {
             getDirectionMarker: function () {
                 return this.getInputElement().data('cke-dir-marker');
             },
+
             keyboardFocusable: true
         }, commonPrototype, true);
 
@@ -1080,6 +1119,7 @@ CKEDITOR.plugins.add('dialogui', {
             getInputElement: function () {
                 return this._.select.getElement();
             },
+
             /**
              * Adds an option to the select box.
              *
@@ -1106,6 +1146,7 @@ CKEDITOR.plugins.add('dialogui', {
                 }
                 return this;
             },
+
             /**
              * Removes an option from the selection list.
              *
@@ -1117,6 +1158,7 @@ CKEDITOR.plugins.add('dialogui', {
                 selectElement.remove(index);
                 return this;
             },
+
             /**
              * Clears all options out of the selection list.
              *
@@ -1128,6 +1170,7 @@ CKEDITOR.plugins.add('dialogui', {
                     selectElement.remove(0);
                 return this;
             },
+
             keyboardFocusable: true
         }, commonPrototype, true);
 
@@ -1141,6 +1184,7 @@ CKEDITOR.plugins.add('dialogui', {
             getInputElement: function () {
                 return this._.checkbox.getElement();
             },
+
             /**
              * Sets the state of the checkbox.
              *
@@ -1151,6 +1195,7 @@ CKEDITOR.plugins.add('dialogui', {
                 this.getInputElement().$.checked = checked;
                 !noChangeEvent && this.fire('change', {value: checked});
             },
+
             /**
              * Gets the state of the checkbox.
              *
@@ -1159,12 +1204,14 @@ CKEDITOR.plugins.add('dialogui', {
             getValue: function () {
                 return this.getInputElement().$.checked;
             },
+
             /**
              * Handler for the access key up event. Toggles the checkbox.
              */
             accessKeyUp: function () {
                 this.setValue(!this.getValue());
             },
+
             /**
              * Defines the `onChange` event for UI element definitions.
              *
@@ -1188,6 +1235,7 @@ CKEDITOR.plugins.add('dialogui', {
                     return null;
                 }
             },
+
             keyboardFocusable: true
         }, commonPrototype, true);
 
@@ -1207,6 +1255,7 @@ CKEDITOR.plugins.add('dialogui', {
                     item.getElement().$.checked = (item.getValue() == value);
                 !noChangeEvent && this.fire('change', {value: value});
             },
+
             /**
              * Gets the value of the currently selected radio button.
              *
@@ -1220,6 +1269,7 @@ CKEDITOR.plugins.add('dialogui', {
                 }
                 return null;
             },
+
             /**
              * Handler for the access key up event. Focuses the currently
              * selected radio button, or the first radio button if none is selected.
@@ -1235,6 +1285,7 @@ CKEDITOR.plugins.add('dialogui', {
                 }
                 children[ 0 ].getElement().focus();
             },
+
             /**
              * Defines the `onChange` event for UI element definitions.
              *
@@ -1275,6 +1326,7 @@ CKEDITOR.plugins.add('dialogui', {
                 var frameDocument = CKEDITOR.document.getById(this._.frameId).getFrameDocument();
                 return frameDocument.$.forms.length > 0 ? new CKEDITOR.dom.element(frameDocument.$.forms[ 0 ].elements[ 0 ]) : this.getElement();
             },
+
             /**
              * Uploads the file in the file input.
              *
@@ -1284,6 +1336,7 @@ CKEDITOR.plugins.add('dialogui', {
                 this.getInputElement().getParent().$.submit();
                 return this;
             },
+
             /**
              * Gets the action assigned to the form.
              *
@@ -1292,6 +1345,7 @@ CKEDITOR.plugins.add('dialogui', {
             getAction: function () {
                 return this.getInputElement().getParent().$.action;
             },
+
             /**
              * The events must be applied to the inner input element, and
              * this must be done when the iframe and form have been loaded.
@@ -1318,6 +1372,7 @@ CKEDITOR.plugins.add('dialogui', {
 
                 return this;
             },
+
             /**
              * Redraws the file input and resets the file path in the file input.
              * The redrawing logic is necessary because non-IE browsers tend to clear
@@ -1371,7 +1426,7 @@ CKEDITOR.plugins.add('dialogui', {
                         '<label id="', _.labelId, '" for="', inputId, '" style="display:none">',
                         CKEDITOR.tools.htmlEncode(elementDefinition.label),
                         '</label>',
-                        // Set width to make sure that input is not clipped by the iframe (#11253).
+                        // Set width to make sure that input is not clipped by the iframe (https://dev.ckeditor.com/ticket/11253).
                         '<input style="width:100%" id="', inputId, '" aria-labelledby="', _.labelId, '" type="file" name="',
                         CKEDITOR.tools.htmlEncode(elementDefinition.id || 'cke_upload'),
                         '" size="',
@@ -1382,6 +1437,7 @@ CKEDITOR.plugins.add('dialogui', {
                         '<script>',
                         // Support for custom document.domain in IE.
                         CKEDITOR.env.ie ? '(' + CKEDITOR.tools.fixDomain + ')();' : '',
+
                         'window.parent.CKEDITOR.tools.callFunction(' + callNumber + ');',
                         'window.onbeforeunload = function() {window.parent.CKEDITOR.tools.callFunction(' + unloadNumber + ')}',
                         '</script>'
@@ -1393,15 +1449,17 @@ CKEDITOR.plugins.add('dialogui', {
                         buttons[ i ].enable();
                 }
 
-                // #3465: Wait for the browser to finish rendering the dialog first.
+                // https://dev.ckeditor.com/ticket/3465: Wait for the browser to finish rendering the dialog first.
                 if (CKEDITOR.env.gecko)
                     setTimeout(generateFormField, 500);
                 else
                     generateFormField();
             },
+
             getValue: function () {
                 return this.getInputElement().$.value || '';
             },
+
             /**
              * The default value of input `type="file"` is an empty string, but during the initialization
              * of this UI element, the iframe still is not ready so it cannot be read from that object.
@@ -1411,6 +1469,7 @@ CKEDITOR.plugins.add('dialogui', {
             setInitValue: function () {
                 this._.initValue = '';
             },
+
             /**
              * Defines the `onChange` event for UI element definitions.
              *
@@ -1435,6 +1494,7 @@ CKEDITOR.plugins.add('dialogui', {
                     this.on('change', func);
                 }
             },
+
             keyboardFocusable: true
         }, true);
 

@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -12,6 +12,7 @@
 (function () {
     CKEDITOR.plugins.add('codesnippetgeshi', {
         requires: 'ajax,codesnippet',
+
         init: function (editor) {
             var writer = new CKEDITOR.htmlParser.basicWriter(),
                     geSHiHighlighter = new CKEDITOR.plugins.codesnippet.highlighter({

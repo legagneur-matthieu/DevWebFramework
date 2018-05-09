@@ -1,11 +1,11 @@
-﻿/**
- * Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+/**
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-        /* exported initSample */
+/* exported initSample */
 
-        if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
+if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
     CKEDITOR.tools.enableHtml5Elements(document);
 
 // The trick to keep the editor in the sample quite small
@@ -24,7 +24,7 @@ var initSample = (function () {
         if (isBBCodeBuiltIn) {
             editorElement.setHtml(
                     'Hello world!\n\n' +
-                    'I\'m an instance of [url=http://ckeditor.com]CKEditor[/url].'
+                    'I\'m an instance of [url=https://ckeditor.com]CKEditor[/url].'
                     );
         }
 
@@ -51,3 +51,4 @@ var initSample = (function () {
     }
 })();
 
+// %LEAVE_UNMINIFIED% %REMOVE_LINE%

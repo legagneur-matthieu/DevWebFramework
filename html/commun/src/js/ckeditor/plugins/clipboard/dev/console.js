@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* global CKCONSOLE */
@@ -19,6 +19,7 @@
                         '<li>type: <span class="ckconsole_value" data-value="type"></span></li>' +
                         '<li>value: <span class="ckconsole_value" data-value="value"></span></li>' +
                         '</ul>',
+
                 refresh: function () {
                     return {
                         header: 'Paste',
@@ -26,6 +27,7 @@
                         value: pasteValue
                     };
                 },
+
                 refreshOn: function (editor, refresh) {
                     editor.on('paste', function (evt) {
                         pasteType = evt.data.type;

@@ -59,10 +59,10 @@ $geshi->set_footer_content_style('font-family: Verdana, Arial, sans-serif; color
         <title>Source code viewer - <?php echo $path; ?> - <?php $geshi->get_language_name(); ?></title>
         <style type="text/css">
             <!--
-            <?php
+<?php
 // Output the stylesheet. Note it doesn't output the <style> tag
-            echo $geshi->get_stylesheet();
-            ?>
+echo $geshi->get_stylesheet();
+?>
             html {
                 background-color: #f0f0f0;
             }
@@ -111,10 +111,10 @@ $geshi->set_footer_content_style('font-family: Verdana, Arial, sans-serif; color
         </style>
     </head>
     <body>
-        <?php
+<?php
 // The fun part :)
-        echo $geshi->parse_code();
-        ?>
+echo $geshi->parse_code();
+?>
         <hr/>
     </body>
 </html>

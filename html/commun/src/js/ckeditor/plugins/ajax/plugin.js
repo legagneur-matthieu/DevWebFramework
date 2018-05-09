@@ -1,7 +1,7 @@
 /* global ActiveXObject */
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -102,7 +102,9 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
-                    callback(getResponseFn(xhr));
+                    if (callback) {
+                        callback(getResponseFn(xhr));
+                    }
                     xhr = null;
                 }
             };
@@ -135,6 +137,7 @@
             load: function (url, callback) {
                 return load(url, callback, getResponseText);
             },
+
             /**
              * Creates an asynchronous POST `XMLHttpRequest` of the given `url`, `data` and optional `contentType`.
              * Once the request is done, regardless if it is successful or not, the `callback` is called
@@ -152,12 +155,13 @@
              * @param {String} url The URL of the request.
              * @param {String/Object/Array} data Data passed to `XMLHttpRequest#send`.
              * @param {String} [contentType='application/x-www-form-urlencoded; charset=UTF-8'] The value of the `Content-type` header.
-             * @param {Function} callback A callback executed asynchronously with `XMLHttpRequest#responseText` or `null` as an argument,
+             * @param {Function} [callback] A callback executed asynchronously with `XMLHttpRequest#responseText` or `null` as an argument,
              * depending on the `status` of the request.
              */
             post: function (url, data, contentType, callback) {
                 return post(url, data, contentType, callback, getResponseText);
             },
+
             /**
              * Loads data from a URL as XML.
              *

@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
         (function () {
@@ -36,49 +36,106 @@
                     label: lang.label,
                     title: lang.panelTitle,
                     toolbar: 'styles,' + order,
+                    defaultValue: 'cke-default',
                     allowedContent: style,
                     requiredContent: style,
+                    contentTransformations: [
+                        [
+                            {
+                                element: 'font',
+                                check: 'span',
+                                left: function (element) {
+                                    return !!element.attributes.size ||
+                                            !!element.attributes.align ||
+                                            !!element.attributes.face;
+                                },
+                                right: function (element) {
+                                    var sizes = [
+                                        '', // Non-existent size "0"
+                                        'x-small',
+                                        'small',
+                                        'medium',
+                                        'large',
+                                        'x-large',
+                                        'xx-large',
+                                        '48px' // Closest value to what size="7" might mean.
+                                    ];
+
+                                    element.name = 'span';
+
+                                    if (element.attributes.size) {
+                                        element.styles[ 'font-size' ] = sizes[ element.attributes.size ];
+                                        delete element.attributes.size;
+                                    }
+
+                                    if (element.attributes.align) {
+                                        element.styles[ 'text-align' ] = element.attributes.align;
+                                        delete element.attributes.align;
+                                    }
+
+                                    if (element.attributes.face) {
+                                        element.styles[ 'font-family' ] = element.attributes.face;
+                                        delete element.attributes.face;
+                                    }
+                                }
+                            }
+                        ]
+                    ],
                     panel: {
                         css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
                         multiSelect: false,
                         attributes: {'aria-label': lang.panelTitle}
                     },
+
                     init: function () {
+                        var name,
+                                defaultText = '(' + editor.lang.common.optionDefault + ')';
+
                         this.startGroup(lang.panelTitle);
 
-                        for (var i = 0; i < names.length; i++) {
-                            var name = names[ i ];
+                        // Add `(Default)` item as a first element on the drop-down list.
+                        this.add(this.defaultValue, defaultText, defaultText);
 
+                        for (var i = 0; i < names.length; i++) {
+                            name = names[ i ];
                             // Add the tag entry to the panel list.
                             this.add(name, styles[ name ].buildPreview(), name);
                         }
                     },
+
                     onClick: function (value) {
                         editor.focus();
                         editor.fire('saveSnapshot');
 
                         var previousValue = this.getValue(),
-                                style = styles[ value ];
+                                style = styles[ value ],
+                                previousStyle,
+                                range,
+                                path,
+                                matching,
+                                startBoundary,
+                                endBoundary,
+                                node,
+                                bm;
 
-                        // When applying one style over another, first remove the previous one (#12403).
-                        // NOTE: This is only a temporary fix. It will be moved to the styles system (#12687).
+                        // When applying one style over another, first remove the previous one (https://dev.ckeditor.com/ticket/12403).
+                        // NOTE: This is only a temporary fix. It will be moved to the styles system (https://dev.ckeditor.com/ticket/12687).
                         if (previousValue && value != previousValue) {
-                            var previousStyle = styles[ previousValue ],
-                                    range = editor.getSelection().getRanges()[ 0 ];
+                            previousStyle = styles[ previousValue ];
+                            range = editor.getSelection().getRanges()[ 0 ];
 
                             // If the range is collapsed we can't simply use the editor.removeStyle method
                             // because it will remove the entire element and we want to split it instead.
                             if (range.collapsed) {
-                                var path = editor.elementPath(),
-                                        // Find the style element.
-                                        matching = path.contains(function (el) {
-                                            return previousStyle.checkElementRemovable(el);
-                                        });
+                                path = editor.elementPath();
+                                // Find the style element.
+                                matching = path.contains(function (el) {
+                                    return previousStyle.checkElementRemovable(el);
+                                });
 
                                 if (matching) {
-                                    var startBoundary = range.checkBoundaryOfElement(matching, CKEDITOR.START),
-                                            endBoundary = range.checkBoundaryOfElement(matching, CKEDITOR.END),
-                                            node, bm;
+                                    startBoundary = range.checkBoundaryOfElement(matching, CKEDITOR.START);
+                                    endBoundary = range.checkBoundaryOfElement(matching, CKEDITOR.END);
 
                                     // If we are at both boundaries it means that the element is empty.
                                     // Remove it but in a way that we won't lose other empty inline elements inside it.
@@ -93,11 +150,10 @@
                                         matching.remove();
                                         range.moveToBookmark(bm);
 
-                                        // If we are at the boundary of the style element, just move out.
-                                    } else if (startBoundary) {
-                                        range.moveToPosition(matching, CKEDITOR.POSITION_BEFORE_START);
-                                    } else if (endBoundary) {
-                                        range.moveToPosition(matching, CKEDITOR.POSITION_AFTER_END);
+                                        // If we are at the boundary of the style element, move out and copy nested styles/elements.
+                                    } else if (startBoundary || endBoundary) {
+                                        range.moveToPosition(matching, startBoundary ? CKEDITOR.POSITION_BEFORE_START : CKEDITOR.POSITION_AFTER_END);
+                                        cloneSubtreeIntoRange(range, path.elements.slice(), matching);
                                     } else {
                                         // Split the element and clone the elements that were in the path
                                         // (between the startContainer and the matching element)
@@ -114,10 +170,17 @@
                             }
                         }
 
-                        editor[ previousValue == value ? 'removeStyle' : 'applyStyle' ](style);
+                        if (value === this.defaultValue) {
+                            if (previousStyle) {
+                                editor.removeStyle(previousStyle);
+                            }
+                        } else {
+                            editor.applyStyle(style);
+                        }
 
                         editor.fire('saveSnapshot');
                     },
+
                     onRender: function () {
                         editor.on('selectionChange', function (ev) {
                             var currentValue = this.getValue();
@@ -144,6 +207,7 @@
                             this.setValue('', defaultLabel);
                         }, this);
                     },
+
                     refresh: function () {
                         if (!editor.activeFilter.check(style))
                             this.setState(CKEDITOR.TRISTATE_DISABLED);
@@ -178,7 +242,7 @@
             CKEDITOR.plugins.add('font', {
                 requires: 'richcombo',
                 // jscs:disable maximumLineLength
-                lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+                lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
                 // jscs:enable maximumLineLength
                 init: function (editor) {
                     var config = editor.config;

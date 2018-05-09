@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* global alert */
@@ -14,6 +14,7 @@ CKEDITOR.dialog.add('embedBase', function (editor) {
         title: lang.title,
         minWidth: 350,
         minHeight: 50,
+
         onLoad: function () {
             var that = this,
                     loadContentRequest = null;
@@ -25,13 +26,14 @@ CKEDITOR.dialog.add('embedBase', function (editor) {
                 // We don't want the widget system to finalize widget insertion (it happens with priority 20).
                 evt.stop();
 
-                // Indicate visually that waiting for the response (#13213).
+                // Indicate visually that waiting for the response (https://dev.ckeditor.com/ticket/13213).
                 that.setState(CKEDITOR.DIALOG_STATE_BUSY);
 
                 var url = that.getValueOf('info', 'url');
 
                 loadContentRequest = that.widget.loadContent(url, {
                     noNotifications: true,
+
                     callback: function () {
                         if (!that.widget.isReady()) {
                             editor.widgets.finalizeCreation(that.widget.wrapper.getParent(true));
@@ -42,6 +44,7 @@ CKEDITOR.dialog.add('embedBase', function (editor) {
                         that.hide();
                         unlock();
                     },
+
                     errorCallback: function (messageTypeOrMessage) {
                         that.getContentElement('info', 'url').select();
 
@@ -60,23 +63,27 @@ CKEDITOR.dialog.add('embedBase', function (editor) {
             });
 
             function unlock() {
-                // Visual waiting indicator is no longer needed (#13213).
+                // Visual waiting indicator is no longer needed (https://dev.ckeditor.com/ticket/13213).
                 that.setState(CKEDITOR.DIALOG_STATE_IDLE);
                 loadContentRequest = null;
             }
         },
+
         contents: [
             {
                 id: 'info',
+
                 elements: [
                     {
                         type: 'text',
                         id: 'url',
                         label: editor.lang.common.url,
                         required: true,
+
                         setup: function (widget) {
                             this.setValue(widget.data.url);
                         },
+
                         validate: function () {
                             if (!this.getDialog().widget.isUrlValid(this.getValue())) {
                                 return lang.unsupportedUrlGiven;

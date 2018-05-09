@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 (function () {
@@ -10,9 +10,11 @@
         icons: 'embedsemantic', // %REMOVE_LINE_CORE%
         hidpi: true, // %REMOVE_LINE_CORE%
         requires: 'embedbase',
+
         onLoad: function () {
             this.registerOembedTag();
         },
+
         init: function (editor) {
             var widgetDefinition = CKEDITOR.plugins.embedBase.createWidgetBaseDefinition(editor),
                     origInit = widgetDefinition.init;
@@ -29,6 +31,7 @@
                         editor.config.embed_provider ||
                         '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}'
                         ),
+
                 init: function () {
                     var that = this;
 
@@ -52,6 +55,7 @@
                         }
                     });
                 },
+
                 upcast: function (element, data) {
                     if (element.name != 'oembed') {
                         return;
@@ -66,17 +70,18 @@
                         div = new CKEDITOR.htmlParser.element('div');
                         element.replaceWith(div);
 
-                        // Transfer widget classes from data to widget element (#13199).
+                        // Transfer widget classes from data to widget element (https://dev.ckeditor.com/ticket/13199).
                         div.attributes[ 'class' ] = element.attributes[ 'class' ];
 
                         return div;
                     }
                 },
+
                 downcast: function (element) {
                     var ret = new CKEDITOR.htmlParser.element('oembed');
                     ret.add(new CKEDITOR.htmlParser.text(this.data.url));
 
-                    // Transfer widget classes from widget element back to data (#13199).
+                    // Transfer widget classes from widget element back to data (https://dev.ckeditor.com/ticket/13199).
                     if (element.attributes[ 'class' ]) {
                         ret.attributes[ 'class' ] = element.attributes[ 'class' ];
                     }
@@ -87,6 +92,7 @@
 
             editor.widgets.add('embedSemantic', widgetDefinition);
         },
+
         // Extends CKEDITOR.dtd so editor accepts <oembed> tag.
         registerOembedTag: function () {
             var dtd = CKEDITOR.dtd,

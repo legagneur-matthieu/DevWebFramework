@@ -3,6 +3,7 @@
 'use strict';
 
 var config = {
+
     applications: {
         ckeditor: {
             path: '../../',
@@ -10,12 +11,14 @@ var config = {
                 'ckeditor.js'
             ]
         },
+
         codemirror: {
             path: '.',
             files: [
                 'js/lib/codemirror/codemirror.js'
             ]
         },
+
         toolbartool: {
             path: '.',
             files: [
@@ -26,11 +29,14 @@ var config = {
             ]
         }
     },
+
     plugins: [
         'node_modules/benderjs-mocha',
         'node_modules/benderjs-chai'
     ],
+
     framework: 'mocha',
+
     tests: {
         'main': {
             applications: ['ckeditor', 'codemirror', 'toolbartool'],

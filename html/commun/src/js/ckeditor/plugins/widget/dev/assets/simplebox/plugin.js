@@ -3,10 +3,12 @@
 // Register the plugin within the editor.
 CKEDITOR.plugins.add('simplebox', {
     // This plugin requires the Widgets System defined in the 'widget' plugin.
-    requires: 'widget',
+    requires: 'widget,dialog',
+
     // Register the icon used for the toolbar button. It must be the same
     // as the name of the widget.
     icons: 'simplebox',
+
     // The plugin initialization logic goes inside this method.
     init: function (editor) {
         // Register the editing dialog.
@@ -16,13 +18,15 @@ CKEDITOR.plugins.add('simplebox', {
         editor.widgets.add('simplebox', {
             // Allow all HTML elements, classes, and styles that this widget requires.
             // Read more about the Advanced Content Filter here:
-            // * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
-            // * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
+            // * https://docs.ckeditor.com/ckeditor4/docs/#!/guide/dev_advanced_content_filter
+            // * https://docs.ckeditor.com/ckeditor4/docs/#!/guide/plugin_sdk_integration_with_acf
             allowedContent:
                     'div(!simplebox,align-left,align-right,align-center){width};' +
                     'div(!simplebox-content); h2(!simplebox-title)',
+
             // Minimum HTML which is required by this widget to work.
             requiredContent: 'div(simplebox)',
+
             // Define two nested editable areas.
             editables: {
                 title: {
@@ -37,6 +41,7 @@ CKEDITOR.plugins.add('simplebox', {
                     selector: '.simplebox-content'
                 }
             },
+
             // Define the template of a new Simple Box widget.
             // The template will be used when creating new instances of the Simple Box widget.
             template:
@@ -44,6 +49,7 @@ CKEDITOR.plugins.add('simplebox', {
                     '<h2 class="simplebox-title">Title</h2>' +
                     '<div class="simplebox-content"><p>Content...</p></div>' +
                     '</div>',
+
             // Define the label for a widget toolbar button which will be automatically
             // created by the Widgets System. This button will insert a new widget instance
             // created from the template defined above, or will edit selected widget
@@ -52,12 +58,14 @@ CKEDITOR.plugins.add('simplebox', {
             // Note: In order to be able to translate your widget you should use the
             // editor.lang.simplebox.* property. A string was used directly here to simplify this tutorial.
             button: 'Create a simple box',
+
             // Set the widget dialog window name. This enables the automatic widget-dialog binding.
             // This dialog window will be opened when creating a new widget or editing an existing one.
             dialog: 'simplebox',
+
             // Check the elements that need to be converted to widgets.
             //
-            // Note: The "element" argument is an instance of http://docs.ckeditor.com/#!/api/CKEDITOR.htmlParser.element
+            // Note: The "element" argument is an instance of https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.htmlParser.element
             // so it is not a real DOM element yet. This is caused by the fact that upcasting is performed
             // during data processing which is done on DOM represented by JavaScript objects.
             upcast: function (element) {
@@ -65,6 +73,7 @@ CKEDITOR.plugins.add('simplebox', {
                 // for all <div> elements with a "simplebox" class.
                 return element.name == 'div' && element.hasClass('simplebox');
             },
+
             // When a widget is being initialized, we need to read the data ("align" and "width")
             // from DOM and set it by using the widget.setData() method.
             // More code which needs to be executed when DOM is available may go here.
@@ -80,6 +89,7 @@ CKEDITOR.plugins.add('simplebox', {
                 if (this.element.hasClass('align-center'))
                     this.setData('align', 'center');
             },
+
             // Listen on the widget#data event which is fired every time the widget data changes
             // and updates the widget's view.
             // Data may be changed by using the widget.setData() method, which we use in the

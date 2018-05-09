@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -38,6 +38,20 @@
                         classes: classes || null
                     }
                 };
+
+                this.contentTransformations = [
+                    ['div: splitMarginShorthand'],
+                    ['h1: splitMarginShorthand'],
+                    ['h2: splitMarginShorthand'],
+                    ['h3: splitMarginShorthand'],
+                    ['h4: splitMarginShorthand'],
+                    ['h5: splitMarginShorthand'],
+                    ['h6: splitMarginShorthand'],
+                    ['ol: splitMarginShorthand'],
+                    ['p: splitMarginShorthand'],
+                    ['pre: splitMarginShorthand'],
+                    ['ul: splitMarginShorthand']
+                ];
 
                 if (this.enterBr)
                     this.allowedContent.div = true;
@@ -127,6 +141,7 @@
                                 }
                             }
                         },
+
                         exec: function (editor) {
                             var selection = editor.getSelection(),
                                     range = selection && selection.getRanges()[ 0 ],
@@ -163,6 +178,7 @@
                 // Elements that, if in an elementpath, will be handled by this
                 // command. They restrict the scope of the plugin.
                 context: {div: 1, dl: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, ul: 1, ol: 1, p: 1, pre: 1, table: 1},
+
                 // A regex built on config#indentClasses to detect whether an
                 // element has some indentClass or not.
                 classNameRegex: classes ? new RegExp('(?:^|\\s+)(' + classes.join('|') + ')(?=$|\\s)') : null

@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
         /**
@@ -10,7 +10,7 @@
         CKEDITOR.plugins.add('forms', {
             requires: 'dialog,fakeobjects',
             // jscs:disable maximumLineLength
-            lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+            lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
             // jscs:enable maximumLineLength
             icons: 'button,checkbox,form,hiddenfield,imagebutton,radio,select,select-rtl,textarea,textarea-rtl,textfield', // %REMOVE_LINE_CORE%
             hidpi: true, // %REMOVE_LINE_CORE%
@@ -90,7 +90,7 @@
                 var imagePlugin = editor.plugins.image;
 
                 // Since Image plugin is disabled when Image2 is to be loaded,
-                // ImageButton also got to be off (#11222).
+                // ImageButton also got to be off (https://dev.ckeditor.com/ticket/11222).
                 if (imagePlugin && !editor.plugins.image2)
                     addButtonCommand('ImageButton', 'imagebutton', CKEDITOR.plugins.getPath('image') + 'dialogs/image.js');
 
@@ -104,31 +104,37 @@
                             command: 'checkbox',
                             group: 'checkbox'
                         },
+
                         radio: {
                             label: lang.forms.checkboxAndRadio.radioTitle,
                             command: 'radio',
                             group: 'radio'
                         },
+
                         textfield: {
                             label: lang.forms.textfield.title,
                             command: 'textfield',
                             group: 'textfield'
                         },
+
                         hiddenfield: {
                             label: lang.forms.hidden.title,
                             command: 'hiddenfield',
                             group: 'hiddenfield'
                         },
+
                         button: {
                             label: lang.forms.button.title,
                             command: 'button',
                             group: 'button'
                         },
+
                         select: {
                             label: lang.forms.select.title,
                             command: 'select',
                             group: 'select'
                         },
+
                         textarea: {
                             label: lang.forms.textarea.title,
                             command: 'textarea',
@@ -234,6 +240,7 @@
                     }
                 });
             },
+
             afterInit: function (editor) {
                 var dataProcessor = editor.dataProcessor,
                         htmlFilter = dataProcessor && dataProcessor.htmlFilter,
@@ -248,7 +255,7 @@
                             input: function (input) {
                                 var attrs = input.attributes,
                                         type = attrs.type;
-                                // Old IEs don't provide type for Text inputs #5522
+                                // Old IEs don't provide type for Text inputs https://dev.ckeditor.com/ticket/5522
                                 if (!type)
                                     attrs.type = 'text';
                                 if (type == 'checkbox' || type == 'radio')

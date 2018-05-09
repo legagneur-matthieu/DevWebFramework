@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 (function () {
@@ -113,7 +113,7 @@
                 // 4 : close of tag;
 
                 part = (parts[ 1 ] || parts[ 3 ] || '').toLowerCase();
-                // Unrecognized tags should be delivered as a simple text (#7860).
+                // Unrecognized tags should be delivered as a simple text (https://dev.ckeditor.com/ticket/7860).
                 if (part && !bbcodeMap[ part ]) {
                     this.onText(parts[ 0 ]);
                     continue;
@@ -435,6 +435,7 @@
                 breakAfterClose: 1
             });
         },
+
         proto: {
             //
             // Sets formatting rules for a given tag. The possible rules are:
@@ -465,9 +466,11 @@
                 else
                     this._.rules[ tagName ] = rules;
             },
+
             getRule: function (tagName, ruleName) {
                 return this._.rules[ tagName ] && this._.rules[ tagName ][ ruleName ];
             },
+
             openTag: function (tag) {
                 if (tag in bbcodeMap) {
                     if (this.getRule(tag, 'breakBeforeOpen'))
@@ -476,6 +479,7 @@
                     this.write('[', tag);
                 }
             },
+
             openTagClose: function (tag) {
                 if (tag == 'br')
                     this._.output.push('\n');
@@ -485,11 +489,13 @@
                         this.lineBreak(1);
                 }
             },
+
             attribute: function (name, val) {
                 if (name == 'option') {
                     this.write('=', val);
                 }
             },
+
             closeTag: function (tag) {
                 if (tag in bbcodeMap) {
                     if (this.getRule(tag, 'breakBeforeClose'))
@@ -501,10 +507,13 @@
                         this.lineBreak(1);
                 }
             },
+
             text: function (text) {
                 this.write(text);
             },
+
             comment: function () {},
+
             // Output line-break for formatting.
             lineBreak: function () {
                 // Avoid line break when:
@@ -515,15 +524,18 @@
                     this._.hasLineBreak = 1;
                 }
             },
+
             write: function () {
                 this._.hasLineBreak = 0;
                 var data = Array.prototype.join.call(arguments, '');
                 this._.output.push(data);
             },
+
             reset: function () {
                 this._.output = [];
                 this._.hasLineBreak = 0;
             },
+
             getHtml: function (reset) {
                 var bbcode = this._.output.join('');
 
@@ -539,6 +551,7 @@
 
     CKEDITOR.plugins.add('bbcode', {
         requires: 'entities',
+
         // Adapt some critical editor configuration for better support
         // of BBCode environment.
         beforeInit: function (editor) {
@@ -546,7 +559,7 @@
 
             CKEDITOR.tools.extend(config, {
                 // This one is for backwards compatibility only as
-                // editor#enterMode is already set at this stage (#11202).
+                // editor#enterMode is already set at this stage (https://dev.ckeditor.com/ticket/11202).
                 enterMode: CKEDITOR.ENTER_BR,
                 basicEntities: false,
                 entities: false,
@@ -556,9 +569,10 @@
             editor.filter.disable();
 
             // Since CKEditor 4.3, editor#(active)enterMode is set before
-            // beforeInit. Properties got to be updated (#11202).
+            // beforeInit. Properties got to be updated (https://dev.ckeditor.com/ticket/11202).
             editor.activeEnterMode = editor.enterMode = CKEDITOR.ENTER_BR;
         },
+
         init: function (editor) {
             var config = editor.config;
 
@@ -715,6 +729,7 @@
 
                         return null;
                     },
+
                     // Remove any bogus br from the end of a pseudo block,
                     // e.g. <div>some text<br /><p>paragraph</p></div>
                     br: function (element) {
@@ -742,6 +757,7 @@
                 editor.on('setData', onSetData);
 
         },
+
         afterInit: function (editor) {
             var filters;
             if (editor._.elementsPath) {

@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 (function () {
@@ -41,6 +41,7 @@
 
     CKEDITOR.plugins.add('dialogadvtab', {
         requires: 'dialog',
+
         // Returns allowed content rule for the content created by this plugin.
         allowedContent: function (tabConfig) {
             if (!tabConfig)
@@ -64,6 +65,7 @@
 
             return allowed;
         },
+
         // @param tabConfig
         // id, dir, classes, styles
         createAdvancedTab: function (editor, tabConfig, element) {
@@ -135,12 +137,15 @@
                         requiredContent: element ? element + '{cke-xyz}' : null,
                         label: lang.styles,
                         'default': '',
+
                         validate: CKEDITOR.dialog.validate.inlineStyle(lang.invalidInlineStyle),
                         onChange: function () {},
+
                         getStyle: function (name, defaultValue) {
                             var match = this.getValue().match(new RegExp('(?:^|;)\\s*' + name + '\\s*:\\s*([^;]*)', 'i'));
                             return match ? match[ 1 ] : defaultValue;
                         },
+
                         updateStyle: function (name, value) {
                             var styles = this.getValue();
 
@@ -151,7 +156,9 @@
 
                             this.setValue(styles, 1);
                         },
+
                         setup: setupAdvParams,
+
                         commit: commitAdvParams
 
                     });

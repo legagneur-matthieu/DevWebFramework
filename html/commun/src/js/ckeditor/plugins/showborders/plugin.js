@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -13,10 +13,12 @@
         preserveState: true,
         editorFocus: false,
         readOnly: 1,
+
         exec: function (editor) {
             this.toggleState();
             this.refresh(editor);
         },
+
         refresh: function (editor) {
             if (editor.document) {
                 var funcName = (this.state == CKEDITOR.TRISTATE_ON) ? 'attachClass' : 'removeClass';
@@ -29,6 +31,7 @@
 
     CKEDITOR.plugins.add('showborders', {
         modes: {'wysiwyg': 1},
+
         onLoad: function () {
             var cssStyleText,
                     cssTemplate =
@@ -55,6 +58,7 @@
 
                             CKEDITOR.addCss(cssStyleText);
                         },
+
                         init: function (editor) {
 
                             var command = editor.addCommand('showborders', commandDefinition);
@@ -81,6 +85,7 @@
                                     element.addClass(showBorderClassName);
                             });
                         },
+
                         afterInit: function (editor) {
                             var dataProcessor = editor.dataProcessor,
                                     dataFilter = dataProcessor && dataProcessor.dataFilter,

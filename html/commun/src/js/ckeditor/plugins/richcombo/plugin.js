@@ -1,10 +1,11 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.add('richcombo', {
     requires: 'floatpanel,listblock,button',
+
     beforeInit: function (editor) {
         editor.ui.addHandler(CKEDITOR.UI_RICHCOMBO, CKEDITOR.ui.richCombo.handler);
     }
@@ -36,7 +37,7 @@ CKEDITOR.plugins.add('richcombo', {
     template +=
             ' onkeydown="return CKEDITOR.tools.callFunction({keydownFn},event,this);"' +
             ' onfocus="return CKEDITOR.tools.callFunction({focusFn},event);" ' +
-            (CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick') + // #188
+            (CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick') + // https://dev.ckeditor.com/ticket/188
             '="CKEDITOR.tools.callFunction({clickFn},this);return false;">' +
             '<span id="{id}_text" class="cke_combo_text cke_combo_inlinelabel">{label}</span>' +
             '<span class="cke_combo_open">' +
@@ -96,12 +97,14 @@ CKEDITOR.plugins.add('richcombo', {
                                 items: {}
                             };
                         },
+
                 proto: {
                     renderHtml: function (editor) {
                         var output = [];
                         this.render(editor, output);
                         return output.join('');
                     },
+
                     /**
                      * Renders the combo.
                      *
@@ -157,7 +160,7 @@ CKEDITOR.plugins.add('richcombo', {
                         };
 
                         function updateState() {
-                            // Don't change state while richcombo is active (#11793).
+                            // Don't change state while richcombo is active (https://dev.ckeditor.com/ticket/11793).
                             if (this.getState() == CKEDITOR.TRISTATE_ON)
                                 return;
 
@@ -185,15 +188,6 @@ CKEDITOR.plugins.add('richcombo', {
                             ev = new CKEDITOR.dom.event(ev);
 
                             var keystroke = ev.getKeystroke();
-
-                            // ARROW-DOWN
-                            // This call is duplicated in plugins/toolbar/plugin.js in itemKeystroke().
-                            // Move focus to the first element after drop down was opened by the arrow down key.
-                            if (keystroke == 40) {
-                                editor.once('panelShow', function (evt) {
-                                    evt.data._.panel._.currentBlock.onKeyDown(40);
-                                });
-                            }
 
                             switch (keystroke) {
                                 case 13: // ENTER
@@ -239,6 +233,7 @@ CKEDITOR.plugins.add('richcombo', {
 
                         return instance;
                     },
+
                     createPanel: function (editor) {
                         if (this._.panel)
                             return;
@@ -262,12 +257,6 @@ CKEDITOR.plugins.add('richcombo', {
 
                             if (me.onOpen)
                                 me.onOpen();
-
-                            // The "panelShow" event is fired assinchronously, after the
-                            // onShow method call.
-                            editor.once('panelShow', function () {
-                                list.focus(!list.multiSelect && me.getValue());
-                            });
                         };
 
                         panel.onHide = function (preventOnClose) {
@@ -305,6 +294,7 @@ CKEDITOR.plugins.add('richcombo', {
                         if (this.init)
                             this.init();
                     },
+
                     setValue: function (value, text) {
                         this._.value = value;
 
@@ -320,31 +310,40 @@ CKEDITOR.plugins.add('richcombo', {
                             textElement.setText(typeof text != 'undefined' ? text : value);
                         }
                     },
+
                     getValue: function () {
                         return this._.value || '';
                     },
+
                     unmarkAll: function () {
                         this._.list.unmarkAll();
                     },
+
                     mark: function (value) {
                         this._.list.mark(value);
                     },
+
                     hideItem: function (value) {
                         this._.list.hideItem(value);
                     },
+
                     hideGroup: function (groupTitle) {
                         this._.list.hideGroup(groupTitle);
                     },
+
                     showAll: function () {
                         this._.list.showAll();
                     },
+
                     add: function (value, html, text) {
                         this._.items[ value ] = text || value;
                         this._.list.add(value, html, text);
                     },
+
                     startGroup: function (title) {
                         this._.list.startGroup(title);
                     },
+
                     commit: function () {
                         if (!this._.committed) {
                             this._.list.commit();
@@ -353,6 +352,7 @@ CKEDITOR.plugins.add('richcombo', {
                         }
                         this._.committed = 1;
                     },
+
                     setState: function (state) {
                         if (this._.state == state)
                             return;
@@ -366,13 +366,16 @@ CKEDITOR.plugins.add('richcombo', {
 
                         this._.state = state;
                     },
+
                     getState: function () {
                         return this._.state;
                     },
+
                     enable: function () {
                         if (this._.state == CKEDITOR.TRISTATE_DISABLED)
                             this.setState(this._.lastState);
                     },
+
                     disable: function () {
                         if (this._.state != CKEDITOR.TRISTATE_DISABLED) {
                             this._.lastState = this._.state;
@@ -380,6 +383,7 @@ CKEDITOR.plugins.add('richcombo', {
                         }
                     }
                 },
+
                 /**
                  * Represents richCombo handler object.
                  *

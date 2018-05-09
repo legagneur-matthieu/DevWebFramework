@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.add('htmlwriter', {
@@ -31,6 +31,7 @@ CKEDITOR.plugins.add('htmlwriter', {
  */
 CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
     base: CKEDITOR.htmlParser.basicWriter,
+
     /**
      * Creates an `htmlWriter` class instance.
      *
@@ -68,7 +69,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
         this._.indent = 0;
         this._.indentation = '';
-        // Indicate preformatted block context status. (#5789)
+        // Indicate preformatted block context status. (https://dev.ckeditor.com/ticket/5789)
         this._.inPre = 0;
         this._.rules = {};
 
@@ -101,6 +102,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
             indent: 0 // Disable indentation on <pre>.
         });
     },
+
     proto: {
         /**
          * Writes the tag opening part for an opener tag.
@@ -130,6 +132,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
             this._.afterCloser = 0;
         },
+
         /**
          * Writes the tag closing part for an opener tag.
          *
@@ -162,6 +165,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
                 this.lineBreak();
             tagName == 'pre' && (this._.inPre = 1);
         },
+
         /**
          * Writes an attribute. This function should be called after opening the
          * tag with {@link #openTagClose}.
@@ -176,12 +180,13 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
             if (typeof attValue == 'string') {
                 this.forceSimpleAmpersand && (attValue = attValue.replace(/&amp;/g, '&'));
-                // Browsers don't always escape special character in attribute values. (#4683, #4719).
+                // Browsers don't always escape special character in attribute values. (https://dev.ckeditor.com/ticket/4683, https://dev.ckeditor.com/ticket/4719).
                 attValue = CKEDITOR.tools.htmlEncodeAttr(attValue);
             }
 
             this._.output.push(' ', attName, '="', attValue, '"');
         },
+
         /**
          * Writes a closer tag.
          *
@@ -214,6 +219,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
             this._.afterCloser = 1;
         },
+
         /**
          * Writes text.
          *
@@ -230,6 +236,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
             this._.output.push(text);
         },
+
         /**
          * Writes a comment.
          *
@@ -244,6 +251,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
 
             this._.output.push('<!--', comment, '-->');
         },
+
         /**
          * Writes a line break. It uses the {@link #lineBreakChars} property for it.
          *
@@ -255,6 +263,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
                 this._.output.push(this.lineBreakChars);
             this._.indent = 1;
         },
+
         /**
          * Writes the current indentation character. It uses the {@link #indentationChars}
          * property, repeating it for the current indentation steps.
@@ -267,6 +276,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
                 this._.output.push(this._.indentation);
             this._.indent = 0;
         },
+
         /**
          * Empties the current output buffer. It also brings back the default
          * values of the writer flags.
@@ -281,6 +291,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass({
             this._.inPre = 0;
             this._.needsSpace = 0;
         },
+
         /**
          * Sets formatting rules for a given element. Possible rules are:
          *

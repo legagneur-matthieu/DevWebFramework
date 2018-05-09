@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.md or http://ckeditor.com/license
+Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 -->
 <html>
     <head>
@@ -393,6 +393,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                             startTimer: function () {
                                                 DEBUG.timer = new Date().getTime();
                                             },
+
                                             stopTimer: (function () {
                                                 var label = CKEDITOR.document.getById('time'),
                                                         max = 0,
@@ -421,6 +422,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                                     count++;
                                                 }
                                             })(),
+
                                             mousePos: (function (y, element)
                                             {
                                                 var my = CKEDITOR.document.getById('my'),
@@ -440,6 +442,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                                         over.setText('-');
                                                 }
                                             })(),
+
                                             showTrigger: (function (trigger)
                                             {
                                                 var tr_type = CKEDITOR.document.getById('tr_type'),
@@ -470,6 +473,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                                     lower && (tbo = lower) && tbo.setAttribute('id', 'tbo');
                                                 }
                                             })(),
+
                                             showHidden: (function (state)
                                             {
                                                 var cnt = CKEDITOR.document.getById('hid');
@@ -479,6 +483,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                                     cnt.setText(state ? 'enabled' : 'disabled');
                                                 }
                                             })(),
+
                                             markElement: function (element) {
                                                 if (!isHtml(element))
                                                     return;
@@ -493,6 +498,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                                                     'outline': 'red solid 2px'
                                                 });
                                             },
+
                                             // Log functions.
                                             log: function () {},
                                             logElements: function () {},
@@ -510,6 +516,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
                                                 console.log.apply(console, args);
                                             },
+
                                             logElements: function (elements, labels, info) {
                                                 var log = {},
                                                         label;
@@ -532,16 +539,20 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
                                                 typeof JSON != 'undefined' && DEBUG.log((info ? info.toUpperCase() + ' ' : '') + JSON.stringify(log));
                                             },
+
                                             groupStart: function (label) {
                                                 console.group(label);
                                             },
+
                                             groupEnd: function () {
                                                 console.groupEnd();
                                             },
+
                                             logEnd: function () {
                                                 DEBUG.log.apply(null, arguments);
                                                 DEBUG.groupEnd();
                                             },
+
                                             logElementsEnd: function () {
                                                 DEBUG.logElements.apply(null, arguments);
                                                 DEBUG.groupEnd();

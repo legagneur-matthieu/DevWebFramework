@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* global CKCONSOLE */
@@ -14,6 +14,7 @@
             {
                 type: 'box',
                 content: '<ul class="ckconsole_list ckconsole_value" data-value="instances"></ul>',
+
                 refresh: function (editor) {
                     var instances = obj2Array(editor.widgets.instances);
 
@@ -22,6 +23,7 @@
                         instances: generateInstancesList(instances)
                     };
                 },
+
                 refreshOn: function (editor, refresh) {
                     editor.widgets.on('instanceCreated', function (evt) {
                         refresh();
@@ -32,6 +34,7 @@
                     editor.widgets.on('instanceDestroyed', refresh);
                 }
             },
+
             {
                 type: 'box',
                 content:
@@ -39,6 +42,7 @@
                         '<li>focused: <span class="ckconsole_value" data-value="focused"></span></li>' +
                         '<li>selected: <span class="ckconsole_value" data-value="selected"></span></li>' +
                         '</ul>',
+
                 refresh: function (editor) {
                     var focused = editor.widgets.focused,
                             selected = editor.widgets.selected,
@@ -53,12 +57,15 @@
                         selected: selectedIds.length ? 'id: ' + selectedIds.join(', id: ') : '-'
                     };
                 },
+
                 refreshOn: function (editor, refresh) {
                     editor.on('selectionCheck', refresh, null, null, 999);
                 }
             },
+
             {
                 type: 'log',
+
                 on: function (editor, log, logFn) {
                     // Add all listeners with high priorities to log
                     // messages in the correct order when one event depends on another.

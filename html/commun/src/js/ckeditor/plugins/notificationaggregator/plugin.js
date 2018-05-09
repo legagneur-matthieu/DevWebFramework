@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -202,6 +202,7 @@
 
             return task;
         },
+
         /**
          * Triggers an update on the aggregator, meaning that its UI will be refreshed.
          *
@@ -214,6 +215,7 @@
                 this.fire('finished');
             }
         },
+
         /**
          * Returns a number from `0` to `1` representing the done weights to total weights ratio
          * (showing how many of the tasks are done).
@@ -230,6 +232,7 @@
 
             return this._doneWeights / this._totalWeights;
         },
+
         /**
          * @returns {Boolean} Returns `true` if all notification tasks are done
          * (or there are no tasks at all).
@@ -237,18 +240,21 @@
         isFinished: function () {
             return this.getDoneTaskCount() === this.getTaskCount();
         },
+
         /**
          * @returns {Number} Returns a total tasks count.
          */
         getTaskCount: function () {
             return this._tasks.length;
         },
+
         /**
          * @returns {Number} Returns the number of tasks done.
          */
         getDoneTaskCount: function () {
             return this._doneTasks;
         },
+
         /**
          * Updates the notification content.
          *
@@ -260,6 +266,7 @@
                 progress: this.getPercentage()
             });
         },
+
         /**
          * Returns a message used in the notification.
          *
@@ -285,6 +292,7 @@
 
             return template.output(templateParams);
         },
+
         /**
          * Creates a notification object.
          *
@@ -296,6 +304,7 @@
                 type: 'progress'
             });
         },
+
         /**
          * Creates a {@link CKEDITOR.plugins.notificationAggregator.task} instance based
          * on `options`, and adds it to the task list.
@@ -310,6 +319,7 @@
             this._totalWeights += task._weight;
             return task;
         },
+
         /**
          * Removes a given task from the {@link #_tasks} array and updates the UI.
          *
@@ -333,6 +343,7 @@
                 this.update();
             }
         },
+
         /**
          * A listener called on the {@link CKEDITOR.plugins.notificationAggregator.task#update} event.
          *
@@ -343,6 +354,7 @@
             this._doneWeights += evt.data;
             this.update();
         },
+
         /**
          * A listener called on the {@link CKEDITOR.plugins.notificationAggregator.task#event-done} event.
          *
@@ -419,6 +431,7 @@
         done: function () {
             this.update(this._weight);
         },
+
         /**
          * Updates the done weight of a task.
          *
@@ -445,6 +458,7 @@
                 this.fire('done');
             }
         },
+
         /**
          * Cancels the task (the task will be removed from the aggregator).
          */
@@ -461,6 +475,7 @@
             // and remove the task.
             this.fire('canceled');
         },
+
         /**
          * Checks if the task is done.
          *
@@ -469,6 +484,7 @@
         isDone: function () {
             return this._weight === this._doneWeight;
         },
+
         /**
          * Checks if the task is canceled.
          *

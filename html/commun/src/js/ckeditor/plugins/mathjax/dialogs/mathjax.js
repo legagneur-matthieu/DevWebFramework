@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 'use strict';
@@ -22,6 +22,7 @@ CKEDITOR.dialog.add('mathjax', function (editor) {
                         id: 'equation',
                         type: 'textarea',
                         label: lang.dialogInput,
+
                         onLoad: function () {
                             var that = this;
 
@@ -32,10 +33,12 @@ CKEDITOR.dialog.add('mathjax', function (editor) {
                                 });
                             }
                         },
+
                         setup: function (widget) {
                             // Remove \( and \).
                             this.setValue(CKEDITOR.plugins.mathjax.trim(widget.data.math));
                         },
+
                         commit: function (widget) {
                             // Add \( and \) to make TeX be parsed by MathJax by default.
                             widget.setData('math', '\\(' + this.getValue() + '\\)');
@@ -58,10 +61,12 @@ CKEDITOR.dialog.add('mathjax', function (editor) {
                                 '<div style="width:100%;text-align:center;">' +
                                 '<iframe style="border:0;width:0;height:0;font-size:20px" scrolling="no" frameborder="0" allowTransparency="true" src="' + CKEDITOR.plugins.mathjax.fixSrc + '"></iframe>' +
                                 '</div>',
+
                         onLoad: function () {
                             var iFrame = CKEDITOR.document.getById(this.domId).getChild(0);
                             preview = new CKEDITOR.plugins.mathjax.frameWrapper(iFrame, editor);
                         },
+
                         setup: function (widget) {
                             preview.setValue(widget.data.math);
                         }

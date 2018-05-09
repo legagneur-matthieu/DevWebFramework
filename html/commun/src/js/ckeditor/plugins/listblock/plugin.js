@@ -1,17 +1,18 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.add('listblock', {
     requires: 'panel',
+
     onLoad: function () {
         var list = CKEDITOR.addTemplate('panel-list', '<ul role="presentation" class="cke_panel_list">{items}</ul>'),
                 listItem = CKEDITOR.addTemplate('panel-list-item', '<li id="{id}" class="cke_panel_listItem" role=presentation>' +
                         '<a id="{id}_option" _cke_focus=1 hidefocus=true' +
                         ' title="{title}"' +
                         ' href="javascript:void(\'{val}\')" ' +
-                        ' {onclick}="CKEDITOR.tools.callFunction({clickFn},\'{val}\'); return false;"' + // #188
+                        ' {onclick}="CKEDITOR.tools.callFunction({clickFn},\'{val}\'); return false;"' + // https://dev.ckeditor.com/ticket/188
                         ' role="option">' +
                         '{text}' +
                         '</a>' +
@@ -28,6 +29,7 @@ CKEDITOR.plugins.add('listblock', {
 
         CKEDITOR.ui.listBlock = CKEDITOR.tools.createClass({
             base: CKEDITOR.ui.panel.block,
+
             $: function (blockHolder, blockDefinition) {
                 blockDefinition = blockDefinition || {};
 
@@ -48,13 +50,14 @@ CKEDITOR.plugins.add('listblock', {
                 keys[ 38 ] = 'prev'; // ARROW-UP
                 keys[ CKEDITOR.SHIFT + 9 ] = 'prev'; // SHIFT + TAB
                 keys[ 32 ] = CKEDITOR.env.ie ? 'mouseup' : 'click'; // SPACE
-                CKEDITOR.env.ie && (keys[ 13 ] = 'mouseup'); // Manage ENTER, since onclick is blocked in IE (#8041).
+                CKEDITOR.env.ie && (keys[ 13 ] = 'mouseup'); // Manage ENTER, since onclick is blocked in IE (https://dev.ckeditor.com/ticket/8041).
 
                 this._.pendingHtml = [];
                 this._.pendingList = [];
                 this._.items = {};
                 this._.groups = {};
             },
+
             _: {
                 close: function () {
                     if (this._.started) {
@@ -64,6 +67,7 @@ CKEDITOR.plugins.add('listblock', {
                         delete this._.started;
                     }
                 },
+
                 getClick: function () {
                     if (!this._.click) {
                         this._.click = CKEDITOR.tools.addFunction(function (value) {
@@ -75,6 +79,7 @@ CKEDITOR.plugins.add('listblock', {
                     return this._.click;
                 }
             },
+
             proto: {
                 add: function (value, html, title) {
                     var id = CKEDITOR.tools.getNextId();
@@ -97,6 +102,7 @@ CKEDITOR.plugins.add('listblock', {
 
                     this._.pendingList.push(listItem.output(data));
                 },
+
                 startGroup: function (title) {
                     this._.close();
 
@@ -106,6 +112,7 @@ CKEDITOR.plugins.add('listblock', {
 
                     this._.pendingHtml.push(listGroup.output({id: id, label: title}));
                 },
+
                 commit: function () {
                     this._.close();
                     this.element.appendHtml(this._.pendingHtml.join(''));
@@ -113,6 +120,7 @@ CKEDITOR.plugins.add('listblock', {
 
                     this._.pendingHtml = [];
                 },
+
                 toggle: function (value) {
                     var isMarked = this.isMarked(value);
 
@@ -123,6 +131,7 @@ CKEDITOR.plugins.add('listblock', {
 
                     return !isMarked;
                 },
+
                 hideGroup: function (groupTitle) {
                     var group = this.element.getDocument().getById(this._.groups[ groupTitle ]),
                             list = group && group.getNext();
@@ -134,9 +143,11 @@ CKEDITOR.plugins.add('listblock', {
                             list.setStyle('display', 'none');
                     }
                 },
+
                 hideItem: function (value) {
                     this.element.getDocument().getById(this._.items[ value ]).setStyle('display', 'none');
                 },
+
                 showAll: function () {
                     var items = this._.items,
                             groups = this._.groups,
@@ -156,6 +167,7 @@ CKEDITOR.plugins.add('listblock', {
                             list.setStyle('display', '');
                     }
                 },
+
                 mark: function (value) {
                     if (!this.multiSelect)
                         this.unmarkAll();
@@ -167,6 +179,15 @@ CKEDITOR.plugins.add('listblock', {
                     this.element.getDocument().getById(itemId + '_option').setAttribute('aria-selected', true);
                     this.onMark && this.onMark(item);
                 },
+
+                markFirstDisplayed: function () {
+                    var context = this;
+                    this._.markFirstDisplayed(function () {
+                        if (!context.multiSelect)
+                            context.unmarkAll();
+                    });
+                },
+
                 unmark: function (value) {
                     var doc = this.element.getDocument(),
                             itemId = this._.items[ value ],
@@ -177,6 +198,7 @@ CKEDITOR.plugins.add('listblock', {
 
                     this.onUnmark && this.onUnmark(item);
                 },
+
                 unmarkAll: function () {
                     var items = this._.items,
                             doc = this.element.getDocument();
@@ -190,9 +212,11 @@ CKEDITOR.plugins.add('listblock', {
 
                     this.onUnmark && this.onUnmark();
                 },
+
                 isMarked: function (value) {
                     return this.element.getDocument().getById(this._.items[ value ]).hasClass('cke_selected');
                 },
+
                 focus: function (value) {
                     this._.focusIndex = -1;
 

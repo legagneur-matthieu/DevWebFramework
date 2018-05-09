@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -177,10 +177,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 title = body.getChild(0),
                 close = body.getChild(1);
 
-        // Don't allow dragging on dialog (#13184).
+        // Don't allow dragging on dialog (https://dev.ckeditor.com/ticket/13184).
         editor.plugins.clipboard && CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(body);
 
-        // IFrame shim for dialog that masks activeX in IE. (#7619)
+        // IFrame shim for dialog that masks activeX in IE. (https://dev.ckeditor.com/ticket/7619)
         if (CKEDITOR.env.ie && !CKEDITOR.env.quirks && !CKEDITOR.env.edge) {
             var src = 'javascript:void(function(){' + encodeURIComponent('document.open();(' + CKEDITOR.tools.fixDomain + ')();document.close();') + '}())', // jshint ignore:line
                     iframe = CKEDITOR.dom.element.createFromHtml('<iframe' +
@@ -229,7 +229,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 tabsToRemove = {},
                 i, processed, stopPropagation;
 
-        if ((buttonsOrder == 'OS' && CKEDITOR.env.mac) || // The buttons in MacOS Apps are in reverse order (#4750)
+        if ((buttonsOrder == 'OS' && CKEDITOR.env.mac) || // The buttons in MacOS Apps are in reverse order (https://dev.ckeditor.com/ticket/4750)
                 (buttonsOrder == 'rtl' && dir == 'ltr') || (buttonsOrder == 'ltr' && dir == 'rtl'))
             defaultDefinition.buttons.reverse();
 
@@ -256,6 +256,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             contents: {},
             buttons: {},
             accessKeyMap: {},
+
             // Initialize the tab and page map.
             tabs: {},
             tabIdList: [],
@@ -264,6 +265,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             pageCount: 0,
             lastTab: null,
             tabBarMode: false,
+
             // Initialize the tab order array for input widgets.
             focusList: [],
             currentFocusIndex: 0,
@@ -332,7 +334,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
         if (definition.onOk) {
             this.on('ok', function (evt) {
-                // Dialog confirm might probably introduce content changes (#5415).
+                // Dialog confirm might probably introduce content changes (https://dev.ckeditor.com/ticket/5415).
                 editor.fire('saveSnapshot');
                 setTimeout(function () {
                     editor.fire('saveSnapshot');
@@ -450,7 +452,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 currentIndex = currentIndex + offset;
 
                 if (hasTabs && !me._.tabBarMode && (currentIndex == focusList.length || currentIndex == -1)) {
-                    // If the dialog was not in tab mode, then focus the first tab (#13027).
+                    // If the dialog was not in tab mode, then focus the first tab (https://dev.ckeditor.com/ticket/13027).
                     me._.tabBarMode = true;
                     me._.tabs[ me._.currentTabId ][ 0 ].focus();
                     me._.currentFocusIndex = -1;
@@ -527,7 +529,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     button && CKEDITOR.tools.setTimeout(button.click, 0, button);
                     processed = 1;
                 }
-                stopPropagation = 1; // Always block the propagation (#4269)
+                stopPropagation = 1; // Always block the propagation (https://dev.ckeditor.com/ticket/4269)
             } else if (keystroke == 27 /*ESC*/) {
                 button = this.getButton('cancel');
 
@@ -538,7 +540,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     if (this.fire('cancel', {hide: true}).hide !== false)
                         this.hide();
                 }
-                stopPropagation = 1; // Always block the propagation (#4269)
+                stopPropagation = 1; // Always block the propagation (https://dev.ckeditor.com/ticket/4269)
             } else {
                 return;
             }
@@ -562,7 +564,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             dialogElement.on('keydown', keydownHandler, this);
 
             // Some browsers instead, don't cancel key events in the keydown, but in the
-            // keypress. So we must do a longer trip in those cases. (#4531,#8985)
+            // keypress. So we must do a longer trip in those cases. (https://dev.ckeditor.com/ticket/4531,https://dev.ckeditor.com/ticket/8985)
             if (CKEDITOR.env.gecko)
                 dialogElement.on('keypress', keypressHandler, this);
 
@@ -595,7 +597,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 me._.tabs[ me._.currentTabId ][ 0 ].focus();
                 me._.currentFocusIndex = -1;
             } else if (!this._.hasFocus) {
-                // http://dev.ckeditor.com/ticket/13114#comment:4.
+                // https://dev.ckeditor.com/ticket/13114#comment:4.
                 this._.currentFocusIndex = hasTabs ? -1 : this._.focusList.length - 1;
 
                 // Decide where to put the initial focus.
@@ -611,7 +613,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             }
         }, this, null, 0xffffffff);
 
-        // IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (#2661).
+        // IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (https://dev.ckeditor.com/ticket/2661).
         // This is still needed after [2708] and [2709] because text fields in hidden TR tags are still broken.
         if (CKEDITOR.env.ie6Compat) {
             this.on('load', function () {
@@ -716,6 +718,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             this.hide();
             this._.element.remove();
         },
+
         /**
          * Resizes the dialog.
          *
@@ -754,6 +757,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 this._.contentSize = {width: width, height: height};
             };
         })(),
+
         /**
          * Gets the current size of the dialog in pixels.
          *
@@ -767,6 +771,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             var element = this._.element.getFirst();
             return {width: element.$.offsetWidth || 0, height: element.$.offsetHeight || 0};
         },
+
         /**
          * Moves the dialog to an `(x, y)` coordinate relative to the window.
          *
@@ -784,7 +789,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             var element = this._.element.getFirst(), rtl = this._.editor.lang.dir == 'rtl';
             var isFixed = element.getComputedStyle('position') == 'fixed';
 
-            // (#8888) In some cases of a very small viewport, dialog is incorrectly
+            // (https://dev.ckeditor.com/ticket/8888) In some cases of a very small viewport, dialog is incorrectly
             // positioned in IE7. It also happens that it remains sticky and user cannot
             // scroll down/up to reveal dialog's content below/above the viewport; this is
             // cumbersome.
@@ -821,6 +826,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             save && (this._.moved = 1);
         },
+
         /**
          * Gets the dialog's position in the window.
          *
@@ -833,6 +839,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getPosition: function () {
             return CKEDITOR.tools.extend({}, this._.position);
         },
+
         /**
          * Shows the dialog box.
          *
@@ -856,8 +863,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             // Reset all inputs back to their default value.
             this.reset();
 
-            // Select the first tab by default.
-            this.selectPage(this.definition.contents[ 0 ].id);
+            // Selects the first tab if no tab is already selected.
+            if (this._.currentTabId === null) {
+                this.selectPage(this.definition.contents[ 0 ].id);
+            }
 
             // Set z-index.
             if (CKEDITOR.dialog._.currentZIndex === null)
@@ -938,6 +947,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             }, 100, this);
         },
+
         /**
          * Rearrange the dialog to its previous position or the middle of the window.
          *
@@ -963,6 +973,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             this.move(this._.moved ? this._.position.x : posX, this._.moved ? this._.position.y : posY);
         },
+
         /**
          * Executes a function for each UI element.
          *
@@ -978,6 +989,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             return this;
         },
+
         /**
          * Resets all input values in the dialog.
          *
@@ -996,6 +1008,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 return this;
             };
         })(),
+
         /**
          * Calls the {@link CKEDITOR.dialog.definition.uiElement#setup} method of each
          * of the UI elements, with the arguments passed through it.
@@ -1013,6 +1026,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     widget.setup.apply(widget, args);
             });
         },
+
         /**
          * Calls the {@link CKEDITOR.dialog.definition.uiElement#commit} method of each
          * of the UI elements, with the arguments passed through it.
@@ -1026,7 +1040,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         commitContent: function () {
             var args = arguments;
             this.foreach(function (widget) {
-                // Make sure IE triggers "change" event on last focused input before closing the dialog. (#7915)
+                // Make sure IE triggers "change" event on last focused input before closing the dialog. (https://dev.ckeditor.com/ticket/7915)
                 if (CKEDITOR.env.ie && this._.currentFocusIndex == widget.focusIndex)
                     widget.getInputElement().$.blur();
 
@@ -1034,6 +1048,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     widget.commit.apply(widget, args);
             });
         },
+
         /**
          * Hides the dialog box.
          *
@@ -1077,11 +1092,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 var editor = this._.editor;
                 editor.focus();
 
-                // Give a while before unlock, waiting for focus to return to the editable. (#172)
+                // Give a while before unlock, waiting for focus to return to the editable. (https://dev.ckeditor.com/ticket/172)
                 setTimeout(function () {
                     editor.focusManager.unlock();
 
-                    // Fixed iOS focus issue (#12381).
+                    // Fixed iOS focus issue (https://dev.ckeditor.com/ticket/12381).
                     // Keep in mind that editor.focus() does not work in this case.
                     if (CKEDITOR.env.iOS) {
                         editor.window.focus();
@@ -1098,9 +1113,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 contentObj.resetInitValue && contentObj.resetInitValue();
             });
 
-            // Reset dialog state back to IDLE, if busy (#13213).
+            // Reset dialog state back to IDLE, if busy (https://dev.ckeditor.com/ticket/13213).
             this.setState(CKEDITOR.DIALOG_STATE_IDLE);
         },
+
         /**
          * Adds a tabbed page into the dialog.
          *
@@ -1183,6 +1199,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 this._.accessKeyMap[ 'CTRL+' + contents.accessKey ] = contents.id;
             }
         },
+
         /**
          * Activates a tab page in the dialog by its id.
          *
@@ -1217,7 +1234,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             // [IE] an invisible input[type='text'] will enlarge it's width
             // if it's value is long when it shows, so we clear it's value
-            // before it shows and then recover it (#5649)
+            // before it shows and then recover it (https://dev.ckeditor.com/ticket/5649)
             if (CKEDITOR.env.ie6Compat || CKEDITOR.env.ie7Compat) {
                 clearOrRecoverTextInputValue(selected[ 1 ]);
                 selected[ 1 ].show();
@@ -1231,6 +1248,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             this._.currentTabId = id;
             this._.currentTabIndex = CKEDITOR.tools.indexOf(this._.tabIdList, id);
         },
+
         /**
          * Dialog state-specific style updates.
          */
@@ -1238,6 +1256,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             // If only a single page shown, a different style is used in the central pane.
             this.parts.dialog[ (this._.pageCount === 1 ? 'add' : 'remove') + 'Class' ]('cke_single_page');
         },
+
         /**
          * Hides a page's tab away from the dialog.
          *
@@ -1257,6 +1276,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             this._.pageCount--;
             this.updateStyle();
         },
+
         /**
          * Unhides a page's tab.
          *
@@ -1272,6 +1292,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             this._.pageCount++;
             this.updateStyle();
         },
+
         /**
          * Gets the root DOM element of the dialog.
          *
@@ -1283,6 +1304,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getElement: function () {
             return this._.element;
         },
+
         /**
          * Gets the name of the dialog.
          *
@@ -1293,6 +1315,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getName: function () {
             return this._.name;
         },
+
         /**
          * Gets a dialog UI element object from a dialog page.
          *
@@ -1306,6 +1329,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             var page = this._.contents[ pageId ];
             return page && page[ elementId ];
         },
+
         /**
          * Gets the value of a dialog UI element.
          *
@@ -1318,6 +1342,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getValueOf: function (pageId, elementId) {
             return this.getContentElement(pageId, elementId).getValue();
         },
+
         /**
          * Sets the value of a dialog UI element.
          *
@@ -1330,6 +1355,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         setValueOf: function (pageId, elementId, value) {
             return this.getContentElement(pageId, elementId).setValue(value);
         },
+
         /**
          * Gets the UI element of a button in the dialog's button row.
          *
@@ -1340,6 +1366,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getButton: function (id) {
             return this._.buttons[ id ];
         },
+
         /**
          * Simulates a click to a dialog button in the dialog's button row.
          *
@@ -1350,6 +1377,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         click: function (id) {
             return this._.buttons[ id ].click();
         },
+
         /**
          * Disables a dialog button.
          *
@@ -1358,6 +1386,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         disableButton: function (id) {
             return this._.buttons[ id ].disable();
         },
+
         /**
          * Enables a dialog button.
          *
@@ -1366,6 +1395,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         enableButton: function (id) {
             return this._.buttons[ id ].enable();
         },
+
         /**
          * Gets the number of pages in the dialog.
          *
@@ -1374,6 +1404,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getPageCount: function () {
             return this._.pageCount;
         },
+
         /**
          * Gets the editor instance which opened this dialog.
          *
@@ -1382,6 +1413,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getParentEditor: function () {
             return this._.editor;
         },
+
         /**
          * Gets the element that was selected when opening the dialog, if any.
          *
@@ -1390,6 +1422,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getSelectedElement: function () {
             return this.getParentEditor().getSelection().getSelectedElement();
         },
+
         /**
          * Adds element to dialog's focusable list.
          *
@@ -1406,6 +1439,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     this._.focusList[ i ].focusIndex++;
             }
         },
+
         /**
          * Sets the dialog {@link #property-state}.
          *
@@ -1535,6 +1569,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             if (!this._.dialogDefinitions[ name ] || typeof dialogDefinition == 'function')
                 this._.dialogDefinitions[ name ] = dialogDefinition;
         },
+
         /**
          * @static
          * @todo
@@ -1542,6 +1577,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         exists: function (name) {
             return !!this._.dialogDefinitions[ name ];
         },
+
         /**
          * @static
          * @todo
@@ -1549,6 +1585,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getCurrent: function () {
             return CKEDITOR.dialog._.currentTop;
         },
+
         /**
          * Check whether tab wasn't removed by {@link CKEDITOR.config#removeDialogTabs}.
          *
@@ -1564,6 +1601,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             return !(cfg && cfg.match(new RegExp('(?:^|;)' + dialogName + ':' + tabName + '(?:$|;)', 'i')));
         },
+
         /**
          * The default OK button for dialogs. Fires the `ok` event and closes the dialog if the event succeeds.
          *
@@ -1593,6 +1631,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             };
             return retval;
         })(),
+
         /**
          * The default cancel button for dialogs. Fires the `cancel` event and
          * closes the dialog if no UI element value changed.
@@ -1623,6 +1662,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             };
             return retval;
         })(),
+
         /**
          * Registers a dialog UI element.
          *
@@ -1637,8 +1677,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
     CKEDITOR.dialog._ = {
         uiElementBuilders: {},
+
         dialogDefinitions: {},
+
         currentTop: null,
+
         currentZIndex: null
     };
 
@@ -1747,6 +1790,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getContents: function (id) {
             return getById(this.contents, id);
         },
+
         /**
          * Gets a button definition.
          *
@@ -1756,6 +1800,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getButton: function (id) {
             return getById(this.buttons, id);
         },
+
         /**
          * Adds a content definition object under this dialog definition.
          *
@@ -1770,6 +1815,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         addContents: function (contentDefinition, nextSiblingId) {
             return addById(this.contents, contentDefinition, nextSiblingId);
         },
+
         /**
          * Adds a button definition object under this dialog definition.
          *
@@ -1784,6 +1830,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         addButton: function (buttonDefinition, nextSiblingId) {
             return addById(this.buttons, buttonDefinition, nextSiblingId);
         },
+
         /**
          * Removes a content definition from this dialog definition.
          *
@@ -1793,6 +1840,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         removeContents: function (id) {
             removeById(this.contents, id);
         },
+
         /**
          * Removes a button definition from the dialog definition.
          *
@@ -1838,6 +1886,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         get: function (id) {
             return getById(this.elements, id, 'children');
         },
+
         /**
          * Adds a UI element definition to the content definition.
          *
@@ -1852,6 +1901,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         add: function (elementDefinition, nextSiblingId) {
             return addById(this.elements, elementDefinition, nextSiblingId, 'children');
         },
+
         /**
          * Removes a UI element definition from the content definition.
          *
@@ -2058,9 +2108,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
     }
 
     function showCover(editor) {
-        var win = CKEDITOR.document.getWindow();
-        var config = editor.config,
-                backgroundColorStyle = config.dialog_backgroundCoverColor || 'white',
+        var win = CKEDITOR.document.getWindow(),
+                config = editor.config,
+                skinName = (CKEDITOR.skinName || editor.config.skin),
+                backgroundColorStyle = config.dialog_backgroundCoverColor || (skinName == 'moono-lisa' ? 'black' : 'white'),
                 backgroundCoverOpacity = config.dialog_backgroundCoverOpacity,
                 baseFloatZIndex = config.baseFloatZIndex,
                 coverKey = CKEDITOR.tools.genKey(backgroundColorStyle, backgroundCoverOpacity, baseFloatZIndex),
@@ -2150,7 +2201,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         resizeCover = resizeFunc;
         win.on('resize', resizeFunc);
         resizeFunc();
-        // Using Safari/Mac, focus must be kept where it is (#7027)
+        // Using Safari/Mac, focus must be kept where it is (https://dev.ckeditor.com/ticket/7027)
         if (!(CKEDITOR.env.mac && CKEDITOR.env.webkit))
             coverElement.focus();
 
@@ -2450,6 +2501,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     });
                 }
             },
+
             /**
              * Horizontal layout box for dialog UI elements, auto-expends to available width of container.
              *
@@ -2510,7 +2562,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                         if (elementDefinition && elementDefinition.padding !== undefined) {
                             styles.push('padding:' + cssLength(elementDefinition.padding));
                         }
-                        // In IE Quirks alignment has to be done on table cells. (#7324)
+                        // In IE Quirks alignment has to be done on table cells. (https://dev.ckeditor.com/ticket/7324)
                         if (CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align) {
                             styles.push('text-align:' + children[ i ].align);
                         }
@@ -2528,6 +2580,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
                 CKEDITOR.ui.dialog.uiElement.call(this, dialog, elementDefinition || {type: 'hbox'}, htmlList, 'table', styles, attribs, innerHTML);
             },
+
             /**
              * Vertical layout box for dialog UI elements.
              *
@@ -2568,7 +2621,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                         html.push('height:100%;');
                     html.push('width:' + cssLength(width || '100%'), ';');
 
-                    // (#10123) Temp fix for dialog broken layout in latest webkit.
+                    // (https://dev.ckeditor.com/ticket/10123) Temp fix for dialog broken layout in latest webkit.
                     if (CKEDITOR.env.webkit)
                         html.push('float:none;');
 
@@ -2588,7 +2641,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                             styles.push('height:' + Math.floor(100 / childHtmlList.length) + '%');
                         if (elementDefinition && elementDefinition.padding !== undefined)
                             styles.push('padding:' + cssLength(elementDefinition.padding));
-                        // In IE Quirks alignment has to be done on table cells. (#7324)
+                        // In IE Quirks alignment has to be done on table cells. (https://dev.ckeditor.com/ticket/7324)
                         if (CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align)
                             styles.push('text-align:' + children[ i ].align);
                         if (styles.length > 0)
@@ -2615,6 +2668,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getElement: function () {
             return CKEDITOR.document.getById(this.domId);
         },
+
         /**
          * Gets the DOM element that the user inputs values.
          *
@@ -2629,6 +2683,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getInputElement: function () {
             return this.getElement();
         },
+
         /**
          * Gets the parent dialog object containing this UI element.
          *
@@ -2639,6 +2694,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getDialog: function () {
             return this._.dialog;
         },
+
         /**
          * Sets the value of this dialog UI object.
          *
@@ -2653,6 +2709,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             !noChangeEvent && this.fire('change', {value: value});
             return this;
         },
+
         /**
          * Gets the current value of this dialog UI object.
          *
@@ -2663,6 +2720,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         getValue: function () {
             return this.getInputElement().getValue();
         },
+
         /**
          * Tells whether the UI object's value has changed.
          *
@@ -2675,6 +2733,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             // Override in input classes.
             return false;
         },
+
         /**
          * Selects the parent tab of this element. Usually called by focus() or overridden focus() methods.
          *
@@ -2703,6 +2762,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                 this._.dialog.selectPage(tabId);
             return this;
         },
+
         /**
          * Puts the focus to the UI object. Switches tabs if the UI object isn't in the active tab page.
          *
@@ -2714,6 +2774,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             this.selectParentTab().getInputElement().focus();
             return this;
         },
+
         /**
          * Registers the `on*` event handlers defined in the element definition.
          *
@@ -2755,6 +2816,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
             return this;
         },
+
         /**
          * The event processor list used by
          * {@link CKEDITOR.ui.dialog.uiElement#getInputElement} at UI element
@@ -2779,13 +2841,16 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             onLoad: function (dialog, func) {
                 dialog.on('load', func, this);
             },
+
             onShow: function (dialog, func) {
                 dialog.on('show', func, this);
             },
+
             onHide: function (dialog, func) {
                 dialog.on('hide', func, this);
             }
         },
+
         /**
          * The default handler for a UI element's access key down event, which
          * tries to put focus to the UI element.
@@ -2800,6 +2865,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         accessKeyDown: function () {
             this.focus();
         },
+
         /**
          * The default handler for a UI element's access key up event, which
          * does nothing.
@@ -2812,6 +2878,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
          * include a `'CTRL+'` prefix.
          */
         accessKeyUp: function () {},
+
         /**
          * Disables a UI element.
          */
@@ -2821,6 +2888,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             input.setAttribute('disabled', 'true');
             element.addClass('cke_disabled');
         },
+
         /**
          * Enables a UI element.
          */
@@ -2830,6 +2898,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
             input.removeAttribute('disabled');
             element.removeClass('cke_disabled');
         },
+
         /**
          * Determines whether an UI element is enabled or not.
          *
@@ -2838,6 +2907,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         isEnabled: function () {
             return !this.getElement().hasClass('cke_disabled');
         },
+
         /**
          * Determines whether an UI element is visible or not.
          *
@@ -2846,6 +2916,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
         isVisible: function () {
             return this.getInputElement().isVisible();
         },
+
         /**
          * Determines whether an UI element is focus-able or not.
          * Focus-able is defined as being both visible and enabled.
@@ -2915,7 +2986,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
     /**
      * Generic dialog command. It opens a specific dialog when executed.
      *
-     *		// Register the "link" command, which opens the "link" dialog.
+     *		// Register the "link" command which opens the "link" dialog.
      *		editor.addCommand( 'link', new CKEDITOR.dialogCommand( 'link' ) );
      *
      * @class
@@ -2924,6 +2995,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
      * @param {String} dialogName The name of the dialog to open when executing
      * this command.
      * @param {Object} [ext] Additional command definition's properties.
+     * @param {String} [ext.tabId] You can provide additional property (`tabId`) if you wish to open the dialog on a specific tabId.
+     *
+     *		// Open the dialog on the 'keystroke' tabId.
+     *		editor.addCommand( 'keystroke', new CKEDITOR.dialogCommand( 'a11yHelp', { tabId: 'keystroke' } ) );
      */
     CKEDITOR.dialogCommand = function (dialogName, ext) {
         this.dialogName = dialogName;
@@ -2932,11 +3007,19 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
     CKEDITOR.dialogCommand.prototype = {
         exec: function (editor) {
-            editor.openDialog(this.dialogName);
+            var tabId = this.tabId;
+            editor.openDialog(this.dialogName, function (dialog) {
+                // Select different tab if it's provided (#830).
+                if (tabId) {
+                    dialog.selectPage(tabId);
+                }
+            });
         },
+
         // Dialog commands just open a dialog ui, thus require no undo logic,
         // undo support should dedicate to specific dialog implementation.
         canUndo: false,
+
         editorFocus: 1
     };
 
@@ -2994,6 +3077,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     return !passed ? msg : true;
                 };
             },
+
             regex: function (regex, msg) {
                 /*
                  * Can be greatly shortened by deriving from functions validator if code size
@@ -3004,35 +3088,43 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
                     return !regex.test(value) ? msg : true;
                 };
             },
+
             notEmpty: function (msg) {
                 return this.regex(notEmptyRegex, msg);
             },
+
             integer: function (msg) {
                 return this.regex(integerRegex, msg);
             },
+
             'number': function (msg) {
                 return this.regex(numberRegex, msg);
             },
+
             'cssLength': function (msg) {
                 return this.functions(function (val) {
                     return cssLengthRegex.test(CKEDITOR.tools.trim(val));
                 }, msg);
             },
+
             'htmlLength': function (msg) {
                 return this.functions(function (val) {
                     return htmlLengthRegex.test(CKEDITOR.tools.trim(val));
                 }, msg);
             },
+
             'inlineStyle': function (msg) {
                 return this.functions(function (val) {
                     return inlineStyleRegex.test(CKEDITOR.tools.trim(val));
                 }, msg);
             },
+
             equals: function (value, msg) {
                 return this.functions(function (val) {
                     return val == value;
                 }, msg);
             },
+
             notEqual: function (value, msg) {
                 return this.functions(function (val) {
                     return val != value;

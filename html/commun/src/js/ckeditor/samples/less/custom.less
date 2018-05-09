@@ -1,3 +1,5 @@
+@global-link-font-color:#0287D0;
+
 main .grid-container,
 header .grid-container,
 .navigation-a > div,
@@ -47,16 +49,6 @@ main .grid-container.freed-width {
     background: #FFF;
     padding: @grid-gutter-width / 2 @grid-gutter-width;
     border: dashed 5px @global-link-font-color;
-}
-
-// There were some inherited styles for links.
-div.cke a.cke_button,
-div.cke .cke_combo_button {
-    border-bottom: none;
-
-    &.cke_combo_button {
-        border-bottom: 1px solid #a6a6a6;
-    }
 }
 
 #main .adjoined-top:before {
@@ -169,5 +161,12 @@ header {
         .global-is-mobile( {
             display: none;
         } );
+    }
+
+    .header-a-logo {
+        img {
+            width: 160px;
+            height: 60px;
+        }
     }
 }

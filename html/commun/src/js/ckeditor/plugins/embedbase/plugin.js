@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
         (function () {
@@ -30,6 +30,7 @@
 
                     return script;
                 },
+
                 /**
                  * Sends a request using the JSONP technique.
                  *
@@ -79,11 +80,13 @@
             };
 
             CKEDITOR.plugins.add('embedbase', {
-                lang: 'cs,da,de,de-ch,en,eo,es,eu,fr,gl,id,it,ko,ku,nb,nl,pl,pt,pt-br,ru,sv,tr,ug,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
-                requires: 'widget,notificationaggregator',
+                lang: 'az,ca,cs,da,de,de-ch,en,en-au,eo,es,es-mx,eu,fr,gl,hr,hu,id,it,ja,ko,ku,nb,nl,oc,pl,pt,pt-br,ro,ru,sk,sq,sv,tr,ug,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
+                requires: 'dialog,widget,notificationaggregator',
+
                 onLoad: function () {
                     CKEDITOR._.jsonpCallbacks = {};
                 },
+
                 init: function () {
                     CKEDITOR.dialog.add('embedBase', this.path + 'dialogs/embedbase.js');
                 }
@@ -135,12 +138,14 @@
                     mask: true,
                     template: '<div></div>',
                     pathName: lang.pathName,
+
                     /**
                      * Response cache. This cache object will be shared between all instances of this widget.
                      *
                      * @private
                      */
                     _cache: {},
+
                     /**
                      * A regular expression to pre-validate URLs.
                      *
@@ -150,6 +155,7 @@
                      * * {@link #isUrlValid}.
                      */
                     urlRegExp: /^((https?:)?\/\/|www\.)/i,
+
                     /**
                      * The template used to generate the URL of the content provider. Content provider is a service
                      * which the embed widget will request in order to get an [oEmbed](http://www.oembed.com/) response that
@@ -207,6 +213,7 @@
                             }
                         }, this, null, 999);
                     },
+
                     /**
                      * Loads content for a given resource URL by requesting the {@link #providerUrl provider}.
                      *
@@ -303,6 +310,7 @@
 
                         return request;
                     },
+
                     /**
                      * Checks whether the URL is valid. Usually the content provider makes the final validation
                      * as only the provider knows what kind of URLs are accepted. However, to give the user some immediate feedback
@@ -314,6 +322,7 @@
                     isUrlValid: function (url) {
                         return this.urlRegExp.test(url) && this.fire('validateUrl', url) !== false;
                     },
+
                     /**
                      * Generates an error message based on the message type (with a possible suffix) or
                      * the custom message template.
@@ -368,6 +377,7 @@
 
                         return new CKEDITOR.template(message).output({url: url || ''});
                     },
+
                     /**
                      * Sends the request to the {@link #providerUrl provider} using
                      * the {@link CKEDITOR.plugins.embedBase._jsonp JSONP} technique.
@@ -393,6 +403,7 @@
                             that.fire('requestCanceled', request);
                         };
                     },
+
                     /**
                      * Handles the response of a successful request.
                      *
@@ -425,6 +436,7 @@
                             return false;
                         }
                     },
+
                     /**
                      * Handles an error. An error can be caused either by a request failure or an unsupported
                      * oEmbed response type.
@@ -442,6 +454,7 @@
                             }
                         }
                     },
+
                     /**
                      * Returns embeddable HTML for an oEmbed response if it is of the `photo`, `video` or `rich` type.
                      *
@@ -455,7 +468,7 @@
                                     'alt="' + CKEDITOR.tools.htmlEncodeAttr(response.title || '') + '" style="max-width:100%;height:auto" />';
                         } else if (response.type == 'video' || response.type == 'rich') {
                             // Embedded iframes are added to page's focus list. Adding negative tabindex attribute
-                            // removes their ability to be focused by user. (#14538)
+                            // removes their ability to be focused by user. (https://dev.ckeditor.com/ticket/14538)
                             response.html = response.html.replace(/<iframe/g, '<iframe tabindex="-1"');
 
                             return response.html;
@@ -463,6 +476,7 @@
 
                         return null;
                     },
+
                     /**
                      * The very final step of {@link #loadContent content loading}. The `url` data property is changed
                      * and the content is embedded ({@link CKEDITOR.plugins.widget#element}'s HTML is set).
@@ -475,6 +489,7 @@
                         this.setData('url', url);
                         this.element.setHtml(content);
                     },
+
                     /**
                      * Creates a notification aggregator task.
                      *
@@ -492,6 +507,7 @@
 
                         return aggregator.createTask();
                     },
+
                     /**
                      * Caches the provider response.
                      *
@@ -502,6 +518,7 @@
                     _cacheResponse: function (url, response) {
                         this._cache[ url ] = response;
                     },
+
                     /**
                      * Returns the cached response.
                      *

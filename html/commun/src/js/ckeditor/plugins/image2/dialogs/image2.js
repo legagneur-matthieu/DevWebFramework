@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -34,6 +34,7 @@ CKEDITOR.dialog.add('image2', function (editor) {
             helpers = CKEDITOR.plugins.image2,
             // Editor instance configuration.
             config = editor.config,
+            hasFileBrowser = !!(config.filebrowserImageBrowseUrl || config.filebrowserBrowseUrl),
             // Content restrictions defined by the widget which
             // impact on dialog structure and presence of fields.
             features = editor.widgets.registered.image.features,
@@ -60,7 +61,7 @@ CKEDITOR.dialog.add('image2', function (editor) {
                 isValid = !!(match && parseInt(match[ 1 ], 10) !== 0);
 
         if (!isValid)
-            alert(commonLang[ 'invalid' + CKEDITOR.tools.capitalize(this.id) ]); // jshint ignore:line
+            alert(commonLang[ 'invalidLength' ].replace('%1', commonLang[ this.id ]).replace('%2', 'px')); // jshint ignore:line
 
         return isValid;
     }
@@ -91,7 +92,7 @@ CKEDITOR.dialog.add('image2', function (editor) {
         // @param {Function} callback.
         return function (src, callback, scope) {
             addListener('load', function () {
-                // Don't use image.$.(width|height) since it's buggy in IE9-10 (#11159)
+                // Don't use image.$.(width|height) since it's buggy in IE9-10 (https://dev.ckeditor.com/ticket/11159)
                 var dimensions = getNatural(image);
 
                 callback.call(scope, image, dimensions.width, dimensions.height);
@@ -326,23 +327,22 @@ CKEDITOR.dialog.add('image2', function (editor) {
         heightField[ method ]();
     }
 
-    var hasFileBrowser = !!(config.filebrowserImageBrowseUrl || config.filebrowserBrowseUrl),
-            srcBoxChildren = [
-                {
-                    id: 'src',
-                    type: 'text',
-                    label: commonLang.url,
-                    onKeyup: onChangeSrc,
-                    onChange: onChangeSrc,
-                    setup: function (widget) {
-                        this.setValue(widget.data.src);
-                    },
-                    commit: function (widget) {
-                        widget.setData('src', this.getValue());
-                    },
-                    validate: CKEDITOR.dialog.validate.notEmpty(lang.urlMissing)
-                }
-            ];
+    var srcBoxChildren = [
+        {
+            id: 'src',
+            type: 'text',
+            label: commonLang.url,
+            onKeyup: onChangeSrc,
+            onChange: onChangeSrc,
+            setup: function (widget) {
+                this.setValue(widget.data.src);
+            },
+            commit: function (widget) {
+                widget.setData('src', this.getValue());
+            },
+            validate: CKEDITOR.dialog.validate.notEmpty(lang.urlMissing)
+        }
+    ];
 
     // Render the "Browse" button on demand to avoid an "empty" (hidden child)
     // space in dialog layout that distorts the UI.
@@ -402,6 +402,7 @@ CKEDITOR.dialog.add('image2', function (editor) {
                             {
                                 type: 'hbox',
                                 widths: ['100%'],
+                                className: 'cke_dialog_image_url',
                                 children: srcBoxChildren
                             }
                         ]
@@ -415,7 +416,8 @@ CKEDITOR.dialog.add('image2', function (editor) {
                         },
                         commit: function (widget) {
                             widget.setData('alt', this.getValue());
-                        }
+                        },
+                        validate: editor.config.image2_altRequired === true ? CKEDITOR.dialog.validate.notEmpty(lang.altMissing) : null
                     },
                     {
                         type: 'hbox',
@@ -481,9 +483,9 @@ CKEDITOR.dialog.add('image2', function (editor) {
                                 type: 'radio',
                                 items: [
                                     [commonLang.alignNone, 'none'],
-                                    [commonLang.alignLeft, 'left'],
-                                    [commonLang.alignCenter, 'center'],
-                                    [commonLang.alignRight, 'right']
+                                    [commonLang.left, 'left'],
+                                    [commonLang.center, 'center'],
+                                    [commonLang.right, 'right']
                                 ],
                                 label: commonLang.align,
                                 setup: function (widget) {

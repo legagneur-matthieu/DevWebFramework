@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -29,7 +29,7 @@
         // Call the CKEDITOR.event constructor to initialize this instance.
         CKEDITOR.event.call(this);
 
-        // Make a clone of the config object, to avoid having it touched by our code. (#9636)
+        // Make a clone of the config object, to avoid having it touched by our code. (https://dev.ckeditor.com/ticket/9636)
         instanceConfig = instanceConfig && CKEDITOR.tools.clone(instanceConfig);
 
         // if editor is created off one page element.
@@ -170,7 +170,16 @@
 
         // Handle startup focus.
         this.on('instanceReady', function () {
-            this.config.startupFocus && this.focus();
+            if (this.config.startupFocus) {
+                if (this.config.startupFocus === 'end') {
+                    var range = this.createRange();
+                    range.selectNodeContents(this.editable());
+                    range.shrink(CKEDITOR.SHRINK_ELEMENT, true);
+                    range.collapse();
+                    this.getSelection().selectRanges([range]);
+                }
+                this.focus();
+            }
         });
 
         CKEDITOR.fire('instanceCreated', null, this);
@@ -222,7 +231,7 @@
     function updateCommandsContext(editor, path, forceRefresh) {
         // Commands cannot be refreshed without a path. In edge cases
         // it may happen that there's no selection when this function is executed.
-        // For example when active filter is changed in #10877.
+        // For example when active filter is changed in https://dev.ckeditor.com/ticket/10877.
         if (!path)
             return;
 
@@ -269,7 +278,7 @@
         } else {
             // Load the custom configuration file.
             // To resolve customConfig race conflicts, use scriptLoader#queue
-            // instead of scriptLoader#load (#6504).
+            // instead of scriptLoader#load (https://dev.ckeditor.com/ticket/6504).
             CKEDITOR.scriptLoader.queue(customConfig, function () {
                 // If the CKEDITOR.editorConfig function has been properly
                 // defined in the custom configuration file, cache it.
@@ -653,24 +662,49 @@
         return editor.blockless ? CKEDITOR.ENTER_BR : enterMode;
     }
 
-    // Create DocumentFragment from specified ranges. For now it handles only tables in Firefox
-    // and returns DocumentFragment from the 1. range for other cases. (#13884)
+    // Create DocumentFragment from specified ranges. For now it handles only tables
+    // and returns DocumentFragment from the 1. range for other cases. (https://dev.ckeditor.com/ticket/13884)
     function createDocumentFragmentFromRanges(ranges, editable) {
         var docFragment = new CKEDITOR.dom.documentFragment(),
                 tableClone,
                 currentRow,
                 currentRowClone;
 
+        // We must handle two cases here:
+        // 1. <tr>[<td>Cell</td>]</tr> (IE9+, Edge, Chrome, Firefox)
+        // 2. <td>[Cell]</td> (IE8-, Safari)
+        function isSelectedCell(range) {
+            var start = range.startContainer,
+                    end = range.endContainer;
+
+            if (start.is && (start.is('tr') ||
+                    (start.is('td') && start.equals(end) && range.endOffset === start.getChildCount()))) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function cloneCell(range) {
+            var start = range.startContainer;
+
+            if (start.is('tr')) {
+                return range.cloneContents();
+            }
+
+            return start.clone(true);
+        }
+
         for (var i = 0; i < ranges.length; i++) {
             var range = ranges[ i ],
-                    container = range.startContainer;
+                    container = range.startContainer.getAscendant('tr', true);
 
-            if (container.getName && container.getName() == 'tr') {
+            if (isSelectedCell(range)) {
                 if (!tableClone) {
                     tableClone = container.getAscendant('table').clone();
-                    tableClone.append(container.getAscendant('tbody').clone());
+                    tableClone.append(container.getAscendant({thead: 1, tbody: 1, tfoot: 1}).clone());
                     docFragment.append(tableClone);
-                    tableClone = tableClone.findOne('tbody');
+                    tableClone = tableClone.findOne('thead, tbody, tfoot');
                 }
 
                 if (!(currentRow && currentRow.equals(container))) {
@@ -679,7 +713,7 @@
                     tableClone.append(currentRowClone);
                 }
 
-                currentRowClone.append(range.cloneContents());
+                currentRowClone.append(cloneCell(range));
             } else {
                 // If there was something else copied with table,
                 // append it to DocumentFragment.
@@ -716,7 +750,7 @@
             // This guarantees that commands added before first editor#mode
             // aren't immediately updated, but waits for editor#mode and that
             // commands added later are immediately refreshed, even when added
-            // before instanceReady. #10103, #10249
+            // before instanceReady. https://dev.ckeditor.com/ticket/10103, https://dev.ckeditor.com/ticket/10249
             if (this.mode)
                 updateCommand(this, cmd);
 
@@ -760,7 +794,7 @@
                         });
                     }
 
-                    // Remove 'submit' events registered on form element before destroying.(#3988)
+                    // Remove 'submit' events registered on form element before destroying.(https://dev.ckeditor.com/ticket/3988)
                     editor.on('destroy', function () {
                         form.removeListener('submit', onSubmit);
                     });
@@ -770,7 +804,7 @@
             function onSubmit(evt) {
                 editor.updateElement();
 
-                // #8031 If textarea had required attribute and editor is empty fire 'required' event and if
+                // https://dev.ckeditor.com/ticket/8031 If textarea had required attribute and editor is empty fire 'required' event and if
                 // it was cancelled, prevent submitting the form.
                 if (editor._.required && !element.getValue() && editor.fire('required') === false) {
                     // When user press save button event (evt) is undefined (see save plugin).
@@ -859,10 +893,10 @@
          *
          *		editorInstance.execCommand( 'bold' );
          *
-         * @param {String} commandName The indentifier name of the command.
-         * @param {Object} [data] The data to be passed to the command.
-         * @returns {Boolean} `true` if the command was executed
-         * successfully, otherwise `false`.
+         * @param {String} commandName The identifier name of the command.
+         * @param {Object} [data] The data to be passed to the command. It defaults to
+         * an empty object starting from 4.7.0.
+         * @returns {Boolean} `true` if the command was executed successfully, `false` otherwise.
          * @see CKEDITOR.editor#addCommand
          */
         execCommand: function (commandName, data) {
@@ -870,7 +904,7 @@
 
             var eventData = {
                 name: commandName,
-                commandData: data,
+                commandData: data || {},
                 command: command
             };
 
@@ -965,7 +999,7 @@
                     data = element.is('textarea') ? element.getValue() : element.getHtml();
                 } else {
                     // If we don't have a proper element, set data to an empty string,
-                    // as this method is expected to return a string. (#13385)
+                    // as this method is expected to return a string. (https://dev.ckeditor.com/ticket/13385)
                     data = '';
                 }
             }
@@ -1067,7 +1101,7 @@
                 this.readOnly = isReadOnly;
 
                 // Block or release BACKSPACE key according to current read-only
-                // state to prevent browser's history navigation (#9761).
+                // state to prevent browser's history navigation (https://dev.ckeditor.com/ticket/9761).
                 this.keystrokeHandler.blockedKeystrokes[ 8 ] = +isReadOnly;
 
                 this.editable().setReadOnly(isReadOnly);
@@ -1196,17 +1230,20 @@
          */
         extractSelectedHtml: function (toString, removeEmptyBlock) {
             var editable = this.editable(),
-                    ranges = this.getSelection().getRanges();
+                    ranges = this.getSelection().getRanges(),
+                    docFragment = new CKEDITOR.dom.documentFragment(),
+                    i;
 
             if (!editable || ranges.length === 0) {
                 return null;
             }
 
-            var range = ranges[ 0 ],
-                    docFragment = editable.extractHtmlFromRange(range, removeEmptyBlock);
+            for (i = 0; i < ranges.length; i++) {
+                docFragment.append(editable.extractHtmlFromRange(ranges[ i ], removeEmptyBlock));
+            }
 
             if (!removeEmptyBlock) {
-                this.getSelection().selectRanges([range]);
+                this.getSelection().selectRanges([ranges[ 0 ]]);
             }
 
             return toString ? docFragment.getHtml() : docFragment;
@@ -1322,6 +1359,38 @@
         },
 
         /**
+         * Returns the keystroke that is assigned to a specified {@link CKEDITOR.command}. If no keystroke is assigned,
+         * it returns `null`.
+         *
+         * Since version 4.7.0 this function also accepts a `command` parameter as a string.
+         *
+         * @since 4.6.0
+         * @param {CKEDITOR.command/String} command The {@link CKEDITOR.command} instance or a string with the command name.
+         * @returns {Number/null} The keystroke assigned to the provided command or `null` if there is no keystroke.
+         */
+        getCommandKeystroke: function (command) {
+            var commandInstance = (typeof command === 'string' ? this.getCommand(command) : command);
+
+            if (commandInstance) {
+                var commandName = CKEDITOR.tools.object.findKey(this.commands, commandInstance),
+                        keystrokes = this.keystrokeHandler.keystrokes,
+                        key;
+
+                // Some commands have a fake keystroke - for example CUT/COPY/PASTE commands are handled natively.
+                if (commandInstance.fakeKeystroke) {
+                    return commandInstance.fakeKeystroke;
+                }
+
+                for (key in keystrokes) {
+                    if (keystrokes.hasOwnProperty(key) && keystrokes[ key ] == commandName) {
+                        return key;
+                    }
+                }
+            }
+            return null;
+        },
+
+        /**
          * Shorthand for {@link CKEDITOR.filter#addFeature}.
          *
          * @since 4.1
@@ -1414,7 +1483,7 @@
         /**
          * Shows a notification to the user.
          *
-         * If the [Notification](http://ckeditor.com/addons/notification) plugin is not enabled, this function shows
+         * If the [Notification](https://ckeditor.com/cke4/addon/notification) plugin is not enabled, this function shows
          * a normal alert with the given `message`. The `type` and `progressOrDuration` parameters are supported
          * only by the Notification plugin.
          *
@@ -1491,7 +1560,7 @@ CKEDITOR.ELEMENT_MODE_INLINE = 3;
  * if the linked `<textarea>` element has the `disabled` attribute.
  *
  * Read more in the [documentation](#!/guide/dev_readonly)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/readonly.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/readonly.html).
  *
  *		config.readOnly = true;
  *
@@ -1504,9 +1573,19 @@ CKEDITOR.ELEMENT_MODE_INLINE = 3;
 /**
  * Whether an editable element should have focus when the editor is loading for the first time.
  *
+ *		// Focus at the beginning of the editable.
  *		config.startupFocus = true;
  *
- * @cfg {Boolean} [startupFocus=false]
+ * Since CKEditor 4.9.0, `startupFocus` can be explicitly set to either the `start` or the `end`
+ * of the editable:
+ *
+ *		// Focus at the beginning of the editable.
+ *		config.startupFocus = 'start';
+ *
+ *		// Focus at the end of the editable.
+ *		config.startupFocus = 'end';
+ *
+ * @cfg {String/Boolean} [startupFocus=false]
  * @member CKEDITOR.config
  */
 
@@ -1805,6 +1884,14 @@ CKEDITOR.ELEMENT_MODE_INLINE = 3;
  * in any plugin.
  *
  * @event destroy
+ * @param {CKEDITOR.editor} editor This editor instance.
+ */
+
+/**
+ * Event fired when the {@link #method-destroy} method is called,
+ * but before destroying the editor.
+ *
+ * @event beforeDestroy
  * @param {CKEDITOR.editor} editor This editor instance.
  */
 

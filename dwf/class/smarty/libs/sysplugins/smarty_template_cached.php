@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Uwe Tews
@@ -14,8 +15,8 @@
  * @subpackage TemplateResources
  * @author     Rodney Rehm
  */
-class Smarty_Template_Cached extends Smarty_Template_Resource_Base
-{
+class Smarty_Template_Cached extends Smarty_Template_Resource_Base {
+
     /**
      * Cache Is Valid
      *
@@ -84,8 +85,7 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      *
      * @param Smarty_Internal_Template $_template template object
      */
-    public function __construct(Smarty_Internal_Template $_template)
-    {
+    public function __construct(Smarty_Internal_Template $_template) {
         $this->compile_id = $_template->compile_id;
         $this->cache_id = $_template->cache_id;
         $this->source = $_template->source;
@@ -100,13 +100,12 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      *
      * @return Smarty_Template_Cached
      */
-    static function load(Smarty_Internal_Template $_template)
-    {
+    static function load(Smarty_Internal_Template $_template) {
         $_template->cached = new Smarty_Template_Cached($_template);
         $_template->cached->handler->populate($_template->cached, $_template);
         // caching enabled ?
         if (!($_template->caching == Smarty::CACHING_LIFETIME_CURRENT ||
-              $_template->caching == Smarty::CACHING_LIFETIME_SAVED) || $_template->source->handler->recompiled
+                $_template->caching == Smarty::CACHING_LIFETIME_SAVED) || $_template->source->handler->recompiled
         ) {
             $_template->cached->valid = false;
         }
@@ -121,8 +120,7 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      *
      * @throws \Exception
      */
-    public function render(Smarty_Internal_Template $_template, $no_output_filter = true)
-    {
+    public function render(Smarty_Internal_Template $_template, $no_output_filter = true) {
         if ($this->isCached($_template)) {
             if ($_template->smarty->debugging) {
                 if (!isset($_template->smarty->_debug)) {
@@ -150,8 +148,7 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      *
      * @return bool flag true if cache is valid
      */
-    public function isCached(Smarty_Internal_Template $_template)
-    {
+    public function isCached(Smarty_Internal_Template $_template) {
         if ($this->valid !== null) {
             return $this->valid;
         }
@@ -163,13 +160,13 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
                     $this->valid = true;
                 }
                 if ($this->valid && $_template->caching == Smarty::CACHING_LIFETIME_CURRENT &&
-                    $_template->cache_lifetime >= 0 && time() > ($this->timestamp + $_template->cache_lifetime)
+                        $_template->cache_lifetime >= 0 && time() > ($this->timestamp + $_template->cache_lifetime)
                 ) {
                     // lifetime expired
                     $this->valid = false;
                 }
                 if ($this->valid && $_template->smarty->compile_check == 1 &&
-                    $_template->source->getTimeStamp() > $this->timestamp
+                        $_template->source->getTimeStamp() > $this->timestamp
                 ) {
                     $this->valid = false;
                 }
@@ -204,8 +201,8 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
                 return $this->valid;
             }
             if ($this->valid && $_template->caching === Smarty::CACHING_LIFETIME_SAVED &&
-                $_template->cached->cache_lifetime >= 0 &&
-                (time() > ($_template->cached->timestamp + $_template->cached->cache_lifetime))
+                    $_template->cached->cache_lifetime >= 0 &&
+                    (time() > ($_template->cached->timestamp + $_template->cached->cache_lifetime))
             ) {
                 $this->valid = false;
             }
@@ -227,8 +224,7 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      * @param Smarty_Internal_Template $_template template object
      * @param bool                     $update    flag if called because cache update
      */
-    public function process(Smarty_Internal_Template $_template, $update = false)
-    {
+    public function process(Smarty_Internal_Template $_template, $update = false) {
         if ($this->handler->process($_template, $this, $update) === false) {
             $this->valid = false;
         }
@@ -246,11 +242,11 @@ class Smarty_Template_Cached extends Smarty_Template_Resource_Base
      *
      * @return string|false content
      */
-    public function read(Smarty_Internal_Template $_template)
-    {
+    public function read(Smarty_Internal_Template $_template) {
         if (!$_template->source->handler->recompiled) {
             return $this->handler->readCachedContent($_template);
         }
         return false;
     }
+
 }

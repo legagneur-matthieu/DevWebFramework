@@ -187,7 +187,7 @@ if (PHP_SAPI != 'cli') {
             <ol>
                 <li>Checking where to find GeSHi installation ...<?php } else {
     ?>
-    <?php echo colorize(TYPE_NOTICE, "#### GeSHi Language File Validation Script ####") ?>
+                    <?php echo colorize(TYPE_NOTICE, "#### GeSHi Language File Validation Script ####") ?>
 
 
                     To use this script, make sure that <?php echo colorize(TYPE_NOTICE, "geshi.php"); ?> is in the

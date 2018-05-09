@@ -482,7 +482,7 @@ function animate(id) {
             $(_id).addClass("hinge");
         }, 10);
     };
-    
+
     this.jackInTheBox = function () {
         this.rm_animate();
         setTimeout(function () {

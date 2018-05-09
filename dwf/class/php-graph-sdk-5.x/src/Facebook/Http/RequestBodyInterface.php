@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\Http;
 
 /**
@@ -28,8 +30,8 @@ namespace Facebook\Http;
  *
  * @package Facebook
  */
-interface RequestBodyInterface
-{
+interface RequestBodyInterface {
+
     /**
      * Get the body of the request to send to Graph.
      *

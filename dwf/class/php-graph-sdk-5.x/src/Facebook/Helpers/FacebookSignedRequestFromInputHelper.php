@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\Helpers;
 
 use Facebook\Facebook;
@@ -35,8 +37,8 @@ use Facebook\Authentication\OAuth2Client;
  *
  * @package Facebook
  */
-abstract class FacebookSignedRequestFromInputHelper
-{
+abstract class FacebookSignedRequestFromInputHelper {
+
     /**
      * @var SignedRequest|null The SignedRequest entity.
      */
@@ -59,8 +61,7 @@ abstract class FacebookSignedRequestFromInputHelper
      * @param FacebookClient $client       The client to make HTTP requests.
      * @param string|null    $graphVersion The version of Graph to use.
      */
-    public function __construct(FacebookApp $app, FacebookClient $client, $graphVersion = null)
-    {
+    public function __construct(FacebookApp $app, FacebookClient $client, $graphVersion = null) {
         $this->app = $app;
         $graphVersion = $graphVersion ?: Facebook::DEFAULT_GRAPH_VERSION;
         $this->oAuth2Client = new OAuth2Client($this->app, $client, $graphVersion);
@@ -73,8 +74,7 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @param string|null
      */
-    public function instantiateSignedRequest($rawSignedRequest = null)
-    {
+    public function instantiateSignedRequest($rawSignedRequest = null) {
         $rawSignedRequest = $rawSignedRequest ?: $this->getRawSignedRequest();
 
         if (!$rawSignedRequest) {
@@ -91,8 +91,7 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function getAccessToken()
-    {
+    public function getAccessToken() {
         if ($this->signedRequest && $this->signedRequest->hasOAuthData()) {
             $code = $this->signedRequest->get('code');
             $accessToken = $this->signedRequest->get('oauth_token');
@@ -114,8 +113,7 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @return SignedRequest|null
      */
-    public function getSignedRequest()
-    {
+    public function getSignedRequest() {
         return $this->signedRequest;
     }
 
@@ -124,8 +122,7 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @return string|null
      */
-    public function getUserId()
-    {
+    public function getUserId() {
         return $this->signedRequest ? $this->signedRequest->getUserId() : null;
     }
 
@@ -141,8 +138,7 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @return string|null
      */
-    public function getRawSignedRequestFromPost()
-    {
+    public function getRawSignedRequestFromPost() {
         if (isset($_POST['signed_request'])) {
             return $_POST['signed_request'];
         }
@@ -155,12 +151,12 @@ abstract class FacebookSignedRequestFromInputHelper
      *
      * @return string|null
      */
-    public function getRawSignedRequestFromCookie()
-    {
+    public function getRawSignedRequestFromCookie() {
         if (isset($_COOKIE['fbsr_' . $this->app->getId()])) {
             return $_COOKIE['fbsr_' . $this->app->getId()];
         }
 
         return null;
     }
+
 }

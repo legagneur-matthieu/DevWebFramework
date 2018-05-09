@@ -1219,7 +1219,7 @@ if (!document.createElement('canvas').getContext) {
                     left = 0,
                     right = delta,
                     offset = {x: 0, y: 0},
-            lineStr = [];
+                    lineStr = [];
 
             var fontStyle = getComputedStyle(processFontStyle(this.font),
                     this.element_);

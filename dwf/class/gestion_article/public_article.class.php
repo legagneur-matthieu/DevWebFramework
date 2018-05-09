@@ -100,13 +100,13 @@ class public_article {
                     ?>
                     <p>
                         <small>Publié le <span><?php echo html_structures::time($article->get_date(), $date); ?></span> <br />
-                            Catégorie <span><?php echo html_structures::a_link(application::get_url(array("view", "id"))."view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
+                            Catégorie <span><?php echo html_structures::a_link(application::get_url(array("view", "id")) . "view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
                         </small>
                     </p>
-                <?php ?>
+                    <?php ?>
                 </header>
                 <hr/>
-                    <?php echo htmlspecialchars_decode(base64_decode($article->get_contenu())); ?>
+                <?php echo htmlspecialchars_decode(base64_decode($article->get_contenu())); ?>
                 <hr/>
                 <footer>
                     <?php
@@ -125,7 +125,7 @@ class public_article {
             </article>
             <?php
         } else {
-            js::redir(application::get_url(array("view", "id"))."view=categorie&id=2");
+            js::redir(application::get_url(array("view", "id")) . "view=categorie&id=2");
         }
     }
 
@@ -226,7 +226,7 @@ class public_article {
                 ?>
                 <div class="media-body">
                     <h4 class="media-heading"><a href="<?php echo application::get_url(array("view", "id")); ?>view=article&amp;id=<?php echo $art["id"] ?>"><?php echo $art["titre"]; ?></a></h4>
-                <?php echo $art["contenu"]; ?>
+                        <?php echo $art["contenu"]; ?>
                 </div>
                 <hr />
                 <?php

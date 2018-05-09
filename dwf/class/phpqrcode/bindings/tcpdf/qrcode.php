@@ -1599,7 +1599,7 @@ if (!class_exists('QRcode', false)) {
             $inputitem['bstream'] = array();
             $inputitem['bstream'] = $this->appendNum($inputitem['bstream'], 4, 0x8);
             $inputitem['bstream'] = $this->appendNum($inputitem['bstream'], $this->lengthIndicator(QR_MODE_KJ, $version), (int) ($inputitem['size'] / 2));
-            for ($i = 0; $i < $inputitem['size']; $i+=2) {
+            for ($i = 0; $i < $inputitem['size']; $i += 2) {
                 $val = (ord($inputitem['data'][$i]) << 8) | ord($inputitem['data'][$i + 1]);
                 if ($val <= 0x9ffc) {
                     $val -= 0x8140;
@@ -1835,7 +1835,7 @@ if (!class_exists('QRcode', false)) {
             if ($size & 1) {
                 return false;
             }
-            for ($i = 0; $i < $size; $i+=2) {
+            for ($i = 0; $i < $size; $i += 2) {
                 $val = (ord($data[$i]) << 8) | ord($data[$i + 1]);
                 if (($val < 0x8140) OR ( ($val > 0x9ffc) AND ( $val < 0xe040)) OR ( $val > 0xebbf)) {
                     return false;

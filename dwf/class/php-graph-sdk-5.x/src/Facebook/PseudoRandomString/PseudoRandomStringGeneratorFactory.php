@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,15 +22,15 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\PseudoRandomString;
 
 use Facebook\Exceptions\FacebookSDKException;
 use InvalidArgumentException;
 
-class PseudoRandomStringGeneratorFactory
-{
-    private function __construct()
-    {
+class PseudoRandomStringGeneratorFactory {
+
+    private function __construct() {
         // a factory constructor should never be invoked
     }
 
@@ -42,8 +43,7 @@ class PseudoRandomStringGeneratorFactory
      *
      * @return PseudoRandomStringGeneratorInterface
      */
-    public static function createPseudoRandomStringGenerator($generator)
-    {
+    public static function createPseudoRandomStringGenerator($generator) {
         if (!$generator) {
             return self::detectDefaultPseudoRandomStringGenerator();
         }
@@ -75,8 +75,7 @@ class PseudoRandomStringGeneratorFactory
      *
      * @return PseudoRandomStringGeneratorInterface
      */
-    private static function detectDefaultPseudoRandomStringGenerator()
-    {
+    private static function detectDefaultPseudoRandomStringGenerator() {
         // Check for PHP 7's CSPRNG first to keep mcrypt deprecation messages from appearing in PHP 7.1.
         if (function_exists('random_bytes')) {
             return new RandomBytesPseudoRandomStringGenerator();
@@ -98,4 +97,5 @@ class PseudoRandomStringGeneratorFactory
 
         throw new FacebookSDKException('Unable to detect a cryptographically secure pseudo-random string generator.');
     }
+
 }

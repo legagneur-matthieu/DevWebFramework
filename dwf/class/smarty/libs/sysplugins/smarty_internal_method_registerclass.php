@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_RegisterClass
-{
+class Smarty_Internal_Method_RegisterClass {
+
     /**
      * Valid for Smarty and template object
      *
@@ -32,15 +32,15 @@ class Smarty_Internal_Method_RegisterClass
      * @return \Smarty|\Smarty_Internal_Template
      * @throws \SmartyException
      */
-    public function registerClass(Smarty_Internal_TemplateBase $obj, $class_name, $class_impl)
-    {
+    public function registerClass(Smarty_Internal_TemplateBase $obj, $class_name, $class_impl) {
         $smarty = isset($obj->smarty) ? $obj->smarty : $obj;
         // test if exists
         if (!class_exists($class_impl)) {
             throw new SmartyException("Undefined class '$class_impl' in register template class");
         }
         // register the class
-        $smarty->registered_classes[ $class_name ] = $class_impl;
+        $smarty->registered_classes[$class_name] = $class_impl;
         return $obj;
     }
+
 }

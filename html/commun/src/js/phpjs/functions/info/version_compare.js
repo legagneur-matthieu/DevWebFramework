@@ -41,22 +41,22 @@ function version_compare(v1, v2, operator) {
                 'p': 1,
                 'pl': 1
             },
-    // This function will be called to prepare each version argument.
-    // It replaces every _, -, and + with a dot.
-    // It surrounds any nonsequence of numbers/dots with dots.
-    // It replaces sequences of dots with a single dot.
-    //    version_compare('4..0', '4.0') == 0
-    // Important: A string of 0 length needs to be converted into a value
-    // even less than an unexisting value in vm (-7), hence [-8].
-    // It's also important to not strip spaces because of this.
-    //   version_compare('', ' ') == 1
-    prepVersion = function (v) {
-        v = ('' + v)
-                .replace(/[_\-+]/g, '.')
-        v = v.replace(/([^.\d]+)/g, '.$1.')
-                .replace(/\.{2,}/g, '.')
-        return (!v.length ? [-8] : v.split('.'))
-    },
+            // This function will be called to prepare each version argument.
+            // It replaces every _, -, and + with a dot.
+            // It surrounds any nonsequence of numbers/dots with dots.
+            // It replaces sequences of dots with a single dot.
+            //    version_compare('4..0', '4.0') == 0
+            // Important: A string of 0 length needs to be converted into a value
+            // even less than an unexisting value in vm (-7), hence [-8].
+            // It's also important to not strip spaces because of this.
+            //   version_compare('', ' ') == 1
+            prepVersion = function (v) {
+                v = ('' + v)
+                        .replace(/[_\-+]/g, '.')
+                v = v.replace(/([^.\d]+)/g, '.$1.')
+                        .replace(/\.{2,}/g, '.')
+                return (!v.length ? [-8] : v.split('.'))
+            },
             // This converts a version component to a number.
             // Empty component becomes 0.
             // Non-numerical component becomes a negative number.

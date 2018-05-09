@@ -367,7 +367,7 @@ class js {
                             echo $d["alt"];
                         }
                         ?>"> 
-                    <?php if (isset($d["caption"])) { ?><div class="carousel-caption"><?php echo $d["caption"]; ?></div><?php } ?>
+                        <?php if (isset($d["caption"])) { ?><div class="carousel-caption"><?php echo $d["caption"]; ?></div><?php } ?>
                     </div>
                     <?php
                 }

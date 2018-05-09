@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty Internal Plugin Templateparser Parsetrees
  * These are classes to build parsetrees in the template parser
@@ -14,8 +15,7 @@
  * @subpackage Compiler
  * @ignore
  */
-abstract class Smarty_Internal_ParseTree
-{
+abstract class Smarty_Internal_ParseTree {
 
     /**
      * Buffer content
@@ -43,12 +43,9 @@ abstract class Smarty_Internal_ParseTree
     /**
      * Template data object destructor
      */
-    public function __destruct()
-    {
+    public function __destruct() {
         $this->data = null;
         $this->subtrees = null;
     }
 
 }
-
-

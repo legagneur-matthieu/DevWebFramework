@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_GetStreamVariable
-{
+class Smarty_Internal_Method_GetStreamVariable {
+
     /**
      * Valid for all objects
      *
@@ -29,8 +29,7 @@ class Smarty_Internal_Method_GetStreamVariable
      * @return mixed
      * @throws \SmartyException
      */
-    public function getStreamVariable(Smarty_Internal_Data $data, $variable)
-    {
+    public function getStreamVariable(Smarty_Internal_Data $data, $variable) {
         $_result = '';
         $fp = fopen($variable, 'r+');
         if ($fp) {
@@ -48,4 +47,5 @@ class Smarty_Internal_Method_GetStreamVariable
             return null;
         }
     }
+
 }

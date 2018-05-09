@@ -81,7 +81,7 @@ class dwf_exception extends Exception {
                     <div class="alert alert-danger" role="alert">
                         <p><?php echo (is_a($e, "dwf_exception") ? "DWF EXCEPTION ! Code " . $e->getCode() : "PHP EXCEPTION") . " : \"" . $e->getMessage() . "\""; ?></p>
                         <pre><?php echo $e->getTraceAsString(); ?></pre>
-                    <?php echo $moreinfo; ?>
+                        <?php echo $moreinfo; ?>
                     </div>
                     <?php
                     if (!html5::$_called and $service) {

@@ -51,7 +51,7 @@ class sub_menu {
             if ($_GET[$key] == $value[$key]) {
                 $action_finded = true;
                 $v = $value[$key];
-                if (isset($value["title"]) and !empty($value["title"])) {
+                if (isset($value["title"]) and ! empty($value["title"])) {
                     js::before_title($value["title"] . " - ");
                 }
                 if (method_exists($this_class, $v)) {
@@ -76,8 +76,8 @@ class sub_menu {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                    $("#nav-<?php echo $sub_menu_key; ?>>li").removeClass("active");
-                        $("#nav-<?php echo $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?php echo $title; ?>"<?php } ?>><?php echo $text; ?></a></li>');
+                $("#nav-<?php echo $sub_menu_key; ?>>li").removeClass("active");
+                $("#nav-<?php echo $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?php echo $title; ?>"<?php } ?>><?php echo $text; ?></a></li>');
             });
         </script>
         <?php

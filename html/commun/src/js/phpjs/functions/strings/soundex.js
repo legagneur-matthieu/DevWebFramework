@@ -41,7 +41,7 @@ function soundex(str) {
                 N: 5,
                 R: 6
             },
-    i = 0,
+            i = 0,
             j, s = 0,
             c, p
 

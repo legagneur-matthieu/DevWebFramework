@@ -66,7 +66,7 @@ function array() {
                     },
                     constructor: function (that) {
                         var i = Stack.indexOf(that)
-                                ~i ? Array[i] : Array[Stack.push(that) - 1] = {}
+                        ~i ? Array[i] : Array[Stack.push(that) - 1] = {}
                         this.method(that)
                                 .that = that
                         return this.method(that)

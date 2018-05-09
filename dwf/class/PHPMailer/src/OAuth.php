@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPMailer - PHP email creation and transport class.
  * PHP Version 5.5.
@@ -32,8 +33,8 @@ use League\OAuth2\Client\Token\AccessToken;
  *
  * @author  Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  */
-class OAuth
-{
+class OAuth {
+
     /**
      * An instance of the League OAuth Client Provider.
      *
@@ -83,8 +84,7 @@ class OAuth
      * @param array $options Associative array containing
      *                       `provider`, `userName`, `clientSecret`, `clientId` and `refreshToken` elements
      */
-    public function __construct($options)
-    {
+    public function __construct($options) {
         $this->provider = $options['provider'];
         $this->oauthUserEmail = $options['userName'];
         $this->oauthClientSecret = $options['clientSecret'];
@@ -97,8 +97,7 @@ class OAuth
      *
      * @return RefreshToken
      */
-    protected function getGrant()
-    {
+    protected function getGrant() {
         return new RefreshToken();
     }
 
@@ -107,11 +106,9 @@ class OAuth
      *
      * @return AccessToken
      */
-    protected function getToken()
-    {
+    protected function getToken() {
         return $this->provider->getAccessToken(
-            $this->getGrant(),
-            ['refresh_token' => $this->oauthRefreshToken]
+                        $this->getGrant(), ['refresh_token' => $this->oauthRefreshToken]
         );
     }
 
@@ -120,19 +117,19 @@ class OAuth
      *
      * @return string
      */
-    public function getOauth64()
-    {
+    public function getOauth64() {
         // Get a new token if it's not available or has expired
         if (null === $this->oauthToken or $this->oauthToken->hasExpired()) {
             $this->oauthToken = $this->getToken();
         }
 
         return base64_encode(
-            'user=' .
-            $this->oauthUserEmail .
-            "\001auth=Bearer " .
-            $this->oauthToken .
-            "\001\001"
+                'user=' .
+                $this->oauthUserEmail .
+                "\001auth=Bearer " .
+                $this->oauthToken .
+                "\001\001"
         );
     }
+
 }

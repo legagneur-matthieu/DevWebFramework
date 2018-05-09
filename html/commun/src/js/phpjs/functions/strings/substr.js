@@ -100,8 +100,8 @@ function substr(str, start, len) {
             }
             // Fall-through
         case 'off':
-            // assumes there are no non-BMP characters;
-            //    if there may be such characters, then it is best to turn it on (critical in true XHTML/XML)
+        // assumes there are no non-BMP characters;
+        //    if there may be such characters, then it is best to turn it on (critical in true XHTML/XML)
         default:
             if (start < 0) {
                 start += end

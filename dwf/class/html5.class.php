@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cette classe gère l'entête HTML5 et son pied de page.
  * Les métas descriptions et keyword sont à ajouter par vous même dans le constructeur

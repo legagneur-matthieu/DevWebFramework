@@ -29,7 +29,7 @@ class index {
      * Toutes les fonction statiques "onload()" sont appelées.
      */
     private static function classloader($class) {
-        $file= __DIR__ . "/class/" . $class . ".class.php";
+        $file = __DIR__ . "/class/" . $class . ".class.php";
         if (file_exists($file)) {
             require_once $file;
             website::$_class[$file] = $class;

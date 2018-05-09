@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
@@ -28,15 +30,14 @@ namespace Facebook\GraphNodes;
  *
  * @package Facebook
  */
-class GraphLocation extends GraphNode
-{
+class GraphLocation extends GraphNode {
+
     /**
      * Returns the street component of the location
      *
      * @return string|null
      */
-    public function getStreet()
-    {
+    public function getStreet() {
         return $this->getField('street');
     }
 
@@ -45,8 +46,7 @@ class GraphLocation extends GraphNode
      *
      * @return string|null
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->getField('city');
     }
 
@@ -55,8 +55,7 @@ class GraphLocation extends GraphNode
      *
      * @return string|null
      */
-    public function getState()
-    {
+    public function getState() {
         return $this->getField('state');
     }
 
@@ -65,8 +64,7 @@ class GraphLocation extends GraphNode
      *
      * @return string|null
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         return $this->getField('country');
     }
 
@@ -75,8 +73,7 @@ class GraphLocation extends GraphNode
      *
      * @return string|null
      */
-    public function getZip()
-    {
+    public function getZip() {
         return $this->getField('zip');
     }
 
@@ -85,8 +82,7 @@ class GraphLocation extends GraphNode
      *
      * @return float|null
      */
-    public function getLatitude()
-    {
+    public function getLatitude() {
         return $this->getField('latitude');
     }
 
@@ -95,8 +91,8 @@ class GraphLocation extends GraphNode
      *
      * @return float|null
      */
-    public function getLongitude()
-    {
+    public function getLongitude() {
         return $this->getField('longitude');
     }
+
 }

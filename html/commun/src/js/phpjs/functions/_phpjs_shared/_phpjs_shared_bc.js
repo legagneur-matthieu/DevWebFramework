@@ -101,7 +101,7 @@ function _phpjs_shared_bc() {
             } else { /* subtraction must be done. */
                 cmp_res = libbcmath._bc_do_compare(n1, n2, false, false) /* Compare magnitudes. */
                 switch (cmp_res) {
-                    case -1:
+                    case - 1:
                         /* n1 is less than n2, subtract n1 from n2. */
                         sum = libbcmath._bc_do_sub(n2, n1, scale_min)
                         sum.n_sign = n2.n_sign
@@ -712,7 +712,7 @@ function _phpjs_shared_bc() {
                 /* Compare magnitudes. */
                 cmp_res = libbcmath._bc_do_compare(n1, n2, false, false)
                 switch (cmp_res) {
-                    case -1:
+                    case - 1:
                         /* n1 is less than n2, subtract n1 from n2. */
                         diff = libbcmath._bc_do_sub(n2, n1, scale_min)
                         diff.n_sign = (n2.n_sign == libbcmath.PLUS ? libbcmath.MINUS : libbcmath.PLUS)

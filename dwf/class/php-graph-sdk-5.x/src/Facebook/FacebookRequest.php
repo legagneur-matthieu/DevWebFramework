@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook;
 
 use Facebook\Authentication\AccessToken;
@@ -36,8 +38,8 @@ use Facebook\Exceptions\FacebookSDKException;
  *
  * @package Facebook
  */
-class FacebookRequest
-{
+class FacebookRequest {
+
     /**
      * @var FacebookApp The Facebook app entity.
      */
@@ -94,8 +96,7 @@ class FacebookRequest
      * @param string|null             $eTag
      * @param string|null             $graphVersion
      */
-    public function __construct(FacebookApp $app = null, $accessToken = null, $method = null, $endpoint = null, array $params = [], $eTag = null, $graphVersion = null)
-    {
+    public function __construct(FacebookApp $app = null, $accessToken = null, $method = null, $endpoint = null, array $params = [], $eTag = null, $graphVersion = null) {
         $this->setApp($app);
         $this->setAccessToken($accessToken);
         $this->setMethod($method);
@@ -112,8 +113,7 @@ class FacebookRequest
      *
      * @return FacebookRequest
      */
-    public function setAccessToken($accessToken)
-    {
+    public function setAccessToken($accessToken) {
         $this->accessToken = $accessToken;
         if ($accessToken instanceof AccessToken) {
             $this->accessToken = $accessToken->getValue();
@@ -131,8 +131,7 @@ class FacebookRequest
      *
      * @throws FacebookSDKException
      */
-    public function setAccessTokenFromParams($accessToken)
-    {
+    public function setAccessTokenFromParams($accessToken) {
         $existingAccessToken = $this->getAccessToken();
         if (!$existingAccessToken) {
             $this->setAccessToken($accessToken);
@@ -148,8 +147,7 @@ class FacebookRequest
      *
      * @return string|null
      */
-    public function getAccessToken()
-    {
+    public function getAccessToken() {
         return $this->accessToken;
     }
 
@@ -158,8 +156,7 @@ class FacebookRequest
      *
      * @return AccessToken|null
      */
-    public function getAccessTokenEntity()
-    {
+    public function getAccessTokenEntity() {
         return $this->accessToken ? new AccessToken($this->accessToken) : null;
     }
 
@@ -168,8 +165,7 @@ class FacebookRequest
      *
      * @param FacebookApp|null $app
      */
-    public function setApp(FacebookApp $app = null)
-    {
+    public function setApp(FacebookApp $app = null) {
         $this->app = $app;
     }
 
@@ -178,8 +174,7 @@ class FacebookRequest
      *
      * @return FacebookApp
      */
-    public function getApp()
-    {
+    public function getApp() {
         return $this->app;
     }
 
@@ -188,8 +183,7 @@ class FacebookRequest
      *
      * @return string|null
      */
-    public function getAppSecretProof()
-    {
+    public function getAppSecretProof() {
         if (!$accessTokenEntity = $this->getAccessTokenEntity()) {
             return null;
         }
@@ -202,8 +196,7 @@ class FacebookRequest
      *
      * @throws FacebookSDKException
      */
-    public function validateAccessToken()
-    {
+    public function validateAccessToken() {
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
             throw new FacebookSDKException('You must provide an access token.');
@@ -215,8 +208,7 @@ class FacebookRequest
      *
      * @param string
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         $this->method = strtoupper($method);
     }
 
@@ -225,8 +217,7 @@ class FacebookRequest
      *
      * @return string
      */
-    public function getMethod()
-    {
+    public function getMethod() {
         return $this->method;
     }
 
@@ -235,8 +226,7 @@ class FacebookRequest
      *
      * @throws FacebookSDKException
      */
-    public function validateMethod()
-    {
+    public function validateMethod() {
         if (!$this->method) {
             throw new FacebookSDKException('HTTP method not specified.');
         }
@@ -255,8 +245,7 @@ class FacebookRequest
      *
      * @throws FacebookSDKException
      */
-    public function setEndpoint($endpoint)
-    {
+    public function setEndpoint($endpoint) {
         // Harvest the access token from the endpoint to keep things in sync
         $params = FacebookUrlManipulator::getParamsAsArray($endpoint);
         if (isset($params['access_token'])) {
@@ -275,8 +264,7 @@ class FacebookRequest
      *
      * @return string
      */
-    public function getEndpoint()
-    {
+    public function getEndpoint() {
         // For batch requests, this will be empty
         return $this->endpoint;
     }
@@ -286,8 +274,7 @@ class FacebookRequest
      *
      * @return array
      */
-    public function getHeaders()
-    {
+    public function getHeaders() {
         $headers = static::getDefaultHeaders();
 
         if ($this->eTag) {
@@ -302,8 +289,7 @@ class FacebookRequest
      *
      * @param array $headers
      */
-    public function setHeaders(array $headers)
-    {
+    public function setHeaders(array $headers) {
         $this->headers = array_merge($this->headers, $headers);
     }
 
@@ -312,8 +298,7 @@ class FacebookRequest
      *
      * @param string $eTag
      */
-    public function setETag($eTag)
-    {
+    public function setETag($eTag) {
         $this->eTag = $eTag;
     }
 
@@ -326,8 +311,7 @@ class FacebookRequest
      *
      * @throws FacebookSDKException
      */
-    public function setParams(array $params = [])
-    {
+    public function setParams(array $params = []) {
         if (isset($params['access_token'])) {
             $this->setAccessTokenFromParams($params['access_token']);
         }
@@ -350,8 +334,7 @@ class FacebookRequest
      *
      * @return FacebookRequest
      */
-    public function dangerouslySetParams(array $params = [])
-    {
+    public function dangerouslySetParams(array $params = []) {
         $this->params = array_merge($this->params, $params);
 
         return $this;
@@ -364,8 +347,7 @@ class FacebookRequest
      *
      * @return array
      */
-    public function sanitizeFileParams(array $params)
-    {
+    public function sanitizeFileParams(array $params) {
         foreach ($params as $key => $value) {
             if ($value instanceof FacebookFile) {
                 $this->addFile($key, $value);
@@ -382,16 +364,14 @@ class FacebookRequest
      * @param string       $key
      * @param FacebookFile $file
      */
-    public function addFile($key, FacebookFile $file)
-    {
+    public function addFile($key, FacebookFile $file) {
         $this->files[$key] = $file;
     }
 
     /**
      * Removes all the files from the upload queue.
      */
-    public function resetFiles()
-    {
+    public function resetFiles() {
         $this->files = [];
     }
 
@@ -400,8 +380,7 @@ class FacebookRequest
      *
      * @return array
      */
-    public function getFiles()
-    {
+    public function getFiles() {
         return $this->files;
     }
 
@@ -410,8 +389,7 @@ class FacebookRequest
      *
      * @return boolean
      */
-    public function containsFileUploads()
-    {
+    public function containsFileUploads() {
         return !empty($this->files);
     }
 
@@ -420,8 +398,7 @@ class FacebookRequest
      *
      * @return boolean
      */
-    public function containsVideoUploads()
-    {
+    public function containsVideoUploads() {
         foreach ($this->files as $file) {
             if ($file instanceof FacebookVideo) {
                 return true;
@@ -436,8 +413,7 @@ class FacebookRequest
      *
      * @return RequestBodyMultipart
      */
-    public function getMultipartBody()
-    {
+    public function getMultipartBody() {
         $params = $this->getPostParams();
 
         return new RequestBodyMultipart($params, $this->files);
@@ -448,8 +424,7 @@ class FacebookRequest
      *
      * @return RequestBodyUrlEncoded
      */
-    public function getUrlEncodedBody()
-    {
+    public function getUrlEncodedBody() {
         $params = $this->getPostParams();
 
         return new RequestBodyUrlEncoded($params);
@@ -460,8 +435,7 @@ class FacebookRequest
      *
      * @return array
      */
-    public function getParams()
-    {
+    public function getParams() {
         $params = $this->params;
 
         $accessToken = $this->getAccessToken();
@@ -478,8 +452,7 @@ class FacebookRequest
      *
      * @return array
      */
-    public function getPostParams()
-    {
+    public function getPostParams() {
         if ($this->getMethod() === 'POST') {
             return $this->getParams();
         }
@@ -492,8 +465,7 @@ class FacebookRequest
      *
      * @return string
      */
-    public function getGraphVersion()
-    {
+    public function getGraphVersion() {
         return $this->graphVersion;
     }
 
@@ -502,8 +474,7 @@ class FacebookRequest
      *
      * @return string
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         $this->validateMethod();
 
         $graphVersion = FacebookUrlManipulator::forceSlashPrefix($this->graphVersion);
@@ -524,11 +495,11 @@ class FacebookRequest
      *
      * @return array
      */
-    public static function getDefaultHeaders()
-    {
+    public static function getDefaultHeaders() {
         return [
             'User-Agent' => 'fb-php-' . Facebook::VERSION,
             'Accept-Encoding' => '*',
         ];
     }
+
 }

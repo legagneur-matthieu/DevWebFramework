@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty Internal Plugin Resource Registered
  *
@@ -16,8 +17,8 @@
  * @subpackage TemplateResources
  * @deprecated
  */
-class Smarty_Internal_Resource_Registered extends Smarty_Resource
-{
+class Smarty_Internal_Resource_Registered extends Smarty_Resource {
+
     /**
      * populate Source Object with meta data from Resource
      *
@@ -26,8 +27,7 @@ class Smarty_Internal_Resource_Registered extends Smarty_Resource
      *
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
-    {
+    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null) {
         $source->filepath = $source->type . ':' . $source->name;
         $source->uid = sha1($source->filepath . $source->smarty->_joined_template_dir);
         $source->timestamp = $this->getTemplateTimestamp($source);
@@ -41,8 +41,7 @@ class Smarty_Internal_Resource_Registered extends Smarty_Resource
      *
      * @return void
      */
-    public function populateTimestamp(Smarty_Template_Source $source)
-    {
+    public function populateTimestamp(Smarty_Template_Source $source) {
         $source->timestamp = $this->getTemplateTimestamp($source);
         $source->exists = !!$source->timestamp;
     }
@@ -54,12 +53,10 @@ class Smarty_Internal_Resource_Registered extends Smarty_Resource
      *
      * @return integer|boolean        timestamp (epoch) the template was modified, false if resources has no timestamp
      */
-    public function getTemplateTimestamp(Smarty_Template_Source $source)
-    {
+    public function getTemplateTimestamp(Smarty_Template_Source $source) {
         // return timestamp
         $time_stamp = false;
-        call_user_func_array($source->smarty->registered_resources[ $source->type ][ 0 ][ 1 ],
-                             array($source->name, &$time_stamp, $source->smarty));
+        call_user_func_array($source->smarty->registered_resources[$source->type][0][1], array($source->name, &$time_stamp, $source->smarty));
 
         return is_numeric($time_stamp) ? (int) $time_stamp : $time_stamp;
     }
@@ -72,12 +69,10 @@ class Smarty_Internal_Resource_Registered extends Smarty_Resource
      * @return string                 template source
      * @throws SmartyException        if source cannot be loaded
      */
-    public function getContent(Smarty_Template_Source $source)
-    {
+    public function getContent(Smarty_Template_Source $source) {
         // return template string
         $content = null;
-        $t = call_user_func_array($source->smarty->registered_resources[ $source->type ][ 0 ][ 0 ],
-                                  array($source->name, &$content, $source->smarty));
+        $t = call_user_func_array($source->smarty->registered_resources[$source->type][0][0], array($source->name, &$content, $source->smarty));
         if (is_bool($t) && !$t) {
             throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
         }
@@ -92,8 +87,8 @@ class Smarty_Internal_Resource_Registered extends Smarty_Resource
      *
      * @return string                 resource's basename
      */
-    public function getBasename(Smarty_Template_Source $source)
-    {
+    public function getBasename(Smarty_Template_Source $source) {
         return basename($source->name);
     }
+
 }

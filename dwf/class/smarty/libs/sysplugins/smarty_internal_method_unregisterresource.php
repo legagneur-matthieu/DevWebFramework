@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_UnregisterResource
-{
+class Smarty_Internal_Method_UnregisterResource {
+
     /**
      * Valid for Smarty and template object
      *
@@ -29,12 +29,12 @@ class Smarty_Internal_Method_UnregisterResource
      *
      * @return \Smarty|\Smarty_Internal_Template
      */
-    public function unregisterResource(Smarty_Internal_TemplateBase $obj, $type)
-    {
+    public function unregisterResource(Smarty_Internal_TemplateBase $obj, $type) {
         $smarty = isset($obj->smarty) ? $obj->smarty : $obj;
-        if (isset($smarty->registered_resources[ $type ])) {
-            unset($smarty->registered_resources[ $type ]);
+        if (isset($smarty->registered_resources[$type])) {
+            unset($smarty->registered_resources[$type]);
         }
         return $obj;
     }
+
 }

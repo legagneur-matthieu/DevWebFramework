@@ -138,9 +138,9 @@ function json_encode(mixed_val) {
                     gap = mind
                     return v
                 case 'undefined':
-                    // Fall-through
+                // Fall-through
                 case 'function':
-                    // Fall-through
+                // Fall-through
                 default:
                     throw new SyntaxError('json_encode')
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,13 +22,14 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\HttpClients;
 
 use Facebook\Http\GraphRawResponse;
 use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookStreamHttpClient implements FacebookHttpClientInterface
-{
+class FacebookStreamHttpClient implements FacebookHttpClientInterface {
+
     /**
      * @var FacebookStream Procedural stream wrapper as object.
      */
@@ -36,16 +38,14 @@ class FacebookStreamHttpClient implements FacebookHttpClientInterface
     /**
      * @param FacebookStream|null Procedural stream wrapper as object.
      */
-    public function __construct(FacebookStream $facebookStream = null)
-    {
+    public function __construct(FacebookStream $facebookStream = null) {
         $this->facebookStream = $facebookStream ?: new FacebookStream();
     }
 
     /**
      * @inheritdoc
      */
-    public function send($url, $method, $body, array $headers, $timeOut)
-    {
+    public function send($url, $method, $body, array $headers, $timeOut) {
         $options = [
             'http' => [
                 'method' => $method,
@@ -82,8 +82,7 @@ class FacebookStreamHttpClient implements FacebookHttpClientInterface
      *
      * @return string
      */
-    public function compileHeader(array $headers)
-    {
+    public function compileHeader(array $headers) {
         $header = [];
         foreach ($headers as $k => $v) {
             $header[] = $k . ': ' . $v;
@@ -91,4 +90,5 @@ class FacebookStreamHttpClient implements FacebookHttpClientInterface
 
         return implode("\r\n", $header);
     }
+
 }

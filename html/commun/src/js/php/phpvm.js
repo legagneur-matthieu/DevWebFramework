@@ -10,7 +10,7 @@ phpvm = function () {
     this.raw = function (code, optn) {
         return new PHP(code, optn).vm.OUTPUT_BUFFER;
     };
-    
+
     /**
      * Interpréte un script PHP
      * @param {string} file Chemain du script a executer,

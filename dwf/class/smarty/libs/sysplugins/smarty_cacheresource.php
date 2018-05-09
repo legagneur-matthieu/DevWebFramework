@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty Internal Plugin
  *
@@ -13,8 +14,8 @@
  * @subpackage Cacher
  * @author     Rodney Rehm
  */
-abstract class Smarty_CacheResource
-{
+abstract class Smarty_CacheResource {
+
     /**
      * resource types provided by the core
      *
@@ -50,8 +51,7 @@ abstract class Smarty_CacheResource
      *
      * @return boolean true or false if the cached content does not exist
      */
-    abstract public function process(Smarty_Internal_Template $_template, Smarty_Template_Cached $cached = null,
-                                     $update = false);
+    abstract public function process(Smarty_Internal_Template $_template, Smarty_Template_Cached $cached = null, $update = false);
 
     /**
      * Write the rendered template output to cache
@@ -79,8 +79,7 @@ abstract class Smarty_CacheResource
      *
      * @return null|string
      */
-    public function getCachedContent(Smarty_Internal_Template $_template)
-    {
+    public function getCachedContent(Smarty_Internal_Template $_template) {
         if ($_template->cached->handler->process($_template)) {
             ob_start();
             $unifunc = $_template->cached->unifunc;
@@ -120,8 +119,7 @@ abstract class Smarty_CacheResource
      *
      * @return bool|null
      */
-    public function locked(Smarty $smarty, Smarty_Template_Cached $cached)
-    {
+    public function locked(Smarty $smarty, Smarty_Template_Cached $cached) {
         // theoretically locking_timeout should be checked against time_limit (max_execution_time)
         $start = microtime(true);
         $hadLock = null;
@@ -145,8 +143,7 @@ abstract class Smarty_CacheResource
      *
      * @return bool
      */
-    public function hasLock(Smarty $smarty, Smarty_Template_Cached $cached)
-    {
+    public function hasLock(Smarty $smarty, Smarty_Template_Cached $cached) {
         // check if lock exists
         return false;
     }
@@ -159,8 +156,7 @@ abstract class Smarty_CacheResource
      *
      * @return bool
      */
-    public function acquireLock(Smarty $smarty, Smarty_Template_Cached $cached)
-    {
+    public function acquireLock(Smarty $smarty, Smarty_Template_Cached $cached) {
         // create lock
         return true;
     }
@@ -173,8 +169,7 @@ abstract class Smarty_CacheResource
      *
      * @return bool
      */
-    public function releaseLock(Smarty $smarty, Smarty_Template_Cached $cached)
-    {
+    public function releaseLock(Smarty $smarty, Smarty_Template_Cached $cached) {
         // release lock
         return true;
     }
@@ -188,33 +183,33 @@ abstract class Smarty_CacheResource
      * @throws SmartyException
      * @return Smarty_CacheResource Cache Resource Handler
      */
-    public static function load(Smarty $smarty, $type = null)
-    {
+    public static function load(Smarty $smarty, $type = null) {
         if (!isset($type)) {
             $type = $smarty->caching_type;
         }
 
         // try smarty's cache
-        if (isset($smarty->_cache[ 'cacheresource_handlers' ][ $type ])) {
-            return $smarty->_cache[ 'cacheresource_handlers' ][ $type ];
+        if (isset($smarty->_cache['cacheresource_handlers'][$type])) {
+            return $smarty->_cache['cacheresource_handlers'][$type];
         }
 
         // try registered resource
-        if (isset($smarty->registered_cache_resources[ $type ])) {
+        if (isset($smarty->registered_cache_resources[$type])) {
             // do not cache these instances as they may vary from instance to instance
-            return $smarty->_cache[ 'cacheresource_handlers' ][ $type ] = $smarty->registered_cache_resources[ $type ];
+            return $smarty->_cache['cacheresource_handlers'][$type] = $smarty->registered_cache_resources[$type];
         }
         // try sysplugins dir
-        if (isset(self::$sysplugins[ $type ])) {
+        if (isset(self::$sysplugins[$type])) {
             $cache_resource_class = 'Smarty_Internal_CacheResource_' . ucfirst($type);
-            return $smarty->_cache[ 'cacheresource_handlers' ][ $type ] = new $cache_resource_class();
+            return $smarty->_cache['cacheresource_handlers'][$type] = new $cache_resource_class();
         }
         // try plugins dir
         $cache_resource_class = 'Smarty_CacheResource_' . ucfirst($type);
         if ($smarty->loadPlugin($cache_resource_class)) {
-            return $smarty->_cache[ 'cacheresource_handlers' ][ $type ] = new $cache_resource_class();
+            return $smarty->_cache['cacheresource_handlers'][$type] = new $cache_resource_class();
         }
         // give up
         throw new SmartyException("Unable to load cache resource '{$type}'");
     }
+
 }

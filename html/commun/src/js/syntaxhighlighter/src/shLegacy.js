@@ -59,7 +59,7 @@ dp.SyntaxHighlighter = {
                 options = {},
                 straight = {'true': true}
         reverse = {'true': false},
-        result = null,
+                result = null,
                 defaults = SyntaxHighlighter.defaults
                 ;
 

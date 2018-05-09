@@ -46,7 +46,7 @@ function pack(format) {
         // Now pack variables: 'quantifier' times 'instruction'
         switch (instruction) {
             case 'a':
-                // NUL-padded string
+            // NUL-padded string
             case 'A':
                 // SPACE-padded string
                 if (typeof arguments[argumentPointer] === 'undefined') {
@@ -71,7 +71,7 @@ function pack(format) {
                 argumentPointer++
                 break
             case 'h':
-                // Hex string, low nibble first
+            // Hex string, low nibble first
             case 'H':
                 // Hex string, high nibble first
                 if (typeof arguments[argumentPointer] === 'undefined') {
@@ -104,7 +104,7 @@ function pack(format) {
                 break
 
             case 'c':
-                // signed char
+            // signed char
             case 'C':
                 // unsigned char
                 // c and C is the same in pack
@@ -122,9 +122,9 @@ function pack(format) {
                 break
 
             case 's':
-                // signed short (always 16 bit, machine byte order)
+            // signed short (always 16 bit, machine byte order)
             case 'S':
-                // unsigned short (always 16 bit, machine byte order)
+            // unsigned short (always 16 bit, machine byte order)
             case 'v':
                 // s and S is the same in pack
                 if (quantifier === '*') {
@@ -158,13 +158,13 @@ function pack(format) {
                 break
 
             case 'i':
-                // signed integer (machine dependent size and byte order)
+            // signed integer (machine dependent size and byte order)
             case 'I':
-                // unsigned integer (machine dependent size and byte order)
+            // unsigned integer (machine dependent size and byte order)
             case 'l':
-                // signed long (always 32 bit, machine byte order)
+            // signed long (always 32 bit, machine byte order)
             case 'L':
-                // unsigned long (always 32 bit, machine byte order)
+            // unsigned long (always 32 bit, machine byte order)
             case 'V':
                 // unsigned long (always 32 bit, little endian byte order)
                 if (quantifier === '*') {
@@ -202,7 +202,7 @@ function pack(format) {
                 break
 
             case 'f':
-                // float (machine dependent size and representation)
+            // float (machine dependent size and representation)
             case 'd':
                 // double (machine dependent size and representation)
                 // version based on IEEE754

@@ -4382,8 +4382,8 @@
                         width: (that.size.width - soffsetw),
                         height: (that.size.height - soffseth)
                     },
-            left = (parseFloat(that.element.css("left")) +
-                    (that.position.left - that.originalPosition.left)) || null,
+                    left = (parseFloat(that.element.css("left")) +
+                            (that.position.left - that.originalPosition.left)) || null,
                     top = (parseFloat(that.element.css("top")) +
                             (that.position.top - that.originalPosition.top)) || null;
 
@@ -4489,7 +4489,7 @@
                         top: 0,
                         left: 0
                     },
-            ce = that.containerElement,
+                    ce = that.containerElement,
                     continueResize = true;
 
             if (ce[ 0 ] !== document && (/static/).test(ce.css("position"))) {
@@ -13187,7 +13187,7 @@
         },
         _mouseDrag: function (event) {
             var position = {x: event.pageX, y: event.pageY},
-            normValue = this._normValueFromMouse(position);
+                    normValue = this._normValueFromMouse(position);
 
             this._slide(event, this._handleIndex, normValue);
 
@@ -14985,18 +14985,18 @@
                                 tab: tab,
                                 panel: panel
                             },
-                    complete = function (jqXHR, status) {
-                        if (status === "abort") {
-                            that.panels.stop(false, true);
-                        }
+                            complete = function (jqXHR, status) {
+                                if (status === "abort") {
+                                    that.panels.stop(false, true);
+                                }
 
-                        that._removeClass(tab, "ui-tabs-loading");
-                        panel.removeAttr("aria-busy");
+                                that._removeClass(tab, "ui-tabs-loading");
+                                panel.removeAttr("aria-busy");
 
-                        if (jqXHR === that.xhr) {
-                            delete that.xhr;
-                        }
-                    };
+                                if (jqXHR === that.xhr) {
+                                    delete that.xhr;
+                                }
+                            };
 
                     // Not remote
                     if (this._isLocal(anchor[ 0 ])) {
@@ -15689,20 +15689,20 @@
                         }
                     }
                 },
-        propTypes = {
-            "byte": {
-                floor: true,
-                max: 255
-            },
-            "percent": {
-                max: 1
-            },
-            "degrees": {
-                mod: 360,
-                floor: true
-            }
-        },
-        support = color.support = {},
+                propTypes = {
+                    "byte": {
+                        floor: true,
+                        max: 255
+                    },
+                    "percent": {
+                        max: 1
+                    },
+                    "degrees": {
+                        mod: 360,
+                        floor: true
+                    }
+                },
+                support = color.support = {},
                 // Element for support tests
                 supportElem = jQuery("<p>")[ 0 ],
                 // Colors = jQuery.Color.names
@@ -16509,7 +16509,7 @@
                         height: element.outerHeight(true),
                         "float": element.css("float")
                     },
-                    wrapper = $("<div></div>")
+                            wrapper = $("<div></div>")
                             .addClass("ui-effects-wrapper")
                             .css({
                                 fontSize: "100%",
@@ -16523,7 +16523,7 @@
                                 width: element.width(),
                                 height: element.height()
                             },
-                    active = document.activeElement;
+                            active = document.activeElement;
 
                     // Support: Firefox
                     // Firefox incorrectly exposes anonymous content
@@ -17026,7 +17026,7 @@
                             height: target.innerHeight(),
                             width: target.innerWidth()
                         },
-                startPosition = element.offset(),
+                        startPosition = element.offset(),
                         transfer = $("<div class='ui-effects-transfer'></div>")
                         .appendTo("body")
                         .addClass(options.className)
@@ -17162,11 +17162,11 @@
             horizontal: ["right", "left"],
             right: ["left", "right"]
         },
-        element = $(this),
+                element = $(this),
                 direction = options.direction || "up",
                 start = element.cssClip(),
                 animate = {clip: $.extend({}, start)},
-        placeholder = $.effects.createPlaceholder(element);
+                placeholder = $.effects.createPlaceholder(element);
 
         animate.clip[ map[ direction ][ 0 ] ] = animate.clip[ map[ direction ][ 1 ] ];
 
@@ -17550,8 +17550,8 @@
                 placeholder = $.effects.createPlaceholder(element),
                 start = element.cssClip(),
                 animation1 = {clip: $.extend({}, start)},
-        animation2 = {clip: $.extend({}, start)},
-        distance = [start[ ref[ 0 ] ], start[ ref[ 1 ] ]],
+                animation2 = {clip: $.extend({}, start)},
+                distance = [start[ ref[ 0 ] ], start[ ref[ 1 ] ]],
                 queuelen = element.queue().length;
 
         if (percent) {
@@ -17742,12 +17742,12 @@
                             outerHeight: childOriginal.outerHeight * factor.from.y,
                             outerWidth: childOriginal.outerWidth * factor.from.x
                         },
-                childTo = {
-                    height: childOriginal.height * factor.to.y,
-                    width: childOriginal.width * factor.to.x,
-                    outerHeight: childOriginal.height * factor.to.y,
-                    outerWidth: childOriginal.width * factor.to.x
-                };
+                        childTo = {
+                            height: childOriginal.height * factor.to.y,
+                            width: childOriginal.width * factor.to.x,
+                            outerHeight: childOriginal.height * factor.to.y,
+                            outerWidth: childOriginal.width * factor.to.x
+                        };
 
                 // Vertical props scaling
                 if (factor.from.y !== factor.to.y) {
@@ -18008,7 +18008,7 @@
                     left: ["right", "left"],
                     right: ["left", "right"]
                 },
-        mode = options.mode,
+                mode = options.mode,
                 direction = options.direction || "left",
                 ref = (direction === "up" || direction === "down") ? "top" : "left",
                 positiveMotion = (direction === "up" || direction === "left"),

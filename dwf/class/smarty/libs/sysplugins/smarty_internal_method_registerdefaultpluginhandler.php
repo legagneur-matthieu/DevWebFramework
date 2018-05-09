@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_RegisterDefaultPluginHandler
-{
+class Smarty_Internal_Method_RegisterDefaultPluginHandler {
+
     /**
      * Valid for Smarty and template object
      *
@@ -30,8 +30,7 @@ class Smarty_Internal_Method_RegisterDefaultPluginHandler
      * @return \Smarty|\Smarty_Internal_Template
      * @throws SmartyException              if $callback is not callable
      */
-    public function registerDefaultPluginHandler(Smarty_Internal_TemplateBase $obj, $callback)
-    {
+    public function registerDefaultPluginHandler(Smarty_Internal_TemplateBase $obj, $callback) {
         $smarty = isset($obj->smarty) ? $obj->smarty : $obj;
         if (is_callable($callback)) {
             $smarty->default_plugin_handler_func = $callback;
@@ -40,4 +39,5 @@ class Smarty_Internal_Method_RegisterDefaultPluginHandler
         }
         return $obj;
     }
+
 }

@@ -68,7 +68,7 @@ class bdd extends singleton {
      * @return string variable protégé
      */
     public function protect_var($var) {
-        return addslashes(htmlspecialchars(htmlspecialchars_decode($var),ENT_NOQUOTES));
+        return addslashes(htmlspecialchars(htmlspecialchars_decode($var), ENT_NOQUOTES));
     }
 
     /**

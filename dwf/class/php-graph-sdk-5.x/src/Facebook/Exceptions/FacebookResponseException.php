@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\Exceptions;
 
 use Facebook\FacebookResponse;
@@ -30,8 +32,8 @@ use Facebook\FacebookResponse;
  *
  * @package Facebook
  */
-class FacebookResponseException extends FacebookSDKException
-{
+class FacebookResponseException extends FacebookSDKException {
+
     /**
      * @var FacebookResponse The response that threw the exception.
      */
@@ -48,8 +50,7 @@ class FacebookResponseException extends FacebookSDKException
      * @param FacebookResponse     $response          The response that threw the exception.
      * @param FacebookSDKException $previousException The more detailed exception.
      */
-    public function __construct(FacebookResponse $response, FacebookSDKException $previousException = null)
-    {
+    public function __construct(FacebookResponse $response, FacebookSDKException $previousException = null) {
         $this->response = $response;
         $this->responseData = $response->getDecodedBody();
 
@@ -66,8 +67,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return FacebookResponseException
      */
-    public static function create(FacebookResponse $response)
-    {
+    public static function create(FacebookResponse $response) {
         $data = $response->getDecodedBody();
 
         if (!isset($data['error']['code']) && isset($data['code'])) {
@@ -143,8 +143,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return mixed
      */
-    private function get($key, $default = null)
-    {
+    private function get($key, $default = null) {
         if (isset($this->responseData['error'][$key])) {
             return $this->responseData['error'][$key];
         }
@@ -157,8 +156,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return int
      */
-    public function getHttpStatusCode()
-    {
+    public function getHttpStatusCode() {
         return $this->response->getHttpStatusCode();
     }
 
@@ -167,8 +165,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return int
      */
-    public function getSubErrorCode()
-    {
+    public function getSubErrorCode() {
         return $this->get('error_subcode', -1);
     }
 
@@ -177,8 +174,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return string
      */
-    public function getErrorType()
-    {
+    public function getErrorType() {
         return $this->get('type', '');
     }
 
@@ -187,8 +183,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return string
      */
-    public function getRawResponse()
-    {
+    public function getRawResponse() {
         return $this->response->getBody();
     }
 
@@ -197,8 +192,7 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return array
      */
-    public function getResponseData()
-    {
+    public function getResponseData() {
         return $this->responseData;
     }
 
@@ -207,8 +201,8 @@ class FacebookResponseException extends FacebookSDKException
      *
      * @return FacebookResponse
      */
-    public function getResponse()
-    {
+    public function getResponse() {
         return $this->response;
     }
+
 }

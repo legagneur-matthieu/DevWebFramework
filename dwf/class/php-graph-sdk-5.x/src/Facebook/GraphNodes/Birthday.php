@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\GraphNodes;
 
 use DateTime;
@@ -30,8 +32,8 @@ use DateTime;
  *
  * @package Facebook
  */
-class Birthday extends DateTime
-{
+class Birthday extends DateTime {
+
     /**
      * @var bool
      */
@@ -53,8 +55,7 @@ class Birthday extends DateTime
      *
      * @param string $date
      */
-    public function __construct($date)
-    {
+    public function __construct($date) {
         $parts = explode('/', $date);
 
         $this->hasYear = count($parts) === 3 || count($parts) === 1;
@@ -68,8 +69,7 @@ class Birthday extends DateTime
      *
      * @return bool
      */
-    public function hasDate()
-    {
+    public function hasDate() {
         return $this->hasDate;
     }
 
@@ -78,8 +78,8 @@ class Birthday extends DateTime
      *
      * @return bool
      */
-    public function hasYear()
-    {
+    public function hasYear() {
         return $this->hasYear;
     }
+
 }

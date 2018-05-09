@@ -9,8 +9,7 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Undefined
-{
+class Smarty_Internal_Undefined {
 
     /**
      * This function is executed automatically when a compiled or cached template file is included
@@ -23,8 +22,7 @@ class Smarty_Internal_Undefined
      *
      * @return bool flag if compiled or cache file is valid
      */
-    public function decodeProperties(Smarty_Internal_Template $tpl, $properties, $cache = false)
-    {
+    public function decodeProperties(Smarty_Internal_Template $tpl, $properties, $cache = false) {
         if ($cache) {
             $tpl->cached->valid = false;
         } else {
@@ -42,8 +40,8 @@ class Smarty_Internal_Undefined
      * @return mixed
      * @throws SmartyException
      */
-    public function __call($name, $args)
-    {
-        throw new SmartyException(get_class($args[ 0 ]) . "->{$name}() undefined method");
+    public function __call($name, $args) {
+        throw new SmartyException(get_class($args[0]) . "->{$name}() undefined method");
     }
+
 }

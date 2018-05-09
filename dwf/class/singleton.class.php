@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cette classe sert de base pour créer des singleton.
  * Utilisez l'heritage :
@@ -7,6 +8,7 @@
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class singleton {
+
     /**
      * Instances des classes sigleton
      * @var array Instances des classes sigleton

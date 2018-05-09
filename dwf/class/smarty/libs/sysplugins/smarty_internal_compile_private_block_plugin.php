@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty Internal Plugin Compile Block Plugin
  * Compiles code for the execution of block plugin
@@ -14,8 +15,8 @@
  * @package    Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_CompileBase {
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -42,14 +43,13 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
      *
      * @return string compiled code
      */
-    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter, $tag, $function = null)
-    {
-        if (!isset($tag[ 5 ]) || substr($tag, - 5) != 'close') {
+    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter, $tag, $function = null) {
+        if (!isset($tag[5]) || substr($tag, - 5) != 'close') {
             // opening tag of block plugin
             // check and get attributes
             $_attr = $this->getAttributes($compiler, $args);
             $this->nesting ++;
-            unset($_attr[ 'nocache' ]);
+            unset($_attr['nocache']);
             list($callback, $_paramsArray, $callable) = $this->setup($compiler, $_attr, $tag, $function);
             $_params = 'array(' . implode(",", $_paramsArray) . ')';
 
@@ -75,22 +75,21 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
             // closing tag of block plugin, restore nocache
             list($_params, $compiler->nocache, $callback) = $this->closeTag($compiler, substr($tag, 0, - 5));
             //Does tag create output
-            $compiler->has_output = isset($_params[ 'assign' ]) ? false : true;
+            $compiler->has_output = isset($_params['assign']) ? false : true;
             // compile code
-            if (!isset($parameter[ 'modifier_list' ])) {
+            if (!isset($parameter['modifier_list'])) {
                 $mod_pre = $mod_post = $mod_content = '';
                 $mod_content2 = 'ob_get_clean()';
             } else {
                 $mod_content2 = "\$_block_content{$this->nesting}";
                 $mod_content = "\$_block_content{$this->nesting} = ob_get_clean();\n";
                 $mod_pre = "ob_start();\n";
-                $mod_post = 'echo ' . $compiler->compileTag('private_modifier', array(),
-                                                            array('modifierlist' => $parameter[ 'modifier_list' ],
-                                                                  'value' => 'ob_get_clean()')) . ";\n";
+                $mod_post = 'echo ' . $compiler->compileTag('private_modifier', array(), array('modifierlist' => $parameter['modifier_list'],
+                            'value' => 'ob_get_clean()')) . ";\n";
             }
             $output = "<?php " . $mod_content . "\$_block_repeat{$this->nesting}=false;\n" . $mod_pre .
-                      "echo {$callback}({$_params}, " . $mod_content2 .
-                      ", \$_smarty_tpl, \$_block_repeat{$this->nesting});\n" . $mod_post . "}\n";
+                    "echo {$callback}({$_params}, " . $mod_content2 .
+                    ", \$_smarty_tpl, \$_block_repeat{$this->nesting});\n" . $mod_post . "}\n";
             $output .= "array_pop(\$_smarty_tpl->smarty->_cache['_tag_stack']);";
             $output .= "?>";
             $this->nesting --;
@@ -108,8 +107,7 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
      *
      * @return array
      */
-    public function setup(Smarty_Internal_TemplateCompilerBase $compiler, $_attr, $tag, $function)
-    {
+    public function setup(Smarty_Internal_TemplateCompilerBase $compiler, $_attr, $tag, $function) {
         $_paramsArray = array();
         foreach ($_attr as $_key => $_value) {
             if (is_int($_key)) {
@@ -120,4 +118,5 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
         }
         return array($function, $_paramsArray, null);
     }
+
 }

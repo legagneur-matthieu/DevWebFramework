@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Extension_Clear
-{
+class Smarty_Internal_Extension_Clear {
+
     /**
      * Empty cache for a specific template
      *
@@ -22,8 +22,7 @@ class Smarty_Internal_Extension_Clear
      *
      * @return integer number of cache files deleted
      */
-    public static function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time)
-    {
+    public static function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time) {
         $_cache_id = isset($cache_id) ? preg_replace('![^\w\|]+!', '_', $cache_id) : null;
         $_compile_id = isset($compile_id) ? preg_replace('![^\w]+!', '_', $compile_id) : null;
         $_dir_sep = $smarty->use_sub_dirs ? '/' : '^';
@@ -77,13 +76,13 @@ class Smarty_Internal_Extension_Clear
                     $_parts_count = count($_parts);
                     // check name
                     if (isset($resource_name)) {
-                        if ($_parts[ $_parts_count - 1 ] != $_resourcename_parts) {
+                        if ($_parts[$_parts_count - 1] != $_resourcename_parts) {
                             continue;
                         }
                     }
                     // check compile id
-                    if (isset($_compile_id) && (!isset($_parts[ $_parts_count - 2 - $_compile_id_offset ]) ||
-                                                $_parts[ $_parts_count - 2 - $_compile_id_offset ] != $_compile_id)
+                    if (isset($_compile_id) && (!isset($_parts[$_parts_count - 2 - $_compile_id_offset]) ||
+                            $_parts[$_parts_count - 2 - $_compile_id_offset] != $_compile_id)
                     ) {
                         continue;
                     }
@@ -91,12 +90,12 @@ class Smarty_Internal_Extension_Clear
                     if (isset($_cache_id)) {
                         // count of cache id parts
                         $_parts_count = (isset($_compile_id)) ? $_parts_count - 2 - $_compile_id_offset :
-                            $_parts_count - 1 - $_compile_id_offset;
+                                $_parts_count - 1 - $_compile_id_offset;
                         if ($_parts_count < $_cache_id_parts_count) {
                             continue;
                         }
                         for ($i = 0; $i < $_cache_id_parts_count; $i ++) {
-                            if ($_parts[ $i ] != $_cache_id_parts[ $i ]) {
+                            if ($_parts[$i] != $_cache_id_parts[$i]) {
                                 continue 2;
                             }
                         }
@@ -105,7 +104,7 @@ class Smarty_Internal_Extension_Clear
                     if (isset($exp_time)) {
                         if ($exp_time < 0) {
                             preg_match('#\'cache_lifetime\' =>\s*(\d*)#', file_get_contents($_file), $match);
-                            if ($_time < (@filemtime($_file) + $match[ 1 ])) {
+                            if ($_time < (@filemtime($_file) + $match[1])) {
                                 continue;
                             }
                         } else {
@@ -123,4 +122,5 @@ class Smarty_Internal_Extension_Clear
         }
         return $_count;
     }
+
 }

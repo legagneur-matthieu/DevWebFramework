@@ -61,7 +61,7 @@ function asort(inputArr, sort_flags) {
             }
             break
         case 'SORT_REGULAR':
-            // compare items normally (don't change types)
+        // compare items normally (don't change types)
         default:
             sorter = function (a, b) {
                 var aFloat = parseFloat(a),

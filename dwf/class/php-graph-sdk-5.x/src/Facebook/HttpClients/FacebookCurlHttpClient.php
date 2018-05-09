@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\HttpClients;
 
 use Facebook\Http\GraphRawResponse;
@@ -31,8 +33,8 @@ use Facebook\Exceptions\FacebookSDKException;
  *
  * @package Facebook
  */
-class FacebookCurlHttpClient implements FacebookHttpClientInterface
-{
+class FacebookCurlHttpClient implements FacebookHttpClientInterface {
+
     /**
      * @var string The client error message
      */
@@ -56,16 +58,14 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     /**
      * @param FacebookCurl|null Procedural curl as object
      */
-    public function __construct(FacebookCurl $facebookCurl = null)
-    {
+    public function __construct(FacebookCurl $facebookCurl = null) {
         $this->facebookCurl = $facebookCurl ?: new FacebookCurl();
     }
 
     /**
      * @inheritdoc
      */
-    public function send($url, $method, $body, array $headers, $timeOut)
-    {
+    public function send($url, $method, $body, array $headers, $timeOut) {
         $this->openConnection($url, $method, $body, $headers, $timeOut);
         $this->sendRequest();
 
@@ -90,8 +90,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
      * @param array  $headers The request headers.
      * @param int    $timeOut The timeout in seconds for the request.
      */
-    public function openConnection($url, $method, $body, array $headers, $timeOut)
-    {
+    public function openConnection($url, $method, $body, array $headers, $timeOut) {
         $options = [
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_HTTPHEADER => $this->compileRequestHeaders($headers),
@@ -116,16 +115,14 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     /**
      * Closes an existing curl connection
      */
-    public function closeConnection()
-    {
+    public function closeConnection() {
         $this->facebookCurl->close();
     }
 
     /**
      * Send the request and get the raw response from curl
      */
-    public function sendRequest()
-    {
+    public function sendRequest() {
         $this->rawResponse = $this->facebookCurl->exec();
     }
 
@@ -136,8 +133,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
      *
      * @return array
      */
-    public function compileRequestHeaders(array $headers)
-    {
+    public function compileRequestHeaders(array $headers) {
         $return = [];
 
         foreach ($headers as $key => $value) {
@@ -152,12 +148,12 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
      *
      * @return array
      */
-    public function extractResponseHeadersAndBody()
-    {
+    public function extractResponseHeadersAndBody() {
         $parts = explode("\r\n\r\n", $this->rawResponse);
         $rawBody = array_pop($parts);
         $rawHeaders = implode("\r\n\r\n", $parts);
 
         return [trim($rawHeaders), trim($rawBody)];
     }
+
 }

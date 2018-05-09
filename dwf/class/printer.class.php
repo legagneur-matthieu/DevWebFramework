@@ -26,7 +26,7 @@ class printer {
      * 
      * @param string $lib Librairie a utiliser (dompdf ou debug)
      */
-    public function __construct($lib="dompdf") {
+    public function __construct($lib = "dompdf") {
         $this->_lib = $lib;
         $this->init_printer();
     }

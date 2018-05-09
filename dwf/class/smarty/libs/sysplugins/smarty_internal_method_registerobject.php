@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_RegisterObject
-{
+class Smarty_Internal_Method_RegisterObject {
+
     /**
      * Valid for Smarty and template object
      *
@@ -44,9 +44,7 @@ class Smarty_Internal_Method_RegisterObject
      * @return \Smarty|\Smarty_Internal_Template
      * @throws \SmartyException
      */
-    public function registerObject(Smarty_Internal_TemplateBase $obj, $object_name, $object,
-                                   $allowed_methods_properties = array(), $format = true, $block_methods = array())
-    {
+    public function registerObject(Smarty_Internal_TemplateBase $obj, $object_name, $object, $allowed_methods_properties = array(), $format = true, $block_methods = array()) {
         $smarty = isset($obj->smarty) ? $obj->smarty : $obj;
         // test if allowed methods callable
         if (!empty($allowed_methods_properties)) {
@@ -65,8 +63,8 @@ class Smarty_Internal_Method_RegisterObject
             }
         }
         // register the object
-        $smarty->registered_objects[ $object_name ] =
-            array($object, (array) $allowed_methods_properties, (boolean) $format, (array) $block_methods);
+        $smarty->registered_objects[$object_name] = array($object, (array) $allowed_methods_properties, (boolean) $format, (array) $block_methods);
         return $obj;
     }
+
 }

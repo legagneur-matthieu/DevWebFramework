@@ -25,7 +25,7 @@ function strptime(dateStr, format) {
         tm_yday: 0,
         unparsed: ''
     },
-    i = 0,
+            i = 0,
             that = this,
             amPmOffset = 0,
             prevHour = false,
@@ -156,14 +156,14 @@ function strptime(dateStr, format) {
             try {
                 switch (formatChar) {
                     case 'a':
-                        // Fall-through // Sun-Sat
+                    // Fall-through // Sun-Sat
                     case 'A':
                         // Sunday-Saturday
                         // Changes nothing else
                         j = _addLocalized(j, formatChar, 'tm_wday')
                         break
                     case 'h':
-                        // Fall-through (alias of 'b');
+                    // Fall-through (alias of 'b');
                     case 'b':
                         // Jan-Dec
                         j = _addLocalized(j, 'b', 'tm_mon')
@@ -191,7 +191,7 @@ function strptime(dateStr, format) {
                                 })
                         break
                     case 'd':
-                        // Fall-through  01-31 day
+                    // Fall-through  01-31 day
                     case 'e':
                         // 1-31 day
                         j = _addNext(j, formatChar === 'd' ? /^(0[1-9]|[1-2]\d|3[0-1])/ : /^([1-2]\d|3[0-1]|[1-9])/,
@@ -217,7 +217,7 @@ function strptime(dateStr, format) {
                         })
                         break
                     case 'l':
-                        // Fall-through of lower-case 'L'; 1-12 hours
+                    // Fall-through of lower-case 'L'; 1-12 hours
                     case 'I':
                         // 01-12 hours
                         j = _addNext(j, formatChar === 'l' ? /^([1-9]|1[0-2])/ : /^(0[1-9]|1[0-2])/, function (d) {
@@ -289,7 +289,7 @@ function strptime(dateStr, format) {
                                 })
                         break
                     case 'u':
-                        // Fall-through; 1 (Monday)-7(Sunday)
+                    // Fall-through; 1 (Monday)-7(Sunday)
                     case 'w':
                         // 0 (Sunday)-6(Saturday)
                         j = _addNext(j, /^\d/, function (d) {
@@ -298,9 +298,9 @@ function strptime(dateStr, format) {
                         })
                         break
                     case 'U':
-                        // Fall-through (week of year, from 1st Sunday)
+                    // Fall-through (week of year, from 1st Sunday)
                     case 'V':
-                        // Fall-through (ISO-8601:1988 week number; from first 4-weekday week, starting with Monday)
+                    // Fall-through (ISO-8601:1988 week number; from first 4-weekday week, starting with Monday)
                     case 'W':
                         // Apparently ignored (week of year, from 1st Monday)
                         break

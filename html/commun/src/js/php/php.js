@@ -8655,7 +8655,7 @@ PHP.ini = function (contents) {
         param: /^\s*([\w\.\-\_]+)\s*=\s*"?(.*?)"?\s*$/,
         comment: /^\s*;.*$/
     },
-    section = null,
+            section = null,
             value = {};
     contents.toString().split(/\r\n|\r|\n/).forEach(function (line) {
         var match;

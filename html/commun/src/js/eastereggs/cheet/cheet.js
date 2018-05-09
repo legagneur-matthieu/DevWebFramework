@@ -137,7 +137,7 @@
                 period: 190,
                 '.': 190
             },
-    Sequence,
+            Sequence,
             NOOP = function NOOP() {},
             held = {};
 

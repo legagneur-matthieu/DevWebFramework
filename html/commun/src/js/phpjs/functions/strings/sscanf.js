@@ -109,10 +109,10 @@ function sscanf(str, format) {
                 // This would need to be processed later
                 switch (sizeCode) {
                     case 'h':
-                        // Treats subsequent as short int (for d,i,n) or unsigned short int (for o,u,x)
+                    // Treats subsequent as short int (for d,i,n) or unsigned short int (for o,u,x)
                     case 'l':
-                        // Treats subsequent as long int (for d,i,n), or unsigned long int (for o,u,x);
-                        //    or as double (for e,f,g) instead of float or wchar_t instead of char
+                    // Treats subsequent as long int (for d,i,n), or unsigned long int (for o,u,x);
+                    //    or as double (for e,f,g) instead of float or wchar_t instead of char
                     case 'L':
                         // Treats subsequent as long double (for e,f,g)
                         break
@@ -163,7 +163,7 @@ function sscanf(str, format) {
                         j = _addNext(j, new RegExp('.{1,' + (width || 1) + '}'))
                         break
                     case 'D':
-                        // sscanf documented decimal number; equivalent of 'd';
+                    // sscanf documented decimal number; equivalent of 'd';
                     case 'd':
                         // Optionally signed decimal integer
                         j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
@@ -180,9 +180,9 @@ function sscanf(str, format) {
                         })
                         break
                     case 'f':
-                        // Although sscanf doesn't support locales, this is used instead of '%F'; seems to be same as %e
+                    // Although sscanf doesn't support locales, this is used instead of '%F'; seems to be same as %e
                     case 'E':
-                        // These don't discriminate here as both allow exponential float of either case
+                    // These don't discriminate here as both allow exponential float of either case
                     case 'e':
                         j = _addNext(j, /([+-])?(?:0*)(\d*\.?\d*(?:[eE]?\d+)?)/, function (num, sign, dec) {
                             if (dec === '.') {
@@ -218,7 +218,7 @@ function sscanf(str, format) {
                         j = _addNext(j, /\S+/)
                         break
                     case 'X':
-                        // Same as 'x'?
+                    // Same as 'x'?
                     case 'x':
                         // Fix: add overflows as above?
                         // Initial 0x not necessary here

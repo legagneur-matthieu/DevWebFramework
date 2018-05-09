@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
@@ -28,8 +30,8 @@ namespace Facebook\GraphNodes;
  *
  * @package Facebook
  */
-class GraphGroup extends GraphNode
-{
+class GraphGroup extends GraphNode {
+
     /**
      * @var array Maps object key names to GraphNode types.
      */
@@ -43,8 +45,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->getField('id');
     }
 
@@ -53,8 +54,7 @@ class GraphGroup extends GraphNode
      *
      * @return GraphCoverPhoto|null
      */
-    public function getCover()
-    {
+    public function getCover() {
         return $this->getField('cover');
     }
 
@@ -63,8 +63,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->getField('description');
     }
 
@@ -73,8 +72,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->getField('email');
     }
 
@@ -83,8 +81,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getIcon()
-    {
+    public function getIcon() {
         return $this->getField('icon');
     }
 
@@ -93,8 +90,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getLink()
-    {
+    public function getLink() {
         return $this->getField('link');
     }
 
@@ -103,8 +99,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->getField('name');
     }
 
@@ -113,8 +108,7 @@ class GraphGroup extends GraphNode
      *
      * @return int|null
      */
-    public function getMemberRequestCount()
-    {
+    public function getMemberRequestCount() {
         return $this->getField('member_request_count');
     }
 
@@ -123,8 +117,7 @@ class GraphGroup extends GraphNode
      *
      * @return GraphNode|null
      */
-    public function getOwner()
-    {
+    public function getOwner() {
         return $this->getField('owner');
     }
 
@@ -133,8 +126,7 @@ class GraphGroup extends GraphNode
      *
      * @return GraphNode|null
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->getField('parent');
     }
 
@@ -143,8 +135,7 @@ class GraphGroup extends GraphNode
      *
      * @return string|null
      */
-    public function getPrivacy()
-    {
+    public function getPrivacy() {
         return $this->getField('privacy');
     }
 
@@ -153,8 +144,7 @@ class GraphGroup extends GraphNode
      *
      * @return \DateTime|null
      */
-    public function getUpdatedTime()
-    {
+    public function getUpdatedTime() {
         return $this->getField('updated_time');
     }
 
@@ -163,8 +153,8 @@ class GraphGroup extends GraphNode
      *
      * @return GraphLocation|null
      */
-    public function getVenue()
-    {
+    public function getVenue() {
         return $this->getField('venue');
     }
+
 }

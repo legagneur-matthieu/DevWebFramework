@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\PersistentData;
 
 /**
@@ -28,8 +30,8 @@ namespace Facebook\PersistentData;
  *
  * @package Facebook
  */
-interface PersistentDataInterface
-{
+interface PersistentDataInterface {
+
     /**
      * Get a value from a persistent data store.
      *

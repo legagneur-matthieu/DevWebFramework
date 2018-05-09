@@ -5,7 +5,7 @@ var SCREEN_WIDTH = window.innerWidth,
             y: 300
         },
 // create canvas
-canvas = document.createElement('canvas'),
+        canvas = document.createElement('canvas'),
         context = canvas.getContext('2d'),
         particles = [],
         rockets = [],

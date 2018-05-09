@@ -21,7 +21,7 @@
                 dialogs = {},
                 isopen = false,
                 keys = {ENTER: 13, ESC: 27, SPACE: 32},
-        queue = [],
+                queue = [],
                 $, btnCancel, btnOK, btnReset, btnResetBack, btnFocus, elCallee, elCover, elDialog, elLog, form, input, getTransitionEvent;
 
         /**

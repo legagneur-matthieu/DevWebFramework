@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty Internal Plugin Compile Capture
  * Compiles the {capture} tag
@@ -14,8 +15,8 @@
  * @package    Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase {
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -42,10 +43,9 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
      * @return string compiled code
      * @throws \SmartyCompilerException
      */
-    public static function compileSpecialVariable($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter = null)
-    {
-        $tag = trim($parameter[ 0 ], '"\'');
-        $name = isset($parameter[ 1 ]) ? $compiler->getId($parameter[ 1 ]) : false;
+    public static function compileSpecialVariable($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter = null) {
+        $tag = trim($parameter[0], '"\'');
+        $name = isset($parameter[1]) ? $compiler->getId($parameter[1]) : false;
         if (!$name) {
             $compiler->trigger_template_error("missing or illegal \$smarty.{$tag} name attribute", null, true);
         }
@@ -61,22 +61,22 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
      *
      * @return string compiled code
      */
-    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter = null)
-    {
+    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter = null) {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args, $parameter, 'capture');
 
-        $buffer = isset($_attr[ 'name' ]) ? $_attr[ 'name' ] : "'default'";
-        $assign = isset($_attr[ 'assign' ]) ? $_attr[ 'assign' ] : 'null';
-        $append = isset($_attr[ 'append' ]) ? $_attr[ 'append' ] : 'null';
+        $buffer = isset($_attr['name']) ? $_attr['name'] : "'default'";
+        $assign = isset($_attr['assign']) ? $_attr['assign'] : 'null';
+        $append = isset($_attr['append']) ? $_attr['append'] : 'null';
 
-        $compiler->_cache[ 'capture_stack' ][] = array($compiler->nocache);
+        $compiler->_cache['capture_stack'][] = array($compiler->nocache);
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
         $_output = "<?php \$_smarty_tpl->smarty->ext->_capture->open(\$_smarty_tpl, $buffer, $assign, $append);\n?>\n";
 
         return $_output;
     }
+
 }
 
 /**
@@ -85,8 +85,8 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
  * @package    Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase {
+
     /**
      * Compiles code for the {/capture} tag
      *
@@ -96,8 +96,7 @@ class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
      *
      * @return string compiled code
      */
-    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter)
-    {
+    public function compile($args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter) {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args, $parameter, '/capture');
         // must endblock be nocache?
@@ -105,8 +104,9 @@ class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
             $compiler->tag_nocache = true;
         }
 
-        list($compiler->nocache) = array_pop($compiler->_cache[ 'capture_stack' ]);
+        list($compiler->nocache) = array_pop($compiler->_cache['capture_stack']);
 
         return "<?php \$_smarty_tpl->smarty->ext->_capture->close(\$_smarty_tpl);\n?>\n";
     }
+
 }

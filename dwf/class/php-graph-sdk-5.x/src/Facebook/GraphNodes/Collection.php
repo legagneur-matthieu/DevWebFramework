@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
@@ -30,14 +32,13 @@ namespace Facebook\GraphNodes;
  *
  * @package Facebook
  */
-
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 
-class Collection implements ArrayAccess, Countable, IteratorAggregate
-{
+class Collection implements ArrayAccess, Countable, IteratorAggregate {
+
     /**
      * The items contained in the collection.
      *
@@ -50,8 +51,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @param array $items
      */
-    public function __construct(array $items = [])
-    {
+    public function __construct(array $items = []) {
         $this->items = $items;
     }
 
@@ -63,8 +63,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function getField($name, $default = null)
-    {
+    public function getField($name, $default = null) {
         if (isset($this->items[$name])) {
             return $this->items[$name];
         }
@@ -83,8 +82,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * @deprecated 5.0.0 getProperty() has been renamed to getField()
      * @todo v6: Remove this method
      */
-    public function getProperty($name, $default = null)
-    {
+    public function getProperty($name, $default = null) {
         return $this->getField($name, $default);
     }
 
@@ -93,8 +91,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return array
      */
-    public function getFieldNames()
-    {
+    public function getFieldNames() {
         return array_keys($this->items);
     }
 
@@ -106,8 +103,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * @deprecated 5.0.0 getPropertyNames() has been renamed to getFieldNames()
      * @todo v6: Remove this method
      */
-    public function getPropertyNames()
-    {
+    public function getPropertyNames() {
         return $this->getFieldNames();
     }
 
@@ -116,8 +112,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return array
      */
-    public function all()
-    {
+    public function all() {
         return $this->items;
     }
 
@@ -126,8 +121,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return array
      */
-    public function asArray()
-    {
+    public function asArray() {
         return array_map(function ($value) {
             return $value instanceof Collection ? $value->asArray() : $value;
         }, $this->items);
@@ -140,8 +134,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return static
      */
-    public function map(\Closure $callback)
-    {
+    public function map(\Closure $callback) {
         return new static(array_map($callback, $this->items, array_keys($this->items)));
     }
 
@@ -152,8 +145,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return string
      */
-    public function asJson($options = 0)
-    {
+    public function asJson($options = 0) {
         return json_encode($this->asArray(), $options);
     }
 
@@ -162,8 +154,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return int
      */
-    public function count()
-    {
+    public function count() {
         return count($this->items);
     }
 
@@ -172,8 +163,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return ArrayIterator
      */
-    public function getIterator()
-    {
+    public function getIterator() {
         return new ArrayIterator($this->items);
     }
 
@@ -184,8 +174,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return bool
      */
-    public function offsetExists($key)
-    {
+    public function offsetExists($key) {
         return array_key_exists($key, $this->items);
     }
 
@@ -196,8 +185,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function offsetGet($key)
-    {
+    public function offsetGet($key) {
         return $this->items[$key];
     }
 
@@ -209,8 +197,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return void
      */
-    public function offsetSet($key, $value)
-    {
+    public function offsetSet($key, $value) {
         if (is_null($key)) {
             $this->items[] = $value;
         } else {
@@ -225,8 +212,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return void
      */
-    public function offsetUnset($key)
-    {
+    public function offsetUnset($key) {
         unset($this->items[$key]);
     }
 
@@ -235,8 +221,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->asJson();
     }
+
 }

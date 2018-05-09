@@ -102,7 +102,7 @@ function _phpjs_shared_bc() {
             } else { /* subtraction must be done. */
                 cmp_res = libbcmath._bc_do_compare(n1, n2, false, false) /* Compare magnitudes. */
                 switch (cmp_res) {
-                    case -1:
+                    case - 1:
                         /* n1 is less than n2, subtract n1 from n2. */
                         sum = libbcmath._bc_do_sub(n2, n1, scale_min)
                         sum.n_sign = n2.n_sign
@@ -713,7 +713,7 @@ function _phpjs_shared_bc() {
                 /* Compare magnitudes. */
                 cmp_res = libbcmath._bc_do_compare(n1, n2, false, false)
                 switch (cmp_res) {
-                    case -1:
+                    case - 1:
                         /* n1 is less than n2, subtract n1 from n2. */
                         diff = libbcmath._bc_do_sub(n2, n1, scale_min)
                         diff.n_sign = (n2.n_sign == libbcmath.PLUS ? libbcmath.MINUS : libbcmath.PLUS)
@@ -1244,7 +1244,7 @@ function array() {
                     },
                     constructor: function (that) {
                         var i = Stack.indexOf(that)
-                                ~i ? Array[i] : Array[Stack.push(that) - 1] = {}
+                        ~i ? Array[i] : Array[Stack.push(that) - 1] = {}
                         this.method(that)
                                 .that = that
                         return this.method(that)
@@ -3766,7 +3766,7 @@ function array() {
                             }
                             break
                         case 'SORT_REGULAR':
-                            // compare items normally (don't change types)
+                        // compare items normally (don't change types)
                         default:
                             sorter = function (b, a) {
                                 var aFloat = parseFloat(a),
@@ -3876,7 +3876,7 @@ function array() {
                             }
                             break
                         case 'SORT_REGULAR':
-                            // compare items normally (don't change types)
+                        // compare items normally (don't change types)
                         default:
                             sorter = function (a, b) {
                                 var aFloat = parseFloat(a),
@@ -4301,7 +4301,7 @@ function array() {
                             }
                             break
                         case 'SORT_REGULAR':
-                            // compare items normally (don't change types)
+                        // compare items normally (don't change types)
                         default:
                             sorter = function (b, a) {
                                 var aFloat = parseFloat(a),
@@ -4815,7 +4815,7 @@ function array() {
                             }
                             break
                         case 'SORT_REGULAR':
-                            // compare items normally (don't change types)
+                        // compare items normally (don't change types)
                         default:
                             sorter = function (b, a) {
                                 var aFloat = parseFloat(a),
@@ -4997,7 +4997,7 @@ function array() {
                             }
                             break
                         case 'SORT_REGULAR':
-                            // compare items normally (don't change types)
+                        // compare items normally (don't change types)
                         default:
                             sorter = function (a, b) {
                                 var aFloat = parseFloat(a),
@@ -6589,7 +6589,7 @@ function array() {
                         tm_yday: 0,
                         unparsed: ''
                     },
-                    i = 0,
+                            i = 0,
                             that = this,
                             amPmOffset = 0,
                             prevHour = false,
@@ -6720,14 +6720,14 @@ function array() {
                             try {
                                 switch (formatChar) {
                                     case 'a':
-                                        // Fall-through // Sun-Sat
+                                    // Fall-through // Sun-Sat
                                     case 'A':
                                         // Sunday-Saturday
                                         // Changes nothing else
                                         j = _addLocalized(j, formatChar, 'tm_wday')
                                         break
                                     case 'h':
-                                        // Fall-through (alias of 'b');
+                                    // Fall-through (alias of 'b');
                                     case 'b':
                                         // Jan-Dec
                                         j = _addLocalized(j, 'b', 'tm_mon')
@@ -6755,7 +6755,7 @@ function array() {
                                                 })
                                         break
                                     case 'd':
-                                        // Fall-through  01-31 day
+                                    // Fall-through  01-31 day
                                     case 'e':
                                         // 1-31 day
                                         j = _addNext(j, formatChar === 'd' ? /^(0[1-9]|[1-2]\d|3[0-1])/ : /^([1-2]\d|3[0-1]|[1-9])/,
@@ -6781,7 +6781,7 @@ function array() {
                                         })
                                         break
                                     case 'l':
-                                        // Fall-through of lower-case 'L'; 1-12 hours
+                                    // Fall-through of lower-case 'L'; 1-12 hours
                                     case 'I':
                                         // 01-12 hours
                                         j = _addNext(j, formatChar === 'l' ? /^([1-9]|1[0-2])/ : /^(0[1-9]|1[0-2])/, function (d) {
@@ -6853,7 +6853,7 @@ function array() {
                                                 })
                                         break
                                     case 'u':
-                                        // Fall-through; 1 (Monday)-7(Sunday)
+                                    // Fall-through; 1 (Monday)-7(Sunday)
                                     case 'w':
                                         // 0 (Sunday)-6(Saturday)
                                         j = _addNext(j, /^\d/, function (d) {
@@ -6862,9 +6862,9 @@ function array() {
                                         })
                                         break
                                     case 'U':
-                                        // Fall-through (week of year, from 1st Sunday)
+                                    // Fall-through (week of year, from 1st Sunday)
                                     case 'V':
-                                        // Fall-through (ISO-8601:1988 week number; from first 4-weekday week, starting with Monday)
+                                    // Fall-through (ISO-8601:1988 week number; from first 4-weekday week, starting with Monday)
                                     case 'W':
                                         // Apparently ignored (week of year, from 1st Monday)
                                         break
@@ -8152,22 +8152,22 @@ function array() {
                                 'p': 1,
                                 'pl': 1
                             },
-                    // This function will be called to prepare each version argument.
-                    // It replaces every _, -, and + with a dot.
-                    // It surrounds any nonsequence of numbers/dots with dots.
-                    // It replaces sequences of dots with a single dot.
-                    //    version_compare('4..0', '4.0') == 0
-                    // Important: A string of 0 length needs to be converted into a value
-                    // even less than an unexisting value in vm (-7), hence [-8].
-                    // It's also important to not strip spaces because of this.
-                    //   version_compare('', ' ') == 1
-                    prepVersion = function (v) {
-                        v = ('' + v)
-                                .replace(/[_\-+]/g, '.')
-                        v = v.replace(/([^.\d]+)/g, '.$1.')
-                                .replace(/\.{2,}/g, '.')
-                        return (!v.length ? [-8] : v.split('.'))
-                    },
+                            // This function will be called to prepare each version argument.
+                            // It replaces every _, -, and + with a dot.
+                            // It surrounds any nonsequence of numbers/dots with dots.
+                            // It replaces sequences of dots with a single dot.
+                            //    version_compare('4..0', '4.0') == 0
+                            // Important: A string of 0 length needs to be converted into a value
+                            // even less than an unexisting value in vm (-7), hence [-8].
+                            // It's also important to not strip spaces because of this.
+                            //   version_compare('', ' ') == 1
+                            prepVersion = function (v) {
+                                v = ('' + v)
+                                        .replace(/[_\-+]/g, '.')
+                                v = v.replace(/([^.\d]+)/g, '.$1.')
+                                        .replace(/\.{2,}/g, '.')
+                                return (!v.length ? [-8] : v.split('.'))
+                            },
                             // This converts a version component to a number.
                             // Empty component becomes 0.
                             // Non-numerical component becomes a negative number.
@@ -8443,9 +8443,9 @@ function array() {
                                     gap = mind
                                     return v
                                 case 'undefined':
-                                    // Fall-through
+                                // Fall-through
                                 case 'function':
-                                    // Fall-through
+                                // Fall-through
                                 default:
                                     throw new SyntaxError('json_encode')
                             }
@@ -9406,7 +9406,7 @@ function array() {
                         // Now pack variables: 'quantifier' times 'instruction'
                         switch (instruction) {
                             case 'a':
-                                // NUL-padded string
+                            // NUL-padded string
                             case 'A':
                                 // SPACE-padded string
                                 if (typeof arguments[argumentPointer] === 'undefined') {
@@ -9431,7 +9431,7 @@ function array() {
                                 argumentPointer++
                                 break
                             case 'h':
-                                // Hex string, low nibble first
+                            // Hex string, low nibble first
                             case 'H':
                                 // Hex string, high nibble first
                                 if (typeof arguments[argumentPointer] === 'undefined') {
@@ -9464,7 +9464,7 @@ function array() {
                                 break
 
                             case 'c':
-                                // signed char
+                            // signed char
                             case 'C':
                                 // unsigned char
                                 // c and C is the same in pack
@@ -9482,9 +9482,9 @@ function array() {
                                 break
 
                             case 's':
-                                // signed short (always 16 bit, machine byte order)
+                            // signed short (always 16 bit, machine byte order)
                             case 'S':
-                                // unsigned short (always 16 bit, machine byte order)
+                            // unsigned short (always 16 bit, machine byte order)
                             case 'v':
                                 // s and S is the same in pack
                                 if (quantifier === '*') {
@@ -9518,13 +9518,13 @@ function array() {
                                 break
 
                             case 'i':
-                                // signed integer (machine dependent size and byte order)
+                            // signed integer (machine dependent size and byte order)
                             case 'I':
-                                // unsigned integer (machine dependent size and byte order)
+                            // unsigned integer (machine dependent size and byte order)
                             case 'l':
-                                // signed long (always 32 bit, machine byte order)
+                            // signed long (always 32 bit, machine byte order)
                             case 'L':
-                                // unsigned long (always 32 bit, machine byte order)
+                            // unsigned long (always 32 bit, machine byte order)
                             case 'V':
                                 // unsigned long (always 32 bit, little endian byte order)
                                 if (quantifier === '*') {
@@ -9562,7 +9562,7 @@ function array() {
                                 break
 
                             case 'f':
-                                // float (machine dependent size and representation)
+                            // float (machine dependent size and representation)
                             case 'd':
                                 // double (machine dependent size and representation)
                                 // version based on IEEE754
@@ -12458,7 +12458,7 @@ function array() {
                             case 'T_FMT_AMPM':
                                 return loc.LC_TIME.r
                             case 'ERA':
-                                // all fall-throughs
+                            // all fall-throughs
                             case 'ERA_YEAR':
                             case 'ERA_D_T_FMT':
                             case 'ERA_D_FMT':
@@ -12472,7 +12472,7 @@ function array() {
                         }
                         switch (item) {
                             case 'INT_CURR_SYMBOL':
-                                // all fall-throughs
+                            // all fall-throughs
                             case 'CURRENCY_SYMBOL':
                             case 'MON_DECIMAL_POINT':
                             case 'MON_THOUSANDS_SEP':
@@ -12494,11 +12494,11 @@ function array() {
                         loc = this.php_js.locales[this.php_js.localeCategories.LC_NUMERIC]
                         switch (item) {
                             case 'RADIXCHAR':
-                                // Fall-through
+                            // Fall-through
                             case 'DECIMAL_POINT':
                                 return loc.LC_NUMERIC[item.toLowerCase()]
                             case 'THOUSEP':
-                                // Fall-through
+                            // Fall-through
                             case 'THOUSANDS_SEP':
                                 return loc.LC_NUMERIC[item.toLowerCase()]
                             case 'GROUPING':
@@ -12508,7 +12508,7 @@ function array() {
                         loc = this.php_js.locales[this.php_js.localeCategories.LC_MESSAGES]
                         switch (item) {
                             case 'YESEXPR':
-                                // all fall-throughs
+                            // all fall-throughs
                             case 'NOEXPR':
                             case 'YESSTR':
                             case 'NOSTR':
@@ -13507,7 +13507,7 @@ function array() {
                                 N: 5,
                                 R: 6
                             },
-                    i = 0,
+                            i = 0,
                             j, s = 0,
                             c, p
 
@@ -13835,10 +13835,10 @@ function array() {
                                 // This would need to be processed later
                                 switch (sizeCode) {
                                     case 'h':
-                                        // Treats subsequent as short int (for d,i,n) or unsigned short int (for o,u,x)
+                                    // Treats subsequent as short int (for d,i,n) or unsigned short int (for o,u,x)
                                     case 'l':
-                                        // Treats subsequent as long int (for d,i,n), or unsigned long int (for o,u,x);
-                                        //    or as double (for e,f,g) instead of float or wchar_t instead of char
+                                    // Treats subsequent as long int (for d,i,n), or unsigned long int (for o,u,x);
+                                    //    or as double (for e,f,g) instead of float or wchar_t instead of char
                                     case 'L':
                                         // Treats subsequent as long double (for e,f,g)
                                         break
@@ -13889,7 +13889,7 @@ function array() {
                                         j = _addNext(j, new RegExp('.{1,' + (width || 1) + '}'))
                                         break
                                     case 'D':
-                                        // sscanf documented decimal number; equivalent of 'd';
+                                    // sscanf documented decimal number; equivalent of 'd';
                                     case 'd':
                                         // Optionally signed decimal integer
                                         j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
@@ -13906,9 +13906,9 @@ function array() {
                                         })
                                         break
                                     case 'f':
-                                        // Although sscanf doesn't support locales, this is used instead of '%F'; seems to be same as %e
+                                    // Although sscanf doesn't support locales, this is used instead of '%F'; seems to be same as %e
                                     case 'E':
-                                        // These don't discriminate here as both allow exponential float of either case
+                                    // These don't discriminate here as both allow exponential float of either case
                                     case 'e':
                                         j = _addNext(j, /([+-])?(?:0*)(\d*\.?\d*(?:[eE]?\d+)?)/, function (num, sign, dec) {
                                             if (dec === '.') {
@@ -13944,7 +13944,7 @@ function array() {
                                         j = _addNext(j, /\S+/)
                                         break
                                     case 'X':
-                                        // Same as 'x'?
+                                    // Same as 'x'?
                                     case 'x':
                                         // Fix: add overflows as above?
                                         // Initial 0x not necessary here
@@ -15517,8 +15517,8 @@ function array() {
                                     }
                                     // Fall-through
                                 case 'off':
-                                    // assumes there are no non-BMP characters;
-                                    //    if there may be such characters, then it is best to turn it on (critical in true XHTML/XML)
+                                // assumes there are no non-BMP characters;
+                                //    if there may be such characters, then it is best to turn it on (critical in true XHTML/XML)
                                 default:
                                     if (start < 0) {
                                         start += end
@@ -17023,7 +17023,7 @@ function array() {
                                                     val += ':' + count + ':{' + vals + '}'
                                                     break
                                                 case 'undefined':
-                                                    // Fall-through
+                                                // Fall-through
                                                 default:
                                                     // if the JS object has a property which contains a null value, the string cannot be unserialized by PHP
                                                     val = 'N'

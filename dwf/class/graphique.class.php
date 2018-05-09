@@ -8,7 +8,7 @@
 class graphique {
 
     /**
-     *Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
+     * Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
      * @var boolean Permet de vérifier que la librairie flot a bien été appelée qu'une fois.
      */
     private static $_called = false;

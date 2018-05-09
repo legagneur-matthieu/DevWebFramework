@@ -37,7 +37,7 @@ class syntaxhighlighter {
                     SyntaxHighlighter.config.tagName = "code";
                     SyntaxHighlighter.defaults['toolbar'] = false;
                     SyntaxHighlighter.all();
-                }); </script> 
+                });</script> 
             <?php
             self::$_called = true;
         }

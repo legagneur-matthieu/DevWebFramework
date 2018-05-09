@@ -1139,7 +1139,7 @@ class QRinputItem {
             $bs->appendNum(4, 0x8);
             $bs->appendNum(QRspec::lengthIndicator(QR_MODE_KANJI, $version), (int) ($this->size / 2));
 
-            for ($i = 0; $i < $this->size; $i+=2) {
+            for ($i = 0; $i < $this->size; $i += 2) {
                 $val = (ord($this->data[$i]) << 8) | ord($this->data[$i + 1]);
                 if ($val <= 0x9ffc) {
                     $val -= 0x8140;
@@ -1453,7 +1453,7 @@ class QRinput {
         if ($size & 1)
             return false;
 
-        for ($i = 0; $i < $size; $i+=2) {
+        for ($i = 0; $i < $size; $i += 2) {
             $val = (ord($data[$i]) << 8) | ord($data[$i + 1]);
             if ($val < 0x8140 || ($val > 0x9ffc && $val < 0xe040) || $val > 0xebbf) {
                 return false;

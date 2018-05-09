@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -21,6 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\FileUpload;
 
 use Facebook\Authentication\AccessToken;
@@ -36,8 +38,8 @@ use Facebook\FacebookRequest;
  *
  * @package Facebook
  */
-class FacebookResumableUploader
-{
+class FacebookResumableUploader {
+
     /**
      * @var FacebookApp
      */
@@ -64,8 +66,7 @@ class FacebookResumableUploader
      * @param AccessToken|string|null $accessToken
      * @param string                  $graphVersion
      */
-    public function __construct(FacebookApp $app, FacebookClient $client, $accessToken, $graphVersion)
-    {
+    public function __construct(FacebookApp $app, FacebookClient $client, $accessToken, $graphVersion) {
         $this->app = $app;
         $this->client = $client;
         $this->accessToken = $accessToken;
@@ -82,8 +83,7 @@ class FacebookResumableUploader
      *
      * @throws FacebookSDKException
      */
-    public function start($endpoint, FacebookFile $file)
-    {
+    public function start($endpoint, FacebookFile $file) {
         $params = [
             'upload_phase' => 'start',
             'file_size' => $file->getSize(),
@@ -104,8 +104,7 @@ class FacebookResumableUploader
      *
      * @throws FacebookResponseException
      */
-    public function transfer($endpoint, FacebookTransferChunk $chunk, $allowToThrow = false)
-    {
+    public function transfer($endpoint, FacebookTransferChunk $chunk, $allowToThrow = false) {
         $params = [
             'upload_phase' => 'transfer',
             'upload_session_id' => $chunk->getUploadSessionId(),
@@ -139,8 +138,7 @@ class FacebookResumableUploader
      *
      * @throws FacebookSDKException
      */
-    public function finish($endpoint, $uploadSessionId, $metadata = [])
-    {
+    public function finish($endpoint, $uploadSessionId, $metadata = []) {
         $params = array_merge($metadata, [
             'upload_phase' => 'finish',
             'upload_session_id' => $uploadSessionId,
@@ -158,10 +156,10 @@ class FacebookResumableUploader
      *
      * @return array
      */
-    private function sendUploadRequest($endpoint, $params = [])
-    {
+    private function sendUploadRequest($endpoint, $params = []) {
         $request = new FacebookRequest($this->app, $this->accessToken, 'POST', $endpoint, $params, null, $this->graphVersion);
 
         return $this->client->sendRequest($request)->getDecodedBody();
     }
+
 }

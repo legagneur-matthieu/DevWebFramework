@@ -53,7 +53,7 @@ class parcour_sites {
                                 <p>
                                     <a href="commun/new_app.php"> <span class="glyphicon glyphicon-plus"></span> Ajouter un projet</a> <br />
                                     <a href="http://localhost/phpmyadmin/"> <span class="glyphicon glyphicon-hdd"></span> PHPMyAdmin</a> <br />
-                                    <a href="index.php?check_update=1"> <span class="glyphicon glyphicon-cloud-download"></span> Mise à jour de DWF (Requière GIT)</a>
+                                    <a href="index.php?check_update=1"> <span class="glyphicon glyphicon-cloud-download"></span> Mise à jour de DWF (Requiert GIT)</a>
                                 </p>
                             </div>
                             <div class="col-sm-4"></div>

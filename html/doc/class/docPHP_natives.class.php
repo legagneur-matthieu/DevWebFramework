@@ -419,7 +419,7 @@ class docPHP_natives {
     }
 
     private function entity_model() {
-        ?><p>Cettle classe permet d'afficher des pseudo MCD a partir de vos entitées</p><?php
+        ?><p>Cettle classe permet d'afficher des pseudo MCD a partir de vos entités</p><?php
         js::syntaxhighlighter("<?php\n"
                 . "//Exemple avec la petite structure vu dans 'Entity'\n\n"
                 . "//Affiche un pseudo MCD sous forme de tableau HTML\n"

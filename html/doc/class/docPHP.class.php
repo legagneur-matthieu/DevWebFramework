@@ -423,11 +423,11 @@ class docPHP {
         </p>
         <h4>Les types de champ/attribut</h4>
         <?php
-        echo html_structures::table(["Type (code PHP)","Type (SQL)","Description"], [
-            ["int, integer","int(11)","un champ de nombre entier"],
-            ["string","text","un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
-            ["mail","text","un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de donnée"],
-            ["array","text","(depuis la version 21.18.03) un champ de texte JSON, les converssions de array (coté PHP) en JSON (coté SQL) et inversement son géré en PHP par l'entité. <br />"
+        echo html_structures::table(["Type (code PHP)", "Type (SQL)", "Description"], [
+            ["int, integer", "int(11)", "un champ de nombre entier"],
+            ["string", "text", "un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
+            ["mail", "text", "un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de donnée"],
+            ["array", "text", "(depuis la version 21.18.03) un champ de texte JSON, les converssions de array (coté PHP) en JSON (coté SQL) et inversement son géré en PHP par l'entité. <br />"
                 . "Inutile donc d'utiliser json_encode() et json_decode()"],
         ]);
     }

@@ -31,7 +31,8 @@ class mail {
         }
         $this->_phpmailer = new \PHPMailer\PHPMailer\PHPMailer(true);
         $this->_phpmailer->Host = config::$_SMTP_host;
-        if ($this->_phpmailer->SMTPAuth = config::$_SMTP_auth) {
+        $this->_phpmailer->SMTPAuth = config::$_SMTP_auth;
+        if (config::$_SMTP_auth) {
             $this->_phpmailer->Username = config::$_SMTP_login;
             $this->_phpmailer->Password = config::$_SMTP_psw;
         }
@@ -40,6 +41,14 @@ class mail {
         $this->_phpmailer->IsSMTP();
         $this->_phpmailer->IsHTML();
         $this->_phpmailer->CharSet = "utf-8";
+    }
+
+    /**
+     * Permet d'accèder aux methodes et attributs de PHPMailer 
+     * @return \PHPMailer\PHPMailer\PHPMailer
+     */
+    public function get_phpmailer() {
+        return $this->_phpmailer;
     }
 
     /**
@@ -59,6 +68,7 @@ class mail {
         $this->_phpmailer->Body = $message;
         $send = $this->_phpmailer->Send();
         $this->_phpmailer->ClearAddresses();
+        $this->_phpmailer->clearCCs();
         return $send;
     }
 
@@ -69,6 +79,22 @@ class mail {
      */
     public function join_file($path, $name = "") {
         $this->_phpmailer->addAttachment($path, $name);
+    }
+
+    /**
+     * Supprimes les pieces jointes du mail
+     */
+    public function unjoin_files() {
+        $this->_phpmailer->clearAttachments();
+    }
+
+    /**
+     * Ajoute un destinataire en copie
+     * @param string $address Adresse mail du destinataire en copie
+     * @param string $name Nom du destinataire en copie
+     */
+    public function add_cc($address, $name = "") {
+        $this->_phpmailer->addCC($address, $name);
     }
 
 }

@@ -691,6 +691,10 @@ class form {
         <?php
     }
 
+    public static function jSignature($id, $label = "Signature", $dataformat = "svgbase64") {
+        new jSignature($id,$label, $dataformat);
+    }
+
     /**
      * Ouvre un fieldset avec une légende pour un formulaire ou une partie de formuaire, <br />
      * ce ferme avec close_fieldset(), les fieldset peuvent être imbriqués (attention aux fermetures !)

@@ -17,7 +17,7 @@ class print_pdf {
             case "dompdf":
                 include_once '../../dwf/class/dompdf/autoload.inc.php';
                 $dompdf = new \Dompdf\Dompdf();
-                $dompdf->load_html(utf8_encode($content));
+                $dompdf->load_html($content);
                 ob_end_clean();
                 $dompdf->render();
                 $dompdf->stream("printer.pdf", array('Attachment' => 0));

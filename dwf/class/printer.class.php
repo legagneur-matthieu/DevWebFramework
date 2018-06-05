@@ -37,7 +37,7 @@ class printer {
     private function init_printer() {
         switch ($this->_lib) {
             case "dompdf":
-                $this->_content = '<html><body>';
+                $this->_content = '<html><head><meta charset="UTF-8"></head><body>';
                 break;
         }
     }
@@ -70,7 +70,7 @@ class printer {
         ?>
         <form action="../commun/printer.php" target="_blank" method="post">
             <div class="form-group">
-                <input type="hidden" class="form-control" name="content" value="<?php echo base64_encode($this->return_content()) ?>" />
+                <input type="hidden" class="form-control" name="content" value="<?php echo base64_encode(($this->return_content())) ?>" />
                 <input type="hidden" class="form-control" name="lib" value="<?php echo $this->_lib; ?>" />
                 <input type="submit" class="btn btn-default" value="Version imprimable (PDF)" />
             </div>

@@ -1,14 +1,26 @@
 <?php
 
 /**
- * Description of jSignature
- *
+ * Créé un champs de formulaire pour les signatures numeriques
+ * Peut être appelé depuis la methode statique form::jSignature()
+ * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class jSignature {
 
+    /**
+     * Permet de vérifier que la librairie jSignature a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie jSignature a bien été appelée qu'une fois.
+     */
     private static $_called = false;
 
+    /**
+     * Créé un champs de formulaire pour les signatures numeriques
+     * 
+     * @param string $id id CSS pour jSignature
+     * @param string $label Label
+     * @param string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30
+     */
     public function __construct($id, $label = "Signature", $dataformat = "svgbase64") {
         if (!self::$_called) {
             ?>

@@ -691,6 +691,13 @@ class form {
         <?php
     }
 
+    /**
+     * Créé un champs de formulaire pour les signatures numeriques
+     * 
+     * @param string $id id CSS pour jSignature
+     * @param string $label Label
+     * @param string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30
+     */
     public static function jSignature($id, $label = "Signature", $dataformat = "svgbase64") {
         new jSignature($id,$label, $dataformat);
     }

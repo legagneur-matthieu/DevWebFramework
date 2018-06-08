@@ -38,6 +38,7 @@ class docTiers {
             ["Html2pdf", "Laurent MINGUET", "PHP", $licences[2]],
             ["JQuery, JQuery-UI", "jQuery Foundation", "JS", $licences[0]],
             ["Jsencrypt.js", "Form.io", "JS", $licences[0]],
+            ["JSignature", "Willowsystems", "JS", $licences[0]],
             ["Leaflet", "Vladimir Agafonkin, CloudMade", "JS", $licences[10] . ", OSMF"],
             ["Modal", "<em>Inconnu</em>", "JS", $licences[10]],
             ["PayPal-PHP-SDK", "PAYPAL INC.", "PHP", $licences[10]],

@@ -193,6 +193,54 @@ class docPHP_natives {
         <?php
     }
 
+    private function check_password() {
+        ?>
+        <p>Cette classe permet d'appliquer une politique de mots de passe</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "if (isset($" . "_POST[\"psw\"])) {\n\n"
+                . "    // Verifie le mot de passe avec la politique suivante ( par défaut) :\n"
+                . "    // - Le mot de passe doit faire au minimum 8 caractères\n"
+                . "    // - Contenir au moins un nombre, une majuscule et une minuscule\n"
+                . "    // - L'utilisation de caractères spéciaux est ici facultatif\n"
+                . "    $" . "check = new check_password($" . "_POST[\"psw\"], $" . "minlen = 8, $" . "special = false, $" . "number = true, $" . "upper = true, $" . "lower = true);\n\n"
+                . "    // On verifie si le mot de passe est conforme à la politique de mots de passe\n"
+                . "    if ($" . "check->is_valid()) {\n"
+                . "        //mot de passe ok \n"
+                . "    } else {\n\n"
+                . "        //si le mot de passe n'est pas conforme on affiche un message d'erreur\n"
+                . "        $" . "check->print_errormsg();\n"
+                . "    }\n"
+                . "}\n"
+                . "form::new_form();\n"
+                . "form::input(\"Mot de passe\", \"psw\", \"password\");\n"
+                . "form::submit(\"btn-default\");\n"
+                . "form::close_form();\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Démonstration du message d'erreur (avec au moins un caractère special obligatoire)</p>
+        <?php
+        (new check_password("", 8, true))->print_errormsg();
+        ?>
+        <p>Il est possible de modifier les messages avant d'appeler print_errormsg() :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "check=new check_password('');\n"
+                . "//Modifie le message d'erreur lié à la longueur du mot de passe\n"
+                . "$" . "check->set_errormsg_minlen($" . "msg);\n\n"
+                . "//Modifie le message d'erreur lié au manque de caractère special dans le mot de passe\n"
+                . "$" . "check->set_errormsg_special($" . "msg);\n\n"
+                . "//Modifie le message d'erreur lié au manque de chiffre dans le mot de passe\n"
+                . "$" . "check->set_errormsg_number($" . "msg);\n\n"
+                . "//Modifie le message d'erreur lié au manque de majuscule dans le mot de passe\n"
+                . "$" . "check->set_errormsg_upper($" . "msg);\n\n"
+                . "//Modifie le message d'erreur lié au manque de minuscule dans le mot de passe\n"
+                . "$" . "check->set_errormsg_lower($" . "msg);\n\n"
+                . "//Modifie le message \"Erreur ! votre mot de passe :\"\n"
+                . "$" . "check->print_errormsg($" . "msg);\n"
+                . "?>", $this->_brush);
+    }
+
     private function citations() {
         ?>
         <p>Cette classe affiche une citation célèbre à chaque chargement de page. <br />

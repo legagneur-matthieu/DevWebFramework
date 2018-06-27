@@ -1131,6 +1131,53 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function pseudo_cron() {
+        ?>
+        <p>Cette classe permet de lancer des "pseudo cron", <br />
+            contairement à des vrais cron qui s'executent a des heures fixes planifié par le sistème, <br />
+            ici les pseudo cron s'executent : lors d'une activité utilisateur et si il n'a pas été executé depuis un certain temps définis</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "// Instanciation du sistème de pseudo cron en utilisant un registre json (ou SQL par defaut)\n"
+                . "$" . "pcron = new pseudo_cron('json');\n\n"
+                . "// Execute la fonction lors d'une activité utilisateur \n"
+                . "// et si la fonction n'a pas été appelé au cours des dernières 24 heurs (86400 secondes) \n"
+                . "$" . "nom = 'world';\n"
+                . "$" . "pcron->fn(86400, function($" . "nom){\n"
+                . "    echo 'hello '.$" . "nom;\n"
+                . "},[$" . "nom]);\n\n"
+                . "// Ou même fonction en utilisant le \"use\" \n"
+                . "$" . "nom = 'world';\n"
+                . "$" . "pcron->fn(86400, function() use ($" . "nom){\n"
+                . "    echo 'hello '.$" . "nom;\n"
+                . "});\n\n"
+                . "// si la fonction retourne un resultat il peut être récupéré,\n"
+                . "// si la fonction n'est pas executé fn() retourne null\n"
+                . "$" . "result = $" . "pcron->fn(86400, function(){return 'hello world';});\n"
+                . "if($" . "result !== null){\n"
+                . "    echo $" . "result;\n"
+                . "}\n\n"
+                . "// Execute un fichier (toujours dans les mêmes conditions)\n"
+                . "// le fichier est executé dans une console !\n"
+                . "$" . "pcron->file(86400,'mon_chemain/mon_script.php');\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>L'intéret des cron étant de pouvoir lancer des operations lourdes a un rithme régulié sans ralentir l'utilisateur <br />
+            il est possible de lancer un pseudo cron de façon "asynchrone" en utilisant un service et la methode service::HTTP_POST().
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "(new pseudo_cron())->fn(86400,function(){\n"
+                . "    service::HTTP_POST(\"http://localhost/mon_projet/services/index.php\", [\"service\"=>\"mon_service\"]);\n"
+                . "});\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Les pseudo cron sont renseigné dans un registe ( soit un fichier json soit une table en base de donnée ) <br />
+            une entré est supprimé si elle n'est pas mise a jour (executé) pendant 1 an, cette durée peut être modifié via la methode</p>
+        <?php
+        js::syntaxhighlighter("<?php (new pseudo_cron())->set_clear(31536000); ?>", $this->_brush);
+    }
+
     private function ratioblocks() {
         ?>
         <p>Cette classe permet d'afficher un bloc css avec les proportions passées en paramètres.</p>

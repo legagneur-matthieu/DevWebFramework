@@ -399,7 +399,7 @@ class docPHP {
                 . "//récuperer tout les rang sous forme de table ordoné par leur ID (les id sont les clé du tableau)\n"
                 . "$" . "rangs = rang::get_table_ordored_array();\n"
                 . "echo $" . "rangs[1]['nom']; //affiche le nom du rang ayant l'identifiant 1\n\n"
-                . "//récuperer les utilisateur sous forme de colection (tableau d'objet)\n"
+                . "//récuperer les utilisateur sous forme de collection (tableau d'objet)\n"
                 . "//DECONSEILLÉ ! potentiellement lourd !\n"
                 . "$" . "users = user::get_collection();\n"
                 . "echo $" . "users[0]->get_rang()->get_nom(); //affiche le nom du rang du premier utilisateur de la table\n\n"
@@ -598,7 +598,7 @@ class docPHP {
         <h4>Les CLI métiers</h4>   
         <p>Les CLI métier sont beaucoup moins contraignant ils peuvent étre placé dans le dossier "class" de votre projet ou dans un sous dossier que vous aurez créé <br />
             <strong>html/<em>[votre-projet]</em>/class/cli</strong> par exemple,<br />
-            il est romandé (mais pas obligatoire) de nommer le fichier en <strong>.cli.php</strong> <br />
+            il est recommandé (mais pas obligatoire) de nommer le fichier en <strong>.cli.php</strong> <br />
             ne le nommez pas en <strong>.class.php</strong> ! ou le CLI rentrerait en interaction avec l'application "web"
         </p>
         <p>il est recomendé de charger et utilisé la classe "cli" dans vos CLI métier, comme ceci :</p>

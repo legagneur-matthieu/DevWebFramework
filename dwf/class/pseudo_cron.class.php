@@ -37,18 +37,7 @@ class pseudo_cron {
     public function __construct($db = "sql") {
         $this->_db = $db;
         switch ($db) {
-            case "sql":
-                entity_generator::generate([
-                    "pcron" => [
-                        ["id", "int", true],
-                        ["hkey", "string", false],
-                        ["mt", "string", false],
-                    ]
-                ]);
-                $this->_pcron = pcron::get_table_array();
-                break;
             case "json":
-            default:
                 if (!file_exists($file = "./class/pcron")) {
                     mkdir($file);
                 }
@@ -57,6 +46,17 @@ class pseudo_cron {
                 }
                 dwf_exception::check_file_writed($file);
                 $this->_pcron = json_decode(file_get_contents($file), true);
+                break;
+            case "sql":
+            default:
+                entity_generator::generate([
+                    "pcron" => [
+                        ["id", "int", true],
+                        ["hkey", "string", false],
+                        ["mt", "string", false],
+                    ]
+                ]);
+                $this->_pcron = pcron::get_table_array();
                 break;
         }
     }
@@ -82,14 +82,14 @@ class pseudo_cron {
      */
     private function new_pcron($hkey) {
         switch ($this->_db) {
-            case "sql":
-                pcron::ajout($hkey, 0);
-                $this->_pcron = pcron::get_table_array();
-                break;
             case "json":
-            default:
                 $this->_pcron[] = ["hkey" => $hkey, "mt" => 0];
                 file_put_contents("./class/pcron/pcron.json", json_encode($this->_pcron));
+                break;
+            case "sql":
+            default:
+                pcron::ajout($hkey, 0);
+                $this->_pcron = pcron::get_table_array();
                 break;
         }
     }
@@ -100,11 +100,7 @@ class pseudo_cron {
      */
     private function save($hkey) {
         switch ($this->_db) {
-            case "sql":
-                application::$_bdd->query("UPDATE `pcron` SET mt='" . application::$_bdd->protect_var(microtime(true)) . "' WHERE hkey='" . application::$_bdd->protect_var($hkey) . "';");
-                break;
             case "json":
-            default:
                 foreach ($this->_pcron as $key => $pcron) {
                     if ($pcron["hkey"] === $hkey) {
                         $this->_pcron[$key]["mt"] = microtime(true);
@@ -112,6 +108,11 @@ class pseudo_cron {
                     }
                 }
                 file_put_contents("./class/pcron/pcron.json", json_encode($this->_pcron));
+                break;
+            case "sql":
+            default:
+                application::$_bdd->query("UPDATE `pcron` SET mt='" . application::$_bdd->protect_var(microtime(true)) . "' WHERE hkey='" . application::$_bdd->protect_var($hkey) . "';");
+                $this->_pcron = pcron::get_table_array();
                 break;
         }
     }
@@ -187,24 +188,18 @@ class pseudo_cron {
         foreach ($this->_pcron as $key => $pcron) {
             if (isset($pcron["mt"]) and $pcron["mt"] < microtime(true) - $this->_ttl) {
                 switch ($this->_db) {
-                    case "sql":
-                        $hkeys[] = "'" . application::$_bdd->protect_var($pcron["hkey"]) . "'";
-                        break;
                     case "json":
-                    default:
                         unset($this->_pcron[$key]);
+                        break;
+                    case "sql":
+                    default:
+                        $hkeys[] = "'" . application::$_bdd->protect_var($pcron["hkey"]) . "'";
                         break;
                 }
             }
         }
         switch ($this->_db) {
-            case "sql":
-                if (count($hkeys) > 0) {
-                    application::$_bdd->query("DELETE FROM `pcron` WHERE hkey in(" . implode(",", $hkeys) . ");");
-                }
-                break;
             case "json":
-            default:
                 $pcron = [];
                 foreach ($this->_pcron as $value) {
                     if ($value !== null) {
@@ -212,6 +207,12 @@ class pseudo_cron {
                     }
                 }
                 file_put_contents("./class/pcron/pcron.json", json_encode($pcron));
+                break;
+            case "sql":
+            default:
+                if (count($hkeys) > 0) {
+                    application::$_bdd->query("DELETE FROM `pcron` WHERE hkey in(" . implode(",", $hkeys) . ");");
+                }
                 break;
         }
     }

@@ -1139,7 +1139,8 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "// Instanciation du sistème de pseudo cron en utilisant un registre json (ou SQL par defaut)\n"
-                . "$" . "pcron = new pseudo_cron('json');\n\n"
+                . "//pseudo_cron est un singleton\n"
+                . "$" . "pcron = pseudo_cron::get_instance('json');\n\n"
                 . "// Execute la fonction lors d'une activité utilisateur \n"
                 . "// et si la fonction n'a pas été appelé au cours des dernières 24 heurs (86400 secondes) \n"
                 . "$" . "nom = 'world';\n"
@@ -1167,7 +1168,7 @@ class docPHP_natives {
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "(new pseudo_cron())->fn(86400,function(){\n"
+                . "pseudo_cron::get_instance()->fn(86400,function(){\n"
                 . "    service::HTTP_POST(\"http://localhost/mon_projet/services/index.php\", [\"service\"=>\"mon_service\"]);\n"
                 . "});\n"
                 . "?>", $this->_brush);
@@ -1175,7 +1176,7 @@ class docPHP_natives {
         <p>Les pseudo cron sont renseigné dans un registe ( soit un fichier json soit une table en base de donnée ) <br />
             une entré est supprimé si elle n'est pas mise a jour (executé) pendant 1 an, cette durée peut être modifié via la methode</p>
         <?php
-        js::syntaxhighlighter("<?php (new pseudo_cron())->set_clear(31536000); ?>", $this->_brush);
+        js::syntaxhighlighter("<?php pseudo_cron::get_instance()->set_clear(31536000); ?>", $this->_brush);
     }
 
     private function ratioblocks() {

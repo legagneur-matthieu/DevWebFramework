@@ -20,8 +20,7 @@ class singleton {
      * @return object Retourne l'instance de la classe
      */
     public static function get_instance() {
-        $class = get_called_class();
-        if (!isset(self::$_instances[$class])) {
+        if (!isset(self::$_instances[$class = get_called_class()])) {
             (new ReflectionMethod($class, "__construct"))->invokeArgs(self::$_instances[$class] = new $class(), func_get_args());
         }
         return self::$_instances[$class];

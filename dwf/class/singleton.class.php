@@ -23,7 +23,8 @@ class singleton {
         $class = get_called_class();
         if (!isset(self::$_instances[$class])) {
             self::$_instances[$class] = true;
-            self::$_instances[$class] = new $class(func_get_args());
+            (new ReflectionMethod($class, "__construct"))->invokeArgs($ins = new $class(), func_get_args());
+            self::$_instances[$class] = $ins;
         }
         return self::$_instances[$class];
     }

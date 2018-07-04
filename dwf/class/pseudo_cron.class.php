@@ -6,7 +6,7 @@
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class pseudo_cron {
+class pseudo_cron extends singleton {
 
     /**
      * Liste des pseudo cron
@@ -20,6 +20,11 @@ class pseudo_cron {
      */
     private $_db;
 
+    /**
+     * Chemain d'accès réel/absolut au fichier pcron.js
+     * @var string Chemain d'accès réel/absolut au fichier pcron.js
+     */
+    private $_rp;
     /**
      * Durée de vie maximal d'un pseudo cron inactif (en secondes)
      * @var int Durée de vie maximal d'un pseudo cron inactif (en secondes)
@@ -44,6 +49,7 @@ class pseudo_cron {
                 if (!file_exists($file = "./class/pcron/pcron.json")) {
                     file_put_contents($file, "[]");
                 }
+                $this->_rp= realpath($file);
                 dwf_exception::check_file_writed($file);
                 $this->_pcron = json_decode(file_get_contents($file), true);
                 break;
@@ -84,7 +90,7 @@ class pseudo_cron {
         switch ($this->_db) {
             case "json":
                 $this->_pcron[] = ["hkey" => $hkey, "mt" => 0];
-                file_put_contents("./class/pcron/pcron.json", json_encode($this->_pcron));
+                file_put_contents($this->_rp, json_encode($this->_pcron));
                 break;
             case "sql":
             default:
@@ -107,7 +113,7 @@ class pseudo_cron {
                         break;
                     }
                 }
-                file_put_contents("./class/pcron/pcron.json", json_encode($this->_pcron));
+                file_put_contents($this->_rp, json_encode($this->_pcron));
                 break;
             case "sql":
             default:
@@ -206,7 +212,7 @@ class pseudo_cron {
                         $pcron[] = $value;
                     }
                 }
-                file_put_contents("./class/pcron/pcron.json", json_encode($pcron));
+                file_put_contents($this->_rp, json_encode($pcron));
                 break;
             case "sql":
             default:

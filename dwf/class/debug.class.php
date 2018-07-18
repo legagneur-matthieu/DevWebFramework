@@ -88,7 +88,7 @@ class debug {
             $data .= '</ol>';
             $cl = "<dl class='dl-horizontal'>";
             foreach (website::$_class as $key => $value) {
-                $cl .= "<dt>" . $value . "</dt><dd>" . $key . "</dd>";
+                $cl .= "<dt>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd>" . $key . "</dd>";
             }
             $cl .= "</dl>";
             $modal = new modal();

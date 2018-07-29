@@ -19,19 +19,19 @@ class g_elFinder {
      * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
      */
     public function __construct($conector_url = "connector.php") {
+        echo html_structures::link_in_body("../commun/src/js/elFinder/css/elfinder.min.css").
+                html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
         ?>
-        <link rel="stylesheet" type="text/css" media="screen" href="../commun/src/js/elFinder/css/elfinder.min.css">
-        <script type="text/javascript" src="../commun/src/js/elFinder/js/elfinder.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#elfinder').elfinder({
                     lang: 'fr',
-                    url: '<?php echo $conector_url; ?>'
+                    url: '<?= $conector_url; ?>'
                 }).elfinder('instance');
             })
         </script>
-        <div id="elfinder"></div>
         <?php
+        echo tags::tag("div",["id"=>"elfinder"],"");
         if (!file_exists($conector_url)) {
             $this->create_connector($conector_url);
         }
@@ -51,23 +51,23 @@ class elFinder_connector {
         $" . "this->classloader();
         session::start();
         if (session::get_val('elFinder')) {
-            $" . "opts = array(
-                'roots' => array(
-                    array(
+            $" . "opts = [
+                'roots' => [
+                    [
                         'driver' => 'LocalFileSystem',
                         'path' => 'files/',
                         'URL' => 'files/',
-                        'uploadDeny' => array('all'),
-                        'uploadAllow' => array(
+                        'uploadDeny' => ['all'],
+                        'uploadAllow' => [
                             'image', 'audio', 'video',
                             'application/json', 'application/pdf', 'application/rtf', 'application/x-7z-compressed', 'application/x-latex', 'application/xml', 'application/zip',
                             'text/css', 'text/csv', 'text/plain',
-                        ),
-                        'uploadOrder' => array('deny', 'allow'),
+                        ],
+                        'uploadOrder' => ['deny', 'allow'],
                         'accessControl' => 'access'
-                    )
-                )
-            );
+                    ]
+                ]
+            ];
             $" . "connector = new elFinderConnector(new elFinder($" . "opts));
             $" . "connector->run();
         }

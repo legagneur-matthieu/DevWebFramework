@@ -22,7 +22,7 @@ class pagination {
         $lim1 = (int) ($_GET[$get] - 1) * $per_page;
         $lim2 = $lim1 + $per_page;
         $nb_page = (int) ($count_all / $per_page) + 1;
-        return array($lim1, $lim2, $count_all, $nb_page);
+        return [$lim1, $lim2, $count_all, $nb_page];
     }
 
     /**
@@ -34,17 +34,15 @@ class pagination {
      */
     public static function print_pagination($get, $nb_page) {
         if ($nb_page != 1) {
-            ?>
-            <ul class="pagination pagination-sm">
-                <?php
-                for ($i = 1; $i <= $nb_page; $i++) {
-                    ?>
-                    <li <?php if ($_GET[$get] == $i) { ?> class="active" <?php } ?>><a href="?p=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                        <?php
-                    }
-                    ?>
-            </ul>
-            <?php
+            $ul = tags::ul(["class" => "pagination pagination-sm"]);
+            for ($i = 1; $i <= $nb_page; $i++) {
+                $li = tags::li(html_structures::a_link("?p" . $i, $i));
+                if ($_GET[$get] == $i) {
+                    $li->set_attr("class", "active");
+                }
+                $ul->append_content($li);
+            }
+            echo $ul;
         }
     }
 

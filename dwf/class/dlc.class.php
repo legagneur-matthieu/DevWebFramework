@@ -442,8 +442,8 @@ class dlc {
 
         # Build CCF stream
         $strXML = utf8_encode($strXML);
-        $arrKeyList = array(self::ccf_key_10, self::ccf_key_08, self::ccf_key_07);
-        $arrIVList = array(self::ccf_iv_10, self::ccf_iv_08, self::ccf_iv_07);
+        $arrKeyList = [self::ccf_key_10, self::ccf_key_08, self::ccf_key_07];
+        $arrIVList = [self::ccf_iv_10, self::ccf_iv_08, self::ccf_iv_07];
         $hdlCCFCrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
         mcrypt_generic_init($hdlCCFCrypt, $this->base16Decode($arrKeyList[0]), $this->base16Decode($arrIVList[0]));
         $strStream = mcrypt_generic($hdlCCFCrypt, $strXML);
@@ -458,9 +458,9 @@ class dlc {
     }
 
     public function decryptCCF($strStream) {
-        $arrKeyList = array(self::ccf_key_10, self::ccf_key_08, self::ccf_key_07);
-        $arrIVList = array(self::ccf_iv_10, self::ccf_iv_08, self::ccf_iv_07);
-        $arrVList = array(self::ccf_id_10, self::ccf_id_08, self::ccf_id_07);
+        $arrKeyList = [self::ccf_key_10, self::ccf_key_08, self::ccf_key_07];
+        $arrIVList = [self::ccf_iv_10, self::ccf_iv_08, self::ccf_iv_07];
+        $arrVList = [self::ccf_id_10, self::ccf_id_08, self::ccf_id_07];
         $a = 0;
         $strXML = '';
         while ($a < count($arrKeyList)) {

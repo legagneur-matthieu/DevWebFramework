@@ -11,7 +11,7 @@ class dwf_exception extends Exception {
      * Liste des exceptions du framework
      * @var array Liste des exceptions du framework 
      */
-    private static $error = array(
+    private static $error = [
         // 60X : base de donnée
         601 => "Connexion à la base de données impossible",
         602 => "Requête SQL incorrect : \"__statement__\" ",
@@ -28,7 +28,7 @@ class dwf_exception extends Exception {
         // 63X FS / système
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
         632 => "Git ne semble pas être installé sur la machine hôte.",
-    );
+    ];
 
     /**
      * Lance une exception qui interrompt le script en cours
@@ -38,7 +38,7 @@ class dwf_exception extends Exception {
      * @param array $arg Argument de l'exception, sert à completer les messages d'erreurs
      * @throws dwf_exception
      */
-    public static function throw_exception($errcode, $arg = array()) {
+    public static function throw_exception($errcode, $arg = []) {
         throw new dwf_exception((isset(self::$error[$errcode]) ? strtr(self::$error[$errcode], $arg) : (isset($arg["msg"]) ? $arg["msg"] : "Unknow exeption")), $errcode);
     }
 
@@ -50,7 +50,7 @@ class dwf_exception extends Exception {
      * @param array $arg Argument de l'exception, sert à completer les messages d'erreurs
      * @throws dwf_exception
      */
-    public static function warning_exception($errcode, $arg = array()) {
+    public static function warning_exception($errcode, $arg = []) {
         self::print_exception(new dwf_exception((isset(self::$error[$errcode]) ? strtr(self::$error[$errcode], $arg) : (isset($arg["msg"]) ? $arg["msg"] : "Unknow exeption")), $errcode));
     }
 
@@ -61,29 +61,26 @@ class dwf_exception extends Exception {
      * @param boolean $service l'exception survient-elle dans un service ? (true/false, false par defaut)
      */
     public static function print_exception(exception $e, $moreinfo = "", $service = false) {
+        $etype = (is_a($e, "dwf_exception") ? "DWF EXCEPTION ! Code " . $e->getCode() : "PHP EXCEPTION");
         if (config::$_debug) {
             if (!html5::$_called) {
                 if ($service) {
                     ?>
                     <!DOCTYPE HTML>
                     <html lang="fr-FR">
-                        <head>
-                            <meta charset="UTF-8">
-                            <title><?php echo config::$_title; ?></title>
-                        </head>
+                        <?= tags::tag("head", [], tags::tag("meta", ["charset" => "UTF-8"]) . tags::tag("title", [], config::$_title)); ?>
                         <body>
                             <?php
                         } else {
                             $html = new html5();
                         }
                     }
-                    ?>
-                    <div class="alert alert-danger" role="alert">
-                        <p><?php echo (is_a($e, "dwf_exception") ? "DWF EXCEPTION ! Code " . $e->getCode() : "PHP EXCEPTION") . " : \"" . $e->getMessage() . "\""; ?></p>
-                        <pre><?php echo $e->getTraceAsString(); ?></pre>
-                        <?php echo $moreinfo; ?>
-                    </div>
-                    <?php
+                    echo tags::tag(
+                            "div", ["class" => "alert alert-danger", "role" => "alert"], tags::tag(
+                                    "p", [], $etype . " : \"" . $e->getMessage() . "\"") .
+                            tags::tag(
+                                    "pre", [], "\r".$e->getTraceAsString()) . $moreinfo
+                    );
                     if (!html5::$_called and $service) {
                         ?>
                     </body>
@@ -91,7 +88,7 @@ class dwf_exception extends Exception {
                 <?php
             }
         }
-        (new log_file(true))->severe((is_a($e, "dwf_exception") ? "DWF EXCEPTION ! Code " . $e->getCode() : "PHP EXCEPTION") . " : \"" . $e->getMessage() . "\"\n" . $e->getTraceAsString() . "\n" . $moreinfo . "\n");
+        (new log_file(true))->severe($etype . " : \"" . $e->getMessage() . "\"\n" . $e->getTraceAsString() . "\n" . $moreinfo . "\n");
     }
 
     /**
@@ -100,7 +97,7 @@ class dwf_exception extends Exception {
      */
     public static function check_file_writed($file) {
         if (!file_exists($file)) {
-            self::throw_exception(631, array("__" => $file));
+            self::throw_exception(631, ["__" => $file]);
         }
     }
 

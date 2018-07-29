@@ -12,19 +12,19 @@ class statistiques {
      */
     public function __construct() {
         if (config::$_statistiques) {
-            $datas = array(
-                "stat_visitor" => array(
-                    array("id", "int", true),
-                    array("imat", "string", false),
-                    array("user_agent", "string", false),
-                ),
-                "stat_pages" => array(
-                    array("id", "int", true),
-                    array("visitor", "visitor", false),
-                    array("page", "string", false),
-                    array("date", "string", false),
-                )
-            );
+            $datas = [
+                "stat_visitor" => [
+                    ["id", "int", true],
+                    ["imat", "string", false],
+                    ["user_agent", "string", false],
+                ],
+                "stat_pages" => [
+                    ["id", "int", true],
+                    ["visitor", "visitor", false],
+                    ["page", "string", false],
+                    ["date", "string", false],
+                ]
+            ];
             foreach ($datas as $table => $data) {
                 new entity_generator($data, $table, true, true);
             }
@@ -35,7 +35,7 @@ class statistiques {
      * Cette fonction permet d'enregistrer l'activitè des utilisateurs sur la page actuelle
      */
     public function add_stat() {
-        if (!in_array($_SERVER["REMOTE_ADDR"], array("localhost", "127.0.0.1", "::1")) and config::$_statistiques) {
+        if (!in_array($_SERVER["REMOTE_ADDR"], ["localhost", "127.0.0.1", "::1"]) and config::$_statistiques) {
             if (session::get_val("stat_uid") == false) {
                 session::set_val("stat_uid", uniqid());
             }
@@ -64,11 +64,10 @@ class statistiques {
         </script>
         <?php
         $key = "stat";
-        $route = array(
-            array($key => "get_stat_an", "title" => "Statistiques annuelles", "text" => "Statistiques annuelles"),
-            //array($key => "get_stat_other", "title" => "Statistiques diverses", "text" => "Statistiques diverses"),
-            array($key => "consult", "title" => "")
-        );
+        $route = [
+            [$key => "get_stat_an", "title" => "Statistiques annuelles", "text" => "Statistiques annuelles"],
+            [$key => "consult", "title" => ""]
+        ];
         (new sub_menu($this, $route, $key, "get_stat_an"));
     }
 
@@ -78,20 +77,12 @@ class statistiques {
     public function get_stat_an() {
         $default = $this->check_form();
         $this->form($default);
-        echo html_structures::hr();
-        ?>
-        <h2 class="text-center"><small>Nombre de visiteurs unique <sup title="Un visiteur unique est dèfini par son cookie de session et son ip">*</sup></small></h2>
-        <?php
+        echo html_structures::hr() .
+        tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Nombre de visiteurs unique " . tags::tag("sup", ["title" => "Un visiteur unique est dèfini par son cookie de session et son ip"], "*")));
         $this->get_uniques_visitors($default);
-        echo html_structures::hr();
-        ?>
-        <h2 class="text-center"><small>Indicateur d'activitè par heures</small></h2>
-        <?php
+        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Indicateur d'activitè par heures"));
         $this->get_activity_per_hours($default);
-        echo html_structures::hr();
-        ?>
-        <h2 class="text-center"><small>Navigateurs</small></h2>
-        <?php
+        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Navigateurs"));
         $this->get_browser($default);
     }
 
@@ -100,51 +91,36 @@ class statistiques {
      * @param array $default $this->check_form()
      */
     private function get_uniques_visitors($default) {
-        $data = array(
-            array("label" => "Visiteurs",
+        $data = [
+            ["label" => "Visiteurs",
                 "data" => $this->get_plot_uniques_visitors($default)
-            )
-        );
-        $tricks = array(
-            array(0, "Janvier"),
-            array(1, "Fevrier"),
-            array(2, "Mars"),
-            array(3, "Avril"),
-            array(4, "Mai"),
-            array(5, "Juin"),
-            array(6, "Juillet"),
-            array(7, "AoÃ»t"),
-            array(8, "Septembre"),
-            array(9, "Octobre"),
-            array(10, "Novembre"),
-            array(11, "Dècembre")
-        );
+            ]
+        ];
+        $tricks = [
+            [0, "Janvier"],
+            [1, "Fevrier"],
+            [2, "Mars"],
+            [3, "Avril"],
+            [4, "Mai"],
+            [5, "Juin"],
+            [6, "Juillet"],
+            [7, "Aout"],
+            [8, "Septembre"],
+            [9, "Octobre"],
+            [10, "Novembre"],
+            [11, "Dècembre"]
+        ];
         (new graphique())->line($data, $tricks, "stat_plot");
-        ?>
-        <ul>
-            <?php
-            foreach ($data[0]["data"] as $d) {
-                ?>
-                <li>
-                    <?php
-                    $mois = "";
-                    if ($d[0] + 1 < 10) {
-                        $mois .= "0";
-                    }
-                    $mois .= ($d[0] + 1);
-                    echo time::convert_mois($mois) . " : ";
-                    if ($d[1] != 0) {
-                        echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;stat=consult&amp;date=" . $default["an"] . "_" . $mois, $d[1] . " Visiteurs");
-                    } else {
-                        echo "Vous n'avez eu aucun visiteur.";
-                    }
-                    ?>
-                </li>
-                <?php
+        $li = [];
+        foreach ($data[0]["data"] as $d) {
+            $mois = "";
+            if ($d[0] + 1 < 10) {
+                $mois .= "0";
             }
-            ?>
-        </ul>
-        <?php
+            $mois .= ($d[0] + 1);
+            $li[] = time::convert_mois($mois) . " : " . ($d[1] != 0 ? html_structures::a_link("index.php?page=" . $_GET["page"] . "&stat=consult&date=" . $default["an"] . "_" . $mois, $d[1] . " Visiteurs") : "Vous n'avez eu aucun visiteur.");
+        }
+        echo html_structures::ul($li);
     }
 
     /**
@@ -153,7 +129,7 @@ class statistiques {
      * @return array Data du graphique de $this->get_uniques_visitors();
      */
     private function get_plot_uniques_visitors($default) {
-        $data = array();
+        $data = [];
         for ($i = 0; $i < 12; $i++) {
             $date_debut = $default["an"] . "-";
             if ($i + 1 < 10) {
@@ -164,7 +140,7 @@ class statistiques {
             $date_debut .= "-01";
 
             $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between '" . $date_debut . "' and '" . $date_fin . "';");
-            $data[$i] = array($i, count($req));
+            $data[$i] = [$i, count($req)];
         }
         return $data;
     }
@@ -174,53 +150,46 @@ class statistiques {
      * @param array $default $this->check_form()
      */
     private function get_activity_per_hours($default) {
-        $data = array(
-            array(
+        $data = [
+            [
                 "label" => "Pages visitèes",
                 "data" => $this->get_plot_activity_per_hours($default)
-            )
-        );
-        $tricks = array(
-            array(0, "00h - 01h"),
-            array(1, "01h - 02h"),
-            array(2, "02h - 03h"),
-            array(3, "03h - 04h"),
-            array(4, "04h - 05h"),
-            array(5, "05h - 06h"),
-            array(6, "06h - 07h"),
-            array(7, "07h - 08h"),
-            array(8, "08h - 09h"),
-            array(9, "09h - 10h"),
-            array(10, "10h - 11h"),
-            array(11, "11h - 12h"),
-            array(12, "12h - 13h"),
-            array(13, "13h - 14h"),
-            array(14, "14h - 15h"),
-            array(15, "15h - 16h"),
-            array(16, "16h - 17h"),
-            array(17, "17h - 18h"),
-            array(18, "18h - 19h"),
-            array(19, "19h - 20h"),
-            array(20, "20h - 21h"),
-            array(21, "21h - 22h"),
-            array(22, "22h - 23h"),
-            array(23, "23h - 24h")
-        );
+            ]
+        ];
+        $tricks = [
+            [0, "00h - 01h"],
+            [1, "01h - 02h"],
+            [2, "02h - 03h"],
+            [3, "03h - 04h"],
+            [4, "04h - 05h"],
+            [5, "05h - 06h"],
+            [6, "06h - 07h"],
+            [7, "07h - 08h"],
+            [8, "08h - 09h"],
+            [9, "09h - 10h"],
+            [10, "10h - 11h"],
+            [11, "11h - 12h"],
+            [12, "12h - 13h"],
+            [13, "13h - 14h"],
+            [14, "14h - 15h"],
+            [15, "15h - 16h"],
+            [16, "16h - 17h"],
+            [17, "17h - 18h"],
+            [18, "18h - 19h"],
+            [19, "19h - 20h"],
+            [20, "20h - 21h"],
+            [21, "21h - 22h"],
+            [22, "22h - 23h"],
+            [23, "23h - 24h"]
+        ];
 
         (new graphique())->line($data, $tricks, "stat_plot_activity_per_hours");
-        ?>
-        <ul>
-            <?php
-            for ($i = 0; $i < 24; $i++) {
-                ?>
-                <li>
-                    <?php echo $tricks[$i][1] . " : " . $data[0]["data"][$i][1] . " pages visitèes"; ?>
-                </li>
-                <?php
-            }
-            ?>
-        </ul>
-        <?php
+
+        $li = [];
+        for ($i = 0; $i < 24; $i++) {
+            $li[] = $tricks[$i][1] . " : " . $data[0]["data"][$i][1] . " pages visitèes";
+        }
+        echo html_structures::ul($li);
     }
 
     /**
@@ -230,10 +199,10 @@ class statistiques {
      */
     private function get_plot_activity_per_hours($default) {
         $pages = stat_pages::get_table_array("date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
-        $heures = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        $heures = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         foreach ($pages as $page) {
             $heure = explode(" ", $page["date"]);
-            $heure = ((int) strtr($heure[1], array(":" => "")));
+            $heure = ((int) strtr($heure[1], [":" => ""]));
             for ($i = 0; $i < 24; $i++) {
                 if ($heure < (($i + 1) * 10000)) {
                     $heures[$i] = $heures[$i] + 1;
@@ -241,9 +210,9 @@ class statistiques {
                 }
             }
         }
-        $data = array();
+        $data = [];
         foreach ($heures as $key => $value) {
-            $data[] = array($key, $value);
+            $data[] = [$key, $value];
         }
         return $data;
     }
@@ -260,8 +229,8 @@ class statistiques {
                 $in .= $v["visitor"] . ",";
             }
             $in .= "__)";
-            $in = strtr($in, array(",__" => ""));
-            $data = array();
+            $in = strtr($in, [",__" => ""]);
+            $data = [];
             foreach (application::$_bdd->fetch("select user_agent, count(*) as count from `stat_visitor`where " . $in . " group by user_agent;") as $key => $value) {
                 $data[] = [$value["user_agent"], $value["count"], $value["count"] / $total * 100];
             }
@@ -290,45 +259,35 @@ class statistiques {
                     $in .= $v["visitor"] . ",";
                 }
                 $in .= "__);";
-                $in = strtr($in, array(",__" => ""));
+                $in = strtr($in, [",__" => ""]);
                 $visitors = stat_visitor::get_table_ordored_array($in); //application::$_bdd->fetch("select imat from stat_visitor " . $in);
                 $nav = stat_pages::get_table_array("date between '" . $date_debut . "' and '" . $date_fin . "';");
                 $req = application::$_bdd->fetch("select page, count(*) as count from stat_pages where " . $where . " group by page");
-                $data = array();
-                $titles = array();
+                $data = [];
+                $titles = [];
                 foreach ($req as $page) {
                     $titles[$page["page"]] = ["title" => $this->get_real_title_from_url($page["page"]), "count" => $page["count"]];
                     $data[] = [$titles[$page["page"]]["title"], $page["page"], $page["count"]];
                 }
-                ?><h2 class="text-center"><small>Pages visitèes</small></h2><?php
                 js::datatable();
-                echo html_structures::table(["Page", "URL", "Visites"], $data, '', "datatable") . html_structures::hr();
-                ?><h2 class="text-center"><small>Historique des visiteurs</small></h2><?php
+                echo tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Pages visitèes")) .
+                html_structures::table(["Page", "URL", "Visites"], $data, '', "datatable") . html_structures::hr() .
+                tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Historique des visiteurs"));
                 foreach ($nav as $link) {
-                    $visitors[$link["visitor"]]["nav"][] = array("date" => $link["date"], "page" => strtr($link["page"], array($_SERVER["HTTP_HOST"] => "localhost")), "title" => $titles[$link["page"]]["title"]);
+                    $visitors[$link["visitor"]]["nav"][] = ["date" => $link["date"], "page" => strtr($link["page"], [$_SERVER["HTTP_HOST"] => "localhost"]), "title" => $titles[$link["page"]]["title"]];
                 }
                 js::accordion();
-                ?>
-                <div id="accordion">
-                    <?php foreach ($visitors as $visitor) {
-                        ?>
-                        <h3>
-                            <?php echo $visitor["imat"] ?>
-                        </h3>
-                        <p>
-                            <?php
-                            foreach ($visitor["nav"] as $nav) {
-                                $date = explode(" ", $nav["date"]);
-                                $date = time::convert_date($date[0]) . " " . $date[1];
-                                echo html_structures::a_link($nav["page"], $date . " - " . $nav["title"], "", $nav["page"]) . "<br />";
-                            }
-                            ?>
-                        </p>
-                        <?php
+                $accordion="";
+                foreach ($visitors as $visitor) {
+                    $a = "";
+                    foreach ($visitor["nav"] as $nav) {
+                        $date = explode(" ", $nav["date"]);
+                        $date = time::convert_date($date[0]) . " " . $date[1];
+                        $a .= html_structures::a_link($nav["page"], $date . " - " . $nav["title"], "", $nav["page"]) . tags::tag("br");
                     }
-                    ?>
-                </div>
-                <?php
+                    $accordion.= tags::tag("h3",[],$visitor["imat"]).tags::tag("div",[],tags::tag("p",[],$a));                    
+                }
+                echo tags::tag("div", ["id"=>"accordion"], $accordion);
             }
         }
     }
@@ -340,10 +299,10 @@ class statistiques {
     private function form($default) {
         form::new_form();
         $y = date("Y");
-        $option = array();
+        $option = [];
         for ($i = 5; $i >= 0; $i--) {
             $k = $y - $i;
-            $option[] = array($k, $k, ($k == $default["an"]));
+            $option[] = [$k, $k, ($k == $default["an"])];
         }
         form::select("Annèe", "stat_an", $option);
         form::submit("btn-default", "Voir");

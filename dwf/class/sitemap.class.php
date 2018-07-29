@@ -43,11 +43,11 @@ class sitemap {
                     $node = $route["sitemap"]["entity"];
                     $node = $node::get_table_array(application::$_bdd);
                     foreach ($node as $value) {
-                        $this->_sitemap[] = array("loc" => $host . "?page=" . $route["page"] . "&amp;" . $route["sitemap"]["var"] . "=" . $value["id"], "text" => $value[$route["sitemap"]["tuple"]], "cat" => $route["title"]);
+                        $this->_sitemap[] = ["loc" => $host . "?page=" . $route["page"] . "&amp;" . $route["sitemap"]["var"] . "=" . $value["id"], "text" => $value[$route["sitemap"]["tuple"]], "cat" => $route["title"]];
                     }
                 } else {
                     if (isset($route["text"])) {
-                        $this->_sitemap[] = array("loc" => $host . "?page=" . $route["page"], "text" => $route["title"]);
+                        $this->_sitemap[] = ["loc" => $host . "?page=" . $route["page"], "text" => $route["title"]];
                     }
                 }
             }
@@ -59,7 +59,7 @@ class sitemap {
      * Génére le fichier JSON pour le XML et la vue HTML
      */
     private function json() {
-        $json = (is_file(self::$_file_json) ? json_decode(file_get_contents(self::$_file_json)) : array());
+        $json = (is_file(self::$_file_json) ? json_decode(file_get_contents(self::$_file_json)) : []);
         $this->_sitemap["last_update"] = date("Ymd");
         if (!isset($json->last_update) or $json->last_update < $this->_sitemap["last_update"]) {
             file_put_contents(self::$_file_json, json_encode($this->_sitemap));
@@ -91,34 +91,20 @@ class sitemap {
     public static function html($show_xml = true, $show_json = false) {
         if (is_file(self::$_file_json)) {
             $json = json_decode(file_get_contents(self::$_file_json));
-            ?>
-            <ul>
-                <?php
-                foreach ($json as $value) {
-                    if (isset($value->loc)) {
-                        ?>
-                        <li><?php
-                            echo(isset($value->cat) ? html_structures::a_link($value->loc, $value->cat . " - " . $value->text) : html_structures::a_link($value->loc, $value->text));
-                            ?></li>
-                        <?php
-                    }
+            $ul = tags::ul();
+            foreach ($json as $value) {
+                if (isset($value->loc)) {
+                    $ul->append_content(
+                            tags::tag("li", [], (isset($value->cat) ? html_structures::a_link($value->loc, $value->cat . " - " . $value->text) : html_structures::a_link($value->loc, $value->text))
+                            )
+                    );
                 }
-                ?>
-            </ul>
-            <?php
+            }
+            echo $ul;
             if ($show_json or $show_xml) {
-                ?>
-                <p><small>
-                        <?php
-                        if ($show_xml) {
-                            echo html_structures::a_link("sitemap.xml", "Sitemap XML", "", "(nouvel onglet)", true) . " ";
-                        }
-                        if ($show_json) {
-                            echo html_structures::a_link("sitemap.json", "Sitemap JSON", "", "(nouvel onglet)", true);
-                        }
-                        ?>
-                    </small></p>
-                <?php
+                echo tags::tag("p", [], tags::tag("small", [], ($show_xml ? html_structures::a_link("sitemap.xml", "Sitemap XML", "", "(nouvel onglet)", true) : "") .
+                                ($show_json ? html_structures::a_link("sitemap.json", "Sitemap JSON", "", "(nouvel onglet)", true) : "")
+                ));
             }
         } else {
             if (config::$_sitemap) {

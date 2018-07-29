@@ -21,17 +21,15 @@ class cytoscape {
      */
     public function __construct($id, $data) {
         if (!self::$_called) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/cytoscape/cytoscape.min.js"></script>
-            <?php
+            echo html_structures::script("../commun/src/js/cytoscape/cytoscape.min.js");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
                 cytoscape({
-                    container: $("#<?php echo $id; ?>"),
-                    elements: [<?php echo $this->mk_graf($data); ?>],
+                    container: $("#<?= $id; ?>"),
+                    elements: [<?= $this->mk_graf($data); ?>],
                     style: [
                         {selector: 'node', css: {'content': 'data(id)', 'width': '25px', 'background-color': 'lightblue'}},
                         {selector: 'edge', css: {'target-arrow-shape': 'triangle', 'line-color': 'lightgray', 'target-arrow-color': 'lightgray', 'curve-style': 'bezier'}}
@@ -40,8 +38,8 @@ class cytoscape {
                 });
             });
         </script>
-        <div id="<?php echo $id; ?>" class="cytoscape"></div>
         <?php
+        echo tags::tag("div", ["id" => $id, "class" => "cytoscape"], "");
     }
 
     /**

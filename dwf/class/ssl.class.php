@@ -91,19 +91,17 @@ class ssl {
      */
     public function ssl_js($enable_client_ssl = false) {
         if (!self::$_called[0]) {
+            echo html_structures::script("../commun/src/js/jsencrypt/jsencrypt.js").
+                    html_structures::script("../commun/src/js/jsencrypt/ssl.jsencrypt.js");
             ?>
             <script type="text/javascript">
-                $prefix = '<?php echo config::$_prefix; ?>';
+                $prefix = '<?= config::$_prefix; ?>';
             </script>
-            <script type="text/javascript" src="../commun/src/js/jsencrypt/jsencrypt.js"></script>
-            <script type="text/javascript" src="../commun/src/js/jsencrypt/ssl.jsencrypt.js"></script>
             <?php
             self::$_called[0] = true;
         }
         if (!self::$_called[1] and $enable_client_ssl) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/jsencrypt/client_ssl.jsencrypt.js"></script>
-            <?php
+            echo html_structures::script("../commun/src/js/jsencrypt/client_ssl.jsencrypt.js");
             self::$_called[1] = true;
         }
     }
@@ -124,13 +122,9 @@ class ssl {
     public function encrypt_html($html) {
         if (session::get_val("client_ssl_public_key") and self::$_called[1]) {
             $this->_RSA->loadKey(session::get_val("client_ssl_public_key"));
-            ?>
-            <div class="jsencrypt"><?php echo base64_encode($this->_RSA->encrypt($html)); ?></div>
-            <?php
+            echo tags::tag("div",["class"=>"jsencrypt"],base64_encode($this->_RSA->encrypt($html)));
         } else {
-            ?>
-            <div class="alert alert-danger" role="alert"><p>Une erreur est survenu, ce comptenu ne peux être affiché</p></div>
-            <?php
+            echo tags::tag("div",["class"=>"alert alert-danger"],tags::tag("p",[],"Une erreur est survenu, ce comptenu ne peux être affiché"));
         }
     }
 

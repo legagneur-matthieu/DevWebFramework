@@ -29,12 +29,12 @@ class ratioblocks {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#<?php echo $id; ?>").css("width", "<?php echo ((int) $width); ?>px");
-                $("#<?php echo $id; ?>").before().css("padding-top", "<?php echo ((int) $width * $ratio); ?>px");
+                $("#<?= $id; ?>").css("width", "<?= ((int) $width); ?>px");
+                $("#<?= $id; ?>").before().css("padding-top", "<?= ((int) $width * $ratio); ?>px");
             });
         </script>
-        <div id="<?php echo $id; ?>" class="box"><div class="box_content"><?php echo $contenu ?></div></div>
         <?php
+        echo tags::tag("div", ["id" => $id, "class" => "box"], tags::tag("div", ["class" => "box_content"], $contenu));
     }
 
 }

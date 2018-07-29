@@ -91,21 +91,21 @@ class easteregg {
      * Detecte si un easteregg doit s'activer aujourd'hui
      */
     private function kegg() {
-        $events = array(
-            array("0001", "-Aucun-", true),
-            array("0101", "Jour de l'an"),
-            array("0601", "Epiphanie"),
-            array("1402", "Saint Valentin"),
-            array("2103", "Printemps"),
-            array("0104", "1e Avril"),
-            array("0105", "Fête du travail"),
-            array("2505", "Fête des mères (que le dimanche)"),
-            array("2106", "Eté (et fête des pères le dimanche)"),
-            array("1407", "Fête nationale"),
-            array("2309", "Automne"),
-            array("2511", "Sainte Catherine"),
-            array("2212", "Hiver")
-        );
+        $events = [
+            ["0001", "-Aucun-", true],
+            ["0101", "Jour de l'an"],
+            ["0601", "Epiphanie"],
+            ["1402", "Saint Valentin"],
+            ["2103", "Printemps"],
+            ["0104", "1e Avril"],
+            ["0105", "Fête du travail"],
+            ["2505", "Fête des mères (que le dimanche]"],
+            ["2106", "Eté (et fête des pères le dimanche)"],
+            ["1407", "Fête nationale"],
+            ["2309", "Automne"],
+            ["2511", "Sainte Catherine"],
+            ["2212", "Hiver"]
+        ];
         ob_start();
         form::new_form();
         form::select("Evenement à activer", "eggday", $events);
@@ -119,8 +119,8 @@ class easteregg {
                 js::redir("");
             }
         }
+        echo html_structures::script("../commun/src/js/eastereggs/cheet/cheet.min.js");
         ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/cheet/cheet.min.js"></script>
         <script type="text/javascript">
             cheet("U U D D L R L R b a", function () {
                 $("#modal_eggday").click();
@@ -134,37 +134,34 @@ class easteregg {
      * easteregg du jour de l'an
      */
     private function jour_de_an() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/snowstorm/lights/christmaslights.css" media="screen');
+        echo html_structures::link_in_body('../commun/src/js/eastereggs/snowstorm/lights/christmaslights.css" media="screen') .
+        html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/yahoo-animation.js") .
+        html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/soundmanager2-nodebug-jsmin.js") .
+        html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/christmaslights.js")
         ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/lights/yahoo-animation.js"></script>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/lights/soundmanager2-nodebug-jsmin.js"></script>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/lights/christmaslights.js"></script>
         <script type="text/javascript">
             var urlBase = '../commun/src/js/eastereggs/snowstorm/lights/';
             soundManager.url = '../commun/src/js/eastereggs/snowstorm/lights/';
         </script>
-        <div id="lights" style="width: 100%; position: absolute;"></div>
         <?php
 
+        echo tags::tag("div", ["id" => "lights", "style" => "width: 100%; position: absolute;"], "");
     }
 
     /**
      * easteregg de l'epiphanie
      */
     private function epiphanie() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/epiphanie/epiphanie.css');
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/epiphanie/epiphanie.js"></script>
-        <?php
-
+        echo html_structures::link_in_body('../commun/src/js/eastereggs/epiphanie/epiphanie.css') .
+        html_structures::script("../commun/src/js/eastereggs/epiphanie/epiphanie.js");
     }
 
     /**
      * easteregg de la saint-Valentin
      */
     private function valentin() {
+        echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
         ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/snowstorm-min.js"></script>
         <script type="text/javascript">
             snowStorm.snowCharacter = "&#9829;";
             snowStorm.snowColor = "red";
@@ -181,9 +178,9 @@ class easteregg {
      * easteregg du printemps
      */
     private function printemp() {
-        echo html_structures::link_in_body("../commun/src/js/eastereggs/sakura/jquery-sakura.min.css");
+        echo html_structures::link_in_body("../commun/src/js/eastereggs/sakura/jquery-sakura.min.css") .
+        html_structures::script("../commun/src/js/eastereggs/sakura/jquery-sakura.min.js");
         ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/sakura/jquery-sakura.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $("body").sakura();
@@ -197,21 +194,15 @@ class easteregg {
      * easteregg du 1er Avril
      */
     private function fish() {
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/fish/fish.js"></script>
-        <?php
-
+        echo html_structures::script("../commun/src/js/eastereggs/fish/fish.js");
     }
 
     /**
      * easteregg du 1er Mai
      */
     private function muguet() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/muguet/muguet.css');
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/muguet/muguet.js"></script>
-        <?php
-
+        echo html_structures::link_in_body('../commun/src/js/eastereggs/muguet/muguet.css') .
+        html_structures::script("../commun/src/js/eastereggs/muguet/muguet.js");
     }
 
     /**
@@ -228,11 +219,8 @@ class easteregg {
      */
     private function fete_mere() {
         if ($this->is_sunday()) {
-            echo html_structures::link_in_body('../commun/src/js/eastereggs/fete_mere/fete_mere.css');
-            ?>
-            <script type="text/javascript" src="../commun/src/js/eastereggs/fete_mere/fete_mere.js"></script>
-            <?php
-
+            echo html_structures::link_in_body('../commun/src/js/eastereggs/fete_mere/fete_mere.css') .
+            html_structures::script("../commun/src/js/eastereggs/fete_mere/fete_mere.js");
         }
     }
 
@@ -268,19 +256,16 @@ class easteregg {
      * easteregg du 14 juillet
      */
     private function fete_national() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/fireworks/fireworks.css');
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/fireworks/fireworks.js"></script>
-        <?php
-
+        echo html_structures::link_in_body('../commun/src/js/eastereggs/fireworks/fireworks.css') .
+        html_structures::script("../commun/src/js/eastereggs/fireworks/fireworks.js");
     }
 
     /**
      * easteregg de l'Automne
      */
     private function automne() {
+        echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js")
         ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/snowstorm-min.js"></script>
         <script type="text/javascript">
             snowStorm.snowCharacter = '<img src="../commun/src/js/eastereggs/automne/automne.gif" alt="" />';
             snowStorm.snowColor = "white";
@@ -296,21 +281,15 @@ class easteregg {
      * easteregg de la sainte Catherine
      */
     private function catherine() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/catherine/catherine.css');
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/catherine/catherine.js"></script>
-        <?php
-
+        echo html_structures::link_in_body('../commun/src/js/eastereggs/catherine/catherine.css') .
+        html_structures::script("../commun/src/js/eastereggs/catherine/catherine.js");
     }
 
     /**
      * easteregg de NoÃ«l
      */
     private function noel() {
-        ?>
-        <script type="text/javascript" src="../commun/src/js/eastereggs/snowstorm/snowstorm-min.js"></script>
-        <?php
-
+        echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
     }
 
 }

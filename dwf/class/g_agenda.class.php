@@ -15,13 +15,13 @@ class g_agenda {
      * (salons, conventions, spectacles, ...)
      */
     public function __construct() {
-        new entity_generator(array(
-            array("id", "int", true),
-            array("date_debut", "string", false),
-            array("date_fin", "string", false),
-            array("titre", "string", false),
-            array("texte", "string", false)
-                ), "agenda", true, true);
+        new entity_generator([
+            ["id", "int", true],
+            ["date_debut", "string", false],
+            ["date_fin", "string", false],
+            ["titre", "string", false],
+            ["texte", "string", false]
+                ], "agenda", true, true);
         echo html_structures::link_in_body("../commun/src/css/agenda.css");
     }
 
@@ -49,18 +49,15 @@ class g_agenda {
         foreach ($events as $event) {
             $date_debut = explode(" ", $event["date_debut"]);
             $date_fin = explode(" ", $event["date_fin"]);
-            ?>
-            <div class="row agenda">
-                <div class="col-xs-3">
-                    <p>Du : <strong><?php echo html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1]); ?></strong><br />
-                        Au : <strong><?php echo html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]); ?></strong></p>
-                </div>
-                <div class="col-xs-9">
-                    <p><a href="index.php?page=<?php echo $_GET["page"]; ?>&amp;agenda=<?php echo $event["id"]; ?>"><?php echo $event["titre"]; ?></a></p>
-                </div>
-            </div>
-            <hr />
-            <?php
+            echo tags::tag("div", ["class" => "row agenda"], tags::tag(
+                            "div", ["class" => "col-xs-3"], tags::tag(
+                                    "p", [], "Du : <strong>" . html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
+                                    "Au : <strong>" . html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
+                    ) .
+                    tags::tag("div", ["class" => "col-xs-9"], tags::tag(
+                                    "p", [], tags::tag("a", ["href" => "index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"]], $event["titre"])
+                    ))
+            ) . tags::tag("hr");
         }
     }
 
@@ -72,33 +69,23 @@ class g_agenda {
         $event = agenda::get_from_id($id);
         $date_debut = explode(" ", $event->get_date_debut());
         $date_fin = explode(" ", $event->get_date_fin());
-        ?>
-        <a href="index.php?page=<?php echo $_GET["page"]; ?>"><?php echo html_structures::glyphicon("arrow-left", "Retour a la liste des futures evennements"); ?> Retour</a>
-        <div class="row agenda">
-            <div class="col-xs-3">
-                <p>
-                    Du : <strong><?php echo html_structures::time($event->get_date_debut(), time::convert_date($date_debut[0]) . " " . $date_debut[1]); ?></strong> <br />
-                    Au : <strong><?php echo html_structures::time($event->get_date_fin(), time::convert_date($date_fin[0]) . " " . $date_fin[1]); ?></strong>
-                </p>
-            </div>
-            <div class="col-xs-9">
-                <p><strong><?php echo $event->get_titre(); ?></strong></p>
-                <hr />
-                <article>
-                    <?php
-                    echo htmlspecialchars_decode($event->get_texte());
-                    ?>
-                </article>
-            </div>
-        </div>
-        <?php
+        echo tags::tag("a", ["href" => "index.php?page=" . $_GET["page"]], html_structures::glyphicon("arrow-left", "Retour a la liste des evennements") . " Retour") .
+        tags::tag("div", ["class" => "row agenda"], tags::tag(
+                        "div", ["class" => "col-xs-3"], tags::tag(
+                                "p", [], "Du : <strong>" . html_structures::time($event->get_date_debut(), time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
+                                "Au : <strong>" . html_structures::time($event->get_date_fin(), time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
+                ) .
+                tags::tag("div", ["class" => "col-xs-9"], tags::tag("p", [], tags::tag("strong", [], $event->get_titre())) .
+                        tags::tag("hr") . tags::tag("article", [], htmlspecialchars_decode($event->get_texte()))
+                )
+        );
     }
 
     /**
      * Affiche la liste des évènements dans l'administration
      */
     private function agenda_admin_list() {
-        $option = array();
+        $option = [];
         for ($i = 0; $i < 12; $i++) {
             $m = date("m") + $i;
             $y = date("Y");
@@ -109,7 +96,7 @@ class g_agenda {
             if ($m < 10) {
                 $m = "0" . $m;
             }
-            $option[] = array($m . "-" . $y, time::convert_mois($m) . " " . $y);
+            $option[] = [$m . "-" . $y, time::convert_mois($m) . " " . $y];
         }
         form::new_form();
         form::select("Mois", "agenda_my", $option);
@@ -117,31 +104,24 @@ class g_agenda {
         form::close_form();
         if (isset($_POST["agenda_my"])) {
             $events = agenda::get_table_array("date_debut>='01-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00';");
-            ?>
-            <hr />
-            <?php
+            echo html_structures::hr();
             foreach ($events as $event) {
                 $date_debut = explode(" ", $event["date_debut"]);
                 $date_fin = explode(" ", $event["date_fin"]);
-                ?>
-                <div class="row agenda">
-                    <div class="col-xs-3">
-                        <p>
-                            Du : <strong><?php echo html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1]); ?></strong> <br />
-                            Au : <strong><?php echo html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]); ?></strong>
-                        </p>
-                    </div>
-                    <div class="col-xs-9">
-                        <a href="index.php?page=<?php echo $_GET["page"]; ?>&amp;agenda=<?php echo $event["id"]; ?>"><?php echo $event["titre"]; ?></a>
-                        <?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;agenda_supp=" . $event["id"], html_structures::glyphicon("remove", "Supprimer l'évenement"), "btn btn-danger btn-xs"); ?>
-                    </div>
-                </div>
-                <hr />
-                <?php
+                echo tags::tag("div", ["class" => "row agenda"], tags::tag(
+                                "div", ["class" => "col-xs-3"], tags::tag(
+                                        "p", [], "Du : " .
+                                        tags::tag("strong", [], html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1])) .
+                                        tags::tag("br") . " Au : " .
+                                        tags::tag("strong", [], html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]))
+                                )
+                        ) .
+                        tags::tag("div", ["class" => "col-xs-9"], html_structures::a_link("index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"], $event["titre"]) .
+                                html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;agenda_supp=" . $event["id"], html_structures::glyphicon("remove", "Supprimer l'évenement"), "btn btn-danger btn-xs")
+                        ) . html_structures::hr()
+                );
             }
-            ?>
-            <hr />
-            <?php
+            echo html_structures::hr();
             form::new_form();
             form::hidden("agenda_my", $_POST["agenda_my"]);
             form::datetimepicker("Date de début", "date_debut", date("d/m/Y H:i"));

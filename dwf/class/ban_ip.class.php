@@ -17,13 +17,13 @@ class ban_ip {
      * @param int $ban_time Temps de bannisement de l'IP
      */
     public function __construct($ban_time = 3600) {
-        $data = array(
-            array("id", "int", true),
-            array("ip", "string", false),
-            array("mt", "string", false),
-            array("nb_req", "int", false),
-            array("ban", "int", false),
-        );
+        $data = [
+            ["id", "int", true],
+            ["ip", "string", false],
+            ["mt", "string", false],
+            ["nb_req", "int", false],
+            ["ban", "int", false],
+        ];
         new entity_generator($data, "banip", false, true);
         application::$_bdd->query("delete from banip where mt<'" . application::$_bdd->protect_var(microtime(true) - $ban_time) . "';");
         $where = "ip='" . application::$_bdd->protect_var($_SERVER["REMOTE_ADDR"]) . "'";

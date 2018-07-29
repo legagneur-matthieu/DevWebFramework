@@ -5,6 +5,9 @@
  */
 
 function audio($id) {
+    $($id + "_player_ctrl_volume").on("input", function () {
+        $('#' + $id + "_player_ctrl_volume_affichage").text($(this).val());
+    });
     document.getElementById($id).onplay = function () {
         setTimeout(function () {
             $("#" + $id + "_player_ctrl_timeline").attr("step", 1).attr("max", document.getElementById($id).duration * 1000);

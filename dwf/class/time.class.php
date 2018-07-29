@@ -126,42 +126,42 @@ class time {
      * @param string $value date par défaut au format US (null par defaut : date actuelle )
      */
     public static function form_date($label, $post, $value = null) {
-        $value = ($value == null ? array(date("Y"), date("m"), date("d")) : explode("-", $value));
+        $value = ($value == null ? [date("Y"), date("m"), date("d")] : explode("-", $value));
         ?>
         <div class="form-group form_date">
-            <label for="<?php echo $post; ?>an"> <?php echo $label; ?> (jour/mois/année)</label>
-            <select name="<?php echo $post; ?>jour" class="form-control">
+            <label for="<?= $post; ?>an"> <?= $label; ?> (jour/mois/année)</label>
+            <select name="<?= $post; ?>jour" class="form-control">
                 <?php
                 for ($index = 1; $index <= 31; $index++) {
                     if ($index < 10) {
                         $index = "0" . $index;
                     }
                     ?>
-                    <option value="<?php echo $index; ?>" <?php
+                    <option value="<?= $index; ?>" <?php
                     if ($index == $value[2]) {
                         echo 'selected="selected" ';
                     }
-                    ?>><?php echo $index; ?></option>
+                    ?>><?= $index; ?></option>
                             <?php
                         }
                         ?>
             </select>
-            <select name="<?php echo $post; ?>mois" class="form-control">
+            <select name="<?= $post; ?>mois" class="form-control">
                 <?php
                 $mois = new time();
                 $mois = $mois->get_mois();
                 foreach ($mois as $key => $m) {
                     ?>
-                    <option value="<?php echo $key; ?>" <?php
+                    <option value="<?= $key; ?>" <?php
                     if ($key == $value[1]) {
                         echo 'selected="selected" ';
                     }
-                    ?>><?php echo $m; ?></option>
+                    ?>><?= $m; ?></option>
                             <?php
                         }
                         ?>
             </select>
-            <input type="number" id="<?php echo $post; ?>an" name="<?php echo $post; ?>an" value="<?php echo $value[0]; ?>" class="form-control"/>
+            <input type="number" id="<?= $post; ?>an" name="<?= $post; ?>an" value="<?= $value[0]; ?>" class="form-control"/>
         </div>
         <?php
     }

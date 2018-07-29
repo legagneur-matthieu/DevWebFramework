@@ -42,7 +42,7 @@ class g_module_article {
             form::close_fieldset();
             form::close_form();
             if (isset($_POST["mod_nom"])) {
-                $mod_cat = array();
+                $mod_cat = [];
                 foreach ($_POST["mod_cat"] as $value) {
                     $mod_cat[] = (int) $value;
                 }
@@ -87,8 +87,8 @@ class g_module_article {
                     ?>
                     <tr>
                         <?php ?>
-                        <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_modif&amp;id=" . $mod["id"], $mod["name"]); ?></td>
-                        <td><?php echo $mod["nb"]; ?></td>
+                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_modif&amp;id=" . $mod["id"], $mod["name"]); ?></td>
+                        <td><?= $mod["nb"]; ?></td>
                         <td> 
                             <ul>
                                 <?php
@@ -104,7 +104,7 @@ class g_module_article {
                                 ?>
                             </ul>
                         </td>
-                        <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_supp&amp;id=" . $mod["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
+                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_supp&amp;id=" . $mod["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
                     </tr>
                     <?php
                 }
@@ -129,7 +129,7 @@ class g_module_article {
         form::close_form();
         if (isset($_POST["mod_nom"])) {
             if (module_article::get_count("name='" . application::$_bdd->protect_var($_POST["mod_nom"]) . "'") == 0) {
-                $mod_cat = array();
+                $mod_cat = [];
                 foreach ($_POST["mod_cat"] as $value) {
                     $mod_cat[] = (int) $value;
                 }

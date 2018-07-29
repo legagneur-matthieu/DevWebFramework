@@ -22,7 +22,7 @@ class printer {
     private $_content;
 
     /**
-     * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)
+     * Cette classe permet la création d'un PDF (passe par printer.php )
      * 
      * @param string $lib Librairie a utiliser (dompdf ou debug)
      */
@@ -67,15 +67,15 @@ class printer {
      * Affiche le bouton d'impression ouvrant le PDF dans print.php
      */
     public function print_buton() {
-        ?>
-        <form action="../commun/printer.php" target="_blank" method="post">
-            <div class="form-group">
-                <input type="hidden" class="form-control" name="content" value="<?php echo base64_encode(($this->return_content())) ?>" />
-                <input type="hidden" class="form-control" name="lib" value="<?php echo $this->_lib; ?>" />
-                <input type="submit" class="btn btn-default" value="Version imprimable (PDF)" />
-            </div>
-        </form>
-        <?php
+        echo tags::tag("form", ["action" => "../commun/printer.php", "target" => "_blank", "method" => "post"], tags::tag(
+                        "div", ["class" => "form-group"], tags::tag(
+                                "input", ["type" => "hidden", "class" => "form-control", "name" => "content", "value" => base64_encode(($this->return_content()))]) .
+                        tags::tag(
+                                "input", ["type" => "hidden", "class" => "form-control", "name" => "lib", "value" => $this->_lib]) .
+                        tags::tag(
+                                "input", ["type" => "submit", "class" => "btn btn-default", "value" => "Version imprimable (PDF)"])
+                )
+        );
     }
 
 }

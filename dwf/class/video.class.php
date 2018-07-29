@@ -20,23 +20,18 @@ class video {
      */
     public function __construct($src, $id = "video-js") {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/videojs/video-js.min.css");
-            ?>
-            <script type="text/javascript" src="../commun/src/js/videojs/video.min.js"></script>
-            <?php
+            echo html_structures::link_in_body("../commun/src/js/videojs/video-js.min.css")
+            . html_structures::script("../commun/src/js/videojs/video.min.js");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                videojs('<?php echo $id; ?>', {}, function () {});
+                videojs('<?= $id; ?>', {}, function () {});
             });
         </script>
-        <video id="<?php echo $id; ?>" class="video-js vjs-default-skin" controls
-               preload="auto" width="600" data-setup='{"language":"fr"}'>            
-            <source src="<?php echo $src; ?>" type="<?php echo mime_content_type($src); ?>">
-        </video>
         <?php
+        echo tags::tag("video", ["id" => $id, "class" => "video-js vjs-default-skin", "controls" => "true", "preload" => "auto", "width" => "600", "data-setup" => "{'language':'fr'}"], tags::tag("source", ["src" => $src, "type" => mime_content_type($src)]));
     }
 
 }

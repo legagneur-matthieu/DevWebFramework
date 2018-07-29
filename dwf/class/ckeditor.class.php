@@ -18,7 +18,7 @@ class ckeditor {
      * 
      * @var array
      */
-    private $_params = array();
+    private $_params = [];
 
     /**
      * Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
@@ -26,7 +26,7 @@ class ckeditor {
      * @param array $id Id du textarea
      * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
      */
-    public function __construct($id, $params = array()) {
+    public function __construct($id, $params = []) {
         if (!self::$_called) {
             ?>
             <script type="text/javascript" src="../commun/src/js/ckeditor/ckeditor.js"></script>
@@ -36,7 +36,7 @@ class ckeditor {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-            CKEDITOR.replace('<?php echo $id; ?>'<?php
+            CKEDITOR.replace('<?= $id; ?>'<?php
         if (count($params) or count($this->_params)) {
             ?>
                 , {<?php
@@ -52,7 +52,7 @@ class ckeditor {
         }
         ?>
             );
-            $("#<?php echo $id; ?>").parents("form").css("width", "100%");
+            $("#<?= $id; ?>").parents("form").css("width", "100%");
             });
         </script>
         <?php

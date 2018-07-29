@@ -16,23 +16,19 @@ class reveal {
      * @param string $theme théme des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
      */
     public function __construct($width = 600, $height = 600, $theme = "white") {
-        echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal.css");
-        echo html_structures::link_in_body("../commun/src/js/reveal/css/theme/" . $theme . ".css");
-        echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal_correctif.css");
+        echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal.css") .
+        html_structures::link_in_body("../commun/src/js/reveal/css/theme/" . $theme . ".css") .
+        html_structures::link_in_body("../commun/src/js/reveal/css/reveal_correctif.css") .
+        html_structures::script("../commun/src/js/reveal/lib/js/classList.js") .
+        html_structures::script("../commun/src/js/reveal/lib/js/head.min.js") .
+        html_structures::script("../commun/src/js/reveal/js/reveal.js");
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".reveal .controls").ready(function () {
-                    $(".reveal,.slides").css("width", "<?php echo $width; ?>px").css("height", "<?php echo $height; ?>px");
-                    $(".reveal .controls").css("margin-top", "<?php echo (-800 + $height); ?>px").css("margin-left", "<?php echo ($width - 100); ?>px");
+                    $(".reveal,.slides").css("width", "<?= $width; ?>px").css("height", "<?= $height; ?>px");
+                    $(".reveal .controls").css("margin-top", "<?= (-800 + $height); ?>px").css("margin-left", "<?= ($width - 100); ?>px");
                 });
-            });
-        </script>
-        <script type="text/javascript" src="../commun/src/js/reveal/lib/js/classList.js"></script>
-        <script type="text/javascript" src="../commun/src/js/reveal/lib/js/head.min.js"></script>
-        <script type="text/javascript" src="../commun/src/js/reveal/js/reveal.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
                 Reveal.initialize({
                     controls: true,
                     progress: false,

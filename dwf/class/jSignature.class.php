@@ -23,11 +23,11 @@ class jSignature {
      */
     public function __construct($id, $label = "Signature", $dataformat = "svgbase64") {
         if (!self::$_called) {
+            echo html_structures::script("../commun/src/js/jSignature/jSignature.min.js");
             ?>
             <!--[if lt IE 9]>
                 <script type="text/javascript" src="../commun/src/js/jSignature/flashcanvas.js"></script>
             <![endif]-->
-            <script type="text/javascript" src="../commun/src/js/jSignature/jSignature.min.js"></script>
             <?php
             self::$_called = true;
         }
@@ -45,12 +45,13 @@ class jSignature {
                 });
             });
         </script>
-        <div class="form-group">
-            <label for="<?= $id ?>"><?= $label ?></label> <a id="<?= $id ?>_reset" class="btn btn-xs btn-default">Reset</a>
-            <div id="<?= $id ?>_div"></div>
-            <input type="hidden" id="<?= $id ?>" name="<?= $id ?>" value="" />
-        </div>
         <?php
+        echo tags::tag("div", ["class" => "form-group"], tags::tag(
+                        "label", ["for" => $id], $label) .
+                tags::tag("a", ["id" => $id . "_reset", "class" => "btn btn-xs btn-default"], "Reset") .
+                tags::tag("div", ["id" => $id . "_div"], "") .
+                tags::tag("input", ["type" => "hidden", "id" => $id, "name" => $id, "value" => ""])
+        );
     }
 
 }

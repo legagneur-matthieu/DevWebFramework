@@ -10,7 +10,7 @@ class bootstrap_theme {
      * Thèmes de bootswath
      * @var array Thèmes de bootswath
      */
-    private static $_theme = array(
+    private static $_theme = [
         "cerulean",
         "cosmo",
         "cyborg",
@@ -27,7 +27,7 @@ class bootstrap_theme {
         "superhero",
         "united",
         "yeti"
-    );
+    ];
 
     /**
      * Retourne le thème renseigné dans config ou en session si l'utilisateur 
@@ -50,14 +50,10 @@ class bootstrap_theme {
      */
     public static function link_theme() {
         if (in_array($theme = self::get_theme(), self::$_theme)) {
-            ?>
-            <link rel="stylesheet" href="../commun/src/dist/bootswatch/<?php echo $theme; ?>/bootstrap.min.css" />
-            <?php
+            echo tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/bootswatch/" . $theme . "/bootstrap.min.css"]);
         } else {
-            ?>
-            <link rel="stylesheet" href="../commun/src/dist/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="../commun/src/dist/css/bootstrap-theme.min.css" />
-            <?php
+            echo tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/css/bootstrap.min.css"]) .
+            tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/css/bootstrap-theme.min.css"]);
         }
     }
 
@@ -77,11 +73,11 @@ class bootstrap_theme {
         ob_start();
         form::new_form();
         $theme = self::get_theme();
-        $option = array(
-            array("default", "Default", false)
-        );
+        $option = [
+            ["default", "Default", false]
+        ];
         foreach (self::$_theme as $t) {
-            $option[] = array($t, ucfirst($t), ($t == $theme));
+            $option[] = [$t, ucfirst($t), ($t == $theme)];
         }
         form::select("Theme", "bootstrap_theme", $option);
         form::submit("btn-default");

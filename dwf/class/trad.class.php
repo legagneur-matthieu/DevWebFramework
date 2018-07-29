@@ -83,7 +83,7 @@ class trad {
                             $lang = json_decode(file_get_contents($file), true);
                             //js::datatable();
                             ?>
-                            <h2>Fichier de traduction <?php echo $_GET["lang"]; ?></h2>
+                            <h2>Fichier de traduction <?= $_GET["lang"]; ?></h2>
                             <?php
                             form::new_form("form_trad");
                             form::hidden("trad_form", 1);
@@ -92,49 +92,36 @@ class trad {
                                 .form_trad{
                                     width: 900px;
                                 }
-                                #datatable{
+                                .form_trad #datatable{
                                     margin: 0 auto;
                                 }
-                                #datatable>tbody>tr>td>input{
+                                .form_trad #datatable>tbody>tr>td>input{
                                     width: 300px;
                                 }
-                                #datatable>tbody>tr>td+td>input{
+                                .form_trad #datatable>tbody>tr>td+td>input{
                                     width: 600px;
 
                                 }
                             </style>
-                            <table id="datatable">
-                                <thead>
-                                    <tr>
-                                        <th>Keyword</th>
-                                        <th>Texte</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $i = 0;
-                                    foreach ($lang as $key => $value) {
-                                        ?>
-                                        <tr>
-                                            <td><input type="text" name="trad[<?php echo $i; ?>][key]" value="<?php echo $key; ?>"</td>
-                                            <td><input type="text" name="trad[<?php echo $i; ?>][value]" value="<?php echo $value; ?>"</td>
-                                        </tr>
-                                        <?php
-                                        $i++;
-                                    }
-                                    ?>
-                                    <tr>
-                                        <td><input type="text" name="trad[<?php echo $i; ?>][key]" /></td>
-                                        <td><input type="text" name="trad[<?php
-                                            echo $i;
-                                            $i++;
-                                            ?>][value]" /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <?php
+                            $i = 0;
+                            $data = [];
+                            foreach ($lang as $key => $value) {
+                                $data[] = [
+                                    tags::tag("input", ["type" => "text", "name" => "trad[" . $i . "][key]", "value" => $key]),
+                                    tags::tag("input", ["type" => "text", "name" => "trad[" . $i . "][value]", "value" => $value])
+                                ];
+                                $i++;
+                            }
+                            $data[] = [
+                                tags::tag("input", ["type" => "text", "name" => "trad[" . $i . "][key]"]),
+                                tags::tag("input", ["type" => "text", "name" => "trad[" . $i . "][value]"])
+                            ];
+                            echo html_structures::table(["Keyword", "Texte"], $data, "", "datatable");
+                            ?>
                             <script type="text/javascript">
                                 $(document).ready(function () {
-                                    i = <?php echo $i; ?>;
+                                    i = <?= $i; ?>;
                                     $("#addkey").click(function (e) {
                                         e.preventDefault();
                                         $("#datatable>tbody").append('<tr><td><input type="text" name="trad[' + i + '][key]" /></td><td><input type="text" name="trad[' + i + '][value]" /></td></tr>');
@@ -142,8 +129,8 @@ class trad {
                                     });
                                 });
                             </script>
-                            <a href="#" id="addkey">Ajouter une clé</a>
                             <?php
+                            echo tags::tag("a", ["href" => "#", "id" => "addkey"], "Ajouter une clé");
                             form::submit('btn-default');
                             form::close_form();
                         } else {
@@ -152,19 +139,13 @@ class trad {
                         }
                     }
                 } else {
-                    ?>
-                    <ul>
-                        <?php
-                        foreach (glob("lang/*.json") as $value) {
-                            $v = explode("lang/", $value);
-                            $v = strtr($v[1], array(".json" => ""));
-                            ?>
-                            <li><a href="<?php echo application::get_url(array("lang")) . "lang=" . $v; ?>"><?php echo $v ?></a></li>
-                            <?php
-                        }
-                        ?>
-                    </ul>
-                    <?php
+                    $ul = [];
+                    foreach (glob("lang/*.json") as $value) {
+                        $v = explode("lang/", $value);
+                        $v = strtr($v[1], array(".json" => ""));
+                        $ul[] = html_structures::a_link(application::get_url(array("lang")) . "lang=" . $v, $v);
+                    }
+                    echo html_structures::ul($ul);
                     form::new_form();
                     form::input("Langue (Sigle, exemple : en, es, it, ru, ...)", "add_lang");
                     form::submit("btn-default", "Ajouter");

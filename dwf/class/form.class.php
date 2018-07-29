@@ -35,42 +35,32 @@ class form {
      * @param null|string $list Datalist (null par défaut, sinon indiquer l'id de la dataliste)
      */
     public static function input($label, $name, $type = "text", $value = null, $required = true, $class = "", $list = null) {
-        if (!empty($class)) {
-            ?>
-            <div class="<?= $class; ?>">            
-                <?php
-            }
-            ?>
-            <div class="form-group">
-                <label for="<?= $name; ?>"><?= $label; ?></label>
-                <input id="<?= $name; ?>" type="<?= $type; ?>" name="<?= $name; ?>" <?php if ($value != null) { ?>value="<?= $value; ?>" <?php } ?> class="form-control" <?php if ($list != null) { ?>list="<?= $list; ?>" <?php } ?> <?php if ($required) { ?>required="required"<?php } ?>/>
-            </div>
-            <?php
-            if (!empty($class)) {
-                ?>
-            </div>
-            <?php
+        $input = tags::input(["id" => $name, "type" => $type, "name" => $name, "class" => "form-control"], false);
+        if ($value != null) {
+            $input->set_attr("value", $value);
         }
+        if ($required) {
+            $input->set_attr("required", "required");
+        }
+        if ($list != null) {
+            $input->set_attr("list", $list);
+        }
+        $fg = tags::tag("div", ["class" => "form-group"], tags::tag("label", ["for" => $name], $label) . $input);
+        echo (!empty($class) ? tags::tag("div", ["class" => $class], $fg) : $fg);
     }
 
     /**
      * Créé une datalist pour un input
      * 
      * @param string $list Id de la liste
-     * @param array $data array(array("label"=>"", "value"=>""), ... );
+     * @param array $data array(value1, value2, ... );
      */
     public static function datalist($list, $data) {
-        ?>
-        <datalist id="<?= $list ?>">
-            <?php
-            foreach ($data as $value) {
-                ?>
-                <option label="<?= $value["label"]; ?>" value="<?= $value["value"]; ?>" />
-                <?php
-            }
-            ?>
-        </datalist>
-        <?php
+        $datalist = tags::datalist(["id" => $list], false);
+        foreach ($data as $value) {
+            $datalist->append_content(tags::tag("option", ["value" => $value], $value));
+        }
+        echo $datalist;
     }
 
     /**
@@ -82,25 +72,18 @@ class form {
      * @param boolean $multiple Upload de fichiers multiples ? true/false (false par défaut)
      */
     public static function file($label, $name, $required = true, $class = "", $multiple = false) {
-        if (!empty($class)) {
-            ?>
-            <div class="<?= $class; ?>">            
-                <?php
-            }
-            ?>
-            <div class="form-group">
-                <label for="<?= $name; ?>"><?= $label; ?></label>
-                <input id="<?= $name; ?>" type="file" name="<?php
-                echo $name;
-                if ($multiple) {
-                    ?>[]<?php } ?>" <?php if ($multiple) { ?>multiple="true" <?php } ?> <?php if ($required) { ?>required="required"<?php } ?>/>
-            </div>
-            <?php
-            if (!empty($class)) {
-                ?>
-            </div>
-            <?php
+        $input = tags::input(["id" => $name, "type" => "file"], false);
+        if ($multiple) {
+            $input->set_attr("name", $name . "[]");
+            $input->set_attr("multiple", "true");
+        } else {
+            $input->set_attr("name", $name);
         }
+        if ($required) {
+            $input->set_attr("required", "required");
+        }
+        $fg = tags::tag("div", ["class" => "form-group"], tags::tag("label", ["for" => $name], $label) . $input);
+        echo (!empty($class) ? tags::tag("div", ["class" => $class], $fg) : $fg);
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -139,7 +122,7 @@ class form {
                 js::alert("Le fichier n'est pas du bon type !");
             }
         }
-        return array("doc" => $doc, "error" => $error);
+        return ["doc" => $doc, "error" => $error];
     }
 
     /**
@@ -173,7 +156,7 @@ class form {
             }
             $i++;
         }
-        return array("doc" => $doc, "error" => $error);
+        return ["doc" => $doc, "error" => $error];
     }
 
     /**
@@ -240,7 +223,7 @@ class form {
      * @return array Table ascci est caractères de substitution
      */
     public static function get_acii() {
-        return array(
+        return [
             "'" => ' ',
             '"' => ' ',
             '!' => '',
@@ -420,7 +403,7 @@ class form {
             '²' => '',
             '■' => '',
             ' ' => '',
-        );
+        ];
     }
 
     /**
@@ -430,11 +413,7 @@ class form {
      * @param string $value Value de l'input
      */
     public static function hidden($name, $value) {
-        ?>
-        <div class="form-group">
-            <input type="hidden" name="<?= $name; ?>" id="<?= $name; ?>" value='<?= $value; ?>' />
-        </div>
-        <?php
+        echo tags::tag("div", ["class" => "form-group"], tags::tag("input", ["type" => "hidden", "name" => $name, "id" => $name, "value" => $value], false));
     }
 
     /**
@@ -446,23 +425,12 @@ class form {
      * @param boolean $checked Case cochée par défaut ? true/false (false par defaut)
      */
     public static function checkbox($label, $name, $value, $class = "", $checked = false) {
-        if (!empty($class)) {
-            ?>
-            <div class="<?= $class; ?>">            
-                <?php
-            }
-            ?>
-            <div class="form-group checkbox">
-                <label for="<?= $name; ?>">
-                    <input type="checkbox" name="<?= $name; ?>" id="<?= $name; ?>" value="<?= $value; ?>" <?php if ($checked) { ?>checked="checked" <?php } ?>/>
-                    <?= $label; ?></label>
-            </div>
-            <?php
-            if (!empty($class)) {
-                ?>
-            </div>
-            <?php
+        $input = tags::input(["type" => "checkbox", "name" => $name, "id" => $name, "value" => $value], false);
+        if ($checked) {
+            $input->set_attr("checked", "checked");
         }
+        $fg = tags::tag("div", ["class" => "form-group checkbox"], tags::tag("label", ["for" => $name], $input . $label));
+        echo (!empty($class) ? tags::tag("div", ["class" => $class], $fg) : $fg);
     }
 
     /**
@@ -478,18 +446,11 @@ class form {
             <?php
             form::new_fieldset($label);
             foreach ($radios as $value) {
-                ?>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="<?= $name; ?>" id="<?= $name . $value[0]; ?>" value="<?= $value[0]; ?>" <?php
-                        if (isset($value[2]) and $value[2] == true) {
-                            ?>checked="checked" <?php
-                               }
-                               ?>>
-                               <?= $value[1]; ?>
-                    </label>
-                </div>
-                <?php
+                $input = tags::input(["type" => "radio", "name" => $name, "id" => $name . $value[0], "value" => $value[0]], false);
+                if (isset($value[2]) and $value[2] == true) {
+                    $input->set_attr("checked", "checked");
+                }
+                echo tags::tag("div", ["class" => "radio"], tags::tag("label", [], $input . $value[1]));
             }
             form::close_fieldset();
             ?>
@@ -600,11 +561,11 @@ class form {
      * @param string $value Texte du bouton (null par default, dépend du navigateur client)
      */
     public static function submit($class, $value = null) {
-        ?>
-        <div class="form-group">
-            <input type="submit" class="btn <?= $class; ?>" <?php if ($value != null) { ?>value="<?= $value; ?>" <?php } ?> />
-        </div>
-        <?php
+        $input = tags::input(["type" => "submit", "class" => "btn " . $class], false);
+        if ($value != null) {
+            $input->set_attr("value", $value);
+        }
+        echo tags::tag("div", ["class" => "form-group"], $input);
     }
 
     /**
@@ -657,9 +618,11 @@ class form {
                 </optgroup>
                 <?php
             } else {
-                ?>
-                <option value="<?= $value[0]; ?>" <?php if (isset($value[2]) and $value[2] == true) { ?> selected="selected" <?php } ?>><?= $value[1]; ?></option>
-                <?php
+                $opt = tags::option(["value" => $value[0]], $value[1]);
+                if (isset($value[2]) and $value[2] == true) {
+                    $opt->set_attr("selected", "selected");
+                }
+                echo $opt;
             }
         }
     }
@@ -675,20 +638,12 @@ class form {
      * @param int $cols cols, Taille en x du textarea
      * @param int $rows rows, Taille en y du textarea
      */
-    public static function textarea($label, $name, $value = null, $required = true, $class = "", $cols = 30, $rows = 10) {
-        ?>
-        <div class="form-group">
-            <label for="<?= $name; ?>"><?= $label; ?></label>
-            <div>
-                <textarea name="<?= $name; ?>" id="<?= $name; ?>" cols="<?= $cols; ?>" rows="<?= $rows; ?>" class="form-control <?= $class; ?>" <?php if ($required) { ?>required="required"<?php } ?>><?php
-                    if ($value != null) {
-                        echo $value;
-                    }
-                    ?></textarea>
-
-            </div>
-        </div>
-        <?php
+    public static function textarea($label, $name, $value = " ", $required = true, $class = "", $cols = 30, $rows = 10) {
+        $ta = tags::textarea(["name" => $name, "id" => $name, "cols" => $cols, "rows" => $rows, "class" => "form-control " . $class], $value);
+        if ($required) {
+            $ta->set_attr("required", "required");
+        }
+        echo tags::tag("div", ["class" => "form-group"], tags::tag("label", ["for" => $name], $label) . tags::tag("div", [], $ta));
     }
 
     /**
@@ -699,7 +654,7 @@ class form {
      * @param string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30
      */
     public static function jSignature($id, $label = "Signature", $dataformat = "svgbase64") {
-        new jSignature($id,$label, $dataformat);
+        new jSignature($id, $label, $dataformat);
     }
 
     /**

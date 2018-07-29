@@ -35,15 +35,14 @@ class messagerie {
         $this->_time = new time();
         $this->_table_user = $table_user;
         $this->_tuple_user = $tuple_user;
-        $data = array(
-            array("id", "int", true),
-            array("heur", "string", false),
-            array("contenu", "string", false),
-            array("emet", "user", false),
-            array("dest", "user", false),
-            array("supp", "int", false),
-        );
-        new entity_generator($data, "message", true, true);
+        new entity_generator([
+            ["id", "int", true],
+            ["heur", "string", false],
+            ["contenu", "string", false],
+            ["emet", "user", false],
+            ["dest", "user", false],
+            ["supp", "int", false]
+                ], "message");
         $this->sub_menu();
     }
 
@@ -51,46 +50,18 @@ class messagerie {
      * Affiche le sous-menu de la messagerie
      */
     private function sub_menu() {
-        $route = array(
-            array("action" => "write", "title" => "Ecrire un message", "text" => "ECRIRE UN MESSAGE"),
-            array("action" => "get", "title" => "Boite de réception", "text" => "BOITE DE RECEPTION"),
-            array("action" => "send", "title" => "Message envoyé", "text" => "MESSAGE ENVOYE")
-        );
-        if (!isset($_GET["action"])) {
-            $_GET["action"] = "get";
-        }
-        ?>
-        <ul class="nav nav-tabs">
-            <?php
-            foreach ($route as $value) {
-                ?>
-                <li <?php
-                if ($_GET["action"] == $value["action"]) {
-                    ?>class="active"<?php
-                    }
-                    ?>><a href="index.php?page=<?php echo $_GET["page"] . "&amp;action=" . $value["action"]; ?>" title="<?php echo $value["title"] ?>"><?php echo $value["text"]; ?></a></li>
-                    <?php
-                }
-                ?>
-        </ul>
-        <?php
-        $action_finded = false;
-        foreach ($route as $value) {
-            if ($_GET["action"] == $value["action"]) {
-                $action_finded = true;
-                $v = $value["action"];
-                $this->$v();
-            }
-        }
-        if (!$action_finded) {
-            $this->get();
-        }
+        $route = [
+            ["action" => "get", "title" => "Boite de réception", "text" => "BOITE DE RECEPTION"],
+            ["action" => "write", "title" => "Ecrire un message", "text" => "ECRIRE UN MESSAGE"],
+            ["action" => "send", "title" => "Message envoyé", "text" => "MESSAGE ENVOYE"]
+        ];
+        (new sub_menu($this, $route, "action", "get"));
     }
 
     /**
      * Vue de l'envoie de message
      */
-    private function write() {
+    public function write() {
         if (!isset($_GET["dest"])) {
             $_GET["dest"] = 0;
         } else {
@@ -98,9 +69,9 @@ class messagerie {
         }
         $user = $this->_table_user;
         $users = $user::get_table_array("id!='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "';");
-        $option = array();
+        $option = [];
         foreach ($users as $value) {
-            $option[] = array($value["id"], $value[$this->_tuple_user], ($value["id"] == $_GET["dest"]));
+            $option[] = [$value["id"], $value[$this->_tuple_user], ($value["id"] == $_GET["dest"])];
         }
         form::new_form();
         form::select("Envoyer a", "dest", $option);
@@ -115,20 +86,20 @@ class messagerie {
     /**
      * Vue de la boite de réception
      */
-    private function get() {
+    public function get() {
         if (isset($_GET["action"]) and isset($_GET["id"]) and $_GET["action"] == "supp") {
             if (message::get_count("dest='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "' and id='" . application::$_bdd->protect_var(((int) $_GET["id"])) . "';") != 0) {
                 $msg = message::get_from_id(((int) $_GET["id"]));
                 $msg->set_supp(1);
             }
-            js::redir("index.php?page=" . $_GET["page"] . "&amp;action=get");
+            js::redir("index.php?page=" . $_GET["page"] . "&action=get");
         } else {
             $msg = message::get_collection("dest='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "' and supp=0;");
-            $data = array();
+            $data = [];
             if ($msg) {
                 foreach ($msg as $value) {
                     $date = explode(" ", $value->get_heur());
-                    $data[] = array(html_structures::time($value->get_heur(), $this->_time->convert_date($date[0]) . "<br />" . $date[1]), $value->get_emet()->get_login(), $value->get_contenu(), html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;action=get&amp;action=supp&amp;id=" . $value->get_id(), html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger btn_supp"));
+                    $data[] = [html_structures::time($value->get_heur(), $this->_time->convert_date($date[0]) . "<br />" . $date[1]), $value->get_emet()->get_login(), $value->get_contenu(), html_structures::a_link("index.php?page=" . $_GET["page"] . "&action=get&action=supp&id=" . $value->get_id(), html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger btn_supp")];
                 }
             }
             js::datatable();
@@ -140,35 +111,26 @@ class messagerie {
                     });
                 });
             </script>
-            <div class="datatable">
-                <?php
-                echo html_structures::table(array("date", "Emetteur", "Message", "Supprimer"), $data, "Messages reÃ§us", "datatable");
-                ?>
-            </div>
             <?php
+
+            echo tags::tag("div", ["class" => "datatable"], html_structures::table(["date", "Emetteur", "Message", "Supprimer"], $data, "Messages reÃ§us", "datatable"));
         }
     }
 
     /**
      * Vue de la boite d'envoi
      */
-    private function send() {
+    public function send() {
         $msg = message::get_collection("emet='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "';");
-        $data = array();
+        $data =[];
         if ($msg) {
             foreach ($msg as $value) {
                 $date = explode(" ", $value->get_heur());
-                $data[] = array(html_structures::time($value->get_heur(), $this->_time->convert_date($date[0]) . "<br />" . $date[1]), $value->get_dest()->get_login(), $value->get_contenu());
+                $data[] = [html_structures::time($value->get_heur(), $this->_time->convert_date($date[0]) . "<br />" . $date[1]), $value->get_dest()->get_login(), $value->get_contenu()];
             }
         }
         js::datatable();
-        ?>
-        <div class="datatable">
-            <?php
-            echo html_structures::table(array("date", "Destinataire", "Message"), $data, "Messages envoyé", "datatable");
-            ?>
-        </div>
-        <?php
+        echo tags::tag("div", ["class" => "datatable"], html_structures::table(array("date", "Destinataire", "Message"), $data, "Messages envoyé", "datatable"));
     }
 
     /**

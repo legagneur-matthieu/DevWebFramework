@@ -26,35 +26,34 @@ class audio {
     public function __construct($src = "", $id = "player") {
         $this->_id = $id;
         if (!self::$_called) {
-            ?> 
-            <script type="text/javascript" src="../commun/src/js/audio/audio.js"></script>
-            <?php
-            echo html_structures::link_in_body("../commun/src/js/audio/audio.css");
+            echo html_structures::script("../commun/src/js/audio/audio.js").
+            html_structures::link_in_body("../commun/src/js/audio/audio.css");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                audio("<?= $id; ?>");
-                $("<?= $id; ?>_player_ctrl_volume").on("input", function () {
-                    $('#<?= $id; ?>_player_ctrl_volume_affichage').text($(this).val());
-                });
+                audio("<?= $id; ?>");                
             });
         </script>
-        <div class="player_ctrl">
-            <audio id="<?= $id; ?>" src="<?= $src; ?>" ></audio> 
-            <input title="Ligne de temps de la musique" id="<?= $id; ?>_player_ctrl_timeline" type="range" min="0" max="0" value="0" step="1"/>
-            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_play"><span class="glyphicon glyphicon-play"><span class="sr-only">Lecture</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_stop"><span class="glyphicon glyphicon-pause"><span class="sr-only">Pause</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_mute"><span class="glyphicon glyphicon-volume-off"><span class="sr-only">Muet</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_volume_down"><span class="glyphicon glyphicon-volume-down"><span class="sr-only">Diminuer le volume</span></span></button>
-            <button class="btn btn-xs btn-default" id="<?= $id; ?>_player_ctrl_volume_up"><span class="glyphicon glyphicon-volume-up"><span class="sr-only">Augmenter le volume</span></span></button>
-            <div class="player_ctrl_volume_div">
-                <input id="<?= $id; ?>_player_ctrl_volume" class="player_ctrl_volume" type="range" title="volume" min="0" max="10" value="10" />
-                <p class="player_ctrl_volume_affichage" id="<?= $id; ?>_player_ctrl_volume_affichage">10</p>
-            </div>
-        </div>
         <?php
+        $class = "btn btn-xs btn-default";
+        echo tags::tag(
+                "div", ["class" => "player_ctrl"], tags::tag(
+                        "audio", ["id" => $id, "src" => $src], "") .
+                tags::tag("input", ["title" => "Ligne de temps de la musique", "id" => $id . "_player_ctrl_timeline", "type" => "range", "min" => "0", "max" => "0", "value" => "0", "step" => "1"]) .
+                tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_play"], html_structures::glyphicon("play", "Lecture")) .
+                tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_stop"], html_structures::glyphicon("pause", "Pause")) .
+                tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_mute"], html_structures::glyphicon("volume-off", "Muet")) .
+                tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_volume_down"], html_structures::glyphicon("volume-down", "Diminuer le volume")) .
+                tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_volume_up"], html_structures::glyphicon("volume-up", "Augmenter le volume")) .
+                tags::tag(
+                        "div", ["class" => ""], tags::tag(
+                                "input", ["id" => $id . "_player_ctrl_volume", "class" => "player_ctrl_volume", "type" => "range", "title" => "volume", "min" => "0", "max" => "10", "value" => "10"]) .
+                        tags::tag(
+                                "p", ["class" => "player_ctrl_volume_affichage", "id" => $id . "_player_ctrl_volume_affichage"], 10)
+                )
+        );
     }
 
     /**
@@ -63,15 +62,14 @@ class audio {
      * Forme du tableau : array(array("src"=>"source", "titre=>"titre"));
      */
     public function playlist($playlist) {
-        ?> 
-        <ul class="playlist">
-            <?php
-            foreach ($playlist as $t) {
-                ?> <li> <a href="#<?= $this->_id; ?>" data-id="<?= $this->_id; ?>" data-src="<?= $t["src"]; ?>"><?= html_structures::glyphicon("music", "") . " " . $t["titre"]; ?></a></li>  <?php
-            }
-            ?>
-        </ul>
-        <?php
+        $li = "";
+        foreach ($playlist as $t) {
+            $li .= tags::tag(
+                            "li", [], tags::tag(
+                                    "a", ["href" => "#" . $this->_id, "data-id" => $this->_id, "data-src" => $t["src"]], html_structures::glyphicon("music", "") . " " . $t["titre"])
+            );
+        }
+        echo tags::tag("ul", ["class" => "playlist"], $li);
     }
 
 }

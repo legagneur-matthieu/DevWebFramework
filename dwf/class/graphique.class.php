@@ -26,10 +26,10 @@ class graphique {
      */
     public function __construct($id, $size = ["width" => "600px", "height" => "300px"]) {
         if (!self::$_called) {
+            echo html_structures::script("../commun/src/js/flot/jquery.flot.min.js") .
+            html_structures::script("../commun/src/js/flot/jquery.flot.pie.min.js") .
+            html_structures::script("../commun/src/js/flot/jquery.flot.resize.min.js")
             ?>
-            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.min.js"></script>
-            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.pie.min.js"></script>
-            <script type="text/javascript" src="../commun/src/js/flot/jquery.flot.resize.min.js"></script>
             <script type="text/javascript">
                 function labelFormatter(label, series) {
                     return "<p style='text-align:center; color:black; text-shadow:0 0 15px white'>" + label + " <br /> " + series.data[0][1] + " (" + Math.round(series.percent) + " %)</p>";
@@ -38,9 +38,7 @@ class graphique {
             <?php
             self::$_called = true;
         }
-        ?>
-        <div id="<?= $this->_id = $id ?>" style="width: <?= $size["width"] ?>;height:<?= $size["height"] ?>"></div>
-        <?php
+        echo tags::tag("div", ["id" => ($this->_id = $id), "style" => "width: " . $size["width"] . ";height: " . $size["height"] . ";"], " ");
     }
 
     /**

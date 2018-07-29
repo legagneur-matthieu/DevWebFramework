@@ -79,7 +79,7 @@ class selectorDOM {
      * @return array DOMNodeList to array
      */
     private function elements_to_array($elements) {
-        $array = array();
+        $array = [];
         for ($i = 0, $length = $elements->length; $i < $length; ++$i) {
             if ($elements->item($i)->nodeType == XML_ELEMENT_NODE) {
                 array_push($array, $this->element_to_array($elements->item($i)));
@@ -95,15 +95,17 @@ class selectorDOM {
      * @return array DOMNode to array
      */
     private function element_to_array($element) {
-        $array = array(
+        $array = [
             'name' => $element->nodeName,
-            'attributes' => array(),
+            'attributes' => [],
             'text' => $element->textContent,
             'children' => $this->elements_to_array($element->childNodes)
-        );
-        if ($element->attributes->length)
-            foreach ($element->attributes as $key => $attr)
+        ];
+        if ($element->attributes->length) {
+            foreach ($element->attributes as $key => $attr) {
                 $array['attributes'][$key] = $attr->value;
+            }
+        }
         return $array;
     }
 
@@ -113,10 +115,17 @@ class selectorDOM {
      */
     private function selector_to_xpath($selector) {
         // remove spaces around operators
-        $selector = preg_replace('/\s*>\s*/', '>', $selector);
-        $selector = preg_replace('/\s*~\s*/', '~', $selector);
-        $selector = preg_replace('/\s*\+\s*/', '+', $selector);
-        $selector = preg_replace('/\s*,\s*/', ',', $selector);
+        $selector = preg_replace([
+            '/\s*>\s*/',
+            '/\s*~\s*/',
+            '/\s*\+\s*/',
+            '/\s*,\s*/'
+                ], [
+            '>',
+            '~',
+            '+',
+            ','
+                ], $selector);
         $selectors = preg_split('/\s+(?![^\[]+\])/', $selector);
         foreach ($selectors as &$selector) {
             // ,

@@ -11,7 +11,7 @@ class cards {
      * Paquet de cartes
      * @var array 
      */
-    private $_deck = array();
+    private $_deck = [];
 
     /**
      * Cette classe permet de gérer un paquet de 32, 52, 54 ou 78 cartes
@@ -27,22 +27,22 @@ class cards {
         if (is_array($deck)) {
             $this->set_deck($deck);
         } else {
-            $icones = array("&hearts;", "&diams;", "&clubs;", "&spades;");
-            $value = array();
+            $icones = ["&hearts;", "&diams;", "&clubs;", "&spades;"];
+            $value = [];
             switch ($deck) {
                 case 32:
-                    $value = array("A", "K", "Q", "J", 10, 9, 8, 7);
+                    $value = ["A", "K", "Q", "J", 10, 9, 8, 7];
                     break;
                 case 52:
-                    $value = array("A", "K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2);
+                    $value = ["A", "K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2];
                     break;
                 case 54:
-                    $value = array("A", "K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2);
+                    $value = ["A", "K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2];
                     $this->_deck[] = "Joker red";
                     $this->_deck[] = "Joker black";
                     break;
                 case 78:
-                    $value = array("A", "K", "Q", "C", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2);
+                    $value = ["A", "K", "Q", "C", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2];
                     for ($i = 1; $i <= 21; $i++) {
                         $this->_deck[] = $i . "&star;";
                     }

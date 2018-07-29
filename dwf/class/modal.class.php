@@ -18,15 +18,13 @@ class modal {
      */
     public function __construct() {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/modal/modal-window.css");
-            ?>
-            <script type="text/javascript" src="../commun/src/js/modal/modal-window.js"></script>
-            <div role="dialog" aria-hidden="true" id="modal" class="modal-content" style="display: none;">
-                <div style="max-height: 100%; overflow: auto;"></div>
-                <button id="modalCloseButton" class="modalCloseButton btn btn-default" title="Fermer la fenêtre"><span class="glyphicon glyphicon-remove"></span></button>
-            </div>
-            <div tabindex="-1" id="modalOverlay" style="display: none;"></div>
-            <?php
+            echo html_structures::link_in_body("../commun/src/js/modal/modal-window.css") .
+            html_structures::script("../commun/src/js/modal/modal-window.js") .
+            tags::tag("div", ["role" => "dialog", "aria-hidden" => "true", "id" => "modal", "class" => "modal-content", "style" => "display: none;"], tags::tag(
+                            "div", ["style" => "max-height: 100%; overflow: auto;"], "") .
+                    tags::tag("button", ["id" => "modalCloseButton", "class" => "modalCloseButton btn btn-default", "title" => "Fermer la fenêtre"], html_structures::glyphicon("remove"))
+            ) .
+            tags::tag("div", ["tabindex" => "-1", "id" => "modalOverlay", "style" => "display: none;"], "");
             self::$_called = true;
         }
     }
@@ -44,14 +42,14 @@ class modal {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("a#<?php echo $id; ?>").click(function () {
+                $("a#<?= $id; ?>").click(function () {
                     $("#modal>div").html(stripslashes("<h1>" + $(this).attr("data-titre")) + "</h1><hr />" + base64_decode($(this).attr("data-data")));
                     showModal($('#modal'));
                 });
             });
         </script>
-        <a href="#<?php echo $id; ?>" id="<?php echo $id; ?>" class="<?php echo $class; ?>" data-titre="<?php echo addslashes($titre); ?>" data-data='<?php echo base64_encode($data); ?>' title="<?php echo $title; ?>"><?php echo $a_text; ?></a>
         <?php
+        echo tags::tag("a", ["href" => "#" . $id, "id" => $id, "class" => $class, "data-titre" => addslashes($titre), "data-data" => base64_encode($data), "title" => $title], $a_text);
     }
 
 }

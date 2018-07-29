@@ -36,12 +36,12 @@ class update_dwf {
             $maj = $this->compare_version($local_tags, $remote_tags);
             echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Status / Mise à jour"], [
                 [$out[0], $maj["local"], $maj["remote"],
-                    ( $maj["maj"] ?
-                            '<form action="#" method="post">'
-                            . '<div class="form-group">'
-                            . '<input type="submit" class="btn btn-block btn-primary" value="' . $maj["msg"] . '" name="dwf_update" />'
-                            . '</div>'
-                            . '</form>' :
+                    ( $maj["maj"] ? tags::tag("form", ["action" => "#", "method" => "post"], tags::tag(
+                                            "div", ["class" => "form-group"], tags::tag(
+                                                    "input", ["type" => "submit", "class" => "btn btn-block btn-primary", "value" => $maj["msg"], "name" => "dwf_update"]
+                                            )
+                                    )
+                            ) :
                             $maj["msg"]
                     )
                 ]

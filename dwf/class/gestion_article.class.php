@@ -12,27 +12,27 @@ class gestion_article {
      */
     public function __construct() {
         include __DIR__ . "/gestion_article/public_article.class.php";
-        $datas = array(
-            "cat_article" => array(
-                array("id", "int", true),
-                array("nom", "string", false)
-            ),
-            "article" => array(
-                array("id", "int", true),
-                array("date", "string", false),
-                array("titre", "string", false),
-                array("img", "string", false),
-                array("contenu", "string", false),
-                array("tags", "string", false),
-                array("categorie", "cat_article", false)
-            ),
-            "module_article" => array(
-                array("id", "int", true),
-                array("name", "string", false),
-                array("nb", "int", false),
-                array("categories", "string", false),
-            )
-        );
+        $datas = [
+            "cat_article" => [
+                ["id", "int", true],
+                ["nom", "string", false]
+            ],
+            "article" => [
+                ["id", "int", true],
+                ["date", "string", false],
+                ["titre", "string", false],
+                ["img", "string", false],
+                ["contenu", "string", false],
+                ["tags", "string", false],
+                ["categorie", "cat_article", false]
+            ],
+            "module_article" => [
+                ["id", "int", true],
+                ["name", "string", false],
+                ["nb", "int", false],
+                ["categories", "string", false],
+            ]
+        ];
         foreach ($datas as $table => $data) {
             new entity_generator($data, $table, true, true);
         }
@@ -62,10 +62,11 @@ class gestion_article {
         <?php
 
         $key = "admin";
-        $route = array(
-            array($key => "g_article", "title" => "Gestion des articles", "text" => "Article"),
-            array($key => "g_categorie", "title" => "Gestion des categories d'articles", "text" => "Categorie"),
-            array($key => "g_module", "title" => "Gestion des modules", "text" => "Modules"));
+        $route = [
+            [$key => "g_article", "title" => "Gestion des articles", "text" => "Article"],
+            [$key => "g_categorie", "title" => "Gestion des categories d'articles", "text" => "Categorie"],
+            [$key => "g_module", "title" => "Gestion des modules", "text" => "Modules"]
+            ];
         new sub_menu($this, $route, $key, "g_article");
     }
 

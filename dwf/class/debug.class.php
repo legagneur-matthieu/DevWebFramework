@@ -18,9 +18,10 @@ class debug {
      * @param array|object $var variable à verifier 
      */
     public static function print_r($var) {
-        ?>
-        <pre><?php print_r($var); ?></pre>
-        <?php
+        ?><pre><?php
+            echo "\r";
+            print_r($var);
+            ?></pre><?php
     }
 
     /**
@@ -28,9 +29,10 @@ class debug {
      * @param int|string|boolean|double|float $var variable à verifier 
      */
     public static function var_dump($var) {
-        ?>
-        <pre><?php var_dump($var); ?></pre>
-        <?php
+        ?><pre><?php
+                echo "\r";
+                var_dump($var);
+                ?></pre><?php
     }
 
     /**
@@ -54,13 +56,13 @@ class debug {
     public static function onhtml_body_end() {
         if (self::$_show_report) {
             $limit = ini_get("memory_limit");
-            $puissance = array(
-                "B" => strtr(pow(10, 0), array("1" => "")),
-                "K" => strtr(pow(10, 3), array("1" => "")),
-                "M" => strtr(pow(10, 6), array("1" => "")),
-                "G" => strtr(pow(10, 9), array("1" => "")),
-                "T" => strtr(pow(10, 12), array("1" => "")),
-            );
+            $puissance = [
+                "B" => strtr(pow(10, 0), ["1" => ""]),
+                "K" => strtr(pow(10, 3), ["1" => ""]),
+                "M" => strtr(pow(10, 6), ["1" => ""]),
+                "G" => strtr(pow(10, 9), ["1" => ""]),
+                "T" => strtr(pow(10, 12), ["1" => ""]),
+            ];
             $data = '<p>$_POST</p><pre>';
             foreach ($_POST as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
@@ -111,20 +113,22 @@ class debug {
                         </p>
                     </div>
                     <div class="col-xs-4">
-                        <p>
-                            <strong>Memoire utilisée / limit : </strong>                              
-                            <?php
-                            echo number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o";
-                            ?> <br />
-                            <strong>Memoire utilisé (%) : </strong><?= memory_get_usage() / ((int) strtr($limit, $puissance)) . " %"; ?>
-                        </p>
+                        <?=
+                        tags::tag("p", [], tags::tag(
+                                        "strong", [], "Memoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
+                                tags::tag("br") .
+                                tags::tag("strong", [], "Memoire utilisé (%) : ") . (memory_get_usage() / ((int) strtr($limit, $puissance))) . " %"
+                        );
+                        ?>
                     </div>
                     <div class="col-xs-4">
-                        <p>
-                            <strong>Nombre de requêtes SQL : </strong><?= bdd::$_debug["nb_req"]; ?><br />
-                            <strong>Memoire utilisé par PHP pour SQL : </strong><?= number_format(bdd::$_debug["memory"], 0, ".", " "); ?> Octet<br />
-                            <strong>Memoire utilisé par PHP pour SQL (%) : </strong><?= number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " "); ?> %
-                        </p>
+                        <?=
+                        tags::tag("p", [], tags::tag(
+                                        "strong", [], "Nombre de requêtes SQL : ") . bdd::$_debug["nb_req"] . tags::tag("br") .
+                                tags::tag("strong", [], "Memoire utilisé par PHP pour SQL : ") . number_format(bdd::$_debug["memory"], 0, ".", " ") . " Octet" . tags::tag("br") .
+                                tags::tag("strong", [], "Memoire utilisé par PHP pour SQL (%) : ") . number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " ") . " %"
+                        );
+                        ?>
                     </div>
                     <div class="col-xs-2">
                         <?php

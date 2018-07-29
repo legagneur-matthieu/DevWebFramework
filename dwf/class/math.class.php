@@ -172,7 +172,7 @@ class math {
         if ($nb == 0) {
             return false;
         }
-        $res = array();
+        $res = [];
         while (true) {
             $a = str_split($nb);
             $nb = 0;
@@ -182,7 +182,7 @@ class math {
             $res[] = $nb;
             if ($nb == 1) {
                 return $res;
-            } elseif (in_array($nb, array(4, 16, 37, 58, 89, 145, 42, 20))) {
+            } elseif (in_array($nb, [4, 16, 37, 58, 89, 145, 42, 20])) {
                 return false;
             }
         }
@@ -261,11 +261,11 @@ class math {
         $res["delta"] = (pow($b, 2) - (4 * $a * $c));
         if ($res["delta"] == 0) {
             $x = ((-$b) / 2 * $a);
-            $res["solution"] = array($x);
+            $res["solution"] = [$x];
         } elseif ($res["delta"] > 0) {
             $x1 = (($b + sqrt($res["delta"])) / 2 * $a);
             $x2 = (($b - sqrt($res["delta"])) / 2 * $a);
-            $res["solution"] = array($x1, $x2);
+            $res["solution"] = [$x1, $x2];
         } else {
             $res["solution"] = null;
         }

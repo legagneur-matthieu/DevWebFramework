@@ -24,28 +24,22 @@ class sub_menu {
         if (!isset($_GET[$key])) {
             $_GET[$key] = $route_default;
         }
-        ?>
-        <ul class="nav <?php echo $css; ?>" id='nav-<?php echo $key; ?>'>
-            <?php
-            foreach ($route as $value) {
-                if (isset($value["text"])) {
-                    ?>
-                    <li <?php
-                    if ($_GET[$key] == $value[$key]) {
-                        ?>class="active"<?php
-                        }
-                        ?>><a href="index.php?<?php
-                            foreach ($keys_route_sup as $k) {
-                                echo $k . "=" . $_GET[$k] . "&amp;";
-                            }
-                            echo $key . "=" . $value[$key];
-                            ?>" title="<?php echo $value["title"] ?>"><?php echo $value["text"]; ?></a></li>
-                        <?php
-                    }
+        $ul = tags::ul(["class" => "nav " . $css, "id" => "nav-" . $key], "");
+        foreach ($route as $value) {
+            if (isset($value["text"])) {
+                $href = "index.php?";
+                foreach ($keys_route_sup as $k) {
+                    $href .= $k . "=" . $_GET[$k] . "&";
                 }
-                ?>
-        </ul>
-        <?php
+                $href .= $key . "=" . $value[$key];
+                $li = tags::li(html_structures::a_link($href, $value["text"], "", $value["title"]));
+                if ($_GET[$key] == $value[$key]) {
+                    $li->set_attr("class", "active");
+                }
+                $ul->append_content($li);
+            }
+        }
+        echo $ul;
         $action_finded = false;
         foreach ($route as $value) {
             if ($_GET[$key] == $value[$key]) {
@@ -76,8 +70,8 @@ class sub_menu {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#nav-<?php echo $sub_menu_key; ?>>li").removeClass("active");
-                $("#nav-<?php echo $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?php echo $title; ?>"<?php } ?>><?php echo $text; ?></a></li>');
+                $("#nav-<?= $sub_menu_key; ?>>li").removeClass("active");
+                $("#nav-<?= $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?= $title; ?>"<?php } ?>><?= $text; ?></a></li>');
             });
         </script>
         <?php

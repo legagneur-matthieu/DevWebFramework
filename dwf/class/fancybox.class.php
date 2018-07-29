@@ -25,25 +25,21 @@ class fancybox {
      */
     public function __construct($id, $data) {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/fancybox/jquery.fancybox.min.css");
-            ?>
-            <script type="text/javascript" src="../commun/src/js/fancybox/jquery.fancybox.min.js"></script>
-            <?php
+            echo html_structures::link_in_body("../commun/src/js/fancybox/jquery.fancybox.min.css") .
+            html_structures::script("../commun/src/js/fancybox/jquery.fancybox.min.js");
             self::$_called = true;
         }
-        ?>
-        <div id="<?= $id; ?>">
-            <?php
-            foreach ($data as $value) {
-                ?>
-                <a data-fancybox="<?= $id; ?>" <?= (isset($value["caption"]) ? 'data-caption="' . ($caption = $value["caption"]) . '"' : $caption = "") ?> href="<?= $value["big"]; ?>">
-                    <img src="<?= $value["small"]; ?>" alt="<?= $caption ?>">
-                </a>
-                <?php
+        $as = "";
+        foreach ($data as $value) {
+            $caption = "";
+            $a = tags::a(["data-fancybox" => $id, "href" => $value["big"]]);
+            if (isset($value["caption"])) {
+                $a->set_attr("data-caption", $caption = $value["caption"]);
             }
-            ?>
-        </div>
-        <?php
+            $a->set_content(tags::tag("img", ["src" => $value["small"], "alt" => $caption]));
+            $as .= $a;
+        }
+        echo tags::tag("div", ["id" => $id], $as);
     }
 
 }

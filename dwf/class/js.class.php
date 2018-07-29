@@ -22,7 +22,7 @@ class js {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("title").text("<?php echo $text; ?> " + $("title").text());
+                $("title").text("<?= $text; ?> " + $("title").text());
             });
         </script>
         <?php
@@ -40,7 +40,7 @@ class js {
     public static function alert($msg) {
         ?>
         <script type="text/javascript">
-            alert("<?php echo $msg; ?>");
+            alert("<?= $msg; ?>");
         </script>
         <?php
     }
@@ -53,7 +53,7 @@ class js {
     public static function alertify_alert($msg) {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?php echo $msg; ?>");
+            alertify.alert("<?= $msg; ?>");
         </script>
         <?php
     }
@@ -67,8 +67,8 @@ class js {
     public static function alertify_alert_redir($msg, $url) {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?php echo $msg; ?>", function (e) {
-                window.location = '<?php echo strtr($url . "___", array("&amp;___" => "", "___" => "", "&amp;" => "&")); ?>';
+            alertify.alert("<?= $msg; ?>", function (e) {
+                window.location = '<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>';
             });</script>
         <?php
     }
@@ -81,7 +81,7 @@ class js {
     public static function log_std($msg) {
         ?>
         <script type="text/javascript">
-            alertify.log("<?php echo $msg; ?>");
+            alertify.log("<?= $msg; ?>");
         </script>
         <?php
     }
@@ -94,7 +94,7 @@ class js {
     public static function log_success($msg) {
         ?>
         <script type="text/javascript">
-            alertify.success("<?php echo $msg; ?>");
+            alertify.success("<?= $msg; ?>");
         </script>
         <?php
     }
@@ -107,7 +107,7 @@ class js {
     public static function log_error($msg) {
         ?>
         <script type="text/javascript">
-            alertify.error("<?php echo $msg; ?>");
+            alertify.error("<?= $msg; ?>");
         </script>
         <?php
     }
@@ -120,7 +120,7 @@ class js {
     public static function redir($url) {
         ?>
         <script type="text/javascript">
-            window.location = "<?php echo strtr($url . "___", array("&amp;___" => "", "___" => "", "&amp;" => "&")); ?>";
+            window.location = "<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>";
         </script>
         <?php
     }
@@ -140,9 +140,9 @@ class js {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $minuterie_heur = <?php echo $heur; ?>;
-                $minuterie_min = <?php echo $minute; ?>;
-                $minuterie_sec = <?php echo $second; ?>;
+                $minuterie_heur = <?= $heur; ?>;
+                $minuterie_min = <?= $minute; ?>;
+                $minuterie_sec = <?= $second; ?>;
                 setInterval(function () {
                     if ($minuterie_sec == 0) {
                         $minuterie_sec = 59;
@@ -158,9 +158,9 @@ class js {
                         $minuterie_sec--;
                     }
                     if ($minuterie_sec == 0 && $minuterie_min == 0 && $minuterie_heur == 0) {
-                        window.location = "<?php echo $url; ?>";
+                        window.location = "<?= $url; ?>";
                     }
-                    document.getElementById('<?php echo $p_id; ?>').innerHTML = $minuterie_heur + ':' + $minuterie_min + ':' + $minuterie_sec;
+                    document.getElementById('<?= $p_id; ?>').innerHTML = $minuterie_heur + ':' + $minuterie_min + ':' + $minuterie_sec;
                 }, 1000);
             });
         </script>
@@ -173,7 +173,7 @@ class js {
      * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
      * @return \ckeditor Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
      */
-    public static function ckeditor($id, $params = array()) {
+    public static function ckeditor($id, $params = []) {
         return new ckeditor($id, $params);
     }
 
@@ -185,7 +185,7 @@ class js {
      * @param array $params Surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc ...)
      * @return \vticker Créé un vTicker (suite de phrases qui défilent)
      */
-    public static function vTicker($data, $id = "vticker", $params = array()) {
+    public static function vTicker($data, $id = "vticker", $params = []) {
         new vticker($data, $id, $params);
     }
 
@@ -196,7 +196,7 @@ class js {
      * @param string $params Surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la doc)
      * @return \datatable Applique les fonctionnalitées de la librairie datatable à un tableau HTML
      */
-    public static function datatable($id = "datatable", $params = array()) {
+    public static function datatable($id = "datatable", $params = []) {
         new datatable($id, $params);
     }
 
@@ -263,10 +263,10 @@ class js {
      * @param string $html Contenu de le boite de dialogue ( au format HTML)
      */
     public static function dialog($name, $title, $html) {
+        echo tags::tag("div", ["id" => $name, "title" => $title], $html);
         ?>
-        <div Id="<?php echo $name; ?>" title="<?php echo $title; ?>"><?php echo $html; ?></div>
         <script type="text/javascript">
-            $("#<?php echo $name; ?>").dialog({autoOpen: true});
+            $("#<?= $name; ?>").dialog({autoOpen: true});
         </script>
         <?php
     }
@@ -281,7 +281,7 @@ class js {
         ?>
         <script>
             $(document).ready(function () {
-            $("#<?php echo $id; ?>").accordion(
+            $("#<?= $id; ?>").accordion(
         <?php
         if ($collapsible or $heightStyle) {
             ?>
@@ -312,7 +312,7 @@ class js {
         ?>
         <script>
                     $(document).ready(function () {
-            $("#<?php echo $id; ?>").menu();
+            $("#<?= $id; ?>").menu();
             });</script>
         <?php
     }
@@ -325,7 +325,7 @@ class js {
         ?>
         <script>
                     $(document).ready(function () {
-            $("#<?php echo $id; ?>").tooltip();
+            $("#<?= $id; ?>").tooltip();
             });
         </script>
         <?php
@@ -338,53 +338,30 @@ class js {
      * format du tableau : array(array("img"=>"chamain/img.png","alt"=>"facultative","caption"=>"HTML facultative"));
      */
     public static function slider($id, $data) {
-        ?>
-        <div id="<?php echo $id; ?>" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <?php
-                for ($i = 0; $i < count($data); $i++) {
-                    ?>
-                    <li data-target="#<?php echo $id; ?>" data-slide-to="<?php echo $i; ?>" <?php if ($i == 0) { ?> class="active" <?php } ?>><a href="#"><span class="sr-only">slide <?php echo $i; ?></span></a></li>
-                    <?php
-                }
-                ?>
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <?php
-                $first = true;
-                foreach ($data as $d) {
-                    ?>
-                    <div class="item<?php
-                    if ($first) {
-                        echo " active";
-                        $first = false;
-                    }
-                    ?>">
-                        <img src="<?php echo $d["img"]; ?>" alt="<?php
-                        if (isset($d["alt"])) {
-                            echo $d["alt"];
-                        }
-                        ?>"> 
-                        <?php if (isset($d["caption"])) { ?><div class="carousel-caption"><?php echo $d["caption"]; ?></div><?php } ?>
-                    </div>
-                    <?php
-                }
-                ?>
-            </div>
-            <!-- Controls -->
-            <a class="left carousel-control" href="#<?php echo $id; ?>" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">Précédent</span>
-            </a>
-            <a class="right carousel-control" href="#<?php echo $id; ?>" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Suivant</span>
-            </a>
-            <a class="center carousel-pause" href="#<?php echo $id; ?>" role="button" data-slide="pause">
-                <span class="glyphicon glyphicon-pause" aria-hidden="true"></span><span class="sr-only">Pause</span>
-            </a>
-        </div>
-        <?php
+
+        //Indicators
+        $ol = tags::ol(["class" => "carousel-indicators", "data-ride" => "carousel"]);
+        for ($i = 0; $i < count($data); $i++) {
+            $li = tags::li(["data-target" => "#" . $id, "data-slide-to" => $i], html_structures::a_link("#", tags::tag("span", ["class" => "sr-only"], "slide " . $i)));
+            if ($i == 0) {
+                $li->set_attr("class", "active");
+            }
+            $ol->append_content($li);
+        }
+        //Wrapper for slides
+        $inner = tags::div(["class" => "carousel-inner", "role" => "listbox"]);
+        $first = true;
+        foreach ($data as $d) {
+            $inner->append_content(tags::tag("div", ["class" => "item" . ($first ? " active" : "")], html_structures::img($d["img"], (isset($d["alt"]) ? $d["alt"] : "")) .
+                            (isset($d["caption"]) ? tags::tag("div", ["class" => "carousel-caption"], $d["caption"]) : "")
+            ));
+            $first = false;
+        }
+        //Controls
+        $controls = tags::tag("a", ["class" => "left carousel-control", "href" => "#" . $id, "role" => "button", "data-slide" => "prev"], html_structures::glyphicon("chevron-left", "Précédent")) .
+                tags::tag("a", ["class" => "right carousel-control", "href" => "#" . $id, "role" => "button", "data-slide" => "next"], html_structures::glyphicon("chevron-right", "Suivant")) .
+                tags::tag("a", ["class" => "center carousel-pause", "href" => "#" . $id, "role" => "button", "data-slide" => "pause"], html_structures::glyphicon("pause", "Pause"));
+        echo tags::tag("div", ["id" => $id, "class" => "carousel slide", "data-ride" => "carousel"], $ol . $inner . $controls);
     }
 
 }

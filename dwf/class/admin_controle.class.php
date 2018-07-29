@@ -270,17 +270,6 @@ class admin_controle {
      * Affiche le formulaire de suppression (pour confirmation)
      */
     private function supp_form() {
-        /*
-          foreach ($this->_structure as $value) {
-          if (!$value[2] and $value[1] != "array") {
-          $this->_head[] = ucfirst($value[0]);
-          } elseif ($value[1] == "array") {
-          foreach ($this->_data as $key => $row) {
-          unset($this->_data[$key][$value[0]]);
-          }
-          }
-          }
-         *          */
         $url = application::get_url(["action", "id"]);
         $this->supp_exec($url);
         $entity = $this->_entity;
@@ -298,10 +287,7 @@ class admin_controle {
                 }
             }
         }
-        ?>
-        <p class="text-center">ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :</p>
-        <?php
-
+        echo tags::tag("p", ["class" => "text-center"], "ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :");
         js::datatable("supp_datatable");
         echo html_structures::table($this->_head, $data, "supp_datatable");
         form::new_form("form-inline");

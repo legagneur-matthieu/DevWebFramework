@@ -20,15 +20,13 @@ class shuffle_letters {
      */
     public function __construct($id) {
         if (!self::$_called) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/shuffleletters/jquery.shuffleLetters.js"></script>
-            <?php
+            echo html_structures::script("../commun/src/js/shuffleletters/jquery.shuffleLetters.js");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#<?php echo $id; ?>").shuffleLetters();
+                $("#<?= $id; ?>").shuffleLetters();
             });
         </script>
         <?php

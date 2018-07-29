@@ -91,21 +91,20 @@ class ip_access {
      * @return string ip formatée
      */
     private function ipv6_to_int($ip) {
-        $from = array(
-            array("a" => "10"),
-            array("b" => "11"),
-            array("c" => "12"),
-            array("d" => "13"),
-            array("e" => "14"),
-            array("f" => "15"),
-            array("A" => "10"),
-            array("B" => "11"),
-            array("C" => "12"),
-            array("D" => "13"),
-            array("E" => "14"),
-            array("F" => "15"),
-        );
-        return strtr(bin2hex(inet_pton($ip)), $from);
+        return strtr(bin2hex(inet_pton($ip)), [
+            ["a" => "10"],
+            ["b" => "11"],
+            ["c" => "12"],
+            ["d" => "13"],
+            ["e" => "14"],
+            ["f" => "15"],
+            ["A" => "10"],
+            ["B" => "11"],
+            ["C" => "12"],
+            ["D" => "13"],
+            ["E" => "14"],
+            ["F" => "15"],
+        ]);
     }
 
     /**
@@ -114,7 +113,7 @@ class ip_access {
     private function redir() {
         ?>
         <script type="text/javascript">
-            window.location = "<?php echo $this->_redir; ?>";
+            window.location = "<?= $this->_redir; ?>";
         </script>
         <?php
         exit();

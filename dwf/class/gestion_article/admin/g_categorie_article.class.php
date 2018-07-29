@@ -70,7 +70,7 @@ class g_categorie_article {
                     foreach ($modules as $m) {
                         $categories = (array) json_decode($m->get_categories());
                         if (in_array($_GET["id"], $categories)) {
-                            $m->set_categories(strtr($m->get_categories(), array($cat[0]["id"] . "," => "", "," . $cat[0]["id"] . "}" => "}", "," . $cat[0]["id"] . "]" => "]")));
+                            $m->set_categories(strtr($m->get_categories(), [$cat[0]["id"] . "," => "", "," . $cat[0]["id"] . "}" => "}", "," . $cat[0]["id"] . "]" => "]"]));
                         }
                     }
                 }
@@ -107,12 +107,12 @@ class g_categorie_article {
                         <?php
                         if ($cat["id"] != 1 and $cat["id"] != 2) {
                             ?>
-                            <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=cat_modif&amp;id=" . $cat["id"], $cat["nom"]); ?></td>
-                            <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=cat_supp&amp;id=" . $cat["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
+                            <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=cat_modif&amp;id=" . $cat["id"], $cat["nom"]); ?></td>
+                            <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=cat_supp&amp;id=" . $cat["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
                             <?php
                         } else {
                             ?>
-                            <td><?php echo $cat["nom"]; ?></td>
+                            <td><?= $cat["nom"]; ?></td>
                             <td></td>
                             <?php
                         }

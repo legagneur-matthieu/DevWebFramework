@@ -42,15 +42,13 @@ class vticker {
      */
     public function __construct($data, $id = "vticker", $params = array()) {
         if (!self::$_called) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/vticker/vticker.min.js"></script>
-            <?php
+            echo html_structures::script("../commun/src/js/vticker/vticker.min.js");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#<?php echo $id; ?>').vTicker({
+                $('#<?= $id; ?>').vTicker({
         <?php
         foreach ($params as $key => $value) {
             $this->_params[$key] = $value;
@@ -62,20 +60,12 @@ class vticker {
                 });
             });
         </script>
-        <div id="<?php echo $id; ?>">
-            <ul>
-                <?php
-                foreach ($data as $value) {
-                    ?>
-                    <li>
-                        <?php echo $value; ?>
-                    </li>
-                    <?php
-                }
-                ?>
-            </ul>
-        </div>
         <?php
+        $ul = [];
+        foreach ($data as $value) {
+            $ul[] = $value;
+        }
+        echo tags::tag("div", ["id" => $id], html_structures::ul($ul));
     }
 
 }

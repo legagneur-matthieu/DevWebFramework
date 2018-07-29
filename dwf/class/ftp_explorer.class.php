@@ -29,7 +29,7 @@ class ftp_explorer {
      * @param boolean $ssl utiliser le protocole FTPS/SFTP ? (true ou false, false par default)
      */
     public function __construct($host, $user, $psw, $ssl = false) {
-        $this->_ftp_data = array("host" => $host, "user" => $user, "psw" => $psw);
+        $this->_ftp_data = ["host" => $host, "user" => $user, "psw" => $psw];
         ($ssl ? ftp_login($this->_ftp_connect = ftp_ssl_connect($host), $user, $psw) : ftp_login($this->_ftp_connect = ftp_connect($host), $user, $psw));
         ?>
         <script type="text/javascript">
@@ -51,32 +51,19 @@ class ftp_explorer {
      */
     private function explore($dir) {
         if ($nlist = ftp_nlist($this->_ftp_connect, $dir)) {
-            ?>            
-            <ul class="ftp_explorer">
-                <?php
-                foreach ($nlist as $file) {
-                    ?>
-                    <li>
-                        <?php
-                        $name = strtr($dirorfile, array("../" => "", "./" => "", $dir . "/" => ""));
-                        if (@ftp_chdir($this->_ftp_connect, $file)) {
-                            $id = strtr($file, array(" " => "", "/" => "_"));
-                            ?>
-                            <a href="#<?php echo $id; ?>" id="<?php echo $id; ?>" name="<?php echo $id; ?>"><?php echo html_structures::glyphicon("folder-open", "Dossier") . " " . $name; ?></a>
-                            <?php
-                            $this->explore($file . "/");
-                        } else {
-                            ?>
-                            <a target="_blank" href="ftp://<?php echo $this->_ftp_data["user"] . ":" . $this->_ftp_data["psw"] . "@" . $this->_ftp_data["host"] . $file ?>"><?php echo html_structures::glyphicon("file", "Fichier") . " " . $name; ?></a>
-                            <?php
-                        }
-                        ?>
-                    </li>
-                    <?php
+            $li = "";
+            foreach ($nlist as $file) {
+                $name = strtr($dirorfile, ["../" => "", "./" => "", $dir . "/" => ""]);
+                if (@ftp_chdir($this->_ftp_connect, $file)) {
+                    $id = strtr($file, [" " => "", "/" => "_"]);
+                    $a = tags::tag("a", ["href" => "#" . $id, "id" => $id, "name" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name);
+                    $this->explore($file . "/");
+                } else {
+                    $a = tags::tag("a", ["target" => "_blank", "href" => "ftp://" . $this->_ftp_data["user"] . ":" . $this->_ftp_data["psw"] . "@" . $this->_ftp_data["host"] . $file], html_structures::glyphicon("file", "Fichier") . " " . $name);
                 }
-                ?>
-            </ul>
-            <?php
+                $li .= tags::tag("li", [], $a);
+            }
+            echo tags::tag(ul, ["class" => "ftp_explorer"], $li);
         }
     }
 

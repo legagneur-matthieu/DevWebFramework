@@ -67,37 +67,32 @@ class application {
      * Menu de l'application ( généré en fonction des routes )
      */
     private function menu() {
-        ?>
-        <nav class="navbar navbar-default">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Dérouler le menu</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <?php
-                    foreach ($this->_routes as $page) {
-                        if (isset($page["text"]) and $page["text"] != "") {
-                            ?>
-                            <li<?php
-                            if ($_GET["page"] == $page["page"]) {
-                                echo ' class="active"';
-                            }
-                            ?>><a href="index.php?page=<?php echo $page["page"]; ?>" title="<?php echo $page["title"]; ?>" ><?php echo $page["text"]; ?></a></li>
-                                <?php
-                            }
-                        }
-                        ?>
-                </ul>
-            </div>
-        </nav>
-
-        <p class="min alert alert-info"><small><span class="glyphicon glyphicon-info-sign"><span class="sr-only">Information</span></span> Vous êtes sur mobile ou tablette ? Tenez votre appareil à l'horizontale !</small></p>
-        <?php
+        $lis = "";
+        foreach ($this->_routes as $page) {
+            if (isset($page["text"]) and $page["text"] != "") {
+                $li = tags::li(tags::tag("a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"]], $page["text"]));
+                if ($_GET["page"] == $page["page"]) {
+                    $li->set_attr("class", "active");
+                }
+                $lis .= $li;
+            }
+        }
+        $span_bar = tags::tag("span", ["class" => "icon-bar"], " ");
+        echo tags::tag(
+                "nav", ["class" => "navbar navbar-default"], tags::tag(
+                        "div", ["class" => "navbar-header"], tags::tag(
+                                "button", ["type" => "button", "class" => "navbar-toggle", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag(
+                                        "span", ["class" => "sr-only"], "Dérouler le menu") . $span_bar . $span_bar . $span_bar
+                        )
+                ) .
+                tags::tag(
+                        "div", ["class" => "collapse navbar-collapse"], tags::tag(
+                                "ul", ["class" => "nav navbar-nav"], $lis)
+                )
+        ) . tags::tag(
+                "p", ["class" => "min alert alert-info"], tags::tag(
+                        "small", [], html_structures::glyphicon("info-sign", "Information") . "Vous êtes sur mobile ou tablette ? Tenez votre appareil à l'horizontale !")
+        );
     }
 
     /**
@@ -123,7 +118,7 @@ class application {
                 <main class="contenu">    
                     <?php
                     try {
-                        (method_exists($this->_pages, $p) ? $this->_pages->$p() : dwf_exception::throw_exception(612, array("__" => $p . '()')));
+                        (method_exists($this->_pages, $p) ? $this->_pages->$p() : dwf_exception::throw_exception(612, ["__" => $p . '()']));
                     } catch (dwf_exception $e) {
                         dwf_exception::print_exception($e);
                     }
@@ -144,13 +139,13 @@ class application {
     }
 
     /**
-     * Cette fonction retourne les variables $_GET courante sous forme d'URL 
+     * Cette fonction retourne les variables $_GET courante sous forme d'URL
      * ("index.php?page=une_page&amp;variable_get=une_valeur&amp;")
      * le paramètre $skip_gets permet de ne pas retourner certaines variables indésirables ou réservé à une classe particulière
      * @param array $skip_gets tableau des variable $_GET a exclure
      * @return string Les variables $_GET courante sous forme d'URL 
      */
-    public static function get_url($skip_gets = array()) {
+    public static function get_url($skip_gets = []) {
         $url = "index.php?";
         foreach ($_GET as $key => $value) {
             if (!in_array($key, $skip_gets)) {

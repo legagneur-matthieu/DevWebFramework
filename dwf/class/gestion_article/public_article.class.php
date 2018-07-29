@@ -25,9 +25,9 @@ class public_article {
         }
         $module = module_article::get_table_array($where);
         $module = module_article::get_from_id($module[0]["id"]);
-        $categories = cat_article::get_table_ordored_array("id in " . application::$_bdd->protect_var(strtr($module->get_categories(), array("{" => "(", "}" => ")", "[" => "(", "]" => ")"))));
+        $categories = cat_article::get_table_ordored_array("id in " . application::$_bdd->protect_var(strtr($module->get_categories(), ["{" => "(", "}" => ")", "[" => "(", "]" => ")"])));
         $mod_cat = (array) json_decode($module->get_categories());
-        $cat_article = array();
+        $cat_article = [];
         foreach ($categories as $id => $row) {
             if ($id == 2) {
                 $articles = article::get_table_array("categorie != '1' order by date desc limit 0," . application::$_bdd->protect_var($module->get_nb()));
@@ -45,7 +45,7 @@ class public_article {
             <?php
             foreach ($cat_article as $cat => $articles) {
                 ?> 
-                <h3><?php echo $cat ?></h3>
+                <h3><?= $cat ?></h3>
                 <div>
                     <?php
                     $this->media($articles);
@@ -93,20 +93,20 @@ class public_article {
             ?>
             <article>
                 <header>
-                    <h2><?php echo $article->get_titre(); ?></h2>
+                    <h2><?= $article->get_titre(); ?></h2>
                     <?php
                     $date = explode(" ", $article->get_date());
                     $date = time::convert_date($date[0]) . " " . $date[1];
                     ?>
                     <p>
-                        <small>Publié le <span><?php echo html_structures::time($article->get_date(), $date); ?></span> <br />
-                            Catégorie <span><?php echo html_structures::a_link(application::get_url(array("view", "id")) . "view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
+                        <small>Publié le <span><?= html_structures::time($article->get_date(), $date); ?></span> <br />
+                            Catégorie <span><?= html_structures::a_link(application::get_url(array("view", "id")) . "view=categorie&amp;id=" . $article->get_categorie()->get_id(), $article->get_categorie()->get_nom()); ?></span>
                         </small>
                     </p>
                     <?php ?>
                 </header>
                 <hr/>
-                <?php echo htmlspecialchars_decode(base64_decode($article->get_contenu())); ?>
+                <?= htmlspecialchars_decode(base64_decode($article->get_contenu())); ?>
                 <hr/>
                 <footer>
                     <?php
@@ -116,7 +116,7 @@ class public_article {
                         <?php
                         echo html_structures::glyphicon("tags", "tags");
                         foreach ($tags as $tag) {
-                            ?> <a href=<?php echo application::get_url(array("view", "id")); ?>view=tag&amp;tag=<?php echo trim($tag); ?>" rel="tag"><?php echo trim($tag); ?></a>,
+                            ?> <a href=<?= application::get_url(array("view", "id")); ?>view=tag&amp;tag=<?= trim($tag); ?>" rel="tag"><?= trim($tag); ?></a>,
                             <?php
                         }
                         ?>
@@ -173,7 +173,7 @@ class public_article {
             }
             $cat = cat_article::get_from_id($_GET["id"]);
             ?>
-            <h2><small>Catégorie : <?php echo $cat->get_nom(); ?></small></h2>
+            <h2><small>Catégorie : <?= $cat->get_nom(); ?></small></h2>
             <?php
             $this->media($articles);
             pagination::print_pagination("p", $p[3]);
@@ -192,7 +192,7 @@ class public_article {
                 js::redir("index.php?page=" . $_GET["page"] . "&view=categories");
             } else {
                 ?>
-                <h2><small>Tag : <?php echo $_GET["tag"]; ?></small></h2>
+                <h2><small>Tag : <?= $_GET["tag"]; ?></small></h2>
                 <?php
                 $p = pagination::get_limits("p", 20, $count);
                 $articles = article::get_table_array("tags like '" . application::$_bdd->protect_var($_GET["tag"]) . "' order by date desc limit " . $p[0] . "," . $p[1]);
@@ -213,20 +213,20 @@ class public_article {
         <div class="media">
             <?php
             foreach ($articles as $art) {
-                $contenu_prev = substr(strtr(strip_tags(htmlspecialchars_decode(base64_decode($art["contenu"]))), array("<p>" => "", "</p>" => "")), 0, 200);
+                $contenu_prev = substr(strtr(strip_tags(htmlspecialchars_decode(base64_decode($art["contenu"]))), ["<p>" => "", "</p>" => ""]), 0, 200);
                 $contenu_prev = substr($contenu_prev, 0, strrpos($contenu_prev, " ")) . " ...";
                 $art["contenu"] = $contenu_prev;
                 if (!empty($art["img"])) {
                     ?>
                     <div class="media-left">
-                        <img class="media-object" src="<?php echo $art["img"] ?>" alt="">
+                        <img class="media-object" src="<?= $art["img"] ?>" alt="">
                     </div>
                     <?php
                 }
                 ?>
                 <div class="media-body">
-                    <h4 class="media-heading"><a href="<?php echo application::get_url(array("view", "id")); ?>view=article&amp;id=<?php echo $art["id"] ?>"><?php echo $art["titre"]; ?></a></h4>
-                        <?php echo $art["contenu"]; ?>
+                    <h4 class="media-heading"><a href="<?= application::get_url(array("view", "id")); ?>view=article&amp;id=<?= $art["id"] ?>"><?= $art["titre"]; ?></a></h4>
+                        <?= $art["contenu"]; ?>
                 </div>
                 <hr />
                 <?php

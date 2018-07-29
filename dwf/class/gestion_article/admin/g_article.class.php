@@ -30,9 +30,9 @@ class g_article {
         if (article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
             $article = article::get_from_id($_GET["id"]);
             $categories = cat_article::get_table_ordored_array();
-            $option = array();
+            $option = [];
             foreach ($categories as $key => $value) {
-                $option[] = array($key, $value["nom"], ($key == $article->get_categorie()->get_id()));
+                $option[] = [$key, $value["nom"], ($key == $article->get_categorie()->get_id())];
             }
             $cke = js::ckeditor("contenu");
             form::new_form("", "#", "post", true);
@@ -57,7 +57,7 @@ class g_article {
                 }
                 if (!empty($_FILES["img"]["name"])) {
                     unlink($article->get_img());
-                    $_FILES["img"]["name"] = strtr($_FILES["img"]["name"], array(
+                    $_FILES["img"]["name"] = strtr($_FILES["img"]["name"], [
                         "\"" => "",
                         "'" => "",
                         "\\" => "",
@@ -76,9 +76,9 @@ class g_article {
                         "," => "",
                         "@" => "",
                         "-" => "_"
-                    ));
+                    ]);
                     $img = "./img/articles/media/" . $_FILES["img"]["name"];
-                    form::get_upload("img", "./img/articles/media", array("image/png", "image/jpg", "image/jpeg", "image/bmp"));
+                    form::get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
                     form::resize_img($img, $img, 0, 720);
                     $article->set_img($img);
                 }
@@ -128,13 +128,13 @@ class g_article {
                 foreach ($articles as $article) {
                     ?>
                     <tr>
-                        <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;action=modif&amp;id=" . $article["id"], $article["titre"]); ?></td>
+                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;action=modif&amp;id=" . $article["id"], $article["titre"]); ?></td>
                         <td><?php
                             $date = explode(" ", $article["date"]);
                             echo time::convert_date($date[0]) . " " . $date[1];
                             ?></td>
-                        <td><?php echo $categories[$article["categorie"]]["nom"]; ?></td>
-                        <td><?php echo html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=supp&amp;id=" . $article["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
+                        <td><?= $categories[$article["categorie"]]["nom"]; ?></td>
+                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=supp&amp;id=" . $article["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
                     </tr>
                     <?php
                 }
@@ -143,9 +143,9 @@ class g_article {
         </table>
         <hr />
         <?php
-        $option = array();
+        $option = [];
         foreach ($categories as $id => $row) {
-            $option[] = array($id, $row["nom"]);
+            $option[] = [$id, $row["nom"]];
         }
         /* TODO : (bug mineur) CKE provoque une bad request dans la console */
         $cke = js::ckeditor("contenu");
@@ -171,7 +171,7 @@ class g_article {
             }
             $img = "";
             if (!empty($_FILES["img"]["name"])) {
-                $_FILES["img"]["name"] = strtr($_FILES["img"]["name"], array(
+                $_FILES["img"]["name"] = strtr($_FILES["img"]["name"], [
                     "\"" => "",
                     "'" => "",
                     "\\" => "",
@@ -190,9 +190,9 @@ class g_article {
                     "," => "",
                     "@" => "",
                     "-" => "_"
-                ));
+                ]);
                 $img = "./img/articles/media/" . $_FILES["img"]["name"];
-                form::get_upload("img", "./img/articles/media", array("image/png", "image/jpg", "image/jpeg", "image/bmp"));
+                form::get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
                 form::resize_img($img, $img, 0, 720);
             }
             $contenu = base64_encode($cke->parse($_POST["contenu"]));

@@ -27,23 +27,22 @@ class ddg {
      * Affiche une searchbar de duckduckgo
      */
     public function print_searchbar() {
-        ?>
-        <div class="ddg">
-            <form action="https://duckduckgo.com/" target="_blank" class="form-inline" method="post">
-                <label for="q"><?php $this->svg(); ?> <span class="sr-only">Rechercher sur DuckDuckGo</span></label>
-                <input id="q" type="text" name="q"  class="form-control"  />
-                <button class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-            </form>
-        </div>
-        <?php
+        echo tags::tag("div", ["class" => "ddg"], tags::tag(
+                        "form", ["action" => "https://duckduckgo.com/", "target" => "_blank", "class" => "form-inline", "method" => "post"], tags::tag(
+                                "label", ["for" => "q"], $this->svg() . " " . tags::tag(
+                                        "span", ["class" => "sr-only"], "Rechercher sur DuckDuckGo")
+                        ) .
+                        tags::tag("input", ["id" => "q", "type" => "text", "name" => "q", "class" => "form-control"]).
+                        tags::tag("button",["class"=>"btn btn-success"], html_structures::glyphicon("search", "Rechercher"))
+                )
+        );
     }
 
     /**
      * Affiche le SVG de DDG
      */
     private function svg() {
-        ?>
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        return '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="60px" height="60px" viewBox="-0.5 -0.5 60 60" enable-background="new -0.5 -0.5 60 60" xml:space="preserve">
             <circle fill="#DE5833" cx="28.498" cy="28.5" r="22.5"/>
             <g>
@@ -119,9 +118,7 @@ class ddg {
                       C17.634,8.808,8.81,17.631,8.81,28.5c0,10.869,8.824,19.693,19.692,19.693S48.193,39.369,48.193,28.5
                       C48.194,17.631,39.37,8.808,28.502,8.808L28.502,8.808"/>
             </g>
-        </svg>
-
-        <?php
+        </svg>';
     }
 
 }

@@ -13,7 +13,7 @@ class phpQRCode {
      * @param string $text Texte à transformer en QRCode
      */
     public static function print_img($text) {
-        echo '<img src="../commun/qrcode_printer.php?raw=' . $text . '" alt="" />';
+        echo html_structures::img("../commun/qrcode_printer.php?raw=".$text);
     }
 
     /**
@@ -29,7 +29,7 @@ class phpQRCode {
      * @return string QRCode (image) en Base64 
      */
     public static function get_img_b64($text) {
-        return base64_encode(service::HTTP_GET($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . strtr($_SERVER["SCRIPT_NAME"], array("index.php" => "")) . "../commun/qrcode_printer.php?raw=" . $text));
+        return base64_encode(service::HTTP_GET($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . strtr($_SERVER["SCRIPT_NAME"], ["index.php" => ""]) . "../commun/qrcode_printer.php?raw=" . $text));
     }
 
 }

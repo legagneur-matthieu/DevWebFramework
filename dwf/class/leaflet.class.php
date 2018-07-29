@@ -35,19 +35,19 @@ class leaflet {
      * Tableau contenant les marqueurs
      * @var array Tableau contenant les marqueurs
      */
-    private $_markers = array();
+    private $_markers = [];
 
     /**
      * Tableau contenant les zones circulaires
      * @var array Tableau contenant les zones circulaires
      */
-    private $_circles = array();
+    private $_circles = [];
 
     /**
      * Tableau contenant les polygones
      * @var array  Tableau contenant les polygones
      */
-    private $_polygon = array();
+    private $_polygon = [];
 
     /**
      * Cette classe permet d'afficher une carte exploitant OSM (OpenStreetMap) !
@@ -55,17 +55,15 @@ class leaflet {
      * @param string $id Identifiant CSS
      * @param string $height hauteur CSS 
      */
-    public function __construct($view_init = array("x" => 0, "y" => 0, "zoom" => 13), $id = "leaflet", $height = "300px") {
+    public function __construct($view_init = ["x" => 0, "y" => 0, "zoom" => 13], $id = "leaflet", $height = "300px") {
         $this->_view_init = $view_init;
         $this->_id = $id;
         $this->_height = $height;
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/leaflet/leaflet.css");
-            echo html_structures::link_in_body("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.css");
-            ?>
-            <script type="text/javascript" src="../commun/src/js/leaflet/leaflet.js"></script>
-            <script type="text/javascript" src="../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.js"></script>
-            <?php
+            echo html_structures::link_in_body("../commun/src/js/leaflet/leaflet.css") .
+            html_structures::link_in_body("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.css") .
+            html_structures::script("../commun/src/js/leaflet/leaflet.js") .
+            html_structures::script("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.js");
             self::$_called = true;
         }
     }
@@ -86,7 +84,7 @@ class leaflet {
      * @param boolean $first Premier marqueur de l'itinéraire, à préciser si $this->optimise_itineraire() est utilisé
      */
     public function add_marker($x, $y, $desc, $first = false) {
-        $this->_markers[] = array("x" => $x, "y" => $y, "desc" => $desc, "first" => $first);
+        $this->_markers[] = ["x" => $x, "y" => $y, "desc" => $desc, "first" => $first];
     }
 
     /**
@@ -99,7 +97,7 @@ class leaflet {
      * @param float $opacity opacité du cercle ( entre 0 et 1 )
      */
     public function add_circle($x, $y, $rayon, $desc, $color = "lightblue", $opacity = "0.4") {
-        $this->_circles[] = array("x" => $x, "y" => $y, "r" => $rayon, "desc" => $desc, "color" => $color, "opacity" => $opacity);
+        $this->_circles[] = ["x" => $x, "y" => $y, "r" => $rayon, "desc" => $desc, "color" => $color, "opacity" => $opacity];
     }
 
     /**
@@ -108,7 +106,7 @@ class leaflet {
      * @param string $desc
      */
     public function add_polygon($data, $desc) {
-        $this->_polygon[] = array("data" => $data, "desc" => $desc);
+        $this->_polygon[] = ["data" => $data, "desc" => $desc];
     }
 
     /**
@@ -118,7 +116,7 @@ class leaflet {
     public function optimise_itineraire() {
         //on copie les données dans un tableau temporaire
         $data_copy = $this->_markers;
-        $data_distances = array();
+        $data_distances = [];
 
         //on créé un tableau qui contient toutes les combinaisons de traget et les distances entre chaque points
         foreach ($this->_markers as $key => $a) {
@@ -144,7 +142,7 @@ class leaflet {
             }
             $path[] = $k = $kt[0];
         }
-        $markers = array();
+        $markers = [];
         foreach ($path as $p) {
             $markers[] = $this->_markers[$p];
         }
@@ -163,20 +161,20 @@ class leaflet {
             <script type="text/javascript">
                 $(document).ready(function () {
                     navigator.geolocation.getCurrentPosition(function (pos) {
-                    L.marker([pos.coords.latitude, pos.coords.longitude]).bindPopup("Vous êtes ici").addTo(map<?php echo $this->_id; ?>);
+                    L.marker([pos.coords.latitude, pos.coords.longitude]).bindPopup("Vous êtes ici").addTo(map<?= $this->_id; ?>);
                             L.Routing.control({
                             waypoints: [
                                     L.Routing.waypoint(L.latLng(pos.coords.latitude, pos.coords.longitude), "Vous êtes ici"), <?php
             foreach ($this->_markers as $markers) {
                 ?>
-                                L.Routing.waypoint(L.latLng(<?php echo $markers["x"]; ?>, <?php echo $markers["y"]; ?>), "<?php echo $markers["desc"]; ?>"), <?php
+                                L.Routing.waypoint(L.latLng(<?= $markers["x"]; ?>, <?= $markers["y"]; ?>), "<?= $markers["desc"]; ?>"), <?php
             }
             ?>
                             ],
                                     Formatter: [
                                             language = "fr"
                                     ]
-                            }).addTo(map<?php echo $this->_id; ?>);
+                            }).addTo(map<?= $this->_id; ?>);
                     });
                     }
                     );</script>
@@ -190,14 +188,14 @@ class leaflet {
             <?php
             foreach ($this->_markers as $markers) {
                 ?>
-                            L.Routing.waypoint(L.latLng(<?php echo $markers["x"]; ?>, <?php echo $markers["y"]; ?>), "<?php echo $markers["desc"]; ?>"), <?php
+                            L.Routing.waypoint(L.latLng(<?= $markers["x"]; ?>, <?= $markers["y"]; ?>), "<?= $markers["desc"]; ?>"), <?php
             }
             ?>
                         ],
                         Formatter: [
                             language = "fr"
                         ]
-                    }).addTo(map<?php echo $this->_id; ?>);
+                    }).addTo(map<?= $this->_id; ?>);
                 });</script>
             <?php
         }
@@ -210,17 +208,17 @@ class leaflet {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                map<?php echo $this->_id; ?> = L.map('<?php echo $this->_id; ?>').setView([<?php echo $this->_view_init["x"]; ?>, <?php echo $this->_view_init["y"]; ?>], <?php echo $this->_view_init["zoom"]; ?>);
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map<?php echo $this->_id; ?>);
+                map<?= $this->_id; ?> = L.map('<?= $this->_id; ?>').setView([<?= $this->_view_init["x"]; ?>, <?= $this->_view_init["y"]; ?>], <?= $this->_view_init["zoom"]; ?>);
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map<?= $this->_id; ?>);
         <?php
         foreach ($this->_markers as $value) {
             ?>
-                    L.marker([<?php echo $value["x"]; ?>,<?php echo $value["y"]; ?>]).bindPopup("<?php echo $value["desc"]; ?>").addTo(map<?php echo $this->_id; ?>);
+                    L.marker([<?= $value["x"]; ?>,<?= $value["y"]; ?>]).bindPopup("<?= $value["desc"]; ?>").addTo(map<?= $this->_id; ?>);
             <?php
         }
         foreach ($this->_circles as $value) {
             ?>
-                    L.circle([<?php echo $value["x"]; ?>,<?php echo $value["y"]; ?>], <?php echo $value["r"]; ?>, {color: '<?php echo $value["color"]; ?>', fillColor: '<?php echo $value["color"]; ?>', fillOpacity: <?php echo $value["opacity"]; ?>}).bindPopup("<?php echo $value["desc"]; ?>").addTo(map<?php echo $this->_id; ?>);
+                    L.circle([<?= $value["x"]; ?>,<?= $value["y"]; ?>], <?= $value["r"]; ?>, {color: '<?= $value["color"]; ?>', fillColor: '<?= $value["color"]; ?>', fillOpacity: <?= $value["opacity"]; ?>}).bindPopup("<?= $value["desc"]; ?>").addTo(map<?= $this->_id; ?>);
             <?php
         }
         foreach ($this->_polygon as $value) {
@@ -231,15 +229,15 @@ class leaflet {
                 $poly .= "[" . $v["x"] . "," . $v["y"] . "],";
             }
             $poly .= "___";
-            echo strtr($poly, array(",___" => ""));
-            ?>]).bindPopup("<?php echo $value["desc"]; ?>").addTo(map<?php echo $this->_id; ?>);
+            echo strtr($poly, [",___" => ""]);
+            ?>]).bindPopup("<?= $value["desc"]; ?>").addTo(map<?= $this->_id; ?>);
             <?php
         }
         ?>
             });
         </script>
-        <div id="<?php echo $this->_id; ?>" style="height: <?php echo $this->_height ?>;"></div>
         <?php
+        echo tags::tag("div", ["id" => $this->_id, "style" => "height: " . $this->_height], "");
     }
 
 }

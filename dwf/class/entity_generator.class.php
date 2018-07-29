@@ -161,7 +161,7 @@ class entity_generator {
         //génére la fonction statique ( static ) d'ajout
         $class .= "/** Ajoute une entrée en base de donnée */" . $n
                 . " public static function ajout(";
-        $class .= strtr($p, array("1__," => "")) . ") { " . $n;
+        $class .= strtr($p, ["1__," => ""]) . ") { " . $n;
         $class .= $tuple_ajout;
         $class .= "application::$" . "_bdd->query(\"INSERT INTO " . self::$_table . "(";
         $i = 0;

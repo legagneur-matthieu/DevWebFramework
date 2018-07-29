@@ -13,7 +13,7 @@ class service {
      * @param string $url URL du service ( attention : les varibles GET sont ignorées !)
      * @param array $params Paramètres POST
      */
-    public static function HTTP_POST($url, $params = array()) {
+    public static function HTTP_POST($url, $params = []) {
         ob_start();
         $post = http_build_query($params);
         $parts = parse_url($url);
@@ -40,11 +40,11 @@ class service {
      * @return string|boolean Réponse du service ou false en cas de problème.
      */
     public static function HTTP_POST_REQUEST($url, $params, $ssl = false) {
-        $req = array(
+        $req = [
             'header' => "Accept-Language: fr,fr-FR;q=0.8,en;q=0.5,en-US;q=0.3\r\nContent-type: application/x-www-form-urlencoded\r\n",
             'method' => 'POST',
             'content' => http_build_query($params)
-        );
+        ];
         ($ssl ? $options['https'] = $req : $options['http'] = $req);
         return file_get_contents($url, false, stream_context_create($options));
     }
@@ -91,7 +91,7 @@ class service {
      * 
      * @param array $IP_Allow liste des IP à autoriser
      */
-    public static function security_check($IP_Allow = array("localhost", "127.0.0.1", "::1")) {
+    public static function security_check($IP_Allow = ["localhost", "127.0.0.1", "::1"]) {
         if (!in_array($_SERVER["REMOTE_ADDR"], $IP_Allow)) {
             exit(403);
         }

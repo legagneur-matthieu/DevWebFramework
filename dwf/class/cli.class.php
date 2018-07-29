@@ -80,7 +80,7 @@ class cli {
      * @return string Chaine avec accents transformés
      */
     private static function accents($str) {
-        return strtr($str, array(
+        return strtr($str, [
             'ü' => "\x81",
             'é' => "\x82",
             'â' => "\x83",
@@ -92,7 +92,7 @@ class cli {
             'è' => "\x8A",
             'ï' => "\x8B",
             'î' => "\x8C",
-            'É' => "\x90")
+            'É' => "\x90"]
         );
     }
 

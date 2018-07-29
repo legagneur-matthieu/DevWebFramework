@@ -19,11 +19,11 @@ class bdd extends singleton {
      * Tableau de débogage 
      * @var array Tableau de débogage 
      */
-    public static $_debug = array(
+    public static $_debug = [
         "nb_req" => 0,
         "memory" => 0,
-        "satatements" => array()
-    );
+        "satatements" => []
+    ];
 
     /**
      * Cet objet gère la connexion et les traitements de la base de données
@@ -114,12 +114,12 @@ class bdd extends singleton {
      */
     public function query($statement) {
         self::$_debug["nb_req"] ++;
-        self::$_debug["statements"][] = array("req" => $statement, "trace" => (new dwf_exception("Trace", 700))->getTraceAsString());
+        self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace", 700))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
         }
-        (strstr($statement, "select") ? dwf_exception::throw_exception(603, array("__m__" => "fetch", "__statement__" => $statement)) : true);
-        ($this->_pdo->query($statement) ? true : dwf_exception::throw_exception(602, array("__statement__" => $statement)));
+        (strstr($statement, "select") ? dwf_exception::throw_exception(603, ["__m__" => "fetch", "__statement__" => $statement]) : true);
+        ($this->_pdo->query($statement) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
     }
 
     /**
@@ -131,15 +131,15 @@ class bdd extends singleton {
      */
     public function fetch($statement) {
         self::$_debug["nb_req"] ++;
-        self::$_debug["statements"][] = array("req" => $statement, "trace" => (new dwf_exception("Trace"))->getTraceAsString());
+        self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace"))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
         }
         $memory = memory_get_usage();
         $data = $this->_pdo->query($statement);
         self::$_debug["memory"] += (memory_get_usage() - $memory);
-        (strstr($statement, "select") ? true : dwf_exception::throw_exception(603, array("__m__" => "query", "__statement__" => $statement)));
-        return ($data ? $data->fetchAll(PDO::FETCH_ASSOC) : dwf_exception::throw_exception(602, array("__statement__" => $statement)));
+        (strstr($statement, "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
+        return ($data ? $data->fetchAll(PDO::FETCH_ASSOC) : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
     }
 
     /**
@@ -148,7 +148,7 @@ class bdd extends singleton {
      * @return string Requête SQLite
      */
     private function mysql_to_sqlite($statement) {
-        $statement = strtr($statement, array(
+        $statement = strtr($statement, [
             "`" => "",
             "\'" => "&apos;",
             "id int(11) NOT NULL AUTO_INCREMENT" => "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT",
@@ -156,10 +156,10 @@ class bdd extends singleton {
             "int(11)" => "INTEGER",
             "PRIMARY KEY (id) " => "",
             "ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 " => "",
-        ));
-        $statement = strtr($statement, array(
+        ]);
+        $statement = strtr($statement, [
             "NULL, )" => "NULL)",
-        ));
+        ]);
         return $statement;
     }
 

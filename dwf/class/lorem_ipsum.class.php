@@ -61,7 +61,7 @@ class lorem_ipsum {
                 $lorem .= $words[rand(0, ($cwords - 1))] . $ponct;
             }
         }
-        return strtr($lorem . "_", array(", _" => ".", " _" => "."));
+        return strtr($lorem . "_", [", _" => ".", " _" => "."]);
     }
 
 }

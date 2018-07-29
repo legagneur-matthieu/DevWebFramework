@@ -24,26 +24,26 @@ class syntaxhighlighter {
      */
     public function __construct($code, $brush = "js", $theme = "Default") {
         if (!self::$_called) {
-            ?><script type="text/javascript" src="../commun/src/js/syntaxhighlighter/scripts/shCore.js"></script><?php
+            $scripts = html_structures::script("../commun/src/js/syntaxhighlighter/scripts/shCore.js");
             foreach (glob("../commun/src/js/syntaxhighlighter/scripts/shBrush*.js") as $fbrush) {
-                ?><script type="text/javascript" src="<?php echo $fbrush; ?>"></script><?php
+                $scripts .= html_structures::script($fbrush);
             }
-            echo html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shCore" . $theme . ".css");
-            echo html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shTheme" . $theme . ".css");
-            echo html_structures::link_in_body("../commun/src/css/syntaxhighlighter.css");
+            echo $scripts .
+            html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shCore" . $theme . ".css") .
+            html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shTheme" . $theme . ".css") .
+            html_structures::link_in_body("../commun/src/css/syntaxhighlighter.css");
             ?> 
             <script type="text/javascript">
                 $(document).ready(function () {
-                    SyntaxHighlighter.config.tagName = "code";
                     SyntaxHighlighter.defaults['toolbar'] = false;
                     SyntaxHighlighter.all();
-                });</script> 
+                });
+            </script> 
             <?php
+
             self::$_called = true;
         }
-        ?>
-        <code class="brush: <?php echo $brush; ?>"><?php echo htmlspecialchars($code); ?></code>
-        <?php
+        echo tags::tag("pre", ["class" => "brush: " . $brush], htmlspecialchars("\r" . $code));
     }
 
 }

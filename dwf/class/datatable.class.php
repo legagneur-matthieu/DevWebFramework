@@ -18,7 +18,7 @@ class datatable {
      * 
      * @var array
      */
-    private $_params = array("responsive" => "true", "language" => "{url: '../commun/src/js/DataTables/lang/French.lang.json'}");
+    private $_params = ["responsive" => "true", "language" => "{url: '../commun/src/js/DataTables/lang/French.lang.json'}"];
 
     /**
      * Applique les fonctionnalitées de la librairie datatable à un tableau HTML
@@ -26,20 +26,18 @@ class datatable {
      * @param string $id id du tableau HTML
      * @param array $params surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc)
      */
-    public function __construct($id = "datatable", $params = array()) {
+    public function __construct($id = "datatable", $params = []) {
         if (!self::$_called) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/DataTables/media/js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" src="../commun/src/js/DataTables/media/js/dataTables.bootstrap.js"></script>       
-            <?php
-            echo html_structures::link_in_body("../commun/src/js/DataTables/media/css/dataTables.bootstrap.css");
+            echo html_structures::script("../commun/src/js/DataTables/media/js/jquery.dataTables.min.js") .
+            html_structures::script("../commun/src/js/DataTables/media/js/dataTables.bootstrap.js") .
+            html_structures::link_in_body("../commun/src/js/DataTables/media/css/dataTables.bootstrap.css");
             self::$_called = true;
         }
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-            $("#<?php echo $id; ?>").addClass("display");
-                    $('#<?php echo $id; ?>').DataTable(<?php
+            $("#<?= $id; ?>").addClass("display");
+                    $('#<?= $id; ?>').DataTable(<?php
         if (count($params) or count($this->_params)) {
             ?>
                 {<?php

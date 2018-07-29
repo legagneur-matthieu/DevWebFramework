@@ -135,20 +135,11 @@ class check_password {
      */
     public function print_errormsg($msg = "Erreur ! votre mot de passe :") {
         if (!$this->is_valid()) {
-            ?>
-            <div class="alert alert-danger">
-                <p><?= $msg; ?></p>
-                <ul>                
-                    <?php
-                    foreach ($this->_error as $error) {
-                        ?>
-                        <li><?= $this->_errormsg[$error]; ?></li>
-                        <?php
-                    }
-                    ?>
-                </ul>
-            </div>
-            <?php
+            $li = "";
+            foreach ($this->_error as $error) {
+                $li .= tags::tag("li", [], $this->_errormsg[$error]);
+            }
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], $msg) . tags::tag("ul", [], $li));
         }
     }
 

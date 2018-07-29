@@ -28,7 +28,7 @@ class reversoLib {
      * @return type Texte avec les correction a appliquer
      */
     public function correctionText($txt) {
-        curl_setopt($ch = curl_init(), CURLOPT_HTTPHEADER, array(
+        curl_setopt($ch = curl_init(), CURLOPT_HTTPHEADER, [
             'User-Agent:Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
             'Origin:http://www.reverso.net',
             'Referer:http://www.reverso.net/orthographe/correcteur-francais/',
@@ -40,7 +40,7 @@ class reversoLib {
             'Accept:*/*',
             'Created: 01/01/0001 00:00:00',
             'Username: OnlineSpellerWS'
-        ));
+        ]);
         curl_setopt($ch, CURLOPT_URL, str_replace('{langue}', $this->_langue, $this->_url));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $txt);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

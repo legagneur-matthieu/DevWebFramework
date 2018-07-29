@@ -31,32 +31,19 @@ class file_explorer {
      * @param string $dir Dossier à explorer 
      */
     private function explore($dir) {
-        ?>
-        <ul class="file_explorer">
-            <?php
-            foreach (glob($dir . "/*") as $dirorfile) {
-                ?>
-                <li>
-                    <?php
-                    $name = strtr($dirorfile, array("../" => "", "./" => "", $dir . "/" => ""));
-                    if (is_dir($dirorfile)) {
-                        $id = strtr($dirorfile, array(" " => "", "/" => "_"));
-                        ?>
-                        <a href="#<?php echo $id; ?>" id="<?php echo $id; ?>"><?php echo html_structures::glyphicon("folder-open", "Dossier") . " " . $name; ?> </a>
-                        <?php
-                        $this->explore($dirorfile);
-                    } else {
-                        ?>
-                        <a href="<?php echo strtr($dirorfile, array("//" => "/")); ?>" target="_blank"><?php echo html_structures::glyphicon("file", "Fichier") . " " . $name; ?></a>  
-                        <?php
-                    }
-                    ?>
-                </li>
-                <?php
+        $li = "";
+        foreach (glob($dir . "/*") as $dirorfile) {
+            $name = strtr($dirorfile, ["../" => "", "./" => "", $dir . "/" => ""]);
+            if (is_dir($dirorfile)) {
+                $id = strtr($dirorfile, [" " => "", "/" => "_"]);
+                $a = tags::tag("a", ["href" => "#" . $id, "id" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name);
+                $this->explore($dirorfile);
+            } else {
+                $a = tags::tag("a", ["href" => strtr($dirorfile, ["//" => "/"]), "target" => "_blank"], html_structures::glyphicon("file", "Fichier") . " " . $name);
             }
-            ?>
-        </ul>
-        <?php
+            $li .= tags::tag("li", [], $a);
+        }
+        echo tags::tag("ul", ["class" => "file_explorer"], $li);
     }
 
 }

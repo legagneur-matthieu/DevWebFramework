@@ -322,12 +322,6 @@ class docPHP_natives {
         <p>Résultat :</p>
         <div class="row" style="overflow: visible; height: 300px;">
             <div class="col-xs-5">
-                <style type="text/css">
-                    .ddg > form > input,
-                    .ddg > form > button{
-                        margin-top: -150px;
-                    }
-                </style>
                 <?php
                 (new ddg())->print_searchbar();
                 ?>

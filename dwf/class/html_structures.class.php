@@ -18,19 +18,33 @@ class html_structures {
      * @param boolean $head_scope l'entête du tableau doit être accessible ? (true/false, true par defaut)
      */
     public static function table($head, $data, $summary = '', $id = '', $class = "table", $head_scope = true) {
-        $str = '<table' . (!empty($summary) ? ' summary="' . $summary . '"' : '') . (!empty($id) ? ' id="' . $id . '"' : '') . (!empty($class) ? ' class="' . $class . '"' : '') . '><thead><tr>';
+        $thead = tags::tr();
         foreach ($head as $h) {
-            $str .= '<th' . ($head_scope ? ' scope="col"' : '') . '>' . $h . '</th>';
-        }
-        $str .= '</tr> </thead> <tbody>';
-        foreach ($data as $row) {
-            $str .= '<tr>';
-            foreach ($row as $value) {
-                $str .= '<td>' . $value . '</td>';
+            $th = tags::th($h);
+            if ($head_scope) {
+                $th->set_attr("scope", "col");
             }
-            $str .= '</tr>';
+            $thead->append_content($th);
         }
-        return ($str . '</tbody></table>');
+        $tbody = tags::tbody();
+        foreach ($data as $row) {
+            $tr = tags::tr();
+            foreach ($row as $value) {
+                $tr->append_content(tags::tag("td", [], $value));
+            }
+            $tbody->append_content($tr);
+        }
+        $table = tags::table(tags::tag("thead", [], $thead) . $tbody);
+        if (!empty($summary)) {
+            $table->set_attr("summary", $summary);
+        }
+        if (!empty($id)) {
+            $table->set_attr("id", $id);
+        }
+        if (!empty($class)) {
+            $table->set_attr("class", $class);
+        }
+        return $table;
     }
 
     /**
@@ -40,11 +54,15 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function ul($data, $class = false) {
-        $str = "<ul" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        $li = "";
         foreach ($data as $value) {
-            $str .= "<li>" . (is_array($value) ? self::ul($value) : $value) . "</li>";
+            $li .= tags::tag("li", [], (is_array($value) ? self::ul($value) : $value));
         }
-        return ($str . "</ul>");
+        $ul = tags::ul($li);
+        if ($class) {
+            $ul->set_attr("class", $class);
+        }
+        return $ul;
     }
 
     /**
@@ -54,11 +72,15 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function ol($data, $class = false) {
-        $str = "<ol" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        $li = "";
         foreach ($data as $value) {
-            $str .= "<li>" . (is_array($value) ? html_structures::ul($value) : $value) . "</li>";
+            $li .= tags::tag("li", [], (is_array($value) ? self::ol($value) : $value));
         }
-        return ($str . "</ol>");
+        $ol = tags::ol($li);
+        if ($class) {
+            $ol->set_attr("class", $class);
+        }
+        return $ol;
     }
 
     /**
@@ -68,11 +90,15 @@ class html_structures {
      * @param string $class class CSS de la liste 
      */
     public static function dl($data, $class = false) {
-        $str = "<dl" . ($class ? ' class="' . $class . '" ' : "") . ">";
+        $dt = "";
         foreach ($data as $key => $value) {
-            $str .= "<dt>" . $key . "</dt><dd>" . $value . "</dd>";
+            $dt .= tags::tag("dt", [], $key) . tags::tag("dd", [], $value);
         }
-        return ($str . "</dl>");
+        $dl = tags::dl($dt);
+        if ($class) {
+            $dl->set_attr("class", $class);
+        }
+        return $dl;
     }
 
     /**
@@ -86,7 +112,17 @@ class html_structures {
      * @return string lien
      */
     public static function a_link($href, $text, $class = "", $title = "", $target_blank = false) {
-        return '<a href="' . $href . '"' . (!empty($class) ? ' class="' . $class . '"' : "") . (!empty($title) ? ' title="' . $title . '"' : "") . ($target_blank ? ' target="_blank" ' : "") . ">" . $text . "</a>";
+        $a = tags::a(["href" => $href], $text);
+        if (!empty($class)) {
+            $a->set_attr("class", $class);
+        }
+        if (!empty($title)) {
+            $a->set_attr("title", $title);
+        }
+        if ($target_blank) {
+            $a->set_attr("target", "__blank");
+        }
+        return $a;
     }
 
     /**
@@ -96,7 +132,7 @@ class html_structures {
      * @return string ancre
      */
     public static function ancre($id) {
-        return '<a id="' . $id . '"></a>';
+        return tags::tag("a", ["id" => $id], "");
     }
 
     /**
@@ -107,7 +143,11 @@ class html_structures {
      * @param string $usemap pour maper l'image
      */
     public static function img($src, $alt = "", $usemap = "") {
-        return '<img src="' . $src . '" alt="' . $alt . '"' . (!empty($usemap) ? ' usemap="' . $usemap . '" ' : "") . '/>';
+        $img = tags::img(["src" => $src, "alt" => $alt]);
+        if (!empty($usemap)) {
+            $img->set_attr("usemap", $usemap);
+        }
+        return $img;
     }
 
     /** Retourne une figure ( illustration + légende )
@@ -117,7 +157,7 @@ class html_structures {
      * @param string $alt alternative
      */
     public static function figure($src, $caption, $alt = "") {
-        return '<figure><img src="' . $src . '" alt="' . $alt . '" /><figcaption>' . $caption . '</figcaption></figure>';
+        return tags::tag("figure", [], self::img($src, $alt) . tags::tag("figcaption", [], $caption));
     }
 
     /**
@@ -147,7 +187,14 @@ class html_structures {
      * @param string $class class css /js
      */
     public function area($shape, $coords, $href, $alt = "", $id = "", $class = "") {
-        return '<area shape="' . $shape . '" coords="' . $coords . '" href="' . $href . '" alt="' . $alt . '"' . (!empty($id) ? ' id="' . $shape . '"' : "") . (!empty($class) ? ' class="' . $shape . '"' : "") . '/>';
+        $area = tags::area(["shape" => $shape, "coords" => $coords, "href" => $href, "alt" => $alt]);
+        if (!empty($id)) {
+            $img->set_attr("id", $id);
+        }
+        if (!empty($class)) {
+            $img->set_attr("class", $class);
+        }
+        return $area;
     }
 
     /**
@@ -159,7 +206,14 @@ class html_structures {
     public static function media($data, $width = 100) {
         $str = "";
         foreach ($data as $d) {
-            $str .= '<div class="media"><div class="media-left"><img class="media-object" style="width: ' . $width . 'px;" src="' . $d["img"] . '" alt="' . $d["titre"] . '"></div><div class="media-body"><h3 class="media-heading">' . $d["titre"] . '</h3>' . $d["text"] . '</div></div><hr />';
+            $str .= tags::tag("div", ["class" => "media"], tags::tag(
+                                    "div", ["class" => "media-left"], tags::tag(
+                                            "img", ["class" => "media-object", "style" => "width: " . $width . "px;", "src" => $d["img"], "alt" => $d["titre"]])
+                            ) .
+                            tags::tag("div", ["class" => "media-body"], tags::tag(
+                                            "h3", ["class" => "media-heading"], $d["titre"]) .
+                                    $d["text"])
+                    ) . self::hr();
         }
         return $str;
     }
@@ -171,8 +225,8 @@ class html_structures {
      * @param string $alt aleternative accessible aux synthéses vocales
      * @return string Glyphicon
      */
-    public static function glyphicon($glyphicon, $alt) {
-        return '<span class="glyphicon glyphicon-' . $glyphicon . '"><span class="sr-only">' . $alt . '</span></span>';
+    public static function glyphicon($glyphicon, $alt = "") {
+        return tags::tag("span", ["class" => "glyphicon glyphicon-" . $glyphicon], tags::tag("span", ["class" => "sr-only"], $alt . "&nbsp;"));
     }
 
     /**
@@ -181,7 +235,7 @@ class html_structures {
      * @return string Séparateur horizontal
      */
     public static function hr() {
-        return '<hr />';
+        return tags::tag("hr");
     }
 
     /**
@@ -191,7 +245,7 @@ class html_structures {
      * @return string balise time
      */
     public static function time($datetime, $text) {
-        return' <time datetime="' . $datetime . '">' . $text . '</time>';
+        return tags::tag("time", ["datetime" => $datetime], $text);
     }
 
     /**
@@ -205,6 +259,15 @@ class html_structures {
     }
 
     /**
+     * Retourne une balise script pour incule un fichier JS
+     * @param string $src chemain vers le fichier JS
+     * @return string balise script
+     */
+    public static function script($src) {
+        return tags::tag("script", ["type" => "text/javascript", "src" => $src], "");
+    }
+
+    /**
      * Permet d'afficher un lien avec un popover
      * @param string $id Id CSS
      * @param string $text Text du lien
@@ -214,7 +277,7 @@ class html_structures {
      * @return string popover
      */
     public static function popover($id, $text, $title, $content, $class = "") {
-        return self::ancre($id) . '</a><a href="#' . $id . '" data-toggle="popover" title="' . $title . '" data-content="' . $content . '">' . $text . '</a>';
+        return tags::tag("a", ["href" => "#" . $id, "data-toggle" => "popover", "title" => $title, "data-content" => $content], $text);
     }
 
 }

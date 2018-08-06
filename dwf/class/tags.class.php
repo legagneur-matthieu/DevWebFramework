@@ -88,10 +88,10 @@ class tags {
     /**
      * Retourne un attribut
      * @param string $key Nom de l'attribut
-     * @return string Valeur de l'attribut
+     * @return string Valeur de l'attribut, null si l'attribut n'existe pas
      */
     public function get_attr($key) {
-        return $this->_attr[$key];
+        return (isset($this->_attr[$key]) ? $this->_attr[$key] : null);
     }
 
     /**

@@ -814,12 +814,10 @@ class docPHP_natives {
         ?>
         <p>Résultat :</p>
         <?php
-        debug::print_r(
-                html_structures::ul(
-                        array(
-                            html_structures::a_link('index.php', html_structures::glyphicon('home', '') . ' Retour à l\'accueil'),
-                            html_structures::a_link('https://duckduckgo.com/', html_structures::glyphicon('search', '') . ' Rechercher sur le web', '', '(nouvel onglet)', true),
-                        )
+        echo html_structures::ul(
+                array(
+                    html_structures::a_link('index.php', html_structures::glyphicon('home', '') . ' Retour à l\'accueil'),
+                    html_structures::a_link('https://duckduckgo.com/', html_structures::glyphicon('search', '') . ' Rechercher sur le web', '', '(nouvel onglet)', true),
                 )
         );
     }
@@ -1446,6 +1444,84 @@ class docPHP_natives {
         <?php
     }
 
+    private function tags() {
+        ?>
+        <p>
+            Cette classe permet de créer et manipuler des balises HTML avant de les afficher.
+        </p>
+        <p class="alert alert-info">
+            Note 21.18.08 : dès sa création cette classe est devenue centrale dans la génération de HTML dans les classes natives du framework. <br />
+            Utiliser cette classe permet d'obtenir un code 100% PHP plus lisible et plus facile à maintenir qu'un code PHP "entrecoupé" de codes HTML. <br />
+            Les impacts négatifs de cette classe sur l'utilisation de la mémoire et le temps d'exécution de PHP sont très faibles. <br />
+            Bien entendu l'utilisation de cette classe dans vos projets et classes métiers reste facultative 
+        </p>
+        <p>Usage :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Créé une balise p.maClasse et la retourne sous forme d'une chaine de caractère\n"
+                . "echo tags::tag('p',['class'=>'maClasse'],'mon contenu');\n\n"
+                . "//Créé une balise auto-fermé\n"
+                . "echo tags::tag('input',['name'=>'monInput'],false);\n\n"
+                . "//Créé une balise ul.maListe sous forme d'objet\n"
+                . "$" . "ul = tags::ul(['class'=>'maListe'],'');\n\n"
+                . "//Ajout/modification d'un atribut \n"
+                . "$" . "ul->set_attr('id','maListe');\n\n"
+                . "//Suppression d'un attribut \n"
+                . "$" . "ul->del_attr('class');\n\n"
+                . "//Retourne la valeur d'un attribut\n"
+                . "$" . "ul->get_attr('class'); //retournera null si l'attribut n'existe pas\n\n"
+                . "//Retourne le tag de la balse\n"
+                . "$" . "ul->get_tag(); //retourne 'ul'\n\n"
+                . "//Redéfini le tag de la balise \n"
+                . "$" . "ul->set_tag('ol');\n\n"
+                . "//Retourne le contenu de la balise\n"
+                . "$" . "ul->get_content();\n\n"
+                . "//Redefini le contenu de la balise, (ici une balise li)\n"
+                . "$" . "ul->set_content(tags::tag(li,[],'1e item'));\n\n"
+                . "//Ajoute du contenu a la balise\n"
+                . "$" . "ul->append_content(tags::tag(li,[],'2e item'));\n\n"
+                . "//Affiche la balise et son contenu\n"
+                . "echo $" . "ul;\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Exemple :</p>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>Code :</p>
+                <?php
+                js::syntaxhighlighter("<?php\n"
+                        . "$" . "ul = tags::ul();\n"
+                        . "foreach (['Pomme', 'Pêche', 'Poire', 'Abricot'] as $" . "fruit) {\n"
+                        . "    $" . "ul->append_content(tags::tag('li', [], $" . "fruit));\n"
+                        . "}\n"
+                        . "echo tags::tag('div', [], tags::tag(\n"
+                        . "     'p', [], 'Ma liste de ' . tags::tag(\n"
+                        . "         'strong', [], 'fruit')\n"
+                        . "     ) . $" . "ul\n"
+                        . ");\n\n"
+                        . "// ou plus simplement avec html_structures\n"
+                        . "echo tags::tag('div', [], tags::tag(\n"
+                        . "     'p', [], 'Ma liste de ' . tags::tag(\n"
+                        . "         'strong', [], 'fruit')\n"
+                        . "     ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])\n"
+                        . ");\n"
+                        . "?>", $this->_brush);
+                ?>
+            </div>
+            <div class="col-xs-6">
+                <p>Resultat :</p>
+                <?php
+                echo tags::tag('div', [], tags::tag(
+                                'p', [], 'Ma liste de ' . tags::tag(
+                                        'strong', [], 'fruit')
+                        ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
+                );
+                ?>
+            </div>
+        </div>
+        <?php
+    }
+
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
             <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
@@ -1557,10 +1633,13 @@ class docPHP_natives {
         </p>
         <?php
         js::syntaxhighlighter("<?php new update_dwf(); ?>", $this->_brush);
+        $vers = "21.18.08";
+        $versm1 = "21.18.07";
+        $vgit = "2.18.0";
         echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Status / Mise à jour"], [
-            ["git version 2.7.4", "21.17.11", "21.17.11", "Already up-to-date."],
+            ["git version " . $vgit, $vers, $vers, "Already up-to-date."],
             ["OU", "", "", ""],
-            ["git version 2.7.4", "21.17.10", "21.17.11", '<input type="submit" class="btn btn-block btn-primary" value="Update from 21.17.10 to 21.17.11" />']
+            ["git version " . $vgit, $versm1, $vers, '<input type="submit" class="btn btn-block btn-primary" value="Update from ' . $versm1 . ' to ' . $vers . '" />']
         ]);
     }
 

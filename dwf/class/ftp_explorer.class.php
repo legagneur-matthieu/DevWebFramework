@@ -37,12 +37,9 @@ class ftp_explorer {
                 $("div.ftp_explorer > ul.ftp_explorer").menu();
             });
         </script>
-        <div class="ftp_explorer">
-            <?php
-            $this->explore("/");
-            ?>
-        </div>
         <?php
+
+        echo tags::tag("div", ["class" => "ftp_explorer"], $this->explore("/"));
     }
 
     /**
@@ -56,14 +53,14 @@ class ftp_explorer {
                 $name = strtr($dirorfile, ["../" => "", "./" => "", $dir . "/" => ""]);
                 if (@ftp_chdir($this->_ftp_connect, $file)) {
                     $id = strtr($file, [" " => "", "/" => "_"]);
-                    $a = tags::tag("a", ["href" => "#" . $id, "id" => $id, "name" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name);
-                    $this->explore($file . "/");
+                    $a = tags::tag("a", ["href" => "#" . $id, "id" => $id, "name" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name) .
+                            $this->explore($file . "/");
                 } else {
                     $a = tags::tag("a", ["target" => "_blank", "href" => "ftp://" . $this->_ftp_data["user"] . ":" . $this->_ftp_data["psw"] . "@" . $this->_ftp_data["host"] . $file], html_structures::glyphicon("file", "Fichier") . " " . $name);
                 }
                 $li .= tags::tag("li", [], $a);
             }
-            echo tags::tag(ul, ["class" => "ftp_explorer"], $li);
+            return tags::tag(ul, ["class" => "ftp_explorer"], $li);
         }
     }
 

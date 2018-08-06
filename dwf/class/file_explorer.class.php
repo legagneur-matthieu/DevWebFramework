@@ -18,12 +18,9 @@ class file_explorer {
                 $("div.file_explorer > ul.file_explorer").menu();
             });
         </script>
-        <div class="file_explorer">
-            <?php
-            $this->explore($dir);
-            ?>
-        </div>
         <?php
+
+        echo tags::tag("div", ["class" => "file_explorer"], $this->explore($dir));
     }
 
     /**
@@ -36,14 +33,14 @@ class file_explorer {
             $name = strtr($dirorfile, ["../" => "", "./" => "", $dir . "/" => ""]);
             if (is_dir($dirorfile)) {
                 $id = strtr($dirorfile, [" " => "", "/" => "_"]);
-                $a = tags::tag("a", ["href" => "#" . $id, "id" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name);
-                $this->explore($dirorfile);
+                $a = tags::tag("a", ["href" => "#" . $id, "id" => $id], html_structures::glyphicon("folder-open", "Dossier") . " " . $name) .
+                        $this->explore($dirorfile);
             } else {
                 $a = tags::tag("a", ["href" => strtr($dirorfile, ["//" => "/"]), "target" => "_blank"], html_structures::glyphicon("file", "Fichier") . " " . $name);
             }
             $li .= tags::tag("li", [], $a);
         }
-        echo tags::tag("ul", ["class" => "file_explorer"], $li);
+        return tags::tag("ul", ["class" => "file_explorer"], $li);
     }
 
 }

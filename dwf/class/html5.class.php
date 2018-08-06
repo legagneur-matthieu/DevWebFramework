@@ -155,7 +155,7 @@ class html5 {
                 "wrap" => 256,
                 "new-blocklevel-tags" => implode(" ", self::tags_list())
                     ], "utf8");
-            echo $tidy;
+            echo strtr($tidy,["&amp;"=>"&"]);
         } else {
             include_once __DIR__ . '/xhtml-formatter/src/XhtmlFormatter/Formatter.php';
             echo (new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document);

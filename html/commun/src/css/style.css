@@ -222,6 +222,9 @@ ul.file_explorer, ul.ftp_explorer{
     position: absolute;
     margin-top: -90000px;
 }
+.w100{
+    width: 100%;
+}
 @media screen and (max-width:799px){
     .min{
         position: relative;

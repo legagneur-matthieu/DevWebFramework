@@ -16,11 +16,13 @@ class parcour_sites {
                 <?= $this->header(); ?>
                 <main class="contenu">
                     <?php
-                    if (!isset($_GET["check_update"])) {
-                        $this->main($this->init_main());
-                    } else {
+                    if (isset($_GET["check_update"])) {
                         echo html_structures::a_link("index.php", html_structures::glyphicon("arrow-left", "") . " Retour au parcours", "btn btn-primary");
                         new update_dwf("../");
+                    } elseif (isset($_GET["phpini"])) {
+                        phpini::admin();
+                    } else {
+                        $this->main($this->init_main());
                     }
                     ?>
                 </main>
@@ -72,8 +74,11 @@ class parcour_sites {
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-theme.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/css/style.css"]) .
-                        tags::tag("script", ["type" => "stylesheet", "src" => "commun/src/dist/jquery-ui/jquery.js"], "") .
-                        tags::tag("script", ["type" => "stylesheet", "src" => "commun/src/dist/jquery-ui/jquery-ui.min.js"], "")
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.core.css"]) .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.bootstrap.css"]) .
+                        html_structures::script("commun/src/dist/jquery-ui/jquery.js") .
+                        html_structures::script("commun/src/dist/jquery-ui/jquery-ui.min.js") .
+                        html_structures::script("commun/src/js/alertify/lib/alertify.min.js")
         );
     }
 
@@ -114,6 +119,7 @@ class parcour_sites {
                 echo tags::tag("h2", [], "Outils DWF") .
                 tags::tag("p", [], tags::tag("a", ["href" => "commun/new_app.php"], html_structures::glyphicon("plus") . " Ajouter un projet") . tags::tag("br") .
                         tags::tag("a", ["href" => "http://localhost/phpmyadmin/"], html_structures::glyphicon("hdd") . " PHPMyAdmin") . tags::tag("br") .
+                        tags::tag("a", ["href" => "index.php?phpini=1"], html_structures::glyphicon("cog") . " PHPini") . tags::tag("br") .
                         tags::tag("a", ["href" => "index.php?check_update=1"], html_structures::glyphicon("cloud-download") . " Mise à jour de DWF (Requiert GIT)")
                 ) .
                 tags::tag("hr") . $s["select"] . tags::tag("hr") .

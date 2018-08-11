@@ -28,6 +28,7 @@ class dwf_exception extends Exception {
         // 63X FS / système
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
         632 => "Git ne semble pas être installé sur la machine hôte.",
+        633 => "PHPini : le profil n'a pas pu être chargé.",
     ];
 
     /**

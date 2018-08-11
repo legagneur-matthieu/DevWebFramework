@@ -1110,7 +1110,7 @@ class docPHP_natives {
 
     private function php_header() {
         ?>
-        <p></p>
+        <p>Cette classe permet de modifier le header HTTP</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "// Renseigne le type (mime) du document. Renseignez juste l'extention du fichier ( par exemple \"json\" ou \"csv\"),\n"
@@ -1120,6 +1120,34 @@ class docPHP_natives {
                 . "(new php_header())->redir($" . "url, $" . "second=0);\n"
                 . "// Définit le statut code de la page, si le statut code est invalide, le code 200 est utilisé par défaut\n"
                 . "(new php_header())->status_code($" . "code);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function phpini() {
+        ?>
+        <p>
+            Cette classe permet de gèrer des profils de configuration PHP (comme avoir plusieurs fichier php.ini interchangeable à volonté)            
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "// Affiche l'interface pour créer vos propres profils de configuration.\n"
+                . "// Est accèssible de base par le fichier html/index.php -> PHPini\n"
+                . "phpini::admin();\n\n"
+                . "//Charge un profil standard\n"
+                . "phpini::set_mode(phpini::MODE_DEFAULT);\n\n"
+                . "//Les diferants profils standard sont :\n"
+                . "//Congiguration par défaut tel que décrite dans la doc officiel de php.ini\n"
+                . "phpini::MODE_DEFAULT;\n\n"
+                . "//Congiguration de développement tel que décrite dans la doc officiel de php.ini\n"
+                . "phpini::MODE_DEV;\n\n"
+                . "//Congiguration de production tel que décrite dans la doc officiel de php.ini\n"
+                . "phpini::MODE_PROD;\n\n"
+                . "//Congiguration de développement conseillé pour DWF\n"
+                . "phpini::MODE_DWF_DEV;\n\n"
+                . "//Congiguration de production conseillé pour DWF\n"
+                . "phpini::MODE_DWF_PROD;\n\n"
+                . "//Charge un profi de configuration de votre création\n"
+                . "phpini::set_mode(phpini::MODE_CUSTOM,'mon_profil');\n\n"
                 . "?>", $this->_brush);
     }
 
@@ -1524,7 +1552,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créé dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

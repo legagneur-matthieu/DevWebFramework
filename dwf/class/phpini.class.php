@@ -287,9 +287,9 @@ class phpini {
                         )]
                 ]);
                 $session__gc_divisor = "session__gc_divisor";
-                form::input($session__gc_divisor . " (default : 100, recommended : 1000)", $session__gc_divisor, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_divisor] : "100"));
+                form::input(strtr($session__gc_divisor, ["__" => "."]) . " (default : 100, recommended : 1000)", $session__gc_divisor, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_divisor] : "100"));
                 $session__sid_bits_per_character = "session__sid_bits_per_character";
-                form::radios($session__sid_bits_per_character, $session__sid_bits_per_character, [
+                form::radios(strtr($session__sid_bits_per_character, ["__" => "."]), $session__sid_bits_per_character, [
                     [4, 4, (isset($_GET["new_profile"]) ?
                                 false :
                                 (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__sid_bits_per_character] == 4)
@@ -343,7 +343,7 @@ class phpini {
                         )]
                 ]);
                 $session__gc_maxlifetime = "session__gc_maxlifetime";
-                form::input($session__gc_maxlifetime, $session__gc_maxlifetime, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_maxlifetime] : "1440"));
+                form::input(strtr($session__gc_maxlifetime, ["__" => "."]), $session__gc_maxlifetime, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_maxlifetime] : "1440"));
                 form::new_fieldset("post_max_size");
                 $qnt = (isset($_GET["new_profile"]) ?
                         "8" :

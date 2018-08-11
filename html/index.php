@@ -20,6 +20,7 @@ class parcour_sites {
                         echo html_structures::a_link("index.php", html_structures::glyphicon("arrow-left", "") . " Retour au parcours", "btn btn-primary");
                         new update_dwf("../");
                     } elseif (isset($_GET["phpini"])) {
+                        echo html_structures::a_link("index.php", html_structures::glyphicon("arrow-left", "") . " Retour au parcours", "btn btn-primary");
                         phpini::admin();
                     } else {
                         $this->main($this->init_main());

@@ -30,7 +30,6 @@ class docPHP {
 
         </style>
         <h2>Framework PHP</h2>
-        <p><?php echo html_structures::a_link("phpdoc/index.html", "Documentation technique (PHPDoc)", "", "", true); ?></p>
         <div id="accordion">
             <?php
             foreach ($doc as $d) {

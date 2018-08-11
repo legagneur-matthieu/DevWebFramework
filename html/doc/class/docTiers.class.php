@@ -24,7 +24,7 @@ class docTiers {
             ["Bootswatch", "3.3.7", "Thomas Park", "CSS", $licences[0]],
             ["Ckeditor", "4.9.2", "Frederico Knabben", "JS", $licences[1]],
             ["Cytoscape", "3.2.12", "The Cytoscape Consortium", "JS", $licences[10]],
-            ["Datatable", "1.10.16", "SpryMedia Limited", "JS", $licences[10]],
+            ["Datatable", "1.10.18", "SpryMedia Limited", "JS", $licences[10]],
             ["Datetimepicker", "1.6.3", "Trent Richardson", "JS", $licences[0]],
             ["Dompdf", "0.8.2", "Benj Carson", "PHP", $licences[2]],
             ["Dlcapi", "1.0.1", "JDTeam", "PHP", $licences[10]],

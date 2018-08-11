@@ -268,6 +268,15 @@ class html_structures {
     }
 
     /**
+     * Retourne une balise link pour incule un fichier CSS
+     * @param string $src chemain vers le fichier CSS
+     * @return string balise link
+     */
+    public static function link($href) {
+        return tags::tag("link", ["rel" => "stylesheet", "href" => $href]);
+    }
+
+    /**
      * Permet d'afficher un lien avec un popover
      * @param string $id Id CSS
      * @param string $text Text du lien

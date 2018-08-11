@@ -77,7 +77,7 @@ class html5 {
             "../commun/src/js/alertify/themes/alertify.core.css",
             "../commun/src/js/alertify/themes/alertify.bootstrap.css"
                 ] as $href) {
-                    $link .= tags::tag("link", ["rel" => "stylesheet", "href" => $href]);
+                    $link .= html_structures::link($href);
                 }
                 echo $link;
                 bootstrap_theme::link_theme();
@@ -86,7 +86,7 @@ class html5 {
             "../commun/src/css/style.css",
             "../commun/src/css/pxtoem.css"
                 ] as $href) {
-                    $link .= tags::tag("link", ["rel" => "stylesheet", "href" => $href]);
+                    $link .= html_structures::link($href);
                 }
                 echo $link;
             }
@@ -155,7 +155,7 @@ class html5 {
                 "wrap" => 256,
                 "new-blocklevel-tags" => implode(" ", self::tags_list())
                     ], "utf8");
-            echo strtr($tidy,["&amp;"=>"&"]);
+            echo strtr($tidy, ["&amp;" => "&"]);
         } else {
             include_once __DIR__ . '/xhtml-formatter/src/XhtmlFormatter/Formatter.php';
             echo (new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document);

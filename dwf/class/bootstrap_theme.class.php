@@ -50,10 +50,10 @@ class bootstrap_theme {
      */
     public static function link_theme() {
         if (in_array($theme = self::get_theme(), self::$_theme)) {
-            echo tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/bootswatch/" . $theme . "/bootstrap.min.css"]);
+            echo html_structures::link("../commun/src/dist/bootswatch/" . $theme . "/bootstrap.min.css");
         } else {
-            echo tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/css/bootstrap.min.css"]) .
-            tags::tag("link", ["rel" => "stylesheet", "href" => "../commun/src/dist/css/bootstrap-theme.min.css"]);
+            echo html_structures::link("../commun/src/dist/css/bootstrap.min.css") .
+            html_structures::link("../commun/src/dist/css/bootstrap-theme.min.css");
         }
     }
 

@@ -64,5 +64,3 @@ probePage.open(inputFile, function (status) {
 
     }
 });
-
-

@@ -182,11 +182,11 @@ var RevealSearch = (function () {
         dom.wrapper.appendChild(searchElement);
     }
 
-    document.getElementById("searchbutton").addEventListener('click', function (event) {
+    document.getElementById('searchbutton').addEventListener('click', function (event) {
         doSearch();
     }, false);
 
-    document.getElementById("searchinput").addEventListener('keyup', function (event) {
+    document.getElementById('searchinput').addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             case 13:
                 event.preventDefault();
@@ -199,7 +199,7 @@ var RevealSearch = (function () {
     }, false);
 
     document.addEventListener('keydown', function (event) {
-        if (event.key == "F" && (event.ctrlKey || event.metaKey)) {//Control+Shift+f
+        if (event.key == "F" && (event.ctrlKey || event.metaKey)) { //Control+Shift+f
             event.preventDefault();
             toggleSearch();
         }

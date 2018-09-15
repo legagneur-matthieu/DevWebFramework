@@ -16,6 +16,7 @@ function animate(id) {
         "tada",
         "wobble",
         "jello",
+        "heartBeat",
         "bounceIn",
         "bounceInDown",
         "bounceInLeft",
@@ -165,6 +166,12 @@ function animate(id) {
         this.rm_animate();
         setTimeout(function () {
             $(_id).addClass("jello");
+        }, 10);
+    };
+    this.heartBeat = function () {
+        this.rm_animate();
+        setTimeout(function () {
+            $(_id).addClass("heartBeat");
         }, 10);
     };
 

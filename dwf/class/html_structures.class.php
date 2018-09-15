@@ -27,12 +27,20 @@ class html_structures {
             $thead->append_content($th);
         }
         $tbody = tags::tbody();
-        foreach ($data as $row) {
-            $tr = tags::tr();
-            foreach ($row as $value) {
-                $tr->append_content(tags::tag("td", [], $value));
+        if (count($data) !== 0) {
+            foreach ($data as $row) {
+                $tr = tags::tr();
+                foreach ($row as $value) {
+                    $tr->append_content(tags::tag("td", [], $value));
+                }
+                $tbody->append_content($tr);
             }
-            $tbody->append_content($tr);
+        } else {
+            $td = "";
+            for ($i = 0; $i < count($thead); $i++) {
+                $td .= tags::tag("td", [], "");
+            }
+            $tbody->append_content(tags::tag("tr", [], $td));
         }
         $table = tags::table(tags::tag("thead", [], $thead) . $tbody);
         if (!empty($summary)) {

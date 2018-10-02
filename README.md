@@ -23,4 +23,4 @@ Vous pouvez faire appel à la plupart des librairies implémentées en utilisant
 ## Documentation
 
 Une documentation plus détaillée est disponible dans : html/doc
-et à l'adresse : http://dwf.sytes.net/doc/ 
+et à l'adresse : https://dwf.sytes.net/doc/ 

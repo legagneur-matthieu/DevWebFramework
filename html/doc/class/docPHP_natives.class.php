@@ -417,16 +417,16 @@ class docPHP_natives {
         <p>Exemple de <em>dwf_exception::warning_exception()</em> :</p>
         <div class="alert alert-danger" role="alert">
             <p>DWF EXCEPTION ! Code 700 : "Exemple d'exception"</p>
-            <pre><?php echo "#0 C:\wamp\www\myhomeframework\html\doc\class\docPHP_natives.class.php(294): dwf_exception::warning_exception('700', Array)
-#1 C:\wamp\www\myhomeframework\html\doc\class\docPHP_natives.class.php(21): docPHP_natives->dwf_exception()
-#2 C:\wamp\www\myhomeframework\html\doc\class\docPHP.class.php(427): docPHP_natives->__construct()
-#3 C:\wamp\www\myhomeframework\html\doc\class\docPHP.class.php(38): docPHP->classes_natives()
-#4 C:\wamp\www\myhomeframework\html\doc\class\pages.class.php(91): docPHP->__construct()
-#5 C:\wamp\www\myhomeframework\dwf\class\application.class.php(126): pages->web()
-#6 C:\wamp\www\myhomeframework\dwf\class\application.class.php(44): application->contenu()
-#7 C:\wamp\www\myhomeframework\dwf\index.php(20): application->__construct()
-#8 C:\wamp\www\myhomeframework\html\doc\index.php(18): index->__construct()
-#9 C:\wamp\www\myhomeframework\html\doc\index.php(40): website->__construct()
+            <pre><?php echo "#0 /var/www/html/doc/class/docPHP_natives.class.php(294): dwf_exception::warning_exception('700', Array)
+#1 /var/www/html/doc/class/docPHP_natives.class.php(21): docPHP_natives->dwf_exception()
+#2 /var/www/html/doc/class/docPHP.class.php(427): docPHP_natives->__construct()
+#3 /var/www/html/doc/class/docPHP.class.php(38): docPHP->classes_natives()
+#4 /var/www/html/doc/class/pages.class.php(91): docPHP->__construct()
+#5 /var/www/dwf/class/application.class.php(126): pages->web()
+#6 /var/www/dwf/class/application.class.php(44): application->contenu()
+#7 /var/www/dwf/index.php(20): application->__construct()
+#8 /var/www/html/doc/index.php(18): index->__construct()
+#9 /var/www/html/doc/index.php(40): website->__construct()
 #10 {main}"; ?></pre>
         </div>
         <?php

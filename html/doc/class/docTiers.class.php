@@ -19,7 +19,7 @@ class docTiers {
         js::datatable();
         echo html_structures::table(["Libairie", "Version", "Auteur", "Langage", "Licence"], [
             ["Alertify", "0.3.11", "Fabien Doiron", "JS", $licences[0]],
-            ["Animate", "3.6.0", "Daniel Eden", "JS", $licences[0]],
+            ["Animate", "3.7.0", "Daniel Eden", "JS", $licences[0]],
             ["Bootsrap", "3.3.7", "Twitter, Inc.", "CSS, JS", $licences[0]],
             ["Bootswatch", "3.3.7", "Thomas Park", "CSS", $licences[0]],
             ["Ckeditor", "4.9.2", "Frederico Knabben", "JS", $licences[1]],
@@ -38,7 +38,7 @@ class docTiers {
             ["JQuery, JQuery-UI", "1.12.1", "jQuery Foundation", "JS", $licences[0]],
             ["Jsencrypt.js", "2.3.1", "Form.io", "JS", $licences[0]],
             ["JSignature", "2.0", "Willowsystems", "JS", $licences[0]],
-            ["Leaflet", "1.2.1", "Vladimir Agafonkin, CloudMade", "JS", $licences[10] . ", OSMF"],
+            ["Leaflet", "1.3.4", "Vladimir Agafonkin, CloudMade", "JS", $licences[10] . ", OSMF"],
             ["Modal", "1.0", "<em>Inconnu</em>", "JS", $licences[10]],
             ["PayPal-PHP-SDK", "1.13.0", "PAYPAL INC.", "PHP", $licences[10]],
             ["Php.js", "1.2", "Niklas von Hertzen", "JS", $licences[0]],
@@ -48,13 +48,13 @@ class docTiers {
             ["Phpqrcode", "1.1.4", "Dominik Dzienia", "PHP", $licences[2]],
             ["Phpseclib", "1.0", "TerraFrost, Jim Wigginton", "PHP", $licences[0]],
             ["Respond", "1.0", "Scott Jehl", "JS", $licences[0]],
-            ["Reveal", "3.6.0", "Hakim El Hattab", "JS", $licences[0]],
+            ["Reveal", "3.7.0", "Hakim El Hattab", "JS", $licences[0]],
             ["ReversoLib", "1.0", "Dyrk", "PHP", "<em>Aucune</em>"],
             ["Shuffleletters", "1.0", "Martin Angelov", "JS", $licences[0]],
             ["Smarty", "3.1.30", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
             ["Stalactite", "0.1", "Jono Brandel", "JS", $licences[4]],
             ["syntaxhighlighter", "3.0.83", "Alex Gorbatchev", "JS", $licences[0] . ', ' . $licences[1]],
-            ["Videojs", "6.8.0", "Brightcove, Inc.", "JS", $licences[4]],
+            ["Videojs", "6.12.1", "Brightcove, Inc.", "JS", $licences[4]],
             ["Vticker", "1.0", "Tadas Juozapaitis", "JS", "<em>Aucune</em>"],
             ["Xhtml-formatter", "1.0", "Vladimír Macháček", "PHP", $licences[3]],
                 ], "", "datatable") . html_structures::hr();

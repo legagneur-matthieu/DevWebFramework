@@ -49,7 +49,7 @@ class g_elFinder {
 class elFinder_connector {
     public function __construct() {
         $" . "this->classloader();
-        session::start();
+        session::start(false);
         if (session::get_val('elFinder')) {
             $" . "opts = [
                 'roots' => [

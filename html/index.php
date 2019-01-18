@@ -135,6 +135,16 @@ class parcour_sites {
 
     private function dwf_statut() {
         $DWFStatus = true;
+        $conf="./commun/conf/default.json";
+        if (!is_writable($conf) or !is_readable($conf)) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier ".$conf." n'est pas accessible en lecture/ecriture"));
+        }
+        $conf="../dwf/log";
+        if (!is_writable($conf) or !is_readable($conf)) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier ".$conf." n'est pas accessible en lecture/ecriture"));
+        }
         if (!class_exists("tidy")) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP Tidy est recomandé"));

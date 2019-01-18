@@ -17,7 +17,7 @@ class singleton {
 
     /**
      * Retourne l'instance de la classe
-     * @return object Retourne l'instance de la classe
+     * @return $this Retourne l'instance de la classe
      */
     public static function get_instance() {
         if (!isset(self::$_instances[$class = get_called_class()])) {

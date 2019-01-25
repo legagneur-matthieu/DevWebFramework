@@ -26,8 +26,8 @@ class audio {
     public function __construct($src = "", $id = "player") {
         $this->_id = $id;
         if (!self::$_called) {
-            echo html_structures::script("../commun/src/js/audio/audio.js").
-            html_structures::link_in_body("../commun/src/js/audio/audio.css");
+            echo html_structures::script("../commun/src/js/audio/audio.js");
+            compact_css::get_instance()->add_css_file("../commun/src/js/audio/audio.css");
             self::$_called = true;
         }
         ?>

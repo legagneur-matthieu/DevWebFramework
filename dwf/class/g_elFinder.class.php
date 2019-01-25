@@ -19,7 +19,7 @@ class g_elFinder {
      * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
      */
     public function __construct($conector_url = "connector.php") {
-        echo html_structures::link_in_body("../commun/src/js/elFinder/css/elfinder.min.css").
+        compact_css::get_instance()->add_css_file("../commun/src/js/elFinder/css/elfinder.min.css").
                 html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
         ?>
         <script type="text/javascript">

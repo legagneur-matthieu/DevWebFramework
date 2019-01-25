@@ -134,8 +134,8 @@ class easteregg {
      * easteregg du jour de l'an
      */
     private function jour_de_an() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/snowstorm/lights/christmaslights.css" media="screen') .
-        html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/yahoo-animation.js") .
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/snowstorm/lights/christmaslights.css" media="screen');
+        echo html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/yahoo-animation.js") .
         html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/soundmanager2-nodebug-jsmin.js") .
         html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/christmaslights.js")
         ?>
@@ -152,8 +152,8 @@ class easteregg {
      * easteregg de l'epiphanie
      */
     private function epiphanie() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/epiphanie/epiphanie.css') .
-        html_structures::script("../commun/src/js/eastereggs/epiphanie/epiphanie.js");
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/epiphanie/epiphanie.css');
+        echo html_structures::script("../commun/src/js/eastereggs/epiphanie/epiphanie.js");
     }
 
     /**
@@ -178,8 +178,8 @@ class easteregg {
      * easteregg du printemps
      */
     private function printemp() {
-        echo html_structures::link_in_body("../commun/src/js/eastereggs/sakura/jquery-sakura.min.css") .
-        html_structures::script("../commun/src/js/eastereggs/sakura/jquery-sakura.min.js");
+        compact_css::get_instance()->add_css_file("../commun/src/js/eastereggs/sakura/jquery-sakura.min.css");
+        echo html_structures::script("../commun/src/js/eastereggs/sakura/jquery-sakura.min.js");
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -201,8 +201,8 @@ class easteregg {
      * easteregg du 1er Mai
      */
     private function muguet() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/muguet/muguet.css') .
-        html_structures::script("../commun/src/js/eastereggs/muguet/muguet.js");
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/muguet/muguet.css');
+        echo html_structures::script("../commun/src/js/eastereggs/muguet/muguet.js");
     }
 
     /**
@@ -219,8 +219,8 @@ class easteregg {
      */
     private function fete_mere() {
         if ($this->is_sunday()) {
-            echo html_structures::link_in_body('../commun/src/js/eastereggs/fete_mere/fete_mere.css') .
-            html_structures::script("../commun/src/js/eastereggs/fete_mere/fete_mere.js");
+            compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/fete_mere/fete_mere.css');
+            echo html_structures::script("../commun/src/js/eastereggs/fete_mere/fete_mere.js");
         }
     }
 
@@ -249,15 +249,15 @@ class easteregg {
      * easteregg de l'été
      */
     private function ete() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/ete.css');
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/ete.css');
     }
 
     /**
      * easteregg du 14 juillet
      */
     private function fete_national() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/fireworks/fireworks.css') .
-        html_structures::script("../commun/src/js/eastereggs/fireworks/fireworks.js");
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/fireworks/fireworks.css');
+        echo html_structures::script("../commun/src/js/eastereggs/fireworks/fireworks.js");
     }
 
     /**
@@ -281,8 +281,8 @@ class easteregg {
      * easteregg de la sainte Catherine
      */
     private function catherine() {
-        echo html_structures::link_in_body('../commun/src/js/eastereggs/catherine/catherine.css') .
-        html_structures::script("../commun/src/js/eastereggs/catherine/catherine.js");
+        compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/catherine/catherine.css');
+        echo html_structures::script("../commun/src/js/eastereggs/catherine/catherine.js");
     }
 
     /**

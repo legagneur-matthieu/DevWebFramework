@@ -73,53 +73,60 @@ class docPHP {
             }
         </style>
         <ul class="no-puces">
-            <li><?php echo $dir_glyph; ?> html
+            <li><?= $dir_glyph; ?> html
                 <ul>
-                    <li><?php echo $arrow_glyph; ?> <em>Contient vos projets</em></li>
-                    <li><?php echo $dir_glyph; ?> commun
+                    <li><?= $arrow_glyph; ?> <em>Contient vos projets</em></li>
+                    <li><?= $dir_glyph; ?> commun
                         <ul>
-                            <li><?php echo $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets</em></li>
-                            <li><?php echo $dir_glyph; ?> src
+                            <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets</em></li>
+                            <li><?= $dir_glyph; ?> src
                                 <ul>
-                                    <li><?php echo $arrow_glyph; ?> <em>Contient toutes les fichier CSS et JS commun à tous les projets (et accessible aux utilisateurs)</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient toutes les fichier CSS et JS commun à tous les projets (et accessible aux utilisateurs)</em></li>
                                 </ul>
                             </li>
-                            <li><?php echo $dir_glyph; ?> service
+                            <li><?= $dir_glyph; ?> service
                                 <ul>
-                                    <li><?php echo $arrow_glyph; ?> <em>Contient vos services / API</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos services / API</em></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li><?php echo $dir_glyph; ?> [votre-projet]
+                    <li><?= $dir_glyph; ?> [votre-projet]
                         <ul>
-                            <li><?php echo $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier !)</em></li>
-                            <li><?php echo $dir_glyph; ?> class
-                            <li><?php echo $arrow_glyph; ?> <em>Contient vos classes specifiques au projet ainsi que le fichier de configuration</em>
+                            <li><?= $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier !)</em></li>
+                            <li><?= $dir_glyph; ?> class
+                            <li><?= $arrow_glyph; ?> <em>Contient vos classes specifiques au projet ainsi que le fichier de configuration</em>
                                 <ul>
-                                    <li><?php echo $dir_glyph; ?> entity</li>
-                                    <li><?php echo $arrow_glyph; ?> <em>Contient les entités de votre projet</em></li>
+                                    <li><?= $dir_glyph; ?> entity</li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient les entités de votre projet</em></li>
+                                </ul>
+                            </li>
+                            <li><?= $dir_glyph; ?> src
+                            <li><?= $arrow_glyph; ?> <em>Contient vos fichier CSS, JS, et médias</em>
+                                <ul>
+                                    <li><?= $dir_glyph; ?> compact</li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS et JS minifié par le framework</em></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li><?php echo $dir_glyph; ?> dwf
+            <li><?= $dir_glyph; ?> dwf
                 <ul>
-                    <li><?php echo $dir_glyph; ?> class
+                    <li><?= $dir_glyph; ?> class
                         <ul>
-                            <li><?php echo $arrow_glyph; ?> <em>Contient les classes natives de DWF</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient les classes natives de DWF</em></li>
                         </ul>
                     </li>
-                    <li><?php echo $dir_glyph; ?> cron
+                    <li><?= $dir_glyph; ?> cron
                         <ul>
-                            <li><?php echo $arrow_glyph; ?> <em>Contient vos eventuelles cron à faire tourner dans vos consoles</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient vos eventuelles cron à faire tourner dans vos consoles</em></li>
                         </ul>
                     </li>
-                    <li><?php echo $dir_glyph; ?> log
+                    <li><?= $dir_glyph; ?> log
                         <ul>
-                            <li><?php echo $arrow_glyph; ?> <em>Contient les logs de vos projets</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient les logs de vos projets</em></li>
                         </ul>
                     </li>
                 </ul>

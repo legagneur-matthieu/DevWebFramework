@@ -3,10 +3,6 @@
 class docTiers {
 
     public function __construct() {
-        ?>
-        <p>Vous trouverez ici la liste de toutes les librairies tiers utilisées par le framework.</p>
-        <?php
-
         $licences = [
             0 => "MIT",
             1 => "GNU GPL",
@@ -17,12 +13,14 @@ class docTiers {
             10 => "AUTRES (Copyleft, copyright particuliers, ...)"
         ];
         js::datatable();
-        echo html_structures::table(["Libairie", "Version", "Auteur", "Langage", "Licence"], [
+        echo tags::tag("p", [], "Vous trouverez ici la liste de toutes les librairies tiers utilisées par le framework.") .
+        html_structures::table(["Libairie", "Version", "Auteur", "Langage", "Licence"], [
             ["Alertify", "0.3.11", "Fabien Doiron", "JS", $licences[0]],
             ["Animate", "3.7.0", "Daniel Eden", "JS", $licences[0]],
             ["Bootsrap", "3.3.7", "Twitter, Inc.", "CSS, JS", $licences[0]],
             ["Bootswatch", "3.3.7", "Thomas Park", "CSS", $licences[0]],
             ["Ckeditor", "4.9.2", "Frederico Knabben", "JS", $licences[1]],
+            ["CSSTidy", "1.6.5", "Florian Schmitz", "PHP", $licences[2]],
             ["Cytoscape", "3.2.12", "The Cytoscape Consortium", "JS", $licences[10]],
             ["Datatable", "1.10.18", "SpryMedia Limited", "JS", $licences[10]],
             ["Datetimepicker", "1.6.3", "Trent Richardson", "JS", $licences[0]],
@@ -57,13 +55,11 @@ class docTiers {
             ["Videojs", "6.12.1", "Brightcove, Inc.", "JS", $licences[4]],
             ["Vticker", "1.0", "Tadas Juozapaitis", "JS", "<em>Aucune</em>"],
             ["Xhtml-formatter", "1.0", "Vladimír Macháček", "PHP", $licences[3]],
-                ], "", "datatable") . html_structures::hr();
-        ?>
-        <p>Du au fait que certaines librairies tiers soient sous <a href="http://www.gnu.org/licenses/gpl.html">licence GNU GPL</a>, le DevWebFramework est diffusé sous la même licence. <br />
-            L'auteur vous remercie pour tous crédits que vous porterez à son travail.
-        </p>
-        <?php
-
+                ], "", "datatable") . html_structures::hr() .
+        tags::tag("p", [], "Du au fait que certaines librairies tiers soient sous " .
+                html_structures::a_link("http://www.gnu.org/licenses/gpl.html", "licence GNU GPL") .
+                "le DevWebFramework est diffusé sous la même licence. " . "<br />" .
+                "L'auteur vous remercie pour tous crédits que vous porterez à son travail.");
     }
 
 }

@@ -60,10 +60,10 @@ class fullcalendar {
             new entity_generator($data, $table, false, true);
         }
         if (!self::$_called) {
-            echo html_structures::link_in_body('../commun/src/js/fullcalendar/fullcalendar.min.css') .
-            html_structures::link_in_body('../commun/src/js/fullcalendar/scheduler/scheduler.min.css') .
-            html_structures::link_in_body('../commun/src/js/fullcalendar/style.css') .
-            html_structures::script("../commun/src/js/fullcalendar/lib/moment.min.js") .
+            compact_css::get_instance()->add_css_file('../commun/src/js/fullcalendar/fullcalendar.min.css');
+            compact_css::get_instance()->add_css_file('../commun/src/js/fullcalendar/scheduler/scheduler.min.css');
+            compact_css::get_instance()->add_css_file('../commun/src/js/fullcalendar/style.css');
+            echo html_structures::script("../commun/src/js/fullcalendar/lib/moment.min.js") .
             html_structures::script("../commun/src/js/fullcalendar/fullcalendar.min.js") .
             html_structures::script("../commun/src/js/fullcalendar/scheduler/scheduler.min.js") .
             html_structures::script("../commun/src/js/fullcalendar/locale-all.js");

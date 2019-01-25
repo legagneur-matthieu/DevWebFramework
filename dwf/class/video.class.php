@@ -20,8 +20,8 @@ class video {
      */
     public function __construct($src, $id = "video-js") {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/videojs/video-js.min.css")
-            . html_structures::script("../commun/src/js/videojs/video.min.js");
+            compact_css::get_instance()->add_css_file("../commun/src/js/videojs/video-js.min.css");
+            echo html_structures::script("../commun/src/js/videojs/video.min.js");
             self::$_called = true;
         }
         ?>

@@ -1,28 +1,37 @@
 <?php
 
 /**
- * Compresse des scripts CSS et JS en quatre fichiers minifié
+ * Compresse des scripts CSS en deux fichiers minifié
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class compact_src extends singleton {
+class compact_css extends singleton {
 
     /**
-     * Liste de fichier CSS et JS
-     * @var array Liste de fichier CSS et JS 
+     * Liste de fichier CSS
+     * @var array Liste de fichier CSS 
      */
-    private $files = [
-        "css" => [],
-        "js" => []
-    ];
+    private $_files = [];
 
     /**
      * Liste de script CSS et JS 
      * @var array Liste de script CSS et JS 
      */
-    private $custom = [
-        "css" => [],
-        "js" => []
+    private $_custom = [];
+
+    /**
+     * Liste des fichiers en cache
+     * @var array Liste des fichiers en cache
+     */
+    private $_cache_files = [
+        "f" => [
+            "file" => "",
+            "mt" => 0
+        ],
+        "c" => [
+            "file" => "",
+            "mt" => 0
+        ]
     ];
 
     /**
@@ -31,16 +40,8 @@ class compact_src extends singleton {
      * @return $this
      */
     public function add_css_file($href) {
-        return $this->add_file("css", $href);
-    }
-
-    /**
-     * Ajoute un fichier JS
-     * @param string $src Chemain du fichier js
-     * @return $this
-     */
-    public function add_js_file($src) {
-        return $this->add_file("js", $src);
+        $this->_files[] = $href;
+        return $this;
     }
 
     /**
@@ -49,46 +50,15 @@ class compact_src extends singleton {
      * @return $this
      */
     public function add_style($style) {
-        return $this->add_custom("css", $style);
-    }
-
-    /**
-     * Ajoute un script JS
-     * @param string $script Script jS
-     * @return $this
-     */
-    public function add_script($script) {
-        return $this->add_custom("js", $script);
-    }
-
-    /**
-     * ajoute un fichier
-     * @param string $type Type du fichier (CSS/JS)
-     * @param string $file Chemain du fichier
-     * @return $this
-     */
-    private function add_file($type, $file) {
-        $this->files[$type][] = $file;
-        return $this;
-    }
-
-    /**
-     * Ajoute un script
-     * @param string $type Type du script (CSS/JS)
-     * @param string $custom Script
-     * @return $this
-     */
-    private function add_custom($type, $custom) {
-        $this->custom[$type][] = $custom;
+        $this->_custom[] = $style;
         return $this;
     }
 
     /**
      * Compacte les fichiers en un seul
-     * @param string $type Type des fichiers (CSS/JS)
      * @return string Nom du fichier compréssé
      */
-    private function compact_files($type) {
+    private function compact_files() {
         if (!file_exists("./src")) {
             mkdir("./src");
             dwf_exception::check_file_writed("./src");
@@ -97,13 +67,13 @@ class compact_src extends singleton {
             mkdir("./src/compact");
             dwf_exception::check_file_writed("./src/compact");
         }
-        if (($fc = count($this->files[$type])) === 0) {
+        if (($fc = count($this->_files)) === 0) {
             return false;
         }
-        $filename = "./src/compact/f_" . $fc . "_" . sha1(implode("&", $_GET)) . "." . $type;
-        $mt_gen = (($regen = !file_exists($filename)) ? 0 : filemtime($filename));
-        $regen = !$regen;
-        foreach ($this->files[$type] as $file) {
+        $filename = "./src/compact/f_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
+        $regen = !file_exists($filename);
+        $mt_gen = (($regen) ? 0 : filemtime($filename));
+        foreach ($this->_files as $file) {
             $mt_file = filemtime($file);
             if (($mt_file and $mt_gen < $mt_file) or $regen) {
                 $regen = true;
@@ -112,10 +82,10 @@ class compact_src extends singleton {
         }
         if ($regen) {
             $content = "";
-            foreach ($this->files[$type] as $file) {
+            foreach ($this->_files as $file) {
                 $content .= file_get_contents($file) . PHP_EOL;
             }
-            $content = self::minify_content($type, $content);
+            $content = self::minify_content($content);
             file_put_contents($filename, $content);
             dwf_exception::check_file_writed($filename);
         }
@@ -124,15 +94,14 @@ class compact_src extends singleton {
 
     /**
      * Compacte les scripts en un seul fichier
-     * @param string $type Type des scripts (CSS/JS)
      * @return string Nom du fichier compréssé
      */
-    private function compact_custom($type) {
-        if (($fc = count($this->custom[$type])) === 0) {
+    private function compact_custom() {
+        if (($fc = count($this->_custom)) === 0) {
             return false;
         }
-        $filename = "./src/compact/c_" . $fc . "_" . sha1(implode("&", $_GET)) . "." . $type;
-        $custom = self::minify_content($type, implode(" ", $this->custom[$type]));
+        $filename = "./src/compact/c_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
+        $custom = self::css_minify(implode(" ", $this->_custom));
         if (!file_exists($filename) or sha1($custom) !== sha1(file_get_contents($filename))) {
             file_put_contents($filename, $custom);
         }
@@ -154,33 +123,13 @@ class compact_src extends singleton {
         return $csstidy->print->plain();
     }
 
-    /**
-     * Minifie un script CSS ou JS
-     * @param string $type "css" ou "js"
-     * @param string $content Script CSS ou JS
-     * @return string Script JS minifié
-     */
-    public static function minify_content($type, $content) {
-        switch ($type) {
-            case "css":
-                $content = self::css_minify($content);
-                break;
-            case "js":
-                $content = JSMin::minify($content);
-                break;
-            default:
-                break;
-        }
-        return $content;
-    }
-
     private function clear($files) {
-        foreach (glob("./src/compact/*_*_" . sha1(implode("&", $_GET)) . ".*") as $f) {
+        foreach (glob("./src/compact/*_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
             if (!in_array($f, $files)) {
                 unlink($f);
             }
         }
-        foreach (glob("./src/compact/*_*_*.*") as $f) {
+        foreach (glob("./src/compact/*_*_*.css") as $f) {
             if (filemtime($f) < microtime(true) - 31536000) {
                 unlink($f);
             }
@@ -192,18 +141,14 @@ class compact_src extends singleton {
      */
     public function render() {
         $files = [
-            "css_f" => $this->compact_files("css"),
-            "css_c" => $this->compact_custom("css"),
-            "js_f" => $this->compact_files("js"),
-            "js_c" => $this->compact_custom("js")
+            "css_f" => $this->compact_files(),
+            "css_c" => $this->compact_custom(),
         ];
-        echo ($files["js_f"] ? html_structures::script($files["js_f"]) : "") .
-        ($files["js_c"] ? html_structures::script($files["js_c"]) : "");
         ?>
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function () {
                 function add_link_in_head(href) {
-                    if (href !== "") {
+                    if (href !== "" || document.querySelector("link[href='" + href + "']") === null) {
                         let link = document.createElement("link");
                         link.rel = "stylesheet";
                         link.href = href;
@@ -216,6 +161,30 @@ class compact_src extends singleton {
         </script>
         <?php
         $this->clear($files);
+    }
+
+    /**
+     * Retourne les link et script des fichiers en cache
+     * @return string Les link et script des fichiers en cache
+     */
+    public function get_file_in_cache() {
+        foreach (["f", "c"] as $p) {
+            foreach (glob("./src/compact/" . $p . "_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
+                if (($nmt = filemtime($f)) > $this->_cache_files[$p]["mt"]) {
+                    $this->_cache_files[$p] = [
+                        "file" => $f,
+                        "mt" => $nmt
+                    ];
+                }
+            }
+        }
+        $src = "";
+        foreach (["f", "c"] as $p) {
+            if ($this->_cache_files[$p]["mt"] > 0) {
+                $src .= html_structures::link($this->_cache_files[$p]["file"]);
+            }
+        }
+        return $src;
     }
 
 }

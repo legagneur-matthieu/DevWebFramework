@@ -68,27 +68,20 @@ class html5 {
              * Appele les link pour CSS
              */
             private function css() {
-                $link = "";
+                bootstrap_theme::link_theme();
+                echo compact_css::get_instance()->get_file_in_cache();
                 foreach ([
             "../commun/src/dist/jquery-ui/jquery-ui.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.structure.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.theme.min.css",
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.css",
             "../commun/src/js/alertify/themes/alertify.core.css",
-            "../commun/src/js/alertify/themes/alertify.bootstrap.css"
-                ] as $href) {
-                    $link .= html_structures::link($href);
-                }
-                echo $link;
-                bootstrap_theme::link_theme();
-                $link = "";
-                foreach ([
+            "../commun/src/js/alertify/themes/alertify.bootstrap.css",
             "../commun/src/css/style.css",
             "../commun/src/css/pxtoem.css"
                 ] as $href) {
-                    $link .= html_structures::link($href);
+                    compact_css::get_instance()->add_css_file($href);
                 }
-                echo $link;
             }
 
             /**

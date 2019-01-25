@@ -28,10 +28,10 @@ class syntaxhighlighter {
             foreach (glob("../commun/src/js/syntaxhighlighter/scripts/shBrush*.js") as $fbrush) {
                 $scripts .= html_structures::script($fbrush);
             }
-            echo $scripts .
-            html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shCore" . $theme . ".css") .
-            html_structures::link_in_body("../commun/src/js/syntaxhighlighter/styles/shTheme" . $theme . ".css") .
-            html_structures::link_in_body("../commun/src/css/syntaxhighlighter.css");
+            echo $scripts;
+            compact_css::get_instance()->add_css_file("../commun/src/js/syntaxhighlighter/styles/shCore" . $theme . ".css");
+            compact_css::get_instance()->add_css_file("../commun/src/js/syntaxhighlighter/styles/shTheme" . $theme . ".css");
+            compact_css::get_instance()->add_css_file("../commun/src/css/syntaxhighlighter.css");
             ?> 
             <script type="text/javascript">
                 $(document).ready(function () {

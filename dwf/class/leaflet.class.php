@@ -60,9 +60,9 @@ class leaflet {
         $this->_id = $id;
         $this->_height = $height;
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/leaflet/leaflet.css") .
-            html_structures::link_in_body("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.css") .
-            html_structures::script("../commun/src/js/leaflet/leaflet.js") .
+            compact_css::get_instance()->add_css_file("../commun/src/js/leaflet/leaflet.css");
+            compact_css::get_instance()->add_css_file("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.css");
+            echo html_structures::script("../commun/src/js/leaflet/leaflet.js") .
             html_structures::script("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.js");
             self::$_called = true;
         }

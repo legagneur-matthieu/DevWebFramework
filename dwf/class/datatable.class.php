@@ -30,7 +30,7 @@ class datatable {
         if (!self::$_called) {
             echo html_structures::script("../commun/src/js/DataTables/media/js/jquery.dataTables.min.js") .
             html_structures::script("../commun/src/js/DataTables/media/js/dataTables.bootstrap.js") .
-            html_structures::link_in_body("../commun/src/js/DataTables/media/css/dataTables.bootstrap.css");
+            compact_css::get_instance()->add_css_file("../commun/src/js/DataTables/media/css/dataTables.bootstrap.css");
             self::$_called = true;
         }
         ?>

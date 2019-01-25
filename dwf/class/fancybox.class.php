@@ -25,7 +25,7 @@ class fancybox {
      */
     public function __construct($id, $data) {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/fancybox/jquery.fancybox.min.css") .
+            compact_css::get_instance()->add_css_file("../commun/src/js/fancybox/jquery.fancybox.min.css") .
             html_structures::script("../commun/src/js/fancybox/jquery.fancybox.min.js");
             self::$_called = true;
         }

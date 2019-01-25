@@ -18,8 +18,8 @@ class modal {
      */
     public function __construct() {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/js/modal/modal-window.css") .
-            html_structures::script("../commun/src/js/modal/modal-window.js") .
+            compact_css::get_instance()->add_css_file("../commun/src/js/modal/modal-window.css");
+            echo html_structures::script("../commun/src/js/modal/modal-window.js") .
             tags::tag("div", ["role" => "dialog", "aria-hidden" => "true", "id" => "modal", "class" => "modal-content", "style" => "display: none;"], tags::tag(
                             "div", ["style" => "max-height: 100%; overflow: auto;"], "") .
                     tags::tag("button", ["id" => "modalCloseButton", "class" => "modalCloseButton btn btn-default", "title" => "Fermer la fenêtre"], html_structures::glyphicon("remove"))

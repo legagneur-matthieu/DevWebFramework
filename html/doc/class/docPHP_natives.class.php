@@ -267,6 +267,24 @@ class docPHP_natives {
         <?php
     }
 
+    private function compact_src() {
+        ?>
+        <p>Compresse des scripts CSS en deux fichiers minifié</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//ajoute un fichier CSS\n"
+                . "compact_src::get_instance()->add_css_file($" . "href);\n\n"
+                . "//ajoute un script CSS (string ou CF \"CSS\")\n"
+                . "compact_src::get_instance()->add_style($" . "style);\n\n"
+                . "//fluent peut-etre utilisé :\n"
+                . "compact_src::get_instance()->add_css_file($" . "href)\n"
+                . "        ->add_style($" . "style)\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>La methode <em>"render()"</em> est utilisé automatiquement dans <em>html5.class.php</em>, il n'est pas utile de l'appeler</p>
+        <?php
+    }
+
     private function cookieaccept() {
         ?>
         <p>Cette classe permet d'afficher un message d'informations sur l'utilisation de cookies ou autre technologies similaires. <br />
@@ -276,6 +294,36 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "new cookieaccept();\n"
                 . "?>", $this->_brush);
+    }
+
+    private function css() {
+        ?>
+        <p>Cette classe permet de génerer des feuilles de style personalisé. <br />            
+            A utiliser avec <em>"compact_src::get_instance()->add_style()"</em></p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Defini une regle CSS\n"
+                . "((new css())->add_rule($" . "selector, $" . "rules));\n"
+                . "//exemple (avec un echo. Fluent peut être utilisé)\n"
+                . "echo (new css())->add_rule(\"p\", [\"padding\" => \"5px\"])\n"
+                . "                ->add_rule(\"div\", [\n"
+                . "                    \"padding\" => \"5px\",\n"
+                . "                    \"margin\" => \"0 auto\"\n"
+                . "                ])\n"
+                . "                ->add_rule(\"#mon_id\", [\"background-color\" => \"lightblue\"]);\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>La feuille de style retourné sera optimisé et minifié,<br />
+            dans l'exemple nous voyons que "p" et "div" ont la même régle de padding, elles seront donc fusionnées. <br />
+            Voici le resultat :</p>
+        <?php
+        debug::print_r((string) (new css())->add_rule("p", ["padding" => "5px"])
+                        ->add_rule("div", [
+                            "padding" => "5px",
+                            "margin" => "0 auto"
+                        ])
+                        ->add_rule("#mon_id", ["background-color" => "lightblue"])
+        );
     }
 
     private function cytoscape() {
@@ -1552,7 +1600,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créé dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

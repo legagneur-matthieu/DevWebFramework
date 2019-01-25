@@ -53,7 +53,7 @@ class statistiques {
      * Cette fonction permet d'afficher les statistiques ( il est conseillè ne ne pas appeler cette fonction sur une page "publique" )
      */
     public function get_stat() {
-        //echo html_structures::link_in_body("../commun/src/css/statistiques.css");
+        //compact_css::get_instance()->add_css_file("../commun/src/css/statistiques.css");
         ?>
         <script type="text/javascript">
             $("head").append('<style type="text/css">' +

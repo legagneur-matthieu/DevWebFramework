@@ -22,7 +22,7 @@ class g_agenda {
             ["titre", "string", false],
             ["texte", "string", false]
                 ], "agenda", true, true);
-        echo html_structures::link_in_body("../commun/src/css/agenda.css");
+        compact_css::get_instance()->add_css_file("../commun/src/css/agenda.css");
     }
 
     /**

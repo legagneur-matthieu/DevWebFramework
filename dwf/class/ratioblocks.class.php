@@ -23,7 +23,7 @@ class ratioblocks {
      */
     public function __construct($id, $width, $ratio, $contenu) {
         if (!self::$_called) {
-            echo html_structures::link_in_body("../commun/src/css/ratioblocks.css");
+            compact_css::get_instance()->add_css_file("../commun/src/css/ratioblocks.css");
             self::$_called = true;
         }
         ?>

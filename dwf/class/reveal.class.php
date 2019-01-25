@@ -16,10 +16,10 @@ class reveal {
      * @param string $theme théme des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
      */
     public function __construct($width = 600, $height = 600, $theme = "white") {
-        echo html_structures::link_in_body("../commun/src/js/reveal/css/reveal.css") .
-        html_structures::link_in_body("../commun/src/js/reveal/css/theme/" . $theme . ".css") .
-        html_structures::link_in_body("../commun/src/js/reveal/css/reveal_correctif.css") .
-        html_structures::script("../commun/src/js/reveal/lib/js/classList.js") .
+        compact_css::get_instance()->add_css_file("../commun/src/js/reveal/css/reveal.css");
+        compact_css::get_instance()->add_css_file("../commun/src/js/reveal/css/theme/" . $theme . ".css");
+        compact_css::get_instance()->add_css_file("../commun/src/js/reveal/css/reveal_correctif.css");
+        echo html_structures::script("../commun/src/js/reveal/lib/js/classList.js") .
         html_structures::script("../commun/src/js/reveal/lib/js/head.min.js") .
         html_structures::script("../commun/src/js/reveal/js/reveal.js");
         ?>

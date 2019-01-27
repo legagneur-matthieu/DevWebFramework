@@ -53,7 +53,7 @@ class css {
                         try {
                             $this->compact();
                         } catch (Exception $exc) {
-                            return;
+                            break(3);
                         }
                         break(3);
                     }
@@ -76,7 +76,7 @@ class css {
             }
             $str .= "}";
         }
-        return compact_src::minify_content("css", $str);
+        return compact_css::css_minify($str);
     }
 
 }

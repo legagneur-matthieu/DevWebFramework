@@ -87,23 +87,12 @@ class trad {
                             <?php
                             form::new_form("form_trad");
                             form::hidden("trad_form", 1);
-                            ?>
-                            <style type="text/css">
-                                .form_trad{
-                                    width: 900px;
-                                }
-                                .form_trad #datatable{
-                                    margin: 0 auto;
-                                }
-                                .form_trad #datatable>tbody>tr>td>input{
-                                    width: 300px;
-                                }
-                                .form_trad #datatable>tbody>tr>td+td>input{
-                                    width: 600px;
-
-                                }
-                            </style>
-                            <?php
+                            compact_css::get_instance()->add_style((new css)
+                                            ->add_rule(".form_trad", ["width" => "900px"])
+                                            ->add_rule(".form_trad #datatable", ["margin" => "0 auto"])
+                                            ->add_rule(".form_trad #datatable>tbody>tr>td>input", ["width" => "300px"])
+                                            ->add_rule(".form_trad #datatable>tbody>tr>td+td>input", ["width" => "600px"])
+                            );
                             $i = 0;
                             $data = [];
                             foreach ($lang as $key => $value) {

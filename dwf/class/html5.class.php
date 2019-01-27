@@ -69,7 +69,6 @@ class html5 {
              */
             private function css() {
                 bootstrap_theme::link_theme();
-                echo compact_css::get_instance()->get_file_in_cache();
                 foreach ([
             "../commun/src/dist/jquery-ui/jquery-ui.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.structure.min.css",
@@ -82,6 +81,7 @@ class html5 {
                 ] as $href) {
                     compact_css::get_instance()->add_css_file($href);
                 }
+                echo compact_css::get_instance()->get_file_in_cache();
             }
 
             /**
@@ -133,6 +133,7 @@ class html5 {
             public function __destruct() {
                 application::event("onhtml_body_end");
                 echo tags::tag("p", ["id" => "real_title", "class" => "hidden"], js::$_real_title);
+                compact_css::get_instance()->render();
                 ?>
             </body>
         </html>

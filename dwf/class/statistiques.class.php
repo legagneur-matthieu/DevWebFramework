@@ -54,15 +54,11 @@ class statistiques {
      */
     public function get_stat() {
         //compact_css::get_instance()->add_css_file("../commun/src/css/statistiques.css");
-        ?>
-        <script type="text/javascript">
-            $("head").append('<style type="text/css">' +
-                    '.plot{ width: 800px; min-height: 400px; margin: 0 auto; }' +
-                    '.stat_ring{ margin: 0 auto; width: 600px; height: 400px; margin-bottom: -100px; }' +
-                    '.graph-legend{ font-size: 10px; }' +
-                    '</style>');
-        </script>
-        <?php
+        compact_css::get_instance()->add_style((new css())
+                        ->add_rule(".plot", ["width" => "800px", "min-height" => "400px", "margin" => "0 auto"])
+                        ->add_rule(".stat_ring", ["margin" => "0 auto", "width" => "600px", "height" => "400px", "margin-bottom" => "-100px"])
+                        ->add_rule(".graph-legend", ["font-size" => "10px"])
+        );
         $key = "stat";
         $route = [
             [$key => "get_stat_an", "title" => "Statistiques annuelles", "text" => "Statistiques annuelles"],
@@ -277,7 +273,7 @@ class statistiques {
                     $visitors[$link["visitor"]]["nav"][] = ["date" => $link["date"], "page" => strtr($link["page"], [$_SERVER["HTTP_HOST"] => "localhost"]), "title" => $titles[$link["page"]]["title"]];
                 }
                 js::accordion();
-                $accordion="";
+                $accordion = "";
                 foreach ($visitors as $visitor) {
                     $a = "";
                     foreach ($visitor["nav"] as $nav) {
@@ -285,9 +281,9 @@ class statistiques {
                         $date = time::convert_date($date[0]) . " " . $date[1];
                         $a .= html_structures::a_link($nav["page"], $date . " - " . $nav["title"], "", $nav["page"]) . tags::tag("br");
                     }
-                    $accordion.= tags::tag("h3",[],$visitor["imat"]).tags::tag("div",[],tags::tag("p",[],$a));                    
+                    $accordion .= tags::tag("h3", [], $visitor["imat"]) . tags::tag("div", [], tags::tag("p", [], $a));
                 }
-                echo tags::tag("div", ["id"=>"accordion"], $accordion);
+                echo tags::tag("div", ["id" => "accordion"], $accordion);
             }
         }
     }

@@ -85,7 +85,7 @@ class compact_css extends singleton {
             foreach ($this->_files as $file) {
                 $content .= file_get_contents($file) . PHP_EOL;
             }
-            $content = self::minify_content($content);
+            $content = self::css_minify($content);
             file_put_contents($filename, $content);
             dwf_exception::check_file_writed($filename);
         }
@@ -113,7 +113,7 @@ class compact_css extends singleton {
      * @param string $css Script CSS
      * @return string Script CSS minifié
      */
-    private static function css_minify($css) {
+    public static function css_minify($css) {
         csstidy_loader::autoloader();
         $csstidy = new csstidy();
         $csstidy->set_cfg("merge_selectors", 2);
@@ -164,7 +164,7 @@ class compact_css extends singleton {
     }
 
     /**
-     * Retourne les link et script des fichiers en cache
+     * Retourne les link des fichiers en cache
      * @return string Les link et script des fichiers en cache
      */
     public function get_file_in_cache() {

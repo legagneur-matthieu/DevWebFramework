@@ -64,7 +64,7 @@ class new_app {
                 form::input("Nom du dossier (apparait dans l'url)", "dirname");
                 form::input("Titre de l'application (apparait dans le \"title\" des page)", "title");
                 form::input("Préfixe (technique, utilisé pour les sessions, log ...)", "prefix");
-                $option = array();
+                $option = [];
                 foreach (hash_algos() as $ha) {
                     switch (strlen(hash($ha, "test"))) {
                         case 8:
@@ -98,25 +98,25 @@ class new_app {
                     $option[] = array($ha, $ha . " (" . $force . ")", ($ha == "sha512"));
                 }
                 form::select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option);
-                form::select("Theme", "theme", array(
-                    array("default", "Default"),
-                    array("cerulean", "Cerulean"),
-                    array("cosmo", "Cosmo"),
-                    array("cyborg", "Cyborg"),
-                    array("darkly", "Darkly"),
-                    array("flatly", "Flatly"),
-                    array("journal", "Journal"),
-                    array("lumen", "Lumen"),
-                    array("paper", "Paper"),
-                    array("readable", "Readable"),
-                    array("sandstone", "Sandstone"),
-                    array("simplex", "Simplex"),
-                    array("slate", "Slate"),
-                    array("spacelab", "Spacelab"),
-                    array("superhero", "Superhero"),
-                    array("united", "United"),
-                    array("yeti", "Yeti")
-                ));
+                form::select("Theme", "theme", [
+                    ["default", "Default"],
+                    ["cerulean", "Cerulean"],
+                    ["cosmo", "Cosmo"],
+                    ["cyborg", "Cyborg"],
+                    ["darkly", "Darkly"],
+                    ["flatly", "Flatly"],
+                    ["journal", "Journal"],
+                    ["lumen", "Lumen"],
+                    ["paper", "Paper"],
+                    ["readable", "Readable"],
+                    ["sandstone", "Sandstone"],
+                    ["simplex", "Simplex"],
+                    ["slate", "Slate"],
+                    ["spacelab", "Spacelab"],
+                    ["superhero", "Superhero"],
+                    ["united", "United"],
+                    ["yeti", "Yeti"]
+                ]);
                 form::checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv");
                 form::close_fieldset();
                 ?>
@@ -124,10 +124,10 @@ class new_app {
             <div class="col-xs-4 border_right">
                 <?php
                 form::new_fieldset("PDO");
-                form::select("type", "pdo_type", array(
-                    array("mysql", "MySQL", true),
-                    array("sqlite", "SQLite (déconseillé !)"),
-                ));
+                form::select("type", "pdo_type", [
+                    ["mysql", "MySQL", true],
+                    ["sqlite", "SQLite (déconseillé !)"],
+                ]);
                 form::input("Host", "pdo_host", "text", "localhost", false);
                 form::input("Login", "pdo_login", "text", "", false);
                 form::input("Password", "pdo_psw", "password", "", false);
@@ -140,7 +140,7 @@ class new_app {
                 <?php
                 form::new_fieldset("SMTP");
                 form::input("Host", "smtp_host", "text", "localhost");
-                form::select("Auth", "smtp_auth", array(array("1", "true", true), array("0", "false")));
+                form::select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]);
                 form::input("Login", "smtp_login", "text", "", false);
                 form::input("Password", "smtp_psw", "password", "", false);
                 form::close_fieldset();
@@ -170,32 +170,16 @@ class new_app {
             $(document).ready(function () {
                 $("#pdo_type").change(function () {
                     if ($("#pdo_type").val() == "sqlite") {
-                        $("#pdo_host").attr("disabled", "disabled");
-                        $("#pdo_host").attr("readonly", "readonly");
-                        $("#pdo_login").attr("disabled", "disabled");
-                        $("#pdo_login").attr("readonly", "readonly");
-                        $("#pdo_psw").attr("disabled", "disabled");
-                        $("#pdo_psw").attr("readonly", "readonly");
+                        $("#pdo_host, #pdo_login, #pdo_psw").attr("disabled", "disabled").attr("readonly", "readonly");
                     } else {
-                        $("#pdo_host").removeAttr("disabled", "disabled");
-                        $("#pdo_host").removeAttr("readonly", "readonly");
-                        $("#pdo_login").removeAttr("disabled", "disabled");
-                        $("#pdo_login").removeAttr("readonly", "readonly");
-                        $("#pdo_psw").removeAttr("disabled", "disabled");
-                        $("#pdo_psw").removeAttr("readonly", "readonly");
+                        $("#pdo_host, #pdo_login, #pdo_psw").removeAttr("disabled", "disabled").removeAttr("readonly", "readonly");
                     }
                 });
                 $("#smtp_auth").change(function () {
                     if ($("#smtp_auth").val() == 0) {
-                        $("#smtp_login").attr("disabled", "disabled");
-                        $("#smtp_login").attr("readonly", "readonly");
-                        $("#smtp_psw").attr("disabled", "disabled");
-                        $("#smtp_psw").attr("readonly", "readonly");
+                        $("#smtp_login, #smtp_psw").attr("disabled", "disabled").attr("readonly", "readonly");
                     } else {
-                        $("#smtp_login").removeAttr("disabled");
-                        $("#smtp_login").removeAttr("readonly");
-                        $("#smtp_psw").removeAttr("disabled");
-                        $("#smtp_psw").removeAttr("readonly");
+                        $("#smtp_login, #smtp_psw").removeAttr("disabled", "disabled").removeAttr("readonly", "readonly");
                     }
                 });
             });
@@ -234,6 +218,8 @@ class new_app {
         $dir = "../" . strtolower($_POST["dirname"]);
         $dir_class = $dir . "/class";
         $dir_entity = $dir . "/class/entity";
+        $dir_src = $dir . "/src";
+        $dir_src_compact = $dir . "/src/compact";
         $file_index_entity = $dir_entity . "/index.php";
         $file_index = $dir . "/index.php";
         $file_pages = $dir_class . "/pages.class.php";
@@ -245,6 +231,10 @@ class new_app {
         $this->check_create_dir($dir_class);
         mkdir($dir_entity);
         $this->check_create_dir($dir_entity);
+        mkdir($dir_src);
+        $this->check_create_dir($dir_src);
+        mkdir($dir_src_compact);
+        $this->check_create_dir($dir_src_compact);
         /* index_entity */
         $index_entity = '<?php header("Location: ../../index.php");';
         $this->create_file($file_index_entity, $index_entity);

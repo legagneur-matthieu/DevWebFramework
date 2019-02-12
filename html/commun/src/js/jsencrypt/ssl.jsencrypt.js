@@ -28,21 +28,10 @@ $(document).ready(function () {
                 error();
             }
         });
-        $(this).find("input").each(function () {
-            enc = $rsa.encrypt($(this).val().toString());
-            if (enc) {
-                $(this).val(enc);
-            } else {
-                error();
-            }
-        });
-        $(this).find("textarea").each(function () {
-            enc = $rsa.encrypt($(this).val().toString());
-            if (enc) {
-                $(this).val(enc);
-            } else {
-                error();
-            }
-        });
+        for (selector in ["input", "textarea"]) {
+            $(this).find(selector).each(function () {
+                ((enc = $rsa.encrypt($(this).val().toString())) ? $(this).val(enc) : error());
+            });
+        }
     });
 });

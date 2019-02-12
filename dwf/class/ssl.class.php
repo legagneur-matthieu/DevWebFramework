@@ -47,13 +47,19 @@ class ssl {
      */
     private function init() {
         //include_once __DIR__.'/phpseclib/phpsec_loader.class.php';
-        include_once __DIR__ . '/phpseclib/Math/BigInteger.php';
-        include_once __DIR__ . '/phpseclib/Crypt/Random.php';
-        include_once __DIR__ . '/phpseclib/Crypt/Hash.php';
-        include_once __DIR__ . '/phpseclib/Crypt/AES.php';
-        include_once __DIR__ . '/phpseclib/Crypt/DES.php';
-        include_once __DIR__ . '/phpseclib/Crypt/TripleDES.php';
-        include_once __DIR__ . '/phpseclib/Crypt/RSA.php';
+        foreach ([
+    __DIR__ . '/phpseclib/Math/BigInteger.php',
+    __DIR__ . '/phpseclib/Crypt/Random.php',
+    __DIR__ . '/phpseclib/Crypt/Hash.php',
+    __DIR__ . '/phpseclib/Crypt/AES.php',
+    __DIR__ . '/phpseclib/Crypt/DES.php',
+    __DIR__ . '/phpseclib/Crypt/TripleDES.php',
+    __DIR__ . '/phpseclib/Crypt/RSA.php'
+        ] as $class) {
+            if (!class_exists($class)) {
+                include_once $class;
+            }
+        }
     }
 
     /**
@@ -91,8 +97,8 @@ class ssl {
      */
     public function ssl_js($enable_client_ssl = false) {
         if (!self::$_called[0]) {
-            echo html_structures::script("../commun/src/js/jsencrypt/jsencrypt.js").
-                    html_structures::script("../commun/src/js/jsencrypt/ssl.jsencrypt.js");
+            echo html_structures::script("../commun/src/js/jsencrypt/jsencrypt.js") .
+            html_structures::script("../commun/src/js/jsencrypt/ssl.jsencrypt.js");
             ?>
             <script type="text/javascript">
                 $prefix = '<?= config::$_prefix; ?>';
@@ -122,9 +128,9 @@ class ssl {
     public function encrypt_html($html) {
         if (session::get_val("client_ssl_public_key") and self::$_called[1]) {
             $this->_RSA->loadKey(session::get_val("client_ssl_public_key"));
-            echo tags::tag("div",["class"=>"jsencrypt"],base64_encode($this->_RSA->encrypt($html)));
+            echo tags::tag("div", ["class" => "jsencrypt"], base64_encode($this->_RSA->encrypt($html)));
         } else {
-            echo tags::tag("div",["class"=>"alert alert-danger"],tags::tag("p",[],"Une erreur est survenu, ce comptenu ne peux être affiché"));
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "Une erreur est survenu, ce comptenu ne peux être affiché"));
         }
     }
 

@@ -13,6 +13,6 @@ $(document).ready(function () {
     rsa = new JSEncrypt();
     rsa.setPrivateKey(localStorage["client_ssl_private_key"]);
     $(".jsencrypt").each(function () {
-        $(this).html(rsa.decrypt($(this).text()));
+        $(this).html(rsa.decrypt(strtr($(this).text(),{" ":"","\n":""})));
     });
 });

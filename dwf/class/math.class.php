@@ -14,8 +14,9 @@ class math {
      * @return int|boolean Retourne le PGCD ou false en cas d'erreur
      */
     public static function pgcd($nb1, $nb2) {
-        $nb1 = (int) $nb1;
-        $nb2 = (int) $nb2;
+        if (function_exists("gmp_gcd")) {
+            return floatval(gmp_gcd($nb1, $nb2));
+        }
         if ($nb1 > 0 and $nb2 > 0) {
             if ($nb1 < $nb2) {
                 $res = $nb1;
@@ -38,18 +39,10 @@ class math {
     /**
      * Retourne le factoriel d'un nombre
      * @param int $nb Nombre entier positif
-     * @return int|boolean Retourne le factoriel ou false en cas d'erreur
+     * @return float Retourne le factoriel
      */
     public static function factorielle($nb) {
-        $nb = sqrt(pow(((int) $nb), 2));
-        if ($nb > 0) {
-            $res = 1;
-            for ($i = $nb; $i > 1; $i--) {
-                $res *= $i;
-            }
-            return $res;
-        }
-        return 1;
+        return (function_exists("gmp_fact") ? floatval(gmp_fact($nb)) : array_product(range(1, $nb)));
     }
 
     /**
@@ -296,7 +289,7 @@ class math {
      * @return boolean La variable est-il un int ? (true/false)
      */
     public static function is_int($nb) {
-        return (((int) $nb) == $nb);
+        return (!is_object($nb) and ( (int) $nb) == $nb);
     }
 
     /**
@@ -306,7 +299,7 @@ class math {
      * @return boolean La variable est-il un float ? (true/false)
      */
     public static function is_float($nb) {
-        return (((float) $nb) == $nb);
+        return (!is_object($nb) and (string) (float) $nb == (string) $nb);
     }
 
     /**
@@ -316,7 +309,115 @@ class math {
      * @return boolean La variable est-il un boolean ? (true/false)
      */
     public static function is_bool($nb) {
-        return (((boolean) $nb) == $nb);
+        return (!is_object($nb) and ( (boolean) $nb) == $nb);
+    }
+
+    /**
+     * Nombre d'arrangements ordonné de k parmis n
+     * @param int $k Nombre d'objets
+     * @param int $n Nombre d'ensemble
+     * @return int Nombre d'arrangements ordonné de k parmis n
+     */
+    public static function arrangements($k, $n) {
+        return ($k <= $n ? (self::factorielle($n) / self::factorielle($n - $k)) : 0);
+    }
+
+    /**
+     * Nombre d'arrangements non ordonné de k parmis n 
+     * (binomial)
+     * @param int $k Nombre d'objets
+     * @param int $n Nombre d'ensemble
+     * @return int Nombre d'arrangements non ordonné de k parmis n
+     */
+    public static function combinaisons($k, $n) {
+        return (self::arrangements($k, $n) / self::factorielle($k));
+    }
+
+    /**
+     * Nombres de Catalan
+     * @param int $n Indice du nombre de Catalan
+     * @return int Nombre de Catalan
+     */
+    public static function catalan($n) {
+        return self::combinaisons($n, 2 * $n) - self::combinaisons($n + 1, 2 * $n);
+    }
+
+    /**
+     * Retourne la somme de la plage des entiers comprit entre $start et $end
+     * @param int $start Premier nombre de la plage 
+     * @param int $end Dernier nombre de la plage
+     * @return int Somme de la plage des entier
+     */
+    public static function range_sum($start, $end) {
+        return (($start + $end) * ($end - $start + 1)) / 2;
+    }
+
+    /**
+     * Tire un nombre aléatoire
+     * @param float|int $min Valeur minimal
+     * @param float|int $max Valeur maximal
+     * @param boolean $get_as_float Le nombre retourné doit il etre un INT ou un FLOAT
+     *      (true = float, false = int)
+     * @param int $mask Masque, influe sur la randomisation,
+     *      (0 = pas de masque,
+     *      -1 = masque aléatoire,
+     *      Ou un entier positif = masque a appliquer) 
+     * @return float|int Nombre aléatoire
+     */
+    public static function rand($min = 0, $max = 1, $get_as_float = true, $mask = 0) {
+        if ($max < $min) {
+            return self::rand($max, $min, $get_as_float, $mask);
+        }
+        if ($min < 0) {
+            return self::rand(0, abs($max - $min), $get_as_float, $mask) + $min;
+        }
+        if ($mask < 0) {
+            $mask = self::rand($min, $max, false);
+        }
+        $i = 90;
+        $f = 9169;
+        $p = 6;
+        $pl = 4;
+        $x = ((float) microtime());
+        while ($max - $min >= pow(10, $pl)) {
+            $p += 4;
+            $pl += 4;
+            $x .= self::rand(1000, 9999, false);
+        }
+        $m = 10 ** $p;
+        $x = (($x * $m) ^ $mask) / $m;
+        for ($j = 0; $j < $i; $j++) {
+            $x = self::logistic($x);
+        }
+        $x = (($x * ($m * $f) % $m) / $m) * ($max + 2) + ($min - 1);
+        if ($x < $min or $x > $max) {
+            $x = self::rand($min, $max, $get_as_float, $mask);
+        }
+        return ($get_as_float ? $x : round($x));
+    }
+
+    /**
+     * Fonction de la suite logistique 
+     * https://fr.wikipedia.org/wiki/Suite_logistique
+     * @param float $x Nombre en entré (float compris entre 0 et 1)
+     * @param float $r Valeur de µ (float compris entre 0 et 4, 4 par defaut)
+     * @return float Nombre en sortie (float compris entre 0 et 1)
+     */
+    public static function logistic($x, $r = 4) {
+        return $r * $x * (1 - $x);
+    }
+    
+    /**
+     * Retourne un bingint (cf phpseclib/Math/BigInteger.php)
+     * @param int|Math_BigInteger $x Nombre entier
+     * @param int $base Base a utiliser (10 par defaut)
+     * @return \Math_BigInteger bingint (cf phpseclib/Math/BigInteger.php)
+     */
+    public static function bigint($x = 0, $base = 10) {
+        if (!class_exists("Math_BigInteger")) {
+            include_once __DIR__ . '/phpseclib/Math/BigInteger.php';
+        }
+        return new Math_BigInteger($x, $base);
     }
 
 }

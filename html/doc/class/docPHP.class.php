@@ -479,7 +479,7 @@ class docPHP {
         <p>
             Il est recomandé, mais pas obligatoire, de nommer le fichier contenant la classe comme ceci : <em>[nom_du_service]<strong>.service.php</strong></em> <br />
             et de passer par <em>/html/commun/service/index.php?service=nom_du_service</em> pour y acceder. <br />
-            En procédant ainsi votre service pourra exploiter le framework.
+            En procédant ainsi votre service pourra exploiter le framework, les classes métiers et les entitées.
         </p>
         <p>exemple pratique, soit le projet avec l'arboressance suivante :</p>
         <ul class="no-puces">
@@ -650,14 +650,10 @@ class docPHP {
     private function mise_en_ligne() {
         ?>
         <p>Lors de la mise en ligne de vos projets vous devrez définir votre "projet par defaut" pour cela : <br />
-            rendez vous dans le fichier <em>html/index.php</em> et modifiez la ligne suivante à votre convenance.
+            rendez vous dans le fichier <em>html/commun/config/default.json</em> et modifiez la ligne suivante à votre convenance.
         </p>
         <?php
-        js::syntaxhighlighter("<?php\nheader(\"Location: ./doc/index.php\"); \n ?>", $this->_brush);
-        ?>
-        <p>Par :</p>
-        <?php
-        js::syntaxhighlighter("<?php\nheader(\"Location: ./[Votre-projet-par-défaut]/index.php\"); \n?>", $this->_brush);
+        js::syntaxhighlighter("{\"project\":\"[Votre-projet-par-défaut]\"}", "js");
     }
 
 }

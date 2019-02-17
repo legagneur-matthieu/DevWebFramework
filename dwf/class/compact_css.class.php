@@ -74,7 +74,7 @@ class compact_css extends singleton {
         $regen = !file_exists($filename);
         $mt_gen = (($regen) ? 0 : filemtime($filename));
         foreach ($this->_files as $file) {
-            $mt_file = filemtime($file);
+            $mt_file = (int)filemtime($file);
             if (($mt_file and $mt_gen < $mt_file) or $regen) {
                 $regen = true;
                 break;

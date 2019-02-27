@@ -35,20 +35,20 @@ class g_article {
                 $option[] = [$key, $value["nom"], ($key == $article->get_categorie()->get_id())];
             }
             $cke = js::ckeditor("contenu");
-            form::new_form("", "#", "post", true);
-            form::new_fieldset("Modifier un article");
-            form::input("Titre de l'article", "titre", "text", $article->get_titre());
-            form::datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
-            form::file("Image de préview", "img", false);
-            form::textarea("Contenu de l'article", "contenu", htmlspecialchars_decode(base64_decode($article->get_contenu())));
-            form::input("Tags (séparé par des viruges)", "tags", "text", $article->get_tags());
-            form::select("Catégorie", "cat", $option);
-            form::submit("btn-default");
-            form::close_fieldset();
-            form::close_form();
+            $form=new form();
+            $form->open_fieldset("Modifier un article");
+            $form->input("Titre de l'article", "titre", "text", $article->get_titre());
+            $form->datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
+            $form->file("Image de préview", "img", false);
+            $form->textarea("Contenu de l'article", "contenu", htmlspecialchars_decode(base64_decode($article->get_contenu())));
+            $form->input("Tags (séparé par des viruges)", "tags", "text", $article->get_tags());
+            $form->select("Catégorie", "cat", $option);
+            $form->submit("btn-default");
+            $form->close_fieldset();
+            echo $form->render();
             if (isset($_POST["titre"])) {
                 if (!empty($_POST["date"])) {
-                    $date = form::get_datetimepicker_us("date");
+                    $date = $form->get_datetimepicker_us("date");
                     if ($date < date("Y-m-d H:i")) {
                         $date = date("Y-m-d H:i");
                     }
@@ -78,8 +78,8 @@ class g_article {
                         "-" => "_"
                     ]);
                     $img = "./img/articles/media/" . $_FILES["img"]["name"];
-                    form::get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
-                    form::resize_img($img, $img, 0, 720);
+                    $form->get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
+                    $form->resize_img($img, $img, 0, 720);
                     $article->set_img($img);
                 }
                 $contenu = base64_encode($cke->parse($_POST["contenu"]));
@@ -149,20 +149,20 @@ class g_article {
         }
         /* TODO : (bug mineur) CKE provoque une bad request dans la console */
         $cke = js::ckeditor("contenu");
-        form::new_form("", "#", "post", true);
-        form::new_fieldset("Ajouter un article");
-        form::input("Titre de l'article", "titre");
-        form::datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
-        form::file("Image de préview", "img", false);
-        form::textarea("Contenu de l'article", "contenu");
-        form::input("Tags (séparé par des viruges)", "tags");
-        form::select("Catégorie", "cat", $option);
-        form::submit("btn-default");
-        form::close_fieldset();
-        form::close_form();
+        $form = new form();
+        $form->open_fieldset("Ajouter un article");
+        $form->input("Titre de l'article", "titre");
+        $form->datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
+        $form->file("Image de préview", "img", false);
+        $form->textarea("Contenu de l'article", "contenu");
+        $form->input("Tags (séparé par des viruges)", "tags");
+        $form->select("Catégorie", "cat", $option);
+        $form->submit("btn-default");
+        $form->close_fieldset();
+        echo $form->render();
         if (isset($_POST["titre"])) {
             if (!empty($_POST["date"])) {
-                $date = form::get_datetimepicker_us("date");
+                $date = $form->get_datetimepicker_us("date");
                 if ($date < date("Y-m-d H:i")) {
                     $date = date("Y-m-d H:i");
                 }
@@ -192,8 +192,8 @@ class g_article {
                     "-" => "_"
                 ]);
                 $img = "./img/articles/media/" . $_FILES["img"]["name"];
-                form::get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
-                form::resize_img($img, $img, 0, 720);
+                $form->get_upload("img", "./img/articles/media", ["image/png", "image/jpg", "image/jpeg", "image/bmp"]);
+                $form->resize_img($img, $img, 0, 720);
             }
             $contenu = base64_encode($cke->parse($_POST["contenu"]));
             article::ajout($date, ucfirst($_POST["titre"]), $img, $contenu, $_POST["tags"], $_POST["cat"]);

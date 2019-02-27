@@ -106,13 +106,10 @@ class easteregg {
             ["2511", "Sainte Catherine"],
             ["2212", "Hiver"]
         ];
-        ob_start();
-        form::new_form();
-        form::select("Evenement à activer", "eggday", $events);
-        form::submit("btn-default", "Activer");
-        form::close_form();
-        $data = ob_get_clean();
-        (new modal())->link_open_modal("", "modal_eggday", '', "Evenements", $data, "");
+        $form=new form();
+        $form->select("Evenement à activer", "eggday", $events);
+        $form->submit("btn-default", "Activer");
+        (new modal())->link_open_modal("", "modal_eggday", '', "Evenements", $form->render(), "");
         if (isset($_POST["eggday"])) {
             if (strlen($_POST["eggday"]) == 4) {
                 session::set_val("eggday", $_POST["eggday"]);

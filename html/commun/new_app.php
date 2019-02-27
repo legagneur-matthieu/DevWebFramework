@@ -55,15 +55,16 @@ class new_app {
      * Formulaire de new_app
      */
     private function form() {
-        form::new_form();
+        $form = new form();
+        echo $form->get_open_form();
         ?>
         <div class="row">
             <div class="col-xs-4 border_right">
                 <?php
-                form::new_fieldset("Application");
-                form::input("Nom du dossier (apparait dans l'url)", "dirname");
-                form::input("Titre de l'application (apparait dans le \"title\" des page)", "title");
-                form::input("Préfixe (technique, utilisé pour les sessions, log ...)", "prefix");
+                echo $form->open_fieldset("Application") .
+                $form->input("Nom du dossier (apparait dans l'url)", "dirname") .
+                $form->input("Titre de l'application (apparait dans le \"title\" des page)", "title") .
+                $form->input("Préfixe (technique, utilisé pour les sessions, log ...)", "prefix");
                 $option = [];
                 foreach (hash_algos() as $ha) {
                     switch (strlen(hash($ha, "test"))) {
@@ -97,8 +98,8 @@ class new_app {
                     }
                     $option[] = array($ha, $ha . " (" . $force . ")", ($ha == "sha512"));
                 }
-                form::select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option);
-                form::select("Theme", "theme", [
+                echo $form->select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option).
+                $form->select("Theme", "theme", [
                     ["default", "Default"],
                     ["cerulean", "Cerulean"],
                     ["cosmo", "Cosmo"],
@@ -116,34 +117,34 @@ class new_app {
                     ["superhero", "Superhero"],
                     ["united", "United"],
                     ["yeti", "Yeti"]
-                ]);
-                form::checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv");
-                form::close_fieldset();
+                ]).
+                $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv").
+                $form->close_fieldset();
                 ?>
             </div>
             <div class="col-xs-4 border_right">
                 <?php
-                form::new_fieldset("PDO");
-                form::select("type", "pdo_type", [
+                echo $form-> open_fieldset("PDO").
+                $form->select("type", "pdo_type", [
                     ["mysql", "MySQL", true],
                     ["sqlite", "SQLite (déconseillé !)"],
-                ]);
-                form::input("Host", "pdo_host", "text", "localhost", false);
-                form::input("Login", "pdo_login", "text", "", false);
-                form::input("Password", "pdo_psw", "password", "", false);
-                form::input("Database", "pdo_dbname");
-                form::checkbox("Créer la base de donnée (si elle n'existe pas)", "dbcreate", "1", "", true);
-                form::close_fieldset();
+                ]).
+                $form->input("Host", "pdo_host", "text", "localhost", false).
+                $form->input("Login", "pdo_login", "text", "", false).
+                $form->input("Password", "pdo_psw", "password", "", false).
+                $form->input("Database", "pdo_dbname").
+                $form->checkbox("Créer la base de donnée (si elle n'existe pas)", "dbcreate", "1", "", true).
+                $form->close_fieldset();
                 ?> 
             </div>
             <div class="col-xs-4">
                 <?php
-                form::new_fieldset("SMTP");
-                form::input("Host", "smtp_host", "text", "localhost");
-                form::select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]);
-                form::input("Login", "smtp_login", "text", "", false);
-                form::input("Password", "smtp_psw", "password", "", false);
-                form::close_fieldset();
+                echo $form-> open_fieldset("SMTP").
+                $form->input("Host", "smtp_host", "text", "localhost").
+                $form->select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]).
+                $form->input("Login", "smtp_login", "text", "", false).
+                $form->input("Password", "smtp_psw", "password", "", false).
+                $form->close_fieldset();
                 ?> 
             </div>
         </div>
@@ -152,12 +153,12 @@ class new_app {
             <div class="col-xs-4"></div>
             <div class="col-xs-4">
                 <?php
-                form::submit("btn-primary", "Créer");
+                echo $form->submit("btn-primary", "Créer");
                 ?>
             </div>
         </div>
         <?php
-        form::close_form();
+        echo $form->get_close_form();
         $this->js();
     }
 

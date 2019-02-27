@@ -93,20 +93,17 @@ class parcour_sites {
 
     private function init_main() {
         $sites = "";
-        $option[] = [];
+        $option = [];
         foreach (glob("*") as $site) {
             if (is_dir($site) and $site != "commun") {
                 $sites .= html_structures::a_link($site . "/", html_structures::glyphicon("folder-open") . " &nbsp;" . $site) . tags::tag("br");
                 $option[] = [$site, $site, $site === $this->_project["project"]];
             }
         }
-        ob_start();
-        form::new_form();
-        form::select("Projet par defaut (ou d'accueil)", "default_project", $option);
-        form::submit("btn-default");
-        form::close_form();
-        $select = ob_get_clean();
-        return ["sites" => $sites, "select" => $select];
+        $select=new form();
+        $select->select("Projet par defaut (ou d'accueil)", "default_project", $option);
+        $select->submit("btn-default");
+        return ["sites" => $sites, "select" => $select->render()];
     }
 
     private function main($s) {

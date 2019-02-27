@@ -30,17 +30,17 @@ class g_module_article {
         if (module_article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
             $module = module_article::get_from_id($_GET["id"]);
             $cat = cat_article::get_table_ordored_array();
-            form::new_form();
-            form::new_fieldset("Modifier un module");
-            form::input("Nom du module", "mod_nom", "text", $module->get_name());
-            form::input("Nomre d'articles par catégories visible dans le module", "mod_nb", "number", $module->get_nb());
             $cat_mod = (array) json_decode($module->get_categories());
+            $form = new form();
+            $form->open_fieldset("Modifier un module");
+            $form->input("Nom du module", "mod_nom", "text", $module->get_name());
+            $form->input("Nomre d'articles par catégories visible dans le module", "mod_nb", "number", $module->get_nb());
             foreach ($cat as $id => $row) {
-                form::checkbox($row["nom"], "mod_cat[]", $id, "", (in_array($id, $cat_mod)));
+                $form->checkbox($row["nom"], "mod_cat[]", $id, "", (in_array($id, $cat_mod)));
             }
-            form::submit("btn-default");
-            form::close_fieldset();
-            form::close_form();
+            $form->submit("btn-default");
+            $form->close_fieldset();
+            echo $form->render();
             if (isset($_POST["mod_nom"])) {
                 $mod_cat = [];
                 foreach ($_POST["mod_cat"] as $value) {
@@ -71,62 +71,37 @@ class g_module_article {
         $modules = module_article::get_table_array();
         $cat = cat_article::get_table_ordored_array();
         js::datatable();
+        $data = [];
+        foreach ($modules as $mod) {
+            $ul = [];
+            foreach (((array) json_decode($mod["categories"])) as $c) {
+                $ul[] = $cat[$c]["nom"];
+            }
+            $data[] = [
+                html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_modif&amp;id=" . $mod["id"], $mod["name"]),
+                $mod["nb"],
+                html_structures::ul($ul),
+                html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_supp&amp;id=" . $mod["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right")
+            ];
+        }
+        echo html_structures::table(["Nom", "Nombre d'articles/catégories", "Catégories", "Supprimer"], $data, "", "datatable");
         ?>
-        <table class="table" id="datatable">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Nombre d'articles/catégories</th>
-                    <th>catégories</th>
-                    <th>supprimer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($modules as $mod) {
-                    ?>
-                    <tr>
-                        <?php ?>
-                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_modif&amp;id=" . $mod["id"], $mod["name"]); ?></td>
-                        <td><?= $mod["nb"]; ?></td>
-                        <td> 
-                            <ul>
-                                <?php
-                                foreach (((array) json_decode($mod["categories"])) as $c) {
-                                    ?>
-                                    <li>
-                                        <?php
-                                        echo $cat[$c]["nom"];
-                                        ?>
-                                    </li>
-                                    <?php
-                                }
-                                ?>
-                            </ul>
-                        </td>
-                        <td><?= html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;admin=" . $_GET["admin"] . "&amp;action=mod_supp&amp;id=" . $mod["id"], html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger navbar-right"); ?></td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </tbody>
-        </table>
         <hr />
         <p class="alert alert-warning">
             ATTENTION ! l'affichage d'un nouveau module nécéssite une intervention directement dans le code de l'application ! <br />
             Faites appele a un informaticien qualifié ou référez vous a la documentation.
         </p>
         <?php
-        form::new_form();
-        form::new_fieldset("Ajouter un module");
-        form::input("Nom du module", "mod_nom");
-        form::input("Nomre d'articles par catégories visible dans le module", "mod_nb", "number", "3");
+        $form = new form();
+        $form->open_fieldset("Ajouter un module");
+        $form->input("Nom du module", "mod_nom");
+        $form->input("Nomre d'articles par catégories visible dans le module", "mod_nb", "number", "3");
         foreach ($cat as $id => $row) {
-            form::checkbox($row["nom"], "mod_cat[]", $id);
+            $form->checkbox($row["nom"], "mod_cat[]", $id);
         }
-        form::submit("btn-default");
-        form::close_fieldset();
-        form::close_form();
+        $form->submit("btn-default");
+        $form->close_fieldset();
+        echo $form->render();
         if (isset($_POST["mod_nom"])) {
             if (module_article::get_count("name='" . application::$_bdd->protect_var($_POST["mod_nom"]) . "'") == 0) {
                 $mod_cat = [];

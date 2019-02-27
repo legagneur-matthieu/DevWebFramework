@@ -20,24 +20,20 @@ class html_structures {
     public static function table($head, $data, $summary = '', $id = '', $class = "table", $head_scope = true) {
         $thead = tags::tr();
         foreach ($head as $h) {
-            $th = tags::th($h);
-            if ($head_scope) {
-                $th->set_attr("scope", "col");
-            }
-            $thead->append_content($th);
+            $thead->append_content(tags::tag("th", ($head_scope ? ["scope" => "col"] : []), $h));
         }
         $tbody = tags::tbody();
         if (count($data) !== 0) {
             foreach ($data as $row) {
-                $tr = tags::tr();
+                $td = "";
                 foreach ($row as $value) {
-                    $tr->append_content(tags::tag("td", [], $value));
+                    $td .= tags::tag("td", [], $value);
                 }
-                $tbody->append_content($tr);
+                $tbody->append_content(tags::tag("tr", [], $td));
             }
         } else {
             $td = "";
-            for ($i = 0; $i < count($thead); $i++) {
+            for ($i = 0; $i < count($head); $i++) {
                 $td .= tags::tag("td", [], "");
             }
             $tbody->append_content(tags::tag("tr", [], $td));

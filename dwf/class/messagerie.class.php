@@ -68,18 +68,19 @@ class messagerie {
             $_GET["dest"] = ((int) $_GET["dest"]);
         }
         $user = $this->_table_user;
-        $users = $user::get_table_array("id!='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "';");
+        
+        $users = $user::get_table_array("id!='" . application::$_bdd->protect_var(session::get_user()) . "'");
         $option = [];
         foreach ($users as $value) {
             $option[] = [$value["id"], $value[$this->_tuple_user], ($value["id"] == $_GET["dest"])];
         }
-        form::new_form();
-        form::select("Envoyer a", "dest", $option);
-        form::textarea("Message", "msg");
-        form::submit("btn-default", "");
-        form::close_form();
+        $form=new form();
+        $form->select("Envoyer a", "dest", $option);
+        $form->textarea("Message", "msg");
+        $form->submit("btn-default", "");
+        echo $form->render();
         if (isset($_POST["dest"])) {
-            message::ajout(date("Y-m-d H:i:s"), $_POST["msg"], $_SESSION[config::$_prefix . "_user"], $_POST["dest"], 0);
+            message::ajout(date("Y-m-d H:i:s"), $_POST["msg"], session::get_user(), $_POST["dest"], 0);
         }
     }
 
@@ -88,13 +89,13 @@ class messagerie {
      */
     public function get() {
         if (isset($_GET["action"]) and isset($_GET["id"]) and $_GET["action"] == "supp") {
-            if (message::get_count("dest='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "' and id='" . application::$_bdd->protect_var(((int) $_GET["id"])) . "';") != 0) {
+            if (message::get_count("dest='" . application::$_bdd->protect_var(session::get_user()) . "' and id='" . application::$_bdd->protect_var(((int) $_GET["id"])) . "'") != 0) {
                 $msg = message::get_from_id(((int) $_GET["id"]));
                 $msg->set_supp(1);
             }
-            js::redir("index.php?page=" . $_GET["page"] . "&action=get");
+            js::redir("index.php?page={$_GET["page"]}&action=get");
         } else {
-            $msg = message::get_collection("dest='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "' and supp=0;");
+            $msg = message::get_collection("dest='" . application::$_bdd->protect_var(session::get_user()) . "' and supp=0");
             $data = [];
             if ($msg) {
                 foreach ($msg as $value) {
@@ -121,7 +122,7 @@ class messagerie {
      * Vue de la boite d'envoi
      */
     public function send() {
-        $msg = message::get_collection("emet='" . application::$_bdd->protect_var($_SESSION[config::$_prefix . "_user"]) . "';");
+        $msg = message::get_collection("emet='" . application::$_bdd->protect_var(session::get_user()) . "';");
         $data =[];
         if ($msg) {
             foreach ($msg as $value) {

@@ -82,11 +82,13 @@ class auth {
             <div class="class_auth">
                 <?php
                 $form = new form();
-                $form->new_form();
                 $form->input("Login", "auth_login", "text");
                 $form->input("Mot de passe", "auth_psw", "password");
                 $form->submit("btn-block btn-default", "Connexion");
-                $form->close_form($this->_use_token);
+                if ($this->_use_token) {
+                    $form->token();
+                }
+                echo $form->render();
                 ?>
             </div>
             <?php

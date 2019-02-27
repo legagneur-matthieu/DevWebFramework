@@ -229,11 +229,12 @@ class fullcalendar {
                     js::alert("L'agenda a bien été supprimé");
                     js::redir(strtr($url, $from = ["&amp;" => "&"]));
                 } else {
-                    form::new_form("form-inline");
-                    form::hidden("admin_form_supp", "1");
-                    form::submit("btn-danger", "Oui");
-                    echo html_structures::a_link($url, "Non", "btn btn-default");
-                    form::close_form();
+                    $form = new form("form-inline");
+                    echo $form->get_open_form() .
+                    $form->hidden("admin_form_supp", "1") .
+                    $form->submit("btn-danger", "Oui") .
+                    html_structures::a_link($url, "Non", "btn btn-default") .
+                    $form->get_close_form();
                 }
             }
             if ($_GET["action"] == "modif") {
@@ -247,11 +248,11 @@ class fullcalendar {
                     js::alert("L'agenda a bien été modifié");
                     js::redir($url);
                 } else {
-                    form::new_form();
-                    form::input("Titre", "title", "text", $resource->get_title());
-                    form::input("Couleur", "eventColor", "color", $resource->get_eventColor());
-                    form::submit("btn-default", "Modifier");
-                    form::close_form();
+                    $form = new form();
+                    $form->input("Titre", "title", "text", $resource->get_title());
+                    $form->input("Couleur", "eventColor", "color", $resource->get_eventColor());
+                    $form->submit("btn-default", "Modifier");
+                    echo $form->render();
                 }
             }
         } else {
@@ -288,11 +289,11 @@ class fullcalendar {
                     </tbody>
                 </table>
                 <?php
-                form::new_form();
-                form::input("Titre", "title");
-                form::input("Couleur", "eventColor", "color", "#0000ff");
-                form::submit("btn-default", "Ajouter");
-                form::close_form();
+                $form = new form();
+                $form->input("Titre", "title");
+                $form->input("Couleur", "eventColor", "color", "#0000ff");
+                $form->submit("btn-default", "Ajouter");
+                echo $form->render();
             }
         }
     }
@@ -314,11 +315,12 @@ class fullcalendar {
                     js::alert("L'evenement a bien été supprimé");
                     js::redir(strtr($url, $from = ["&amp;" => "&"]));
                 } else {
-                    form::new_form("form-inline");
-                    form::hidden("admin_form_supp", "1");
-                    form::submit("btn-danger", "Oui");
-                    echo html_structures::a_link($url, "Non", "btn btn-default");
-                    form::close_form();
+                    $form = new form("form-inline");
+                    echo $form->get_open_form() .
+                    $form->hidden("admin_form_supp", "1") .
+                    $form->submit("btn-danger", "Oui") .
+                    html_structures::a_link($url, "Non", "btn btn-default") .
+                    $form->get_close_form();
                 }
             }
             if ($_GET["action"] == "modif") {
@@ -326,8 +328,8 @@ class fullcalendar {
                 $event = fullcalendar_event::get_from_id($id);
                 if (isset($_POST["title"])) {
                     $event->set_title($_POST["title"]);
-                    $event->set_start(form::get_datetimepicker_us("start"));
-                    $event->set_end(form::get_datetimepicker_us("end"));
+                    $event->set_start($form->get_datetimepicker_us("start"));
+                    $event->set_end($form->get_datetimepicker_us("end"));
                     $event->set_url($_POST["url"]);
                     $event->set_resourceId($_POST["resourceId"]);
                     js::alert("L'evenement a bien été modifié");
@@ -339,15 +341,15 @@ class fullcalendar {
                     foreach (fullcalendar_resource::get_table_array() as $res) {
                         $option[] = [$res["id"], $res["title"], ($res["id"] == $event->get_resourceId())];
                     }
-                    form::new_form();
-                    form::input("Titre", "title", "text", $event->get_title());
-                    form::datetimepicker("Debut", "start", $this->convert_date($event->get_start()));
-                    form::datetimepicker("Fin", "end", $this->convert_date($event->get_end()));
-                    form::input("URL (facultative)", "url", "url", $event->get_url(), false);
-                    form::select("Agenda", "resourceId", $option);
-                    form::submit("btn-default", "Modifier");
-                    form::close_form();
-                    echo html_structures::a_link($url . "action=supp&id=" . $event->get_id(), "Supprimer", "btn btn-danger");
+                    $form=new form();
+                    $form->input("Titre", "title", "text", $event->get_title());
+                    $form->datetimepicker("Debut", "start", $this->convert_date($event->get_start()));
+                    $form->datetimepicker("Fin", "end", $this->convert_date($event->get_end()));
+                    $form->input("URL (facultative)", "url", "url", $event->get_url(), false);
+                    $form->select("Agenda", "resourceId", $option);
+                    $form->submit("btn-default", "Modifier");
+                    echo $form->render().
+                    html_structures::a_link($url . "action=supp&id=" . $event->get_id(), "Supprimer", "btn btn-danger");
                 }
             }
         } else {
@@ -371,16 +373,16 @@ class fullcalendar {
             }
             $this->events($data, $resources);
             echo html_structures::hr();
-            form::new_form();
-            form::input("Titre", "title");
-            form::datetimepicker("Debut", "start");
-            form::datetimepicker("Fin", "end");
-            form::input("URL (facultative)", "url", "url", null, false);
-            form::select("Agenda", "resourceId", $option);
-            form::submit("btn-default", "Ajouter");
-            form::close_form();
+            $form=new form();
+            $form->input("Titre", "title");
+            $form->datetimepicker("Debut", "start");
+            $form->datetimepicker("Fin", "end");
+            $form->input("URL (facultative)", "url", "url", null, false);
+            $form->select("Agenda", "resourceId", $option);
+            $form->submit("btn-default", "Ajouter");
+            echo $form->render();
             if (isset($_POST["title"])) {
-                fullcalendar_event::ajout($_POST["title"], form::get_datetimepicker_us("start"), form::get_datetimepicker_us("end"), $_POST["url"], $_POST["resourceId"]);
+                fullcalendar_event::ajout($_POST["title"], $form->get_datetimepicker_us("start"), $form->get_datetimepicker_us("end"), $_POST["url"], $_POST["resourceId"]);
                 js::alert("L'evenement a bien été ajouté");
                 js::redir("");
             }

@@ -70,20 +70,16 @@ class bootstrap_theme {
             js::redir("");
             exit();
         }
-        ob_start();
-        form::new_form();
-        $theme = self::get_theme();
+        $form=new form();
         $option = [
             ["default", "Default", false]
         ];
         foreach (self::$_theme as $t) {
-            $option[] = [$t, ucfirst($t), ($t == $theme)];
+            $option[] = [$t, ucfirst($t), ($t == self::get_theme())];
         }
-        form::select("Theme", "bootstrap_theme", $option);
-        form::submit("btn-default");
-        form::close_form();
-        $data = ob_get_clean();
-        (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $data, "");
+        $form->select("Theme", "bootstrap_theme", $option);
+        $form->submit("btn-default");
+        (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
     }
 
 }

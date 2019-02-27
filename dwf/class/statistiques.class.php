@@ -106,7 +106,7 @@ class statistiques {
             [10, "Novembre"],
             [11, "Dècembre"]
         ];
-        (new graphique())->line($data, $tricks, "stat_plot");
+        (new graphique("stat_graph_visiteur_unique",["width"=>"100%","height"=>"300px"]))->line($data, $tricks, "stat_plot");
         $li = [];
         foreach ($data[0]["data"] as $d) {
             $mois = "";
@@ -179,7 +179,7 @@ class statistiques {
             [23, "23h - 24h"]
         ];
 
-        (new graphique())->line($data, $tricks, "stat_plot_activity_per_hours");
+        (new graphique("stat_graph_activity_per_hours",["width"=>"100%","height"=>"300px"]))->line($data, $tricks, "stat_plot_activity_per_hours");
 
         $li = [];
         for ($i = 0; $i < 24; $i++) {
@@ -293,16 +293,16 @@ class statistiques {
      * @param array $default $this->check_form()
      */
     private function form($default) {
-        form::new_form();
+        $form=new form();
         $y = date("Y");
         $option = [];
         for ($i = 5; $i >= 0; $i--) {
             $k = $y - $i;
             $option[] = [$k, $k, ($k == $default["an"])];
         }
-        form::select("Annèe", "stat_an", $option);
-        form::submit("btn-default", "Voir");
-        form::close_form();
+        $form->select("Annèe", "stat_an", $option);
+        $form->submit("btn-default", "Voir");
+        echo $form->render();
     }
 
     /**

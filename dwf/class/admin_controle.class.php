@@ -127,26 +127,26 @@ class admin_controle {
      */
     private function ajout_form() {
         $this->ajout_exec();
-        form::new_form();
+        $form = new form();
         foreach ($this->_structure as $element) {
             if (!$element[2]) {
                 switch ($element[1]) {
                     case "int":
                     case "interger":
-                        form::input(ucfirst($element[0]), $element[0], "number");
+                        $form->input(ucfirst($element[0]), $element[0], "number");
                         break;
                     case "mail":
-                        form::input(ucfirst($element[0]), $element[0], "email");
+                        $form->input(ucfirst($element[0]), $element[0], "email");
                         break;
                     case "string":
                         if ($element[0] == "psw" or $element[0] == "password") {
-                            form::input(ucfirst($element[0]), $element[0], "password");
+                            $form->input(ucfirst($element[0]), $element[0], "password");
                         } else {
-                            form::input(ucfirst($element[0]), $element[0]);
+                            $form->input(ucfirst($element[0]), $element[0]);
                         }
                         break;
                     case "array":
-                        form::hidden($element[0], "[]");
+                        $form->hidden($element[0], "[]");
                         break;
                     default:
                         $elem = $element[1];
@@ -155,14 +155,14 @@ class admin_controle {
                         foreach ($elem as $e) {
                             $option[] = [$e["id"], $e[$this->_relations[$element[0]]]];
                         }
-                        form::select(ucfirst($element[0]), $element[0], $option);
+                        $form->select(ucfirst($element[0]), $element[0], $option);
                         break;
                 }
             }
         }
-        form::hidden("admin_form_ajout", "1");
-        form::submit("btn-default", "Ajouter");
-        form::close_form();
+        $form->hidden("admin_form_ajout", "1");
+        $form->submit("btn-default", "Ajouter");
+        echo $form->render();
     }
 
     /**
@@ -183,8 +183,8 @@ class admin_controle {
                     }
                 }
             }
-            $req .= $key . "1) VALUES (" . $value . "1);";
-            $req = strtr($req, $from = [",1)" => ")"]);
+            $req .= "{$key}__) VALUES ({$value}__);";
+            $req = strtr($req, $from = [",__)" => ")"]);
             application::$_bdd->query($req);
             js::redir("");
         }
@@ -199,27 +199,27 @@ class admin_controle {
         $object = $entity::get_from_id($_GET["id"]);
         $this->modif_exec($object, $url);
         echo html_structures::a_link($url, html_structures::glyphicon("arrow-left", "") . " Retour", "btn btn-default");
-        form::new_form();
+        $form = new form();
         foreach ($this->_structure as $element) {
             if (!$element[2]) {
                 $geter = "get_" . $element[0];
                 switch ($element[1]) {
                     case "int":
                     case "interger":
-                        form::input(ucfirst($element[0]), $element[0], "number", $object->$geter());
+                        $form->input(ucfirst($element[0]), $element[0], "number", $object->$geter());
                         break;
                     case "mail":
-                        form::input(ucfirst($element[0]), $element[0], "email", $object->$geter());
+                        $form->input(ucfirst($element[0]), $element[0], "email", $object->$geter());
                         break;
                     case "string":
                         if ($element[0] == "psw" or $element[0] == "password") {
-                            form::input(ucfirst($element[0]), $element[0], "password");
+                            $form->input(ucfirst($element[0]), $element[0], "password");
                         } else {
-                            form::input(ucfirst($element[0]), $element[0], "text", $object->$geter());
+                            $form->input(ucfirst($element[0]), $element[0], "text", $object->$geter());
                         }
                         break;
                     case "array":
-                        form::hidden($element[0], json_encode($object->$geter()));
+                        $form->hidden($element[0], json_encode($object->$geter()));
                         break;
                     default:
                         $elem = $element[1];
@@ -232,14 +232,14 @@ class admin_controle {
                             }
                             $option[] = [$e["id"], $e[$this->_relations[$element[0]]], $selected];
                         }
-                        form::select(ucfirst($element[0]), $element[0], $option);
+                        $form->select(ucfirst($element[0]), $element[0], $option);
                         break;
                 }
             }
         }
-        form::hidden("admin_form_modif", "1");
-        form::submit("btn-default", "Modifier");
-        form::close_form();
+        $form->hidden("admin_form_modif", "1");
+        $form->submit("btn-default", "Modifier");
+        echo $form->render();
     }
 
     /**
@@ -287,14 +287,15 @@ class admin_controle {
                 }
             }
         }
-        echo tags::tag("p", ["class" => "text-center"], "ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :");
         js::datatable("supp_datatable");
-        echo html_structures::table($this->_head, $data, "supp_datatable");
-        form::new_form("form-inline");
-        form::hidden("admin_form_supp", "1");
-        form::submit("btn-danger", "Oui");
-        echo html_structures::a_link($url, "Non", "btn btn-default");
-        form::close_form();
+        $form = new form("form-inline");
+        echo tags::tag("p", ["class" => "text-center"], "ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :").
+        html_structures::table($this->_head, $data, "supp_datatable").
+        $form->get_open_form() .
+        $form->hidden("admin_form_supp", "1") .
+        $form->submit("btn-danger", "Oui") .
+        html_structures::a_link($url, "Non", "btn btn-default") .
+        $form->get_close_form();
     }
 
     /**

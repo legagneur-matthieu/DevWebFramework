@@ -5,7 +5,7 @@
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
-class trad {
+class trad extends singleton {
 
     /**
      * Sigle de la langue de l'utilisateur
@@ -35,12 +35,16 @@ class trad {
                 new entity_generator(array(array("id", "int", true), array("keyword", "string", false), array("lang", "string", false), array("texte", "string", false)), "lang_sub", true, true);
                 $lang = lang_sub::get_table_array("lang='" . application::$_bdd->protect_var(session::get_lang()) . "'");
                 foreach ($lang as $value) {
-                    $this->_lang[$value["keyword"]][$value["texte"]];
+                    $this->_lang[$value["keyword"]] = $value["texte"];
                 }
                 break;
             case "json":
                 $file = "lang/" . session::get_lang() . ".json";
-                (!is_dir("lang") ? mkdir("lang") : dwf_exception::check_file_writed($file));
+                if (!file_exists($file)) {
+                    mkdir("lang");
+                    file_put_contents($file, "{}");
+                }
+                dwf_exception::check_file_writed($file);
                 $this->_lang = json_decode(file_get_contents($file), true);
                 break;
             default:
@@ -55,7 +59,7 @@ class trad {
      * @return string Tradution associée selon la langue choisie 
      */
     public function t($key) {
-        return ((isset($this->_lang[$key]) or ! empty($this->_lang[$key]) ) ? $this->_lang[$key] : $key);
+        return ((isset($this->_lang[$key]) and ! empty($this->_lang[$key]) ) ? $this->_lang[$key] : $key);
     }
 
     /**
@@ -85,8 +89,9 @@ class trad {
                             ?>
                             <h2>Fichier de traduction <?= $_GET["lang"]; ?></h2>
                             <?php
-                            form::new_form("form_trad");
-                            form::hidden("trad_form", 1);
+                            $form = new form("form_trad");
+                            echo $form->get_open_form() .
+                            $form->hidden("trad_form", 1);
                             compact_css::get_instance()->add_style((new css)
                                             ->add_rule(".form_trad", ["width" => "900px"])
                                             ->add_rule(".form_trad #datatable", ["margin" => "0 auto"])
@@ -119,9 +124,9 @@ class trad {
                                 });
                             </script>
                             <?php
-                            echo tags::tag("a", ["href" => "#", "id" => "addkey"], "Ajouter une clé");
-                            form::submit('btn-default');
-                            form::close_form();
+                            echo tags::tag("a", ["href" => "#", "id" => "addkey"], "Ajouter une clé") .
+                            $form->submit('btn-default') .
+                            $form->get_close_form();
                         } else {
                             js::alert("Le fichier de traduction n'existe pas !");
                             js::redir(application::get_url(array("lang")));
@@ -135,10 +140,10 @@ class trad {
                         $ul[] = html_structures::a_link(application::get_url(array("lang")) . "lang=" . $v, $v);
                     }
                     echo html_structures::ul($ul);
-                    form::new_form();
-                    form::input("Langue (Sigle, exemple : en, es, it, ru, ...)", "add_lang");
-                    form::submit("btn-default", "Ajouter");
-                    form::close_form();
+                    $form = new form();
+                    $form->input("Langue (Sigle, exemple : en, es, it, ru, ...)", "add_lang");
+                    $form->submit("btn-default", "Ajouter");
+                    echo $form->render();
                     if (isset($_POST["add_lang"])) {
                         $file = "lang/" . ($add_lang = strtr($_POST["add_lang"], array("." => "", "/" => "", "\\" => "", "'" => "", '"' => ""))) . ".json";
                         if (!file_exists($file)) {

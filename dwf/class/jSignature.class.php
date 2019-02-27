@@ -15,6 +15,24 @@ class jSignature {
     private static $_called = false;
 
     /**
+     * Id CSS pour jSignature
+     * @var string $id id CSS pour jSignature
+     */
+    private $_id;
+
+    /**
+     * Label
+     * @var string $label Label 
+     */
+    private $_label;
+
+    /**
+     * Format de donné returné : svgbase64 (defaut), svg ou base30 
+     * @var string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30 
+     */
+    private $_dataformat;
+
+    /**
      * Créé un champs de formulaire pour les signatures numeriques
      * 
      * @param string $id id CSS pour jSignature
@@ -31,27 +49,29 @@ class jSignature {
             <?php
             self::$_called = true;
         }
-        ?>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#<?= $id ?>_div").jSignature();
-                $("#<?= $id ?>_reset").click(function (e) {
+        $this->_id = $id;
+        $this->_label = $label;
+        $this->_dataformat = $dataformat;
+    }
+
+    public function render() {
+        $script = "$(document).ready(function () {
+                $(\"#{$this->_id}_div\").jSignature();
+                $(\"#{$this->_id}_reset\").click(function (e) {
                     e.preventDefault();
-                    $("#<?= $id ?>_div").jSignature("reset");
-                    $("#<?= $id ?>").val("");
+                    $(\"#{$this->_id}_div\").jSignature(\"reset\");
+                    $(\"#{$this->_id}\").val(\"\");
                 });
-                $("#<?= $id ?>_div").change(function () {
-                    $("#<?= $id ?>").val($("#<?= $id ?>_div").jSignature("getData", "<?= $dataformat ?>"));
+                $(\"#{$this->_id}_div\").change(function () {
+                    $(\"#{$this->_id}\").val($(\"#{$this->_id}_div\").jSignature(\"getData\", \"{$this->_dataformat}\"));
                 });
-            });
-        </script>
-        <?php
-        echo tags::tag("div", ["class" => "form-group"], tags::tag(
-                        "label", ["for" => $id], $label) .
-                tags::tag("a", ["id" => $id . "_reset", "class" => "btn btn-xs btn-default"], "Reset") .
-                tags::tag("div", ["id" => $id . "_div"], "") .
-                tags::tag("input", ["type" => "hidden", "id" => $id, "name" => $id, "value" => ""])
-        );
+            });";
+        return tags::tag("div", ["class" => "form-group"], tags::tag(
+                                "label", ["for" => $this->_id], $this->_label) .
+                        tags::tag("a", ["id" => $this->_id . "_reset", "class" => "btn btn-xs btn-default"], "Reset") .
+                        tags::tag("div", ["id" => $this->_id . "_div"], "") .
+                        tags::tag("input", ["type" => "hidden", "id" => $this->_id, "name" => $this->_id, "value" => ""])
+                ) . tags::tag("script", ["type" => "text/javascript"], $script);
     }
 
 }

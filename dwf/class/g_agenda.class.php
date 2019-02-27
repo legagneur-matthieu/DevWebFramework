@@ -98,10 +98,10 @@ class g_agenda {
             }
             $option[] = [$m . "-" . $y, time::convert_mois($m) . " " . $y];
         }
-        form::new_form();
-        form::select("Mois", "agenda_my", $option);
-        form::submit("btn-default");
-        form::close_form();
+        $form=new form();
+        $form->select("Mois", "agenda_my", $option);
+        $form->submit("btn-default");
+        echo $form->render();
         if (isset($_POST["agenda_my"])) {
             $events = agenda::get_table_array("date_debut>='01-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00';");
             echo html_structures::hr();
@@ -122,17 +122,17 @@ class g_agenda {
                 );
             }
             echo html_structures::hr();
-            form::new_form();
-            form::hidden("agenda_my", $_POST["agenda_my"]);
-            form::datetimepicker("Date de début", "date_debut", date("d/m/Y H:i"));
-            form::datetimepicker("Date de fin", "date_fin", date("d/m/Y H:i"));
-            form::input("Titre", "titre");
             $cke = js::ckeditor("texte");
-            form::textarea("Texte", "texte");
-            form::submit("btn-default");
-            form::close_form();
+            $form=new form();
+            $form->hidden("agenda_my", $_POST["agenda_my"]);
+            $form->datetimepicker("Date de début", "date_debut", date("d/m/Y H:i"));
+            $form->datetimepicker("Date de fin", "date_fin", date("d/m/Y H:i"));
+            $form->input("Titre", "titre");
+            $form->textarea("Texte", "texte");
+            $form->submit("btn-default");
+            echo $form->render();
             if (isset($_POST["titre"])) {
-                agenda::ajout(form::get_datetimepicker_us("date_debut"), form::get_datetimepicker_us("date_fin"), $_POST["titre"], $cke->parse($_POST["texte"]));
+                agenda::ajout($form->get_datetimepicker_us("date_debut"), $form->get_datetimepicker_us("date_fin"), $_POST["titre"], $cke->parse($_POST["texte"]));
                 js::alert("L'événement a bien été ajouté");
                 js::redir("");
             }
@@ -144,23 +144,23 @@ class g_agenda {
      */
     private function agenda_admin_modif() {
         $event = agenda::get_from_id($_GET["agenda"]);
-        form::new_form();
         $debut = explode(" ", $event->get_date_debut());
         $debut[0] = explode("-", $debut[0]);
         $debut = $debut[0][2] . "/" . $debut[0][1] . "/" . $debut[0][0] . " " . $debut[1];
         $fin = explode(" ", $event->get_date_fin());
         $fin[0] = explode("-", $fin[0]);
         $fin = $fin[0][2] . "/" . $fin[0][1] . "/" . $fin[0][0] . " " . $fin[1];
-        form::datetimepicker("Date de début", "date_debut", $debut);
-        form::datetimepicker("Date de fin", "date_fin", $fin);
-        form::input("Titre", "titre", "text", $event->get_titre());
         $cke = js::ckeditor("texte");
-        form::textarea("Texte", "texte", htmlspecialchars_decode($event->get_texte()));
-        form::submit("btn-default");
-        form::close_form();
+        $form=new form();
+        $form->datetimepicker("Date de début", "date_debut", $debut);
+        $form->datetimepicker("Date de fin", "date_fin", $fin);
+        $form->input("Titre", "titre", "text", $event->get_titre());
+        $form->textarea("Texte", "texte", htmlspecialchars_decode($event->get_texte()));
+        $form->submit("btn-default");
+        echo $form->render();
         if (isset($_POST["titre"])) {
-            $event->set_date_debut(form::get_datetimepicker_us("date_debut"));
-            $event->set_date_fin(form::get_datetimepicker_us("date_fin"));
+            $event->set_date_debut($form->get_datetimepicker_us("date_debut"));
+            $event->set_date_fin($form->get_datetimepicker_us("date_fin"));
             $event->set_titre($_POST["titre"]);
             $event->set_texte($cke->parse($_POST["texte"]));
             js::alert("L'événement a bien été ajouté");

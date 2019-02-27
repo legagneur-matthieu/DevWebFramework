@@ -44,11 +44,11 @@ class tags {
      * @param string|\tags $content Contenu de la balise (false = balise auto fermante)
      */
     public static function tag($tag, $attr = [], $content = false) {
-        $str = "<$tag";
+        $str = "<{$tag}";
         foreach ($attr as $key => $value) {
-            $str .= ' ' . $key . '="' . $value . '"';
+            $str .= " {$key}=\"{$value}\"";
         }
-        $str .= ($content !== false ? ">" . $content . "</" . $tag . ">" : "/>") . PHP_EOL;
+        $str .= ($content !== false ? ">{$content}</{$tag}>" : "/>") . PHP_EOL;
         return $str;
     }
 

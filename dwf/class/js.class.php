@@ -8,28 +8,14 @@
 class js {
 
     /**
-     * Permet d'afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)
-     * @var string Permet d'afficher le p#real_title à la fin des pages (utilisé par statistiques.class.php)
-     */
-    public static $_real_title = "";
-
-    /**
+     * CETTE METHODE EST OBSELETTE !
+     * ALIAS DE html5::before_title();
      * Ajoute un préfixe au titre de la page en cours
      * 
      * @param string $text Préfixe au titre
      */
     public static function before_title($text) {
-        ?>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("title").text("<?= $text; ?> " + $("title").text());
-            });
-        </script>
-        <?php
-        if (empty(self::$_real_title)) {
-            self::$_real_title = config::$_title;
-        }
-        self::$_real_title = $text . self::$_real_title;
+        html5::before_title($text);
     }
 
     /**

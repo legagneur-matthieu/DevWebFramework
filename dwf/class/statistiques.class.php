@@ -243,7 +243,7 @@ class statistiques {
         if (isset($_GET["date"])) {
             $date = explode("_", $_GET["date"]);
             sub_menu::add_active_tab("stat", $stat = time::convert_mois($date[1]) . " " . $date[0]);
-            js::before_title("Statistiques " . $stat . " -");
+            html5::before_title("Statistiques " . $stat . " -");
             $date_debut = $date[0] . "-" . $date[1];
             $date_fin = $date_debut . "-31";
             $date_debut .= "-01";
@@ -320,15 +320,15 @@ class statistiques {
     }
 
     /**
-     * Récupére le contenu de p#real_title sur l'url passè en paramétre 
+     * Récupére le title de l'url passè en paramétre 
      * @param string $url URL
-     * @return string contenu de p#real_title
+     * @return string Title de l'url
      */
     private function get_real_title_from_url($url) {
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadHTMLFile($url);
-        $title = $dom->getElementById("real_title")->textContent;
+        $title = $dom->getElementsByTagName("title")->item(0)->textContent;
         libxml_clear_errors();
         return $title;
     }

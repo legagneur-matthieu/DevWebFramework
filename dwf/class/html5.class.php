@@ -15,6 +15,12 @@ class html5 {
     public static $_called = false;
 
     /**
+     * Contien de titre (title) de la page HTML
+     * @var string Contien de titre (title) de la page HTML
+     */
+    public static $_real_title = "";
+
+    /**
      * Cette classe gère l'entête HTML5 et son pied de page.
      * 
      * @param string $title Titre du site
@@ -36,7 +42,8 @@ class html5 {
         <html lang="<?= $lang; ?>">
             <head>
                 <?php
-                $meta .= tags::tag("meta", ["charset" => "UTF-8"]) .
+                $meta .= tags::tag("title", [], "") .
+                        tags::tag("meta", ["charset" => "UTF-8"]) .
                         tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]);
                 if ($description != "" or $keywords != "") {
                     $meta .= tags::tag("meta", ["name" => "Robots", "content" => "all"]) .
@@ -47,9 +54,6 @@ class html5 {
                     if ($keywords != "") {
                         $meta .= tags::tag("meta", ["name" => "keywords", "content" => $keywords]);
                     }
-                }
-                if (isset(config::$_title)and config::$_title != "") {
-                    $meta .= tags::tag("title", [], config::$_title);
                 }
                 if (isset(config::$_favicon)and config::$_favicon != "") {
                     $meta .= tags::tag("link", ["rel" => "icon", "href" => config::$_favicon]);
@@ -132,7 +136,6 @@ class html5 {
              */
             public function __destruct() {
                 application::event("onhtml_body_end");
-                echo tags::tag("p", ["id" => "real_title", "class" => "hidden"], js::$_real_title);
                 compact_css::get_instance()->render();
                 ?>
             </body>
@@ -141,7 +144,7 @@ class html5 {
         self::render(ob_get_clean());
     }
 
-    public static function render($document) {
+    private static function render($document) {
         if (class_exists("tidy")) {
             $tidy = new tidy();
             $tidy->parseString($document, [
@@ -149,11 +152,23 @@ class html5 {
                 "wrap" => 256,
                 "new-blocklevel-tags" => implode(" ", self::tags_list())
                     ], "utf8");
-            echo strtr($tidy, ["&amp;" => "&"]);
+            echo strtr($tidy, ["&amp;" => "&", "<title></title>" => "<title>" . self::$_real_title . "</title>"]);
         } else {
             include_once __DIR__ . '/xhtml-formatter/src/XhtmlFormatter/Formatter.php';
-            echo (new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document);
+            echo strtr((new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document), ["<title></title>" => "<title>" . self::$_real_title . "</title>"]);
         }
+    }
+
+    /**
+     * Ajoute un préfixe au titre de la page en cours
+     * 
+     * @param string $text Préfixe au titre
+     */
+    public static function before_title($text) {
+        if (empty(self::$_real_title)) {
+            self::$_real_title = config::$_title;
+        }
+        self::$_real_title = $text . self::$_real_title;
     }
 
     private static function tags_list() {

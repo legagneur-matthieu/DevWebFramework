@@ -110,7 +110,7 @@ class application {
                     $page["keyword"] = "";
                 }
                 $html = new html5($page["description"], $page["keyword"]);
-                js::before_title($page["title"] . " - ");
+                html5::before_title("{$page["title"]} - ");
                 $this->_pages->header();
                 $this->menu();
                 $p = $page["page"];

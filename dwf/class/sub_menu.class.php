@@ -46,7 +46,7 @@ class sub_menu {
                 $action_finded = true;
                 $v = $value[$key];
                 if (isset($value["title"]) and ! empty($value["title"])) {
-                    js::before_title($value["title"] . " - ");
+                    html5::before_title($value["title"] . " - ");
                 }
                 if (method_exists($this_class, $v)) {
                     $this_class->$v();

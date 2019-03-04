@@ -144,7 +144,7 @@ class html5 {
         self::render(ob_get_clean());
     }
 
-    private static function render($document) {
+    public static function render($document) {
         if (class_exists("tidy")) {
             $tidy = new tidy();
             $tidy->parseString($document, [

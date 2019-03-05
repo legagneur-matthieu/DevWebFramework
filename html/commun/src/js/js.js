@@ -13,4 +13,15 @@ $(document).ready(function () {
     });
     $('[data-toggle="popover"]').popover();
     $('[data-toggle="tooltip"]').tooltip();
+
 });
+function maskNumber(id, integer = false, thousands = " ", decimal = ".") {
+    let from = {};
+    from[thousands] = "";
+    from[decimal] = ".";
+    $("#" + id).val(number_format(parseFloat(strtr($("#" + id).val(), from)), (integer ? 0 : 2), decimal, thousands))
+            .unbind("change")
+            .change(function () {
+                maskNumber(id, integer, thousands, decimal);
+            });
+}

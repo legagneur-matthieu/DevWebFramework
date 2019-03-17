@@ -15,14 +15,15 @@ class maskNumber {
 
     /**
      * Formater l'affichage d'un nombre dans un INPUT de type text
-     * @param string $name ID de l'input
+     * @param string $name nom de l'input
      * @param boolean $integer true = int, false = float
      * @param string $thousands Symbole separateur entre milliers, millions, milliards, ... (un espace par defaut)
      * @param string $decimal Symbole pour les decimeaux ( un point par defaut)
      */
     public static function set($name, $integer = false, $thousands = " ", $decimal = ".") {
         $int = ($integer ? "true" : "false");
-        echo tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () {maskNumber(\"{$name}\", {$int}, \"{$thousands}\",\"{$decimal}\");});");
+        $id = strtr($name, ["[" => "_", "]" => ""]);
+        echo tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () {maskNumber(\"{$id}\", {$int}, \"{$thousands}\",\"{$decimal}\");});");
         self::$_inputs[] = ["name" => $name, "thousands" => $thousands, "integer" => $integer, "decimal" => $decimal];
     }
 
@@ -31,12 +32,23 @@ class maskNumber {
      */
     public static function get() {
         foreach (self::$_inputs as $input) {
-            if (isset($_POST[$input["name"]])) {
-                $value = strtr($_POST[$input["name"]], [
-                    $input["thousands"] => "",
-                    $input["decimal"] => ".",
-                ]);
-                $_POST[$input["name"]] = ($input["integer"] ? (int) $value : (float) $value);
+            $exp = explode("[", $input["name"]);
+            $key = $exp[0];
+            $index = (isset($exp[1]) ? (int) $exp[1] : false);
+            if (isset($_POST[$key])) {
+                if (is_array($_POST[$key])) {
+                    $value = strtr($_POST[$key][$index], [
+                        $input["thousands"] => "",
+                        $input["decimal"] => ".",
+                    ]);
+                    $_POST[$key][$index] = ($input["integer"] ? (int) $value : (float) $value);
+                } else {
+                    $value = strtr($_POST[$key], [
+                        $input["thousands"] => "",
+                        $input["decimal"] => ".",
+                    ]);
+                    $_POST[$key] = ($input["integer"] ? (int) $value : (float) $value);
+                }
             }
         }
     }

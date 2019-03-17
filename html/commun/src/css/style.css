@@ -15,36 +15,13 @@
     color: white;
     margin-left: 50px;
 }
-.btn_crypto{
-    float: right;
-    margin-top: -109px;
-    margin-right: 1px;
-    margin-bottom: -10px;
-}
-.btn_crypto>div{
-    padding: 0;
-    margin: 0;
-
-}
-.btn_crypto>div>p{
-    padding: 0;
-    margin: 0;
-    font-size: xx-small; 
-    text-align: center;    
-}
-.btn_crypto>div>.alert-info>a{
-    display: block;
-}
-.btn_crypto>.panel-body>form{
-    margin: -10px auto;
-    width: 33%;
-}
 /*menu*/
 .navbar{
-    margin-top: -25px;
+    margin-bottom: 20px;
 }
 nav *{
     font-size: 0.95em;
+    font-weight: bold;
 }
 ul.navbar-nav li a, ul.nav-tabs li a {
     text-transform: uppercase;
@@ -151,18 +128,18 @@ ul.file_explorer, ul.ftp_explorer{
     border-bottom: lightgrey solid 1px;
 }
 
-.messagerie>.row>.col-xs-2{
+.messagerie>.row>.col-sm-2{
     text-align: center;
 }
 
 .messagerie>.row:first-child{
     border-top: lightgrey solid 1px;
 }
-.messagerie>.row>.col-xs-9{
+.messagerie>.row>.col-sm-9{
     border-left: lightgrey dotted 1px;
 }
 
-.messagerie>.row>.col-xs-1{
+.messagerie>.row>.col-sm-1{
     text-align: center;
     vertical-align: middle;
 }

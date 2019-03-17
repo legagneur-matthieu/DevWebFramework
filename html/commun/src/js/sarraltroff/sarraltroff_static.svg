@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg"     
+     version="1.2"
+     height="400"
+     width="690">
+    <circle cx="5" cy="200" r="5" fill="black" ></circle> 
+    <circle cx="25" cy="200" r="15" fill="black" ></circle>
+    <circle cx="65" cy="200" r="25" fill="black" ></circle>
+    <circle cx="290" cy="200" r="50"  fill="black"></circle>
+    <circle cx="540" cy="200" r="50" fill="black" ></circle>
+    <circle cx="615" cy="200" r="25" fill="black" ></circle>
+    <circle cx="655" cy="200" r="15" fill="black" ></circle>
+    <circle cx="675" cy="200" r="5" fill="black" ></circle>
+    <path d="M190 200  
+        a100,100 90 0,0 200,0
+        a75,75 90 0,1 -150,0
+        a25,25 90 0,0 -50 0
+        a100,100 90 0,1 200,0
+        a25,25 90 0,1 -50 0
+        a75,75 90 0,0 -150,0
+        " fill="black">
+    </path>
+    <path d="M90 200 
+        a200,200 90 0,1 400,0
+        a150,150 90 0,0 -300,0
+        a50,50 90 0,1 -100 0
+        a200,200 90 0,0 400,0
+        a50,50 90 0,0 -100 0
+        a150,150 90 0,1 -300,0
+        " fill="black">
+    </path>
+    <path d="M390 200
+        a150,150 90 0,0 300,0
+        a100,100 90 0,1 -200,0
+        a50,50 90 0,0 -100,0
+        " fill="black">
+    </path>
+</svg> 

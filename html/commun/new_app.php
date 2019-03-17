@@ -45,7 +45,7 @@ class new_app {
                 border-right: lightgray solid 1px;
             }
         </style>
-        <header class="page-header label-info">
+        <header class="page-header bg-info">
             <h1>Nouvelle Application <br /><small>Créer une nouvelle application avec DWF</small></h1>
         </header>
         <?php
@@ -59,7 +59,7 @@ class new_app {
         echo $form->get_open_form();
         ?>
         <div class="row">
-            <div class="col-xs-4 border_right">
+            <div class="col-sm-4 border_right">
                 <?php
                 echo $form->open_fieldset("Application") .
                 $form->input("Nom du dossier (apparait dans l'url)", "dirname") .
@@ -98,60 +98,46 @@ class new_app {
                     }
                     $option[] = array($ha, $ha . " (" . $force . ")", ($ha == "sha512"));
                 }
-                echo $form->select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option).
-                $form->select("Theme", "theme", [
-                    ["default", "Default"],
-                    ["cerulean", "Cerulean"],
-                    ["cosmo", "Cosmo"],
-                    ["cyborg", "Cyborg"],
-                    ["darkly", "Darkly"],
-                    ["flatly", "Flatly"],
-                    ["journal", "Journal"],
-                    ["lumen", "Lumen"],
-                    ["paper", "Paper"],
-                    ["readable", "Readable"],
-                    ["sandstone", "Sandstone"],
-                    ["simplex", "Simplex"],
-                    ["slate", "Slate"],
-                    ["spacelab", "Spacelab"],
-                    ["superhero", "Superhero"],
-                    ["united", "United"],
-                    ["yeti", "Yeti"]
-                ]).
-                $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv").
-                $form->close_fieldset();
+                echo $form->select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option) .
+                $option = [["default", "Default"]];
+                foreach (bootstrap_theme::get_bootstrap_themes() as $theme) {
+                    $option[] = [$theme, $theme];
+                }
+                $form->select("Theme", "theme", $option) .
+                        $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv") .
+                        $form->close_fieldset();
                 ?>
             </div>
-            <div class="col-xs-4 border_right">
+            <div class="col-sm-4 border_right">
                 <?php
-                echo $form-> open_fieldset("PDO").
+                echo $form->open_fieldset("PDO") .
                 $form->select("type", "pdo_type", [
                     ["mysql", "MySQL", true],
                     ["sqlite", "SQLite (déconseillé !)"],
-                ]).
-                $form->input("Host", "pdo_host", "text", "localhost", false).
-                $form->input("Login", "pdo_login", "text", "", false).
-                $form->input("Password", "pdo_psw", "password", "", false).
-                $form->input("Database", "pdo_dbname").
-                $form->checkbox("Créer la base de donnée (si elle n'existe pas)", "dbcreate", "1", "", true).
+                ]) .
+                $form->input("Host", "pdo_host", "text", "localhost", false) .
+                $form->input("Login", "pdo_login", "text", "", false) .
+                $form->input("Password", "pdo_psw", "password", "", false) .
+                $form->input("Database", "pdo_dbname") .
+                $form->checkbox("Créer la base de donnée (si elle n'existe pas)", "dbcreate", "1", "", true) .
                 $form->close_fieldset();
                 ?> 
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
-                echo $form-> open_fieldset("SMTP").
-                $form->input("Host", "smtp_host", "text", "localhost").
-                $form->select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]).
-                $form->input("Login", "smtp_login", "text", "", false).
-                $form->input("Password", "smtp_psw", "password", "", false).
+                echo $form->open_fieldset("SMTP") .
+                $form->input("Host", "smtp_host", "text", "localhost") .
+                $form->select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]) .
+                $form->input("Login", "smtp_login", "text", "", false) .
+                $form->input("Password", "smtp_psw", "password", "", false) .
                 $form->close_fieldset();
                 ?> 
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
                 <?php
                 echo $form->submit("btn-primary", "Créer");
                 ?>
@@ -246,10 +232,10 @@ class new_app {
         $index = '<?php class website { /** * Liste des classes metier et classes natives chargé par le framework * @var array Liste des classes metier et classes natives chargé par le framework      */public static $_class; /** * point de départ du site web  */ public function __construct() { self::$_class[__FILE__] = __CLASS__; spl_autoload_register([__CLASS__, "classloader"]); require_once "../../dwf/index.php"; try { new index(); } catch (Exception $e) { dwf_exception::print_exception($e); }  } /** * Inclut toutes les classes du dossier "class" se finissant par ".class.php" * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application */ private static function classloader($class) { $file = __DIR__ . "/class/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } else { $file = __DIR__ . "/class/entity/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } } } } new website();';
         $this->create_file($file_index, $index);
         /* page */
-        $pages = '<?php /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créér et appeler une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> */ class pages { /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créé et appelle une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... */ public function __construct() { new robotstxt();} /** * Entete des pages */ public function header() { ?> <header class="page-header label-info"> <h1>' . $_POST["title"] . ' <br /><small>Description de ' . $_POST["title"] . '</small></h1> </header> <?php } /** * Pied des pages */ public function footer() { ?> <footer> <hr /> <p> ' . date("Y") . '-<?php echo date("Y"); ?> D&eacute;velopp&eacute; par [VOUS]</p> <!--[if (IE 6)|(IE 7)]> <p><big>Ce site n\'est pas compatible avec votre version d\'internet explorer !</big></p> <![endif]--> </footer> <?php } /** * Fonction par défaut / page d\'accueil */ public function index() { ?> <p>[Votre contenu]</p> <?php } /** * Exemple de login */ public function login() { $auth = new auth("user", "login", "psw"); if (session::get_auth()) { js::redir("index.php"); } } public function deco() { auth::unauth(); js::redir("index.php"); } } ';
+        $pages = '<?php /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créér et appeler une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> */ class pages { /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créé et appelle une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... */ public function __construct() { new robotstxt();} /** * Entete des pages */ public function header() { ?> <header class="page-header bg-info"> <h1>' . $_POST["title"] . ' <br /><small>Description de ' . $_POST["title"] . '</small></h1> </header> <?php } /** * Pied des pages */ public function footer() { ?> <footer> <hr /> <p> ' . date("Y") . '-<?php echo date("Y"); ?> D&eacute;velopp&eacute; par [VOUS]</p> <!--[if (IE 6)|(IE 7)]> <p><big>Ce site n\'est pas compatible avec votre version d\'internet explorer !</big></p> <![endif]--> </footer> <?php } /** * Fonction par défaut / page d\'accueil */ public function index() { ?> <p>[Votre contenu]</p> <?php } /** * Exemple de login */ public function login() { $auth = new auth("user", "login", "psw"); if (session::get_auth()) { js::redir("index.php"); } } public function deco() { auth::unauth(); js::redir("index.php"); } } ';
         $this->create_file($file_pages, $pages);
         /* config */
-        $config = '<?php /** * Cette classe sert de fichier de configuration, <br /> * elle contient: * <ul> * <li>les variables de connexion à la base de données</li> * <li>l \'algo utilisé pour les hash</li> * <li>les routes de l \'aplication</li> * </ul> * * mais vous pouvez également y ajouter des variables diverses qui vous seront utile */ class config { /*PDO*/ public static $_PDO_type = "' . $_POST["pdo_type"] . '"; public static $_PDO_host = "' . $_POST["pdo_host"] . '"; public static $_PDO_dbname = "' . $_POST["pdo_dbname"] . '"; public static $_PDO_login = "' . $_POST["pdo_login"] . '"; public static $_PDO_psw = "' . $_POST["pdo_psw"] . '"; /*hash*/ public static $_hash_algo = "' . $_POST["hash"] . '"; /*routes*/ public static $_route_auth = array(); public static $_route_unauth = array(); /*Data*/ public static $_title = "' . $_POST["title"] . '"; public static $_favicon =""; public static $_debug = true; public static $_prefix = "' . $_POST["prefix"] . '"; public static $_theme = "' . $_POST["theme"] . '"; public static $_SMTP_host = "' . $_POST["smtp_host"] . '"; public static $_SMTP_auth = ' . $_POST["smtp_auth"] . '; public static $_SMTP_login = "' . $_POST["smtp_login"] . '"; public static $_SMTP_psw = "' . $_POST["smtp_psw"] . '"; public static $_sitemap = false; public static $_statistiques = false; public static function onbdd_connected() {self::$_route_auth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keyword" => "Index, devwebframework, DWF"),array("page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION"),); self::$_route_unauth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keyword" => "Index, devwebframework, DWF"), array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keyword" => "login, devwebframework, DWF"),); }}';
+        $config = '<?php /** * Cette classe sert de fichier de configuration, <br /> * elle contient: * <ul> * <li>les variables de connexion à la base de données</li> * <li>l \'algo utilisé pour les hash</li> * <li>les routes de l \'aplication</li> * </ul> * * mais vous pouvez également y ajouter des variables diverses qui vous seront utile */ class config { /*PDO*/ public static $_PDO_type = "' . $_POST["pdo_type"] . '"; public static $_PDO_host = "' . $_POST["pdo_host"] . '"; public static $_PDO_dbname = "' . $_POST["pdo_dbname"] . '"; public static $_PDO_login = "' . $_POST["pdo_login"] . '"; public static $_PDO_psw = "' . $_POST["pdo_psw"] . '"; /*hash*/ public static $_hash_algo = "' . $_POST["hash"] . '"; /*routes*/ public static $_route_auth = array(); public static $_route_unauth = array(); /*Data*/ public static $_title = "' . $_POST["title"] . '"; public static $_favicon =""; public static $_debug = true; public static $_prefix = "' . $_POST["prefix"] . '"; public static $_theme = "' . $_POST["theme"] . '"; public static $_SMTP_host = "' . $_POST["smtp_host"] . '"; public static $_SMTP_auth = ' . $_POST["smtp_auth"] . '; public static $_SMTP_login = "' . $_POST["smtp_login"] . '"; public static $_SMTP_psw = "' . $_POST["smtp_psw"] . '"; public static $_sitemap = false; public static $_statistiques = false; public static function onbdd_connected() {self::$_route_auth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),array("page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION"),); self::$_route_unauth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"), array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keywords" => "login, devwebframework, DWF"),); }}';
         $this->create_file($file_config, $config);
         if (isset($_POST["srv"])) {
             $dir_services = $dir . "/services";

@@ -84,7 +84,7 @@ class auth {
                 $form = new form();
                 $form->input("Login", "auth_login", "text");
                 $form->input("Mot de passe", "auth_psw", "password");
-                $form->submit("btn-block btn-default", "Connexion");
+                $form->submit("btn-block btn-primary", "Connexion");
                 if ($this->_use_token) {
                     $form->token();
                 }

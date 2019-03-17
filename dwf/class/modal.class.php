@@ -22,7 +22,7 @@ class modal {
             echo html_structures::script("../commun/src/js/modal/modal-window.js") .
             tags::tag("div", ["role" => "dialog", "aria-hidden" => "true", "id" => "modal", "class" => "modal-content", "style" => "display: none;"], tags::tag(
                             "div", ["style" => "max-height: 100%; overflow: auto;"], "") .
-                    tags::tag("button", ["id" => "modalCloseButton", "class" => "modalCloseButton btn btn-default", "title" => "Fermer la fenêtre"], html_structures::glyphicon("remove"))
+                    tags::tag("button", ["id" => "modalCloseButton", "class" => "modalCloseButton btn btn-secondary", "title" => "Fermer la fenêtre"], html_structures::glyphicon("remove"))
             ) .
             tags::tag("div", ["tabindex" => "-1", "id" => "modalOverlay", "style" => "display: none;"], "");
             self::$_called = true;

@@ -27,14 +27,14 @@ class config { /* PDO */
 
     public static function onbdd_connected() {
         self::$_route_auth = array(
-            array("page" => "index", "title" => "Page d 'accueil", "text" => "Accueil", "description" => "Index de Documentation", "keyword" => "Index, Documentation"),
+            array("page" => "index", "title" => "Page d 'accueil", "text" => "Accueil", "description" => "Index de Documentation", "keywords" => "Index, Documentation"),
             array("page" => "deco", "title" => "Deconnexion", "text" => "Deconnexion"),
         );
         self::$_route_unauth = array(
-            array("page" => "index", "title" => "Page d 'accueil", "text" => "Accueil", "description" => "Index de Documentation", "keyword" => "Index, Documentation, DWF"),
-            array("page" => "web", "title" => "Framework PHP", "text" => "Framework PHP", "description" => "Documentation du framework PHP", "keyword" => "Framework, PHP, Documentation, DWF"),
-            array("page" => "mobile", "title" => "Framework Mobile", "text" => "Framework Mobile", "description" => "Documentation du framework Mobile", "keyword" => "Framework, Mobile, Documentation, DWF"),
-            array("page" => "tiers", "title" => "Librairies Tiers", "text" => "Librairies Tiers", "description" => "Librairies tiers dans les frameworks", "keyword" => "Librairies, Frameworks, PHP, Mobile, Documentation, DWF"),
+            array("page" => "index", "title" => "Page d 'accueil", "text" => "Accueil", "description" => "Index de Documentation", "keywords" => "Index, Documentation, DWF"),
+            array("page" => "web", "title" => "Framework PHP", "text" => "Framework PHP", "description" => "Documentation du framework PHP", "keywords" => "Framework, PHP, Documentation, DWF"),
+            array("page" => "mobile", "title" => "Framework Mobile", "text" => "Framework Mobile", "description" => "Documentation du framework Mobile", "keywords" => "Framework, Mobile, Documentation, DWF"),
+            array("page" => "tiers", "title" => "Librairies Tiers", "text" => "Librairies Tiers", "description" => "Librairies tiers dans les frameworks", "keywords" => "Librairies, Frameworks, PHP, Mobile, Documentation, DWF"),
         );
     }
 

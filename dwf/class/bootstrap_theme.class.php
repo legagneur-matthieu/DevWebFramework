@@ -17,17 +17,30 @@ class bootstrap_theme {
         "darkly",
         "flatly",
         "journal",
+        "litera",
         "lumen",
-        "paper",
-        "readable",
+        "lux",
+        "materia",
+        "minty",
+        "pulse",
         "sandstone",
         "simplex",
+        "sketchy",
         "slate",
+        "solar",
         "spacelab",
         "superhero",
         "united",
         "yeti"
     ];
+
+    /**
+     * Retourne la liste des thèmes disponible
+     * @return array La liste des thèmes disponible
+     */
+    public static function get_bootstrap_themes() {
+        return self::$_theme;
+    }
 
     /**
      * Retourne le thème renseigné dans config ou en session si l'utilisateur 
@@ -49,11 +62,13 @@ class bootstrap_theme {
      * Affiche les links des thèmes
      */
     public static function link_theme() {
+        echo html_structures::link("../commun/src/dist/css/bootstrap-reboot.min.css") .
+        html_structures::link("../commun/src/dist/css/bootstrap-glyphicon.min") .
+        html_structures::link("../commun/src/dist/css/bootstrap-grid.min.css");
         if (in_array($theme = self::get_theme(), self::$_theme)) {
-            echo html_structures::link("../commun/src/dist/bootswatch/" . $theme . "/bootstrap.min.css");
+            echo html_structures::link("../commun/src/dist/bootswatch/{$theme}/bootstrap.min.css");
         } else {
-            echo html_structures::link("../commun/src/dist/css/bootstrap.min.css") .
-            html_structures::link("../commun/src/dist/css/bootstrap-theme.min.css");
+            echo html_structures::link("../commun/src/dist/css/bootstrap.min.css");
         }
     }
 
@@ -70,7 +85,7 @@ class bootstrap_theme {
             js::redir("");
             exit();
         }
-        $form=new form();
+        $form = new form();
         $option = [
             ["default", "Default", false]
         ];

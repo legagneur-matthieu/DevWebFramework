@@ -32,11 +32,11 @@ class sub_menu {
                     $href .= $k . "=" . $_GET[$k] . "&";
                 }
                 $href .= $key . "=" . $value[$key];
-                $li = tags::li(html_structures::a_link($href, $value["text"], "", $value["title"]));
-                if ($_GET[$key] == $value[$key]) {
-                    $li->set_attr("class", "active");
-                }
-                $ul->append_content($li);
+                $ul->append_content(
+                        tags::tag(
+                                "li", ["class" => "nav-item"], html_structures::a_link($href, $value["text"], "nav-link" . ($_GET[$key] == $value[$key] ? " active" : ""), $value["title"])
+                        )
+                );
             }
         }
         echo $ul;

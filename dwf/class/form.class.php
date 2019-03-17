@@ -87,7 +87,7 @@ class form {
      * @return string Le champ input
      */
     public function input($label, $name, $type = "text", $value = null, $required = true, $class = "", $list = null) {
-        $attr = ["id" => $name, "name" => $name, "type" => $type, "class" => "form-control"];
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => $type, "class" => "form-control form-control-sm"];
         if ($value !== null) {
             $attr["value"] = $value;
         }
@@ -98,6 +98,40 @@ class form {
             $attr["required"] = "required";
         }
         return $this->append(tags::tag("div", ["class" => "form-group {$class}"], tags::tag("label", ["for" => $name], $label) . tags::tag("input", $attr, false)));
+    }
+
+    /**
+     * Ajoute un input de type range
+     * @param string $label Label de l'input
+     * @param string $name Nom de l'input
+     * @param int $min Valeur minimal de l'input
+     * @param int $max Valeur maximal de l'input
+     * @param int $value $value Valeur de l'input (0 par défaut)
+     * @param int $step Pas de l'input
+     * @param string $class Classe CSS
+     * @return string Le champ input de type range
+     */
+    public function range($label, $name, $min, $max, $value = 0, $step = 1, $class = "") {
+        $script = tags::tag("script", ["type" => "text/javascript"], "$(\"#{$name}\").on(\"input\", function () { $(\"#{$name}_span\").text(number_format($(this).val(), 0, \",\", \" \"));});");
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "range", "class" => "form-control-range", "min" => $min, "max" => $max, "step" => $step, "value" => $value,];
+        return $this->append(tags::tag("div", ["class" => "form-group {$class}"], tags::tag("label", ["for" => $name], $label . " - " .
+                                        tags::tag("span", ["id" => strtr($name,["["=>"_","]"=>""]) . "_span"], $value)) . tags::tag("input", $attr, false)) . $script);
+    }
+
+    /**
+     * @param string $label Label de l'input
+     * @param string $name Nom de l'input
+     * @param string $value Valeur de l'input (null par défaut)
+     * @param string $class Classe CSS
+     * @param boolean $checked Case cochée par défaut ? true/false (false par defaut)
+     * @return type
+     */
+    public function input_switch($label, $name, $value, $class = "", $checked = false) {
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "checkbox", "value" => $value, "class" => "custom-control-input"];
+        if ($checked) {
+            $attr["checked"] = "checked";
+        }
+        return $this->append(tags::tag("div", ["class" => "custom-control custom-switch {$class}"], tags::tag("input", $attr, false) . tags::tag("label", ["for" => $name, "class" => "custom-control-label"], $label)));
     }
 
     /**
@@ -124,7 +158,7 @@ class form {
      * @return string
      */
     public function file($label, $name, $required = true, $class = "", $multiple = false) {
-        $attr = ["id" => $name, "name" => $name, "type" => "file"];
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "file"];
         if ($multiple) {
             $attr["name"] .= "[]";
             $attr["multiple"] = "true";
@@ -263,7 +297,7 @@ class form {
     public function token() {
         return $this->hidden("token", self::get_token());
     }
-    
+
     /**
      * Retourne un token à partir de l'algo de hash, de l'ip et du navigateur enregistré en session
      * @return string Token
@@ -287,7 +321,7 @@ class form {
      * @return string L'input de type hidden
      */
     public function hidden($name, $value) {
-        return $this->append(tags::tag("div", ["class" => "form-group"], tags::tag("input", ["type" => "hidden", "name" => $name, "id" => $name, "value" => $value], false)));
+        return $this->append(tags::tag("div", ["class" => "form-group"], tags::tag("input", ["type" => "hidden", "name" => $name, "id" => strtr($name,["["=>"_","]"=>""]), "value" => $value], false)));
     }
 
     /**
@@ -300,9 +334,9 @@ class form {
      * @return string La checkbox
      */
     public function checkbox($label, $name, $value, $class = "", $checked = false) {
-        $attr = ["id" => $name, "name" => $name, "type" => "checkbox", "value" => $value];
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "checkbox", "value" => $value];
         if ($checked) {
-            $att["checked"] = "checked";
+            $attr["checked"] = "checked";
         }
         return $this->append(tags::tag("div", ["class" => "form-group checkbox {$class}"], tags::tag("label", ["for" => $name], tags::tag("input", $attr, false) . $label)));
     }
@@ -318,7 +352,7 @@ class form {
     public function radios($label, $name, $radios, $class = "") {
         $divs = "";
         foreach ($radios as $value) {
-            $attr = ["id" => $name . $value[0], "name" => $name, "type" => "radio", "value" => $value[0]];
+            $attr = ["id" => strtr($name,["["=>"_","]"=>""]) . $value[0], "name" => $name, "type" => "radio", "value" => $value[0]];
             if (isset($value[2]) and $value[2] == true) {
                 $attr["checked"] = "checked";
             }
@@ -424,7 +458,7 @@ class form {
      * @return string le selecteur
      */
     public function select($label, $name, $option, $required = true, $class = "") {
-        $attr = ["id" => $name, "name" => $name, "class" => "form-control"];
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "class" => "form-control form-control-sm"];
         if ($required) {
             $attr["required"] = "required";
         }
@@ -465,7 +499,7 @@ class form {
      * @return string Le textarea
      */
     public function textarea($label, $name, $value = " ", $required = true, $class = "", $cols = 30, $rows = 10) {
-        $attr = ["name" => $name, "id" => $name, "cols" => $cols, "rows" => $rows, "class" => "form-control"];
+        $attr = ["name" => $name, "id" => strtr($name,["["=>"_","]"=>""]), "cols" => $cols, "rows" => $rows, "class" => "form-control form-control-sm"];
         if ($required) {
             $attr["required"] = "required";
         }

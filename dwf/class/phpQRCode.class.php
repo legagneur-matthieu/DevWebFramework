@@ -20,7 +20,7 @@ class phpQRCode {
      * Affiche un lien-modal permettant à l'utilisateur d'ouvrir la page courante sur smartphone ou tablette.
      */
     public static function this_page_to_qr() {
-        (new modal())->link_open_modal(html_structures::glyphicon("qrcode", "Voir sur téléphone"), "QRcode", "Continuez la lecture de cette page sur votre téléphone", "QRCode de la page", '<div class="row"><div class="col-xs-6"><p>Scanez le QRCode pour continuer la lecture de cette page sur votre téléphone</p></div><div class="col-xs-6">' . self::print_img($_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . '</div></div>', "");
+        (new modal())->link_open_modal(html_structures::glyphicon("qrcode", "Voir sur téléphone"), "QRcode", "Continuez la lecture de cette page sur votre téléphone", "QRCode de la page", '<div class="row"><div class="col-sm-6"><p>Scanez le QRCode pour continuer la lecture de cette page sur votre téléphone</p></div><div class="col-sm-6">' . self::print_img($_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . '</div></div>', "");
     }
 
     /**

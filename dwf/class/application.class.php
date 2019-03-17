@@ -70,24 +70,16 @@ class application {
         $lis = "";
         foreach ($this->_routes as $page) {
             if (isset($page["text"]) and $page["text"] != "") {
-                $li = tags::li(tags::tag("a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"]], $page["text"]));
-                if ($_GET["page"] == $page["page"]) {
-                    $li->set_attr("class", "active");
-                }
-                $lis .= $li;
+                $active = ($_GET["page"] == $page["page"]);
+                $lis .= tags::tag("li", ["class" => "nav-item" . ( $active ? " active bg-secondary" : "")], tags::tag(
+                                        "a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " text-light" : "")], $page["text"]));
             }
         }
-        $span_bar = tags::tag("span", ["class" => "icon-bar"], " ");
-        echo tags::tag(
-                "nav", ["class" => "navbar navbar-default"], tags::tag(
-                        "div", ["class" => "navbar-header"], tags::tag(
-                                "button", ["type" => "button", "class" => "navbar-toggle", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag(
-                                        "span", ["class" => "sr-only"], "Dérouler le menu") . $span_bar . $span_bar . $span_bar
-                        )
-                ) .
+        echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"], tags::tag("button", ["class" => "navbar-toggler", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag("span", ["class" => "sr-only"], "Dérouler le menu") .
+                        html_structures::glyphicon("menu-hamburger")) .
                 tags::tag(
                         "div", ["class" => "collapse navbar-collapse"], tags::tag(
-                                "ul", ["class" => "nav navbar-nav"], $lis)
+                                "ul", ["class" => "navbar-nav"], $lis)
                 )
         ) . tags::tag(
                 "p", ["class" => "min alert alert-info"], tags::tag(
@@ -103,14 +95,10 @@ class application {
         foreach ($this->_routes as $page) {
             if ($_GET["page"] == $page["page"]) {
                 $page_finded = true;
-                if (!isset($page["description"])) {
-                    $page["description"] = "";
-                }
-                if (!isset($page["keyword"])) {
-                    $page["keyword"] = "";
-                }
-                $html = new html5($page["description"], $page["keyword"]);
+                $html = new html5();
                 html5::before_title("{$page["title"]} - ");
+                html5::set_description((isset($page["description"])?$page["description"]:""));
+                html5::set_keywords((isset($page["keywords"])?$page["keywords"]:""));
                 $this->_pages->header();
                 $this->menu();
                 $p = $page["page"];

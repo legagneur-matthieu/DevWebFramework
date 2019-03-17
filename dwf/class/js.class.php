@@ -280,7 +280,7 @@ class js {
                 echo 'heightStyle:"content",';
             }
             ?>
-                classes:{"ui-accordion-header-active":"ui-accordion-header-active label-info"},
+                classes:{"ui-accordion-header-active":"ui-accordion-header-active bg-info"},
                 }
             <?php
         }

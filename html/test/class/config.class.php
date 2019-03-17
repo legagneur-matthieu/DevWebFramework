@@ -25,11 +25,11 @@ class config { /* PDO */
 
     public static function onbdd_connected() {
         self::$_route_auth = array(
-            array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keyword" => "Index, devwebframework, DWF"),
+            array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),
             array("page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION")
         );
-        self::$_route_unauth = array(array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keyword" => "Index, devwebframework, DWF"),
-            array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keyword" => "login, devwebframework, DWF")
+        self::$_route_unauth = array(array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),
+            array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keywords" => "login, devwebframework, DWF")
         );
     }
 

@@ -73,7 +73,7 @@ class printer {
                         tags::tag(
                                 "input", ["type" => "hidden", "class" => "form-control", "name" => "lib", "value" => $this->_lib]) .
                         tags::tag(
-                                "input", ["type" => "submit", "class" => "btn btn-default", "value" => "Version imprimable (PDF)"])
+                                "input", ["type" => "submit", "class" => "btn btn-secondary", "value" => "Version imprimable (PDF)"])
                 )
         );
     }

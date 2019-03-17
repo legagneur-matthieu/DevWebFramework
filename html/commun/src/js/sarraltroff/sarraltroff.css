@@ -1,0 +1,11 @@
+.sarraltroff{
+    background-repeat: no-repeat;
+    background-size: 200px;
+    height: 200px;
+}
+.sarraltroff-load{
+    background-image: url("./sarraltroff_static.svg");
+}
+.sarraltroff-load-animate{
+    background-image: url("./sarraltroff_animated.svg");
+}

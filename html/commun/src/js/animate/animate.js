@@ -90,551 +90,331 @@ function animate(id) {
         $.each(this.class, function (k, v) {
             $(_id).removeClass(v);
         });
+        return this;
     };
 
     this.infinite = function () {
         $(_id).addClass("infinite");
+        return this;
     };
     this.once = function () {
         $(_id).removeClass("infinite");
+        return this;
+    };
+
+    this.anim=function(name){
+        this.rm_animate();
+        setTimeout(function () {
+            $(_id).addClass(name);
+        }, 10);
+        return this;
     };
 
     this.bounce = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounce");
-        }, 10);
+        return this.anim("bounce");        
     };
 
     this.flash = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("flash");
-        }, 10);
+        return this.anim("flash");
     };
 
     this.pulse = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("pulse");
-        }, 10);
+        return this.anim("pulse");
     };
 
     this.rubberBand = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rubberBand");
-        }, 10);
+        return this.anim("rubberBand");
     };
 
     this.shake = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("shake");
-        }, 10);
+        return this.anim("shake");
     };
 
     this.headShake = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("headShake");
-        }, 10);
+        return this.anim("headShake");
     };
 
     this.swing = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("swing");
-        }, 10);
+        return this.anim("swing");
     };
 
     this.tada = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("tada");
-        }, 10);
+        return this.anim("tada");
     };
 
     this.wobble = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("wobble");
-        }, 10);
+        return this.anim("wobble");
     };
 
     this.jello = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("jello");
-        }, 10);
+        return this.anim("jello");
     };
     this.heartBeat = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("heartBeat");
-        }, 10);
+        return this.anim("heartBeat");
     };
 
     this.bounceIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceIn");
-        }, 10);
+        return this.anim("bounceIn");
     };
 
     this.bounceInDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceInDown");
-        }, 10);
+        return this.anim("bounceInDown");
     };
 
     this.bounceInLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceInLeft");
-        }, 10);
+        return this.anim("bounceInLeft");
     };
 
     this.bounceInRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceInRight");
-        }, 10);
+        return this.anim("bounceInRight");
     };
 
     this.bounceInUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceInUp");
-        }, 10);
+        return this.anim("bounceInUp");
     };
 
     this.bounceOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceOut");
-        }, 10);
+        return this.anim("bounceOut");
     };
 
     this.bounceOutDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceOutDown");
-        }, 10);
+        return this.anim("bounceOutDown");
     };
 
     this.bounceOutLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceOutLeft");
-        }, 10);
+        return this.anim("bounceOutLeft");
     };
 
     this.bounceOutRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceOutRight");
-        }, 10);
+        return this.anim("bounceOutRight");
     };
 
     this.bounceOutUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("bounceOutUp");
-        }, 10);
+        return this.anim("bounceOutUp");
     };
 
     this.fadeIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeIn");
-        }, 10);
+        return this.anim("fadeIn");
     };
 
     this.fadeInDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInDown");
-        }, 10);
+        return this.anim("fadeInDown");
     };
 
     this.fadeInDownBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInDownBig");
-        }, 10);
+        return this.anim("fadeInDownBig");
     };
 
     this.fadeInLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInLeft");
-        }, 10);
+        return this.anim("fadeInLeft");
     };
 
     this.fadeInLeftBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInLeftBig");
-        }, 10);
+        return this.anim("fadeInLeftBig");
     };
 
     this.fadeInRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInRight");
-        }, 10);
+        return this.anim("fadeInRight");
     };
 
     this.fadeInRightBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInRightBig");
-        }, 10);
+        return this.anim("fadeInRightBig");
     };
 
     this.fadeInUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInUp");
-        }, 10);
+        return this.anim("fadeInUp");
     };
 
     this.fadeInUpBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeInUpBig");
-        }, 10);
+        return this.anim("fadeInUpBig");
     };
 
     this.fadeOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOut");
-        }, 10);
+        return this.anim("fadeOut");
     };
 
     this.fadeOutDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutDown");
-        }, 10);
+        return this.anim("fadeOutDown");
     };
 
     this.fadeOutDownBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutDownBig");
-        }, 10);
+        return this.anim("fadeOutDownBig");
     };
 
     this.fadeOutLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutLeft");
-        }, 10);
+        return this.anim("fadeOutLeft");
     };
 
     this.fadeOutLeftBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutLeftBig");
-        }, 10);
+        return this.anim("fadeOutLeftBig");
     };
 
     this.fadeOutRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutRight");
-        }, 10);
+        return this.anim("fadeOutRight");
     };
 
     this.fadeOutRightBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutRightBig");
-        }, 10);
+        return this.anim("fadeOutRightBig");
     };
 
     this.fadeOutUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutUp");
-        }, 10);
+        return this.anim("fadeOutUp");
     };
 
     this.fadeOutUpBig = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("fadeOutUpBig");
-        }, 10);
+        return this.anim("fadeOutUpBig");
     };
 
     this.flipInX = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("flipInX");
-        }, 10);
+        return this.anim("flipInX");
     };
 
     this.flipInY = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("flipInY");
-        }, 10);
+        return this.anim("flipInY");
     };
 
     this.flipOutX = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("flipOutX");
-        }, 10);
+        return this.anim("flipOutX");
     };
 
     this.flipOutY = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("flipOutY");
-        }, 10);
+        return this.anim("flipOutY");
     };
 
     this.lightSpeedIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("lightSpeedIn");
-        }, 10);
+        return this.anim("lightSpeedIn");
     };
 
     this.lightSpeedOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("lightSpeedOut");
-        }, 10);
+        return this.anim("lightSpeedOut");
     };
 
     this.rotateIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateIn");
-        }, 10);
+        return this.anim("rotateIn");
     };
 
     this.rotateInDownLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateInDownLeft");
-        }, 10);
+        return this.anim("rotateInDownLeft");
     };
 
     this.rotateInDownRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateInDownRight");
-        }, 10);
+        return this.anim("rotateInDownRight");
     };
 
     this.rotateInUpLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateInUpLeft");
-        }, 10);
+        return this.anim("rotateInUpLeft");
     };
 
     this.rotateInUpRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateInUpRight");
-        }, 10);
+        return this.anim("rotateInUpRight");
     };
 
     this.rotateOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateOut");
-        }, 10);
+        return this.anim("rotateOut");
     };
 
     this.rotateOutDownLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateOutDownLeft");
-        }, 10);
+        return this.anim("rotateOutDownLeft");
     };
 
     this.rotateOutDownRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateOutDownRight");
-        }, 10);
+        return this.anim("rotateOutDownRight");
     };
 
     this.rotateOutUpLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateOutUpLeft");
-        }, 10);
+        return this.anim("rotateOutUpLeft");
     };
 
     this.rotateOutUpRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rotateOutUpRight");
-        }, 10);
+        return this.anim("rotateOutUpRight");
     };
 
     this.hinge = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("hinge");
-        }, 10);
+        return this.anim("hinge");
     };
 
     this.jackInTheBox = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("jackInTheBox");
-        }, 10);
+        return this.anim("jackInTheBox");
     };
 
     this.rollIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rollIn");
-        }, 10);
+        return this.anim("rollIn");
     };
 
     this.rollOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("rollOut");
-        }, 10);
+        return this.anim("rollOut");
     };
 
     this.zoomIn = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomIn");
-        }, 10);
+        return this.anim("zoomIn");
     };
 
     this.zoomInDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("");
-        }, 10);
+        return this.anim("zoomInDown");
     };
 
     this.zoomInLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomInDown");
-        }, 10);
+        return this.anim("zoomInLeft");
     };
 
     this.zoomInRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomInRight");
-        }, 10);
+        return this.anim("zoomInRight");
     };
 
     this.zoomInUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomInUp");
-        }, 10);
+        return this.anim("zoomInUp");
     };
 
     this.zoomOut = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomOut");
-        }, 10);
+        return this.anim("zoomOut");
     };
 
     this.zoomOutDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomOutDown");
-        }, 10);
+        return this.anim("zoomOutDown");
     };
 
     this.zoomOutLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomOutLeft");
-        }, 10);
+        return this.anim("zoomOutLeft");
     };
 
     this.zoomOutRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomOutRight");
-        }, 10);
+        return this.anim("zoomOutRight");
     };
 
     this.zoomOutUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("zoomOutUp");
-        }, 10);
+        return this.anim("zoomOutUp");
     };
 
     this.slideInDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideInDown");
-        }, 10);
+        return this.anim("slideInDown");
     };
 
     this.slideInLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideInLeft");
-        }, 10);
+        return this.anim("slideInLeft");
     };
 
     this.slideInRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideInRight");
-        }, 10);
+        return this.anim("slideInRight");
     };
 
     this.slideInUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideInUp");
-        }, 10);
+        return this.anim("slideInUp");
     };
 
     this.slideOutDown = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideOutDown");
-        }, 10);
+        return this.anim("slideOutDown");
     };
 
     this.slideOutLeft = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideOutLeft");
-        }, 10);
+        return this.anim("slideOutLeft");
     };
 
     this.slideOutRight = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideOutRight");
-        }, 10);
+        return this.anim("slideOutRight");
     };
 
     this.slideOutUp = function () {
-        this.rm_animate();
-        setTimeout(function () {
-            $(_id).addClass("slideOutUp");
-        }, 10);
+        return this.anim("slideOutUp");
     };
 
 }

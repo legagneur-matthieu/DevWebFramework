@@ -50,11 +50,11 @@ class g_agenda {
             $date_debut = explode(" ", $event["date_debut"]);
             $date_fin = explode(" ", $event["date_fin"]);
             echo tags::tag("div", ["class" => "row agenda"], tags::tag(
-                            "div", ["class" => "col-xs-3"], tags::tag(
+                            "div", ["class" => "col-sm-3"], tags::tag(
                                     "p", [], "Du : <strong>" . html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
                                     "Au : <strong>" . html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
                     ) .
-                    tags::tag("div", ["class" => "col-xs-9"], tags::tag(
+                    tags::tag("div", ["class" => "col-sm-9"], tags::tag(
                                     "p", [], tags::tag("a", ["href" => "index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"]], $event["titre"])
                     ))
             ) . tags::tag("hr");
@@ -71,11 +71,11 @@ class g_agenda {
         $date_fin = explode(" ", $event->get_date_fin());
         echo tags::tag("a", ["href" => "index.php?page=" . $_GET["page"]], html_structures::glyphicon("arrow-left", "Retour a la liste des evennements") . " Retour") .
         tags::tag("div", ["class" => "row agenda"], tags::tag(
-                        "div", ["class" => "col-xs-3"], tags::tag(
+                        "div", ["class" => "col-sm-3"], tags::tag(
                                 "p", [], "Du : <strong>" . html_structures::time($event->get_date_debut(), time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
                                 "Au : <strong>" . html_structures::time($event->get_date_fin(), time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
                 ) .
-                tags::tag("div", ["class" => "col-xs-9"], tags::tag("p", [], tags::tag("strong", [], $event->get_titre())) .
+                tags::tag("div", ["class" => "col-sm-9"], tags::tag("p", [], tags::tag("strong", [], $event->get_titre())) .
                         tags::tag("hr") . tags::tag("article", [], htmlspecialchars_decode($event->get_texte()))
                 )
         );
@@ -109,14 +109,14 @@ class g_agenda {
                 $date_debut = explode(" ", $event["date_debut"]);
                 $date_fin = explode(" ", $event["date_fin"]);
                 echo tags::tag("div", ["class" => "row agenda"], tags::tag(
-                                "div", ["class" => "col-xs-3"], tags::tag(
+                                "div", ["class" => "col-sm-3"], tags::tag(
                                         "p", [], "Du : " .
                                         tags::tag("strong", [], html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1])) .
                                         tags::tag("br") . " Au : " .
                                         tags::tag("strong", [], html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]))
                                 )
                         ) .
-                        tags::tag("div", ["class" => "col-xs-9"], html_structures::a_link("index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"], $event["titre"]) .
+                        tags::tag("div", ["class" => "col-sm-9"], html_structures::a_link("index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"], $event["titre"]) .
                                 html_structures::a_link("index.php?page=" . $_GET["page"] . "&amp;agenda_supp=" . $event["id"], html_structures::glyphicon("remove", "Supprimer l'évenement"), "btn btn-danger btn-xs")
                         ) . html_structures::hr()
                 );

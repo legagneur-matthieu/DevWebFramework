@@ -18,7 +18,7 @@ class debug {
      * @param array|object $var variable à verifier 
      */
     public static function print_r($var) {
-        ?><pre><?php
+        ?><pre class="border alert alert-light"><?php
             echo "\r";
             print_r($var);
             ?></pre><?php
@@ -29,7 +29,7 @@ class debug {
      * @param int|string|boolean|double|float $var variable à verifier 
      */
     public static function var_dump($var) {
-        ?><pre><?php
+        ?><pre class="border alert alert-light"><?php
                 echo "\r";
                 var_dump($var);
                 ?></pre><?php
@@ -63,23 +63,23 @@ class debug {
                 "G" => strtr(pow(10, 9), ["1" => ""]),
                 "T" => strtr(pow(10, 12), ["1" => ""]),
             ];
-            $data = '<p>$_POST</p><pre>';
+            $data = '<p>$_POST</p><pre class="border alert alert-light">';
             foreach ($_POST as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
             }
-            $data .= '</pre><p>$_GET</p><pre>';
+            $data .= '</pre><p>$_GET</p><pre class="border alert alert-light">';
             foreach ($_GET as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
             }
-            $data .= '</pre><p>$_REQUEST</p><pre>';
+            $data .= '</pre><p>$_REQUEST</p><pre class="border alert alert-light">';
             foreach ($_REQUEST as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
             }
-            $data .= '</pre><p>$_COOKIE</p><pre>';
+            $data .= '</pre><p>$_COOKIE</p><pre class="border alert alert-light">';
             foreach ($_COOKIE as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : json_encode($value)) . "\n";
             }
-            $data .= '</pre><p>$_SESSION</p><pre>';
+            $data .= '</pre><p>$_SESSION</p><pre class="border alert alert-light">';
             foreach ($_SESSION as $key => $value) {
                 $data .= $key . " => " . (!is_array($value) ? $value : htmlspecialchars(json_encode($value))) . "\n";
             }
@@ -88,9 +88,9 @@ class debug {
                 $data .= '<li title="' . $value["trace"] . '"><p>' . $value["req"] . '</p></li>';
             }
             $data .= '</ol>';
-            $cl = "<dl class='dl-horizontal'>";
+            $cl = "<dl class='row'>";
             foreach (website::$_class as $key => $value) {
-                $cl .= "<dt>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd>" . $key . "</dd>";
+                $cl .= "<dt class='col-sm-2'>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd class='col-sm-10'>" . $key . "</dd>";
             }
             $cl .= "</dl>";
             $modal = new modal();
@@ -103,7 +103,7 @@ class debug {
                 </script>
                 <p>Debug report :</p>
                 <div class="row" style="width: 98%; margin-left: 1%;">
-                    <div class="col-xs-2">
+                    <div class="col-sm-2">
                         <p>
                             <?php
                             $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, "")
@@ -112,7 +112,7 @@ class debug {
                             <strong>Temp d'execution : </strong><?= time::parse_time(time::chronometer_get("debug_exec")); ?>
                         </p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-sm-4">
                         <?=
                         tags::tag("p", [], tags::tag(
                                         "strong", [], "Memoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
@@ -121,7 +121,7 @@ class debug {
                         );
                         ?>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-sm-4">
                         <?=
                         tags::tag("p", [], tags::tag(
                                         "strong", [], "Nombre de requêtes SQL : ") . bdd::$_debug["nb_req"] . tags::tag("br") .
@@ -130,7 +130,7 @@ class debug {
                         );
                         ?>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-sm-2">
                         <?php
                         $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
                         ?>

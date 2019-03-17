@@ -241,7 +241,7 @@ class phpini {
         echo $form->get_open_form();
         ?>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 if (isset($_GET["new_profile"])) {
                     echo $form->input("Nom du profil", "profil_name");
@@ -268,7 +268,7 @@ class phpini {
                 echo $form->close_fieldset();
                 ?>
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 $max_input_time = "max_input_time";
                 $output_buffering = "output_buffering";
@@ -325,7 +325,7 @@ class phpini {
                 $form->close_fieldset();
                 ?>
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 $short_open_tag = "short_open_tag";
                 $track_errors = "track_errors";

@@ -15,10 +15,22 @@ class html5 {
     public static $_called = false;
 
     /**
-     * Contien de titre (title) de la page HTML
-     * @var string Contien de titre (title) de la page HTML
+     * Contien le titre (title) de la page HTML
+     * @var string Contien le titre (title) de la page HTML
      */
     public static $_real_title = "";
+
+    /**
+     * Contien la description (meta description) de la page HTML
+     * @var string Contien la description (meta description) de la page HTML
+     */
+    public static $_real_description = "";
+
+    /**
+     * Contien les mots clé (meta keywords) de la page HTML
+     * @var string Contien les mots clé (meta keywords) de la page HTML
+     */
+    public static $_real_keywords = "";
 
     /**
      * Cette classe gère l'entête HTML5 et son pied de page.
@@ -27,7 +39,7 @@ class html5 {
      * @param string $description Description de la page
      * @param string $keyword Mots clés de la page
      */
-    public function __construct($description = "", $keywords = "") {
+    public function __construct() {
         self::$_called = true;
         $lang = explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
         $lang = explode(";", $lang[0]);
@@ -44,17 +56,11 @@ class html5 {
                 <?php
                 $meta .= tags::tag("title", [], "") .
                         tags::tag("meta", ["charset" => "UTF-8"]) .
-                        tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]);
-                if ($description != "" or $keywords != "") {
-                    $meta .= tags::tag("meta", ["name" => "Robots", "content" => "all"]) .
-                            tags::tag("meta", ["name" => "Revisit-after", "content" => "14 days"]);
-                    if ($description != "") {
-                        $meta .= tags::tag("meta", ["name" => "description", "content" => $description]);
-                    }
-                    if ($keywords != "") {
-                        $meta .= tags::tag("meta", ["name" => "keywords", "content" => $keywords]);
-                    }
-                }
+                        tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]) .
+                        tags::tag("meta", ["name" => "Robots", "content" => "all"]) .
+                        tags::tag("meta", ["name" => "Revisit-after", "content" => "14 days"]) .
+                        tags::tag("meta", ["name" => "description", "content" => ""]) .
+                        tags::tag("meta", ["name" => "keywords", "content" => ""]);
                 if (isset(config::$_favicon)and config::$_favicon != "") {
                     $meta .= tags::tag("link", ["rel" => "icon", "href" => config::$_favicon]);
                 }
@@ -94,21 +100,18 @@ class html5 {
             private function js() {
                 $script = "";
                 foreach ([
-            "../commun/src/dist/jquery-ui/jquery.js",
+            "../commun/src/dist/jquery-ui/external/jquery/jquery.js",
             "../commun/src/dist/jquery-ui/jquery-ui.min.js",
             "../commun/src/dist/jquery-ui/i18n/datepicker-fr.js",
+            "../commun/src/dist/js/bootstrap.bundle.min.js",
             "../commun/src/dist/js/bootstrap.min.js",
-            "../commun/src/dist/js/transition.js",
-            "../commun/src/dist/js/collapse.js",
-            "../commun/src/dist/js/popover.js",
-            "../commun/src/dist/js/tooltip.js",
-            "../commun/src/dist/js/carousel.js",
             "../commun/src/js/jquery.cookie.js",
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.js",
             "../commun/src/js/datetimepicker/i18n/jquery-ui-timepicker-addon-i18n.js",
             "../commun/src/js/datetimepicker/jquery-ui-sliderAccess.js",
             "../commun/src/js/alertify/lib/alertify.min.js",
             "../commun/src/js/animate/animate.js",
+            "../commun/src/js/sarraltroff/sarraltroff.js",
             "../commun/src/js/phpjs/phpjs.min.js",
             "../commun/src/js/php/phpvm.js",
             "../commun/src/js/js.js"
@@ -152,10 +155,19 @@ class html5 {
                 "wrap" => 256,
                 "new-blocklevel-tags" => implode(" ", self::tags_list())
                     ], "utf8");
-            echo strtr($tidy, ["&amp;" => "&", "<title></title>" => "<title>" . self::$_real_title . "</title>"]);
+            echo strtr($tidy, [
+                "&amp;" => "&",
+                "<title></title>" => "<title>" . self::$_real_title . "</title>",
+                "<meta name=\"description\" content=\"\">" => (!empty(self::$_real_description) ? "<meta name=\"description\" content=\"" . self::$_real_description . "\">" : ""),
+                "<meta name=\"keywords\" content=\"\">" => (!empty(self::$_real_keywords) ? "<meta name=\"keywords\" content=\"" . self::$_real_keywords . "\">" : "")
+            ]);
         } else {
             include_once __DIR__ . '/xhtml-formatter/src/XhtmlFormatter/Formatter.php';
-            echo strtr((new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document), ["<title></title>" => "<title>" . self::$_real_title . "</title>"]);
+            echo strtr((new XhtmlFormatter\Formatter())->addSkippedElement("pre")->format($document), [
+                "<title></title>" => "<title>" . self::$_real_title . "</title>",
+                "<meta name=\"description\" content=\"\">" => (!empty(self::$_real_description) ? "<meta name=\"description\" content=\"" . self::$_real_description . "\">" : ""),
+                "<meta name=\"keywords\" content=\"\">" => (!empty(self::$_real_keywords) ? "<meta name=\"keywords\" content=\"" . self::$_real_keywords . "\">" : "")
+            ]);
         }
     }
 
@@ -169,6 +181,33 @@ class html5 {
             self::$_real_title = config::$_title;
         }
         self::$_real_title = $text . self::$_real_title;
+    }
+
+    /**
+     * Défini la décription de la page en cours (conseil SEO : pas plus de 200 caractères)
+     * 
+     * @param string $description Description de la page
+     */
+    public static function set_description($description) {
+        self::$_real_description = $description;
+    }
+
+    /**
+     * Défini les mots clé de la page en cours
+     * 
+     * @param string $keywords Mots clé de la page
+     */
+    public static function set_keywords($keywords) {
+        self::$_real_keywords = $keywords;
+    }
+
+    /**
+     * Ajoute des mots clé à la page en cours (séparer chaques mots par une virgule)
+     * 
+     * @param string $keywords Mots clé à ajouter à la page
+     */
+    public static function add_keywords($keywords) {
+        self::$_real_keywords .= ", {$keywords}";
     }
 
     private static function tags_list() {

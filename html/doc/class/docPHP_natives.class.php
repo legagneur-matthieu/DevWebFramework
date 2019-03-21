@@ -5,19 +5,18 @@ class docPHP_natives {
     private $_brush = "php; html-script: true";
 
     public function __construct() {
-        js::accordion("accordion_classes_natives", true, true);
         ?>
         <p>
             Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (doc technique) <br />
             si une classe/fonction a mal été commentée ( ou pas du tout commentée) merci de nous le signaler. <br />
-            (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?php echo count(glob("../../dwf/class/*.class.php")); ?> classes natives)
+            (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?= count(glob("../../dwf/class/*.class.php")); ?> classes natives)
         </p>
         <div id="accordion_classes_natives">
             <?php
             foreach (get_class_methods(__CLASS__) as $m) {
                 if ($m != __FUNCTION__) {
                     ?>
-                    <h4><?php echo strtr($m, array("__" => ", ")); ?></h4>
+                    <h4><?= strtr($m, array("__" => ", ")); ?></h4>
                     <div><?php $this->$m(); ?></div>
                     <?php
                 }
@@ -25,6 +24,7 @@ class docPHP_natives {
             ?>
         </div>
         <?php
+        js::accordion("accordion_classes_natives", true, true);
     }
 
     private function admin_controle() {
@@ -79,12 +79,12 @@ class docPHP_natives {
                 . "?>", $this->_brush);
         ?>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <?php
                 new audio("./files/musiques/GM-The Search.mp3");
                 ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <?php
                 (new audio("", "player2"))->playlist(array(
                     array("src" => "./files/musiques/GM-The Search.mp3", "titre" => "InYourDreams - The Search"),
@@ -369,12 +369,12 @@ class docPHP_natives {
         ?>
         <p>Résultat :</p>
         <div class="row" style="overflow: visible; height: 300px;">
-            <div class="col-xs-5">
+            <div class="col-sm-5">
                 <?php
                 (new ddg())->print_searchbar();
                 ?>
             </div>
-            <div class="col-xs-7"> 
+            <div class="col-sm-7"> 
                 <style type="text/css">
                     #ddg_api{
                         border-left: black solid 1px;
@@ -465,7 +465,7 @@ class docPHP_natives {
         <p>Exemple de <em>dwf_exception::warning_exception()</em> :</p>
         <div class="alert alert-danger" role="alert">
             <p>DWF EXCEPTION ! Code 700 : "Exemple d'exception"</p>
-            <pre><?php echo "#0 /var/www/html/doc/class/docPHP_natives.class.php(294): dwf_exception::warning_exception('700', Array)
+            <pre class="border alert alert-light"><?= "#0 /var/www/html/doc/class/docPHP_natives.class.php(294): dwf_exception::warning_exception('700', Array)
 #1 /var/www/html/doc/class/docPHP_natives.class.php(21): docPHP_natives->dwf_exception()
 #2 /var/www/html/doc/class/docPHP.class.php(427): docPHP_natives->__construct()
 #3 /var/www/html/doc/class/docPHP.class.php(38): docPHP->classes_natives()
@@ -519,11 +519,11 @@ class docPHP_natives {
                 . "?>", $this->_brush);
         ?><p>Resultats :</p>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <p>- entity_model::table("user") :</p>
                 <?= entity_model::table("user"); ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <p>- entity_model::div("user") :</p>
                 <?= entity_model::div("user"); ?>
             </div>
@@ -606,45 +606,131 @@ class docPHP_natives {
         ?>
         <p>La classe form permet de créer des formulaires en php stylisé par bootstrap, accessible et respectant les normes W3C</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//création du formulaire\n"
-                . "form::new_form();\n"
-                . "form::input(\"Input de type text\", \"input_1\");\n"
-                . "form::input(\"Input de type password\", \"input_2\", \"password\");\n"
-                . "form::input(\"Input avec valeur initiale\", \"input_3\", \"text\", \"valeur initiale\");\n"
-                . "form::datepicker(\"Un datepicker\", \"datepicker_1\");\n"
-                . "form::select(\"Un selecteur\", \"select_1\", array(\n"
-                . "    array(1, \"Abricots\"),\n"
-                . "    array(2, \"Poires\", true), //Poires est selectioné par defaut\n"
-                . "    array(3, \"Pommes\"),\n"
-                . "));\n"
-                . "form::textarea(\"Un textarea\", \"ta_1\");\n"
-                . "//création d\"un CKEditor\n"
-                . "form::textarea(\"Un ckeditor\", \"ta_2\");\n"
-                . "$cke = js::ckeditor(\"ta_2\");\n"
-                . "\n"
-                . "//bouton de soumition\n"
-                . "form::submit(\"btn-default\");\n"
-                . "//fermeture du formulaire\n"
-                . "form::close_form();\n"
-                . "\n"
-                . "//execution du formulaire\n"
-                . "if (isset($" . "_POST[\"input_1\"])) {\n"
-                . "\n"
-                . "    //recupere la date du datepicker au format US\n"
-                . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
-                . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
-                . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
-                . "\n"
-                . "    //message de succes ou erreur\n"
-                . "    js::alert(\"le formulaire a bien été soumis\");\n"
-                . "    //redirection vers la page courante = rafraichisement de la page\n"
-                . "    js::redir(\"\");\n"
-                . "}\n?>", $this->_brush);
+        js::accordion("accordion_classes_natives_form", true, true);
         ?>
+        <div id="accordion_classes_natives_form">
+            <h5>Depuis la version 21.19.03</h5>
+            <div>
+                <p>Première méthode : création et rendu</p>
+                <?php
+                js::syntaxhighlighter("<?php\n"
+                        . "//création du formulaire\n"
+                        . "$" . "form = new form();\n"
+                        . "$" . "form->input(\"Input de type text\", \"input_1\");\n"
+                        . "$" . "form->input(\"Input de type password\", \"input_2\", \"password\");\n"
+                        . "$" . "form->input(\"Input avec valeur initiale\", \"input_3\", \"text\", \"valeur initiale\");\n"
+                        . "$" . "form->datepicker(\"Un datepicker\", \"datepicker_1\");\n"
+                        . "$" . "form->select(\"Un selecteur\", \"select_1\", [\n"
+                        . "    [1, \"Abricots\"],\n"
+                        . "    [2, \"Poires\", true], //Poires est selectioné par défaut\n"
+                        . "    [3, \"Pommes\"],\n"
+                        . "]);\n"
+                        . "$" . "form->textarea(\"Un textarea\", \"ta_1\");\n"
+                        . "//création d\"un CKEditor\n"
+                        . "$" . "form->textarea(\"Un ckeditor\", \"ta_2\");\n"
+                        . "$" . "cke = js::ckeditor(\"ta_2\");\n"
+                        . "//bouton de soumition\n"
+                        . "$" . "form->submit(\"btn-primary\");\n"
+                        . "//Rendu du formulaire\n"
+                        . "echo $" . "form->render();\n"
+                        . "//execution du formulaire\n"
+                        . "if (isset($" . "_POST[\"input_1\"])) {\n"
+                        . "\n"
+                        . "    //recupere la date du datepicker au format US\n"
+                        . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
+                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
+                        . "\n"
+                        . "    //message de succes ou erreur\n"
+                        . "    js::alert(\"le formulaire a bien été soumis\");\n"
+                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    js::redir(\"\");\n"
+                        . "}\n?>", $this->_brush);
+                ?>
+                <p>Seconde méthode : affichage directe</p>
+                <?php
+                js::syntaxhighlighter("<?php\n"
+                        . "//création du formulaire\n"
+                        . "$" . "form = new form();\n"
+                        . "//affichage de la balise d'ouverture\n"
+                        . "echo $" . "form->get_open_form();\n"
+                        . "echo $" . "form->input(\"Input de type text\", \"input_1\");\n"
+                        . "echo $" . "form->input(\"Input de type password\", \"input_2\", \"password\");\n"
+                        . "echo $" . "form->input(\"Input avec valeur initiale\", \"input_3\", \"text\", \"valeur initiale\");\n"
+                        . "echo $" . "form->datepicker(\"Un datepicker\", \"datepicker_1\");\n"
+                        . "echo $" . "form->select(\"Un selecteur\", \"select_1\", [\n"
+                        . "    [1, \"Abricots\"],\n"
+                        . "    [2, \"Poires\", true], //Poires est selectioné par défaut\n"
+                        . "    [3, \"Pommes\"],\n"
+                        . "]);\n"
+                        . "echo $" . "form->textarea(\"Un textarea\", \"ta_1\");\n"
+                        . "//création d\"un CKEditor\n"
+                        . "echo $" . "form->textarea(\"Un ckeditor\", \"ta_2\");\n"
+                        . "$" . "cke = js::ckeditor(\"ta_2\");\n"
+                        . "//bouton de soumition\n"
+                        . "echo $" . "form->submit(\"btn-primary\");\n"
+                        . "//affichage de la balise de fermeture\n"
+                        . "echo $" . "form->get_close_form();\n"
+                        . "//execution du formulaire\n"
+                        . "if (isset($" . "_POST[\"input_1\"])) {\n"
+                        . "\n"
+                        . "    //recupere la date du datepicker au format US\n"
+                        . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
+                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
+                        . "\n"
+                        . "    //message de succes ou erreur\n"
+                        . "    js::alert(\"le formulaire a bien été soumis\");\n"
+                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    js::redir(\"\");\n"
+                        . "}\n?>", $this->_brush);
+                ?>
+
+            </div>
+            <h5>Avant la version 21.19.03</h5>
+            <div>
+                <?php
+                js::syntaxhighlighter("<?php\n"
+                        . "//création du formulaire\n"
+                        . "form::new_form();\n"
+                        . "form::input(\"Input de type text\", \"input_1\");\n"
+                        . "form::input(\"Input de type password\", \"input_2\", \"password\");\n"
+                        . "form::input(\"Input avec valeur initiale\", \"input_3\", \"text\", \"valeur initiale\");\n"
+                        . "form::datepicker(\"Un datepicker\", \"datepicker_1\");\n"
+                        . "form::select(\"Un selecteur\", \"select_1\", array(\n"
+                        . "    array(1, \"Abricots\"),\n"
+                        . "    array(2, \"Poires\", true), //Poires est selectioné par defaut\n"
+                        . "    array(3, \"Pommes\"),\n"
+                        . "));\n"
+                        . "form::textarea(\"Un textarea\", \"ta_1\");\n"
+                        . "//création d\"un CKEditor\n"
+                        . "form::textarea(\"Un ckeditor\", \"ta_2\");\n"
+                        . "$" . "cke = js::ckeditor(\"ta_2\");\n"
+                        . "\n"
+                        . "//bouton de soumition\n"
+                        . "form::submit(\"btn-default\");\n"
+                        . "//fermeture du formulaire\n"
+                        . "form::close_form();\n"
+                        . "\n"
+                        . "//execution du formulaire\n"
+                        . "if (isset($" . "_POST[\"input_1\"])) {\n"
+                        . "\n"
+                        . "    //recupere la date du datepicker au format US\n"
+                        . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
+                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
+                        . "\n"
+                        . "    //message de succes ou erreur\n"
+                        . "    js::alert(\"le formulaire a bien été soumis\");\n"
+                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    js::redir(\"\");\n"
+                        . "}\n?>", $this->_brush);
+                ?>
+            </div>
+        </div>
         <p>Résultat (visuel uniquement, execution désactivée):</p>
         <div class="row" style="border: 1px solid #ccc; border-radius: 4px;">
-            <div class="col-xs-3">
+            <div class="col-sm-3">
                 <script type="text/javascript">
                     $(document).ready(function () {
                         $(".no-sub").submit(function (e) {
@@ -654,26 +740,27 @@ class docPHP_natives {
                     });
                 </script>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <?php
-                form::new_form("no-sub");
-                form::input("Input de type text", "input_1");
-                form::input("Input de type password", "input_2", "password");
-                form::input("Input avec valeur initiale", "input_3", "text", "valeur initiale");
-                form::datepicker("Un datepicker", "datepicker_1");
-                form::select("Un selecteur", "select_1", array(
-                    array(1, "Abricots"),
-                    array(2, "Poires", true), //Poires est selectioné par défaut
-                    array(3, "Pommes"),
-                ));
-                form::textarea("Un textarea", "ta_1");
-                form::textarea("Un ckeditor", "ta_2");
+                $form = new form("no-sub");
+                $form->get_open_form();
+                $form->input("Input de type text", "input_1");
+                $form->input("Input de type password", "input_2", "password");
+                $form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");
+                $form->datepicker("Un datepicker", "datepicker_1");
+                $form->select("Un selecteur", "select_1", [
+                    [1, "Abricots"],
+                    [2, "Poires", true], //Poires est selectioné par défaut
+                    [3, "Pommes"],
+                ]);
+                $form->textarea("Un textarea", "ta_1");
+                $form->textarea("Un ckeditor", "ta_2");
                 $cke = js::ckeditor("ta_2");
-                form::submit("btn-default");
-                form::close_form();
+                $form->submit("btn-primary");
+                echo $form->render();
                 ?>
             </div>
-            <div class="col-xs-3"></div>
+            <div class="col-sm-3"></div>
         </div>
         <?php
     }
@@ -836,17 +923,17 @@ class docPHP_natives {
         ?>
         <p>Résultats :</p>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
                 ?>
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 (new graphique("graph2", $size))->points($data);
                 ?>
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <?php
                 (new graphique("graph3", $size))->bars($data);
                 ?>
@@ -854,12 +941,12 @@ class docPHP_natives {
         </div>
         <div class="row">
             <p>PIB 2016</p>
-            <div class="col-xs-6">
+            <div class="col-sm-5">
                 <?php
                 (new graphique("graph4", $size))->pie($data2);
                 ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-5">
                 <?php
                 (new graphique("graph5", $size))->ring($data2);
                 ?>
@@ -872,9 +959,21 @@ class docPHP_natives {
         ?>
         <p>
             Cette classe gère l'en-tête HTML5 et son pied de page. <br />
-            Cette classe est utilisé automatiquement par le framework dans <em>application.class.php</em>
+            Cette classe est utilisé automatiquement par le framework dans <em>application.class.php</em> <br />
+            Les balises : title, meta description et meta keywords peuvent être modifié grace au fonction suivantes :
+
         </p>
         <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Ajoute un préfixe au titre de la page en cours\n"
+                . "html5::before_title($" . "text);\n"
+                . "//Défini la décription de la page en cours\n"
+                . "html5::set_description($" . "description);\n"
+                . "//Défini les mots clé de la page en cours\n"
+                . "html5::set_keywords($" . "keywords);\n"
+                . "//Ajoute des mots clé de la page en cours\n"
+                . "html5::add_keywords($" . "keywords);\n"
+                . "?>", $this->_brush);
     }
 
     private function html_structures() {
@@ -1025,6 +1124,31 @@ class docPHP_natives {
                 . "$" . "msg='Hello World';\n"
                 . "(new mail())->send($" . "from, $" . "from_name, $" . "to, $" . "subject, $" . "msg);\n"
                 . "?>", $this->_brush);
+    }
+
+    private function maskNumber() {
+        ?>
+        <p>Cette classe permet de formater l'affichage d'un nombre dans un INPUT de type text</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "maskNumber::set(\"masknumber\");\n"
+                . "$" . "form=new form();\n"
+                . "$" . "form->input(\"Nombre\", \"masknumber\");\n"
+                . "$" . "form->submit(\"btn-primary\");\n"
+                . "echo $" . "form->render();\n"
+                . "if(isset($" . "_POST[\"masknumber\"])){\n"
+                . "    maskNumber::get(\"masknumber\"); //converti les saisis dans $" . "_POST\n"
+                . "}\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>Attention ! maskNumber::set() doit être executé avant l'execution du formulaire ! <br />
+            Resultat :</p>
+        <?php
+        maskNumber::set("masknumber");
+        $form = new form();
+        $form->input("Nombre", "masknumber");
+        $form->submit("btn-primary");
+        echo $form->render();
     }
 
     private function math() {
@@ -1360,7 +1484,7 @@ class docPHP_natives {
                 . "selectorDOM::select_elements('header', file_get_contents('http://" . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . "?page=index'));\n"
                 . "?>", $this->_brush);
         ?><p>Résultat :</p><?php
-        debug::print_r(json_decode('[{"name":"header","attributes":{"class":"page-header label-info"},"text":"\r\n        DocumentationDocumentation de DWF\r\n      \r\n    ","children":[{"name":"h1","attributes":[],"text":"\r\n        DocumentationDocumentation de DWF\r\n      ","children":[{"name":"br","attributes":[],"text":"","children":[]},{"name":"small","attributes":[],"text":"Documentation de DWF","children":[]}]}]}]'));
+        debug::print_r(json_decode('[{"name":"header","attributes":{"class":"page-header bg-info"},"text":"\r\n        DocumentationDocumentation de DWF\r\n      \r\n    ","children":[{"name":"h1","attributes":[],"text":"\r\n        DocumentationDocumentation de DWF\r\n      ","children":[{"name":"br","attributes":[],"text":"","children":[]},{"name":"small","attributes":[],"text":"Documentation de DWF","children":[]}]}]}]'));
     }
 
     private function services() {
@@ -1596,7 +1720,7 @@ class docPHP_natives {
         ?>
         <p>Exemple :</p>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <p>Code :</p>
                 <?php
                 js::syntaxhighlighter("<?php\n"
@@ -1618,7 +1742,7 @@ class docPHP_natives {
                         . "?>", $this->_brush);
                 ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <p>Resultat :</p>
                 <?php
                 echo tags::tag('div', [], tags::tag(
@@ -1645,14 +1769,14 @@ class docPHP_natives {
         js::syntaxhighlighter(""
                 . "<p>Bienvenu { $" . "name}</p>\n"
                 . "<div class=\"row\">\n"
-                . "    <div class=\"col-xs-6\">\n"
+                . "    <div class=\"col-sm-6\">\n"
                 . "        <ul>\n"
                 . "            {foreach from=$" . "list item=value}\n"
                 . "                <li>{ $" . "value}</li>\n"
                 . "            {/foreach}\n"
                 . "        </ul>\n"
                 . "    </div>\n"
-                . "    <div class=\"col-xs-6\">\n"
+                . "    <div class=\"col-sm-6\">\n"
                 . "        <dl class=\"dl-horizontal\">\n"
                 . "            {foreach from=$" . "list_asso key=key item=value}\n"
                 . "                <dt>{ $" . "key}</dt> <dd>{ $" . "value}</dd>\n"

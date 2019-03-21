@@ -20,7 +20,7 @@ class pages { /**
 
     public function header() {
         ?> 
-        <header class="page-header label-info">
+        <header class="page-header bg-info">
             <h1>Documentation <br /><small>Documentation de DWF</small></h1> 
         </header> 
         <?php
@@ -63,7 +63,7 @@ class pages { /**
             }
         </style>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <div class="index">
                     <p>
                         <a href="index.php?page=web">Framework PHP</a>
@@ -73,7 +73,7 @@ class pages { /**
                     </a>
                 </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <div class="index index2">
                     <p>
                         <a href="index.php?page=mobile">Framework Mobile</a>

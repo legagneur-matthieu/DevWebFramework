@@ -304,20 +304,6 @@ class js {
     }
 
     /**
-     * Applique un toolpip à un élément ( transforme son "title" en infobulle rapide)
-     * @param string $id Id CSS de l'élément
-     */
-    public static function tooltip($id) {
-        ?>
-        <script>
-                    $(document).ready(function () {
-            $("#<?= $id; ?>").tooltip();
-            });
-        </script>
-        <?php
-    }
-
-    /**
      * Affiche le carousel/slide de bootstrap
      * @param string $id Id css du carousel/slide
      * @param array $data Tableau contenant les images, les alternatives et les caption, 

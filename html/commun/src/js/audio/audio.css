@@ -1,18 +1,18 @@
 .player_ctrl_volume_affichage{
-    margin-left: 110px;
-}
-.player_ctrl_volume_div{
-    margin-left: 150px;
+    margin-left: 280px;
     margin-top: -20px;
 }
 .player_ctrl{
-    width: 300px;
     border : lightblue solid 1px;
+    width: 300px;
     background-color: lightblue;
 }
 .player_ctrl>audio{
     display: none;
 
+}
+input[type="range"]{
+    width: 100%;
 }
 input[type="range"].player_ctrl_volume{
     width: 100px;

@@ -20,7 +20,6 @@ class docPHP {
             "CLI",
             "mise_en_ligne",
         );
-        js::accordion("accordion", true, true);
         ?>
         <style type="text/css">
             h4{
@@ -41,6 +40,7 @@ class docPHP {
             ?>
         </div>
         <?php
+        js::accordion("accordion", true, true);
     }
 
     private function introduction() {

@@ -113,7 +113,7 @@ class form {
      */
     public function range($label, $name, $min, $max, $value = 0, $step = 1, $class = "") {
         $script = tags::tag("script", ["type" => "text/javascript"], "$(\"#{$name}\").on(\"input\", function () { $(\"#{$name}_span\").text(number_format($(this).val(), 0, \",\", \" \"));});");
-        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "range", "class" => "form-control-range", "min" => $min, "max" => $max, "step" => $step, "value" => $value,];
+        $attr = ["id" => strtr($name,["["=>"_","]"=>""]), "name" => $name, "type" => "range", "class" => "form-control-range", "min" => $min, "max" => $max, "step" => $step, "value" => $value];
         return $this->append(tags::tag("div", ["class" => "form-group {$class}"], tags::tag("label", ["for" => $name], $label . " - " .
                                         tags::tag("span", ["id" => strtr($name,["["=>"_","]"=>""]) . "_span"], $value)) . tags::tag("input", $attr, false)) . $script);
     }

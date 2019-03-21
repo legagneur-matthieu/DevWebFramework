@@ -17,8 +17,8 @@ class docTiers {
         html_structures::table(["Libairie", "Version", "Auteur", "Langage", "Licence"], [
             ["Alertify", "0.3.11", "Fabien Doiron", "JS", $licences[0]],
             ["Animate", "3.7.0", "Daniel Eden", "JS", $licences[0]],
-            ["Bootsrap", "3.3.7", "Twitter, Inc.", "CSS, JS", $licences[0]],
-            ["Bootswatch", "3.3.7", "Thomas Park", "CSS", $licences[0]],
+            ["Bootsrap", "4.3.1", "Twitter, Inc.", "CSS, JS", $licences[0]],
+            ["Bootswatch", "4.3.1", "Thomas Park", "CSS", $licences[0]],
             ["Ckeditor", "4.9.2", "Frederico Knabben", "JS", $licences[1]],
             ["CSSTidy", "1.6.5", "Florian Schmitz", "PHP", $licences[2]],
             ["Cytoscape", "3.2.12", "The Cytoscape Consortium", "JS", $licences[10]],

@@ -80,7 +80,7 @@ class dwf_exception extends Exception {
                             "div", ["class" => "alert alert-danger", "role" => "alert"], tags::tag(
                                     "p", [], $etype . " : \"" . $e->getMessage() . "\"") .
                             tags::tag(
-                                    "pre", [], "\r".$e->getTraceAsString()) . $moreinfo
+                                    "pre", ["class"=>"border alert alert-light"], "\r".$e->getTraceAsString()) . $moreinfo
                     );
                     if (!html5::$_called and $service) {
                         ?>

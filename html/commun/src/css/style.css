@@ -88,13 +88,8 @@ form{
     margin: 5px 0 -5px 0;
     width: 300px;
 }
-.ddg>form>input{
-    width: 240px;
-    margin-top: -50px;
-}
 .ddg>form>button{
     margin-left: -6px;
-    margin-top: -50px;
     padding: 9px;
 }
 

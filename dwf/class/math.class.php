@@ -8,6 +8,14 @@
 class math {
 
     /**
+     * Tableau mémoire (https://fr.wikipedia.org/wiki/M%C3%A9mo%C3%AFsation )
+     * @var array Tableau mémoire
+     */
+    public static $_memoi = [
+        "int_partition" => [[]]
+    ];
+
+    /**
      * Retourne le PGCD de deux nombres ( calculé par l'algorithme d'Euclide )
      * @param int $nb1 Nombre entier non nul superieur a $nb2
      * @param int $nb2 Nombre entier non nul inferieur a $nb1
@@ -406,7 +414,54 @@ class math {
     public static function logistic($x, $r = 4) {
         return $r * $x * (1 - $x);
     }
-    
+
+    /**
+     * Retourne la partition d'un entier a $k patie,
+     * si $k=null, retourne le nombre de partition de $n
+     * @param int $n
+     * @param int|null $k
+     * @return int partition ou nombre de partition
+     */
+    public static function int_partition($n, $k = null) {
+        if ($k === null) {
+            if (isset(self::$_memoi[__FUNCTION__][$n][$n])) {
+                return array_sum(self::$_memoi[__FUNCTION__][$n]);
+            }
+            $s = 0;
+            for ($k = 1; $k <= $n; $k++) {
+                $s += self::int_partition($n, $k);
+            }
+            return $s;
+        } else {
+            if (isset(self::$_memoi[__FUNCTION__][$n][$k])) {
+                return self::$_memoi[__FUNCTION__][$n][$k];
+            }
+            if ($n == $k || $k == 1) {
+                return (self::$_memoi[__FUNCTION__][$n][$k] = 1);
+            }
+            if ($n < $k) {
+                return 0;
+            } else {
+                return (self::$_memoi[__FUNCTION__][$n][$k] = (self::int_partition($n - 1, $k - 1) + self::int_partition($n - $k, $k)));
+            }
+        }
+    }
+
+    /**
+     * Retourne le nombre dans la suite de Fibonacci a l'index $n
+     * @param int $n Index du nombre dans la suite
+     * @return int Le nombre dans la suite de Fibonacci a l'index $n
+     */
+    public static function fibonacci($n) {
+        $negative = false;
+        if ($n < 0) {
+            $negative = true;
+            $n *= -1;
+        }
+        $s = ( (1 / sqrt(5) * (pow(self::phi(), $n) - pow((-(1 / self::phi())), $n))) );
+        return($negative ? ($n % 2 == 0 ? -$s : $s) : $s);
+    }
+
     /**
      * Retourne un bingint (cf phpseclib/Math/BigInteger.php)
      * @param int|Math_BigInteger $x Nombre entier

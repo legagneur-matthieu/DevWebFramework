@@ -33,11 +33,11 @@ class audio {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                audio("<?= $id; ?>");                
+                audio("<?= $id; ?>");
             });
         </script>
         <?php
-        $class = "btn btn-xs btn-default";
+        $class = "btn btn-sm btn-light";
         echo tags::tag(
                 "div", ["class" => "player_ctrl"], tags::tag(
                         "audio", ["id" => $id, "src" => $src], "") .
@@ -47,12 +47,8 @@ class audio {
                 tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_mute"], html_structures::glyphicon("volume-off", "Muet")) .
                 tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_volume_down"], html_structures::glyphicon("volume-down", "Diminuer le volume")) .
                 tags::tag("button", ["class" => $class, "id" => $id . "_player_ctrl_volume_up"], html_structures::glyphicon("volume-up", "Augmenter le volume")) .
-                tags::tag(
-                        "div", ["class" => ""], tags::tag(
-                                "input", ["id" => $id . "_player_ctrl_volume", "class" => "player_ctrl_volume", "type" => "range", "title" => "volume", "min" => "0", "max" => "10", "value" => "10"]) .
-                        tags::tag(
-                                "p", ["class" => "player_ctrl_volume_affichage", "id" => $id . "_player_ctrl_volume_affichage"], 10)
-                )
+                tags::tag("input", ["id" => $id . "_player_ctrl_volume", "class" => "player_ctrl_volume", "type" => "range", "title" => "volume", "min" => "0", "max" => "10", "value" => "10"]) .
+                tags::tag("p", ["class" => "player_ctrl_volume_affichage", "id" => $id . "_player_ctrl_volume_affichage"], 10)
         );
     }
 

@@ -72,19 +72,21 @@ class parcour_sites {
                                 "meta", ["charset" => "UTF-8"]) .
                         tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]) .
                         tags::tag("title", [], "Parcour des sites") .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-reboot.min.css"]) .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-glyphicon.min"]) .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-grid.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap.min.css"]) .
-                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-theme.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/css/style.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.core.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.bootstrap.css"]) .
-                        html_structures::script("commun/src/dist/jquery-ui/jquery.js") .
+                        html_structures::script("commun/src/dist/jquery-ui/external/jquery/jquery.js") .
                         html_structures::script("commun/src/dist/jquery-ui/jquery-ui.min.js") .
                         html_structures::script("commun/src/js/alertify/lib/alertify.min.js")
         );
     }
 
     private function header() {
-        return tags::tag("header", ["class" => "page-header label-info"], tags::tag(
+        return tags::tag("header", ["class" => "page-header bg-info"], tags::tag(
                                 "h1", [], "Parcours des projets " . tags::tag("br") .
                                 tags::tag("small", [], "Liste des projets présent dans DWF")
                         )
@@ -100,7 +102,7 @@ class parcour_sites {
                 $option[] = [$site, $site, $site === $this->_project["project"]];
             }
         }
-        $select=new form();
+        $select = new form();
         $select->select("Projet par defaut (ou d'accueil)", "default_project", $option);
         $select->submit("btn-default");
         return ["sites" => $sites, "select" => $select->render()];
@@ -109,10 +111,10 @@ class parcour_sites {
     private function main($s) {
         ?>
         <div class="row">
-            <div class="col-sm-4 col-xs-6">
+            <div class="col-sm-4 col-sm-6">
                 <?= tags::tag("h2", [], "Vos projets") . tags::tag("p", [], $s["sites"]); ?>
             </div>
-            <div class="col-sm-4 col-xs-6">
+            <div class="col-sm-4 col-sm-6">
                 <?php
                 echo tags::tag("h2", [], "Outils DWF") .
                 tags::tag("p", [], tags::tag("a", ["href" => "commun/new_app.php"], html_structures::glyphicon("plus") . " Ajouter un projet") . tags::tag("br") .
@@ -132,15 +134,15 @@ class parcour_sites {
 
     private function dwf_statut() {
         $DWFStatus = true;
-        $conf="./commun/conf/default.json";
-        if (!is_writable($conf) or !is_readable($conf)) {
+        $conf = "./commun/conf/default.json";
+        if (!is_writable($conf) or ! is_readable($conf)) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier ".$conf." n'est pas accessible en lecture/ecriture"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
-        $conf="../dwf/log";
-        if (!is_writable($conf) or !is_readable($conf)) {
+        $conf = "../dwf/log";
+        if (!is_writable($conf) or ! is_readable($conf)) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier ".$conf." n'est pas accessible en lecture/ecriture"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
         if (!class_exists("tidy")) {
             $DWFStatus = false;

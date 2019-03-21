@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de formater l'affichage d'un nombre dans un INPUTde type text
+ * Cette classe permet de formater l'affichage d'un nombre dans un INPUT de type text
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */

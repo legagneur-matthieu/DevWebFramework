@@ -5,7 +5,6 @@ class docPHP_natives_js {
     private $_brush = "php; html-script: true";
 
     public function __construct() {
-        js::accordion("accordion_classes_natives_js", true, true);
         ?>
         <p>La classe js permet d'exploiter un grand nombre de librairies javascript intégrées à DWF notamment pour les appliquer à des éléments html de la page.</p>
         <div id="accordion_classes_natives_js">
@@ -21,6 +20,7 @@ class docPHP_natives_js {
             ?>
         </div>
         <?php
+        js::accordion("accordion_classes_natives_js", true, true);
     }
 
     public function before_title() {
@@ -231,9 +231,6 @@ class docPHP_natives_js {
         <p>Applique un effet accordéon à une structure</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "js::accordion('js_accordion1', true, true);\n"
-                . "js::accordion('js_accordion2', true, true);\n"
-                . "?>\n"
                 . "<div id=\"js_accordion1\">\n"
                 . "    <h3>accordéon1</h3>\n"
                 . "    <div>\n"
@@ -249,13 +246,13 @@ class docPHP_natives_js {
                 . "    <div>\n"
                 . "        <p>contenu accordéon 2</p>\n"
                 . "    </div>\n"
-                . "</div>", $this->_brush);
+                . "</div>\n"
+                . "<?php\n"
+                . "js::accordion('js_accordion1', true, true);\n"
+                . "js::accordion('js_accordion2', true, true);\n"
+                . "?>", $this->_brush);
         ?>
         <p>Résultat : </p>
-        <?php
-        js::accordion('js_accordion1', true, true);
-        js::accordion('js_accordion2', true, true);
-        ?>
         <div id = "js_accordion1">
             <h3>accordéon1</h3>
             <div>
@@ -272,6 +269,10 @@ class docPHP_natives_js {
                 <p>contenu accordéon 2</p>
             </div>
         </div>
+        <?php
+        js::accordion('js_accordion1', true, true);
+        js::accordion('js_accordion2', true, true);
+        ?>
         <p>(Vous l'aurez compris, cette documentation utilise beaucoup d'accordéons)</p><?php
     }
 
@@ -297,23 +298,6 @@ class docPHP_natives_js {
             <li><a href="#menu">Item 2</a></li>
             <li><a href="#menu">Item 3</a></li>
         </ul>
-        <?php
-    }
-
-    public function tooltip() {
-        ?> 
-        <p>Applique un toolpip à un élément ( transforme son "title" en infobulle rapide)</p>
-        <?php
-        js::syntaxhighlighter("<?php\n"
-                . "js::tooltip('js_tooltip');\n"
-                . "?>\n"
-                . "<p><strong id=\"js_tooltip\" title=\"Ceci est un tooltip\">Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit.</p>", $this->_brush);
-        ?>
-        <p>Résultat : </p>
-        <?php
-        js::tooltip('js_tooltip');
-        ?>
-        <p><strong id="js_tooltip" title="Ceci est un tooltip">Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit.</p>
         <?php
     }
 

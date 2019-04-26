@@ -26,9 +26,20 @@ class graphique {
      */
     public function __construct($id, $size = ["width" => "600px", "height" => "300px"]) {
         if (!self::$_called) {
-            echo html_structures::script("../commun/src/js/flot/jquery.flot.min.js") .
-            html_structures::script("../commun/src/js/flot/jquery.flot.pie.min.js") .
-            html_structures::script("../commun/src/js/flot/jquery.flot.resize.min.js")
+            foreach ([
+        "../commun/src/js/flot/jquery.canvaswrapper.js",
+        "../commun/src/js/flot/jquery.colorhelpers.js",
+        "../commun/src/js/flot/jquery.flot.js",
+        "../commun/src/js/flot/jquery.flot.browser.js",
+        "../commun/src/js/flot/jquery.flot.uiConstants.js",
+        "../commun/src/js/flot/jquery.flot.saturated.js",
+        "../commun/src/js/flot/jquery.flot.drawSeries.js",
+        "../commun/src/js/flot/jquery.flot.legend.js",
+        "../commun/src/js/flot/jquery.flot.hover.js",
+        "../commun/src/js/flot/jquery.flot.pie.js",
+            ] as $src) {
+                echo html_structures::script($src);
+            }
             ?>
             <script type="text/javascript">
                 function labelFormatter(label, series) {
@@ -39,51 +50,6 @@ class graphique {
             self::$_called = true;
         }
         echo tags::tag("div", ["id" => ($this->_id = $id), "style" => "width: " . $size["width"] . ";height: " . $size["height"] . ";"], " ");
-    }
-
-    /**
-     * Affiche un graphique par points
-     * @param array $data array( <br />
-     * array("label"=> "label1,<br />
-     * "data"=> array(<br />
-     *      array(x1,y1),<br />
-     *      array(x2,y2),<br />
-     *      array(x3,y3),<br />
-     *      ...<br />
-     * ),<br />
-     * array("label"=> "label2,<br />
-     * "data"=> array(<br />
-     *      array(x1,y1),<br />
-     *      array(x2,y2),<br />
-     *      array(x3,y3),<br />
-     *      ...<br />
-     * ),<br />
-     * ...<br />
-     * );<br />
-     * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
-     * @param boolean $show_points afficher les points sur le graphique ? (true/false, true par defaut)
-     */
-    public function points($data, $ticks = []) {
-        ?>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
-                    series: {points: {show: true}},
-                    grid: {hoverable: true, clickable: true},
-                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
-                    yaxis: {show: true}
-                });
-                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
-                $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
-                    if (item) {
-                        $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
-                    } else {
-                        $("#<?= $this->_id ?>_tooltip").hide();
-                    }
-                });
-            });
-        </script>
-        <?php
     }
 
     /**
@@ -110,26 +76,57 @@ class graphique {
      * @param boolean $fill La zone entre la ligne et l'abscisse doit-il être coloré  ? (true/false, false par defaut)
      */
     public function line($data, $ticks = [], $show_points = true, $fill = false) {
-        ?>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
-                    series: {lines: {show: true<?= ($fill ? ", fill: true" : "") ?>}, <?= ($show_points ? "points: {show: true}," : "") ?>},
-                    grid: {hoverable: true, clickable: true},
-                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
-                    yaxis: {show: true}
-                });
-                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
-                $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
-                    if (item) {
-                        $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
-                    } else {
-                        $("#<?= $this->_id ?>_tooltip").hide();
-                    }
-                });
-            });
-        </script>
-        <?php
+        $this->graph_render($data, [
+            "series" => [
+                "lines" => [
+                    "show" => true,
+                    "fill" => $fill
+                ],
+                "points" => [
+                    "show" => $show_points
+                ]
+            ],
+            "grid" => ["hoverable" => true, "clickable" => true],
+            "xaxis" => ["show" => true, "ticks" => (count($ticks) > 0 ? $ticks : null)],
+            "yaxis" => ["show" => true],
+            "legend" => ["show" => true, "position" => "ne"]
+        ]);
+    }
+
+    /**
+     * Affiche un graphique par points
+     * @param array $data array( <br />
+     * array("label"=> "label1,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * array("label"=> "label2,<br />
+     * "data"=> array(<br />
+     *      array(x1,y1),<br />
+     *      array(x2,y2),<br />
+     *      array(x3,y3),<br />
+     *      ...<br />
+     * ),<br />
+     * ...<br />
+     * );<br />
+     * @param array $ticks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
+     * @param boolean $show_points afficher les points sur le graphique ? (true/false, true par defaut)
+     */
+    public function points($data, $ticks = []) {
+        $this->graph_render($data, [
+            "series" => [
+                "points" => [
+                    "show" => true
+                ]
+            ],
+            "grid" => ["hoverable" => true, "clickable" => true],
+            "xaxis" => ["show" => true, "ticks" => (count($ticks) > 0 ? $ticks : null)],
+            "yaxis" => ["show" => true],
+            "legend" => ["show" => true, "position" => "ne"]
+        ]);
     }
 
     /**
@@ -151,19 +148,34 @@ class graphique {
      * ),<br />
      * ...<br />
      * );<br />
-     * @param array $tricks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
+     * @param array $ticks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
      */
     public function bars($data, $ticks = []) {
+        $this->graph_render($data, [
+            "series" => [
+                "bars" => [
+                    "show" => true,
+                    "align" => "center"
+                ]
+            ],
+            "grid" => ["hoverable" => true, "clickable" => true],
+            "xaxis" => ["show" => true, "ticks" => (count($ticks) > 0 ? $ticks : null)],
+            "yaxis" => ["show" => true],
+            "legend" => ["show" => true, "position" => "ne"]
+        ]);
+    }
+
+    /**
+     * Affiche le rendu du graphique de type line, points ou bars
+     * @param array $data Données du graphique
+     * @param array $option Options du graphique
+     */
+    private function graph_render($data, $option) {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
-                    series: {bars: {show: true}},
-                    grid: {hoverable: true, clickable: true},
-                    xaxis: {show: true, <?= (count($ticks) > 0 ? "ticks: " . json_encode($ticks) : ""); ?>},
-                    yaxis: {show: true}
-                });
-                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.80}).appendTo("body");
+                $.plot("#<?= $this->_id; ?>", <?= json_encode($data) ?>, <?= json_encode($option) ?>);
+                $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.85}).appendTo("body");
                 $("#<?= $this->_id ?>").bind("plothover", function (event, pos, item) {
                     if (item) {
                         $("#<?= $this->_id ?>_tooltip").html("x : " + item.datapoint[0].toFixed(2) + ", y : " + item.datapoint[1].toFixed(2)).css({top: item.pageY + 5, left: item.pageX + 5}).fadeIn(200);
@@ -186,13 +198,14 @@ class graphique {
      *         "data"=>20 <br />
      *     ) <br />
      * )
+     * @param boolean $tilted Incline le graphique pour un rendu ovale
      */
-    public function pie($data) {
+    public function pie($data, $tilted = false) {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
-                    series: {pie: {show: true, radius: 1, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
+                    series: {pie: {show: true, radius: 1, tilt: <?= ($tilted ? 0.5 : 1) ?>, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
                     grid: {hoverable: true, clickable: true}
                 });
             });
@@ -210,13 +223,14 @@ class graphique {
      *         "data"=>20 <br />
      *     ) <br />
      * )
+     * @param boolean $tilted Incline le graphique pour un rendu ovale
      */
-    public function ring($data) {
+    public function ring($data, $tilted = false) {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
-                    series: {pie: {innerRadius: 0.5, show: true, radius: 1, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
+                    series: {pie: {innerRadius: 0.5, show: true, radius: 1, tilt: <?= ($tilted ? 0.5 : 1) ?>, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
                     grid: {hoverable: true, clickable: true}
                 });
             });

@@ -1,46 +1,43 @@
 /* Flot plugin for computing bottoms for filled line and bar charts.
- 
- Copyright (c) 2007-2014 IOLA and Ole Laursen.
- Licensed under the MIT license.
- 
- The case: you've got two series that you want to fill the area between. In Flot
- terms, you need to use one as the fill bottom of the other. You can specify the
- bottom of each data point as the third coordinate manually, or you can use this
- plugin to compute it for you.
- 
- In order to name the other series, you need to give it an id, like this:
- 
- var dataset = [
- { data: [ ... ], id: "foo" } ,         // use default bottom
- { data: [ ... ], fillBetween: "foo" }, // use first dataset as bottom
- ];
- 
- $.plot($("#placeholder"), dataset, { lines: { show: true, fill: true }});
- 
- As a convenience, if the id given is a number that doesn't appear as an id in
- the series, it is interpreted as the index in the array instead (so fillBetween:
- 0 can also mean the first series).
- 
- Internally, the plugin modifies the datapoints in each series. For line series,
- extra data points might be inserted through interpolation. Note that at points
- where the bottom line is not defined (due to a null point or start/end of line),
- the current line will show a gap too. The algorithm comes from the
- jquery.flot.stack.js plugin, possibly some code could be shared.
- 
- */
+
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
+Licensed under the MIT license.
+
+The case: you've got two series that you want to fill the area between. In Flot
+terms, you need to use one as the fill bottom of the other. You can specify the
+bottom of each data point as the third coordinate manually, or you can use this
+plugin to compute it for you.
+
+In order to name the other series, you need to give it an id, like this:
+
+    var dataset = [
+        { data: [ ... ], id: "foo" } ,         // use default bottom
+        { data: [ ... ], fillBetween: "foo" }, // use first dataset as bottom
+    ];
+
+    $.plot($("#placeholder"), dataset, { lines: { show: true, fill: true }});
+
+As a convenience, if the id given is a number that doesn't appear as an id in
+the series, it is interpreted as the index in the array instead (so fillBetween:
+0 can also mean the first series).
+
+Internally, the plugin modifies the datapoints in each series. For line series,
+extra data points might be inserted through interpolation. Note that at points
+where the bottom line is not defined (due to a null point or start/end of line),
+the current line will show a gap too. The algorithm comes from the
+jquery.flot.stack.js plugin, possibly some code could be shared.
+
+*/
 
 (function ($) {
-
     var options = {
         series: {
-            fillBetween: null	// or number
+            fillBetween: null    // or number
         }
     };
 
     function init(plot) {
-
         function findBottomSeries(s, allseries) {
-
             var i;
 
             for (i = 0; i < allseries.length; ++i) {
@@ -59,8 +56,55 @@
             return null;
         }
 
-        function computeFillBottoms(plot, s, datapoints) {
+        function computeFormat(plot, s, data, datapoints) {
+            if (s.fillBetween == null) {
+                return;
+            }
+            
+            format = datapoints.format;
+            var plotHasId = function(id) {
+                var plotData = plot.getData();
+                for (i = 0; i < plotData.length; i++) {
+                    if (plotData[i].id === id) {
+                        return true;
+                    }
+                }
 
+                return false;
+            }
+
+            if (!format) {
+                format = [];
+
+                format.push({ 
+                    x: true, 
+                    number: true, 
+                    computeRange: s.xaxis.options.autoScale !== 'none',
+                    required: true 
+                });
+                format.push({ 
+                    y: true, 
+                    number: true, 
+                    computeRange: s.yaxis.options.autoScale !== 'none',
+                    required: true 
+                });
+
+                if (s.fillBetween !== undefined && s.fillBetween !== '' && plotHasId(s.fillBetween) && s.fillBetween !== s.id) {
+                    format.push({
+                        x: false,
+                        y: true,
+                        number: true,
+                        required: false,
+                        computeRange: s.yaxis.options.autoScale !== 'none',
+                        defaultValue: 0
+                    });
+                }
+
+                datapoints.format = format;
+            }
+        }
+
+        function computeFillBottoms(plot, s, datapoints) {
             if (s.fillBetween == null) {
                 return;
             }
@@ -72,21 +116,20 @@
             }
 
             var ps = datapoints.pointsize,
-                    points = datapoints.points,
-                    otherps = other.datapoints.pointsize,
-                    otherpoints = other.datapoints.points,
-                    newpoints = [],
-                    px, py, intery, qx, qy, bottom,
-                    withlines = s.lines.show,
-                    withbottom = ps > 2 && datapoints.format[2].y,
-                    withsteps = withlines && s.lines.steps,
-                    fromgap = true,
-                    i = 0,
-                    j = 0,
-                    l, m;
+                points = datapoints.points,
+                otherps = other.datapoints.pointsize,
+                otherpoints = other.datapoints.points,
+                newpoints = [],
+                px, py, intery, qx, qy, bottom,
+                withlines = s.lines.show,
+                withbottom = ps > 2 && datapoints.format[2].y,
+                withsteps = withlines && s.lines.steps,
+                fromgap = true,
+                i = 0,
+                j = 0,
+                l, m;
 
             while (true) {
-
                 if (i >= points.length) {
                     break;
                 }
@@ -94,19 +137,14 @@
                 l = newpoints.length;
 
                 if (points[ i ] == null) {
-
                     // copy gaps
-
                     for (m = 0; m < ps; ++m) {
                         newpoints.push(points[ i + m ]);
                     }
 
                     i += ps;
-
                 } else if (j >= otherpoints.length) {
-
                     // for lines, we can't use the rest of the points
-
                     if (!withlines) {
                         for (m = 0; m < ps; ++m) {
                             newpoints.push(points[ i + m ]);
@@ -114,22 +152,16 @@
                     }
 
                     i += ps;
-
                 } else if (otherpoints[ j ] == null) {
-
                     // oops, got a gap
-
                     for (m = 0; m < ps; ++m) {
                         newpoints.push(null);
                     }
 
                     fromgap = true;
                     j += otherps;
-
                 } else {
-
                     // cases where we actually got two points
-
                     px = points[ i ];
                     py = points[ i + 1 ];
                     qx = otherpoints[ j ];
@@ -137,7 +169,6 @@
                     bottom = 0;
 
                     if (px === qx) {
-
                         for (m = 0; m < ps; ++m) {
                             newpoints.push(points[ i + m ]);
                         }
@@ -147,9 +178,7 @@
 
                         i += ps;
                         j += otherps;
-
                     } else if (px > qx) {
-
                         // we got past point below, might need to
                         // insert interpolated extra point
 
@@ -164,9 +193,8 @@
                         }
 
                         j += otherps;
-
-                    } else { // px < qx
-
+                    } else {
+                        // px < qx
                         // if we come from a gap, we just skip this point
 
                         if (fromgap && withlines) {
@@ -200,9 +228,9 @@
                 // maintain the line steps invariant
 
                 if (withsteps && l !== newpoints.length && l > 0 &&
-                        newpoints[ l ] !== null &&
-                        newpoints[ l ] !== newpoints[ l - ps ] &&
-                        newpoints[ l + 1 ] !== newpoints[ l - ps + 1 ]) {
+                    newpoints[ l ] !== null &&
+                    newpoints[ l ] !== newpoints[ l - ps ] &&
+                    newpoints[ l + 1 ] !== newpoints[ l - ps + 1 ]) {
                     for (m = 0; m < ps; ++m) {
                         newpoints[ l + ps + m ] = newpoints[ l + m ];
                     }
@@ -213,6 +241,7 @@
             datapoints.points = newpoints;
         }
 
+        plot.hooks.processRawData.push(computeFormat);
         plot.hooks.processDatapoints.push(computeFillBottoms);
     }
 
@@ -222,5 +251,4 @@
         name: "fillbetween",
         version: "1.0"
     });
-
 })(jQuery);

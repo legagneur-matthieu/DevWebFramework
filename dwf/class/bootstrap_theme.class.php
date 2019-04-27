@@ -64,7 +64,7 @@ class bootstrap_theme {
     public static function link_theme() {
         echo html_structures::link("../commun/src/dist/css/bootstrap-reboot.min.css") .
         html_structures::link("../commun/src/dist/css/bootstrap-reboot.min.css") .
-        html_structures::link("../commun/src/dist/css/bootstrap-glyphicon.min") .
+        html_structures::link("../commun/src/dist/css/bootstrap-glyphicon.min.css") .
         html_structures::link("../commun/src/dist/css/bootstrap-grid.min.css");
         if (in_array($theme = self::get_theme(), self::$_theme)) {
             echo html_structures::link("../commun/src/dist/bootswatch/{$theme}/bootstrap.min.css");

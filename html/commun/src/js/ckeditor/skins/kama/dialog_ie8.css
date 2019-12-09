@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 
@@ -15,10 +15,10 @@ This file contains styles to used by Internet Explorer 8 only.
 
 .cke_rtl .cke_dialog_footer_buttons td
 {
-    padding-left: 2px;
+	padding-left: 2px;
 }
 
 .cke_rtl .cke_dialog_close_button
 {
-    left: 8px;
+	left: 8px;
 }

@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * properties.php
  * --------
  * Author: Edy Hinzen
@@ -18,7 +17,7 @@
  * TODO
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -36,9 +35,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'PROPERTIES',
     'COMMENT_SINGLE' => array(1 => '#'),
     'COMMENT_MULTI' => array(),
@@ -49,54 +48,54 @@ $language_data = array(
         /* Common used variables */
         1 => array(
             '${user.home}'
+            ),
         ),
-    ),
     'SYMBOLS' => array(
         '[', ']', '='
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'font-weight: bold;',
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => ''
-        ),
+            ),
         'BRACKETS' => array(
             0 => ''
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #933;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => ''
-        ),
+            ),
         'METHODS' => array(
             0 => ''
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #000080; font-weight:bold;',
             1 => 'color: #008000; font-weight:bold;'
-        ),
+            ),
         'SCRIPT' => array(
             0 => ''
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //Entry names
         0 => array(
@@ -105,7 +104,7 @@ $language_data = array(
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => '\\3'
-        ),
+            ),
         //Entry values
         1 => array(
             // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
@@ -116,12 +115,13 @@ $language_data = array(
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1=',
             GESHI_AFTER => ''
-        )
-    ),
+            )
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

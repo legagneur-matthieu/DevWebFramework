@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * pf.php
  * --------
  * Author: David Berard (david@nfrance.com)
@@ -20,7 +19,7 @@
  * -------------------------
  * * Support ALTQ
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -38,9 +37,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'OpenBSD Packet Filter',
     'COMMENT_SINGLE' => array('#'),
     'COMMENT_MULTI' => array(),
@@ -48,7 +47,7 @@ $language_data = array(
         1 => "/\\$\\{[^\\n\\}]*?\\}/i",
         2 => '/<<-?\s*?(\'?)([a-zA-Z0-9]+)\1\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
         3 => "/\\\\['\"]/siU"
-    ),
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),
     'HARDQUOTE' => array("'", "'"),
@@ -60,45 +59,45 @@ $language_data = array(
         3 => "/\\$\\{[^\\n\\}]*?\\}/i",
         4 => "/\\$\\([^\\n\\)]*?\\)/i",
         5 => "/`[^`]*`/"
-    ),
+        ),
     'KEYWORDS' => array(
         1 => array(
             'pass'
         ),
         2 => array(
             'block'
-        ),
+            ),
         3 => array(
-            'quick', 'keep', 'state', 'antispoof', 'table', 'persist', 'file', 'scrub',
-            'set', 'skip', 'flags', 'on'
-        ),
+            'quick','keep','state','antispoof','table','persist','file','scrub',
+            'set','skip','flags','on'
+            ),
         4 => array(
-            'in', 'out', 'proto'
-        )
-    ),
+            'in','out','proto'
+            )
+        ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`', '='
-    ),
+        '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`','='
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
         2 => true,
         3 => true,
         4 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #009900; font-weight: bold;',
             2 => 'color: #990000; font-weight: bold;',
             3 => 'color: #7a0874;',
             4 => 'color: #336699;'
-        ),
+            ),
         'COMMENTS' => array(
             0 => 'color: #666666; font-style: italic;',
             1 => 'color: #800000;',
             2 => 'color: #cc0000; font-style: italic;',
             3 => 'color: #000000; font-weight: bold;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             1 => 'color: #000099; font-weight: bold;',
             2 => 'color: #007800;',
@@ -106,22 +105,22 @@ $language_data = array(
             4 => 'color: #007800;',
             5 => 'color: #780078;',
             'HARD' => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #7a0874; font-weight: bold;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #CC0000;',
             'HARD' => 'color: #CC0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #ff00cc;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000000; font-weight: bold;'
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #007800;',
             1 => 'color: #007800;',
@@ -130,19 +129,19 @@ $language_data = array(
             5 => 'color: #660033;',
             6 => 'color: #000099; font-weight: bold;',
             7 => 'color: #0000ff;',
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => '',
         4 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //Variables (will be handled by comment_regexps)
         0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
@@ -158,12 +157,12 @@ $language_data = array(
         6 => "([0-9]{1,3}\.){3}[0-9]{1,3}",
         //Tables
         7 => "(&lt;(.*)&gt;)"
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'COMMENTS' => array(
@@ -171,8 +170,9 @@ $language_data = array(
         ),
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#])",
-            'DISALLOWED_AFTER' => "(?![\.\-a-zA-Z0-9_%\\/])"
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%\\/])"
         )
     )
 );
+
 ?>

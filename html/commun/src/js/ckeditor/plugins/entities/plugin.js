@@ -1,162 +1,167 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-(function () {
-    // Basic HTML entities.
-    var htmlbase = 'nbsp,gt,lt,amp';
+( function() {
+	// Basic HTML entities.
+	var htmlbase = 'nbsp,gt,lt,amp';
 
-    var entities =
-            // Latin-1 entities
-            'quot,iexcl,cent,pound,curren,yen,brvbar,sect,uml,copy,ordf,laquo,' +
-            'not,shy,reg,macr,deg,plusmn,sup2,sup3,acute,micro,para,middot,' +
-            'cedil,sup1,ordm,raquo,frac14,frac12,frac34,iquest,times,divide,' +
-            // Symbols
-            'fnof,bull,hellip,prime,Prime,oline,frasl,weierp,image,real,trade,' +
-            'alefsym,larr,uarr,rarr,darr,harr,crarr,lArr,uArr,rArr,dArr,hArr,' +
-            'forall,part,exist,empty,nabla,isin,notin,ni,prod,sum,minus,lowast,' +
-            'radic,prop,infin,ang,and,or,cap,cup,int,there4,sim,cong,asymp,ne,' +
-            'equiv,le,ge,sub,sup,nsub,sube,supe,oplus,otimes,perp,sdot,lceil,' +
-            'rceil,lfloor,rfloor,lang,rang,loz,spades,clubs,hearts,diams,' +
-            // Other special characters
-            'circ,tilde,ensp,emsp,thinsp,zwnj,zwj,lrm,rlm,ndash,mdash,lsquo,' +
-            'rsquo,sbquo,ldquo,rdquo,bdquo,dagger,Dagger,permil,lsaquo,rsaquo,' +
-            'euro';
+	var entities =
+	// Latin-1 entities
+	'quot,iexcl,cent,pound,curren,yen,brvbar,sect,uml,copy,ordf,laquo,' +
+		'not,shy,reg,macr,deg,plusmn,sup2,sup3,acute,micro,para,middot,' +
+		'cedil,sup1,ordm,raquo,frac14,frac12,frac34,iquest,times,divide,' +
 
-    // Latin letters entities
-    var latin = 'Agrave,Aacute,Acirc,Atilde,Auml,Aring,AElig,Ccedil,Egrave,Eacute,' +
-            'Ecirc,Euml,Igrave,Iacute,Icirc,Iuml,ETH,Ntilde,Ograve,Oacute,Ocirc,' +
-            'Otilde,Ouml,Oslash,Ugrave,Uacute,Ucirc,Uuml,Yacute,THORN,szlig,' +
-            'agrave,aacute,acirc,atilde,auml,aring,aelig,ccedil,egrave,eacute,' +
-            'ecirc,euml,igrave,iacute,icirc,iuml,eth,ntilde,ograve,oacute,ocirc,' +
-            'otilde,ouml,oslash,ugrave,uacute,ucirc,uuml,yacute,thorn,yuml,' +
-            'OElig,oelig,Scaron,scaron,Yuml';
+		// Symbols
+		'fnof,bull,hellip,prime,Prime,oline,frasl,weierp,image,real,trade,' +
+		'alefsym,larr,uarr,rarr,darr,harr,crarr,lArr,uArr,rArr,dArr,hArr,' +
+		'forall,part,exist,empty,nabla,isin,notin,ni,prod,sum,minus,lowast,' +
+		'radic,prop,infin,ang,and,or,cap,cup,int,there4,sim,cong,asymp,ne,' +
+		'equiv,le,ge,sub,sup,nsub,sube,supe,oplus,otimes,perp,sdot,lceil,' +
+		'rceil,lfloor,rfloor,lang,rang,loz,spades,clubs,hearts,diams,' +
 
-    // Greek letters entities.
-    var greek = 'Alpha,Beta,Gamma,Delta,Epsilon,Zeta,Eta,Theta,Iota,Kappa,Lambda,Mu,' +
-            'Nu,Xi,Omicron,Pi,Rho,Sigma,Tau,Upsilon,Phi,Chi,Psi,Omega,alpha,' +
-            'beta,gamma,delta,epsilon,zeta,eta,theta,iota,kappa,lambda,mu,nu,xi,' +
-            'omicron,pi,rho,sigmaf,sigma,tau,upsilon,phi,chi,psi,omega,thetasym,' +
-            'upsih,piv';
+		// Other special characters
+		'circ,tilde,ensp,emsp,thinsp,zwnj,zwj,lrm,rlm,ndash,mdash,lsquo,' +
+		'rsquo,sbquo,ldquo,rdquo,bdquo,dagger,Dagger,permil,lsaquo,rsaquo,' +
+		'euro';
 
-    // Create a mapping table between one character and its entity form from a list of entity names.
-    // @param reverse {Boolean} Whether to create a reverse map from the entity string form to an actual character.
-    function buildTable(entities, reverse) {
-        var table = {},
-                regex = [];
+	// Latin letters entities
+	var latin = 'Agrave,Aacute,Acirc,Atilde,Auml,Aring,AElig,Ccedil,Egrave,Eacute,' +
+		'Ecirc,Euml,Igrave,Iacute,Icirc,Iuml,ETH,Ntilde,Ograve,Oacute,Ocirc,' +
+		'Otilde,Ouml,Oslash,Ugrave,Uacute,Ucirc,Uuml,Yacute,THORN,szlig,' +
+		'agrave,aacute,acirc,atilde,auml,aring,aelig,ccedil,egrave,eacute,' +
+		'ecirc,euml,igrave,iacute,icirc,iuml,eth,ntilde,ograve,oacute,ocirc,' +
+		'otilde,ouml,oslash,ugrave,uacute,ucirc,uuml,yacute,thorn,yuml,' +
+		'OElig,oelig,Scaron,scaron,Yuml';
 
-        // Entities that the browsers' DOM does not automatically transform to the
-        // final character.
-        var specialTable = {
-            nbsp: '\u00A0', // IE | FF
-            shy: '\u00AD', // IE
-            gt: '\u003E', // IE | FF |   --   | Opera
-            lt: '\u003C', // IE | FF | Safari | Opera
-            amp: '\u0026', // ALL
-            apos: '\u0027', // IE
-            quot: '\u0022' // IE
-        };
+	// Greek letters entities.
+	var greek = 'Alpha,Beta,Gamma,Delta,Epsilon,Zeta,Eta,Theta,Iota,Kappa,Lambda,Mu,' +
+		'Nu,Xi,Omicron,Pi,Rho,Sigma,Tau,Upsilon,Phi,Chi,Psi,Omega,alpha,' +
+		'beta,gamma,delta,epsilon,zeta,eta,theta,iota,kappa,lambda,mu,nu,xi,' +
+		'omicron,pi,rho,sigmaf,sigma,tau,upsilon,phi,chi,psi,omega,thetasym,' +
+		'upsih,piv';
 
-        entities = entities.replace(/\b(nbsp|shy|gt|lt|amp|apos|quot)(?:,|$)/g, function (match, entity) {
-            var org = reverse ? '&' + entity + ';' : specialTable[ entity ],
-                    result = reverse ? specialTable[ entity ] : '&' + entity + ';';
+	// Create a mapping table between one character and its entity form from a list of entity names.
+	// @param reverse {Boolean} Whether to create a reverse map from the entity string form to an actual character.
+	function buildTable( entities, reverse ) {
+		var table = {},
+			regex = [];
 
-            table[ org ] = result;
-            regex.push(org);
-            return '';
-        });
+		// Entities that the browsers' DOM does not automatically transform to the
+		// final character.
+		var specialTable = {
+			nbsp: '\u00A0', // IE | FF
+			shy: '\u00AD', // IE
+			gt: '\u003E', // IE | FF |   --   | Opera
+			lt: '\u003C', // IE | FF | Safari | Opera
+			amp: '\u0026', // ALL
+			apos: '\u0027', // IE
+			quot: '\u0022' // IE
+		};
 
-        if (!reverse && entities) {
-            // Transforms the entities string into an array.
-            entities = entities.split(',');
+		entities = entities.replace( /\b(nbsp|shy|gt|lt|amp|apos|quot)(?:,|$)/g, function( match, entity ) {
+			var org = reverse ? '&' + entity + ';' : specialTable[ entity ],
+				result = reverse ? specialTable[ entity ] : '&' + entity + ';';
 
-            // Put all entities inside a DOM element, transforming them to their
-            // final characters.
-            var div = document.createElement('div'),
-                    chars;
-            div.innerHTML = '&' + entities.join(';&') + ';';
-            chars = div.innerHTML;
-            div = null;
+			table[ org ] = result;
+			regex.push( org );
+			return '';
+		} );
 
-            // Add all characters to the table.
-            for (var i = 0; i < chars.length; i++) {
-                var charAt = chars.charAt(i);
-                table[ charAt ] = '&' + entities[ i ] + ';';
-                regex.push(charAt);
-            }
-        }
+		// Drop trailing comma (#2448).
+		entities = entities.replace( /,$/, '' );
 
-        table.regex = regex.join(reverse ? '|' : '');
+		if ( !reverse && entities ) {
+			// Transforms the entities string into an array.
+			entities = entities.split( ',' );
 
-        return table;
-    }
+			// Put all entities inside a DOM element, transforming them to their
+			// final characters.
+			var div = document.createElement( 'div' ),
+				chars;
+			div.innerHTML = '&' + entities.join( ';&' ) + ';';
+			chars = div.innerHTML;
+			div = null;
 
-    CKEDITOR.plugins.add('entities', {
-        afterInit: function (editor) {
-            var config = editor.config;
+			// Add all characters to the table.
+			for ( var i = 0; i < chars.length; i++ ) {
+				var charAt = chars.charAt( i );
+				table[ charAt ] = '&' + entities[ i ] + ';';
+				regex.push( charAt );
+			}
+		}
 
-            function getChar(character) {
-                return baseEntitiesTable[ character ];
-            }
+		table.regex = regex.join( reverse ? '|' : '' );
 
-            function getEntity(character) {
-                return config.entities_processNumerical == 'force' || !entitiesTable[ character ] ? '&#' + character.charCodeAt(0) + ';'
-                        : entitiesTable[ character ];
-            }
+		return table;
+	}
 
-            var dataProcessor = editor.dataProcessor,
-                    htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+	CKEDITOR.plugins.add( 'entities', {
+		afterInit: function( editor ) {
+			var config = editor.config;
 
-            if (htmlFilter) {
-                // Mandatory HTML basic entities.
-                var selectedEntities = [];
+			function getChar( character ) {
+				return baseEntitiesTable[ character ];
+			}
 
-                if (config.basicEntities !== false)
-                    selectedEntities.push(htmlbase);
+			function getEntity( character ) {
+				return config.entities_processNumerical == 'force' || !entitiesTable[ character ] ? '&#' + character.charCodeAt( 0 ) + ';'
+				: entitiesTable[ character ];
+			}
 
-                if (config.entities) {
-                    if (selectedEntities.length)
-                        selectedEntities.push(entities);
+			var dataProcessor = editor.dataProcessor,
+				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 
-                    if (config.entities_latin)
-                        selectedEntities.push(latin);
+			if ( htmlFilter ) {
+				// Mandatory HTML basic entities.
+				var selectedEntities = [];
 
-                    if (config.entities_greek)
-                        selectedEntities.push(greek);
+				if ( config.basicEntities !== false )
+					selectedEntities.push( htmlbase );
 
-                    if (config.entities_additional)
-                        selectedEntities.push(config.entities_additional);
-                }
+				if ( config.entities ) {
+					if ( selectedEntities.length )
+						selectedEntities.push( entities );
 
-                var entitiesTable = buildTable(selectedEntities.join(','));
+					if ( config.entities_latin )
+						selectedEntities.push( latin );
 
-                // Create the Regex used to find entities in the text, leave it matches nothing if entities are empty.
-                var entitiesRegex = entitiesTable.regex ? '[' + entitiesTable.regex + ']' : 'a^';
-                delete entitiesTable.regex;
+					if ( config.entities_greek )
+						selectedEntities.push( greek );
 
-                if (config.entities && config.entities_processNumerical)
-                    entitiesRegex = '[^ -~]|' + entitiesRegex;
+					if ( config.entities_additional )
+						selectedEntities.push( config.entities_additional );
+				}
 
-                entitiesRegex = new RegExp(entitiesRegex, 'g');
+				var entitiesTable = buildTable( selectedEntities.join( ',' ) );
 
-                // Decode entities that the browsers has transformed
-                // at first place.
-                var baseEntitiesTable = buildTable([htmlbase, 'shy'].join(','), true),
-                        baseEntitiesRegex = new RegExp(baseEntitiesTable.regex, 'g');
+				// Create the Regex used to find entities in the text, leave it matches nothing if entities are empty.
+				var entitiesRegex = entitiesTable.regex ? '[' + entitiesTable.regex + ']' : 'a^';
+				delete entitiesTable.regex;
 
-                htmlFilter.addRules({
-                    text: function (text) {
-                        return text.replace(baseEntitiesRegex, getChar).replace(entitiesRegex, getEntity);
-                    }
-                }, {
-                    applyToAll: true,
-                    excludeNestedEditable: true
-                });
-            }
-        }
-    });
-})();
+				if ( config.entities && config.entities_processNumerical )
+					entitiesRegex = '[^ -~]|' + entitiesRegex;
+
+				entitiesRegex = new RegExp( entitiesRegex, 'g' );
+
+				// Decode entities that the browsers has transformed
+				// at first place.
+				var baseEntitiesTable = buildTable( [ htmlbase, 'shy' ].join( ',' ), true ),
+					baseEntitiesRegex = new RegExp( baseEntitiesTable.regex, 'g' );
+
+				htmlFilter.addRules( {
+					text: function( text ) {
+						return text.replace( baseEntitiesRegex, getChar ).replace( entitiesRegex, getEntity );
+					}
+				}, {
+					applyToAll: true,
+					excludeNestedEditable: true
+				} );
+			}
+		}
+	} );
+} )();
 
 /**
  * Whether to escape basic HTML entities in the document, including:

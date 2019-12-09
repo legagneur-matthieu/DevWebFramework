@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -11,131 +11,131 @@
  * @constructor Creates a `ui` class instance.
  * @param {CKEDITOR.editor} editor The editor instance.
  */
-CKEDITOR.ui = function (editor) {
-    if (editor.ui)
-        return editor.ui;
+CKEDITOR.ui = function( editor ) {
+	if ( editor.ui )
+		return editor.ui;
 
-    this.items = {};
-    this.instances = {};
-    this.editor = editor;
+	this.items = {};
+	this.instances = {};
+	this.editor = editor;
 
-    /**
-     * Object used to store private stuff.
-     *
-     * @private
-     */
-    this._ = {
-        handlers: {}
-    };
+	/**
+	 * Object used to store private stuff.
+	 *
+	 * @private
+	 */
+	this._ = {
+		handlers: {}
+	};
 
-    return this;
+	return this;
 };
 
 // PACKAGER_RENAME( CKEDITOR.ui )
 
 CKEDITOR.ui.prototype = {
-    /**
-     * Adds a UI item to the items collection. These items can be later used in
-     * the interface.
-     *
-     *		// Add a new button named 'MyBold'.
-     *		editorInstance.ui.add( 'MyBold', CKEDITOR.UI_BUTTON, {
-     *			label: 'My Bold',
-     *			command: 'bold'
-     *		} );
-     *
-     * @param {String} name The UI item name.
-     * @param {Object} type The item type.
-     * @param {Object} definition The item definition. The properties of this
-     * object depend on the item type.
-     */
-    add: function (name, type, definition) {
-        // Compensate the unique name of this ui item to definition.
-        definition.name = name.toLowerCase();
+	/**
+	 * Adds a UI item to the items collection. These items can be later used in
+	 * the interface.
+	 *
+	 *		// Add a new button named 'MyBold'.
+	 *		editorInstance.ui.add( 'MyBold', CKEDITOR.UI_BUTTON, {
+	 *			label: 'My Bold',
+	 *			command: 'bold'
+	 *		} );
+	 *
+	 * @param {String} name The UI item name.
+	 * @param {Object} type The item type.
+	 * @param {Object} definition The item definition. The properties of this
+	 * object depend on the item type.
+	 */
+	add: function( name, type, definition ) {
+		// Compensate the unique name of this ui item to definition.
+		definition.name = name.toLowerCase();
 
-        var item = this.items[ name ] = {
-            type: type,
-            // The name of {@link CKEDITOR.command} which associate with this UI.
-            command: definition.command || null,
-            args: Array.prototype.slice.call(arguments, 2)
-        };
+		var item = this.items[ name ] = {
+			type: type,
+			// The name of {@link CKEDITOR.command} which associate with this UI.
+			command: definition.command || null,
+			args: Array.prototype.slice.call( arguments, 2 )
+		};
 
-        CKEDITOR.tools.extend(item, definition);
-    },
+		CKEDITOR.tools.extend( item, definition );
+	},
 
-    /**
-     * Retrieves the created UI objects by name.
-     *
-     * @param {String} name The name of the UI definition.
-     */
-    get: function (name) {
-        return this.instances[ name ];
-    },
+	/**
+	 * Retrieves the created UI objects by name.
+	 *
+	 * @param {String} name The name of the UI definition.
+	 */
+	get: function( name ) {
+		return this.instances[ name ];
+	},
 
-    /**
-     * Gets a UI object.
-     *
-     * @param {String} name The UI item name.
-     * @returns {Object} The UI element.
-     */
-    create: function (name) {
-        var item = this.items[ name ],
-                handler = item && this._.handlers[ item.type ],
-                command = item && item.command && this.editor.getCommand(item.command);
+	/**
+	 * Gets a UI object.
+	 *
+	 * @param {String} name The UI item name.
+	 * @returns {Object} The UI element.
+	 */
+	create: function( name ) {
+		var item = this.items[ name ],
+			handler = item && this._.handlers[ item.type ],
+			command = item && item.command && this.editor.getCommand( item.command );
 
-        var result = handler && handler.create.apply(this, item.args);
+		var result = handler && handler.create.apply( this, item.args );
 
-        this.instances[ name ] = result;
+		this.instances[ name ] = result;
 
-        // Add reference inside command object.
-        if (command)
-            command.uiItems.push(result);
+		// Add reference inside command object.
+		if ( command )
+			command.uiItems.push( result );
 
-        if (result && !result.type)
-            result.type = item.type;
+		if ( result && !result.type )
+			result.type = item.type;
 
-        return result;
-    },
+		return result;
+	},
 
-    /**
-     * Adds a handler for a UI item type. The handler is responsible for
-     * transforming UI item definitions into UI objects.
-     *
-     * @param {Object} type The item type.
-     * @param {Object} handler The handler definition.
-     */
-    addHandler: function (type, handler) {
-        this._.handlers[ type ] = handler;
-    },
+	/**
+	 * Adds a handler for a UI item type. The handler is responsible for
+	 * transforming UI item definitions into UI objects.
+	 *
+	 * @param {Object} type The item type.
+	 * @param {Object} handler The handler definition.
+	 */
+	addHandler: function( type, handler ) {
+		this._.handlers[ type ] = handler;
+	},
 
-    /**
-     * Returns the unique DOM element that represents one editor's UI part, also known as "space".
-     * There are 3 main editor spaces available: `top`, `contents` and `bottom`
-     * and their availability depends on editor type.
-     *
-     *		// Hide the bottom space in the UI.
-     *		var bottom = editor.ui.space( 'bottom' );
-     *		bottom.setStyle( 'display', 'none' );
-     *
-     * @param {String} name The name of the space.
-     * @returns {CKEDITOR.dom.element} The element that represents the space.
-     */
-    space: function (name) {
-        return CKEDITOR.document.getById(this.spaceId(name));
-    },
+	/**
+	 * Returns the unique DOM element that represents one editor's UI part, also known as "space".
+	 * There are 3 main editor spaces available: `top`, `contents` and `bottom`
+	 * and their availability depends on editor type.
+	 *
+	 *		// Hide the bottom space in the UI.
+	 *		var bottom = editor.ui.space( 'bottom' );
+	 *		bottom.setStyle( 'display', 'none' );
+	 *
+	 * @param {String} name The name of the space.
+	 * @returns {CKEDITOR.dom.element} The element that represents the space.
+	 */
+	space: function( name ) {
+		return CKEDITOR.document.getById( this.spaceId( name ) );
+	},
 
-    /**
-     * Returns the HTML ID for a specific UI space name.
-     *
-     * @param {String} name The name of the space.
-     * @returns {String} The ID of an element representing this space in the DOM.
-     */
-    spaceId: function (name) {
-        return this.editor.id + '_' + name;
-    }
+	/**
+	 * Returns the HTML ID for a specific UI space name.
+	 *
+	 * @param {String} name The name of the space.
+	 * @returns {String} The ID of an element representing this space in the DOM.
+	 */
+	spaceId: function( name ) {
+		return this.editor.id + '_' + name;
+	}
 };
 
-CKEDITOR.event.implementOn(CKEDITOR.ui);
+CKEDITOR.event.implementOn( CKEDITOR.ui );
 
 /**
  * Internal event fired when a new UI element is ready.
@@ -169,7 +169,7 @@ CKEDITOR.event.implementOn(CKEDITOR.ui);
 
 /**
  * The element in the {@link CKEDITOR#document host page's document} that contains the editor content.
- * If the [fixed editor UI](#!/guide/dev_uitypes-section-fixed-user-interface) is used, then it will be set to
+ * If the {@glink features/uitypes#fixed-user-interface fixed editor UI} is used, then it will be set to
  * `editor.ui.space( 'contents' )` &mdash; i.e. the `<div>` which contains the editor `<iframe>` (in case of classic editor)
  * or {@link CKEDITOR.editable} (in case of inline editor). Otherwise it is set to the {@link CKEDITOR.editable} itself.
  *
@@ -179,7 +179,7 @@ CKEDITOR.event.implementOn(CKEDITOR.ui);
  *		var editor = CKEDITOR.instances.editor1;
  *		console.log( editor.ui.contentsElement.getName() ); // 'div'
  *
- * @since 4.5
+ * @since 4.5.0
  * @readonly
  * @property {CKEDITOR.dom.element} contentsElement
  */

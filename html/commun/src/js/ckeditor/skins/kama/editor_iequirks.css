@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 
@@ -18,7 +18,7 @@ in Quirks mode only.
 .cke_contents,
 .cke_bottom
 {
-    width: 100%; /* IE Quirks */
+	width: 100%; /* IE Quirks */
 }
 
 .cke_rtl .cke_toolgroup,
@@ -30,7 +30,7 @@ in Quirks mode only.
 .cke_rtl .cke_path_item,
 .cke_rtl .cke_path_item *
 {
-    float: none;
+	float: none;
 }
 
 .cke_rtl .cke_toolbar_separator,
@@ -40,8 +40,8 @@ in Quirks mode only.
 .cke_rtl .cke_button_icon,
 .cke_rtl .cke_button_arrow
 {
-    vertical-align: top;
-    display: inline-block;
+	vertical-align: top;
+	display: inline-block;
 }
 
 .cke_toolgroup,
@@ -51,182 +51,182 @@ in Quirks mode only.
 .cke_toolbox_collapser,
 .cke_resizer
 {
-    background-image: url(images/sprites_ie6.png);
+	background-image: url(images/sprites_ie6.png);
 }
 
 .cke_toolgroup
 {
-    background-color: #fff;
-    display: inline-block;
-    padding: 2px;
+	background-color: #fff;
+	display: inline-block;
+	padding: 2px;
 }
 
 .cke_inner
 {
-    padding-top: 2px;
-    background-color: #d3d3d3;
-    background-image: none;
+	padding-top: 2px;
+	background-color: #d3d3d3;
+	background-image: none;
 }
 
 .cke_toolbar
 {
-    margin: 2px 0;
+	margin: 2px 0;
 }
 .cke_rtl .cke_toolbar
 {
-    margin-bottom: -1px;
-    margin-top: -1px;
+	margin-bottom: -1px;
+	margin-top: -1px;
 }
 
 .cke_toolbar_separator
 {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 .cke_toolbox
 {
-    width: 100%;
-    float: left;
-    padding-bottom: 4px;
+	width: 100%;
+	float: left;
+	padding-bottom: 4px;
 }
 
 .cke_rtl .cke_toolbox
 {
-    margin-top: 2px;
-    margin-bottom: -4px;
+	margin-top: 2px;
+	margin-bottom: -4px;
 }
 
 .cke_combo_button
 {
-    background-color: #fff;
+	background-color: #fff;
 }
 
 .cke_rtl .cke_combo_button
 {
-    padding-right: 6px;
-    padding-left: 0px;
+	padding-right: 6px;
+	padding-left: 0px;
 }
 
 .cke_combo_text
 {
-    line-height: 21px;
+	line-height: 21px;
 }
 
 .cke_ltr .cke_combo_open
 {
-    margin-left: -3px;
+	margin-left: -3px;
 }
 
 .cke_combo_arrow
 {
-    background-position: 2px -1467px;
-    margin: 2px 0 0;
-    border: 0;
-    width: 8px;
-    height: 13px;
+	background-position: 2px -1467px;
+	margin: 2px 0 0;
+	border: 0;
+	width: 8px;
+	height: 13px;
 }
 .cke_rtl .cke_button_arrow
 {
-    background-position-x: 0;
+	background-position-x: 0;
 }
 
 .cke_toolbox_collapser .cke_arrow
 {
-    display: block;
-    visibility: hidden;
-    font-size: 0;
-    color: transparent;
-    border: 0;
+	display: block;
+	visibility: hidden;
+	font-size: 0;
+	color: transparent;
+	border: 0;
 }
 
 .cke_button_arrow
 {
-    background-position: 2px -1467px;
-    margin: 0;
-    border: 0;
-    width: 8px;
-    height: 15px;
+	background-position: 2px -1467px;
+	margin: 0;
+	border: 0;
+	width: 8px;
+	height: 15px;
 }
 
 .cke_ltr .cke_button_arrow
 {
-    background-position: 0 -1467px;
-    margin-left: -3px;
+	background-position: 0 -1467px;
+	margin-left: -3px;
 }
 
 .cke_toolbox_collapser
 {
-    background-position: 3px -1367px;
+	background-position: 3px -1367px;
 }
 .cke_toolbox_collapser_min
 {
-    background-position: 4px -1387px; /* +4px +3px */
-    margin: 2px 0 0;
+	background-position: 4px -1387px; /* +4px +3px */
+	margin: 2px 0 0;
 }
 .cke_rtl .cke_toolbox_collapser_min
 {
-    background-position: 4px -1408px;
+	background-position: 4px -1408px;
 }
 
 .cke_resizer
 {
-    background-position: 0px -1427px;
-    width: 12px;
-    height: 12px;
-    border: 0;
-    margin: 9px 0 0;
-    vertical-align: baseline;
+	background-position: 0px -1427px;
+	width: 12px;
+	height: 12px;
+	border: 0;
+	margin: 9px 0 0;
+	vertical-align: baseline;
 }
 
 .cke_dialog_tabs
 {
-    position: absolute;
-    top: 38px;
-    left: 0px;
+	position: absolute;
+	top: 38px;
+	left: 0px;
 }
 
 .cke_dialog_body
 {
-    clear: both;
-    margin-top: 20px;
+	clear: both;
+	margin-top: 20px;
 }
 
 a.cke_dialog_ui_button
 {
-    background: url(images/sprites.png) repeat_x 0 _ 1069px;
+	background: url(images/sprites.png) repeat_x 0 _ 1069px;
 }
 
 a.cke_dialog_ui_button:hover,
 a.cke_dialog_ui_button:focus,
 a.cke_dialog_ui_button:active
 {
-    background-position: 0 -1179px;
+	background-position: 0 -1179px;
 }
 
 a.cke_dialog_ui_button_ok
 {
-    background: url(images/sprites.png) repeat_x 0 _ 1144px;
+	background: url(images/sprites.png) repeat_x 0 _ 1144px;
 }
 
 a.cke_dialog_ui_button_cancel
 {
-    background: url(images/sprites.png) repeat_x 0 _ 1105px;
+	background: url(images/sprites.png) repeat_x 0 _ 1105px;
 }
 
 a.cke_dialog_ui_button_ok span,
 a.cke_dialog_ui_button_cancel span
 {
-    background-image: none;
+	background-image: none;
 }
 
 .cke_menubutton_label
 {
-    height:25px;
+	height:25px;
 }
 
 .cke_menuarrow
 {
-    background-image: url(images/sprites_ie6.png);
+	background-image: url(images/sprites_ie6.png);
 }
 
 .cke_menuitem .cke_icon,
@@ -234,20 +234,20 @@ a.cke_dialog_ui_button_cancel span
 .cke_menuitem .cke_disabled .cke_icon,
 .cke_button_disabled .cke_button_icon
 {
-    filter: "";
+	filter: "";
 }
 
 .cke_menuseparator
 {
-    font-size: 0;
+	font-size: 0;
 }
 
 .cke_colorbox
 {
-    font-size: 0; /* Set minimal font size, so button won't be streched by the text that doesn't exist. */
+	font-size: 0; /* Set minimal font size, so button won't be streched by the text that doesn't exist. */
 }
 
 .cke_source
 {
-    white-space: normal;
+	white-space: normal;
 }

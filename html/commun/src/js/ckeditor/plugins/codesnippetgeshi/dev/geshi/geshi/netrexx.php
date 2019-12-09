@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * netrexx.php
  * ---------------------------------
  * Author: Jon Wolfers (sahananda@windhorse.biz)
@@ -21,7 +20,7 @@
  * -------------------------
  *   -  Get it working on rosettacode.org
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *      This file is part of GeSHi.
  *
@@ -39,9 +38,9 @@
  *    along with GeSHi; if not, write to the Free Software
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'NetRexx',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -53,7 +52,7 @@ $language_data = array(
             'class', 'do', 'exit', 'if', 'import', 'iterate', 'leave',
             'loop', 'nop', 'numeric', 'package', 'parse', 'properties',
             'return', 'say', 'select', 'signal', 'trace'
-        ),
+            ),
         2 => array(
             'abstract', 'adapter', 'all', 'ask', 'binary', 'case',
             'constant', 'dependent', 'deprecated', 'extends', 'final',
@@ -61,16 +60,16 @@ $language_data = array(
             'native', 'off', 'private', 'protect', 'public', 'results',
             'returns', 'shared', 'signals', 'source', 'static',
             'transient', 'unused', 'uses', 'version', 'volatile'
-        ),
+            ),
         3 => array(
             'catch', 'else', 'end', 'finally', 'otherwise', 'then', 'when'
-        ),
+            ),
         4 => array(
             'rc', 'result', 'self', 'sigl', 'super'
-        ),
+            ),
         5 => array(
             'placeholderforoorexxdirectives'
-        ),
+            ),
         6 => array(
             'abbrev', 'abs', 'b2x', 'c2d', 'c2x', 'center', 'centre',
             'changestr', 'compare', 'copies', 'copyindexed', 'countstr',
@@ -87,12 +86,12 @@ $language_data = array(
             'toshort', 'tostring', 'translate', 'trunc', 'upper',
             'verify', 'word', 'wordindex', 'wordlength', 'wordpos',
             'words', 'x2b', 'x2c', 'x2d'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         '(', ')', '<', '>', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':',
         '<', '>'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => true,
         1 => false,
@@ -101,7 +100,7 @@ $language_data = array(
         4 => false,
         5 => false,
         6 => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #b1b100;',
@@ -110,35 +109,35 @@ $language_data = array(
             4 => 'color: #0000ff; font-weight: bold;',
             5 => 'color: #880088; font-weight: bold;',
             6 => 'color: #888800; font-weight: bold;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #666666;',
             'MULTI' => 'color: #808080;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #202020;',
             2 => 'color: #202020;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
@@ -146,18 +145,19 @@ $language_data = array(
         4 => '',
         5 => '',
         6 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.'
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'TAB_WIDTH' => 4
 );
+
 ?>

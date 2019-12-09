@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * bash.php
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
@@ -33,7 +32,7 @@
  * * Get symbols working
  * * Highlight builtin vars
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -51,9 +50,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'Bash',
     // Bash DOES have single line comments with # markers. But bash also has
     // the  $# variable, so comments need special handling (see sf.net
@@ -70,7 +69,7 @@ $language_data = array(
         // Single-Line Shell usage: Hide the prompt at the beginning
         /* 4 => "/\A(?!#!)\s*(?>[\w:@\\/\\-\\._~]*[$#]\s?)?(?=[^\n]+\n?\Z)|^(?!#!)(\w+@)?[\w\\-\\.]+(:~?)[\w\\/\\-\\._]*?[$#]\s?/ms" */
         4 => "/\A(?!#!)(?:(?>[\w:@\\/\\-\\._~]*)[$#]\s?)(?=(?>[^\n]+)\n?\Z)|^(?!#!)(?:\w+@)?(?>[\w\\-\\.]+)(?>:~?[\w\\/\\-\\._]*?)?[$#]\s?/sm"
-    ),
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),
     'HARDQUOTE' => array("'", "'"),
@@ -87,12 +86,12 @@ $language_data = array(
         4 => "/\\$\\([^\\n\\)]*?\\)/i",
         // `...`
         5 => "/`[^`]*`/"
-    ),
+        ),
     'KEYWORDS' => array(
         1 => array(
             'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
             'if', 'in', 'select', 'set', 'then', 'until', 'while', 'time'
-        ),
+            ),
         2 => array(
             'aclocal', 'aconnect', 'apachectl', 'apache2ctl', 'aplay', 'apm',
             'apmsleep', 'apropos', 'apt-cache', 'apt-cdrom', 'apt-config',
@@ -101,6 +100,7 @@ $language_data = array(
             'apt-src', 'apticron', 'aptitude', 'aptsh', 'apxs', 'apxs2', 'ar',
             'arch', 'arecord', 'as', 'as86', 'ash', 'autoconf', 'autoheader',
             'automake', 'awk',
+
             'apachectl start', 'apachectl stop', 'apachectl restart',
             'apachectl graceful', 'apachectl graceful-stop',
             'apachectl configtest', 'apachectl status', 'apachectl fullstatus',
@@ -108,6 +108,7 @@ $language_data = array(
             'apache2ctl restart', 'apache2ctl graceful',
             'apache2ctl graceful-stop', 'apache2ctl configtest',
             'apache2ctl status', 'apache2ctl fullstatus', 'apache2ctl help',
+
             'apt-cache add', 'apt-cache depends', 'apt-cache dotty',
             'apt-cache dump', 'apt-cache dumpavail', 'apt-cache gencaches',
             'apt-cache pkgnames', 'apt-cache policy', 'apt-cache rdepends',
@@ -130,13 +131,16 @@ $language_data = array(
             'apt-src list', 'apt-src location', 'apt-src name',
             'apt-src remove', 'apt-src update', 'apt-src upgrade',
             'apt-src version',
+
             'basename', 'bash', 'bc', 'bison', 'bunzip2', 'bzcat',
             'bzcmp', 'bzdiff', 'bzegrep', 'bzfgrep', 'bzgrep',
             'bzip2', 'bzip2recover', 'bzless', 'bzmore',
+
             'c++', 'cal', 'cat', 'chattr', 'cc', 'cdda2wav', 'cdparanoia',
             'cdrdao', 'cd-read', 'cdrecord', 'chfn', 'chgrp', 'chmod',
             'chown', 'chroot', 'chsh', 'chvt', 'clear', 'cmp', 'comm', 'co',
             'col', 'cp', 'cpio', 'cpp', 'csh', 'cut', 'cvs', 'cvs-pserver',
+
             'cvs add', 'cvs admin', 'cvs annotate', 'cvs checkout',
             'cvs commit', 'cvs diff', 'cvs edit', 'cvs editors', 'cvs export',
             'cvs history', 'cvs import', 'cvs init', 'cvs log', 'cvs login',
@@ -144,18 +148,23 @@ $language_data = array(
             'cvs rdiff', 'cvs release', 'cvs remove', 'cvs rlog', 'cvs rls',
             'cvs rtag', 'cvs server', 'cvs status', 'cvs tag', 'cvs unedit',
             'cvs update', 'cvs version', 'cvs watch', 'cvs watchers',
+
             'dash', 'date', 'dc', 'dch', 'dcop', 'dd', 'ddate', 'ddd',
             'deallocvt', 'debconf', 'defoma', 'depmod', 'df', 'dh',
             'dialog', 'diff', 'diff3', 'dig', 'dir', 'dircolors', 'directomatic',
             'dirname', 'dmesg', 'dnsdomainname', 'domainname', 'dpkg',
             'dselect', 'du', 'dumpkeys',
+
             'ed', 'egrep', 'env', 'expr',
-            'false', 'fbset', 'fdisk', 'ffmpeg', 'fgconsole', 'fgrep', 'file',
+
+            'false', 'fbset', 'fdisk', 'ffmpeg', 'fgconsole','fgrep', 'file',
             'find', 'flex', 'flex++', 'fmt', 'free', 'ftp', 'funzip', 'fuser',
-            'g++', 'gawk', 'gc', 'gcc', 'gdb', 'getent', 'getkeycodes',
+
+            'g++', 'gawk', 'gc','gcc', 'gdb', 'getent', 'getkeycodes',
             'getopt', 'gettext', 'gettextize', 'gimp', 'gimp-remote',
             'gimptool', 'gmake', 'gocr', 'grep', 'groups', 'gs', 'gunzip',
             'gzexe', 'gzip',
+
             'git', 'git add', 'git add--interactive', 'git am', 'git annotate',
             'git apply', 'git archive', 'git bisect', 'git bisect--helper',
             'git blame', 'git branch', 'git bundle', 'git cat-file',
@@ -195,6 +204,7 @@ $language_data = array(
             'git upload-archive', 'git upload-pack', 'git var',
             'git verify-pack', 'git verify-tag', 'git web--browse',
             'git whatchanged', 'git write-tree',
+
             'gitaction', 'git-add', 'git-add--interactive', 'git-am',
             'git-annotate', 'git-apply', 'git-archive', 'git-bisect',
             'git-bisect--helper', 'git-blame', 'git-branch', 'git-bundle',
@@ -236,27 +246,39 @@ $language_data = array(
             'git-var', 'git-verify-pack', 'git-verify-tag', 'gitview',
             'git-web--browse', 'git-whatchanged', 'gitwhich', 'gitwipe',
             'git-write-tree', 'gitxgrep',
+
             'head', 'hexdump', 'hostname',
+
             'id', 'ifconfig', 'ifdown', 'ifup', 'igawk', 'install',
+
             'ip', 'ip addr', 'ip addrlabel', 'ip link', 'ip maddr', 'ip mroute',
             'ip neigh', 'ip route', 'ip rule', 'ip tunnel', 'ip xfrm',
+
             'join',
-            'kbd_mode', 'kbdrate', 'kdialog', 'kfile', 'kill', 'killall',
+
+            'kbd_mode','kbdrate', 'kdialog', 'kfile', 'kill', 'killall',
+
             'lame', 'last', 'lastb', 'ld', 'ld86', 'ldd', 'less', 'lex', 'link',
             'ln', 'loadkeys', 'loadunimap', 'locate', 'lockfile', 'login',
             'logname', 'lp', 'lpr', 'ls', 'lsattr', 'lsmod', 'lsmod.old',
             'lspci', 'ltrace', 'lynx',
+
             'm4', 'make', 'man', 'mapscrn', 'mesg', 'mkdir', 'mkfifo',
             'mknod', 'mktemp', 'more', 'mount', 'mplayer', 'msgfmt', 'mv',
+
             'namei', 'nano', 'nasm', 'nawk', 'netstat', 'nice',
             'nisdomainname', 'nl', 'nm', 'nm86', 'nmap', 'nohup', 'nop',
+
             'od', 'openvt',
+
             'passwd', 'patch', 'pcregrep', 'pcretest', 'perl', 'perror',
             'pgawk', 'pidof', 'ping', 'pr', 'procmail', 'prune', 'ps', 'pstree',
             'ps2ascii', 'ps2epsi', 'ps2frag', 'ps2pdf', 'ps2ps', 'psbook',
             'psmerge', 'psnup', 'psresize', 'psselect', 'pstops',
+
             'rbash', 'rcs', 'rcs2log', 'read', 'readlink', 'red', 'resizecons',
             'rev', 'rm', 'rmdir', 'rsh', 'run-parts',
+
             'sash', 'scp', 'screen', 'sed', 'seq', 'sendmail', 'setfont',
             'setkeycodes', 'setleds', 'setmetamode', 'setserial', 'setterm',
             'sh', 'showkey', 'shred', 'size', 'size86', 'skill', 'sleep',
@@ -265,6 +287,7 @@ $language_data = array(
             'strings', 'strip', 'stty', 'su', 'sudo', 'suidperl', 'sum', 'svn',
             'svnadmin', 'svndumpfilter', 'svnlook', 'svnmerge', 'svnmucc',
             'svnserve', 'svnshell', 'svnsync', 'svnversion', 'svnwrap', 'sync',
+
             'svn add', 'svn ann', 'svn annotate', 'svn blame', 'svn cat',
             'svn changelist', 'svn checkout', 'svn ci', 'svn cl', 'svn cleanup',
             'svn co', 'svn commit', 'svn copy', 'svn cp', 'svn del',
@@ -278,28 +301,36 @@ $language_data = array(
             'svn rename', 'svn resolve', 'svn resolved', 'svn revert', 'svn rm',
             'svn st', 'svn stat', 'svn status', 'svn sw', 'svn switch',
             'svn unlock', 'svn up', 'svn update',
+
             'tac', 'tail', 'tar', 'tee', 'tempfile', 'touch', 'tr', 'tree',
             'true',
+
             'umount', 'uname', 'unicode_start', 'unicode_stop', 'uniq',
             'unlink', 'unzip', 'updatedb', 'updmap', 'uptime', 'users',
             'utmpdump', 'uuidgen',
+
             'valgrind', 'vdir', 'vi', 'vim', 'vmstat',
+
             'w', 'wall', 'watch', 'wc', 'wget', 'whatis', 'whereis',
             'which', 'whiptail', 'who', 'whoami', 'whois', 'wine', 'wineboot',
             'winebuild', 'winecfg', 'wineconsole', 'winedbg', 'winedump',
             'winefile', 'wodim', 'write',
+
             'xargs', 'xhost', 'xmodmap', 'xset',
+
             'yacc', 'yes', 'ypdomainname', 'yum',
+
             'yum check-update', 'yum clean', 'yum deplist', 'yum erase',
             'yum groupinfo', 'yum groupinstall', 'yum grouplist',
             'yum groupremove', 'yum groupupdate', 'yum info', 'yum install',
             'yum list', 'yum localinstall', 'yum localupdate', 'yum makecache',
             'yum provides', 'yum remove', 'yum resolvedep', 'yum search',
             'yum shell', 'yum update', 'yum upgrade', 'yum whatprovides',
+
             'zcat', 'zcmp', 'zdiff', 'zdump', 'zegrep', 'zfgrep', 'zforce',
             'zgrep', 'zip', 'zipgrep', 'zipinfo', 'zless', 'zmore', 'znew',
             'zsh', 'zsoelim'
-        ),
+            ),
         3 => array(
             'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
             'compgen', 'complete', 'continue', 'declare', 'dirs', 'disown',
@@ -309,30 +340,30 @@ $language_data = array(
             'return', 'shift', 'shopt', 'source', 'suspend', 'test', 'times',
             'trap', 'type', 'typeset', 'ulimit', 'umask', 'unalias', 'unset',
             'wait'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         '(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>', ';;', '`'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
         2 => true,
         3 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000000; font-weight: bold;',
             2 => 'color: #c20cb9; font-weight: bold;',
             3 => 'color: #7a0874; font-weight: bold;'
-        ),
+            ),
         'COMMENTS' => array(
             0 => 'color: #666666; font-style: italic;',
             1 => 'color: #800000;',
             2 => 'color: #cc0000; font-style: italic;',
             3 => 'color: #000000; font-weight: bold;',
             4 => 'color: #666666;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             1 => 'color: #000099; font-weight: bold;',
             2 => 'color: #007800;',
@@ -340,40 +371,40 @@ $language_data = array(
             4 => 'color: #007800;',
             5 => 'color: #780078;',
             'HARD' => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #7a0874; font-weight: bold;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;',
             'HARD' => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000000; font-weight: bold;'
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #007800;',
             1 => 'color: #007800;',
             2 => 'color: #007800;',
             4 => 'color: #007800;',
             5 => 'color: #660033;'
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //Variables (will be handled by comment_regexps)
         0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
@@ -385,12 +416,12 @@ $language_data = array(
         4 => "\\$[*#\$\\-\\?!\d]",
         //Parameters of commands
         5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|<(?:SEMI|PIPE)>|$)"
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'COMMENTS' => array(
@@ -398,11 +429,12 @@ $language_data = array(
         ),
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#:])",
-            'DISALLOWED_AFTER' => "(?![\.\-a-zA-Z0-9_%=\\/:])",
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%=\\/:])",
             2 => array(
                 'SPACE_AS_WHITESPACE' => false
+                )
             )
         )
-    )
 );
+
 ?>

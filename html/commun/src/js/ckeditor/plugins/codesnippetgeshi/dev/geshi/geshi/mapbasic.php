@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * mapbasic.php
  * ------
  * Author: Tomasz Berus (t.berus@gisodkuchni.pl)
@@ -21,7 +20,7 @@
  * TODO (updated 2008/11/25)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -39,9 +38,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'MapBasic',
     'COMMENT_SINGLE' => array(1 => "'"),
     'COMMENT_MULTI' => array(),
@@ -50,13 +49,13 @@ $language_data = array(
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-        /*
-          1 - Statements + Clauses + Data Types + Logical Operators, Geographical Operators + SQL
-          2 - Special Procedures
-          3 - Functions
-          4 - Constants
-          5 - Extended keywords (case sensitive)
-         */
+/*
+        1 - Statements + Clauses + Data Types + Logical Operators, Geographical Operators + SQL
+        2 - Special Procedures
+        3 - Functions
+        4 - Constants
+        5 - Extended keywords (case sensitive)
+*/
         1 => array(
             'Add', 'Alias', 'All', 'Alter', 'And', 'Any', 'Application', 'Arc',
             'Area', 'As', 'AutoLabel', 'Bar', 'Beep', 'Begin', 'Bind',
@@ -97,13 +96,13 @@ $language_data = array(
             'Units', 'Unlink', 'Update', 'Using', 'VALUES', 'Version',
             'Versioning', 'Wend', 'WFS', 'WHERE', 'While', 'Window', 'Within',
             'Workspace', 'Write'
-        ),
+            ),
         2 => array(
             'EndHandler', 'ForegroundTaskSwitchHandler', 'Main',
             'RemoteMapGenHandler', 'RemoteMsgHandler', 'SelChangedHandler',
             'ToolHandler', 'WinChangedHandler', 'WinClosedHandler',
             'WinFocusChangedHandler'
-        ),
+            ),
         3 => array(
             'Abs', 'Acos', 'ApplicationDirectory$', 'AreaOverlap', 'Asc',
             'Asin', 'Ask', 'Atn', 'Avg', 'Buffer', 'ButtonPadInfo',
@@ -180,7 +179,7 @@ $language_data = array(
             'TempFileName$', 'TextSize', 'Time', 'Timer', 'TriggerControl',
             'TrueFileName$', 'UBound', 'UCase$', 'UnitAbbr$', 'UnitName$',
             'Val', 'Weekday', 'WindowID', 'WindowInfo', 'WtAvg', 'Year'
-        ),
+            ),
         4 => array(
             'BLACK', 'BLUE', 'BRUSH_BACKCOLOR', 'BRUSH_FORECOLOR',
             'BRUSH_PATTERN', 'BTNPAD_INFO_FLOATING', 'BTNPAD_INFO_NBTNS',
@@ -766,7 +765,7 @@ $language_data = array(
             'WIN_STATISTICS', 'WIN_STYLE_CHILD', 'WIN_STYLE_POPUP',
             'WIN_STYLE_POPUP_FULLCAPTION', 'WIN_STYLE_STANDARD',
             'WIN_SYMBOLPICKER', 'WIN_TOOLBAR', 'WIN_TOOLPICKER', 'YELLOW'
-        ),
+            ),
         5 => array(
             'Abbrs', 'Above', 'Access', 'Active', 'Address', 'Advanced',
             'Affine', 'Align', 'Alpha', 'alpha_value', 'Always', 'Angle',
@@ -833,13 +832,13 @@ $language_data = array(
             'VisibleOnly', 'VMDefault', 'VMGrid', 'VMRaster', 'Voronoi',
             'Warnings', 'Wedge', 'West', 'Width', 'With', 'XY', 'XYINDEX',
             'Yaw', 'Zoom'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
-        //Numeric/String Operators + Comparison Operators
-        '(', ')', '[', ']', '+', '-', '*', '/', '\\', '^', '&',
-        '=', '<', '>'
-    ),
+            //Numeric/String Operators + Comparison Operators
+            '(', ')', '[', ']', '+', '-', '*', '/', '\\', '^', '&',
+            '=', '<', '>'
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
@@ -847,62 +846,63 @@ $language_data = array(
         3 => false,
         4 => false,
         5 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #0000ff;', //Statements + Clauses + Data Types + Logical Operators, Geographical Operators + SQL
-            2 => 'color: #2391af;', //Special Procedures
-            3 => 'color: #2391af;', //Functions
-            4 => 'color: #c635cb;', //Constants
+            1 => 'color: #0000ff;',        //Statements + Clauses + Data Types + Logical Operators, Geographical Operators + SQL
+            2 => 'color: #2391af;',        //Special Procedures
+            3 => 'color: #2391af;',        //Functions
+            4 => 'color: #c635cb;',        //Constants
             5 => 'color: #0000ff;'         //Extended keywords (case sensitive)
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #008000;',
             'MULTI' => 'color: #008000;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #a31515;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        ),
+            ),
         'REGEXPS' => array(
-            0 => 'color: #12198b;', //Table Attributes
+            0 => 'color: #12198b;',            //Table Attributes
             1 => 'color: #2391af;'             //Data Types
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => '',
         4 => '',
         5 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
-        //Table Attribute
-        0 => "[\\.]{1}[a-zA-Z0-9_]+",
-        //Data Type
-        1 => "(?xi) \\s+ as \\s+ (Alias|Brush|Date|Float|Font|Integer|Logical|Object|Pen|SmallInt|String|Symbol)"
-    ),
+            //Table Attribute
+            0 => "[\\.]{1}[a-zA-Z0-9_]+",
+            //Data Type
+            1 => "(?xi) \\s+ as \\s+ (Alias|Brush|Date|Float|Font|Integer|Logical|Object|Pen|SmallInt|String|Symbol)"
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
 );
+
 ?>

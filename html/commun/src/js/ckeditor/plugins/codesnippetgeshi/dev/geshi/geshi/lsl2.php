@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * lsl2.php
  * --------
  * Author: William Fry (william.fry@nyu.edu)
@@ -23,7 +22,7 @@
  * TODO (updated 2009/02/05)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -41,9 +40,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'LSL2',
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array(),
@@ -51,7 +50,7 @@ $language_data = array(
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        1 => array(// flow control
+        1 => array( // flow control
             'do',
             'else',
             'for',
@@ -60,8 +59,8 @@ $language_data = array(
             'return',
             'state',
             'while',
-        ),
-        2 => array(// manifest constants
+            ),
+        2 => array( // manifest constants
             'ACTIVE',
             'AGENT',
             'AGENT_ALWAYS_RUN',
@@ -422,8 +421,8 @@ $language_data = array(
             'VEHICLE_VERTICAL_ATTRACTION_TIMESCALE',
             'ZERO_ROTATION',
             'ZERO_VECTOR',
-        ),
-        3 => array(// handlers
+            ),
+        3 => array( // handlers
             'at_rot_target',
             'at_target',
             'attached',
@@ -457,8 +456,8 @@ $language_data = array(
             'touch',
             'touch_end',
             'touch_start',
-        ),
-        4 => array(// data types
+            ),
+        4 => array( // data types
             'float',
             'integer',
             'key',
@@ -466,8 +465,8 @@ $language_data = array(
             'rotation',
             'string',
             'vector',
-        ),
-        5 => array(// library
+            ),
+        5 => array( // library
             'default',
             'llAbs',
             'llAcos',
@@ -795,8 +794,8 @@ $language_data = array(
             'llWhisper',
             'llWind',
             'llXorBase64StringsCorrect',
-        ),
-        6 => array(// deprecated
+            ),
+        6 => array( // deprecated
             'llMakeExplosion',
             'llMakeFire',
             'llMakeFountain',
@@ -804,8 +803,8 @@ $language_data = array(
             'llSound',
             'llSoundPreload',
             'llXorBase64Strings',
-        ),
-        7 => array(// unimplemented
+            ),
+        7 => array( // unimplemented
             'llPointAt',
             'llRefreshPrimURL',
             'llReleaseCamera',
@@ -814,13 +813,13 @@ $language_data = array(
             'llStopPointAt',
             'llTakeCamera',
             'llTextBox',
-        ),
-        8 => array(// God mode
+            ),
+        8 => array( // God mode
             'llGodLikeRezObject',
             'llSetInventoryPermMask',
             'llSetObjectPermMask',
+            ),
         ),
-    ),
     'SYMBOLS' => array(
         '{', '}', '(', ')', '[', ']',
         '=', '+', '-', '*', '/',
@@ -828,7 +827,7 @@ $language_data = array(
         '!', '%', '&amp;', '|', '&amp;&amp;', '||',
         '==', '!=', '&lt;', '&gt;', '&lt;=', '&gt;=',
         '~', '&lt;&lt;', '&gt;&gt;', '^', ':',
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => true,
         1 => true,
@@ -839,7 +838,7 @@ $language_data = array(
         6 => true,
         7 => true,
         8 => true,
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0000ff;',
@@ -850,32 +849,32 @@ $language_data = array(
             6 => 'color: #8b0000; background-color: #ffff00;',
             7 => 'color: #8b0000; background-color: #fa8072;',
             8 => 'color: #000000; background-color: #ba55d3;',
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #ff7f50; font-style: italic;',
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #006400;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
@@ -885,15 +884,15 @@ $language_data = array(
         6 => 'http://www.lslwiki.net/lslwiki/wakka.php?wakka={FNAME}', // http://wiki.secondlife.com/wiki/{FNAME}
         7 => 'http://www.lslwiki.net/lslwiki/wakka.php?wakka={FNAME}', // http://wiki.secondlife.com/wiki/{FNAME}
         8 => 'http://www.lslwiki.net/lslwiki/wakka.php?wakka={FNAME}', // http://wiki.secondlife.com/wiki/{FNAME}
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
 ?>

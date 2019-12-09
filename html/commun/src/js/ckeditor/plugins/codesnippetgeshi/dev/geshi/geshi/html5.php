@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * html5.php
  * ---------------
  * Author: Nigel McNie (nigel@geshi.org)
@@ -30,7 +29,7 @@
  * * Eliminate empty tags that aren't allowed in HTML4 strict
  * * Split to several files - html4trans, xhtml1 etc
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -48,9 +47,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'HTML5',
     'COMMENT_SINGLE' => array(),
     'COMMENT_MULTI' => array(),
@@ -60,27 +59,47 @@ $language_data = array(
     'KEYWORDS' => array(
         2 => array(
             'a', 'abbr', 'address', 'article', 'area', 'aside', 'audio',
+
             'base', 'bdo', 'blockquote', 'body', 'br', 'button', 'b',
+
             'caption', 'cite', 'code', 'colgroup', 'col', 'canvas', 'command', 'datalist', 'details',
+
             'dd', 'del', 'dfn', 'div', 'dl', 'dt',
+
             'em', 'embed',
+
             'fieldset', 'form', 'figcaption', 'figure', 'footer',
+
             'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'html', 'header', 'hgroup',
+
             'iframe', 'ilayer', 'img', 'input', 'ins', 'isindex', 'i',
+
             'kbd', 'keygen',
+
             'label', 'legend', 'link', 'li',
+
             'map', 'meta', 'mark', 'meter',
+
             'noscript', 'nav',
+
             'object', 'ol', 'optgroup', 'option', 'output',
+
             'param', 'pre', 'p', 'progress',
+
             'q',
+
             'rp', 'rt', 'ruby',
+
             'samp', 'script', 'select', 'small', 'span', 'strong', 'style', 'sub', 'sup', 's', 'section', 'source', 'summary',
+
             'table', 'tbody', 'td', 'textarea', 'text', 'tfoot', 'thead', 'th', 'title', 'tr', 'time',
+
             'ul',
+
             'var', 'video',
+
             'wbr',
-        ),
+            ),
         3 => array(
             'abbr', 'accept-charset', 'accept', 'accesskey', 'action', 'align', 'alink', 'alt', 'archive', 'axis', 'autocomplete', 'autofocus',
             'background', 'bgcolor', 'border',
@@ -101,76 +120,76 @@ $language_data = array(
             'usemap',
             'valign', 'value', 'valuetype', 'version', 'vlink', 'vspace',
             'width'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         '/', '='
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         2 => false,
         3 => false,
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             2 => 'color: #000000; font-weight: bold;',
             3 => 'color: #000066;'
-        ),
+            ),
         'COMMENTS' => array(
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'SCRIPT' => array(
             -2 => 'color: #404040;', // CDATA
             -1 => 'color: #808080; font-style: italic;', // comments
             0 => 'color: #00bbdd;',
             1 => 'color: #ddbb00;',
             2 => 'color: #009900;'
-        ),
+            ),
         'REGEXPS' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         2 => 'http://december.com/html/4/element/{FNAMEL}.html',
         3 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
         -2 => array(
             '<![CDATA[' => ']]>'
-        ),
+            ),
         -1 => array(
             '<!--' => '-->'
-        ),
+            ),
         0 => array(
             '<!DOCTYPE' => '>'
-        ),
+            ),
         1 => array(
             '&' => ';'
-        ),
+            ),
         2 => array(
             '<' => '>'
-        )
+            )
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         -2 => false,
@@ -178,7 +197,7 @@ $language_data = array(
         0 => false,
         1 => false,
         2 => true
-    ),
+        ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
@@ -189,4 +208,5 @@ $language_data = array(
         )
     )
 );
+
 ?>

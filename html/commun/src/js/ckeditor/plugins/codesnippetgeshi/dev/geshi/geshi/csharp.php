@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * csharp.php
  * ----------
  * Author: Alan Juden (alan@judenware.org)
@@ -27,7 +26,7 @@
  * TODO (updated 2004/11/27)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -45,9 +44,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'C#',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -72,19 +71,19 @@ $language_data = array(
             'select', 'set', 'stackalloc', 'static', 'switch', 'this', 'throw', 'true',
             'try', 'unsafe', 'using', 'var', 'value', 'virtual', 'volatile', 'where',
             'while', 'yield'
-        ),
+            ),
         2 => array(
             '#elif', '#endif', '#endregion', '#else', '#error', '#define', '#if',
             '#line', '#region', '#undef', '#warning'
-        ),
+            ),
         3 => array(
             'checked', 'is', 'new', 'sizeof', 'typeof', 'unchecked'
-        ),
+            ),
         4 => array(
             'bool', 'byte', 'char', 'class', 'decimal', 'delegate', 'double',
             'dynamic', 'enum', 'float', 'int', 'interface', 'long', 'object', 'sbyte',
             'short', 'string', 'struct', 'uint', 'ulong', 'ushort', 'void'
-        ),
+            ),
         5 => array(
             'Microsoft.Win32',
             'System',
@@ -172,12 +171,12 @@ $language_data = array(
             'System.Xml.Serialization',
             'System.Xml.Serialization.Code',
             'System.Xml.Serialization.Schema'
+            ),
         ),
-    ),
     'SYMBOLS' => array(
         '+', '-', '*', '?', '=', '/', '%', '&', '>', '<', '^', '!', ':', ';',
         '(', ')', '{', '}', '[', ']', '|', '.'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
@@ -185,7 +184,7 @@ $language_data = array(
         3 => false,
         4 => false,
         5 => false,
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0600FF; font-weight: bold;',
@@ -193,58 +192,58 @@ $language_data = array(
             3 => 'color: #008000;',
             4 => 'color: #6666cc; font-weight: bold;',
             5 => 'color: #000000;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #008080; font-style: italic;',
             2 => 'color: #008080;',
             3 => 'color: #008080;',
             'MULTI' => 'color: #008080; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #008080; font-weight: bold;',
             'HARD' => 'color: #008080; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #008000;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #666666;',
             'HARD' => 'color: #666666;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #FF0000;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #0000FF;',
             2 => 'color: #0000FF;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #008000;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => 'http://www.google.com/search?q={FNAMEL}+msdn.microsoft.com',
         4 => '',
         5 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.',
         2 => '::'
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
@@ -253,4 +252,5 @@ $language_data = array(
         )
     )
 );
+
 ?>

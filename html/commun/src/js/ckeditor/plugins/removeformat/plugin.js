@@ -1,144 +1,155 @@
 ﻿/**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-        CKEDITOR.plugins.add('removeformat', {
-            // jscs:disable maximumLineLength
-            lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
-            // jscs:enable maximumLineLength
-            icons: 'removeformat', // %REMOVE_LINE_CORE%
-            hidpi: true, // %REMOVE_LINE_CORE%
-            init: function (editor) {
-                editor.addCommand('removeFormat', CKEDITOR.plugins.removeformat.commands.removeformat);
-                editor.ui.addButton && editor.ui.addButton('RemoveFormat', {
-                    label: editor.lang.removeformat.toolbar,
-                    command: 'removeFormat',
-                    toolbar: 'cleanup,10'
-                });
-            }
-        });
+CKEDITOR.plugins.add( 'removeformat', {
+	// jscs:disable maximumLineLength
+	lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+	// jscs:enable maximumLineLength
+	icons: 'removeformat', // %REMOVE_LINE_CORE%
+	hidpi: true, // %REMOVE_LINE_CORE%
+	init: function( editor ) {
+		editor.addCommand( 'removeFormat', CKEDITOR.plugins.removeformat.commands.removeformat );
+		editor.ui.addButton && editor.ui.addButton( 'RemoveFormat', {
+			label: editor.lang.removeformat.toolbar,
+			command: 'removeFormat',
+			toolbar: 'cleanup,10'
+		} );
+	}
+} );
 
 CKEDITOR.plugins.removeformat = {
-    commands: {
-        removeformat: {
-            exec: function (editor) {
-                var tagsRegex = editor._.removeFormatRegex || (editor._.removeFormatRegex = new RegExp('^(?:' + editor.config.removeFormatTags.replace(/,/g, '|') + ')$', 'i'));
+	commands: {
+		removeformat: {
+			exec: function( editor ) {
+				var tagsRegex = editor._.removeFormatRegex || ( editor._.removeFormatRegex = new RegExp( '^(?:' + editor.config.removeFormatTags.replace( /,/g, '|' ) + ')$', 'i' ) );
 
-                var removeAttributes = editor._.removeAttributes || (editor._.removeAttributes = editor.config.removeFormatAttributes.split(',')),
-                        filter = CKEDITOR.plugins.removeformat.filter,
-                        ranges = editor.getSelection().getRanges(),
-                        iterator = ranges.createIterator(),
-                        isElement = function (element) {
-                            return element.type == CKEDITOR.NODE_ELEMENT;
-                        },
-                        range;
+				var removeAttributes = editor._.removeAttributes || ( editor._.removeAttributes = editor.config.removeFormatAttributes.split( ',' ) ),
+					filter = CKEDITOR.plugins.removeformat.filter,
+					ranges = editor.getSelection().getRanges(),
+					iterator = ranges.createIterator(),
+					isElement = function( element ) {
+						return element.type == CKEDITOR.NODE_ELEMENT;
+					},
+					newRanges = [],
+					range;
 
-                while ((range = iterator.getNextRange())) {
-                    if (!range.collapsed)
-                        range.enlarge(CKEDITOR.ENLARGE_ELEMENT);
+				while ( ( range = iterator.getNextRange() ) ) {
+					var bookmarkForRangeRecreation = range.createBookmark();
+					range = editor.createRange();
+					range.setStartBefore( bookmarkForRangeRecreation.startNode );
+					bookmarkForRangeRecreation.endNode && range.setEndAfter( bookmarkForRangeRecreation.endNode );
 
-                    // Bookmark the range so we can re-select it after processing.
-                    var bookmark = range.createBookmark(),
-                            // The style will be applied within the bookmark boundaries.
-                            startNode = bookmark.startNode,
-                            endNode = bookmark.endNode,
-                            currentNode;
+					if ( !range.collapsed )
+						range.enlarge( CKEDITOR.ENLARGE_ELEMENT );
 
-                    // We need to check the selection boundaries (bookmark spans) to break
-                    // the code in a way that we can properly remove partially selected nodes.
-                    // For example, removing a <b> style from
-                    //		<b>This is [some text</b> to show <b>the] problem</b>
-                    // ... where [ and ] represent the selection, must result:
-                    //		<b>This is </b>[some text to show the]<b> problem</b>
-                    // The strategy is simple, we just break the partial nodes before the
-                    // removal logic, having something that could be represented this way:
-                    //		<b>This is </b>[<b>some text</b> to show <b>the</b>]<b> problem</b>
+					// Bookmark the range so we can re-select it after processing.
+					var bookmark = range.createBookmark(),
+						// The style will be applied within the bookmark boundaries.
+						startNode = bookmark.startNode,
+						endNode = bookmark.endNode,
+						currentNode;
 
-                    var breakParent = function (node) {
-                        // Let's start checking the start boundary.
-                        var path = editor.elementPath(node),
-                                pathElements = path.elements;
+					// We need to check the selection boundaries (bookmark spans) to break
+					// the code in a way that we can properly remove partially selected nodes.
+					// For example, removing a <b> style from
+					//		<b>This is [some text</b> to show <b>the] problem</b>
+					// ... where [ and ] represent the selection, must result:
+					//		<b>This is </b>[some text to show the]<b> problem</b>
+					// The strategy is simple, we just break the partial nodes before the
+					// removal logic, having something that could be represented this way:
+					//		<b>This is </b>[<b>some text</b> to show <b>the</b>]<b> problem</b>
 
-                        for (var i = 1, pathElement; pathElement = pathElements[ i ]; i++) {
-                            if (pathElement.equals(path.block) || pathElement.equals(path.blockLimit))
-                                break;
+					var breakParent = function( node ) {
+							// Let's start checking the start boundary.
+							var path = editor.elementPath( node ),
+								pathElements = path.elements;
 
-                            // If this element can be removed (even partially).
-                            if (tagsRegex.test(pathElement.getName()) && filter(editor, pathElement))
-                                node.breakParent(pathElement);
-                        }
-                    };
+							for ( var i = 1, pathElement; pathElement = pathElements[ i ]; i++ ) {
+								if ( pathElement.equals( path.block ) || pathElement.equals( path.blockLimit ) )
+									break;
 
-                    breakParent(startNode);
-                    if (endNode) {
-                        breakParent(endNode);
+								// If this element can be removed (even partially).
+								if ( tagsRegex.test( pathElement.getName() ) && filter( editor, pathElement ) )
+									node.breakParent( pathElement );
+							}
+						};
 
-                        // Navigate through all nodes between the bookmarks.
-                        currentNode = startNode.getNextSourceNode(true, CKEDITOR.NODE_ELEMENT);
+					breakParent( startNode );
+					if ( endNode ) {
+						breakParent( endNode );
 
-                        while (currentNode) {
-                            // If we have reached the end of the selection, stop looping.
-                            if (currentNode.equals(endNode))
-                                break;
+						// Navigate through all nodes between the bookmarks.
+						currentNode = startNode.getNextSourceNode( true, CKEDITOR.NODE_ELEMENT );
 
-                            if (currentNode.isReadOnly()) {
-                                // In case of non-editable we're skipping to the next sibling *elmenet*.
+						while ( currentNode ) {
+							// If we have reached the end of the selection, stop looping.
+							if ( currentNode.equals( endNode ) )
+								break;
 
-                                // We need to be aware that endNode can be nested within current non-editable.
-                                // This condition tests if currentNode (non-editable) contains endNode. If it does
-                                // then we should break the filtering
-                                if (currentNode.getPosition(endNode) & CKEDITOR.POSITION_CONTAINS) {
-                                    break;
-                                }
+							if ( currentNode.isReadOnly() ) {
+								// In case of non-editable we're skipping to the next sibling *elmenet*.
 
-                                currentNode = currentNode.getNext(isElement);
-                                continue;
-                            }
+								// We need to be aware that endNode can be nested within current non-editable.
+								// This condition tests if currentNode (non-editable) contains endNode. If it does
+								// then we should break the filtering
+								if ( currentNode.getPosition( endNode ) & CKEDITOR.POSITION_CONTAINS ) {
+									break;
+								}
 
-                            // Cache the next node to be processed. Do it now, because
-                            // currentNode may be removed.
-                            var nextNode = currentNode.getNextSourceNode(false, CKEDITOR.NODE_ELEMENT),
-                                    isFakeElement = currentNode.getName() == 'img' && currentNode.data('cke-realelement');
+								currentNode = currentNode.getNext( isElement );
+								continue;
+							}
 
-                            // This node must not be a fake element, and must not be read-only.
-                            if (!isFakeElement && filter(editor, currentNode)) {
-                                // Remove elements nodes that match with this style rules.
-                                if (tagsRegex.test(currentNode.getName()))
-                                    currentNode.remove(1);
-                                else {
-                                    currentNode.removeAttributes(removeAttributes);
-                                    editor.fire('removeFormatCleanup', currentNode);
-                                }
-                            }
+							// Cache the next node to be processed. Do it now, because
+							// currentNode may be removed.
+							var nextNode = currentNode.getNextSourceNode( false, CKEDITOR.NODE_ELEMENT ),
+								isFakeElement =
+									( currentNode.getName() == 'img' && currentNode.data( 'cke-realelement' ) ) ||
+									currentNode.hasAttribute( 'data-cke-bookmark' );
 
-                            currentNode = nextNode;
-                        }
-                    }
+							// This node must not be a fake element, and must not be read-only.
+							if ( !isFakeElement && filter( editor, currentNode ) ) {
+								// Remove elements nodes that match with this style rules.
+								if ( tagsRegex.test( currentNode.getName() ) )
+									currentNode.remove( 1 );
+								else {
+									currentNode.removeAttributes( removeAttributes );
+									editor.fire( 'removeFormatCleanup', currentNode );
+								}
+							}
 
-                    range.moveToBookmark(bookmark);
-                }
+							currentNode = nextNode;
+						}
+					}
 
-                // The selection path may not changed, but we should force a selection
-                // change event to refresh command states, due to the above attribution change. (https://dev.ckeditor.com/ticket/9238)
-                editor.forceNextSelectionCheck();
-                editor.getSelection().selectRanges(ranges);
-            }
-        }
-    },
+					bookmark.startNode.remove();
+					bookmark.endNode && bookmark.endNode.remove();
+					range.moveToBookmark( bookmarkForRangeRecreation );
+					newRanges.push( range );
+				}
 
-    // Perform the remove format filters on the passed element.
-    // @param {CKEDITOR.editor} editor
-    // @param {CKEDITOR.dom.element} element
-    filter: function (editor, element) {
-        // If editor#addRemoveFotmatFilter hasn't been executed yet value is not initialized.
-        var filters = editor._.removeFormatFilters || [];
-        for (var i = 0; i < filters.length; i++) {
-            if (filters[ i ](element) === false)
-                return false;
-        }
-        return true;
-    }
+				// The selection path may not changed, but we should force a selection
+				// change event to refresh command states, due to the above attribution change. (https://dev.ckeditor.com/ticket/9238)
+				editor.forceNextSelectionCheck();
+				editor.getSelection().selectRanges( newRanges );
+			}
+		}
+	},
+
+	// Perform the remove format filters on the passed element.
+	// @param {CKEDITOR.editor} editor
+	// @param {CKEDITOR.dom.element} element
+	filter: function( editor, element ) {
+		// If editor#addRemoveFotmatFilter hasn't been executed yet value is not initialized.
+		var filters = editor._.removeFormatFilters || [];
+		for ( var i = 0; i < filters.length; i++ ) {
+			if ( filters[ i ]( element ) === false )
+				return false;
+		}
+		return true;
+	}
 };
 
 /**
@@ -153,15 +164,15 @@ CKEDITOR.plugins.removeformat = {
  *			return !( element.is( 'span' ) && CKEDITOR.tools.isEmpty( element.getAttributes() ) );
  *		} );
  *
- * @since 3.3
+ * @since 3.3.0
  * @member CKEDITOR.editor
- * @param {Function} func The function to be called, which will be passed a {CKEDITOR.dom.element} element to test.
+ * @param {Function} func The function to be called, which will be passed an {@link CKEDITOR.dom.element element} to test.
  */
-CKEDITOR.editor.prototype.addRemoveFormatFilter = function (func) {
-    if (!this._.removeFormatFilters)
-        this._.removeFormatFilters = [];
+CKEDITOR.editor.prototype.addRemoveFormatFilter = function( func ) {
+	if ( !this._.removeFormatFilters )
+		this._.removeFormatFilters = [];
 
-    this._.removeFormatFilters.push(func);
+	this._.removeFormatFilters.push( func );
 };
 
 /**

@@ -1,150 +1,154 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 'use strict';
 
-(function () {
-    var uniqueNameCounter = 0,
-            // Black rectangle which is shown before the image is loaded.
-            loadingImage = 'data:image/gif;base64,R0lGODlhDgAOAIAAAAAAAP///yH5BAAAAAAALAAAAAAOAA4AAAIMhI+py+0Po5y02qsKADs=';
+( function() {
+	var uniqueNameCounter = 0,
+		// Black rectangle which is shown before the image is loaded.
+		loadingImage = 'data:image/gif;base64,R0lGODlhDgAOAIAAAAAAAP///yH5BAAAAAAALAAAAAAOAA4AAAIMhI+py+0Po5y02qsKADs=';
 
-    // Returns number as a string. If a number has 1 digit only it returns it prefixed with an extra 0.
-    function padNumber(input) {
-        if (input <= 9) {
-            input = '0' + input;
-        }
+	// Returns number as a string. If a number has 1 digit only it returns it prefixed with an extra 0.
+	function padNumber( input ) {
+		if ( input <= 9 ) {
+			input = '0' + input;
+		}
 
-        return String(input);
-    }
+		return String( input );
+	}
 
-    // Returns a unique image file name.
-    function getUniqueImageFileName(type) {
-        var date = new Date(),
-                dateParts = [date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
+	// Returns a unique image file name.
+	function getUniqueImageFileName( type ) {
+		var date = new Date(),
+			dateParts = [ date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds() ];
 
-        uniqueNameCounter += 1;
+		uniqueNameCounter += 1;
 
-        return 'image-' + CKEDITOR.tools.array.map(dateParts, padNumber).join('') + '-' + uniqueNameCounter + '.' + type;
-    }
+		return 'image-' + CKEDITOR.tools.array.map( dateParts, padNumber ).join( '' ) + '-' + uniqueNameCounter + '.' + type;
+	}
 
-    CKEDITOR.plugins.add('uploadimage', {
-        requires: 'uploadwidget',
+	CKEDITOR.plugins.add( 'uploadimage', {
+		requires: 'uploadwidget',
 
-        onLoad: function () {
-            CKEDITOR.addCss(
-                    '.cke_upload_uploading img{' +
-                    'opacity: 0.3' +
-                    '}'
-                    );
-        },
+		onLoad: function() {
+			CKEDITOR.addCss(
+				'.cke_upload_uploading img{' +
+					'opacity: 0.3' +
+				'}'
+			);
+		},
 
-        init: function (editor) {
-            // Do not execute this paste listener if it will not be possible to upload file.
-            if (!CKEDITOR.plugins.clipboard.isFileApiSupported) {
-                return;
-            }
+		isSupportedEnvironment: function() {
+			return CKEDITOR.plugins.clipboard.isFileApiSupported;
+		},
 
-            var fileTools = CKEDITOR.fileTools,
-                    uploadUrl = fileTools.getUploadUrl(editor.config, 'image');
+		init: function( editor ) {
+			// Do not execute this paste listener if it will not be possible to upload file.
+			if ( !this.isSupportedEnvironment() ) {
+				return;
+			}
 
-            if (!uploadUrl) {
-                return;
-            }
+			var fileTools = CKEDITOR.fileTools,
+				uploadUrl = fileTools.getUploadUrl( editor.config, 'image' );
 
-            // Handle images which are available in the dataTransfer.
-            fileTools.addUploadWidget(editor, 'uploadimage', {
-                supportedTypes: /image\/(jpeg|png|gif|bmp)/,
+			if ( !uploadUrl ) {
+				return;
+			}
 
-                uploadUrl: uploadUrl,
+			// Handle images which are available in the dataTransfer.
+			fileTools.addUploadWidget( editor, 'uploadimage', {
+				supportedTypes: /image\/(jpeg|png|gif|bmp)/,
 
-                fileToElement: function () {
-                    var img = new CKEDITOR.dom.element('img');
-                    img.setAttribute('src', loadingImage);
-                    return img;
-                },
+				uploadUrl: uploadUrl,
 
-                parts: {
-                    img: 'img'
-                },
+				fileToElement: function() {
+					var img = new CKEDITOR.dom.element( 'img' );
+					img.setAttribute( 'src', loadingImage );
+					return img;
+				},
 
-                onUploading: function (upload) {
-                    // Show the image during the upload.
-                    this.parts.img.setAttribute('src', upload.data);
-                },
+				parts: {
+					img: 'img'
+				},
 
-                onUploaded: function (upload) {
-                    // Width and height could be returned by server (https://dev.ckeditor.com/ticket/13519).
-                    var $img = this.parts.img.$,
-                            width = upload.responseData.width || $img.naturalWidth,
-                            height = upload.responseData.height || $img.naturalHeight;
+				onUploading: function( upload ) {
+					// Show the image during the upload.
+					this.parts.img.setAttribute( 'src', upload.data );
+				},
 
-                    // Set width and height to prevent blinking.
-                    this.replaceWith('<img src="' + upload.url + '" ' +
-                            'width="' + width + '" ' +
-                            'height="' + height + '">');
-                }
-            });
+				onUploaded: function( upload ) {
+					// Width and height could be returned by server (https://dev.ckeditor.com/ticket/13519).
+					var $img = this.parts.img.$,
+						width = upload.responseData.width || $img.naturalWidth,
+						height = upload.responseData.height || $img.naturalHeight;
 
-            // Handle images which are not available in the dataTransfer.
-            // This means that we need to read them from the <img src="data:..."> elements.
-            editor.on('paste', function (evt) {
-                // For performance reason do not parse data if it does not contain img tag and data attribute.
-                if (!evt.data.dataValue.match(/<img[\s\S]+data:/i)) {
-                    return;
-                }
+					// Set width and height to prevent blinking.
+					this.replaceWith( '<img src="' + upload.url + '" ' +
+						'width="' + width + '" ' +
+						'height="' + height + '">' );
+				}
+			} );
 
-                var data = evt.data,
-                        // Prevent XSS attacks.
-                        tempDoc = document.implementation.createHTMLDocument(''),
-                        temp = new CKEDITOR.dom.element(tempDoc.body),
-                        imgs, img, i;
+			// Handle images which are not available in the dataTransfer.
+			// This means that we need to read them from the <img src="data:..."> elements.
+			editor.on( 'paste', function( evt ) {
+				// For performance reason do not parse data if it does not contain img tag and data attribute.
+				if ( !evt.data.dataValue.match( /<img[\s\S]+data:/i ) ) {
+					return;
+				}
 
-                // Without this isReadOnly will not works properly.
-                temp.data('cke-editable', 1);
+				var data = evt.data,
+					// Prevent XSS attacks.
+					tempDoc = document.implementation.createHTMLDocument( '' ),
+					temp = new CKEDITOR.dom.element( tempDoc.body ),
+					imgs, img, i;
 
-                temp.appendHtml(data.dataValue);
+				// Without this isReadOnly will not works properly.
+				temp.data( 'cke-editable', 1 );
 
-                imgs = temp.find('img');
+				temp.appendHtml( data.dataValue );
 
-                for (i = 0; i < imgs.count(); i++) {
-                    img = imgs.getItem(i);
+				imgs = temp.find( 'img' );
 
-                    // Assign src once, as it might be a big string, so there's no point in duplicating it all over the place.
-                    var imgSrc = img.getAttribute('src'),
-                            // Image have to contain src=data:...
-                            isDataInSrc = imgSrc && imgSrc.substring(0, 5) == 'data:',
-                            isRealObject = img.data('cke-realelement') === null;
+				for ( i = 0; i < imgs.count(); i++ ) {
+					img = imgs.getItem( i );
 
-                    // We are not uploading images in non-editable blocs and fake objects (https://dev.ckeditor.com/ticket/13003).
-                    if (isDataInSrc && isRealObject && !img.data('cke-upload-id') && !img.isReadOnly(1)) {
-                        // Note that normally we'd extract this logic into a separate function, but we should not duplicate this string, as it might
-                        // be large.
-                        var imgFormat = imgSrc.match(/image\/([a-z]+?);/i),
-                                loader;
+					// Assign src once, as it might be a big string, so there's no point in duplicating it all over the place.
+					var imgSrc = img.getAttribute( 'src' ),
+						// Image have to contain src=data:...
+						isDataInSrc = imgSrc && imgSrc.substring( 0, 5 ) == 'data:',
+						isRealObject = img.data( 'cke-realelement' ) === null;
 
-                        imgFormat = (imgFormat && imgFormat[ 1 ]) || 'jpg';
+					// We are not uploading images in non-editable blocs and fake objects (https://dev.ckeditor.com/ticket/13003).
+					if ( isDataInSrc && isRealObject && !img.data( 'cke-upload-id' ) && !img.isReadOnly( 1 ) ) {
+						// Note that normally we'd extract this logic into a separate function, but we should not duplicate this string, as it might
+						// be large.
+						var imgFormat = imgSrc.match( /image\/([a-z]+?);/i ),
+							loader;
 
-                        loader = editor.uploadRepository.create(imgSrc, getUniqueImageFileName(imgFormat));
-                        loader.upload(uploadUrl);
+						imgFormat = ( imgFormat && imgFormat[ 1 ] ) || 'jpg';
 
-                        fileTools.markElement(img, 'uploadimage', loader.id);
+						loader = editor.uploadRepository.create( imgSrc, getUniqueImageFileName( imgFormat ) );
+						loader.upload( uploadUrl );
 
-                        fileTools.bindNotifications(editor, loader);
-                    }
-                }
+						fileTools.markElement( img, 'uploadimage', loader.id );
 
-                data.dataValue = temp.getHtml();
-            });
-        }
-    });
+						fileTools.bindNotifications( editor, loader );
+					}
+				}
 
-    /**
-     * The URL where images should be uploaded.
-     *
-     * @since 4.5
-     * @cfg {String} [imageUploadUrl='' (empty string = disabled)]
-     * @member CKEDITOR.config
-     */
-})();
+				data.dataValue = temp.getHtml();
+			} );
+		}
+	} );
+
+	/**
+	 * The URL where images should be uploaded.
+	 *
+	 * @since 4.5.0
+	 * @cfg {String} [imageUploadUrl='' (empty string = disabled)]
+	 * @member CKEDITOR.config
+	 */
+} )();

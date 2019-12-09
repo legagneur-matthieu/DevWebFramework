@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * e.php
  * --------
  * Author: Kevin Reid (kpreid@switchb.org)
@@ -24,7 +23,7 @@
  *     - change the numbering to match conventional uses by other languages,
  *     - or find or create some way to produce usefully named classes.
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -42,37 +41,44 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 $language_data = array(
     'LANG_NAME' => 'E',
     'COMMENT_SINGLE' => array(1 => '#'),
     'COMMENT_MULTI' => array('/**' => '*/'), // Note: This is method doc, not a general comment syntax.
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
+
     // FIXME: The escaping inside ` is actually doubling of any interior `, $, or @ -- backslash is NOT special
     'QUOTEMARKS' => array('\'', '"', '`'),
     'ESCAPE_CHAR' => '\\',
+
     'KEYWORDS' => array(
         // builtin control structures
         1 => array(
             'accum', 'break', 'try', 'continue', 'if', 'while', 'for', 'switch'
-        ),
+            ),
+
         // control structures subsidiary keywords
         2 => array(
             'catch', 'else', 'finally', 'in', 'exit'
-        ),
+            ),
+
         // named operators
         3 => array(
             'fn', 'via'
-        ),
+            ),
+
         // variable/function/object definers
         4 => array(
             'def', 'bind', 'var'
-        ),
+            ),
+
         // object definition subsidiary keywords
         5 => array(
             'extends', 'as', 'implements', 'guards', 'match', 'to', 'method'
-        ),
+            ),
+
         // builtin nouns in safeEnv
         6 => array(
             'null', 'false', 'true', 'throw', '__loop', '__makeList',
@@ -92,7 +98,8 @@ $language_data = array(
             'safeScope', '__eval', 'resource__uriGetter', 'type__uriGetter',
             'import__uriGetter', 'elib__uriGetter', 'elang__uriGetter',
             'opaque__uriGetter'
-        ),
+            ),
+
         // builtin nouns in privilegedEnv
         7 => array(
             'file__uriGetter', 'fileURL__uriGetter', 'jar__uriGetter',
@@ -104,7 +111,8 @@ $language_data = array(
             'swing__uriGetter', 'JPanel__quasiParser', 'swt__uriGetter',
             'currentDisplay', 'swtGrid__quasiParser', 'swtGrid`',
             'privilegedScope'
-        ),
+            ),
+
         // reserved keywords
         8 => array(
             'abstract', 'an', 'assert', 'attribute', 'be', 'begin', 'behalf',
@@ -121,13 +129,13 @@ $language_data = array(
             'suspects', 'synchronized', 'this', 'transient', 'truncatable',
             'typedef', 'unsigned', 'unum', 'uses', 'using', 'utf8', 'utf16',
             'virtual', 'volatile', 'wstring'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         1 => array(
             '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '%', '=', '<', '>', '!', '^', '&', '|', '?', ':', ';', ','
-        )
-    ),
+            )
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
@@ -138,7 +146,7 @@ $language_data = array(
         6 => true,
         7 => true,
         8 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #b1b100;',
@@ -149,32 +157,32 @@ $language_data = array(
             6 => 'color: #b1b100;',
             7 => 'color: #b1b100;',
             8 => 'color: #b1b100;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #666666; font-style: italic;',
             'MULTI' => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #0000ff;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;',
-        ),
+            ),
         'METHODS' => array(
             0 => 'color: #004000;'
-        ),
+            ),
         'SYMBOLS' => array(
             1 => 'color: #339933;'
-        ),
+            ),
         'REGEXPS' => array(),
         'SCRIPT' => array()
-    ),
+        ),
     'URLS' => array(
         1 => 'http://wiki.erights.org/wiki/{FNAME}',
         2 => 'http://wiki.erights.org/wiki/{FNAME}',
@@ -184,16 +192,17 @@ $language_data = array(
         6 => 'http://wiki.erights.org/wiki/{FNAME}',
         7 => 'http://wiki.erights.org/wiki/{FNAME}',
         8 => 'http://wiki.erights.org/wiki/{FNAME}'
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.',
         2 => '<-',
         3 => '::'
-    ),
+        ),
     'REGEXPS' => array(),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(),
     'HIGHLIGHT_STRICT_BLOCK' => array()
 );
+
 ?>

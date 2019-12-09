@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <!--
-Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 -->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Code Snippet &mdash; CKEditor Sample</title>
-        <script src="../../../ckeditor.js"></script>
-        <link href="../../../samples/old/sample.css" rel="stylesheet">
-        <meta name="ckeditor-sample-name" content="Code Snippet plugin">
-        <meta name="ckeditor-sample-group" content="Plugins">
-        <meta name="ckeditor-sample-description" content="View and modify code using the Code Snippet plugin.">
-        <meta name="ckeditor-sample-isnew" content="1">
-        <style>
+<head>
+	<meta charset="utf-8">
+	<title>Code Snippet &mdash; CKEditor Sample</title>
+	<script src="../../../ckeditor.js"></script>
+	<link href="../../../samples/old/sample.css" rel="stylesheet">
+	<meta name="ckeditor-sample-name" content="Code Snippet plugin">
+	<meta name="ckeditor-sample-group" content="Plugins">
+	<meta name="ckeditor-sample-description" content="View and modify code using the Code Snippet plugin.">
+	<meta name="ckeditor-sample-isnew" content="1">
+	<style>
 
-            #editable
-            {
-                padding: 10px 20px;
-            }
-            pre > code {
-                display: block;
-            }
+		#editable
+		{
+			padding: 10px 20px;
+		}
+		pre > code {
+			display: block;
+		}
 
-        </style>
-    </head>
-    <body>
-        <textarea id="editor1">
+	</style>
+</head>
+<body>
+	<textarea id="editor1">
 &lt;p&gt;JavaScript code:&lt;/p&gt;
 
 &lt;pre&gt;
@@ -54,15 +54,15 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         ||----w |
                         ||     ||
 &lt;/code&gt;&lt;/pre&gt;
-        </textarea>
+	</textarea>
 
-        <h2>Inline editor</h2>
+	<h2>Inline editor</h2>
 
-        <div id="editable" contenteditable="true">
+	<div id="editable" contenteditable="true">
 
-            <p>JavaScript code:</p>
+<p>JavaScript code:</p>
 
-            <pre><code class="language-javascript">function isEmpty( object ) {
+<pre><code class="language-javascript">function isEmpty( object ) {
 	for ( var i in object ) {
 		if ( object.hasOwnProperty( i ) )
 			return false;
@@ -70,13 +70,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 	return true;
 }</code></pre>
 
-            <p>SQL query:</p>
+<p>SQL query:</p>
 
-            <pre><code class="language-sql">SELECT cust.id, cust.name, loc.city FROM cust LEFT JOIN loc ON ( cust.loc_id = loc.id ) WHERE cust.type IN ( 1, 2 );</code></pre>
+<pre><code class="language-sql">SELECT cust.id, cust.name, loc.city FROM cust LEFT JOIN loc ON ( cust.loc_id = loc.id ) WHERE cust.type IN ( 1, 2 );</code></pre>
 
-            <p>Unknown markup:</p>
+<p>Unknown markup:</p>
 
-            <pre><code> ________________
+<pre><code> ________________
 /                \
 | How about moo? |  ^__^
 \________________/  (oo)\_______
@@ -84,39 +84,39 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         ||----w |
                         ||     ||
 </code></pre>
-        </div>
+	</div>
 
-        <script>
-            (function () {
-                CKEDITOR.disableAutoInline = true;
+	<script>
+		( function() {
+			CKEDITOR.disableAutoInline = true;
 
-                var config = {
-                    extraPlugins: 'codesnippet,codesnippetgeshi',
-                    codeSnippetGeshi_url: 'plugins/codesnippetgeshi/dev/colorize.php',
-                    toolbar: [
-                        ['Source', 'Sourcedialog'], ['Undo', 'Redo'], ['Bold', 'Italic', 'Underline'], ['CodeSnippet']
-                    ],
-                    codeSnippet_theme: 'monokai_sublime',
-                    height: 400
-                };
+			var config = {
+				extraPlugins: 'codesnippet,codesnippetgeshi',
+				codeSnippetGeshi_url: 'plugins/codesnippetgeshi/dev/colorize.php',
+				toolbar: [
+					[ 'Source', 'Sourcedialog' ], [ 'Undo', 'Redo' ], [ 'Bold', 'Italic', 'Underline' ], [ 'CodeSnippet' ]
+				],
+				codeSnippet_theme: 'monokai_sublime',
+				height: 400
+			};
 
-                CKEDITOR.replace('editor1', config);
+			CKEDITOR.replace( 'editor1', config );
 
-                CKEDITOR.inline('editable', CKEDITOR.tools.extend({}, config, {
-                    extraPlugins: 'codesnippet,codesnippetgeshi,sourcedialog'
-                }, true));
-            }());
-        </script>
+			CKEDITOR.inline( 'editable', CKEDITOR.tools.extend( {}, config, {
+				extraPlugins: 'codesnippet,codesnippetgeshi,sourcedialog'
+			}, true ) );
+		}() );
+	</script>
 
-        <div id="footer">
-            <hr>
-            <p>
-                CKEditor - The text editor for the Internet - <a class="samples" href="https://ckeditor.com/">https://ckeditor.com</a>
-            </p>
-            <p id="copy">
-                Copyright &copy; 2003-2018, <a class="samples" href="https://cksource.com/">CKSource</a> - Frederico
-                Knabben. All rights reserved.
-            </p>
-        </div>
-    </body>
+	<div id="footer">
+		<hr>
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="https://ckeditor.com/">https://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2019, <a class="samples" href="https://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
 </html>

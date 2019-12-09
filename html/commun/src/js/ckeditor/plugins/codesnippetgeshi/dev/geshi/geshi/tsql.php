@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * tsql.php
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
@@ -18,7 +17,7 @@
  * TODO (updated 2006/01/23)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -36,9 +35,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'T-SQL',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -52,6 +51,7 @@ $language_data = array(
             'smallmoney', 'datetime', 'smalldatetime',
             'text', 'nvarchar', 'ntext', 'varbinary', 'image',
             'sql_variant', 'uniqueidentifier',
+
             // Keywords
             'ABSOLUTE', 'ACTION', 'ADD', 'ADMIN', 'AFTER', 'AGGREGATE', 'ALIAS', 'ALLOCATE', 'ALTER', 'ARE', 'ARRAY', 'AS',
             'ASC', 'ASSERTION', 'AT', 'AUTHORIZATION', 'BACKUP', 'BEFORE', 'BEGIN', 'BINARY', 'BIT', 'BLOB', 'BOOLEAN', 'BOTH', 'BREADTH',
@@ -83,82 +83,98 @@ $language_data = array(
             'UNIQUE', 'UNKNOWN', 'UNNEST', 'UPDATE', 'UPDATETEXT', 'USAGE', 'USE', 'USER', 'USING', 'VALUE', 'VALUES', 'VARCHAR', 'VARIABLE',
             'VARYING', 'VIEW', 'WAITFOR', 'WHEN', 'WHENEVER', 'WHERE', 'WHILE', 'WITH', 'WITHOUT', 'WORK', 'WRITE', 'WRITETEXT', 'YEAR', 'ZONE',
             'UNCOMMITTED', 'NOCOUNT',
-        ),
+            ),
         2 => array(
             /*
-              Built-in functions
-              Highlighted in pink.
-             */
+                Built-in functions
+                Highlighted in pink.
+            */
 
             //Configuration Functions
-            '@@DATEFIRST', '@@OPTIONS', '@@DBTS', '@@REMSERVER', '@@LANGID', '@@SERVERNAME',
-            '@@LANGUAGE', '@@SERVICENAME', '@@LOCK_TIMEOUT', '@@SPID', '@@MAX_CONNECTIONS',
-            '@@TEXTSIZE', '@@MAX_PRECISION', '@@VERSION', '@@NESTLEVEL',
+            '@@DATEFIRST','@@OPTIONS','@@DBTS','@@REMSERVER','@@LANGID','@@SERVERNAME',
+            '@@LANGUAGE','@@SERVICENAME','@@LOCK_TIMEOUT','@@SPID','@@MAX_CONNECTIONS',
+            '@@TEXTSIZE','@@MAX_PRECISION','@@VERSION','@@NESTLEVEL',
+
             //Cursor Functions
-            '@@CURSOR_ROWS', '@@FETCH_STATUS',
+            '@@CURSOR_ROWS','@@FETCH_STATUS',
+
             //Date and Time Functions
-            'DATEADD', 'DATEDIFF', 'DATENAME', 'DATEPART', 'GETDATE', 'GETUTCDATE',
+            'DATEADD','DATEDIFF','DATENAME','DATEPART','GETDATE','GETUTCDATE',
+
             //Mathematical Functions
-            'ABS', 'DEGREES', 'RAND', 'ACOS', 'EXP', 'ROUND', 'ASIN', 'FLOOR', 'SIGN',
-            'ATAN', 'LOG', 'SIN', 'ATN2', 'LOG10', 'SQUARE', 'CEILING', 'PI', 'SQRT', 'COS',
-            'POWER', 'TAN', 'COT', 'RADIANS',
+            'ABS','DEGREES','RAND','ACOS','EXP','ROUND','ASIN','FLOOR','SIGN',
+            'ATAN','LOG','SIN','ATN2','LOG10','SQUARE','CEILING','PI','SQRT','COS',
+            'POWER','TAN','COT','RADIANS',
+
             //Meta Data Functions
-            'COL_LENGTH', 'COL_NAME', 'FULLTEXTCATALOGPROPERTY',
-            'COLUMNPROPERTY', 'FULLTEXTSERVICEPROPERTY', 'DATABASEPROPERTY', 'INDEX_COL',
-            'DATABASEPROPERTYEX', 'INDEXKEY_PROPERTY', 'DB_ID', 'INDEXPROPERTY', 'DB_NAME',
-            'OBJECT_ID', 'FILE_ID', 'OBJECT_NAME', 'FILE_NAME', 'OBJECTPROPERTY', 'FILEGROUP_ID',
-            '@@PROCID', 'FILEGROUP_NAME', 'SQL_VARIANT_PROPERTY', 'FILEGROUPPROPERTY',
-            'TYPEPROPERTY', 'FILEPROPERTY',
+            'COL_LENGTH','COL_NAME','FULLTEXTCATALOGPROPERTY',
+            'COLUMNPROPERTY','FULLTEXTSERVICEPROPERTY','DATABASEPROPERTY','INDEX_COL',
+            'DATABASEPROPERTYEX','INDEXKEY_PROPERTY','DB_ID','INDEXPROPERTY','DB_NAME',
+            'OBJECT_ID','FILE_ID','OBJECT_NAME','FILE_NAME','OBJECTPROPERTY','FILEGROUP_ID',
+            '@@PROCID','FILEGROUP_NAME','SQL_VARIANT_PROPERTY','FILEGROUPPROPERTY',
+            'TYPEPROPERTY','FILEPROPERTY',
+
             //Security Functions
-            'IS_SRVROLEMEMBER', 'SUSER_SID', 'SUSER_SNAME', 'USER_ID',
-            'HAS_DBACCESS', 'IS_MEMBER',
+            'IS_SRVROLEMEMBER','SUSER_SID','SUSER_SNAME','USER_ID',
+            'HAS_DBACCESS','IS_MEMBER',
+
             //String Functions
-            'ASCII', 'SOUNDEX', 'PATINDEX', 'CHARINDEX', 'REPLACE', 'STR',
-            'DIFFERENCE', 'QUOTENAME', 'STUFF', 'REPLICATE', 'SUBSTRING', 'LEN',
-            'REVERSE', 'UNICODE', 'LOWER', 'UPPER', 'LTRIM', 'RTRIM',
+            'ASCII','SOUNDEX','PATINDEX','CHARINDEX','REPLACE','STR',
+            'DIFFERENCE','QUOTENAME','STUFF','REPLICATE','SUBSTRING','LEN',
+            'REVERSE','UNICODE','LOWER','UPPER','LTRIM','RTRIM',
+
             //System Functions
-            'APP_NAME', 'COLLATIONPROPERTY', '@@ERROR', 'FORMATMESSAGE',
-            'GETANSINULL', 'HOST_ID', 'HOST_NAME', 'IDENT_CURRENT', 'IDENT_INCR',
-            'IDENT_SEED', '@@IDENTITY', 'ISDATE', 'ISNUMERIC', 'PARSENAME', 'PERMISSIONS',
-            '@@ROWCOUNT', 'ROWCOUNT_BIG', 'SCOPE_IDENTITY', 'SERVERPROPERTY', 'SESSIONPROPERTY',
-            'STATS_DATE', '@@TRANCOUNT', 'USER_NAME',
+            'APP_NAME','COLLATIONPROPERTY','@@ERROR','FORMATMESSAGE',
+            'GETANSINULL','HOST_ID','HOST_NAME','IDENT_CURRENT','IDENT_INCR',
+            'IDENT_SEED','@@IDENTITY','ISDATE','ISNUMERIC','PARSENAME','PERMISSIONS',
+            '@@ROWCOUNT','ROWCOUNT_BIG','SCOPE_IDENTITY','SERVERPROPERTY','SESSIONPROPERTY',
+            'STATS_DATE','@@TRANCOUNT','USER_NAME',
+
             //System Statistical Functions
-            '@@CONNECTIONS', '@@PACK_RECEIVED', '@@CPU_BUSY', '@@PACK_SENT',
-            '@@TIMETICKS', '@@IDLE', '@@TOTAL_ERRORS', '@@IO_BUSY',
-            '@@TOTAL_READ', '@@PACKET_ERRORS', '@@TOTAL_WRITE',
+            '@@CONNECTIONS','@@PACK_RECEIVED','@@CPU_BUSY','@@PACK_SENT',
+            '@@TIMETICKS','@@IDLE','@@TOTAL_ERRORS','@@IO_BUSY',
+            '@@TOTAL_READ','@@PACKET_ERRORS','@@TOTAL_WRITE',
+
             //Text and Image Functions
-            'TEXTPTR', 'TEXTVALID',
+            'TEXTPTR','TEXTVALID',
+
             //Aggregate functions
             'AVG', 'MAX', 'BINARY_CHECKSUM', 'MIN', 'CHECKSUM', 'SUM', 'CHECKSUM_AGG',
             'STDEV', 'COUNT', 'STDEVP', 'COUNT_BIG', 'VAR', 'VARP'
-        ),
+            ),
         3 => array(
             /*
-              System stored procedures
-              Higlighted dark brown
-             */
+                System stored procedures
+                Higlighted dark brown
+            */
 
             //Active Directory Procedures
             'sp_ActiveDirectory_Obj', 'sp_ActiveDirectory_SCP',
+
             //Catalog Procedures
             'sp_column_privileges', 'sp_special_columns', 'sp_columns', 'sp_sproc_columns',
             'sp_databases', 'sp_statistics', 'sp_fkeys', 'sp_stored_procedures', 'sp_pkeys',
             'sp_table_privileges', 'sp_server_info', 'sp_tables',
+
             //Cursor Procedures
             'sp_cursor_list', 'sp_describe_cursor_columns', 'sp_describe_cursor', 'sp_describe_cursor_tables',
+
             //Database Maintenance Plan Procedures
             'sp_add_maintenance_plan', 'sp_delete_maintenance_plan_db', 'sp_add_maintenance_plan_db',
             'sp_delete_maintenance_plan_job', 'sp_add_maintenance_plan_job', 'sp_help_maintenance_plan',
             'sp_delete_maintenance_plan',
+
             //Distributed Queries Procedures
             'sp_addlinkedserver', 'sp_indexes', 'sp_addlinkedsrvlogin', 'sp_linkedservers', 'sp_catalogs',
             'sp_primarykeys', 'sp_column_privileges_ex', 'sp_columns_ex',
             'sp_table_privileges_ex', 'sp_tables_ex', 'sp_foreignkeys',
+
             //Full-Text Search Procedures
             'sp_fulltext_catalog', 'sp_help_fulltext_catalogs_cursor', 'sp_fulltext_column',
             'sp_help_fulltext_columns', 'sp_fulltext_database', 'sp_help_fulltext_columns_cursor',
             'sp_fulltext_service', 'sp_help_fulltext_tables', 'sp_fulltext_table',
             'sp_help_fulltext_tables_cursor', 'sp_help_fulltext_catalogs',
+
             //Log Shipping Procedures
             'sp_add_log_shipping_database', 'sp_delete_log_shipping_database', 'sp_add_log_shipping_plan',
             'sp_delete_log_shipping_plan', 'sp_add_log_shipping_plan_database',
@@ -169,9 +185,11 @@ $language_data = array(
             'sp_resolve_logins', 'sp_change_secondary_role', 'sp_update_log_shipping_monitor_info',
             'sp_create_log_shipping_monitor_account', 'sp_update_log_shipping_plan',
             'sp_define_log_shipping_monitor', 'sp_update_log_shipping_plan_database',
+
             //OLE Automation Extended Stored Procedures
             'sp_OACreate', 'sp_OAMethod', 'sp_OADestroy', 'sp_OASetProperty', 'sp_OAGetErrorInfo',
             'sp_OAStop', 'sp_OAGetProperty',
+
             //Replication Procedures
             'sp_add_agent_parameter', 'sp_enableagentoffload', 'sp_add_agent_profile',
             'sp_enumcustomresolvers', 'sp_addarticle', 'sp_enumdsn', 'sp_adddistpublisher',
@@ -212,6 +230,7 @@ $language_data = array(
             'sp_subscription_cleanup', 'sp_droppublication', 'sp_table_validation', 'sp_droppullsubscription',
             'sp_update_agent_profile', 'sp_dropsubscriber', 'sp_validatemergepublication', 'sp_dropsubscription',
             'sp_validatemergesubscription', 'sp_dsninfo', 'sp_vupgrade_replication', 'sp_dumpparamcmd',
+
             //Security Procedures
             'sp_addalias', 'sp_droprolemember', 'sp_addapprole', 'sp_dropserver', 'sp_addgroup', 'sp_dropsrvrolemember',
             'sp_dropuser', 'sp_addlogin', 'sp_grantdbaccess', 'sp_addremotelogin',
@@ -223,10 +242,13 @@ $language_data = array(
             'sp_defaultlanguage', 'sp_MShasdbaccess', 'sp_denylogin', 'sp_password', 'sp_dropalias', 'sp_remoteoption',
             'sp_dropapprole', 'sp_revokedbaccess', 'sp_dropgroup', 'sp_revokelogin', 'sp_droplinkedsrvlogin',
             'sp_setapprole', 'sp_droplogin', 'sp_srvrolepermission', 'sp_dropremotelogin', 'sp_validatelogins', 'sp_droprole',
+
             //SQL Mail Procedures
             'sp_processmail', 'xp_sendmail', 'xp_deletemail', 'xp_startmail', 'xp_findnextmsg', 'xp_stopmail', 'xp_readmail',
+
             //SQL Profiler Procedures
             'sp_trace_create', 'sp_trace_setfilter', 'sp_trace_generateevent', 'sp_trace_setstatus', 'sp_trace_setevent',
+
             //SQL Server Agent Procedures
             'sp_add_alert', 'sp_help_jobhistory', 'sp_add_category', 'sp_help_jobschedule', 'sp_add_job',
             'sp_help_jobserver', 'sp_add_jobschedule', 'sp_help_jobstep', 'sp_add_jobserver', 'sp_help_notification',
@@ -242,6 +264,7 @@ $language_data = array(
             'sp_update_jobschedule', 'sp_help_alert', 'sp_update_jobstep', 'sp_help_category',
             'sp_update_notification', 'sp_help_downloadlist', 'sp_update_operator', 'sp_helphistory',
             'sp_update_targetservergroup', 'sp_help_job', 'sp_updatetask', 'xp_sqlagent_proxy_account',
+
             //System Procedures
             'sp_add_data_file_recover_suspect_db', 'sp_helpconstraint', 'sp_addextendedproc',
             'sp_helpdb', 'sp_addextendedproperty', 'sp_helpdevice', 'sp_add_log_file_recover_suspect_db',
@@ -258,89 +281,95 @@ $language_data = array(
             'sp_dropextendedproperty', 'sp_tableoption', 'sp_dropmessage', 'sp_unbindefault', 'sp_droptype',
             'sp_unbindrule', 'sp_executesql', 'sp_updateextendedproperty', 'sp_getapplock', 'sp_updatestats',
             'sp_getbindtoken', 'sp_validname', 'sp_help', 'sp_who',
+
             //Web Assistant Procedures
             'sp_dropwebtask', 'sp_makewebtask', 'sp_enumcodepages', 'sp_runwebtask',
+
             //XML Procedures
             'sp_xml_preparedocument', 'sp_xml_removedocument',
+
             //General Extended Procedures
             'xp_cmdshellxp_logininfo', 'xp_enumgroups', 'xp_msver', 'xp_findnextmsgxp_revokelogin',
             'xp_grantlogin', 'xp_sprintf', 'xp_logevent', 'xp_sqlmaint', 'xp_loginconfig', 'xp_sscanf',
+
             //API System Stored Procedures
             'sp_cursor', 'sp_cursorclose', 'sp_cursorexecute', 'sp_cursorfetch', 'sp_cursoropen',
             'sp_cursoroption', 'sp_cursorprepare', 'sp_cursorunprepare', 'sp_execute', 'sp_prepare', 'sp_unprepare',
+
             //Misc
             'sp_createorphan', 'sp_droporphans', 'sp_reset_connection', 'sp_sdidebug'
-        ),
+            ),
         4 => array(
             //Function/sp's higlighted brown.
             'fn_helpcollations', 'fn_listextendedproperty ', 'fn_servershareddrives',
             'fn_trace_geteventinfo', 'fn_trace_getfilterinfo', 'fn_trace_getinfo',
-            'fn_trace_gettable', 'fn_virtualfilestats', 'fn_listextendedproperty',
+            'fn_trace_gettable', 'fn_virtualfilestats','fn_listextendedproperty',
+            ),
         ),
-    ),
     'SYMBOLS' => array(
         '!', '!=', '%', '&', '&&', '(', ')', '*', '+', '-', '/', '<', '<<', '<=',
         '<=>', '<>', '=', '>', '>=', '>>', '^', 'ALL', 'AND', 'ANY', 'BETWEEN', 'CROSS',
         'EXISTS', 'IN', 'JOIN', 'LIKE', 'NOT', 'NULL', 'OR', 'OUTER', 'SOME', '|', '||', '~'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,
         4 => false,
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0000FF;',
             2 => 'color: #FF00FF;',
             3 => 'color: #AF0000;',
             4 => 'color: #AF0000;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #008080;',
             'MULTI' => 'color: #008080;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #808080;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #FF0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #000;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #202020;',
             2 => 'color: #202020;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #808080;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => '',
         4 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.'
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

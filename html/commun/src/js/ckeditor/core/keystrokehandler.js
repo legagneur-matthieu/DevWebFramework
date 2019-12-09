@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -10,88 +10,88 @@
  * @constructor Creates a keystrokeHandler class instance.
  * @param {CKEDITOR.editor} editor The editor instance.
  */
-CKEDITOR.keystrokeHandler = function (editor) {
-    if (editor.keystrokeHandler)
-        return editor.keystrokeHandler;
+CKEDITOR.keystrokeHandler = function( editor ) {
+	if ( editor.keystrokeHandler )
+		return editor.keystrokeHandler;
 
-    /**
-     * A list of keystrokes associated with commands. Each entry points to the
-     * command to be executed.
-     *
-     * Since CKEditor 4 there is no need to modify this property directly during the runtime.
-     * Use {@link CKEDITOR.editor#setKeystroke} instead.
-     */
-    this.keystrokes = {};
+	/**
+	 * A list of keystrokes associated with commands. Each entry points to the
+	 * command to be executed.
+	 *
+	 * Since CKEditor 4 there is no need to modify this property directly during the runtime.
+	 * Use {@link CKEDITOR.editor#setKeystroke} instead.
+	 */
+	this.keystrokes = {};
 
-    /**
-     * A list of keystrokes that should be blocked if not defined in
-     * {@link #keystrokes}. In this way it is possible to block the default
-     * browser behavior for those keystrokes.
-     */
-    this.blockedKeystrokes = {};
+	/**
+	 * A list of keystrokes that should be blocked if not defined in
+	 * {@link #keystrokes}. In this way it is possible to block the default
+	 * browser behavior for those keystrokes.
+	 */
+	this.blockedKeystrokes = {};
 
-    this._ = {
-        editor: editor
-    };
+	this._ = {
+		editor: editor
+	};
 
-    return this;
+	return this;
 };
 
-(function () {
-    var cancel;
+( function() {
+	var cancel;
 
-    var onKeyDown = function (event) {
-        // The DOM event object is passed by the "data" property.
-        event = event.data;
+	var onKeyDown = function( event ) {
+			// The DOM event object is passed by the "data" property.
+			event = event.data;
 
-        var keyCombination = event.getKeystroke();
-        var command = this.keystrokes[ keyCombination ];
-        var editor = this._.editor;
+			var keyCombination = event.getKeystroke();
+			var command = this.keystrokes[ keyCombination ];
+			var editor = this._.editor;
 
-        cancel = (editor.fire('key', {keyCode: keyCombination, domEvent: event}) === false);
+			cancel = ( editor.fire( 'key', { keyCode: keyCombination, domEvent: event } ) === false );
 
-        if (!cancel) {
-            if (command) {
-                var data = {from: 'keystrokeHandler'};
-                cancel = (editor.execCommand(command, data) !== false);
-            }
+			if ( !cancel ) {
+				if ( command ) {
+					var data = { from: 'keystrokeHandler' };
+					cancel = ( editor.execCommand( command, data ) !== false );
+				}
 
-            if (!cancel)
-                cancel = !!this.blockedKeystrokes[ keyCombination ];
-        }
+				if ( !cancel )
+					cancel = !!this.blockedKeystrokes[ keyCombination ];
+			}
 
-        if (cancel)
-            event.preventDefault(true);
+			if ( cancel )
+				event.preventDefault( true );
 
-        return !cancel;
-    };
+			return !cancel;
+		};
 
-    var onKeyPress = function (event) {
-        if (cancel) {
-            cancel = false;
-            event.data.preventDefault(true);
-        }
-    };
+	var onKeyPress = function( event ) {
+			if ( cancel ) {
+				cancel = false;
+				event.data.preventDefault( true );
+			}
+		};
 
-    CKEDITOR.keystrokeHandler.prototype = {
-        /**
-         * Attaches this keystroke handle to a DOM object. Keystrokes typed
-         * over this object will be handled by this keystrokeHandler.
-         *
-         * @param {CKEDITOR.dom.domObject} domObject The DOM object to attach to.
-         */
-        attach: function (domObject) {
-            // For most browsers, it is enough to listen to the keydown event
-            // only.
-            domObject.on('keydown', onKeyDown, this);
+	CKEDITOR.keystrokeHandler.prototype = {
+		/**
+		 * Attaches this keystroke handle to a DOM object. Keystrokes typed
+		 * over this object will be handled by this keystrokeHandler.
+		 *
+		 * @param {CKEDITOR.dom.domObject} domObject The DOM object to attach to.
+		 */
+		attach: function( domObject ) {
+			// For most browsers, it is enough to listen to the keydown event
+			// only.
+			domObject.on( 'keydown', onKeyDown, this );
 
-            // Some browsers instead, don't cancel key events in the keydown, but in the
-            // keypress. So we must do a longer trip in those cases.
-            if (CKEDITOR.env.gecko && CKEDITOR.env.mac)
-                domObject.on('keypress', onKeyPress, this);
-        }
-    };
-})();
+			// Some browsers instead, don't cancel key events in the keydown, but in the
+			// keypress. So we must do a longer trip in those cases.
+			if ( CKEDITOR.env.gecko && CKEDITOR.env.mac )
+				domObject.on( 'keypress', onKeyPress, this );
+		}
+	};
+} )();
 
 /**
  * A list associating keystrokes with editor commands. Each element in the list

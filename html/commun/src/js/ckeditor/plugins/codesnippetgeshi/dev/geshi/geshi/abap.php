@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * abap.php
  * --------
  * Author: Andres Picazo (andres@andrespicazo.com)
@@ -66,7 +65,7 @@
  *       echo $html;
  *   - Numbers followed by a dot terminating the statement are not properly recognized
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -84,26 +83,27 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 $language_data = array(
     'LANG_NAME' => 'ABAP',
     'COMMENT_SINGLE' => array(
         1 => '"'
-    ),
+        ),
     'COMMENT_MULTI' => array(),
     'COMMENT_REGEXP' => array(
         // lines beginning with star at 1st position are comments
         // (star anywhere else is not a comment, especially be careful with
         // "assign dref->* to <fs>" statement)
         2 => '/^\*.*?$/m'
-    ),
+        ),
     'CASE_KEYWORDS' => 0,
     'QUOTEMARKS' => array(
         1 => "'",
         2 => "`"
-    ),
+        ),
     'ESCAPE_CHAR' => '',
+
     'KEYWORDS' => array(
         //***********************************************
         // Section 2 : process sequences of several tokens
@@ -116,7 +116,8 @@ $language_data = array(
             'at last',
             'loop at',
             'loop at screen',
-        ),
+            ),
+
         8 => array(
             'private section',
             'protected section',
@@ -217,7 +218,8 @@ $language_data = array(
             'truncate dataset',
             'wait until',
             'wait up to',
-        ),
+            ),
+
         9 => array(
             'accepting duplicate keys',
             'accepting padding',
@@ -256,6 +258,7 @@ $language_data = array(
             'at exit-command',
             'at next application statement',
             'at position',
+
             'backup into',
             'before output',
             'before unwind',
@@ -271,6 +274,7 @@ $language_data = array(
             'binary search',
             'by kernel module',
             'bypassing buffer',
+
             'client specified',
             'code page',
             'code page hint',
@@ -293,6 +297,7 @@ $language_data = array(
             'create protected',
             'create public',
             'current position',
+
             'data buffer',
             'data values',
             'dataset expiration',
@@ -308,6 +313,7 @@ $language_data = array(
             'display offset',
             'during line-selection',
             'dynamic selections',
+
             'edit mask',
             'end of block',
             'end of common part',
@@ -325,6 +331,7 @@ $language_data = array(
             'execute procedure',
             'exporting list to memory',
             'extension type',
+
             'field format',
             'field selection',
             'field value into',
@@ -358,11 +365,14 @@ $language_data = array(
             'from screen',
             'from table',
             'function key',
+
             'get connection',
             'global friends',
             'group by',
+
             'hashed table of',
             'hashed table',
+
             'if found',
             'ignoring case',
             'ignoring conversion errors',
@@ -397,11 +407,13 @@ $language_data = array(
             'initial size',
             'internal table',
             'into sortable code',
+
             'keep in spool',
             'keeping directory entry',
             'keeping logical unit of work',
             'keeping task',
             'keywords from',
+
             'left margin',
             'left outer',
             'levels into',
@@ -420,6 +432,7 @@ $language_data = array(
             'local friends',
             'locator for',
             'lower case',
+
             'main table field',
             'match count',
             'match length',
@@ -432,6 +445,7 @@ $language_data = array(
             'message into',
             'messages into',
             'modif id',
+
             'nesting level',
             'new list identification',
             'next cursor',
@@ -449,6 +463,7 @@ $language_data = array(
             'not at end of mode',
             'number of lines',
             'number of pages',
+
             'object key',
             'obligatory off',
             'of current page',
@@ -473,6 +488,7 @@ $language_data = array(
             'options from',
             'order by',
             'overflow into',
+
             'package section',
             'package size',
             'preferred parameter',
@@ -482,6 +498,7 @@ $language_data = array(
             'print on',
             'program from',
             'program type',
+
             'radiobutton groups',
             'radiobutton group',
             'range of',
@@ -491,6 +508,7 @@ $language_data = array(
             'ref to data',
             'ref to object',
             'ref to',
+
             'reference into',
             'renaming with suffix',
             'replacement character',
@@ -502,6 +520,7 @@ $language_data = array(
             'respecting case',
             'result into',
             'risk level',
+
             'sap cover page',
             'search fkeq',
             'search fkge',
@@ -525,6 +544,7 @@ $language_data = array(
             'statements into',
             'structure default',
             'structures into',
+
             'table field',
             'table of',
             'text mode',
@@ -546,6 +566,7 @@ $language_data = array(
             'transporting no fields',
             'type tableview',
             'type tabstrip',
+
             'unicode enabling',
             'up to',
             'upper case',
@@ -556,12 +577,14 @@ $language_data = array(
             'using selection-screen',
             'using selection-set',
             'using selection-sets of program',
+
             'valid between',
             'valid from',
             'value check',
             'via job',
             'via selection-screen',
             'visible length',
+
             'whenever found',
             'with analysis',
             'with byte-order mark',
@@ -598,7 +621,8 @@ $language_data = array(
             'without trmac',
             'word into',
             'writer for'
-        ),
+            ),
+
         //**********************************************************
         // Other abap statements
         //**********************************************************
@@ -610,7 +634,9 @@ $language_data = array(
             'assign',
             'at',
             'authority-check',
+
             'break-point',
+
             'clear',
             'collect',
             'compute',
@@ -620,12 +646,14 @@ $language_data = array(
             'class-events',
             'class-methods',
             'class-pool',
+
             'define',
             'delete',
             'demand',
             'detail',
             'divide',
             'divide-corresponding',
+
             'editor-call',
             'end-of-file',
             'end-enhancement-section',
@@ -649,6 +677,7 @@ $language_data = array(
             'export',
             'extract',
             'events',
+
             'fetch',
             'field-groups',
             'find',
@@ -657,8 +686,11 @@ $language_data = array(
             'free',
             'function-pool',
             'function',
+
             'get',
+
             'hide',
+
             'import',
             'infotypes',
             'input',
@@ -668,9 +700,11 @@ $language_data = array(
             'interface',
             'interface-pool',
             'interfaces',
+
             'leave',
             'load-of-program',
             'log-point',
+
             'maximum',
             'message',
             'methods',
@@ -681,10 +715,13 @@ $language_data = array(
             'move-corresponding',
             'multiply',
             'multiply-corresponding',
+
             'new-line',
             'new-page',
             'new-section',
+
             'overlay',
+
             'pack',
             'perform',
             'position',
@@ -692,12 +729,14 @@ $language_data = array(
             'program',
             'provide',
             'put',
+
             'raise',
             'refresh',
             'reject',
             'replace',
             'report',
             'reserve',
+
             'scroll',
             'search',
             'select',
@@ -715,19 +754,25 @@ $language_data = array(
             'summing',
             'supply',
             'syntax-check',
+
             'top-of-page',
             'transfer',
             'translate',
             'type-pool',
+
             'uline',
             'unpack',
             'update',
+
             'window',
             'write'
-        ),
+
+            ),
+
         //**********************************************************
         // keywords
         //**********************************************************
+
         4 => array(
             'abbreviated',
             'abstract',
@@ -750,6 +795,7 @@ $language_data = array(
             'atan',
             'attributes',
             'avg',
+
             'backward',
             'between',
             'bit-and',
@@ -771,6 +817,7 @@ $language_data = array(
             'byte-cs',
             'byte-na',
             'byte-ns',
+
             'ca',
             'calling',
             'casting',
@@ -824,6 +871,7 @@ $language_data = array(
             'cx_static_check',
             'cx_root',
             'cx_dynamic_check',
+
             'dangerous',
             'database',
             'datainfo',
@@ -849,6 +897,7 @@ $language_data = array(
             'distinct',
             'div',
             'dummy',
+
             'encoding',
             'end-lines',
             'engineering',
@@ -868,6 +917,7 @@ $language_data = array(
             'exponent',
             'exporting',
             'extended_monetary',
+
             'field',
             'filter-table',
             'filters',
@@ -885,9 +935,11 @@ $language_data = array(
             'from_mixed',
             'friends',
             'from',
+
             'giving',
             'ge',
             'gt',
+
             'handle',
             'harmless',
             'having',
@@ -897,6 +949,7 @@ $language_data = array(
             'high',
             'hold',
             'hotspot',
+
             'id',
             'ids',
             'immediately',
@@ -916,9 +969,12 @@ $language_data = array(
             'inverse',
             'is',
             'iso',
+
             'join',
+
             'key',
             'kind',
+
             'log10',
             'language',
             'late',
@@ -941,6 +997,7 @@ $language_data = array(
             'lower',
             'low',
             'lpi',
+
             'matches',
             'match',
             'mail',
@@ -959,6 +1016,7 @@ $language_data = array(
             'modifier',
             'mod',
             'monetary',
+
             'name',
             'nb',
             'ne',
@@ -984,6 +1042,7 @@ $language_data = array(
             'null',
             'numeric',
             'numofchar',
+
             'o',
             'objects',
             'obligatory',
@@ -1002,6 +1061,7 @@ $language_data = array(
             'on change of',
             'or',
             'others',
+
             'pad',
             'page',
             'pages',
@@ -1013,8 +1073,10 @@ $language_data = array(
             'priority',
             'public',
             'pushbutton',
+
             'queue-only',
             'quickinfo',
+
             'raising',
             'range',
             'read-only',
@@ -1042,6 +1104,7 @@ $language_data = array(
             'requested',
             'rescale',
             'reverse',
+
             'scale_preserving',
             'scale_preserving_scientific',
             'scientific',
@@ -1084,6 +1147,7 @@ $language_data = array(
             'super',
             'supplied',
             'switch',
+
             'tan',
             'tanh',
             'table_line',
@@ -1106,12 +1170,14 @@ $language_data = array(
             'transporting',
             'trunc',
             'type',
+
             'under',
             'unique',
             'unit',
             'user-command',
             'using',
             'utf-8',
+
             'valid',
             'value',
             'value-request',
@@ -1119,6 +1185,7 @@ $language_data = array(
             'vary',
             'varying',
             'version',
+
             'warning',
             'where',
             'width',
@@ -1126,17 +1193,23 @@ $language_data = array(
             'word',
             'with-heading',
             'with-title',
+
             'xsequence',
             'xstring',
             'xstrlen',
+
             'yes',
             'yymmdd',
+
             'z',
             'zero'
-        ),
+
+            ),
+
         //**********************************************************
         // screen statements
         //**********************************************************
+
         5 => array(
             'call subscreen',
             'chain',
@@ -1148,10 +1221,12 @@ $language_data = array(
             'on request',
             'on value-request',
             'process'
-        ),
+            ),
+
         //**********************************************************
         // internal statements
         //**********************************************************
+
         6 => array(
             'generate dynpro',
             'generate report',
@@ -1167,10 +1242,12 @@ $language_data = array(
             'system-call',
             'system-exit',
             'verification-message'
-        ),
+            ),
+
         //**********************************************************
         // Control statements
         //**********************************************************
+
         1 => array(
             'assert',
             'case',
@@ -1199,10 +1276,13 @@ $language_data = array(
             'try',
             'when',
             'while'
-        ),
+
+            ),
+
         //**********************************************************
         // variable declaration statements
         //**********************************************************
+
         2 => array(
             'class-data',
             'controls',
@@ -1218,20 +1298,20 @@ $language_data = array(
             'tables',
             'type-pools',
             'types'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         0 => array(
             '->*', '->', '=>',
             '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '!', '%', '^', '&', ':', ',', '.'
-        ),
+            ),
         1 => array(
             '>=', '<=', '<', '>', '='
-        ),
+            ),
         2 => array(
             '?='
-        )
-    ),
+            )
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
@@ -1243,7 +1323,7 @@ $language_data = array(
         7 => false,
         8 => false,
         9 => false,
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000066; text-transform: uppercase; font-weight: bold; zzz:control;', //control statements
@@ -1255,38 +1335,38 @@ $language_data = array(
             7 => 'color: #000066; text-transform: uppercase; font-weight: bold; zzz:control;',
             8 => 'color: #005066; text-transform: uppercase; font-weight: bold; zzz:statement;',
             9 => 'color: #500066; text-transform: uppercase; font-weight: bold; zzz:keyword;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
             2 => 'color: #339933;',
             'MULTI' => 'color: #808080; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #808080;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #4da619;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #3399ff;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #202020;',
             2 => 'color: #202020;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #808080;',
             1 => 'color: #800080;',
             2 => 'color: #0000ff;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => 'http://help.sap.com/abapdocu/en/ABAP{FNAMEU}.htm',
         2 => 'http://help.sap.com/abapdocu/en/ABAP{FNAMEU}.htm',
@@ -1297,32 +1377,33 @@ $language_data = array(
         7 => '',
         8 => '',
         9 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '-&gt;',
         2 => '=&gt;'
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
             7 => array(
                 'SPACE_AS_WHITESPACE' => true
-            ),
+                ),
             8 => array(
                 'SPACE_AS_WHITESPACE' => true
-            ),
+                ),
             9 => array(
                 'SPACE_AS_WHITESPACE' => true
+                )
             )
-        )
-    ),
+        ),
     'TAB_WIDTH' => 4
 );
+
 ?>

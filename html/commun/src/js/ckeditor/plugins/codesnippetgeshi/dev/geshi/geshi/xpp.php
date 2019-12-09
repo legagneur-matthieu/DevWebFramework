@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * xpp.php
  * -------
  * Author: Simon Butcher (simon@butcher.name)
@@ -19,7 +18,7 @@
  * TODO (updated 2007/02/27)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -37,9 +36,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'X++',
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -47,7 +46,7 @@ $language_data = array(
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-        1 => array(// Primitive types
+        1 => array( // Primitive types
             'void',
             'str',
             'real',
@@ -57,8 +56,8 @@ $language_data = array(
             'container',
             'boolean',
             'anytype'
-        ),
-        2 => array(// Keywords
+            ),
+        2 => array( // Keywords
             'window',
             'while',
             'try',
@@ -102,8 +101,8 @@ $language_data = array(
             'break',
             'at',
             'abstract'
-        ),
-        3 => array(// Functions within the Axapta kernel
+            ),
+        3 => array( // Functions within the Axapta kernel
             'year',
             'wkofyr',
             'webwebpartstr',
@@ -306,8 +305,8 @@ $language_data = array(
             'ansi2ascii',
             'acos',
             'abs'
-        ),
-        4 => array(// X++ SQL stuff
+            ),
+        4 => array( // X++ SQL stuff
             'where',
             'update_recordset',
             'ttsCommit',
@@ -347,9 +346,9 @@ $language_data = array(
             'count',
             'avg',
             'asc'
-        )
-    ),
-    'SYMBOLS' => array(// X++ symbols
+            )
+        ),
+    'SYMBOLS' => array( // X++ symbols
         '!',
         '&',
         '(',
@@ -371,66 +370,67 @@ $language_data = array(
         ']',
         '{',
         '}'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,
         4 => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0000ff;',
             2 => 'color: #0000ff;',
             3 => 'color: #0000ff;',
             4 => 'color: #0000ff;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #007f00;',
             'MULTI' => 'color: #007f00; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #000000;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #000000;',
             2 => 'color: #000000;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #00007f;'
-        ),
+            ),
         'REGEXPS' => array(
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => '',
         4 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.',
         2 => '::'
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

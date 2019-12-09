@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * unicon.php
  * --------
  * Author: Matt Oates (mattoates@gmail.com)
@@ -22,7 +21,7 @@
  * -------------------------
  * - Do the &amp; need replacing with &?
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -40,7 +39,7 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 $language_data = array(
     'LANG_NAME' => 'Unicon (Unified Extended Dialect of Icon)',
@@ -55,10 +54,10 @@ $language_data = array(
             'else', 'end', 'every', 'fail', 'for', 'if', 'import', 'initial', 'initially',
             'invocable', 'link', 'method', 'next', 'not', 'of', 'package', 'procedure', 'record',
             'repeat', 'return', 'switch', 'suspend', 'then', 'to', 'until', 'while'
-        ),
+            ),
         2 => array(
             'global', 'local', 'static'
-        ),
+            ),
         3 => array(
             'allocated', 'ascii', 'clock', 'collections',
             'column', 'cset', 'current', 'date', 'dateline', 'digits',
@@ -72,7 +71,7 @@ $language_data = array(
             'ldrag', 'lpress', 'lrelease', 'mdrag', 'meta', 'mpress',
             'mrelease', 'rdrag', 'resize', 'row', 'rpress', 'rrelease',
             'shift', 'window', 'x', 'y'
-        ),
+            ),
         4 => array(
             'abs', 'acos', 'any', 'args', 'asin', 'atan', 'bal', 'center', 'char',
             'chmod', 'close', 'cofail', 'collect', 'copy', 'cos', 'cset', 'ctime', 'dbcolumns',
@@ -88,7 +87,7 @@ $language_data = array(
             'setenv', 'sort', 'sortf', 'sql', 'sqrt', 'stat', 'staticnames', 'stop', 'string', 'system', 'tab',
             'table', 'tan', 'trap', 'trim', 'truncate', 'type', 'upto', 'utime', 'variable', 'where',
             'write', 'writes'
-        ),
+            ),
         5 => array(
             'Active', 'Alert', 'Bg', 'Clip', 'Clone', 'Color', 'ColorValue',
             'CopyArea', 'Couple', 'DrawArc', 'DrawCircle', 'DrawCurve', 'DrawCylinder', 'DrawDisk',
@@ -100,11 +99,11 @@ $language_data = array(
             'PushScale', 'PushTranslate', 'QueryPointer', 'Raise', 'ReadImage', 'Refresh', 'Rotate',
             'Scale', 'Texcoord', 'TextWidth', 'Texture', 'Translate', 'Uncouple', 'WAttrib',
             'WDefault', 'WFlush', 'WindowContents', 'WriteImage', 'WSync'
-        ),
+            ),
         6 => array(
             'define', 'include', 'ifdef', 'ifndef', 'else', 'endif', 'error',
             'line', 'undef'
-        ),
+            ),
         7 => array(
             '_V9', '_AMIGA', '_ACORN', '_CMS', '_MACINTOSH', '_MSDOS_386',
             '_MS_WINDOWS_NT', '_MSDOS', '_MVS', '_OS2', '_POR', 'T', '_UNIX', '_POSIX', '_DBM',
@@ -113,19 +112,19 @@ $language_data = array(
             '_MULTITASKING', '_PIPES', '_RECORD_IO', '_SYSTEM_FUNCTION', '_MESSAGING', '_GRAPHICS',
             '_X_WINDOW_SYSTEM', '_MS_WINDOWS', '_WIN32', '_PRESENTATION_MGR', '_ARM_FUNCTIONS',
             '_DOS_FUNCTIONS'
-        ),
+            ),
         8 => array(
             'line')
-    ),
+        ),
     'SYMBOLS' => array(
         1 => array(
             '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '\\', '%', '=', '<', '>', '!', '^',
             '&', '|', '?', ':', ';', ',', '.', '~', '@'
-        ),
+            ),
         2 => array(
             '$(', '$)', '$<', '$>'
-        )
-    ),
+            )
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
@@ -136,7 +135,7 @@ $language_data = array(
         6 => true,
         7 => true,
         8 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #b1b100;',
@@ -147,32 +146,32 @@ $language_data = array(
             6 => 'color: #b1b100;',
             7 => 'color: #b1b100;',
             8 => 'color: #b1b100;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #666666; font-style: italic;',
             'MULTI' => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #0000ff;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;',
-        ),
+            ),
         'METHODS' => array(
             0 => 'color: #004000;'
-        ),
+            ),
         'SYMBOLS' => array(
             1 => 'color: #339933;'
-        ),
+            ),
         'REGEXPS' => array(),
         'SCRIPT' => array()
-    ),
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
@@ -182,7 +181,7 @@ $language_data = array(
         6 => '',
         7 => '',
         8 => ''
-    ),
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(1 => '.'),
     'REGEXPS' => array(),
@@ -193,18 +192,19 @@ $language_data = array(
         'KEYWORDS' => array(
             3 => array(
                 'DISALLOWED_BEFORE' => '(?<=&amp;)'
-            ),
+                ),
             4 => array(
                 'DISALLOWED_BEFORE' => "(?<![a-zA-Z0-9_\"\'])",
                 'DISALLOWED_AFTER' => "(?![a-zA-Z0-9_\"\'])"
-            ),
+                ),
             6 => array(
                 'DISALLOWED_BEFORE' => '(?<=\$)'
-            ),
+                ),
             8 => array(
                 'DISALLOWED_BEFORE' => '(?<=#)'
+                )
             )
         )
-    )
 );
+
 ?>

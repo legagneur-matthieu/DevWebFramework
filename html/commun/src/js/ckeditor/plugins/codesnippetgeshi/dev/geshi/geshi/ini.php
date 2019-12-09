@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * ini.php
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
@@ -23,7 +22,7 @@
  * TODO (updated 2005/03/27)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -41,9 +40,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'INI',
     'COMMENT_SINGLE' => array(0 => ';'),
     'COMMENT_MULTI' => array(),
@@ -51,51 +50,51 @@ $language_data = array(
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-    ),
+        ),
     'SYMBOLS' => array(
         '[', ']', '='
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
-        ),
+            ),
         'COMMENTS' => array(
             0 => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => ''
-        ),
+            ),
         'BRACKETS' => array(
             0 => ''
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #933;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => ''
-        ),
+            ),
         'METHODS' => array(
             0 => ''
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000066; font-weight:bold;'
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #000066; font-weight:bold;',
             1 => 'color: #000099;',
             2 => 'color: #660066;'
-        ),
+            ),
         'SCRIPT' => array(
             0 => ''
-        )
-    ),
+            )
+        ),
     'URLS' => array(
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //Section names
         0 => '\[.+\]',
@@ -106,7 +105,7 @@ $language_data = array(
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => '\\3'
-        ),
+            ),
         //Entry values
         2 => array(
             // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
@@ -117,12 +116,13 @@ $language_data = array(
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1=',
             GESHI_AFTER => ''
-        )
-    ),
+            )
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * oracle11.php
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
@@ -22,7 +21,7 @@
  * TODO (updated 2004/11/27)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -40,9 +39,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'Oracle 11 SQL',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -53,15 +52,19 @@ $language_data = array(
 //Put your package names here - e.g. select distinct ''''|| lower(name) || ''',' from user_source;
 //        6 => array(
 //            ),
+
 //Put your table names here - e.g. select distinct ''''|| lower(table_name) || ''',' from user_tables;
 //        5 => array(
 //            ),
+
 //Put your view names here - e.g. select distinct ''''|| lower(view_name) || ''',' from user_views;
 //        4 => array(
 //            ),
+
 //Put your table field names here - e.g. select distinct ''''|| lower(column_name) || ''',' from user_tab_columns;
 //        3 => array(
 //            ),
+
         //Put ORACLE reserved keywords here (11i).  I like mine uppercase.
         1 => array(
             'ABS',
@@ -546,11 +549,11 @@ $language_data = array(
             'XMLTRANSFORM',
             'YEAR',
             'ZONE'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         '(', ')', '=', '<', '>', '|', '+', '-', '*', '/', ','
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
@@ -558,53 +561,54 @@ $language_data = array(
 //        4 => false,
 //        5 => false,
 //        6 => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #993333; font-weight: bold; text-transform: uppercase;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #ff0000;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'SCRIPT' => array(
-        ),
+            ),
         'REGEXPS' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
 //        3 => '',
 //        4 => '',
 //        5 => '',
 //        6 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

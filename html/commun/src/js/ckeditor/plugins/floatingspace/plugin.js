@@ -1,336 +1,342 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-(function () {
-    var win = CKEDITOR.document.getWindow(),
-            pixelate = CKEDITOR.tools.cssLength;
+( function() {
+	var win = CKEDITOR.document.getWindow(),
+		pixelate = CKEDITOR.tools.cssLength;
 
-    CKEDITOR.plugins.add('floatingspace', {
-        init: function (editor) {
-            // Add listener with lower priority than that in themedui creator.
-            // Thereby floatingspace will be created only if themedui wasn't used.
-            editor.on('loaded', function () {
-                attach(this);
-            }, null, null, 20);
-        }
-    });
+	CKEDITOR.plugins.add( 'floatingspace', {
+		init: function( editor ) {
+			// Add listener with lower priority than that in themedui creator.
+			// Thereby floatingspace will be created only if themedui wasn't used.
+			editor.on( 'loaded', function() {
+				attach( this );
+			}, null, null, 20 );
+		}
+	} );
 
-    function scrollOffset(side) {
-        var pageOffset = side == 'left' ? 'pageXOffset' : 'pageYOffset',
-                docScrollOffset = side == 'left' ? 'scrollLeft' : 'scrollTop';
+	function scrollOffset( side ) {
+		var pageOffset = side == 'left' ? 'pageXOffset' : 'pageYOffset',
+			docScrollOffset = side == 'left' ? 'scrollLeft' : 'scrollTop';
 
-        return (pageOffset in win.$) ? win.$[ pageOffset ] : CKEDITOR.document.$.documentElement[ docScrollOffset ];
-    }
+		return ( pageOffset in win.$ ) ? win.$[ pageOffset ] : CKEDITOR.document.$.documentElement[ docScrollOffset ];
+	}
 
-    function attach(editor) {
-        var config = editor.config,
-                // Get the HTML for the predefined spaces.
-                topHtml = editor.fire('uiSpace', {space: 'top', html: ''}).html,
-                // Re-positioning of the space.
-                layout = (function () {
-                    // Mode indicates the vertical aligning mode.
-                    var mode, editable,
-                            spaceRect, editorRect, viewRect, spaceHeight, pageScrollX,
-                            // Allow minor adjustments of the float space from custom configs.
-                            dockedOffsetX = config.floatSpaceDockedOffsetX || 0,
-                            dockedOffsetY = config.floatSpaceDockedOffsetY || 0,
-                            pinnedOffsetX = config.floatSpacePinnedOffsetX || 0,
-                            pinnedOffsetY = config.floatSpacePinnedOffsetY || 0;
+	function attach( editor ) {
+		var config = editor.config,
 
-                    // Update the float space position.
-                    function updatePos(pos, prop, val) {
-                        floatSpace.setStyle(prop, pixelate(val));
-                        floatSpace.setStyle('position', pos);
-                    }
+			// Get the HTML for the predefined spaces.
+			topHtml = editor.fire( 'uiSpace', { space: 'top', html: '' } ).html,
 
-                    // Change the current mode and update float space position accordingly.
-                    function changeMode(newMode) {
-                        var editorPos = editable.getDocumentPosition();
+			// Re-positioning of the space.
+			layout = ( function() {
+				// Mode indicates the vertical aligning mode.
+				var mode, editable,
+					spaceRect, editorRect, viewRect, spaceHeight, pageScrollX,
 
-                        switch (newMode) {
-                            case 'top':
-                                updatePos('absolute', 'top', editorPos.y - spaceHeight - dockedOffsetY);
-                                break;
-                            case 'pin':
-                                updatePos('fixed', 'top', pinnedOffsetY);
-                                break;
-                            case 'bottom':
-                                updatePos('absolute', 'top', editorPos.y + (editorRect.height || editorRect.bottom - editorRect.top) + dockedOffsetY);
-                                break;
-                        }
+					// Allow minor adjustments of the float space from custom configs.
+					dockedOffsetX = config.floatSpaceDockedOffsetX || 0,
+					dockedOffsetY = config.floatSpaceDockedOffsetY || 0,
+					pinnedOffsetX = config.floatSpacePinnedOffsetX || 0,
+					pinnedOffsetY = config.floatSpacePinnedOffsetY || 0;
 
-                        mode = newMode;
-                    }
+				// Update the float space position.
+				function updatePos( pos, prop, val ) {
+					floatSpace.setStyle( prop, pixelate( val ) );
+					floatSpace.setStyle( 'position', pos );
+				}
 
-                    return function (evt) {
-                        // https://dev.ckeditor.com/ticket/10112 Do not fail on editable-less editor.
-                        if (!(editable = editor.editable()))
-                            return;
+				// Change the current mode and update float space position accordingly.
+				function changeMode( newMode ) {
+					var editorPos = editable.getDocumentPosition();
 
-                        var show = (evt && evt.name == 'focus');
+					switch ( newMode ) {
+						case 'top':
+							updatePos( 'absolute', 'top', editorPos.y - spaceHeight - dockedOffsetY );
+							break;
+						case 'pin':
+							updatePos( 'fixed', 'top', pinnedOffsetY );
+							break;
+						case 'bottom':
+							updatePos( 'absolute', 'top', editorPos.y + ( editorRect.height || editorRect.bottom - editorRect.top ) + dockedOffsetY );
+							break;
+					}
 
-                        // Show up the space on focus gain.
-                        if (show) {
-                            floatSpace.show();
-                        }
+					mode = newMode;
+				}
 
-                        editor.fire('floatingSpaceLayout', {show: show});
+				return function( evt ) {
+					// https://dev.ckeditor.com/ticket/10112 Do not fail on editable-less editor.
+					if ( !( editable = editor.editable() ) )
+						return;
 
-                        // Reset the horizontal position for below measurement.
-                        floatSpace.removeStyle('left');
-                        floatSpace.removeStyle('right');
+					var show = ( evt && evt.name == 'focus' );
 
-                        // Compute the screen position from the TextRectangle object would
-                        // be very simple, even though the "width"/"height" property is not
-                        // available for all, it's safe to figure that out from the rest.
+					// Show up the space on focus gain.
+					if ( show ) {
+						floatSpace.show();
+					}
 
-                        // http://help.dottoro.com/ljgupwlp.php
-                        spaceRect = floatSpace.getClientRect();
-                        editorRect = editable.getClientRect();
-                        viewRect = win.getViewPaneSize();
-                        spaceHeight = spaceRect.height;
-                        pageScrollX = scrollOffset('left');
+					editor.fire( 'floatingSpaceLayout', { show: show } );
 
-                        // We initialize it as pin mode.
-                        if (!mode) {
-                            mode = 'pin';
-                            changeMode('pin');
-                            // Call for a refresh to the actual layout.
-                            layout(evt);
-                            return;
-                        }
+					// Reset the horizontal position for below measurement.
+					floatSpace.removeStyle( 'left' );
+					floatSpace.removeStyle( 'right' );
 
-                        // +------------------------ Viewport -+ \
-                        // |                                   |  |-> floatSpaceDockedOffsetY
-                        // | ................................. | /
-                        // |                                   |
-                        // |   +------ Space -+                |
-                        // |   |              |                |
-                        // |   +--------------+                |
-                        // |   +------------------ Editor -+   |
-                        // |   |                           |   |
-                        //
-                        if (spaceHeight + dockedOffsetY <= editorRect.top)
-                            changeMode('top');
+					// Compute the screen position from the TextRectangle object would
+					// be very simple, even though the "width"/"height" property is not
+					// available for all, it's safe to figure that out from the rest.
 
-                        //     +- - - - - - - - -  Editor -+
-                        //     |                           |
-                        // +------------------------ Viewport -+ \
-                        // |   |                           |   |  |-> floatSpacePinnedOffsetY
-                        // | ................................. | /
-                        // |   +------ Space -+            |   |
-                        // |   |              |            |   |
-                        // |   +--------------+            |   |
-                        // |   |                           |   |
-                        // |   +---------------------------+   |
-                        // +-----------------------------------+
-                        //
-                        else if (spaceHeight + dockedOffsetY > viewRect.height - editorRect.bottom)
-                            changeMode('pin');
+					// http://help.dottoro.com/ljgupwlp.php
+					spaceRect = floatSpace.getClientRect();
+					editorRect = editable.getClientRect();
+					viewRect = win.getViewPaneSize();
+					spaceHeight = spaceRect.height;
+					pageScrollX = scrollOffset( 'left' );
 
-                        //     +- - - - - - - - -  Editor -+
-                        //     |                           |
-                        // +------------------------ Viewport -+ \
-                        // |   |                           |   |  |-> floatSpacePinnedOffsetY
-                        // | ................................. | /
-                        // |   |                           |   |
-                        // |   |                           |   |
-                        // |   +---------------------------+   |
-                        // |   +------ Space -+                |
-                        // |   |              |                |
-                        // |   +--------------+                |
-                        //
-                        else
-                            changeMode('bottom');
+					// We initialize it as pin mode.
+					if ( !mode ) {
+						mode = 'pin';
+						changeMode( 'pin' );
+						// Call for a refresh to the actual layout.
+						layout( evt );
+						return;
+					}
 
-                        var mid = viewRect.width / 2,
-                                alignSide, offset;
+					// +------------------------ Viewport -+ \
+					// |                                   |  |-> floatSpaceDockedOffsetY
+					// | ................................. | /
+					// |                                   |
+					// |   +------ Space -+                |
+					// |   |              |                |
+					// |   +--------------+                |
+					// |   +------------------ Editor -+   |
+					// |   |                           |   |
+					//
+					if ( spaceHeight + dockedOffsetY <= editorRect.top )
+						changeMode( 'top' );
 
-                        if (config.floatSpacePreferRight) {
-                            alignSide = 'right';
-                        } else if (editorRect.left > 0 && editorRect.right < viewRect.width && editorRect.width > spaceRect.width) {
-                            alignSide = config.contentsLangDirection == 'rtl' ? 'right' : 'left';
-                        } else {
-                            alignSide = mid - editorRect.left > editorRect.right - mid ? 'left' : 'right';
-                        }
+					//     +- - - - - - - - -  Editor -+
+					//     |                           |
+					// +------------------------ Viewport -+ \
+					// |   |                           |   |  |-> floatSpacePinnedOffsetY
+					// | ................................. | /
+					// |   +------ Space -+            |   |
+					// |   |              |            |   |
+					// |   +--------------+            |   |
+					// |   |                           |   |
+					// |   +---------------------------+   |
+					// +-----------------------------------+
+					//
+					else if ( spaceHeight + dockedOffsetY > viewRect.height - editorRect.bottom )
+						changeMode( 'pin' );
 
-                        // (https://dev.ckeditor.com/ticket/9769) If viewport width is less than space width,
-                        // make sure space never cross the left boundary of the viewport.
-                        // In other words: top-left corner of the space is always visible.
-                        if (spaceRect.width > viewRect.width) {
-                            alignSide = 'left';
-                            offset = 0;
-                        } else {
-                            if (alignSide == 'left') {
-                                // If the space rect fits into viewport, align it
-                                // to the left edge of editor:
-                                //
-                                // +------------------------ Viewport -+
-                                // |                                   |
-                                // |   +------------- Space -+         |
-                                // |   |                     |         |
-                                // |   +---------------------+         |
-                                // |   +------------------ Editor -+   |
-                                // |   |                           |   |
-                                //
-                                if (editorRect.left > 0)
-                                    offset = editorRect.left;
+					//     +- - - - - - - - -  Editor -+
+					//     |                           |
+					// +------------------------ Viewport -+ \
+					// |   |                           |   |  |-> floatSpacePinnedOffsetY
+					// | ................................. | /
+					// |   |                           |   |
+					// |   |                           |   |
+					// |   +---------------------------+   |
+					// |   +------ Space -+                |
+					// |   |              |                |
+					// |   +--------------+                |
+					//
+					else
+						changeMode( 'bottom' );
 
-                                // If the left part of the editor is cut off by the left
-                                // edge of the viewport, stick the space to the viewport:
-                                //
-                                //       +------------------------ Viewport -+
-                                //       |                                   |
-                                //       +---------------- Space -+          |
-                                //       |                        |          |
-                                //       +------------------------+          |
-                                //  +----|------------- Editor -+            |
-                                //  |    |                      |            |
-                                //
-                                else
-                                    offset = 0;
-                            } else {
-                                // If the space rect fits into viewport, align it
-                                // to the right edge of editor:
-                                //
-                                // +------------------------ Viewport -+
-                                // |                                   |
-                                // |         +------------- Space -+   |
-                                // |         |                     |   |
-                                // |         +---------------------+   |
-                                // |   +------------------ Editor -+   |
-                                // |   |                           |   |
-                                //
-                                if (editorRect.right < viewRect.width)
-                                    offset = viewRect.width - editorRect.right;
+					var mid = viewRect.width / 2,
+						alignSide, offset;
 
-                                // If the right part of the editor is cut off by the right
-                                // edge of the viewport, stick the space to the viewport:
-                                //
-                                // +------------------------ Viewport -+
-                                // |                                   |
-                                // |             +------------- Space -+
-                                // |             |                     |
-                                // |             +---------------------+
-                                // |                 +-----------------|- Editor -+
-                                // |                 |                 |          |
-                                //
-                                else
-                                    offset = 0;
-                            }
+					if ( config.floatSpacePreferRight ) {
+						alignSide = 'right';
+					} else if ( editorRect.left > 0 && editorRect.right < viewRect.width && editorRect.width > spaceRect.width ) {
+						alignSide = config.contentsLangDirection == 'rtl' ? 'right' : 'left';
+					} else {
+						alignSide = mid - editorRect.left > editorRect.right - mid ? 'left' : 'right';
+					}
 
-                            // (https://dev.ckeditor.com/ticket/9769) Finally, stick the space to the opposite side of
-                            // the viewport when it's cut off horizontally on the left/right
-                            // side like below.
-                            //
-                            // This trick reveals cut off space in some edge cases and
-                            // hence it improves accessibility.
-                            //
-                            // +------------------------ Viewport -+
-                            // |                                   |
-                            // |              +--------------------|-- Space -+
-                            // |              |                    |          |
-                            // |              +--------------------|----------+
-                            // |              +------- Editor -+   |
-                            // |              |                |   |
-                            //
-                            //				becomes:
-                            //
-                            // +------------------------ Viewport -+
-                            // |                                   |
-                            // |   +----------------------- Space -+
-                            // |   |                               |
-                            // |   +-------------------------------+
-                            // |              +------- Editor -+   |
-                            // |              |                |   |
-                            //
-                            if (offset + spaceRect.width > viewRect.width) {
-                                alignSide = alignSide == 'left' ? 'right' : 'left';
-                                offset = 0;
-                            }
-                        }
+					// (https://dev.ckeditor.com/ticket/9769) If viewport width is less than space width,
+					// make sure space never cross the left boundary of the viewport.
+					// In other words: top-left corner of the space is always visible.
+					if ( spaceRect.width > viewRect.width ) {
+						alignSide = 'left';
+						offset = 0;
+					}
+					else {
+						if ( alignSide == 'left' ) {
+							// If the space rect fits into viewport, align it
+							// to the left edge of editor:
+							//
+							// +------------------------ Viewport -+
+							// |                                   |
+							// |   +------------- Space -+         |
+							// |   |                     |         |
+							// |   +---------------------+         |
+							// |   +------------------ Editor -+   |
+							// |   |                           |   |
+							//
+							if ( editorRect.left > 0 )
+								offset = editorRect.left;
 
-                        // Pin mode is fixed, so don't include scroll-x.
-                        // (https://dev.ckeditor.com/ticket/9903) For mode is "top" or "bottom", add opposite scroll-x for right-aligned space.
-                        var scroll = mode == 'pin' ? 0 : alignSide == 'left' ? pageScrollX : -pageScrollX;
+							// If the left part of the editor is cut off by the left
+							// edge of the viewport, stick the space to the viewport:
+							//
+							//       +------------------------ Viewport -+
+							//       |                                   |
+							//       +---------------- Space -+          |
+							//       |                        |          |
+							//       +------------------------+          |
+							//  +----|------------- Editor -+            |
+							//  |    |                      |            |
+							//
+							else
+								offset = 0;
+						}
+						else {
+							// If the space rect fits into viewport, align it
+							// to the right edge of editor:
+							//
+							// +------------------------ Viewport -+
+							// |                                   |
+							// |         +------------- Space -+   |
+							// |         |                     |   |
+							// |         +---------------------+   |
+							// |   +------------------ Editor -+   |
+							// |   |                           |   |
+							//
+							if ( editorRect.right < viewRect.width )
+								offset = viewRect.width - editorRect.right;
 
-                        floatSpace.setStyle(alignSide, pixelate((mode == 'pin' ? pinnedOffsetX : dockedOffsetX) + offset + scroll));
-                    };
-                })();
+							// If the right part of the editor is cut off by the right
+							// edge of the viewport, stick the space to the viewport:
+							//
+							// +------------------------ Viewport -+
+							// |                                   |
+							// |             +------------- Space -+
+							// |             |                     |
+							// |             +---------------------+
+							// |                 +-----------------|- Editor -+
+							// |                 |                 |          |
+							//
+							else
+								offset = 0;
+						}
 
-        if (topHtml) {
-            var floatSpaceTpl = new CKEDITOR.template(
-                    '<div' +
-                    ' id="cke_{name}"' +
-                    ' class="cke {id} cke_reset_all cke_chrome cke_editor_{name} cke_float cke_{langDir} ' + CKEDITOR.env.cssClass + '"' +
-                    ' dir="{langDir}"' +
-                    ' title="' + (CKEDITOR.env.gecko ? ' ' : '') + '"' +
-                    ' lang="{langCode}"' +
-                    ' role="application"' +
-                    ' style="{style}"' +
-                    (editor.title ? ' aria-labelledby="cke_{name}_arialbl"' : ' ') +
-                    '>' +
-                    (editor.title ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : ' ') +
-                    '<div class="cke_inner">' +
-                    '<div id="{topId}" class="cke_top" role="presentation">{content}</div>' +
-                    '</div>' +
-                    '</div>'),
-                    floatSpace = CKEDITOR.document.getBody().append(CKEDITOR.dom.element.createFromHtml(floatSpaceTpl.output({
-                content: topHtml,
-                id: editor.id,
-                langDir: editor.lang.dir,
-                langCode: editor.langCode,
-                name: editor.name,
-                style: 'display:none;z-index:' + (config.baseFloatZIndex - 1),
-                topId: editor.ui.spaceId('top'),
-                voiceLabel: editor.title
-            }))),
-                    // Use event buffers to reduce CPU load when tons of events are fired.
-                    changeBuffer = CKEDITOR.tools.eventsBuffer(500, layout),
-                    uiBuffer = CKEDITOR.tools.eventsBuffer(100, layout);
+						// (https://dev.ckeditor.com/ticket/9769) Finally, stick the space to the opposite side of
+						// the viewport when it's cut off horizontally on the left/right
+						// side like below.
+						//
+						// This trick reveals cut off space in some edge cases and
+						// hence it improves accessibility.
+						//
+						// +------------------------ Viewport -+
+						// |                                   |
+						// |              +--------------------|-- Space -+
+						// |              |                    |          |
+						// |              +--------------------|----------+
+						// |              +------- Editor -+   |
+						// |              |                |   |
+						//
+						//				becomes:
+						//
+						// +------------------------ Viewport -+
+						// |                                   |
+						// |   +----------------------- Space -+
+						// |   |                               |
+						// |   +-------------------------------+
+						// |              +------- Editor -+   |
+						// |              |                |   |
+						//
+						if ( offset + spaceRect.width > viewRect.width ) {
+							alignSide = alignSide == 'left' ? 'right' : 'left';
+							offset = 0;
+						}
+					}
 
-            // There's no need for the floatSpace to be selectable.
-            floatSpace.unselectable();
+					// Pin mode is fixed, so don't include scroll-x.
+					// (https://dev.ckeditor.com/ticket/9903) For mode is "top" or "bottom", add opposite scroll-x for right-aligned space.
+					var scroll = mode == 'pin' ? 0 : alignSide == 'left' ? pageScrollX : -pageScrollX;
 
-            // Prevent clicking on non-buttons area of the space from blurring editor.
-            floatSpace.on('mousedown', function (evt) {
-                evt = evt.data;
-                if (!evt.getTarget().hasAscendant('a', 1))
-                    evt.preventDefault();
-            });
+					floatSpace.setStyle( alignSide, pixelate( ( mode == 'pin' ? pinnedOffsetX : dockedOffsetX ) + offset + scroll ) );
+				};
+			} )();
 
-            editor.on('focus', function (evt) {
-                layout(evt);
-                editor.on('change', changeBuffer.input);
-                win.on('scroll', uiBuffer.input);
-                win.on('resize', uiBuffer.input);
-            });
+		if ( topHtml ) {
+			var floatSpaceTpl = new CKEDITOR.template(
+				'<div' +
+					' id="cke_{name}"' +
+					' class="cke {id} cke_reset_all cke_chrome cke_editor_{name} cke_float cke_{langDir} ' + CKEDITOR.env.cssClass + '"' +
+					' dir="{langDir}"' +
+					' title="' + ( CKEDITOR.env.gecko ? ' ' : '' ) + '"' +
+					' lang="{langCode}"' +
+					' role="application"' +
+					' style="{style}"' +
+					( editor.title ? ' aria-labelledby="cke_{name}_arialbl"' : ' ' ) +
+					'>' +
+					( editor.title ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : ' ' ) +
+					'<div class="cke_inner">' +
+						'<div id="{topId}" class="cke_top" role="presentation">{content}</div>' +
+					'</div>' +
+				'</div>' ),
+				floatSpace = CKEDITOR.document.getBody().append( CKEDITOR.dom.element.createFromHtml( floatSpaceTpl.output( {
+					content: topHtml,
+					id: editor.id,
+					langDir: editor.lang.dir,
+					langCode: editor.langCode,
+					name: editor.name,
+					style: 'display:none;z-index:' + ( config.baseFloatZIndex - 1 ),
+					topId: editor.ui.spaceId( 'top' ),
+					voiceLabel: editor.title
+				} ) ) ),
 
-            editor.on('blur', function () {
-                floatSpace.hide();
-                editor.removeListener('change', changeBuffer.input);
-                win.removeListener('scroll', uiBuffer.input);
-                win.removeListener('resize', uiBuffer.input);
-            });
+				// Use event buffers to reduce CPU load when tons of events are fired.
+				changeBuffer = CKEDITOR.tools.eventsBuffer( 500, layout ),
+				uiBuffer = CKEDITOR.tools.eventsBuffer( 100, layout );
 
-            editor.on('destroy', function () {
-                win.removeListener('scroll', uiBuffer.input);
-                win.removeListener('resize', uiBuffer.input);
-                floatSpace.clearCustomData();
-                floatSpace.remove();
-            });
+			// There's no need for the floatSpace to be selectable.
+			floatSpace.unselectable();
 
-            // Handle initial focus.
-            if (editor.focusManager.hasFocus)
-                floatSpace.show();
+			// Prevent clicking on non-buttons area of the space from blurring editor.
+			floatSpace.on( 'mousedown', function( evt ) {
+				evt = evt.data;
+				if ( !evt.getTarget().hasAscendant( 'a', 1 ) )
+					evt.preventDefault();
+			} );
 
-            // Register this UI space to the focus manager.
-            editor.focusManager.add(floatSpace, 1);
-        }
-    }
-})();
+			editor.on( 'focus', function( evt ) {
+				layout( evt );
+				editor.on( 'change', changeBuffer.input );
+				win.on( 'scroll', uiBuffer.input );
+				win.on( 'resize', uiBuffer.input );
+			} );
+
+			editor.on( 'blur', function() {
+				floatSpace.hide();
+				editor.removeListener( 'change', changeBuffer.input );
+				win.removeListener( 'scroll', uiBuffer.input );
+				win.removeListener( 'resize', uiBuffer.input );
+			} );
+
+			editor.on( 'destroy', function() {
+				win.removeListener( 'scroll', uiBuffer.input );
+				win.removeListener( 'resize', uiBuffer.input );
+				floatSpace.clearCustomData();
+				floatSpace.remove();
+			} );
+
+			// Handle initial focus.
+			if ( editor.focusManager.hasFocus )
+				floatSpace.show();
+
+			// Register this UI space to the focus manager.
+			editor.focusManager.add( floatSpace, 1 );
+		}
+	}
+} )();
 
 /**
  * Along with {@link #floatSpaceDockedOffsetY} it defines the
@@ -382,7 +388,7 @@
  *
  *		config.floatSpacePreferRight = true;
  *
- * @since 4.5
+ * @since 4.5.0
  * @cfg {Boolean} [floatSpacePreferRight=false]
  * @member CKEDITOR.config
  */
@@ -391,7 +397,7 @@
  * Fired when the viewport or editor parameters change and the floating space needs to check and
  * eventually update its position and dimensions.
  *
- * @since 4.5
+ * @since 4.5.0
  * @event floatingSpaceLayout
  * @member CKEDITOR.editor
  * @param {CKEDITOR.editor} editor The editor instance.

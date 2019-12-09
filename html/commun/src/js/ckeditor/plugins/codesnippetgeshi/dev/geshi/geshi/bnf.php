@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * bnf.php
  * --------
  * Author: Rowan Rodrik van der Molen (rowan@bigsmoke.us)
@@ -24,7 +23,7 @@
  * -------------------------
  * * Nothing I can think of
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -42,9 +41,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'bnf',
     'COMMENT_SINGLE' => array(';'),
     'COMMENT_MULTI' => array(),
@@ -66,23 +65,23 @@ $language_data = array(
         'KEYWORDS' => array(),
         'COMMENTS' => array(
             0 => 'color: #666666; font-style: italic;', // Single Line comments
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => ''
-        ),
+            ),
         'BRACKETS' => array(
             0 => ''
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #a00;',
             1 => 'color: #a00;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => ''
-        ),
+            ),
         'METHODS' => array(
             0 => ''
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #000066; font-weight: bold;', // Round brackets
             1 => 'color: #000066; font-weight: bold;', // Angel Brackets
@@ -92,11 +91,11 @@ $language_data = array(
         ),
         'REGEXPS' => array(
             0 => 'color: #007;',
-        ),
+            ),
         'SCRIPT' => array(
             0 => ''
-        )
-    ),
+            )
+        ),
     'URLS' => array(),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
@@ -108,12 +107,13 @@ $language_data = array(
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => '\\3'
+            ),
         ),
-    ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

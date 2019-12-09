@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -63,10 +63,10 @@ CKEDITOR.verbosity = CKEDITOR.VERBOSITY_WARN | CKEDITOR.VERBOSITY_ERROR;
  * @param {String} errorCode Error code describing reported problem.
  * @param {Object} [additionalData] Additional data associated with reported problem.
  */
-CKEDITOR.warn = function (errorCode, additionalData) {
-    if (CKEDITOR.verbosity & CKEDITOR.VERBOSITY_WARN) {
-        CKEDITOR.fire('log', {type: 'warn', errorCode: errorCode, additionalData: additionalData});
-    }
+CKEDITOR.warn = function( errorCode, additionalData ) {
+	if ( CKEDITOR.verbosity & CKEDITOR.VERBOSITY_WARN ) {
+		CKEDITOR.fire( 'log', { type: 'warn', errorCode: errorCode, additionalData: additionalData } );
+	}
 };
 
 /**
@@ -79,10 +79,10 @@ CKEDITOR.warn = function (errorCode, additionalData) {
  * @param {String} errorCode Error code describing the reported problem.
  * @param {Object} [additionalData] Additional data associated with the reported problem.
  */
-CKEDITOR.error = function (errorCode, additionalData) {
-    if (CKEDITOR.verbosity & CKEDITOR.VERBOSITY_ERROR) {
-        CKEDITOR.fire('log', {type: 'error', errorCode: errorCode, additionalData: additionalData});
-    }
+CKEDITOR.error = function( errorCode, additionalData ) {
+	if ( CKEDITOR.verbosity & CKEDITOR.VERBOSITY_ERROR ) {
+		CKEDITOR.fire( 'log', { type: 'error', errorCode: errorCode, additionalData: additionalData } );
+	}
 };
 
 /**
@@ -106,22 +106,22 @@ CKEDITOR.error = function (errorCode, additionalData) {
  * @param {String} data.errorCode Error code describing the reported problem.
  * @param {Object} [data.additionalData] Additional data associated with this log event.
  */
-CKEDITOR.on('log', function (evt) {
-    if (!window.console || !window.console.log) {
-        return;
-    }
+CKEDITOR.on( 'log', function( evt ) {
+	if ( !window.console || !window.console.log ) {
+		return;
+	}
 
-    var type = console[ evt.data.type ] ? evt.data.type : 'log',
-            errorCode = evt.data.errorCode,
-            additionalData = evt.data.additionalData,
-            prefix = '[CKEDITOR] ',
-            errorCodeLabel = 'Error code: ';
+	var type = console[ evt.data.type ] ? evt.data.type : 'log',
+		errorCode = evt.data.errorCode,
+		additionalData = evt.data.additionalData,
+		prefix = '[CKEDITOR] ',
+		errorCodeLabel = 'Error code: ';
 
-    if (additionalData) {
-        console[ type ](prefix + errorCodeLabel + errorCode + '.', additionalData);
-    } else {
-        console[ type ](prefix + errorCodeLabel + errorCode + '.');
-    }
+	if ( additionalData ) {
+		console[ type ]( prefix + errorCodeLabel + errorCode + '.', additionalData );
+	} else {
+		console[ type ]( prefix + errorCodeLabel + errorCode + '.' );
+	}
 
-    console[ type ](prefix + 'For more information about this error go to https://docs.ckeditor.com/ckeditor4/docs/#!/guide/dev_errors-section-' + errorCode);
-}, null, null, 999);
+	console[ type ]( prefix + 'For more information about this error go to https://ckeditor.com/docs/ckeditor4/latest/guide/dev_errors.html#' + errorCode );
+}, null, null, 999 );

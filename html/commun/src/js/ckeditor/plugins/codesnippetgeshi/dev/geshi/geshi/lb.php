@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * lb.php
  * --------
  * Author: Chris Iverson (cj.no.one@gmail.com)
@@ -25,7 +24,7 @@
  *     highlighted
  * Prevent highlighting keywords within branch labels(within brackets)
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -43,7 +42,7 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 $language_data = array(
     'LANG_NAME' => 'Liberty BASIC',
@@ -73,7 +72,7 @@ $language_data = array(
             'then', 'timer', 'titlebar', 'to', 'trace', 'ulong', 'unloadbmp',
             'until', 'ushort', 'void', 'wait', 'window', 'wend', 'while',
             'word', 'xor'
-        ),
+            ),
         2 => array(
             'abs', 'acs', 'asc', 'asn', 'atn', 'chr$', 'cos', 'date$',
             'dechex$', 'eof', 'eval', 'eval$', 'exp', 'hbmp', 'hexdec', 'hwnd',
@@ -82,7 +81,7 @@ $language_data = array(
             'right$', 'rmdir', 'rnd', 'sin', 'space$', 'sqr', 'str$', 'tab',
             'tan', 'time$', 'trim$', 'txcount', 'upper$', 'using', 'val',
             'winstring', 'word$'
-        ),
+            ),
         3 => array(
             'BackgroundColor$', 'Com', 'ComboboxColor$', 'ComError', 'ComErrorNumber',
             'CommandLine$', 'ComPortNumber', 'DefaultDir$',
@@ -93,55 +92,55 @@ $language_data = array(
             'PrintCollate', 'PrintCopies', 'PrinterFont$', 'PrinterName$', 'StartupDir$',
             'TextboxColor$', 'TexteditorColor$', 'Version$', 'WindowHeight',
             'WindowWidth', 'UpperLeftX', 'UpperLeftY'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         1 => array(
             '(', ')', '[', ']', '+', '-', '*', '/', '%', '=', '<', '>', ':', ',', '#'
-        )
-    ),
+            )
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #0000FF;',
             2 => 'color: #AD0080;',
             3 => 'color: #008080;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #666666; font-style: italic;',
             'MULTI' => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #008000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #FF0000;',
-        ),
+            ),
         'METHODS' => array(
             0 => 'color: #004000;'
-        ),
+            ),
         'SYMBOLS' => array(
             1 => 'color: #339933;'
-        ),
+            ),
         'REGEXPS' => array(),
         'SCRIPT' => array()
-    ),
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(),
@@ -155,8 +154,9 @@ $language_data = array(
                 //and their names should not be highlighted unless being used
                 //as a function name.
                 'DISALLOWED_AFTER' => '(?=\s*\()'
+                )
             )
         )
-    )
 );
+
 ?>

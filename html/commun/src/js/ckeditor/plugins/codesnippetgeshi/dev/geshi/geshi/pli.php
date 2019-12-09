@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * pli.php
  * --------
  * Author: Robert AH Prins (robert@prino.org)
@@ -19,7 +18,7 @@
  * -------------------------
  *
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -37,7 +36,7 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 $language_data = array(
     'LANG_NAME' => 'PL/I',
@@ -150,45 +149,45 @@ $language_data = array(
             'vs', 'vsam', 'wait', 'wchar', 'wcharval', 'weekday', 'when',
             'whigh', 'while', 'widechar', 'wlow', 'write', 'xmlchar', 'y4date',
             'y4julian', 'y4year', 'zdiv', 'zerodivide'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         1 => array(
             '+', '-', '*', '/', '=', '<', '>', '&', '^', '|', ':', '(', ')', ';', ','
-        )
-    ),
+            )
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #b1b100;'
-        ),
+            ),
         'COMMENTS' => array(
             'MULTI' => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #0000ff;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;',
-        ),
+            ),
         'METHODS' => array(
             0 => 'color: #004000;'
-        ),
+            ),
         'SYMBOLS' => array(
             1 => 'color: #339933;'
-        ),
+            ),
         'REGEXPS' => array(),
         'SCRIPT' => array()
-    ),
+        ),
     'URLS' => array(1 => ''),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(1 => '.'),
@@ -197,4 +196,5 @@ $language_data = array(
     'SCRIPT_DELIMITERS' => array(),
     'HIGHLIGHT_STRICT_BLOCK' => array()
 );
+
 ?>

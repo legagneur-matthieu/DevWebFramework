@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * css.php
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
@@ -30,7 +29,7 @@
  * * Re-look at keywords - possibly to make several CSS language
  *   files, all with different versions of CSS in them
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -48,15 +47,15 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'CSS',
     'COMMENT_SINGLE' => array(1 => '@'),
     'COMMENT_MULTI' => array('/*' => '*/'),
     'COMMENT_REGEXP' => array(
         2 => "/(?<=\\()\\s*(?:(?:[a-z0-9]+?:\\/\\/)?[a-z0-9_\\-\\.\\/:]+?)?[a-z]+?\\.[a-z]+?(\\?[^\)]+?)?\\s*?(?=\\))/i"
-    ),
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"', "'"),
     'ESCAPE_CHAR' => '',
@@ -65,9 +64,9 @@ $language_data = array(
         //1 => "#\\\\[nfrtv\$\"\n\\\\]#i",
         //Hexadecimal Char Specs
         2 => "#\\\\[\da-fA-F]{1,6}\s?#i",
-    //Unicode Char Specs
-    //3 => "#\\\\u[\da-fA-F]{1,8}#i",
-    ),
+        //Unicode Char Specs
+        //3 => "#\\\\u[\da-fA-F]{1,8}#i",
+        ),
     'KEYWORDS' => array(
         1 => array(
             'aqua', 'azimuth', 'background-attachment', 'background-color',
@@ -79,7 +78,7 @@ $language_data = array(
             'border-left-style', 'border-left-width', 'border-right',
             'border-right-color', 'border-right-style', 'border-right-width',
             'border-top-color', 'border-top-style',
-            'border-top-width', 'border-bottom', 'border-collapse',
+            'border-top-width','border-bottom', 'border-collapse',
             'border-left', 'border-width', 'border-color', 'border-spacing',
             'border-style', 'border-top', 'border', 'caption-side', 'clear',
             'clip', 'color', 'content', 'counter-increment', 'counter-reset',
@@ -103,7 +102,7 @@ $language_data = array(
             'vertical-align', 'visibility', 'voice-family', 'volume',
             'white-space', 'widows', 'width', 'word-spacing', 'z-index',
             'bottom', 'left', 'height'
-        ),
+            ),
         2 => array(
             'above', 'absolute', 'always', 'armenian', 'aural', 'auto',
             'avoid', 'baseline', 'behind', 'below', 'bidi-override', 'blink',
@@ -142,63 +141,63 @@ $language_data = array(
             'white', 'wider', 'x-fast', 'x-high', 'x-large', 'x-loud',
             'x-low', 'x-small', 'x-soft', 'xx-large', 'xx-small', 'yellow',
             'yes'
-        )
-    ),
+            )
+        ),
     'SYMBOLS' => array(
         '(', ')', '{', '}', ':', ';',
         '>', '+', '*', ',', '^', '='
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
         2 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000000; font-weight: bold;',
             2 => 'color: #993333;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #a1a100;',
             2 => 'color: #ff0000; font-style: italic;',
             'MULTI' => 'color: #808080; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;',
             //1 => 'color: #000099; font-weight: bold;',
             2 => 'color: #000099; font-weight: bold;'
-        //3 => 'color: #000099; font-weight: bold;'
-        ),
+            //3 => 'color: #000099; font-weight: bold;'
+            ),
         'BRACKETS' => array(
             0 => 'color: #00AA00;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #00AA00;'
-        ),
+            ),
         'SCRIPT' => array(
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #cc00cc;',
             1 => 'color: #6666ff;',
             2 => 'color: #3333ff;',
             3 => 'color: #933;'
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //DOM Node ID
         0 => '\#[a-zA-Z0-9\-_]+(?:\\\\:[a-zA-Z0-9\-_]+)*',
@@ -209,12 +208,12 @@ $language_data = array(
         2 => '(?<!\\\\):(?!\d)[a-zA-Z0-9\-]+\b(?:\s*(?=[\{\.#a-zA-Z,:+*&](.|\n)|<\|))',
         //Measurements
         3 => '[+\-]?(\d+|(\d*\.\d+))(em|ex|pt|px|cm|in|%)',
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    ),
+        ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
@@ -223,4 +222,5 @@ $language_data = array(
         )
     )
 );
+
 ?>

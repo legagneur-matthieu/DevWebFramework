@@ -1,58 +1,58 @@
 ﻿/**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-        (function () {
-            CKEDITOR.plugins.add('templates', {
-                requires: 'dialog',
-                // jscs:disable maximumLineLength
-                lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
-                // jscs:enable maximumLineLength
-                icons: 'templates,templates-rtl', // %REMOVE_LINE_CORE%
-                hidpi: true, // %REMOVE_LINE_CORE%
-                init: function (editor) {
-                    CKEDITOR.dialog.add('templates', CKEDITOR.getUrl(this.path + 'dialogs/templates.js'));
+( function() {
+	CKEDITOR.plugins.add( 'templates', {
+		requires: 'dialog',
+		// jscs:disable maximumLineLength
+		lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+		// jscs:enable maximumLineLength
+		icons: 'templates,templates-rtl', // %REMOVE_LINE_CORE%
+		hidpi: true, // %REMOVE_LINE_CORE%
+		init: function( editor ) {
+			CKEDITOR.dialog.add( 'templates', CKEDITOR.getUrl( this.path + 'dialogs/templates.js' ) );
 
-                    editor.addCommand('templates', new CKEDITOR.dialogCommand('templates'));
+			editor.addCommand( 'templates', new CKEDITOR.dialogCommand( 'templates' ) );
 
-                    editor.ui.addButton && editor.ui.addButton('Templates', {
-                        label: editor.lang.templates.button,
-                        command: 'templates',
-                        toolbar: 'doctools,10'
-                    });
-                }
-            });
+			editor.ui.addButton && editor.ui.addButton( 'Templates', {
+				label: editor.lang.templates.button,
+				command: 'templates',
+				toolbar: 'doctools,10'
+			} );
+		}
+	} );
 
-            var templates = {},
-                    loadedTemplatesFiles = {};
+	var templates = {},
+		loadedTemplatesFiles = {};
 
-            CKEDITOR.addTemplates = function (name, definition) {
-                templates[ name ] = definition;
-            };
+	CKEDITOR.addTemplates = function( name, definition ) {
+		templates[ name ] = definition;
+	};
 
-            CKEDITOR.getTemplates = function (name) {
-                return templates[ name ];
-            };
+	CKEDITOR.getTemplates = function( name ) {
+		return templates[ name ];
+	};
 
-            CKEDITOR.loadTemplates = function (templateFiles, callback) {
-                // Holds the templates files to be loaded.
-                var toLoad = [];
+	CKEDITOR.loadTemplates = function( templateFiles, callback ) {
+		// Holds the templates files to be loaded.
+		var toLoad = [];
 
-                // Look for pending template files to get loaded.
-                for (var i = 0, count = templateFiles.length; i < count; i++) {
-                    if (!loadedTemplatesFiles[ templateFiles[ i ] ]) {
-                        toLoad.push(templateFiles[ i ]);
-                        loadedTemplatesFiles[ templateFiles[ i ] ] = 1;
-                    }
-                }
+		// Look for pending template files to get loaded.
+		for ( var i = 0, count = templateFiles.length; i < count; i++ ) {
+			if ( !loadedTemplatesFiles[ templateFiles[ i ] ] ) {
+				toLoad.push( templateFiles[ i ] );
+				loadedTemplatesFiles[ templateFiles[ i ] ] = 1;
+			}
+		}
 
-                if (toLoad.length)
-                    CKEDITOR.scriptLoader.load(toLoad, callback);
-                else
-                    setTimeout(callback, 0);
-            };
-        })();
+		if ( toLoad.length )
+			CKEDITOR.scriptLoader.load( toLoad, callback );
+		else
+			setTimeout( callback, 0 );
+	};
+} )();
 
 
 
@@ -75,13 +75,13 @@
  *		];
  *
  * For a sample template file
- * [see `templates/default.js`](https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/templates/templates/default.js).
+ * [see `templates/default.js`](https://github.com/ckeditor/ckeditor4/blob/master/plugins/templates/templates/default.js).
  *
  * @cfg {String[]}
  * @member CKEDITOR.config
  */
 CKEDITOR.config.templates_files = [
-    CKEDITOR.getUrl('plugins/templates/templates/default.js')
+	CKEDITOR.getUrl( 'plugins/templates/templates/default.js' )
 ];
 
 /**

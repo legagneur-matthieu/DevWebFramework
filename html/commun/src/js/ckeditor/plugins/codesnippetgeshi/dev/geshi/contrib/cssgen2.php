@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  A simple script which outputs the CSS classes for all languages
  *  supported by GeSHi. You can access it directly to download
@@ -28,6 +27,7 @@
  * @license    http://gnu.org/copyleft/gpl.html GNU GPL
  *
  */
+
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'geshi.php';
 $geshi = new GeSHi;
 
@@ -46,10 +46,10 @@ sort($languages);
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename="geshi.css"');
 
-echo "/**\n" .
- " * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann\n" .
- " * (http://qbnz.com/highlighter/ and http://geshi.org/)\n" .
- " */\n";
+echo "/**\n".
+     " * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann\n" .
+     " * (http://qbnz.com/highlighter/ and http://geshi.org/)\n".
+     " */\n";
 
 foreach ($languages as $language) {
     $geshi->set_language($language);

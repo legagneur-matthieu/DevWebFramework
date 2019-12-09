@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 
@@ -18,12 +18,12 @@ in Quirks mode only.
 .cke_contents,
 .cke_bottom
 {
-    width: 100%; /* hasLayout = true */
+	width: 100%; /* hasLayout = true */
 }
 
 .cke_button_arrow
 {
-    font-size: 0; /* Set minimal font size, so arrow won't be streched by the text that doesn't exist. */
+	font-size: 0; /* Set minimal font size, so arrow won't be streched by the text that doesn't exist. */
 }
 
 /* Bring back toolbar buttons in RTL. */
@@ -38,7 +38,7 @@ in Quirks mode only.
 .cke_rtl .cke_path_item *,
 .cke_rtl .cke_path_empty
 {
-    float: none;
+	float: none;
 }
 
 .cke_rtl .cke_toolgroup,
@@ -48,32 +48,32 @@ in Quirks mode only.
 .cke_rtl .cke_button,
 .cke_rtl .cke_button_icon
 {
-    display: inline-block;
-    vertical-align: top;
+	display: inline-block;
+	vertical-align: top;
 }
 
 /* Otherwise formatting toolbar breaks when editing a mixed content (#9893). */
 .cke_rtl .cke_button_icon
 {
-    float: none;
+	float: none;
 }
 
 .cke_resizer
 {
-    width: 10px;
+	width: 10px;
 }
 
 .cke_source
 {
-    white-space: normal;
+	white-space: normal;
 }
 
 .cke_bottom
 {
-    position: static; /* Without this bottom space doesn't move when resizing editor. */
+	position: static; /* Without this bottom space doesn't move when resizing editor. */
 }
 
 .cke_colorbox
 {
-    font-size: 0; /* Set minimal font size, so button won't be streched by the text that doesn't exist. */
+	font-size: 0; /* Set minimal font size, so button won't be streched by the text that doesn't exist. */
 }

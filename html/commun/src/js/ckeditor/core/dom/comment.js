@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -24,30 +24,30 @@
  * @param {CKEDITOR.dom.document} [ownerDocument] The document that will contain
  * the node in case of new node creation. Defaults to the current document.
  */
-CKEDITOR.dom.comment = function (comment, ownerDocument) {
-    if (typeof comment == 'string')
-        comment = (ownerDocument ? ownerDocument.$ : document).createComment(comment);
+CKEDITOR.dom.comment = function( comment, ownerDocument ) {
+	if ( typeof comment == 'string' )
+		comment = ( ownerDocument ? ownerDocument.$ : document ).createComment( comment );
 
-    CKEDITOR.dom.domObject.call(this, comment);
+	CKEDITOR.dom.domObject.call( this, comment );
 };
 
 CKEDITOR.dom.comment.prototype = new CKEDITOR.dom.node();
 
-CKEDITOR.tools.extend(CKEDITOR.dom.comment.prototype, {
-    /**
-     * The node type. This is a constant value set to {@link CKEDITOR#NODE_COMMENT}.
-     *
-     * @readonly
-     * @property {Number} [=CKEDITOR.NODE_COMMENT]
-     */
-    type: CKEDITOR.NODE_COMMENT,
+CKEDITOR.tools.extend( CKEDITOR.dom.comment.prototype, {
+	/**
+	 * The node type. This is a constant value set to {@link CKEDITOR#NODE_COMMENT}.
+	 *
+	 * @readonly
+	 * @property {Number} [=CKEDITOR.NODE_COMMENT]
+	 */
+	type: CKEDITOR.NODE_COMMENT,
 
-    /**
-     * Gets the outer HTML of this comment.
-     *
-     * @returns {String} The HTML `<!-- comment value -->`.
-     */
-    getOuterHtml: function () {
-        return '<!--' + this.$.nodeValue + '-->';
-    }
-});
+	/**
+	 * Gets the outer HTML of this comment.
+	 *
+	 * @returns {String} The HTML `<!-- comment value -->`.
+	 */
+	getOuterHtml: function() {
+		return '<!--' + this.$.nodeValue + '-->';
+	}
+} );

@@ -38,6 +38,7 @@ if (isset($_POST['submit'])) {
     }
 
     // Here's a free demo of how GeSHi works.
+
     // First the initialisation: source code to highlight and the language to use. Make sure
     // you sanitise correctly if you use $_POST of course - this very script has had a security
     // advisory against it in the past because of this. Please try not to use this script on a
@@ -96,120 +97,121 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <title>GeSHi examples</title>
-        <style type="text/css">
-            <!--
-            <?php
-            if (isset($_POST['submit'])) {
-                // Output the stylesheet. Note it doesn't output the <style> tag
-                echo $geshi->get_stylesheet(true);
-            }
-            ?>
-            html {
-                background-color: #f0f0f0;
-            }
-            body {
-                font-family: Verdana, Arial, sans-serif;
-                margin: 10px;
-                border: 2px solid #e0e0e0;
-                background-color: #fcfcfc;
-                padding: 5px;
-            }
-            h2 {
-                margin: .1em 0 .2em .5em;
-                border-bottom: 1px solid #b0b0b0;
-                color: #b0b0b0;
-                font-weight: normal;
-                font-size: 150%;
-            }
-            h3 {
-                margin: .1em 0 .2em .5em;
-                color: #b0b0b0;
-                font-weight: normal;
-                font-size: 120%;
-            }
-            #footer {
-                text-align: center;
-                font-size: 80%;
-                color: #a9a9a9;
-            }
-            #footer a {
-                color: #9999ff;
-            }
-            textarea {
-                border: 1px solid #b0b0b0;
-                font-size: 90%;
-                color: #333;
-                margin-left: 20px;
-            }
-            select, input {
-                margin-left: 20px;
-            }
-            p {
-                font-size: 90%;
-                margin-left: .5em;
-            }
-            -->
-        </style>
-    </head>
-    <body>
-        <h2>GeSHi Example Script</h2>
-        <p>To use this script, make sure that <strong>geshi.php</strong> is in the parent directory or in your
-            include_path, and that the language files are in a subdirectory of GeSHi's directory called <strong>geshi/</strong>.</p>
-        <p>Enter your source and a language to highlight the source in and submit, or just choose a language to
-            have that language file highlighted in PHP.</p>
-        <?php
-        if (isset($_POST['submit'])) {
-            // The fun part :)
-            echo $geshi->parse_code();
-            echo '<hr />';
-        }
-        ?>
-        <form action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
-            <h3>Source to highlight</h3>
-            <p>
-                <textarea rows="10" cols="60" name="source" id="source"><?php echo $fill_source ? htmlspecialchars($_POST['source']) : '' ?></textarea>
-            </p>
-            <h3>Choose a language</h3>
-            <p>
-                <select name="language" id="language">
-                    <?php
-                    if (!($dir = @opendir(dirname(__FILE__) . '/geshi'))) {
-                        if (!($dir = @opendir(dirname(__FILE__) . '/../geshi'))) {
-                            echo '<option>No languages available!</option>';
-                        }
-                    }
-                    $languages = array();
-                    while ($file = readdir($dir)) {
-                        if ($file[0] == '.' || strpos($file, '.', 1) === false) {
-                            continue;
-                        }
-                        $lang = substr($file, 0, strpos($file, '.'));
-                        $languages[] = $lang;
-                    }
-                    closedir($dir);
-                    sort($languages);
-                    foreach ($languages as $lang) {
-                        if (isset($_POST['language']) && $_POST['language'] == $lang) {
-                            $selected = 'selected="selected"';
-                        } else {
-                            $selected = '';
-                        }
-                        echo '<option value="' . $lang . '" ' . $selected . '>' . $lang . "</option>\n";
-                    }
-                    ?>
-                </select>
-            </p>
-            <p>
-                <input type="submit" name="submit" value="Highlight Source" />
-                <input type="submit" name="clear" onclick="document.getElementById('source').value = '';document.getElementById('language').value = '';return false" value="clear" />
-            </p>
-        </form>
-        <div id="footer">GeSHi &copy; Nigel McNie, 2004, released under the GNU GPL<br />
-            For a better demonstration, check out the <a href="http://qbnz.com/highlighter/demo.php">online demo</a>
-        </div>
-    </body>
+<head>
+    <title>GeSHi examples</title>
+    <style type="text/css">
+    <!--
+    <?php
+    if (isset($_POST['submit'])) {
+        // Output the stylesheet. Note it doesn't output the <style> tag
+        echo $geshi->get_stylesheet(true);
+    }
+    ?>
+    html {
+        background-color: #f0f0f0;
+    }
+    body {
+        font-family: Verdana, Arial, sans-serif;
+        margin: 10px;
+        border: 2px solid #e0e0e0;
+        background-color: #fcfcfc;
+        padding: 5px;
+    }
+    h2 {
+        margin: .1em 0 .2em .5em;
+        border-bottom: 1px solid #b0b0b0;
+        color: #b0b0b0;
+        font-weight: normal;
+        font-size: 150%;
+    }
+    h3 {
+        margin: .1em 0 .2em .5em;
+        color: #b0b0b0;
+        font-weight: normal;
+        font-size: 120%;
+    }
+    #footer {
+        text-align: center;
+        font-size: 80%;
+        color: #a9a9a9;
+    }
+    #footer a {
+        color: #9999ff;
+    }
+    textarea {
+        border: 1px solid #b0b0b0;
+        font-size: 90%;
+        color: #333;
+        margin-left: 20px;
+    }
+    select, input {
+        margin-left: 20px;
+    }
+    p {
+        font-size: 90%;
+        margin-left: .5em;
+    }
+    -->
+    </style>
+</head>
+<body>
+<h2>GeSHi Example Script</h2>
+<p>To use this script, make sure that <strong>geshi.php</strong> is in the parent directory or in your
+include_path, and that the language files are in a subdirectory of GeSHi's directory called <strong>geshi/</strong>.</p>
+<p>Enter your source and a language to highlight the source in and submit, or just choose a language to
+have that language file highlighted in PHP.</p>
+<?php
+if (isset($_POST['submit'])) {
+    // The fun part :)
+    echo $geshi->parse_code();
+    echo '<hr />';
+}
+?>
+<form action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
+<h3>Source to highlight</h3>
+<p>
+<textarea rows="10" cols="60" name="source" id="source"><?php echo $fill_source ? htmlspecialchars($_POST['source']) : '' ?></textarea>
+</p>
+<h3>Choose a language</h3>
+<p>
+<select name="language" id="language">
+<?php
+if (!($dir = @opendir(dirname(__FILE__) . '/geshi'))) {
+    if (!($dir = @opendir(dirname(__FILE__) . '/../geshi'))) {
+        echo '<option>No languages available!</option>';
+    }
+}
+$languages = array();
+while ($file = readdir($dir)) {
+    if ( $file[0] == '.' || strpos($file, '.', 1) === false) {
+        continue;
+    }
+    $lang = substr($file, 0,  strpos($file, '.'));
+    $languages[] = $lang;
+}
+closedir($dir);
+sort($languages);
+foreach ($languages as $lang) {
+    if (isset($_POST['language']) && $_POST['language'] == $lang) {
+        $selected = 'selected="selected"';
+    } else {
+        $selected = '';
+    }
+    echo '<option value="' . $lang . '" '. $selected .'>' . $lang . "</option>\n";
+}
+
+?>
+</select>
+</p>
+<p>
+<input type="submit" name="submit" value="Highlight Source" />
+<input type="submit" name="clear" onclick="document.getElementById('source').value='';document.getElementById('language').value='';return false" value="clear" />
+</p>
+</form>
+<div id="footer">GeSHi &copy; Nigel McNie, 2004, released under the GNU GPL<br />
+For a better demonstration, check out the <a href="http://qbnz.com/highlighter/demo.php">online demo</a>
+</div>
+</body>
 </html>

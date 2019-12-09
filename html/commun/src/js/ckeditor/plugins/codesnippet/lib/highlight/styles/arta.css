@@ -5,15 +5,15 @@ Author: pumbur <pumbur@pumbur.net>
 
 .hljs
 {
-    display: block; padding: 0.5em;
-    background: #222;
+  display: block; padding: 0.5em;
+  background: #222;
 }
 
 .profile .hljs-header *,
 .ini .hljs-title,
 .nginx .hljs-title
 {
-    color: #fff;
+  color: #fff;
 }
 
 .hljs-comment,
@@ -31,7 +31,7 @@ Author: pumbur <pumbur@pumbur.net>
 .css .hljs-rules,
 .tex .hljs-special
 {
-    color: #444;
+  color: #444;
 }
 
 .hljs-string,
@@ -45,13 +45,13 @@ Author: pumbur <pumbur@pumbur.net>
 .clojure .hljs-attribute,
 .coffeescript .hljs-attribute
 {
-    color: #ffcc33;
+  color: #ffcc33;
 }
 
 .hljs-number,
 .hljs-addition
 {
-    color: #00cc66;
+  color: #00cc66;
 }
 
 .hljs-built_in,
@@ -73,7 +73,7 @@ Author: pumbur <pumbur@pumbur.net>
 .hljs-inheritance,
 .parser3 .hljs-variable
 {
-    color: #32AAEE;
+  color: #32AAEE;
 }
 
 .hljs-keyword,
@@ -90,7 +90,7 @@ Author: pumbur <pumbur@pumbur.net>
 .hljs-request,
 .hljs-status
 {
-    color: #6644aa;
+  color: #6644aa;
 }
 
 .hljs-title,
@@ -116,7 +116,7 @@ Author: pumbur <pumbur@pumbur.net>
 .tex .hljs-formula,
 .tex .hljs-formula *
 {
-    color: #bb1166;
+  color: #bb1166;
 }
 
 .hljs-yardoctag,
@@ -126,7 +126,7 @@ Author: pumbur <pumbur@pumbur.net>
 .apache .hljs-tag,
 .parser3 .hljs-title
 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .coffeescript .javascript,
@@ -137,7 +137,7 @@ Author: pumbur <pumbur@pumbur.net>
 .xml .css,
 .xml .hljs-cdata
 {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 .hljs,
@@ -156,5 +156,5 @@ Author: pumbur <pumbur@pumbur.net>
 .erlang *,
 .erlang_repl *
 {
-    color: #aaa;
+  color: #aaa;
 }

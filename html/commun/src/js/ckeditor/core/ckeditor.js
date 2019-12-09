@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -31,7 +31,7 @@ CKEDITOR.instances = {};
  *
  * @property {CKEDITOR.dom.document}
  */
-CKEDITOR.document = new CKEDITOR.dom.document(document);
+CKEDITOR.document = new CKEDITOR.dom.document( document );
 
 /**
  * Adds an editor instance to the global {@link CKEDITOR} object. This function
@@ -39,24 +39,29 @@ CKEDITOR.document = new CKEDITOR.dom.document(document);
  *
  * @param {CKEDITOR.editor} editor The editor instance to be added.
  */
-CKEDITOR.add = function (editor) {
-    CKEDITOR.instances[ editor.name ] = editor;
+CKEDITOR.add = function( editor ) {
+	CKEDITOR.instances[ editor.name ] = editor;
 
-    editor.on('focus', function () {
-        if (CKEDITOR.currentInstance != editor) {
-            CKEDITOR.currentInstance = editor;
-            CKEDITOR.fire('currentInstance');
-        }
-    });
+	editor.on( 'focus', function() {
+		if ( CKEDITOR.currentInstance != editor ) {
+			CKEDITOR.currentInstance = editor;
+			CKEDITOR.fire( 'currentInstance' );
+		}
+	} );
 
-    editor.on('blur', function () {
-        if (CKEDITOR.currentInstance == editor) {
-            CKEDITOR.currentInstance = null;
-            CKEDITOR.fire('currentInstance');
-        }
-    });
+	editor.on( 'blur', removeInstance );
 
-    CKEDITOR.fire('instance', null, editor);
+	// Remove currentInstance if it's destroyed (#589).
+	editor.on( 'destroy', removeInstance );
+
+	CKEDITOR.fire( 'instance', null, editor );
+
+	function removeInstance() {
+		if ( CKEDITOR.currentInstance == editor ) {
+			CKEDITOR.currentInstance = null;
+			CKEDITOR.fire( 'currentInstance' );
+		}
+	}
 };
 
 /**
@@ -66,84 +71,84 @@ CKEDITOR.add = function (editor) {
  * @private
  * @param {CKEDITOR.editor} editor The editor instance to be removed.
  */
-CKEDITOR.remove = function (editor) {
-    delete CKEDITOR.instances[ editor.name ];
+CKEDITOR.remove = function( editor ) {
+	delete CKEDITOR.instances[ editor.name ];
 };
 
-(function () {
-    var tpls = {};
+( function() {
+	var tpls = {};
 
-    /**
-     * Adds a named {@link CKEDITOR.template} instance to be reused among all editors.
-     * This will return the existing one if a template with same name is already
-     * defined. Additionally, it fires the "template" event to allow template source customization.
-     *
-     * @param {String} name The name which identifies a UI template.
-     * @param {String} source The source string for constructing this template.
-     * @returns {CKEDITOR.template} The created template instance.
-     */
-    CKEDITOR.addTemplate = function (name, source) {
-        var tpl = tpls[ name ];
-        if (tpl)
-            return tpl;
+	/**
+	 * Adds a named {@link CKEDITOR.template} instance to be reused among all editors.
+	 * This will return the existing one if a template with same name is already
+	 * defined. Additionally, it fires the "template" event to allow template source customization.
+	 *
+	 * @param {String} name The name which identifies a UI template.
+	 * @param {String} source The source string for constructing this template.
+	 * @returns {CKEDITOR.template} The created template instance.
+	 */
+	CKEDITOR.addTemplate = function( name, source ) {
+		var tpl = tpls[ name ];
+		if ( tpl )
+			return tpl;
 
-        // Make it possible to customize the template through event.
-        var params = {name: name, source: source};
-        CKEDITOR.fire('template', params);
+		// Make it possible to customize the template through event.
+		var params = { name: name, source: source };
+		CKEDITOR.fire( 'template', params );
 
-        return (tpls[ name ] = new CKEDITOR.template(params.source));
-    };
+		return ( tpls[ name ] = new CKEDITOR.template( params.source ) );
+	};
 
-    /**
-     * Retrieves a defined template created with {@link CKEDITOR#addTemplate}.
-     *
-     * @param {String} name The template name.
-     */
-    CKEDITOR.getTemplate = function (name) {
-        return tpls[ name ];
-    };
-})();
+	/**
+	 * Retrieves a defined template created with {@link CKEDITOR#addTemplate}.
+	 *
+	 * @param {String} name The template name.
+	 */
+	CKEDITOR.getTemplate = function( name ) {
+		return tpls[ name ];
+	};
+} )();
 
-(function () {
-    var styles = [];
+( function() {
+	var styles = [];
 
-    /**
-     * Adds CSS rules to be appended to the editor document.
-     * This method is mostly used by plugins to add custom styles to the editor
-     * document. For basic content styling the `contents.css` file should be
-     * used instead.
-     *
-     * **Note:** This function should be called before the creation of editor instances.
-     *
-     *		// Add styles for all headings inside editable contents.
-     *		CKEDITOR.addCss( '.cke_editable h1,.cke_editable h2,.cke_editable h3 { border-bottom: 1px dotted red }' );
-     *
-     * @param {String} css The style rules to be appended.
-     * @see CKEDITOR.config#contentsCss
-     */
-    CKEDITOR.addCss = function (css) {
-        styles.push(css);
-    };
+	/**
+	 * Adds CSS rules to be appended to the editor document.
+	 * This method is mostly used by plugins to add custom styles to the editor
+	 * document. For basic content styling the `contents.css` file should be
+	 * used instead.
+	 *
+	 * **Note:** This function should be called before the creation of editor instances.
+	 *
+	 *		// Add styles for all headings inside editable contents.
+	 *		CKEDITOR.addCss( '.cke_editable h1,.cke_editable h2,.cke_editable h3 { border-bottom: 1px dotted red }' );
+	 *
+	 * @param {String} css The style rules to be appended.
+	 * @see CKEDITOR.config#contentsCss
+	 */
+	CKEDITOR.addCss = function( css ) {
+		styles.push( css );
+	};
 
-    /**
-     * Returns a string with all CSS rules passed to the {@link CKEDITOR#addCss} method.
-     *
-     * @returns {String} A string containing CSS rules.
-     */
-    CKEDITOR.getCss = function () {
-        return styles.join('\n');
-    };
-})();
+	/**
+	 * Returns a string with all CSS rules passed to the {@link CKEDITOR#addCss} method.
+	 *
+	 * @returns {String} A string containing CSS rules.
+	 */
+	CKEDITOR.getCss = function() {
+		return styles.join( '\n' );
+	};
+} )();
 
 // Perform global clean up to free as much memory as possible
 // when there are no instances left
-CKEDITOR.on('instanceDestroyed', function () {
-    if (CKEDITOR.tools.isEmpty(this.instances))
-        CKEDITOR.fire('reset');
-});
+CKEDITOR.on( 'instanceDestroyed', function() {
+	if ( CKEDITOR.tools.isEmpty( this.instances ) )
+		CKEDITOR.fire( 'reset' );
+} );
 
 // Load the bootstrap script.
-CKEDITOR.loader.load('_bootstrap'); // %REMOVE_LINE%
+CKEDITOR.loader.load( '_bootstrap' ); // %REMOVE_LINE%
 
 // Tri-state constants.
 /**

@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * mpasm.php
  * ---------
  * Author: Bakalex (bakalex@gmail.com)
@@ -24,7 +23,7 @@
  * PIC10, PIC18 and dsPIC registers).
  * Must take a look to dsPIC instructions.
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -42,9 +41,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'Microchip Assembler',
     'COMMENT_SINGLE' => array(1 => ';'),
     'COMMENT_MULTI' => array(),
@@ -52,7 +51,7 @@ $language_data = array(
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-        /* Directive Language */
+        /*Directive Language*/
         4 => array(
             'CONSTANT', '#DEFINE', 'END', 'EQU', 'ERROR', 'ERROR-LEVEL', '#INCLUDE', 'LIST',
             'MESSG', 'NOLIST', 'ORG', 'PAGE', 'PROCESSOR', 'RADIX', 'SET', 'SPACE', 'SUBTITLE',
@@ -61,8 +60,8 @@ $language_data = array(
             'ENDC', 'FILL', '__IDLOCS', '__MAXRAM', 'RES', 'ENDM', 'EXITM', 'EXPAND', 'LOCAL',
             'MACRO', 'NOEXPAND', 'BANKISEL', 'BANKSEL', 'CODE', 'EXTERN', 'GLOBAL', 'IDATA',
             'PAGESEL', 'UDATA', 'UDATA_ACS', 'UDATA_OVR', 'UDATA_SHR'
-        ),
-        /* 12&14-bit Specific Instruction Set */
+            ),
+        /* 12&14-bit Specific Instruction Set*/
         1 => array(
             'andlw', 'call', 'clrwdt', 'goto', 'iorlw', 'movlw', 'option', 'retlw', 'sleep',
             'tris', 'xorlw', 'addwf', 'andwf', 'clrf', 'clrw', 'comf', 'decf', 'decfsz', 'incf',
@@ -72,14 +71,14 @@ $language_data = array(
             'bnc', 'bndc', 'bnz', 'bz', 'clrc', 'clrdc', 'clrz', 'lcall', 'lgoto', 'movfw',
             'negf', 'setc', 'setdc', 'setz', 'skpc', 'skpdc', 'skpnc', 'skpndc', 'skpnz', 'skpz',
             'subcf', 'subdcf', 'tstf'
-        ),
+            ),
         /* 16-bit Specific Instructiob Set */
-        2 => array(
+        2 => array (
             'movfp', 'movlb', 'movlp', 'movpf', 'movwf', 'tablrd', 'tablwt', 'tlrd', 'tlwt',
             'addwfc', 'daw', 'mullw', 'negw', 'rlcf', 'rlncf', 'rrcf', 'rrncf', 'setf', 'subwfb',
             'btg', 'cpfseq', 'cpfsgt', 'cpfslt', 'dcfsnz', 'infsnz', 'tstfsz', 'lfsr', 'bnn',
             'bnov', 'bra', 'pop', 'push', 'rcall', 'reset'
-        ),
+            ),
         /* Registers */
         3 => array(
             'INDF', 'TMR0', 'PCL', 'STATUS', 'FSR', 'PORTA', 'PORTB', 'PORTC', 'PORTD', 'PORTE',
@@ -87,15 +86,15 @@ $language_data = array(
             'TMR2H', 'TMR0H', 'TMR0L', 'SSPBUF', 'SSPCON', 'CCPR1L', 'CCPR1H', 'CCP1CON', 'RCSTA',
             'TXREG', 'RCREG', 'CCPR2L', 'CCPR2H', 'CCP2CON', 'OPTION', 'TRISA', 'TRISB', 'TRISC',
             'TRISD', 'TRISE', 'PIE2', 'PIE1', 'PR2', 'SSPADD', 'SSPSTAT', 'TXSTA', 'SPBRG'
-        ),
-        /* Operands */
+            ),
+        /*Operands*/
         5 => array(
-            'high', 'low'
-        )
-    ),
+            'high','low'
+            )
+        ),
     'SYMBOLS' => array(
         '[', ']', '(', ')'
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
@@ -103,7 +102,7 @@ $language_data = array(
         3 => false,
         4 => false,
         5 => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #00007f;',
@@ -111,54 +110,55 @@ $language_data = array(
             3 => 'color: #007f00;',
             4 => 'color: #46aa03; font-weight:bold;',
             5 => 'color: #7f0000;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #adadad; font-style: italic;',
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #7f007f;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #ff0000;'
-        ),
+            ),
         'METHODS' => array(
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #66cc66;'
-        ),
+            ),
         'REGEXPS' => array(
             0 => 'color: #ff0000;',
             1 => 'color: #ff0000;'
-        ),
+            ),
         'SCRIPT' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
         3 => '',
         4 => '',
         5 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
-    ),
+        ),
     'REGEXPS' => array(
         //Hex numbers
         0 => '[0-9a-fA-F]{1,32}[hH]',
         //Binary numbers
         1 => '[01]{1,64}[bB]'
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
+
 ?>

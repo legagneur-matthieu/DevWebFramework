@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * text.php
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
@@ -24,7 +23,7 @@
  * -------------------------
  *
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -42,9 +41,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'Text',
     'COMMENT_SINGLE' => array(),
     'COMMENT_MULTI' => array(),
@@ -55,7 +54,7 @@ $language_data = array(
     'SYMBOLS' => array(),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(),
         'COMMENTS' => array(),
@@ -67,7 +66,7 @@ $language_data = array(
         'SYMBOLS' => array(),
         'SCRIPT' => array(),
         'REGEXPS' => array()
-    ),
+        ),
     'URLS' => array(),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
@@ -81,4 +80,5 @@ $language_data = array(
         ),
     )
 );
+
 ?>

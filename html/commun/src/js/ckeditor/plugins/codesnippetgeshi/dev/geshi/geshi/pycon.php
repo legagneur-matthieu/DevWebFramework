@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * python.php
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
@@ -24,7 +23,7 @@
  * TODO (updated 2004/11/27)
  * -------------------------
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -42,10 +41,10 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
 //This
-require(dirname(__FILE__) . '/python.php');
+require(dirname(__FILE__).'/python.php');
 
 $language_data['LANG_NAME'] = 'Python (console mode)';
 
@@ -55,10 +54,11 @@ $language_data['HIGHLIGHT_STRICT_BLOCK'][-1] = true;
 
 $language_data['STYLES']['SCRIPT'][-1] = 'color: #222222;';
 
-if (!isset($language_data['COMMENT_REGEXP'])) {
+if(!isset($language_data['COMMENT_REGEXP'])) {
     $language_data['COMMENT_REGEXP'] = array();
 }
 
 $language_data['COMMENT_REGEXP'][-1] = '/(?:^|\A\s)(?:>>>|\.\.\.)/m';
 $language_data['STYLES']['COMMENTS'][-1] = 'color: #444444;';
+
 ?>

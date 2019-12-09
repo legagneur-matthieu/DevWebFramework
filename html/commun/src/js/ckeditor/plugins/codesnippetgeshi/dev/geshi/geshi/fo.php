@@ -1,6 +1,5 @@
 <?php
-
-/* * ***********************************************************************************
+/*************************************************************************************
  * fo.php
  * --------
  * Author: Tan-Vinh Nguyen (tvnguyen@web.de)
@@ -19,7 +18,7 @@
  *   -  First Release
  *      Basic commands in German and English
  *
- * ************************************************************************************
+ *************************************************************************************
  *
  *     This file is part of GeSHi.
  *
@@ -37,9 +36,9 @@
  *   along with GeSHi; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * ********************************************************************************** */
+ ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'FO (abas-ERP)',
     'COMMENT_SINGLE' => array(1 => '..'),
     'COMMENT_MULTI' => array(),
@@ -54,8 +53,9 @@ $language_data = array(
             /* fo keywords, part 1: control flow */
             '.weiter', '.continue'
 
-        /* this language works with goto's only */
-        ),
+            /* this language works with goto's only*/
+            ),
+
         //FO Keywords
         2 => array(
             /* fo keywords, part 2 */
@@ -63,14 +63,16 @@ $language_data = array(
             '.zuweisen', '.assign',
             '.fehler', '.error',
             '.ende', '.end'
-        ),
+            ),
+
         //Java Keywords
         3 => array(
             /* Java keywords, part 3: primitive data types */
             '.art', '.type',
             'integer', 'real', 'bool', 'text', 'datum', 'woche', 'termin', 'zeit',
             'mehr', 'MEHR'
-        ),
+            ),
+
         //Reserved words in fo literals
         4 => array(
             /* other reserved words in fo literals */
@@ -86,13 +88,15 @@ $language_data = array(
             'PC',
             'MASKE', 'SCREEN',
             'ZEILE', 'LINE'
-        ),
+            ),
+
         // interpreter settings
-        5 => array(
+        5 => array (
             '..!INTERPRETER', 'DEBUG'
-        ),
+            ),
+
         // database commands
-        6 => array(
+        6 => array (
             '.hole', '.hol', '.select',
             '.lade', '.load',
             '.aktion', '.action',
@@ -148,9 +152,10 @@ $language_data = array(
             'AUFZAEHLTYP', 'ENUMERATION-TYPE',
             'AUSGABE', 'OUTPUT',
             'DEZPUNKT', 'DECPOINT'
-        ),
+            ),
+
         // output settings
-        7 => array(
+        7 => array (
             '.absatz', '.para',
             '.blocksatz', '.justified',
             '.flattersatz', '.unjustified',
@@ -167,16 +172,18 @@ $language_data = array(
             '.tabellensatz', '.tablerecord',
             '.trenner', '.separator',
             'ARCHIV'
-        ),
+            ),
+
         // text commands
-        8 => array(
+        8 => array (
             '.text',
             '.atext',
             '.println',
             '.uebersetzen', '.translate'
-        ),
+            ),
+
         // I/O commands
-        9 => array(
+        9 => array (
             '.aus', '.ausgabe', '.output',
             '.ein', '.eingabe', '.input',
             '.datei', '.file',
@@ -186,9 +193,10 @@ $language_data = array(
             '-TEST',
             '-LESEN', '-READ',
             'VON', 'FROM'
-        ),
+            ),
+
         //system
-        10 => array(
+        10 => array (
             '.browser',
             '.kommando', '.command',
             '.system', '.dde',
@@ -204,9 +212,10 @@ $language_data = array(
             'DOPPELPUNKT', 'COLON',
             'ERSETZUNG', 'REPLACEMENT',
             'WARTEN', 'PARALLEL'
-        ),
+            ),
+
         //fibu/accounting specific commands
-        11 => array(
+        11 => array (
             '.budget',
             '.chart',
             'VKZ',
@@ -216,9 +225,10 @@ $language_data = array(
             'WAEHRUNGSKURS', 'EXCHANGERATE',
             'AUSWAEHR', 'FORCURR',
             'BUCHUNGSKREIS', 'SET OF BOOKS'
-        ),
+            ),
+
         // efop - extended flexible surface
-        12 => array(
+        12 => array (
             '.cursor',
             '.farbe', '.colour',
             '.fenster', '.window',
@@ -232,19 +242,19 @@ $language_data = array(
             'SOFORT', 'IMMEDIATELY',
             'AKTUALISIEREN', 'UPDATE',
             'FENSTERSCHLIESSEN', 'CLOSEWINDOWS'
+            ),
         ),
-    ),
     'SYMBOLS' => array(
         0 => array('(', ')', '[', ']', '{', '}', '*', '&', '%', ';', '<', '>'),
         1 => array('?', '!')
-    ),
+        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         /* all fo keywords are case sensitive, don't have to but I like this type of coding */
         1 => true, 2 => true, 3 => true, 4 => true,
         5 => true, 6 => true, 7 => true, 8 => true, 9 => true,
         10 => true, 11 => true, 12 => true
-    ),
+        ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000000; font-weight: bold;',
@@ -259,37 +269,37 @@ $language_data = array(
             10 => 'color: #003399; font-weight: bold;',
             11 => 'color: #003399; font-weight: bold;',
             12 => 'color: #003399; font-weight: bold;'
-        ),
+            ),
         'COMMENTS' => array(
             1 => 'color: #666666; font-style: italic;',
             //2 => 'color: #006699;',
             'MULTI' => 'color: #666666; font-style: italic;'
-        ),
+            ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
-        ),
+            ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
-        ),
+            ),
         'STRINGS' => array(
             0 => 'color: #0000ff;'
-        ),
+            ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
-        ),
+            ),
         'METHODS' => array(
             1 => 'color: #006633;',
             2 => 'color: #006633;'
-        ),
+            ),
         'SYMBOLS' => array(
             0 => 'color: #339933;',
             1 => 'color: #000000; font-weight: bold;'
-        ),
+            ),
         'SCRIPT' => array(
-        ),
+            ),
         'REGEXPS' => array(
-        )
-    ),
+            )
+        ),
     'URLS' => array(
         1 => '',
         2 => '',
@@ -303,15 +313,15 @@ $language_data = array(
         10 => '',
         11 => '',
         12 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(
-    ),
+        ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
-    ),
+        ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-    )
+        )
 );
 ?>

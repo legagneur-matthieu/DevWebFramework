@@ -1,28 +1,28 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /*
- skin.js
- =========
- 
- In this file we interact with the CKEditor JavaScript API to register the skin
- and enable additional skin related features.
- 
- The level of complexity of this file depends on the features available in the
- skin. There is only one mandatory line of code to be included here, which is
- setting CKEDITOR.skin.name. All the rest is optional, but recommended to be
- implemented as they make higher quality skins.
- 
- For this skin, the following tasks are achieved in this file:
- 
- 1. Register the skin.
- 2. Register browser specific skin files.
- 3. Define the "Chameleon" feature.
- 4. Register the skin icons, to have them used on the development version of
- the skin.
- */
+skin.js
+=========
+
+In this file we interact with the CKEditor JavaScript API to register the skin
+and enable additional skin related features.
+
+The level of complexity of this file depends on the features available in the
+skin. There is only one mandatory line of code to be included here, which is
+setting CKEDITOR.skin.name. All the rest is optional, but recommended to be
+implemented as they make higher quality skins.
+
+For this skin, the following tasks are achieved in this file:
+
+	1. Register the skin.
+	2. Register browser specific skin files.
+	3. Define the "Chameleon" feature.
+	4. Register the skin icons, to have them used on the development version of
+		the skin.
+*/
 
 // 1. Register the skin
 // ----------------------
@@ -35,7 +35,7 @@ CKEDITOR.skin.name = 'kama';
 
 // 2. Register browser specific skin files
 // -----------------------------------------
-// (https://docs.ckeditor.com/ckeditor4/docs/#!/guide/skin_sdk_browser_hacks)
+// (https://ckeditor.com/docs/ckeditor4/latest/guide/skin_sdk_browser_hacks.html)
 //
 // To help implementing browser specific "hacks" to the skin files and have it
 // easy to maintain, it is possible to have dedicated files for such browsers,
@@ -47,7 +47,7 @@ CKEDITOR.skin.name = 'kama';
 // The accepted browser names must match the CKEDITOR.env properties. The most
 // common names are: ie, opera, webkit and gecko. Check the documentation for
 // the complete list:
-// https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.env
+// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_env.html
 //
 // Internet explorer is an expection and the browser version is also accepted
 // (ie7, ie8, ie9, ie10), as well as a special name for IE in Quirks mode (iequirks).
@@ -60,7 +60,7 @@ CKEDITOR.skin.ua_dialog = 'ie,iequirks,ie7,ie8';
 
 // 3. Define the "Chameleon" feature
 // -----------------------------------
-// (https://docs.ckeditor.com/ckeditor4/docs/#!/guide/skin_sdk_chameleon)
+// (https://ckeditor.com/docs/ckeditor4/latest/guide/skin_sdk_chameleon.html)
 //
 // "Chameleon" is a unique feature available in CKEditor. It makes it possible
 // to end users to specify which color to use as the basis for the editor UI.
@@ -81,119 +81,131 @@ CKEDITOR.skin.ua_dialog = 'ie,iequirks,ie7,ie8';
 //
 // The "$color" placeholder can be used in the returned string. It'll be
 // replaced with the desired color.
-CKEDITOR.skin.chameleon = function (editor, part) {
-    var css;
+CKEDITOR.skin.chameleon = function( editor, part ) {
+	var css;
 
-    // The Chameleon feature is available for each CKEditor instance,
-    // independently. Because of this, we need to prefix all CSS selectors with
-    // the unique class name of the instance.
-    //
-    // CKEditor instances have a unique ID, which is used as class name into
-    // the outer container of the editor UI (e.g. ".cke_1").
-    var cssId = '.' + editor.id;
+	// The Chameleon feature is available for each CKEditor instance,
+	// independently. Because of this, we need to prefix all CSS selectors with
+	// the unique class name of the instance.
+	//
+	// CKEditor instances have a unique ID, which is used as class name into
+	// the outer container of the editor UI (e.g. ".cke_1").
+	var cssId = '.' + editor.id;
 
-    // There are two main "parts" that need the be touched by the Chameleon
-    // feature: "editor" and "panel".
-    //
-    // This is the main UI part, representing everything that is loaded in the
-    // page that includes the editor instance. Note that the dialog styles are
-    // also taken in consideration here.
-    if (part == 'editor') {
-        css = cssId + ' .cke_inner,' +
-                cssId + ' .cke_dialog_tab' +
-                '{' +
-                'background-color:$color;' +
-                'linear-gradient( to bottom,#fff -15px,$color 40px );' +
-                '}' +
-                cssId + ' .cke_toolgroup' +
-                '{' +
-                'linear-gradient( to bottom,#fff,$color 100px );' +
-                '}' +
-                cssId + ' .cke_combo_button' +
-                '{' +
-                'linear-gradient( to top,#fff,$color 100px );' +
-                '}' +
-                cssId + ' .cke_dialog_contents,' +
-                cssId + ' .cke_dialog_footer' +
-                '{' +
-                'background-color:$color !important;' +
-                '}' +
-                cssId + ' .cke_dialog_tab:hover,' +
-                cssId + ' .cke_dialog_tab:active,' +
-                cssId + ' .cke_dialog_tab:focus,' +
-                cssId + ' .cke_dialog_tab_selected' +
-                '{' +
-                'background-color:$color;' +
-                'background-image:none;' +
-                '}' +
-                '';
+	// There are two main "parts" that need the be touched by the Chameleon
+	// feature: "editor" and "panel".
+	//
+	// This is the main UI part, representing everything that is loaded in the
+	// page that includes the editor instance. Note that the dialog styles are
+	// also taken in consideration here.
+	if ( part == 'editor' ) {
+		css = cssId + ' .cke_inner,' +
+			cssId + ' .cke_dialog_tab' +
+			'{' +
+			'background-color:$color;' +
+				'linear-gradient( to bottom,#fff -15px,$color 40px );' +
+			'}' +
+
+			cssId + ' .cke_toolgroup' +
+			'{' +
+				'linear-gradient( to bottom,#fff,$color 100px );' +
+			'}' +
+
+			cssId + ' .cke_combo_button' +
+			'{' +
+				'linear-gradient( to top,#fff,$color 100px );' +
+			'}' +
+
+			cssId + ' .cke_dialog_contents,' +
+			cssId + ' .cke_dialog_footer' +
+			'{' +
+			'background-color:$color !important;' +
+			'}' +
+
+			cssId + ' .cke_dialog_tab:hover,' +
+			cssId + ' .cke_dialog_tab:active,' +
+			cssId + ' .cke_dialog_tab:focus,' +
+			cssId + ' .cke_dialog_tab_selected' +
+			'{' +
+			'background-color:$color;' +
+			'background-image:none;' +
+			'}' +
+
+			'';
 
 
-        // The "panel" part is necessary because it represents contents of panels
-        // used in the editor, like context-menus or the toolbar combos panels.
-        // Those are loaded inside iframes, so this template is used there. Because
-        // of this iframe isolation, we don't need to specify the editor id class
-        // name in the rules selectors.
-        //
-        // The menu.css rules are usually the ones to be overriden here, while all
-        // the rest is handled by the above "editor" part.
-    } else if (part == 'panel') {
-        css = '.cke_menubutton_icon' +
-                '{' +
-                'background-color:$color !important;' +
-                'border-color:$color !important;' +
-                '}' +
-                '.cke_menubutton:hover .cke_menubutton_icon,' +
-                '.cke_menubutton:focus .cke_menubutton_icon,' +
-                '.cke_menubutton:active .cke_menubutton_icon' +
-                '{' +
-                'background-color:$color !important;' +
-                'border-color:$color !important;' +
-                '}' +
-                '.cke_menubutton:hover .cke_menubutton_label,' +
-                '.cke_menubutton:focus .cke_menubutton_label,' +
-                '.cke_menubutton:active .cke_menubutton_label' +
-                '{' +
-                'background-color:$color !important;' +
-                '}' +
-                '.cke_menubutton_disabled:hover .cke_menubutton_label,' +
-                '.cke_menubutton_disabled:focus .cke_menubutton_label,' +
-                '.cke_menubutton_disabled:active .cke_menubutton_label' +
-                '{' +
-                'background-color: transparent !important;' +
-                '}' +
-                '.cke_menubutton_disabled:hover .cke_menubutton_icon,' +
-                '.cke_menubutton_disabled:focus .cke_menubutton_icon,' +
-                '.cke_menubutton_disabled:active .cke_menubutton_icon' +
-                '{' +
-                'background-color:$color !important;' +
-                'border-color:$color !important;' +
-                '}' +
-                '.cke_menubutton_disabled .cke_menubutton_icon' +
-                '{' +
-                'background-color:$color !important;' +
-                'border-color:$color !important;' +
-                '}' +
-                '.cke_menuseparator' +
-                '{' +
-                'background-color:$color !important;' +
-                '}' +
-                '.cke_menubutton:hover,' +
-                '.cke_menubutton:focus,' +
-                '.cke_menubutton:active' +
-                '{' +
-                'background-color:$color !important;' +
-                '}';
-    }
+	// The "panel" part is necessary because it represents contents of panels
+	// used in the editor, like context-menus or the toolbar combos panels.
+	// Those are loaded inside iframes, so this template is used there. Because
+	// of this iframe isolation, we don't need to specify the editor id class
+	// name in the rules selectors.
+	//
+	// The menu.css rules are usually the ones to be overriden here, while all
+	// the rest is handled by the above "editor" part.
+	} else if ( part == 'panel' ) {
+		css = '.cke_menubutton_icon' +
+			'{' +
+				'background-color:$color !important;' +
+				'border-color:$color !important;' +
+			'}' +
 
-    return css;
+			'.cke_menubutton:hover .cke_menubutton_icon,' +
+			'.cke_menubutton:focus .cke_menubutton_icon,' +
+			'.cke_menubutton:active .cke_menubutton_icon' +
+			'{' +
+				'background-color:$color !important;' +
+				'border-color:$color !important;' +
+			'}' +
+
+			'.cke_menubutton:hover .cke_menubutton_label,' +
+			'.cke_menubutton:focus .cke_menubutton_label,' +
+			'.cke_menubutton:active .cke_menubutton_label' +
+			'{' +
+				'background-color:$color !important;' +
+			'}' +
+
+			'.cke_menubutton_disabled:hover .cke_menubutton_label,' +
+			'.cke_menubutton_disabled:focus .cke_menubutton_label,' +
+			'.cke_menubutton_disabled:active .cke_menubutton_label' +
+			'{' +
+				'background-color: transparent !important;' +
+			'}' +
+
+			'.cke_menubutton_disabled:hover .cke_menubutton_icon,' +
+			'.cke_menubutton_disabled:focus .cke_menubutton_icon,' +
+			'.cke_menubutton_disabled:active .cke_menubutton_icon' +
+			'{' +
+				'background-color:$color !important;' +
+				'border-color:$color !important;' +
+			'}' +
+
+			'.cke_menubutton_disabled .cke_menubutton_icon' +
+			'{' +
+				'background-color:$color !important;' +
+				'border-color:$color !important;' +
+			'}' +
+
+			'.cke_menuseparator' +
+			'{' +
+				'background-color:$color !important;' +
+			'}' +
+
+			'.cke_menubutton:hover,' +
+			'.cke_menubutton:focus,' +
+			'.cke_menubutton:active' +
+			'{' +
+				'background-color:$color !important;' +
+			'}';
+	}
+
+	return css;
 };
 
 // %REMOVE_START%
 
 // 4. Register the skin icons for development purposes only
 // ----------------------------------------------------------
-// (https://docs.ckeditor.com/ckeditor4/docs/#!/guide/skin_sdk_icons)
+// (https://ckeditor.com/docs/ckeditor4/latest/guide/skin_sdk_icons.html)
 //
 // This code is here just to make the skin work fully when using its "source"
 // version. Without this, the skin will still work, but its icons will not be
@@ -208,29 +220,29 @@ CKEDITOR.skin.chameleon = function (editor, part) {
 // used instead. This means that a skin is not required to provide all icons.
 // Actually, it is not required to provide icons at all.
 
-(function () {
-    // The available icons. This list must match the file names (without
-    // extension) available inside the "icons" folder.
-    var icons = ('about,anchor-rtl,anchor,bgcolor,bidiltr,bidirtl,blockquote,' +
-            'bold,bulletedlist-rtl,bulletedlist,button,checkbox,copy-rtl,copy,' +
-            'creatediv,cut-rtl,cut,docprops-rtl,docprops,find-rtl,find,flash,form,' +
-            'hiddenfield,horizontalrule,icons,iframe,image,imagebutton,indent-rtl,' +
-            'indent,italic,justifyblock,justifycenter,justifyleft,justifyright,' +
-            'link,maximize,newpage-rtl,newpage,numberedlist-rtl,numberedlist,' +
-            'outdent-rtl,outdent,pagebreak-rtl,pagebreak,paste-rtl,paste,' +
-            'pastefromword-rtl,pastefromword,pastetext-rtl,pastetext,placeholder,preview-rtl,' +
-            'preview,print,radio,redo-rtl,redo,removeformat,replace,save,scayt,' +
-            'select-rtl,select,selectall,showblocks-rtl,showblocks,smiley,' +
-            'source-rtl,source,specialchar,spellchecker,strike,subscript,' +
-            'superscript,table,templates-rtl,templates,textarea-rtl,textarea,' +
-            'textcolor,textfield,underline,undo-rtl,undo,unlink').split(',');
+( function() {
+	// The available icons. This list must match the file names (without
+	// extension) available inside the "icons" folder.
+	var icons = ( 'about,anchor-rtl,anchor,bgcolor,bidiltr,bidirtl,blockquote,' +
+		'bold,bulletedlist-rtl,bulletedlist,button,checkbox,copy-rtl,copy,' +
+		'creatediv,cut-rtl,cut,docprops-rtl,docprops,find-rtl,find,flash,form,' +
+		'hiddenfield,horizontalrule,icons,iframe,image,imagebutton,indent-rtl,' +
+		'indent,italic,justifyblock,justifycenter,justifyleft,justifyright,' +
+		'link,maximize,newpage-rtl,newpage,numberedlist-rtl,numberedlist,' +
+		'outdent-rtl,outdent,pagebreak-rtl,pagebreak,paste-rtl,paste,' +
+		'pastefromword-rtl,pastefromword,pastetext-rtl,pastetext,placeholder,preview-rtl,' +
+		'preview,print,radio,redo-rtl,redo,removeformat,replace,save,scayt,' +
+		'select-rtl,select,selectall,showblocks-rtl,showblocks,smiley,' +
+		'source-rtl,source,specialchar,spellchecker,strike,subscript,' +
+		'superscript,table,templates-rtl,templates,textarea-rtl,textarea,' +
+		'textcolor,textfield,underline,undo-rtl,undo,unlink' ).split( ',' );
 
-    var iconsFolder = CKEDITOR.getUrl(CKEDITOR.skin.path() + 'icons/');
+	var iconsFolder = CKEDITOR.getUrl( CKEDITOR.skin.path() + 'icons/' );
 
-    for (var i = 0; i < icons.length; i++) {
-        CKEDITOR.skin.addIcon(icons[ i ], iconsFolder + icons[ i ] + '.png');
-    }
-})();
+	for ( var i = 0; i < icons.length; i++ ) {
+		CKEDITOR.skin.addIcon( icons[ i ], iconsFolder + icons[ i ] + '.png' );
+	}
+} )();
 
 // %REMOVE_END%
 

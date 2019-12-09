@@ -20,12 +20,8 @@
  * SOFTWARE.
  */
 
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var util = _interopDefault(require('lodash.debounce'));
-var Heap = _interopDefault(require('heap'));
+import util from 'lodash.debounce';
+import Heap from 'heap';
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -31231,4 +31227,4 @@ cytoscape.version = version; // expose public apis (mostly for extensions)
 
 cytoscape.stylesheet = cytoscape.Stylesheet = Stylesheet;
 
-module.exports = cytoscape;
+export default cytoscape;

@@ -15,6 +15,14 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
 });
+
+/**
+ * Cette fonction permet de formater l'affichage d'un nombre dans un INPUT de type text
+ * @param {string} id ID CSS de l'input
+ * @param {boolean} integer False si l'input doit tolérer les type float
+ * @param {string} thousands Caractère d'espacement entre les milliers
+ * @param {string} decimal Cacactère pour les décimales
+ */
 function maskNumber(id, integer = false, thousands = " ", decimal = ".") {
     let from = {};
     from[thousands] = "";
@@ -24,4 +32,27 @@ function maskNumber(id, integer = false, thousands = " ", decimal = ".") {
             .change(function () {
                 maskNumber(id, integer, thousands, decimal);
             });
+}
+
+/**
+ * Cette fonction permet de verifier si l'utilisateur a donné la permision de lancer automatiquement les sons et vidéos de l'application
+ * et d'agir en concequance ( exemple : afficher un message a l'utilisateur )
+ * @param {Callback} IfAllowedCallback 
+ * @param {Callback} IfNotAllowedCallback
+ */
+function CheckAutoplayPermission(IfAllowedCallback, IfNotAllowedCallback) {
+    $("body").append($("<audio>", {id: "AutoplayPermission", src: "../commun/src/js/CheckAutoplayPermission/silence.mp3"}));
+    var AutoplayPermission = document.getElementById("AutoplayPermission");
+    AutoplayPermission.play();
+    setTimeout(function () {
+        setTimeout(AutoplayPermission.paused ? IfNotAllowedCallback : IfAllowedCallback, 1);
+        AutoplayPermission.pause();
+        $("#AutoplayPermission").remove();
+    }, 200);
+}
+
+function add_script(src) {
+    if (!document.querySelector("script[src='" + src + "']")) {
+        $("head").append('<script type="text/javascript" src="' + src + '"></script>');
+    }
 }

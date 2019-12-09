@@ -23,6 +23,7 @@ class syntaxhighlighter {
      * @param string $theme Le thème de SyntaxHightlighter à utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/
      */
     public function __construct($code, $brush = "js", $theme = "Default") {
+        echo tags::tag("pre", ["class" => "brush: " . $brush], htmlspecialchars("\r" . $code));
         if (!self::$_called) {
             $scripts = html_structures::script("../commun/src/js/syntaxhighlighter/scripts/shCore.js");
             foreach (glob("../commun/src/js/syntaxhighlighter/scripts/shBrush*.js") as $fbrush) {
@@ -34,16 +35,14 @@ class syntaxhighlighter {
             compact_css::get_instance()->add_css_file("../commun/src/css/syntaxhighlighter.css");
             ?> 
             <script type="text/javascript">
-                $(document).ready(function () {
+                (function () {
                     SyntaxHighlighter.defaults['toolbar'] = false;
                     SyntaxHighlighter.all();
-                });
+                })();
             </script> 
             <?php
-
             self::$_called = true;
         }
-        echo tags::tag("pre", ["class" => "brush: " . $brush], htmlspecialchars("\r" . $code));
     }
 
 }

@@ -98,7 +98,7 @@ class new_app {
                     }
                     $option[] = array($ha, $ha . " (" . $force . ")", ($ha == "sha512"));
                 }
-                echo $form->select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option) .
+                echo $form->select("Hash (hash à utiliser pour chiffrer les mots de passe)", "hash", $option);
                 $option = [["default", "Default"]];
                 foreach (bootstrap_theme::get_bootstrap_themes() as $theme) {
                     $option[] = [$theme, $theme];

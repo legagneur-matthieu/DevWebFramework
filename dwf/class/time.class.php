@@ -121,49 +121,27 @@ class time {
     /**
      * Affiche un élément de formulaire pour renseigner une date (jour/mois/année)
      * 
+     * @param form $form objet form
      * @param string $label label
      * @param string $post préfixe des variables ($post."an",$post."mois",$post."jour")
      * @param string $value date par défaut au format US (null par defaut : date actuelle )
      */
-    public static function form_date($label, $post, $value = null) {
+    public static function form_date($form, $label, $post, $value = null) {
         $value = ($value == null ? [date("Y"), date("m"), date("d")] : explode("-", $value));
-        ?>
-        <div class="form-group form_date">
-            <label for="<?= $post; ?>an"> <?= $label; ?> (jour/mois/année)</label>
-            <select name="<?= $post; ?>jour" class="form-control">
-                <?php
-                for ($index = 1; $index <= 31; $index++) {
-                    if ($index < 10) {
-                        $index = "0" . $index;
-                    }
-                    ?>
-                    <option value="<?= $index; ?>" <?php
-                    if ($index == $value[2]) {
-                        echo 'selected="selected" ';
-                    }
-                    ?>><?= $index; ?></option>
-                            <?php
-                        }
-                        ?>
-            </select>
-            <select name="<?= $post; ?>mois" class="form-control">
-                <?php
-                $mois = new time();
-                $mois = $mois->get_mois();
-                foreach ($mois as $key => $m) {
-                    ?>
-                    <option value="<?= $key; ?>" <?php
-                    if ($key == $value[1]) {
-                        echo 'selected="selected" ';
-                    }
-                    ?>><?= $m; ?></option>
-                            <?php
-                        }
-                        ?>
-            </select>
-            <input type="number" id="<?= $post; ?>an" name="<?= $post; ?>an" value="<?= $value[0]; ?>" class="form-control"/>
-        </div>
-        <?php
+        $option_j = [];
+        foreach (range(0, 31) as $i) {
+            if ($i < 10) {
+                $i = "0" . $i;
+            }
+            $option_j[] = [$i, $i, ($i == $value[2])];
+        }
+        $option_m = [];
+        foreach (self::get_mois() as $key => $m) {
+            $option_m[] = [$key, $m, ($key == $value[1])];
+        }
+        return $form->select("Jour", $post . "jour", $option_j) .
+                $form->select("Mois", $post . "mois", $option_m) .
+                $form->input("Année", $post . "an", "number", $value[0]);
     }
 
     /**
@@ -177,7 +155,7 @@ class time {
     }
 
     /**
-     * Retourne l'Ã¢ge actuel en fonction d'une date de naissance
+     * Retourne l'age actuel en fonction d'une date de naissance
      * 
      * @param int $d jour de naissance
      * @param int $m mois de naissance
@@ -255,21 +233,39 @@ class time {
             return ($ms < 1 ? ((int) ($secondes * 1000000)) . " µs" : $ms . " ms");
         }
         if ($secondes < 60) {
-            return $secondes . " s";
+            return "$secondes s";
         } else {
             $min = (int) ($secondes / 60);
             $secondes %= 60;
             if ($min < 60) {
-                return $min . " min " . $secondes . " s";
+                return "$min min $secondes s";
             } else {
                 $h = (int) ($min / 60);
                 $min %= 60;
                 if ($h < 24) {
-                    return $h . " h " . $min . " min " . $secondes . " s";
+                    return "$h h $min min $secondes s";
                 } else {
                     $j = (int) ($h / 24);
                     $h %= 24;
-                    return $j . " J " . $h . " h " . $min . " min " . $secondes . " s";
+                    if ($j < 31) {
+                        return "$j jours $h h $min min $secondes s";
+                    } else {
+                        $m = (int) ($j / 31);
+                        $j %= 31;
+                        if ($m < 12) {
+                            return "$m mois $j jours $h h $min min $secondes s";
+                        } else {
+                            $a = (int) ($m / 12);
+                            $m %= 12;
+                            if ($a < 100) {
+                                return "$a ans $m mois $j jours $h h $min min $secondes s";
+                            } else {
+                                $s = (int) ($a / 100);
+                                $a %= 100;
+                                return "$s siècles $a ans $m mois $j jours $h h $min min $secondes s";
+                            }
+                        }
+                    }
                 }
             }
         }

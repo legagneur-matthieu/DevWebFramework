@@ -74,7 +74,7 @@ class compact_css extends singleton {
         $regen = !file_exists($filename);
         $mt_gen = (($regen) ? 0 : filemtime($filename));
         foreach ($this->_files as $file) {
-            $mt_file = (int)filemtime($file);
+            $mt_file = (int) filemtime($file);
             if (($mt_file and $mt_gen < $mt_file) or $regen) {
                 $regen = true;
                 break;
@@ -146,18 +146,16 @@ class compact_css extends singleton {
         ];
         ?>
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function () {
-                function add_link_in_head(href) {
-                    if (href !== "" || document.querySelector("link[href='" + href + "']") === null) {
-                        let link = document.createElement("link");
-                        link.rel = "stylesheet";
-                        link.href = href;
-                        document.querySelector("head").appendChild(link);
-                    }
+            function add_link_in_head(href) {
+                if (href !== "" || document.querySelector("link[href='" + href + "']") === null) {
+                    let link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = href;
+                    document.querySelector("head").appendChild(link);
                 }
-                add_link_in_head("<?= ($files["css_f"] ? $files["css_f"] : ""); ?>");
-                add_link_in_head("<?= ($files["css_c"] ? $files["css_c"] : ""); ?>");
-            });
+            }
+            add_link_in_head("<?= ($files["css_f"] ? $files["css_f"] : ""); ?>");
+            add_link_in_head("<?= ($files["css_c"] ? $files["css_c"] : ""); ?>");
         </script>
         <?php
         $this->clear($files);

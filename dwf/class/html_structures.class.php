@@ -263,6 +263,16 @@ class html_structures {
     }
 
     /**
+     * Permet de faire appel à une balise SCRIPT dans le body 
+     * (elle est injéctée dans le HEAD par Jquery)
+     * @param string $src lien du fichier JS
+     * @return string script d'injection
+     */
+    public static function script_in_body($src) {
+        return tags::tag("script", ["type" => "text/javascript"], "add_script(\"$src\")");
+    }
+
+    /**
      * Retourne une balise script pour incule un fichier JS
      * @param string $src chemain vers le fichier JS
      * @return string balise script

@@ -41,10 +41,7 @@ class html5 {
      */
     public function __construct() {
         self::$_called = true;
-        $lang = explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-        $lang = explode(";", $lang[0]);
-        $lang = $lang[0];
-        if (empty($lang)) {
+        if (empty($lang = explode(";", explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"])[0])[0])) {
             $lang = "fr";
         }
         ob_clean();

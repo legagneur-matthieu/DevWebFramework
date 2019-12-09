@@ -50,7 +50,23 @@ class math {
      * @return float Retourne le factoriel
      */
     public static function factorielle($nb) {
+        if ($nb == 0) {
+            return 1;
+        }
         return (function_exists("gmp_fact") ? floatval(gmp_fact($nb)) : array_product(range(1, $nb)));
+    }
+
+    /**
+     * Retourne le multifactioriel de facteur k
+     * @param int $nb Nombre entier positif
+     * @param int $k Facteur du factorielle (2= factorielle double, 3= triple, ...)
+     * @return int Retourne le multifactoriel
+     */
+    public static function multifactorielle($nb, $k) {
+        if ($k > $nb) {
+            return 0;
+        }
+        return array_product(range(($nb % $k == 0 ? $k : $nb % $k), $nb, $k));
     }
 
     /**
@@ -73,10 +89,10 @@ class math {
 
     /**
      * Calcule la distance entre deux points depuis leurs coordonées X (latitude) et Y (longitude)
-     * @param float $xa
-     * @param float $ya
-     * @param float $xb
-     * @param float $yb
+     * @param float $xa Coordoné x du point a
+     * @param float $ya Coordoné y du point a
+     * @param float $xb Coordoné x du point b
+     * @param float $yb Coordoné y du point b
      * @return float distance entre les deux points
      */
     public static function distance_entre_deux_points($xa, $ya, $xb, $yb) {
@@ -353,11 +369,21 @@ class math {
     /**
      * Retourne la somme de la plage des entiers comprit entre $start et $end
      * @param int $start Premier nombre de la plage 
-     * @param int $end Dernier nombre de la plage
-     * @return int Somme de la plage des entier
+     * @param int $end Dernier nombre de la plage (> $start)
+     * @return int Somme de la plage des entiers
      */
     public static function range_sum($start, $end) {
         return (($start + $end) * ($end - $start + 1)) / 2;
+    }
+
+    /**
+     * Retourne le produit de la plage des entiers comprit entre $start et $end
+     * @param int $start Premier nombre de la plage (entier >= 1)
+     * @param int $end Dernier nombre de la plage (> $start)
+     * @return int Produit de la plage des entiers
+     */
+    public static function range_product($start, $end) {
+        return (function_exists("gmp_fact") ? floatval(gmp_fact($end)) / floatval(gmp_fact(($start == 1 ? $start : $start - 1))) : array_product(range($start, $end)));
     }
 
     /**

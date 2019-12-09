@@ -36,10 +36,10 @@ class js {
      * 
      * @param string $msg Message à afficher
      */
-    public static function alertify_alert($msg) {
+    public static function alertify_alert($msg, $title = "Message") {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?= $msg; ?>");
+            alertify.alert("<?= $title; ?>", "<?= $msg; ?>");
         </script>
         <?php
     }
@@ -50,10 +50,10 @@ class js {
      * @param string $msg Message à afficher
      * @param string $url URL de redirection
      */
-    public static function alertify_alert_redir($msg, $url) {
+    public static function alertify_alert_redir($msg, $url, $title = "Message") {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?= $msg; ?>", function (e) {
+            alertify.alert("<?= $title; ?>", "<?= $msg; ?>", function () {
                 window.location = '<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>';
             });</script>
         <?php

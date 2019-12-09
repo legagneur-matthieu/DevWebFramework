@@ -81,8 +81,8 @@ class html5 {
             "../commun/src/dist/jquery-ui/jquery-ui.structure.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.theme.min.css",
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.css",
-            "../commun/src/js/alertify/themes/alertify.core.css",
-            "../commun/src/js/alertify/themes/alertify.bootstrap.css",
+            "../commun/src/js/alertify/css/alertify.min.css",
+            "../commun/src/js/alertify/css/themes/bootstrap.min.css",
             "../commun/src/css/style.css",
             "../commun/src/css/pxtoem.css"
                 ] as $href) {
@@ -106,7 +106,7 @@ class html5 {
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.js",
             "../commun/src/js/datetimepicker/i18n/jquery-ui-timepicker-addon-i18n.js",
             "../commun/src/js/datetimepicker/jquery-ui-sliderAccess.js",
-            "../commun/src/js/alertify/lib/alertify.min.js",
+            "../commun/src/js/alertify/alertify.min.js",
             "../commun/src/js/animate/animate.js",
             "../commun/src/js/sarraltroff/sarraltroff.js",
             "../commun/src/js/phpjs/phpjs.min.js",

@@ -824,7 +824,7 @@ echo sprintf("%.2f", $time_diff);
 <div id="footer">GeSHi &copy; 2004-2007 Nigel McNie, 2007-2009 Benny Baumann, released under the GNU GPL</div>
 </body>
 </html>
-<?
+<?php
 
 function str_to_phpstring($str, $doublequote = false){
     if($doublequote) {
@@ -959,7 +959,7 @@ function gen_langfile($lang){
  *
  ************************************************************************************/
 
-\$language_data = array(
+//$language_data = array(
 
 GESHI_LANGFILE_HEAD;
 

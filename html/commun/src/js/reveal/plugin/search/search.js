@@ -205,7 +205,7 @@ var RevealSearch = (function () {
         }
     }, false);
     if (window.Reveal)
-        Reveal.registerKeyboardShortcut('Ctrl-Shift-F', 'Search');
+        Reveal.registerKeyboardShortcut('CTRL + Shift + F', 'Search');
     closeSearch();
     return {open: openSearch};
 })();

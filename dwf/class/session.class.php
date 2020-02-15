@@ -19,6 +19,9 @@ class session {
         }
         if (!self::get_val("ip")) {
             self::set_val("ip", $_SERVER["REMOTE_ADDR"]);
+            if(!isset($_SERVER["HTTP_USER_AGENT"])){
+                $_SERVER["HTTP_USER_AGENT"]="Unknown";
+            }
             self::set_val("browser", $_SERVER["HTTP_USER_AGENT"]);
         }
         if (self::get_val("ip") != $_SERVER["REMOTE_ADDR"] or self::get_val("browser") != $_SERVER["HTTP_USER_AGENT"]) {

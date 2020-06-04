@@ -411,6 +411,30 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function dictionary() {
+        ?>
+        <p>Cette classe permet convertir et gerrer une liste lourde comme étant un dictionnaire</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//créé un dictionnaire\n"
+                . "$" . "dictionnaire = new dictionary($" . "words = [\"All\", \"My\", \"Words\"], $" . "chunk_size = 100000);\n\n"
+                . "//Ajoute des mots\n"
+                . "$" . "dictionnaire->add([\"New\", \"Elements\"]);\n\n"
+                . "//Verifie si un mot existe\n"
+                . "$" . "dictionnaire->word_exist(\"Words\");\n\n"
+                . "//Supprime des mots\n"
+                . "$" . "dictionnaire->remove([\"Words\", \"Elements\"]);\n\n"
+                . "//Nombre de mots dans le dictionnaire\n"
+                . "$" . "dictionnaire->count_words();\n\n"
+                . "//Gestion de la taille des sections du dictionnaire\n"
+                . "$" . "dictionnaire->set_chunk_size($" . "chunk_size = 100000);\n"
+                . "$" . "dictionnaire->get_chunk_size();\n\n"
+                . "//Accès au sections\n"
+                . "$" . "dictionnaire->count_sections();\n"
+                . "$" . "dictionnaire->get_section($" . "key = 0);\n"
+                . "?>", $this->_brush);
+    }
+
     private function dlc() {
         ?><p>Cette classe permet de générer des fichiers :</p><?php
         echo html_structures::ul([
@@ -1906,6 +1930,30 @@ class docPHP_natives {
                 . "//Retourne le statut de la page passée en paramètre\n"
                 . "//(si la page est conforme W3C)\n"
                 . "w3c_validate::validate_from_url($" . "url);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function writer() {
+        ?>
+        <p>Cette classe permet de gèrer un buffer a l'ecriture de fichiers </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Ajoute un fichier au buffer\n"
+                . "writer::get_instance()->add($" . "file, $" . "content);\n\n"
+                . "//Verifie si un ficher est dans le buffer\n"
+                . "writer::get_instance()->exist($" . "file);\n\n"
+                . "//Retourne le contenu d'un fichier du buffer (chaine vide si non)\n"
+                . "writer::get_instance()->content($" . "file);\n\n"
+                . "//Retourne le nombre de fichiers dans le buffer\n"
+                . "writer::get_instance()->count();\n\n"
+                . "//Supprime un fichier du buffer\n"
+                . "writer::get_instance()->clear($" . "file);\n\n"
+                . "//Supprime tout les fichiers du buffer\n"
+                . "writer::get_instance()->clear();\n\n"
+                . "//Ecris les fichier du buffer sur le disque dur (et vide le buffer)\n"
+                . "writer::get_instance()->write();\n\n"
+                . "//Ecris les fichier du buffer dans une archive (et vide le buffer)\n"
+                . "writer::get_instance()->write_zip($" . "zipname);\n"
                 . "?>", $this->_brush);
     }
 

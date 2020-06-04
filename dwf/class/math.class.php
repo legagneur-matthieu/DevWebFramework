@@ -387,6 +387,19 @@ class math {
     }
 
     /**
+     * Retourne la somme harmonique de 1 + 1/(2^p) + 1/(3^p) + ... + 1/(n^p)
+     * @param int $n Linite de la somme harmonique
+     * @param float $p puissance au dénominateur de la somme harmonique
+     * @return float Resultat de la somme harmonique
+     */
+    public static function harmonic_sum($n, $p = 1) {
+        foreach ($s = range(1, $n) as $k => $v) {
+            $s[$k] = 1 / pow($v, $p);
+        }
+        return array_sum($s);
+    }
+
+    /**
      * Tire un nombre aléatoire
      * @param float|int $min Valeur minimal
      * @param float|int $max Valeur maximal

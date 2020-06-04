@@ -14,7 +14,6 @@ class service {
      * @param array $params Paramètres POST
      */
     public static function HTTP_POST($url, $params = []) {
-        ob_start();
         $post = http_build_query($params);
         $parts = parse_url($url);
         $fp = fsockopen($parts['host'], isset($parts['port']) ? $parts['port'] : 80, $errno, $errstr, 30);

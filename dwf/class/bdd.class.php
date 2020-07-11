@@ -34,7 +34,11 @@ class bdd extends singleton {
         $pdo_type = (isset(config::$_PDO_type) ? config::$_PDO_type : "mysql");
         switch ($pdo_type) {
             case "sqlite":
-                $this->_pdo = new PDO("sqlite:class/entity/" . config::$_PDO_dbname . ".sqlite");
+                $file = "class/entity/" . config::$_PDO_dbname . ".sqlite";
+                if (!file_exists($file) and file_exists("../" . $file)) {
+                    $file = "../" . $file;
+                }
+                $this->_pdo = new PDO("sqlite:$file");
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
                 break;
             case "mysql":

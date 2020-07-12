@@ -168,7 +168,7 @@ class js {
      * 
      * @param array $data Liste des phrases à afficher
      * @param string $id Id CSS du vTicker
-     * @param array $params Surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc ...)
+     * @param array $params Surcharge les paramètres à appliquer au vTicker ( laissez par défaut ou voir la doc ...)
      * @return \vticker Créé un vTicker (suite de phrases qui défilent)
      */
     public static function vTicker($data, $id = "vticker", $params = []) {
@@ -310,7 +310,6 @@ class js {
      * format du tableau : array(array("img"=>"chamain/img.png","alt"=>"facultative","caption"=>"HTML facultative"));
      */
     public static function slider($id, $data) {
-
         //Indicators
         $ol = tags::ol(["class" => "carousel-indicators", "data-ride" => "carousel"]);
         for ($i = 0; $i < count($data); $i++) {
@@ -324,14 +323,16 @@ class js {
         $inner = tags::div(["class" => "carousel-inner", "role" => "listbox"]);
         $first = true;
         foreach ($data as $d) {
-            $inner->append_content(tags::tag("div", ["class" => "item" . ($first ? " active" : "")], html_structures::img($d["img"], (isset($d["alt"]) ? $d["alt"] : "")) .
+
+            $inner->append_content(tags::tag("div", ["class" => "carousel-item" . ($first ? " active" : "")],
+                            tags::tag("img", ["class" => "d-block w-100", "src" => $d["img"], "alt" => (isset($d["alt"]) ? $d["alt"] : "")]) .
                             (isset($d["caption"]) ? tags::tag("div", ["class" => "carousel-caption"], $d["caption"]) : "")
             ));
             $first = false;
         }
         //Controls
-        $controls = tags::tag("a", ["class" => "left carousel-control", "href" => "#" . $id, "role" => "button", "data-slide" => "prev"], html_structures::glyphicon("chevron-left", "Précédent")) .
-                tags::tag("a", ["class" => "right carousel-control", "href" => "#" . $id, "role" => "button", "data-slide" => "next"], html_structures::glyphicon("chevron-right", "Suivant")) .
+        $controls = tags::tag("a", ["class" => "carousel-control-prev", "href" => "#" . $id, "role" => "button", "data-slide" => "prev"], html_structures::glyphicon("chevron-left", "Précédent")) .
+                tags::tag("a", ["class" => "carousel-control-next", "href" => "#" . $id, "role" => "button", "data-slide" => "next"], html_structures::glyphicon("chevron-right", "Suivant")) .
                 tags::tag("a", ["class" => "center carousel-pause", "href" => "#" . $id, "role" => "button", "data-slide" => "pause"], html_structures::glyphicon("pause", "Pause"));
         echo tags::tag("div", ["id" => $id, "class" => "carousel slide", "data-ride" => "carousel"], $ol . $inner . $controls);
     }

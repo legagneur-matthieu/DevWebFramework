@@ -108,7 +108,7 @@ class easteregg {
         ];
         $form=new form();
         $form->select("Evenement à activer", "eggday", $events);
-        $form->submit("btn-default", "Activer");
+        $form->submit("btn-primary", "Activer");
         (new modal())->link_open_modal("", "modal_eggday", '', "Evenements", $form->render(), "");
         if (isset($_POST["eggday"])) {
             if (strlen($_POST["eggday"]) == 4) {

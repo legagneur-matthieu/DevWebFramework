@@ -233,7 +233,7 @@ class fullcalendar {
                     echo $form->get_open_form() .
                     $form->hidden("admin_form_supp", "1") .
                     $form->submit("btn-danger", "Oui") .
-                    html_structures::a_link($url, "Non", "btn btn-default") .
+                    html_structures::a_link($url, "Non", "btn btn-primary") .
                     $form->get_close_form();
                 }
             }
@@ -251,7 +251,7 @@ class fullcalendar {
                     $form = new form();
                     $form->input("Titre", "title", "text", $resource->get_title());
                     $form->input("Couleur", "eventColor", "color", $resource->get_eventColor());
-                    $form->submit("btn-default", "Modifier");
+                    $form->submit("btn-primary", "Modifier");
                     echo $form->render();
                 }
             }
@@ -279,7 +279,7 @@ class fullcalendar {
                                 <td><?= $r["title"]; ?></td>
                                 <td style="background-color: <?= $r["eventColor"]; ?>"> <?= $r["eventColor"]; ?> </td>
                                 <td><?php
-                                    echo html_structures::a_link($url . "action=modif&amp;id=" . $r["id"], html_structures::glyphicon("edit", "Modifier") . " Modifier", "btn btn-xs btn-default") .
+                                    echo html_structures::a_link($url . "action=modif&amp;id=" . $r["id"], html_structures::glyphicon("edit", "Modifier") . " Modifier", "btn btn-xs btn-primary") .
                                     html_structures::a_link($url . "action=supp&amp;id=" . $r["id"], html_structures::glyphicon("remove", "Supprimer") . " Supprimer", "btn btn-xs btn-danger navbar-right");
                                     ?></td>
                             </tr>
@@ -292,7 +292,7 @@ class fullcalendar {
                 $form = new form();
                 $form->input("Titre", "title");
                 $form->input("Couleur", "eventColor", "color", "#0000ff");
-                $form->submit("btn-default", "Ajouter");
+                $form->submit("btn-primary", "Ajouter");
                 echo $form->render();
             }
         }
@@ -319,7 +319,7 @@ class fullcalendar {
                     echo $form->get_open_form() .
                     $form->hidden("admin_form_supp", "1") .
                     $form->submit("btn-danger", "Oui") .
-                    html_structures::a_link($url, "Non", "btn btn-default") .
+                    html_structures::a_link($url, "Non", "btn btn-primary") .
                     $form->get_close_form();
                 }
             }
@@ -347,7 +347,7 @@ class fullcalendar {
                     $form->datetimepicker("Fin", "end", $this->convert_date($event->get_end()));
                     $form->input("URL (facultative)", "url", "url", $event->get_url(), false);
                     $form->select("Agenda", "resourceId", $option);
-                    $form->submit("btn-default", "Modifier");
+                    $form->submit("btn-primary", "Modifier");
                     echo $form->render().
                     html_structures::a_link($url . "action=supp&id=" . $event->get_id(), "Supprimer", "btn btn-danger");
                 }
@@ -379,7 +379,7 @@ class fullcalendar {
             $form->datetimepicker("Fin", "end");
             $form->input("URL (facultative)", "url", "url", null, false);
             $form->select("Agenda", "resourceId", $option);
-            $form->submit("btn-default", "Ajouter");
+            $form->submit("btn-primary", "Ajouter");
             echo $form->render();
             if (isset($_POST["title"])) {
                 fullcalendar_event::ajout($_POST["title"], $form->get_datetimepicker_us("start"), $form->get_datetimepicker_us("end"), $_POST["url"], $_POST["resourceId"]);

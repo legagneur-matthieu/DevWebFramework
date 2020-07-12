@@ -43,7 +43,7 @@ class g_article {
             $form->textarea("Contenu de l'article", "contenu", htmlspecialchars_decode(base64_decode($article->get_contenu())));
             $form->input("Tags (séparé par des viruges)", "tags", "text", $article->get_tags());
             $form->select("Catégorie", "cat", $option);
-            $form->submit("btn-default");
+            $form->submit("btn-primary");
             $form->close_fieldset();
             echo $form->render();
             if (isset($_POST["titre"])) {
@@ -157,7 +157,7 @@ class g_article {
         $form->textarea("Contenu de l'article", "contenu");
         $form->input("Tags (séparé par des viruges)", "tags");
         $form->select("Catégorie", "cat", $option);
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         $form->close_fieldset();
         echo $form->render();
         if (isset($_POST["titre"])) {

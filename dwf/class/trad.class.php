@@ -125,7 +125,7 @@ class trad extends singleton {
                             </script>
                             <?php
                             echo tags::tag("a", ["href" => "#", "id" => "addkey"], "Ajouter une clé") .
-                            $form->submit('btn-default') .
+                            $form->submit('btn-primary') .
                             $form->get_close_form();
                         } else {
                             js::alert("Le fichier de traduction n'existe pas !");
@@ -142,7 +142,7 @@ class trad extends singleton {
                     echo html_structures::ul($ul);
                     $form = new form();
                     $form->input("Langue (Sigle, exemple : en, es, it, ru, ...)", "add_lang");
-                    $form->submit("btn-default", "Ajouter");
+                    $form->submit("btn-primary", "Ajouter");
                     echo $form->render();
                     if (isset($_POST["add_lang"])) {
                         $file = "lang/" . ($add_lang = strtr($_POST["add_lang"], array("." => "", "/" => "", "\\" => "", "'" => "", '"' => ""))) . ".json";

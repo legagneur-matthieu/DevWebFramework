@@ -33,7 +33,7 @@ class g_categorie_article {
                 $form = new form();
                 $form->open_fieldset("Modifer une categorie");
                 $form->input("Nom de la catégorie", "cat_nom", "", $cat->get_nom());
-                $form->submit("btn-default", "Modifier");
+                $form->submit("btn-primary", "Modifier");
                 $form->close_fieldset();
                 echo $form->render();
                 if (isset($_POST["cat_nom"])) {
@@ -101,7 +101,7 @@ class g_categorie_article {
         $form = new form();
         $form->open_fieldset("Ajouter une categorie");
         $form->input("Nom de la catégorie", "cat_nom");
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         $form->close_fieldset();
         echo $form->render();
         if (isset($_POST["cat_nom"])) {

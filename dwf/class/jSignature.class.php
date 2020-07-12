@@ -68,7 +68,7 @@ class jSignature {
             });";
         return tags::tag("div", ["class" => "form-group"], tags::tag(
                                 "label", ["for" => $this->_id], $this->_label) .
-                        tags::tag("a", ["id" => $this->_id . "_reset", "class" => "btn btn-xs btn-default"], "Reset") .
+                        tags::tag("a", ["id" => $this->_id . "_reset", "class" => "btn btn-xs btn-primary"], "Reset") .
                         tags::tag("div", ["id" => $this->_id . "_div"], "") .
                         tags::tag("input", ["type" => "hidden", "id" => $this->_id, "name" => $this->_id, "value" => ""])
                 ) . tags::tag("script", ["type" => "text/javascript"], $script);

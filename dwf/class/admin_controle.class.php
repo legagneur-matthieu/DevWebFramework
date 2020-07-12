@@ -83,7 +83,7 @@ class admin_controle {
                     $this->_data[$key][$k] = '<a href="mailto:' . $v . '">' . $v . '</a>';
                 }
             }
-            $m_d = html_structures::a_link($url . "action=modif&amp;id=" . $row["id"], html_structures::glyphicon("edit", "Modifier") . " Modifier", "btn btn-xs btn-default");
+            $m_d = html_structures::a_link($url . "action=modif&amp;id=" . $row["id"], html_structures::glyphicon("edit", "Modifier") . " Modifier", "btn btn-xs btn-primary");
             $m_d .= html_structures::a_link($url . "action=supp&amp;id=" . $row["id"], html_structures::glyphicon("remove", "Supprimer") . " Supprimer", "btn btn-xs btn-danger navbar-right");
             $this->_data[$key]["m_d"] = $m_d;
             foreach ($this->_relations as $k => $v) {
@@ -161,7 +161,7 @@ class admin_controle {
             }
         }
         $form->hidden("admin_form_ajout", "1");
-        $form->submit("btn-default", "Ajouter");
+        $form->submit("btn-primary", "Ajouter");
         echo $form->render();
     }
 
@@ -198,7 +198,7 @@ class admin_controle {
         $entity = $this->_entity;
         $object = $entity::get_from_id($_GET["id"]);
         $this->modif_exec($object, $url);
-        echo html_structures::a_link($url, html_structures::glyphicon("arrow-left", "") . " Retour", "btn btn-default");
+        echo html_structures::a_link($url, html_structures::glyphicon("arrow-left", "") . " Retour", "btn btn-primary");
         $form = new form();
         foreach ($this->_structure as $element) {
             if (!$element[2]) {
@@ -238,7 +238,7 @@ class admin_controle {
             }
         }
         $form->hidden("admin_form_modif", "1");
-        $form->submit("btn-default", "Modifier");
+        $form->submit("btn-primary", "Modifier");
         echo $form->render();
     }
 
@@ -294,7 +294,7 @@ class admin_controle {
         $form->get_open_form() .
         $form->hidden("admin_form_supp", "1") .
         $form->submit("btn-danger", "Oui") .
-        html_structures::a_link($url, "Non", "btn btn-default") .
+        html_structures::a_link($url, "Non", "btn btn-primary") .
         $form->get_close_form();
     }
 

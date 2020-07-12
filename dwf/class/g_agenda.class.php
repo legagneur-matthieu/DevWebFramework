@@ -100,7 +100,7 @@ class g_agenda {
         }
         $form=new form();
         $form->select("Mois", "agenda_my", $option);
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         echo $form->render();
         if (isset($_POST["agenda_my"])) {
             $events = agenda::get_table_array("date_debut>='01-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00';");
@@ -129,7 +129,7 @@ class g_agenda {
             $form->datetimepicker("Date de fin", "date_fin", date("d/m/Y H:i"));
             $form->input("Titre", "titre");
             $form->textarea("Texte", "texte");
-            $form->submit("btn-default");
+            $form->submit("btn-primary");
             echo $form->render();
             if (isset($_POST["titre"])) {
                 agenda::ajout($form->get_datetimepicker_us("date_debut"), $form->get_datetimepicker_us("date_fin"), $_POST["titre"], $cke->parse($_POST["texte"]));
@@ -156,7 +156,7 @@ class g_agenda {
         $form->datetimepicker("Date de fin", "date_fin", $fin);
         $form->input("Titre", "titre", "text", $event->get_titre());
         $form->textarea("Texte", "texte", htmlspecialchars_decode($event->get_texte()));
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         echo $form->render();
         if (isset($_POST["titre"])) {
             $event->set_date_debut($form->get_datetimepicker_us("date_debut"));

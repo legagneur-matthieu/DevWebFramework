@@ -19,7 +19,7 @@ class printcsv {
             }
             $csv .= "\n";
         }
-        echo html_structures::a_link("../commun/csv.php?value=" . base64_encode(utf8_decode($csv)), "Exporter en CSV", "btn btn-default", "(Nouvel onglet)", TRUE);
+        echo html_structures::a_link("../commun/csv.php?value=" . base64_encode(utf8_decode($csv)), "Exporter en CSV", "btn btn-primary", "(Nouvel onglet)", TRUE);
     }
 
 }

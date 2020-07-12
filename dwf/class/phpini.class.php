@@ -196,7 +196,7 @@ class phpini {
                 }
                 $form=new form();
                 $form->select("Profil", "profil", $option);
-                $form->submit("btn-default", "Modifier");
+                $form->submit("btn-primary", "Modifier");
                 echo $form->render();
             }
             echo html_structures::a_link(application::get_url() . "new_profile=1", html_structures::glyphicon("plus") . " Nouveau profil", "btn btn-primary");
@@ -361,7 +361,7 @@ class phpini {
                     ["T", "T", ("T" == $unit)],
                 ]).
                 $form->close_fieldset().
-                $form->submit("btn-default", "Enregistrer");
+                $form->submit("btn-primary", "Enregistrer");
                 ?>
             </div>
         </div>

@@ -77,7 +77,7 @@ class messagerie {
         $form=new form();
         $form->select("Envoyer a", "dest", $option);
         $form->textarea("Message", "msg");
-        $form->submit("btn-default", "");
+        $form->submit("btn-primary", "");
         echo $form->render();
         if (isset($_POST["dest"])) {
             message::ajout(date("Y-m-d H:i:s"), $_POST["msg"], session::get_user(), $_POST["dest"], 0);

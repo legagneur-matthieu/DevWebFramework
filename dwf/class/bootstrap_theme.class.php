@@ -94,7 +94,7 @@ class bootstrap_theme {
             $option[] = [$t, ucfirst($t), ($t == self::get_theme())];
         }
         $form->select("Theme", "bootstrap_theme", $option);
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
     }
 

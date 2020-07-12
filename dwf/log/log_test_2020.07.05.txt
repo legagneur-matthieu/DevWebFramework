@@ -1,0 +1,9 @@
+2020/07/05 00:58:39 [Severe] ( 127.0.0.1 ) DWF EXCEPTION ! Code 612 : "Méthode page::papa() introuvable"
+#0 C:\wamp\www\DevWebFramework\dwf\class\application.class.php(109): dwf_exception::throw_exception(612, Array)
+#1 C:\wamp\www\DevWebFramework\dwf\class\application.class.php(44): application->contenu()
+#2 C:\wamp\www\DevWebFramework\dwf\index.php(23): application->__construct()
+#3 C:\wamp\www\DevWebFramework\html\test\index.php(19): index->__construct()
+#4 C:\wamp\www\DevWebFramework\html\test\index.php(45): website->__construct()
+#5 {main}
+
+

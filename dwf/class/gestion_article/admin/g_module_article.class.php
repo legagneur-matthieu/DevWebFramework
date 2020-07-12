@@ -38,7 +38,7 @@ class g_module_article {
             foreach ($cat as $id => $row) {
                 $form->checkbox($row["nom"], "mod_cat[]", $id, "", (in_array($id, $cat_mod)));
             }
-            $form->submit("btn-default");
+            $form->submit("btn-primary");
             $form->close_fieldset();
             echo $form->render();
             if (isset($_POST["mod_nom"])) {
@@ -99,7 +99,7 @@ class g_module_article {
         foreach ($cat as $id => $row) {
             $form->checkbox($row["nom"], "mod_cat[]", $id);
         }
-        $form->submit("btn-default");
+        $form->submit("btn-primary");
         $form->close_fieldset();
         echo $form->render();
         if (isset($_POST["mod_nom"])) {

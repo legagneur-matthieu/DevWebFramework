@@ -301,7 +301,7 @@ class statistiques {
             $option[] = [$k, $k, ($k == $default["an"])];
         }
         $form->select("Annèe", "stat_an", $option);
-        $form->submit("btn-default", "Voir");
+        $form->submit("btn-primary", "Voir");
         echo $form->render();
     }
 

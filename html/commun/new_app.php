@@ -103,7 +103,7 @@ class new_app {
                 foreach (bootstrap_theme::get_bootstrap_themes() as $theme) {
                     $option[] = [$theme, $theme];
                 }
-                $form->select("Theme", "theme", $option) .
+                echo $form->select("Theme", "theme", $option) .
                         $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv") .
                         $form->close_fieldset();
                 ?>

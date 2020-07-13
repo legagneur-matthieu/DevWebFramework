@@ -214,7 +214,7 @@ class docPHP_natives {
                 . "}\n"
                 . "form::new_form();\n"
                 . "form::input(\"Mot de passe\", \"psw\", \"password\");\n"
-                . "form::submit(\"btn-default\");\n"
+                . "form::submit(\"btn-primary\");\n"
                 . "form::close_form();\n"
                 . "?>", $this->_brush);
         ?>
@@ -732,7 +732,7 @@ class docPHP_natives {
                         . "$" . "cke = js::ckeditor(\"ta_2\");\n"
                         . "\n"
                         . "//bouton de soumition\n"
-                        . "form::submit(\"btn-default\");\n"
+                        . "form::submit(\"btn-primary\");\n"
                         . "//fermeture du formulaire\n"
                         . "form::close_form();\n"
                         . "\n"

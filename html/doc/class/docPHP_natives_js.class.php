@@ -306,10 +306,12 @@ class docPHP_natives_js {
         <p>Affiche le carousel/slide de bootstrap</p>
         <?php
         js::syntaxhighlighter("<style type=\"text/css\">\n"
-                . "    #slider img{\n"
+                . "    #slider{\n"
                 . "        width: 300px;\n"
-                . "        height: 300px;\n"
                 . "        margin: 0 auto;\n"
+                . "    }\n"
+                . "    #slider img{\n"
+                . "        height: 300px;\n"
                 . "    }\n"
                 . "</style>\n"
                 . "<?php\n"
@@ -320,10 +322,12 @@ class docPHP_natives_js {
         ?>
         <p>Résultat : </p>
         <style type="text/css">
-            #slider img{
+            #slider{
                 width: 300px;
-                height: 300px;
                 margin: 0 auto;
+            }
+            #slider img{
+                height: 300px;
             }
         </style>
         <?php

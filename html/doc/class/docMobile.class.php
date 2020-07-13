@@ -33,6 +33,13 @@ class docMobile {
 
     private function introduction() {
         ?>
+        <div class="alert alert-warning">
+            <p>
+                <strong>Note du développeur</strong> <br />
+                La version cordova du framework n'est plus maintenu depuis 2018 par manque de temps. <br />
+                Mais il n'est pas abandonné ! Une mise à niveau sera faite dès que cela sera possible.
+            </p>
+        </div>
         <p>
             Le framework mobile est un framework JS conçu pour être utilisé dans une application <a href="https://cordova.apache.org/" target="_blank">Cordova</a> <br />
             contrairement au framework PHP, le framework JS ne peut pas servir à créer plusieurs projets, chaque application devra avoir sa copie du framework.
@@ -42,7 +49,7 @@ class docMobile {
             <li>Connaitre Javascript et JQuery</li>
             <li>Connaitre le principe de "Single Page Application" (SPA)</li>
             <li>Savoir comment configurer correctement Cordova</li>
-            <li>Connaitre le principe de prototype en JS (pas obligatoire mais c'est un plus !)</li>
+            <li>Connaitre le principe de prototype (objet) en JS (pas obligatoire mais c'est un plus !)</li>
         </ul>
         <h4>Structure</h4>
         <p>La structure du Framework JS est très simple</p>
@@ -156,7 +163,7 @@ class docMobile {
                 . "        [1, \"oui\"],\n"
                 . "        [2, \"non\"]\n"
                 . "    ]);\n"
-                . "    mon_form.submit(\"btn-default\", \"Valider\"); //ajout du bouton de soumission\n\n"
+                . "    mon_form.submit(\"btn-primary\", \"Valider\"); //ajout du bouton de soumission\n\n"
                 . "    $(\"#mon_form\").submit(function (e) { //etape 4\n"
                 . "        e.preventDefault(); //evite le rafraichissement du formulaire\n"
                 . "        mon_form.get_post(); //étape 5\n\n"

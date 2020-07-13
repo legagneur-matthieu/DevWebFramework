@@ -17,7 +17,7 @@ form::textarea("Un ckeditor", "ta_2");
 $cke = js::ckeditor("ta_2");
 
 //bouton de soumition
-form::submit("btn-default");
+form::submit("btn-primary");
 //fermeture du formulaire
 form::close_form();
 

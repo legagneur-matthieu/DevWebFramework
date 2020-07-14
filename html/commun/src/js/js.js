@@ -13,7 +13,24 @@ $(document).ready(function () {
     });
     $('[data-toggle="popover"]').popover();
     $('[data-toggle="tooltip"]').tooltip();
-
+    //parallax
+    (function () {
+        var elements = [];
+        document.querySelectorAll(".parallax").forEach(function (elem) {
+            elements.push({
+                element: elem,
+                speed: (elem.getAttribute("data-speed") ? elem.getAttribute("data-speed") : 0.5)
+            });
+            if (elem.getAttribute("data-zindex")) {
+                elem.style.zIndex = elem.getAttribute("data-zindex");
+            }
+            if (elem.getAttribute("data-src")) {
+                elem.style.backgroundImage = "url('" + elem.getAttribute("data-src") + "')";
+            }
+        });
+        console.log(elements);
+        new SimpleParallax(elements);
+    })();
 });
 
 /**

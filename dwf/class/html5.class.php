@@ -114,6 +114,7 @@ class html5 {
             "../commun/src/js/sarraltroff/sarraltroff.js",
             "../commun/src/js/phpjs/phpjs.min.js",
             "../commun/src/js/php/phpvm.js",
+            "../commun/src/js/SimpleParallax.min.js",
             "../commun/src/js/js.js"
                 ] as $s) {
                     $script .= html_structures::script($s);

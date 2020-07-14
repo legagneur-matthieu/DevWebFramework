@@ -303,4 +303,23 @@ class html_structures {
         return tags::tag("a", ["href" => "#" . $id, "data-toggle" => "popover", "title" => $title, "data-content" => $content], $text);
     }
 
+    /**
+     * Permet d'afficher une DIV qui aurra un effet de parallax
+     * @param tags|string $content Contenu de la div
+     * @param float $speed Vitesse de déplacement par rapport au scroll
+     * @param null|string $src Background-image de la div
+     * @param null|int $zindex Z-index de la div
+     * @return string la DIV
+     */
+    public static function parallax($content, $speed, $src = false, $zindex = false) {
+        $attr = ["data-speed" => $speed];
+        if ($src) {
+            $attr["data-src"] = $src;
+        }
+        if ($zindex) {
+            $attr["data-zindex"] = $zindex;
+        }
+        return tags::div($attr, $content);
+    }
+
 }

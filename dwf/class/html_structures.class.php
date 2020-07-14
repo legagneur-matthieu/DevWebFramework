@@ -169,14 +169,14 @@ class html_structures {
      * 
      * @param string $id correspond au usemap d'une image
      */
-    public function new_map($id) {
+    public static function new_map($id) {
         return '<map id="' . $id . '">';
     }
 
     /**
      * Retourne la fermeture d'un mapping d'image
      */
-    public function close_map() {
+    public static function close_map() {
         return '</map>';
     }
 
@@ -190,13 +190,13 @@ class html_structures {
      * @param string $id id css / js
      * @param string $class class css /js
      */
-    public function area($shape, $coords, $href, $alt = "", $id = "", $class = "") {
+    public static function area($shape, $coords, $href, $alt = "", $id = "", $class = "") {
         $area = tags::area(["shape" => $shape, "coords" => $coords, "href" => $href, "alt" => $alt]);
         if (!empty($id)) {
-            $img->set_attr("id", $id);
+            $area->set_attr("id", $id);
         }
         if (!empty($class)) {
-            $img->set_attr("class", $class);
+            $area->set_attr("class", $class);
         }
         return $area;
     }

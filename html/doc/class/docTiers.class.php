@@ -49,6 +49,7 @@ class docTiers {
             ["Reveal", "3.9.2", "Hakim El Hattab", "JS", $licences[0]],
             ["ReversoLib", "1.0", "Dyrk", "PHP", "<em>Aucune</em>"],
             ["Shuffleletters", "1.0", "Martin Angelov", "JS", $licences[0]],
+            ["SimpleParallax", "0.1", "Chris Anselmo (christopherwk210)", "JS", $licences[0]],
             ["Smarty", "3.1.30", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
             ["Stalactite", "0.1", "Jono Brandel", "JS", $licences[4]],
             ["syntaxhighlighter", "3.0.83", "Alex Gorbatchev", "JS", $licences[0] . ', ' . $licences[1]],

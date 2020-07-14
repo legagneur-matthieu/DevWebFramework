@@ -1025,6 +1025,27 @@ class docPHP_natives {
                     html_structures::a_link('https://duckduckgo.com/', html_structures::glyphicon('search', '') . ' Rechercher sur le web', '', '(nouvel onglet)', true),
                 )
         );
+        ?>
+        <p>Methodes (toutes static) :</p>
+        <?php
+        echo html_structures::table(["Methode","Description"], [
+            ["table","Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données"],
+            ["ul, ol, dl","Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des array)"],
+            ["a_link","Retourne un lien"],
+            ["Ancre","Retourne une ancre a"],
+            ["img","Retourne une image img"],
+            ["figure","Retourne une figure ( illustration + légende )"],
+            ["new_map, area et close_map","Mapping d'image"],
+            ["media","Retourne les données passées en paramètres sous forme de média (bootstrap)"],
+            ["glyphicon","Retourne un glyphicon (avec un texte alternative)"],
+            ["hr","Retourne un séparateur horizontal"],
+            ["time","La balise time permet d'afficher une date avec une valeur SEO sémantique"],
+            ["link_in_body","Permet de faire appel à une balise LINK dans le body"],
+            ["script_in_body","Permet de faire appel à une balise SCRIPT dans le body"],
+            ["script et link","Sont utilisé par le framework (dans html5.class.php)"],
+            ["popover","Permet d'afficher un lien avec un popover"],
+            ["parallax","Permet d'afficher une DIV qui aurra un effet de parallax"]
+        ]);
     }
 
     private function ip_access() {

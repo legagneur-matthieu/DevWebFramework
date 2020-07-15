@@ -1,6 +1,10 @@
 html, body{
     scroll-behavior: smooth;
 }
+
+header, nav, footer{    
+    z-index:100;
+}
 /*entete*/
 .page-header{
     margin-top: -20px;

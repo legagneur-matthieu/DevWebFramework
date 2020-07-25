@@ -187,7 +187,6 @@ class form {
                 if ($fname != null) {
                     $_FILES[$name]["name"] = $fname;
                 }
-                $_FILES[$name]["name"] = strtr($_FILES[$name]["name"], form::get_acii());
                 if (move_uploaded_file($_FILES[$name]["tmp_name"], "{$path}/{$_FILES[$name]["name"]}")) {
                     $doc = $_FILES[$name]["name"];
                 } else {
@@ -220,7 +219,6 @@ class form {
                 if ($fname != null) {
                     $_FILES[$name]["name"][$i] = "{$i}_{$fname}";
                 }
-                $_FILES[$name]["name"][$i] = strtr($_FILES[$name]["name"][$i], form::get_acii());
                 if (move_uploaded_file($_FILES[$name]["tmp_name"][$i], "{$path}/{$_FILES[$name]["name"][$i]}")) {
                     $doc[] = $_FILES[$name]["name"][$i];
                 } else {

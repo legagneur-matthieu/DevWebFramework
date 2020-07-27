@@ -20,11 +20,11 @@ class modal {
         if (!self::$_called) {
             compact_css::get_instance()->add_css_file("../commun/src/js/modal/modal-window.css");
             echo html_structures::script("../commun/src/js/modal/modal-window.js") .
-            tags::tag("div", ["role" => "dialog", "aria-hidden" => "true", "id" => "modal", "class" => "modal-content", "style" => "display: none;"], tags::tag(
+            tags::tag("div", ["role" => "dialog", "aria-hidden" => "true", "id" => "modal", "class" => "modal-content", "style" => "display: none; z-index:1001;"], tags::tag(
                             "div", ["style" => "max-height: 100%; overflow: auto;"], "") .
                     tags::tag("button", ["id" => "modalCloseButton", "class" => "modalCloseButton btn btn-secondary", "title" => "Fermer la fenêtre"], html_structures::glyphicon("remove"))
             ) .
-            tags::tag("div", ["tabindex" => "-1", "id" => "modalOverlay", "style" => "display: none;"], "");
+            tags::tag("div", ["tabindex" => "-1", "id" => "modalOverlay", "style" => "display: none; z-index:1000;"], "");
             self::$_called = true;
         }
     }
@@ -49,7 +49,7 @@ class modal {
             });
         </script>
         <?php
-        echo tags::tag("a", ["href" => "#" . $id, "id" => $id, "class" => $class, "data-titre" => addslashes($titre), "data-data" => base64_encode($data), "title" => $title], $a_text);
+        return tags::tag("a", ["href" => "#" . $id, "id" => $id, "class" => $class, "data-titre" => addslashes($titre), "data-data" => base64_encode($data), "title" => $title], $a_text);
     }
 
 }

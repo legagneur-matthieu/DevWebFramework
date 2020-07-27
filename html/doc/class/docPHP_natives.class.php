@@ -1225,12 +1225,12 @@ class docPHP_natives {
                 . "$" . "titre='Démonstartion';\n"
                 . "$" . "data='<p class=\"text-center\">Bienvenue sur la démonstration de modals</p>';\n"
                 . "$" . "class='';\n"
-                . "(new modal())->link_open_modal($" . "a_text, $" . "id, $" . "title, $" . "titre, $" . "data, $" . "class);\n"
+                . "echo (new modal())->link_open_modal($" . "a_text, $" . "id, $" . "title, $" . "titre, $" . "data, $" . "class);\n"
                 . "?>", $this->_brush);
         ?>
         <p>Résultat :</p>
         <?php
-        (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstartion", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
+        echo (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstartion", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
     }
 
     private function openweather() {

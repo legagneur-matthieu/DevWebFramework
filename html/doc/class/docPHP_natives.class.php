@@ -1608,21 +1608,19 @@ class docPHP_natives {
 
     private function sms_gateway() {
         ?>
-        <p>Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer et recevoir des SMS depuis une application Web. <br />
+        <p>Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer des SMS depuis une application Web. <br />
             Cette classe a été conçue pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.<br />
-            <a href="https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway">https://play.google.com/store/apps/details?id=eu.apksoft.android.smsgateway</a><br />
+            <a href="https://dwf.sytes.net/smsgateway">SMS Gateway</a><br />
             Si vous utilisez un autre programme, veillez à adapter les paramètres en conséquence.</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "$" . "sms_gateway = new sms_gateway($" . "gateway_host, $" . "password = '', $" . "gateway_port = 9090, $" . "gateway_page_send = 'sendmsg', $" . "gateway_page_index = '');\n"
+                . "$" . "sms_gateway = new sms_gateway($" . "gateway_host, $" . "gateway_port = 8080, $" . "gateway_page_send = 'sendmsg', $" . "gateway_page_index = 'run');\n"
                 . "//Retourne si le service répond ou non (true/false)\n"
                 . "$" . "sms_gateway->is_runing();\n"
                 . "//Envoi de SMS par URL\n"
-                . "$" . "sms_gateway->send_by_url(array('phone' => '0654321987', 'text' => 'le sms'), $" . "methode = 'get', $" . "ssl = false);\n"
-                . "//Affiche les messages reçus\n"
-                . "$" . "sms_gateway->incoming();\n"
-                . "//Affiche les messages envoyés\n"
-                . "$" . "sms_gateway->outcoming();\n"
+                . "$" . "sms_gateway->send_by_url(array('phone' => '0654321987', 'text' => 'le sms'), $" . "methode = 'post', $" . "ssl = false);\n"
+                . "//Envoi de SMS par URL avec password\n"
+                . "$" . "sms_gateway->send_by_url(array('phone' => '0654321987', 'text' => 'le sms', 'psw'=>'motdepasse'), $" . "methode = 'post', $" . "ssl = false);\n"
                 . "?>", $this->_brush);
     }
 

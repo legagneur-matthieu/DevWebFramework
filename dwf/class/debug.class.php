@@ -132,7 +132,7 @@ class debug {
                     </div>
                     <div class="col-sm-2">
                         <?php
-                        $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
+                        echo $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
                         ?>
                     </div>
                 </div>

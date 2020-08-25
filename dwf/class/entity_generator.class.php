@@ -152,6 +152,9 @@ class entity_generator {
         $class .= "/** Indique si l'objet a été supprimé ou non " . $n
                 . "* @var boolean Indique si l'objet a été supprimé ou non */" . $n
                 . "private $" . "_this_was_delete;" . $n;
+        $class .= "/** Memento des instances " . $n
+                . "* @var boolean Memento des instances */" . $n
+                . "private static $" . "_entity_memento=[];" . $n;
 
         //génére le constructeur
         $class .= "/** Entité de la table " . self::$_table . " */\n public function __construct($" . "data) { " . $n;
@@ -197,10 +200,14 @@ class entity_generator {
         $class .= "/** Retourne le contenu de la table sout forme d'une collection " . $n
                 . "*ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_collection($" . "where = \"\" ) {" . $n
-                . "    $" . "col=false;" . $n
+                . "    $" . "col=[];" . $n
                 . "    foreach (" . self::$_table . "::get_table_array($" . "where) as $" . "entity) {" . $n
                 . "        if ($" . "entity != FALSE) {" . $n
-                . "            $" . "col[]=new " . self::$_table . "($" . "entity);" . $n
+                . "            if (isset(self::$" . "_entity_memento[$" . "entity[\"id\"]])) {" . $n
+                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]];" . $n
+                . "            } else {" . $n
+                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]] = new " . self::$_table . "($" . "entity);" . $n
+                . "            }" . $n
                 . "        }" . $n
                 . "    }" . $n
                 . "    return $" . "col;" . $n
@@ -249,8 +256,12 @@ class entity_generator {
         $class .= "/** Retourne une entité sous forme d'objet a partir de son identifiant " . $n
                 . "* @return " . self::$_table . "|boolean */" . $n
                 . "public static function get_from_id($" . "id) {" . $n
-                . "    $" . "data = self::get_table_array(\"id='\" . application::$" . "_bdd->protect_var($" . "id) . \"'\");" . $n
-                . "    return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? new " . self::$_table . "($" . "data[0]) : false);" . $n
+                . "    if (isset(self::$" . "_entity_memento[$" . "id])) {" . $n
+                . "        return self::$" . "_entity_memento[$" . "id];" . $n
+                . "    } else {" . $n
+                . "        $" . "data = self::get_table_array(\"id='\" . application::$" . "_bdd->protect_var($" . "id) . \"'\");" . $n
+                . "        return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? self::$" . "_entity_memento[$" . "id]=new " . self::$_table . "($" . "data[0]) : false);" . $n
+                . "    }" . $n
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_json_object

@@ -104,7 +104,7 @@ class parcour_sites {
         }
         $select = new form();
         $select->select("Projet par defaut (ou d'accueil)", "default_project", $option);
-        $select->submit("btn-default");
+        $select->submit("btn-primary");
         return ["sites" => $sites, "select" => $select->render()];
     }
 

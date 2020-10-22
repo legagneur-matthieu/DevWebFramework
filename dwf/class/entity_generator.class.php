@@ -60,11 +60,8 @@ class entity_generator {
             self::$_table = $table;
             self::create_class_file(self::get_class(), $overwrite);
             if ($create_table) {
-                $sql .= self::create_sql_table();
+                application::$_bdd->query(self::create_sql_table());
             }
-        }
-        if (!empty($sql)) {
-            application::$_bdd->query($sql);
         }
     }
 

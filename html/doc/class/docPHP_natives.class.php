@@ -136,7 +136,7 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche une interface (modal) permettant à l'utilisateur de choisir un thème\n"
-                . "bootstrap_theme::user_custom();\n"
+                . "echo bootstrap_theme::user_custom();\n"
                 . "?>", $this->_brush);
     }
 
@@ -267,17 +267,17 @@ class docPHP_natives {
         <?php
     }
 
-    private function compact_src() {
+    private function compact_css() {
         ?>
         <p>Compresse des scripts CSS en deux fichiers minifié</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//ajoute un fichier CSS\n"
-                . "compact_src::get_instance()->add_css_file($" . "href);\n\n"
+                . "compact_css::get_instance()->add_css_file($" . "href);\n\n"
                 . "//ajoute un script CSS (string ou CF \"CSS\")\n"
-                . "compact_src::get_instance()->add_style($" . "style);\n\n"
+                . "compact_css::get_instance()->add_style($" . "style);\n\n"
                 . "//fluent peut-etre utilisé :\n"
-                . "compact_src::get_instance()->add_css_file($" . "href)\n"
+                . "compact_css::get_instance()->add_css_file($" . "href)\n"
                 . "        ->add_style($" . "style)\n"
                 . "?>", $this->_brush);
         ?>
@@ -1028,23 +1028,23 @@ class docPHP_natives {
         ?>
         <p>Methodes (toutes static) :</p>
         <?php
-        echo html_structures::table(["Methode","Description"], [
-            ["table","Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données"],
-            ["ul, ol, dl","Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des array)"],
-            ["a_link","Retourne un lien"],
-            ["Ancre","Retourne une ancre a"],
-            ["img","Retourne une image img"],
-            ["figure","Retourne une figure ( illustration + légende )"],
-            ["new_map, area et close_map","Mapping d'image"],
-            ["media","Retourne les données passées en paramètres sous forme de média (bootstrap)"],
-            ["glyphicon","Retourne un glyphicon (avec un texte alternative)"],
-            ["hr","Retourne un séparateur horizontal"],
-            ["time","La balise time permet d'afficher une date avec une valeur SEO sémantique"],
-            ["link_in_body","Permet de faire appel à une balise LINK dans le body"],
-            ["script_in_body","Permet de faire appel à une balise SCRIPT dans le body"],
-            ["script et link","Sont utilisé par le framework (dans html5.class.php)"],
-            ["popover","Permet d'afficher un lien avec un popover"],
-            ["parallax","Permet d'afficher une DIV qui aurra un effet de parallax"]
+        echo html_structures::table(["Methode", "Description"], [
+            ["table", "Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données"],
+            ["ul, ol, dl", "Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des array)"],
+            ["a_link", "Retourne un lien"],
+            ["Ancre", "Retourne une ancre a"],
+            ["img", "Retourne une image img"],
+            ["figure", "Retourne une figure ( illustration + légende )"],
+            ["new_map, area et close_map", "Mapping d'image"],
+            ["media", "Retourne les données passées en paramètres sous forme de média (bootstrap)"],
+            ["glyphicon", "Retourne un glyphicon (avec un texte alternative)"],
+            ["hr", "Retourne un séparateur horizontal"],
+            ["time", "La balise time permet d'afficher une date avec une valeur SEO sémantique"],
+            ["link_in_body", "Permet de faire appel à une balise LINK dans le body"],
+            ["script_in_body", "Permet de faire appel à une balise SCRIPT dans le body"],
+            ["script et link", "Sont utilisé par le framework (dans html5.class.php)"],
+            ["popover", "Permet d'afficher un lien avec un popover"],
+            ["parallax", "Permet d'afficher une DIV qui aurra un effet de parallax"]
         ]);
     }
 
@@ -1882,6 +1882,15 @@ class docPHP_natives {
                 . "time::parse_time($" . "secondes);\n\n"
                 . "//astuce pour afficher un chronomètre bien présenté\n"
                 . "echo time::parse_time(time::chronometer_get($" . "id));\n"
+                . "?>", $this->_brush);
+    }
+
+    private function tor() {
+        ?>
+        <p>Cette classe permet de recuperer une ressource en passant par tor</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$"."data = (new tor())->wget($" . "url);\n"
                 . "?>", $this->_brush);
     }
 

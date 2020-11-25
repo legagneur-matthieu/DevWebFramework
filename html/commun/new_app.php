@@ -104,8 +104,8 @@ class new_app {
                     $option[] = [$theme, $theme];
                 }
                 echo $form->select("Theme", "theme", $option) .
-                        $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv") .
-                        $form->close_fieldset();
+                $form->checkbox("Services interne (un dossier de service sera créé dans le projet)", "srv", "srv") .
+                $form->close_fieldset();
                 ?>
             </div>
             <div class="col-sm-4 border_right">
@@ -232,10 +232,27 @@ class new_app {
         $index = '<?php class website { /** * Liste des classes metier et classes natives chargé par le framework * @var array Liste des classes metier et classes natives chargé par le framework      */public static $_class; /** * point de départ du site web  */ public function __construct() { self::$_class[__FILE__] = __CLASS__; spl_autoload_register([__CLASS__, "classloader"]); require_once "../../dwf/index.php"; try { new index(); } catch (Exception $e) { dwf_exception::print_exception($e); }  } /** * Inclut toutes les classes du dossier "class" se finissant par ".class.php" * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application */ private static function classloader($class) { $file = __DIR__ . "/class/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } else { $file = __DIR__ . "/class/entity/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } } } } new website();';
         $this->create_file($file_index, $index);
         /* page */
-        $pages = '<?php /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créér et appeler une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> */ class pages { /** * Cette classe sert de "Vue" à votre application, * vous pouvez y développer votre application comme bon vous semble : * HTML, créé et appelle une fonction "private" dans une fonction "public", faire appel à des classes exterieures ... */ public function __construct() { new robotstxt();} /** * Entete des pages */ public function header() { ?> <header class="page-header bg-info"> <h1>' . $_POST["title"] . ' <br /><small>Description de ' . $_POST["title"] . '</small></h1> </header> <?php } /** * Pied des pages */ public function footer() { ?> <footer> <hr /> <p> ' . date("Y") . '-<?php echo date("Y"); ?> D&eacute;velopp&eacute; par [VOUS]</p> <!--[if (IE 6)|(IE 7)]> <p><big>Ce site n\'est pas compatible avec votre version d\'internet explorer !</big></p> <![endif]--> </footer> <?php } /** * Fonction par défaut / page d\'accueil */ public function index() { ?> <p>[Votre contenu]</p> <?php } /** * Exemple de login */ public function login() { $auth = new auth("user", "login", "psw"); if (session::get_auth()) { js::redir("index.php"); } } public function deco() { auth::unauth(); js::redir("index.php"); } } ';
+        $pages = strtr(file_get_contents("./new_app_tpl/pages"), [
+            "{{TITLE}}" => $_POST["title"],
+            "{{YEAR}}" => date("Y")
+        ]);
         $this->create_file($file_pages, $pages);
         /* config */
-        $config = '<?php /** * Cette classe sert de fichier de configuration, <br /> * elle contient: * <ul> * <li>les variables de connexion à la base de données</li> * <li>l \'algo utilisé pour les hash</li> * <li>les routes de l \'aplication</li> * </ul> * * mais vous pouvez également y ajouter des variables diverses qui vous seront utile */ class config { /*PDO*/ public static $_PDO_type = "' . $_POST["pdo_type"] . '"; public static $_PDO_host = "' . $_POST["pdo_host"] . '"; public static $_PDO_dbname = "' . $_POST["pdo_dbname"] . '"; public static $_PDO_login = "' . $_POST["pdo_login"] . '"; public static $_PDO_psw = "' . $_POST["pdo_psw"] . '"; /*hash*/ public static $_hash_algo = "' . $_POST["hash"] . '"; /*routes*/ public static $_route_auth = array(); public static $_route_unauth = array(); /*Data*/ public static $_title = "' . $_POST["title"] . '"; public static $_favicon =""; public static $_debug = true; public static $_prefix = "' . $_POST["prefix"] . '"; public static $_theme = "' . $_POST["theme"] . '"; public static $_SMTP_host = "' . $_POST["smtp_host"] . '"; public static $_SMTP_auth = ' . $_POST["smtp_auth"] . '; public static $_SMTP_login = "' . $_POST["smtp_login"] . '"; public static $_SMTP_psw = "' . $_POST["smtp_psw"] . '"; public static $_sitemap = false; public static $_statistiques = false; public static function onbdd_connected() {self::$_route_auth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),array("page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION"),); self::$_route_unauth = array(array("page" => "index", "title" => "Page d\'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"), array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keywords" => "login, devwebframework, DWF"),); }}';
+        $config = strtr(file_get_contents("./new_app_tpl/config"), [
+            "{{PDO_TYPE}}" => $_POST["pdo_type"],
+            "{{PDO_HOST}}" => $_POST["pdo_host"],
+            "{{PDO_DBNAME}}" => $_POST["pdo_dbname"],
+            "{{PDO_LOGIN}}" => $_POST["pdo_login"],
+            "{{PDO_PSW}}" => $_POST["pdo_psw"],
+            "{{HASH_ALGO}}" => $_POST["hash"],
+            "{{TITLE}}" => $_POST["title"],
+            "{{PREFIX}}" => $_POST["prefix"],
+            "{{THEME}}" => $_POST["theme"],
+            "{{SMTP_HOST}}" => $_POST["smtp_host"],
+            "{{SMTP_AUTH}}" => $_POST["smtp_auth"],
+            "{{SMTP_LOGIN}}" => $_POST["smtp_login"],
+            "{{SMTP_PSW}}" => $_POST["smtp_psw"],
+        ]);
         $this->create_file($file_config, $config);
         if (isset($_POST["srv"])) {
             $dir_services = $dir . "/services";

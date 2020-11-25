@@ -75,6 +75,7 @@ class bootstrap_theme {
 
     /**
      * Affiche une interface (modal) permettant à l'utilisateur de choisir un thème
+     * @return string Lien modal
      */
     public static function user_custom() {
         if (isset($_POST["bootstrap_theme"])) {
@@ -95,7 +96,7 @@ class bootstrap_theme {
         }
         $form->select("Theme", "bootstrap_theme", $option);
         $form->submit("btn-primary");
-        (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
+        return (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
     }
 
 }

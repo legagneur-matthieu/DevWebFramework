@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -7,7 +6,6 @@
  * @author  Helmut Tischer <htischer@weihenstephan.org>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\Renderer;
 
 use Dompdf\Helpers;
@@ -21,14 +19,15 @@ use Dompdf\FrameDecorator\ListBullet as ListBulletFrameDecorator;
  * @access  private
  * @package dompdf
  */
-class ListBullet extends AbstractRenderer {
-
+class ListBullet extends AbstractRenderer
+{
     /**
      * @param $type
      * @return mixed|string
      */
-    static function get_counter_chars($type) {
-        static $cache = array();
+    static function get_counter_chars($type)
+    {
+        static $cache = [];
 
         if (isset($cache[$type])) {
             return $cache[$type];
@@ -82,7 +81,8 @@ class ListBullet extends AbstractRenderer {
      *
      * @return string
      */
-    private function make_counter($n, $type, $pad = null) {
+    private function make_counter($n, $type, $pad = null)
+    {
         $n = intval($n);
         $text = "";
         $uppercase = false;
@@ -131,10 +131,11 @@ class ListBullet extends AbstractRenderer {
     /**
      * @param Frame $frame
      */
-    function render(Frame $frame) {
+    function render(Frame $frame)
+    {
         $style = $frame->get_style();
-        $font_size = $style->get_font_size();
-        $line_height = (float) $style->length_in_pt($style->line_height, $frame->get_containing_block("h"));
+        $font_size = $style->font_size;
+        $line_height = $style->line_height;
 
         $this->_set_opacity($frame->get_opacity($style->opacity));
 
@@ -158,8 +159,8 @@ class ListBullet extends AbstractRenderer {
             //$h = $frame->get_height();
             list($width, $height) = Helpers::dompdf_getimagesize($img, $this->_dompdf->getHttpContext());
             $dpi = $this->_dompdf->getOptions()->getDpi();
-            $w = ((float) rtrim($width, "px") * 72) / $dpi;
-            $h = ((float) rtrim($height, "px") * 72) / $dpi;
+            $w = ((float)rtrim($width, "px") * 72) / $dpi;
+            $h = ((float)rtrim($height, "px") * 72) / $dpi;
 
             $x -= $w;
             $y -= ($line_height - $font_size) / 2; //Reverse hinting of list_bullet_positioner
@@ -178,7 +179,7 @@ class ListBullet extends AbstractRenderer {
 
                 case "circle":
                     list($x, $y) = $frame->get_position();
-                    $r = ($font_size * (ListBulletFrameDecorator::BULLET_SIZE /* -ListBulletFrameDecorator::BULLET_THICKNESS */)) / 2;
+                    $r = ($font_size * (ListBulletFrameDecorator::BULLET_SIZE /*-ListBulletFrameDecorator::BULLET_THICKNESS*/)) / 2;
                     $x -= $font_size * (ListBulletFrameDecorator::BULLET_SIZE / 2);
                     $y += ($font_size * (1 - ListBulletFrameDecorator::BULLET_DESCENT)) / 2;
                     $o = $font_size * ListBulletFrameDecorator::BULLET_THICKNESS;
@@ -229,15 +230,19 @@ class ListBullet extends AbstractRenderer {
                     $font_family = $style->font_family;
 
                     $line = $li->get_containing_line();
-                    list($x, $y) = array($frame->get_position("x"), $line->y);
+                    list($x, $y) = [$frame->get_position("x"), $line->y];
 
                     $x -= $this->_dompdf->getFontMetrics()->getTextWidth($text, $font_family, $font_size, $spacing);
 
                     // Take line-height into account
+                    // TODO: should the line height take into account the line height of the containing block (per previous logic)
+                    // $line_height = (float)$style->length_in_pt($style->line_height, $frame->get_containing_block("h"));
                     $line_height = $style->line_height;
                     $y += ($line_height - $font_size) / 4; // FIXME I thought it should be 2, but 4 gives better results
 
-                    $this->_canvas->text($x, $y, $text, $font_family, $font_size, $style->color, $spacing);
+                    $this->_canvas->text($x, $y, $text,
+                        $font_family, $font_size,
+                        $style->color, $spacing);
 
                 case "none":
                     break;
@@ -245,9 +250,8 @@ class ListBullet extends AbstractRenderer {
         }
 
         $id = $frame->get_node()->getAttribute("id");
-        if (strlen($id) > 0) {
+        if (strlen($id) > 0)  {
             $this->_canvas->add_named_dest($id);
         }
     }
-
 }

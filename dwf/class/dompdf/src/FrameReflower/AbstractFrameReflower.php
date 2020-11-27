@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameReflower;
 
 use Dompdf\Adapter\CPDF;
@@ -25,7 +23,8 @@ use Dompdf\Frame\Factory;
  *
  * @package dompdf
  */
-abstract class AbstractFrameReflower {
+abstract class AbstractFrameReflower
+{
 
     /**
      * Frame for this reflower
@@ -45,19 +44,21 @@ abstract class AbstractFrameReflower {
      * AbstractFrameReflower constructor.
      * @param Frame $frame
      */
-    function __construct(Frame $frame) {
+    function __construct(Frame $frame)
+    {
         $this->_frame = $frame;
         $this->_min_max_cache = null;
     }
 
-    function dispose() {
-        
+    function dispose()
+    {
     }
 
     /**
      * @return Dompdf
      */
-    function get_dompdf() {
+    function get_dompdf()
+    {
         return $this->_frame->get_dompdf();
     }
 
@@ -65,13 +66,14 @@ abstract class AbstractFrameReflower {
      * Collapse frames margins
      * http://www.w3.org/TR/CSS2/box.html#collapsing-margins
      */
-    protected function _collapse_margins() {
+    protected function _collapse_margins()
+    {
         $frame = $this->_frame;
         $cb = $frame->get_containing_block();
         $style = $frame->get_style();
 
         // Margins of float/absolutely positioned/inline-block elements do not collapse.
-        if (!$frame->is_in_flow() || $frame->is_inline_block()) {
+        if (!$frame->is_in_flow() || $frame->is_inline_block() || $frame->get_root() == $frame || $frame->get_parent() == $frame->get_root()) {
             return;
         }
 
@@ -91,7 +93,7 @@ abstract class AbstractFrameReflower {
 
         // Collapse vertical margins:
         $n = $frame->get_next_sibling();
-        if ($n && !$n->is_block() & !$n->is_table()) {
+        if ( $n && !$n->is_block() & !$n->is_table() ) {
             while ($n = $n->get_next_sibling()) {
                 if ($n->is_block() || $n->is_table()) {
                     break;
@@ -106,7 +108,7 @@ abstract class AbstractFrameReflower {
 
         if ($n) {
             $n_style = $n->get_style();
-            $n_t = (float) $n_style->length_in_pt($n_style->margin_top, $cb["h"]);
+            $n_t = (float)$n_style->length_in_pt($n_style->margin_top, $cb["h"]);
 
             $b = $this->_get_collapsed_margin_length($b, $n_t);
             $style->margin_bottom = $b . "pt";
@@ -114,15 +116,15 @@ abstract class AbstractFrameReflower {
         }
 
         // Collapse our first child's margin, if there is no border or padding
-        if ($style->get_border_top_width() == 0 && $style->length_in_pt($style->padding_top) == 0) {
+        if ($style->border_top_width == 0 && $style->length_in_pt($style->padding_top) == 0) {
             $f = $this->_frame->get_first_child();
-            if ($f && !$f->is_block() && !$f->is_table()) {
-                while ($f = $f->get_next_sibling()) {
-                    if ($f->is_block() || $f->is_table()) {
+            if ( $f && !$f->is_block() && !$f->is_table() ) {
+                while ( $f = $f->get_next_sibling() ) {
+                    if ( $f->is_block() || $f->is_table() ) {
                         break;
                     }
 
-                    if (!$f->get_first_child()) {
+                    if ( !$f->get_first_child() ) {
                         $f = null;
                         break;
                     }
@@ -132,24 +134,24 @@ abstract class AbstractFrameReflower {
             // Margin are collapsed only between block-level boxes
             if ($f) {
                 $f_style = $f->get_style();
-                $f_t = (float) $f_style->length_in_pt($f_style->margin_top, $cb["h"]);
+                $f_t = (float)$f_style->length_in_pt($f_style->margin_top, $cb["h"]);
 
                 $t = $this->_get_collapsed_margin_length($t, $f_t);
-                $style->margin_top = $t . "pt";
+                $style->margin_top = $t."pt";
                 $f_style->margin_top = "0pt";
             }
         }
 
         // Collapse our last child's margin, if there is no border or padding
-        if ($style->get_border_bottom_width() == 0 && $style->length_in_pt($style->padding_bottom) == 0) {
+        if ($style->border_bottom_width == 0 && $style->length_in_pt($style->padding_bottom) == 0) {
             $l = $this->_frame->get_last_child();
-            if ($l && !$l->is_block() && !$l->is_table()) {
-                while ($l = $l->get_prev_sibling()) {
-                    if ($l->is_block() || $l->is_table()) {
+            if ( $l && !$l->is_block() && !$l->is_table() ) {
+                while ( $l = $l->get_prev_sibling() ) {
+                    if ( $l->is_block() || $l->is_table() ) {
                         break;
                     }
 
-                    if (!$l->get_last_child()) {
+                    if ( !$l->get_last_child() ) {
                         $l = null;
                         break;
                     }
@@ -159,10 +161,10 @@ abstract class AbstractFrameReflower {
             // Margin are collapsed only between block-level boxes
             if ($l) {
                 $l_style = $l->get_style();
-                $l_b = (float) $l_style->length_in_pt($l_style->margin_bottom, $cb["h"]);
+                $l_b = (float)$l_style->length_in_pt($l_style->margin_bottom, $cb["h"]);
 
                 $b = $this->_get_collapsed_margin_length($b, $l_b);
-                $style->margin_bottom = $b . "pt";
+                $style->margin_bottom = $b."pt";
                 $l_style->margin_bottom = "0pt";
             }
         }
@@ -177,15 +179,16 @@ abstract class AbstractFrameReflower {
      * @param number $length2
      * @return number
      */
-    private function _get_collapsed_margin_length($length1, $length2) {
+    private function _get_collapsed_margin_length($length1, $length2)
+    {
         if ($length1 < 0 && $length2 < 0) {
             return min($length1, $length2); // min(x, y) = - max(abs(x), abs(y)), if x < 0 && y < 0
         }
-
+        
         if ($length1 < 0 || $length2 < 0) {
             return $length1 + $length2; // x + y = x - abs(y), if y < 0
         }
-
+        
         return max($length1, $length2);
     }
 
@@ -203,7 +206,8 @@ abstract class AbstractFrameReflower {
      *
      * @return array|null
      */
-    function get_min_max_width() {
+    function get_min_max_width()
+    {
         if (!is_null($this->_min_max_cache)) {
             return $this->_min_max_cache;
         }
@@ -211,27 +215,27 @@ abstract class AbstractFrameReflower {
         $style = $this->_frame->get_style();
 
         // Account for margins & padding
-        $dims = array($style->padding_left,
+        $dims = [$style->padding_left,
             $style->padding_right,
             $style->border_left_width,
             $style->border_right_width,
             $style->margin_left,
-            $style->margin_right);
+            $style->margin_right];
 
         $cb_w = $this->_frame->get_containing_block("w");
-        $delta = (float) $style->length_in_pt($dims, $cb_w);
+        $delta = (float)$style->length_in_pt($dims, $cb_w);
 
         // Handle degenerate case
         if (!$this->_frame->get_first_child()) {
-            return $this->_min_max_cache = array(
+            return $this->_min_max_cache = [
                 $delta, $delta,
                 "min" => $delta,
                 "max" => $delta,
-            );
+            ];
         }
 
-        $low = array();
-        $high = array();
+        $low = [];
+        $high = [];
 
         for ($iter = $this->_frame->get_children()->getIterator(); $iter->valid(); $iter->next()) {
             $inline_min = 0;
@@ -243,7 +247,7 @@ abstract class AbstractFrameReflower {
 
                 $minmax = $child->get_min_max_width();
 
-                if (in_array($iter->current()->get_style()->white_space, array("pre", "nowrap"))) {
+                if (in_array($iter->current()->get_style()->white_space, ["pre", "nowrap"])) {
                     $inline_min += $minmax["min"];
                 } else {
                     $low[] = $minmax["min"];
@@ -272,7 +276,7 @@ abstract class AbstractFrameReflower {
         // content.  If the width is a percentage ignore it for now.
         $width = $style->width;
         if ($width !== "auto" && !Helpers::is_percent($width)) {
-            $width = (float) $style->length_in_pt($width, $cb_w);
+            $width = (float)$style->length_in_pt($width, $cb_w);
             if ($min < $width) {
                 $min = $width;
             }
@@ -283,7 +287,7 @@ abstract class AbstractFrameReflower {
 
         $min += $delta;
         $max += $delta;
-        return $this->_min_max_cache = array($min, $max, "min" => $min, "max" => $max);
+        return $this->_min_max_cache = [$min, $max, "min" => $min, "max" => $max];
     }
 
     /**
@@ -293,7 +297,8 @@ abstract class AbstractFrameReflower {
      * @param $single_trim
      * @return string
      */
-    protected function _parse_string($string, $single_trim = false) {
+    protected function _parse_string($string, $single_trim = false)
+    {
         if ($single_trim) {
             $string = preg_replace('/^[\"\']/', "", $string);
             $string = preg_replace('/[\"\']$/', "", $string);
@@ -301,12 +306,13 @@ abstract class AbstractFrameReflower {
             $string = trim($string, "'\"");
         }
 
-        $string = str_replace(array("\\\n", '\\"', "\\'"), array("", '"', "'"), $string);
+        $string = str_replace(["\\\n", '\\"', "\\'"],
+            ["", '"', "'"], $string);
 
         // Convert escaped hex characters into ascii characters (e.g. \A => newline)
-        $string = preg_replace_callback("/\\\\([0-9a-fA-F]{0,6})/", function ($matches) {
-            return \Dompdf\Helpers::unichr(hexdec($matches[1]));
-        }, $string);
+        $string = preg_replace_callback("/\\\\([0-9a-fA-F]{0,6})/",
+            function ($matches) { return \Dompdf\Helpers::unichr(hexdec($matches[1])); },
+            $string);
         return $string;
     }
 
@@ -315,7 +321,8 @@ abstract class AbstractFrameReflower {
      *
      * @return array|null An array of pairs of quotes
      */
-    protected function _parse_quotes() {
+    protected function _parse_quotes()
+    {
         // Matches quote types
         $re = '/(\'[^\']*\')|(\"[^\"]*\")/';
 
@@ -326,13 +333,13 @@ abstract class AbstractFrameReflower {
             return null;
         }
 
-        $quotes_array = array();
+        $quotes_array = [];
         foreach ($matches as $_quote) {
             $quotes_array[] = $this->_parse_string($_quote[0], true);
         }
 
         if (empty($quotes_array)) {
-            $quotes_array = array('"', '"');
+            $quotes_array = ['"', '"'];
         }
 
         return array_chunk($quotes_array, 2);
@@ -343,16 +350,17 @@ abstract class AbstractFrameReflower {
      *
      * @return string|null The resulting string
      */
-    protected function _parse_content() {
+    protected function _parse_content()
+    {
         // Matches generated content
         $re = "/\n" .
-                "\s(counters?\\([^)]*\\))|\n" .
-                "\A(counters?\\([^)]*\\))|\n" .
-                "\s([\"']) ( (?:[^\"']|\\\\[\"'])+ )(?<!\\\\)\\3|\n" .
-                "\A([\"']) ( (?:[^\"']|\\\\[\"'])+ )(?<!\\\\)\\5|\n" .
-                "\s([^\s\"']+)|\n" .
-                "\A([^\s\"']+)\n" .
-                "/xi";
+            "\s(counters?\\([^)]*\\))|\n" .
+            "\A(counters?\\([^)]*\\))|\n" .
+            "\s([\"']) ( (?:[^\"']|\\\\[\"'])+ )(?<!\\\\)\\3|\n" .
+            "\A([\"']) ( (?:[^\"']|\\\\[\"'])+ )(?<!\\\\)\\5|\n" .
+            "\s([^\s\"']+)|\n" .
+            "\A([^\s\"']+)\n" .
+            "/xi";
 
         $content = $this->_frame->get_style()->content;
 
@@ -390,7 +398,7 @@ abstract class AbstractFrameReflower {
                     continue;
                 }
 
-                preg_match('/(counters?)(^\()*?\(\s*([^\s,]+)\s*(,\s*["\']?([^"\'\)]+)["\']?\s*(,\s*([^\s)]+)\s*)?)?\)/i', $match[1], $args);
+                preg_match('/(counters?)(^\()*?\(\s*([^\s,]+)\s*(,\s*["\']?([^"\'\)]*)["\']?\s*(,\s*([^\s)]+)\s*)?)?\)/i', $match[1], $args);
                 $counter_id = $args[3];
                 if (strtolower($args[1]) == 'counter') {
                     // counter(name [,style])
@@ -402,6 +410,7 @@ abstract class AbstractFrameReflower {
                     $p = $this->_frame->lookup_counter_frame($counter_id);
 
                     $text .= $p->counter_value($counter_id, $type);
+
                 } else if (strtolower($args[1]) == 'counters') {
                     // counters(name, string [,style])
                     if (isset($args[5])) {
@@ -417,7 +426,7 @@ abstract class AbstractFrameReflower {
                     }
 
                     $p = $this->_frame->lookup_counter_frame($counter_id);
-                    $tmp = array();
+                    $tmp = [];
                     while ($p) {
                         // We only want to use the counter values when they actually increment the counter
                         if (array_key_exists($counter_id, $p->_counters)) {
@@ -430,6 +439,7 @@ abstract class AbstractFrameReflower {
                     // countertops?
                     continue;
                 }
+
             } else if (isset($match[4]) && $match[4] !== "") {
                 // String match
                 $text .= $this->_parse_string($match[4]);
@@ -470,7 +480,8 @@ abstract class AbstractFrameReflower {
     /**
      * Sets the generated content of a generated frame
      */
-    protected function _set_content() {
+    protected function _set_content()
+    {
         $frame = $this->_frame;
         $style = $frame->get_style();
 
@@ -511,8 +522,8 @@ abstract class AbstractFrameReflower {
      *
      * @return float
      */
-    public function calculate_auto_width() {
+    public function calculate_auto_width()
+    {
         return $this->_frame->get_margin_width();
     }
-
 }

@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameReflower;
 
 use Dompdf\FrameDecorator\Block as BlockFrameDecorator;
@@ -17,20 +15,23 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
  *
  * @package dompdf
  */
-class ListBullet extends AbstractFrameReflower {
+class ListBullet extends AbstractFrameReflower
+{
 
     /**
      * ListBullet constructor.
      * @param AbstractFrameDecorator $frame
      */
-    function __construct(AbstractFrameDecorator $frame) {
+    function __construct(AbstractFrameDecorator $frame)
+    {
         parent::__construct($frame);
     }
 
     /**
      * @param BlockFrameDecorator|null $block
      */
-    function reflow(BlockFrameDecorator $block = null) {
+    function reflow(BlockFrameDecorator $block = null)
+    {
         $style = $this->_frame->get_style();
 
         $style->width = $this->_frame->get_width();
@@ -41,5 +42,4 @@ class ListBullet extends AbstractFrameReflower {
             $p->add_frame_to_line($this->_frame);
         }
     }
-
 }

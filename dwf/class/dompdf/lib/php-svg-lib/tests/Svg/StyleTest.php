@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: Fabien
@@ -9,13 +8,14 @@
 
 namespace Svg\Tests;
 
-include_once __DIR__ . "/../../src/autoload.php";
-
 use Svg\Style;
+use PHPUnit\Framework\TestCase;
 
-class StyleTest extends \PHPUnit_Framework_TestCase {
+class StyleTest extends TestCase
+{
 
-    public function test_parseColor() {
+    public function test_parseColor()
+    {
         $this->assertEquals("none", Style::parseColor("none"));
         $this->assertEquals(array(255, 0, 0), Style::parseColor("RED"));
         $this->assertEquals(array(0, 0, 255), Style::parseColor("blue"));
@@ -30,7 +30,8 @@ class StyleTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(array(255, 255, 255), Style::parseColor("rgb(255, 255, 255)"));
     }
 
-    public function test_fromAttributes() {
+    public function test_fromAttributes()
+    {
         $style = new Style();
 
         $attributes = array(
@@ -46,7 +47,8 @@ class StyleTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("none", $style->stroke);
     }
 
-    public function test_convertSize() {
+    public function test_convertSize()
+    {
         $this->assertEquals(1, Style::convertSize(1));
         $this->assertEquals(10, Style::convertSize("10px")); // FIXME
         $this->assertEquals(10, Style::convertSize("10pt"));
@@ -54,3 +56,4 @@ class StyleTest extends \PHPUnit_Framework_TestCase {
     }
 
 }
+ 

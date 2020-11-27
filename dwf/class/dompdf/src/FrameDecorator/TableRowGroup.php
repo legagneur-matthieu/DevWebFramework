@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameDecorator;
 
 use Dompdf\Dompdf;
@@ -19,7 +17,8 @@ use Dompdf\Frame;
  *
  * @package dompdf
  */
-class TableRowGroup extends AbstractFrameDecorator {
+class TableRowGroup extends AbstractFrameDecorator
+{
 
     /**
      * Class constructor
@@ -27,7 +26,8 @@ class TableRowGroup extends AbstractFrameDecorator {
      * @param Frame $frame   Frame to decorate
      * @param Dompdf $dompdf Current dompdf instance
      */
-    function __construct(Frame $frame, Dompdf $dompdf) {
+    function __construct(Frame $frame, Dompdf $dompdf)
+    {
         parent::__construct($frame, $dompdf);
     }
 
@@ -39,7 +39,8 @@ class TableRowGroup extends AbstractFrameDecorator {
      *
      * @return void
      */
-    function split(Frame $child = null, $force_pagebreak = false) {
+    function split(Frame $child = null, $force_pagebreak = false)
+    {
         if (is_null($child)) {
             parent::split();
             return;
@@ -65,5 +66,5 @@ class TableRowGroup extends AbstractFrameDecorator {
         $cellmap->update_row_group($this, $child->get_prev_sibling());
         parent::split($child);
     }
-
 }
+

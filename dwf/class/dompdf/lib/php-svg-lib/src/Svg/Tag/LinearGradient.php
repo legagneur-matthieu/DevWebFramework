@@ -1,28 +1,29 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-use Svg\Gradient\Stop;
+
+use Svg\Gradient;
 use Svg\Style;
 
-class LinearGradient extends AbstractTag {
-
+class LinearGradient extends AbstractTag
+{
     protected $x1;
     protected $y1;
     protected $x2;
     protected $y2;
 
-    /** @var Stop[] */
+    /** @var Gradient\Stop[] */
     protected $stops = array();
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         parent::start($attributes);
 
         if (isset($attributes['x1'])) {
@@ -46,7 +47,7 @@ class LinearGradient extends AbstractTag {
                     continue;
                 }
 
-                $_stop = new Stop();
+                $_stop = new Gradient\Stop();
                 $_attributes = $_child->attributes;
 
                 // Style
@@ -79,5 +80,4 @@ class LinearGradient extends AbstractTag {
 
         return $this->stops;
     }
-
-}
+} 

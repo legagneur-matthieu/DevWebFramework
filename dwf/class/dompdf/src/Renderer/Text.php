@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -8,7 +7,6 @@
  * @author  Fabien Ménager <fabien.menager@gmail.com>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\Renderer;
 
 use Dompdf\Adapter\CPDF;
@@ -19,8 +17,8 @@ use Dompdf\Frame;
  *
  * @package dompdf
  */
-class Text extends AbstractRenderer {
-
+class Text extends AbstractRenderer
+{
     /** Thickness of underline. Screen: 0.08, print: better less, e.g. 0.04 */
     const DECO_THICKNESS = 0.02;
 
@@ -45,7 +43,8 @@ class Text extends AbstractRenderer {
     /**
      * @param \Dompdf\FrameDecorator\Text $frame
      */
-    function render(Frame $frame) {
+    function render(Frame $frame)
+    {
         $text = $frame->get_text();
         if (trim($text) === "") {
             return;
@@ -67,21 +66,24 @@ class Text extends AbstractRenderer {
             $bl = 0;
         }
 
-        $x += (float) $style->length_in_pt(array($ml, $pl, $bl), $cb["w"]);
+        $x += (float)$style->length_in_pt([$ml, $pl, $bl], $cb["w"]);
 
         $font = $style->font_family;
-        $size = $frame_font_size = $style->font_size;
-        $word_spacing = $frame->get_text_spacing() + (float) $style->length_in_pt($style->word_spacing);
-        $char_spacing = (float) $style->length_in_pt($style->letter_spacing);
+        $size = $style->font_size;
+        $frame_font_size = $frame->get_dompdf()->getFontMetrics()->getFontHeight($font, $size);
+        $word_spacing = $frame->get_text_spacing() + (float)$style->length_in_pt($style->word_spacing);
+        $char_spacing = (float)$style->length_in_pt($style->letter_spacing);
         $width = $style->width;
 
-        /* $text = str_replace(
+        /*$text = str_replace(
           array("{PAGE_NUM}"),
           array($this->_canvas->get_page_number()),
           $text
-          ); */
+        );*/
 
-        $this->_canvas->text($x, $y, $text, $font, $size, $style->color, $word_spacing, $char_spacing);
+        $this->_canvas->text($x, $y, $text,
+            $font, $size,
+            $style->color, $word_spacing, $char_spacing);
 
         $line = $frame->get_containing_line();
 
@@ -112,13 +114,14 @@ class Text extends AbstractRenderer {
         }
 
         $descent = $size * $underline_position;
-        $base = $size;
+        $base = $frame_font_size;
 
         // Handle text decoration:
         // http://www.w3.org/TR/CSS21/text.html#propdef-text-decoration
+
         // Draw all applicable text-decorations.  Start with the root and work our way down.
         $p = $frame;
-        $stack = array();
+        $stack = [];
         while ($p = $p->get_parent()) {
             $stack[] = $p;
         }
@@ -135,7 +138,7 @@ class Text extends AbstractRenderer {
 
             switch ($text_deco) {
                 default:
-                    continue;
+                    continue 2;
 
                 case "underline":
                     $deco_y += $base - $descent + $underline_offset + $line_thickness / 2;
@@ -157,9 +160,8 @@ class Text extends AbstractRenderer {
         }
 
         if ($this->_dompdf->getOptions()->getDebugLayout() && $this->_dompdf->getOptions()->getDebugLayoutLines()) {
-            $text_width = $this->_dompdf->getFontMetrics()->getTextWidth($text, $font, $frame_font_size);
-            $this->_debug_layout(array($x, $y, $text_width + ($line->wc - 1) * $word_spacing, $frame_font_size), "orange", array(0.5, 0.5));
+            $text_width = $this->_dompdf->getFontMetrics()->getTextWidth($text, $font, $size);
+            $this->_debug_layout([$x, $y, $text_width + ($line->wc - 1) * $word_spacing, $frame_font_size], "orange", [0.5, 0.5]);
         }
     }
-
 }

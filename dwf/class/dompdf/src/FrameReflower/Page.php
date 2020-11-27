@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -7,7 +6,6 @@
  * @author  Fabien Ménager <fabien.menager@gmail.com>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameReflower;
 
 use Dompdf\Frame;
@@ -19,7 +17,8 @@ use Dompdf\FrameDecorator\Page as PageFrameDecorator;
  *
  * @package dompdf
  */
-class Page extends AbstractFrameReflower {
+class Page extends AbstractFrameReflower
+{
 
     /**
      * Cache of the callbacks array
@@ -39,7 +38,8 @@ class Page extends AbstractFrameReflower {
      * Page constructor.
      * @param PageFrameDecorator $frame
      */
-    function __construct(PageFrameDecorator $frame) {
+    function __construct(PageFrameDecorator $frame)
+    {
         parent::__construct($frame);
     }
 
@@ -47,7 +47,8 @@ class Page extends AbstractFrameReflower {
      * @param Frame $frame
      * @param $page_number
      */
-    function apply_page_style(Frame $frame, $page_number) {
+    function apply_page_style(Frame $frame, $page_number)
+    {
         $style = $frame->get_style();
         $page_styles = $style->get_stylesheet()->get_page_styles();
 
@@ -90,8 +91,9 @@ class Page extends AbstractFrameReflower {
      *
      * @param BlockFrameDecorator|null $block
      */
-    function reflow(BlockFrameDecorator $block = null) {
-        $fixed_children = array();
+    function reflow(BlockFrameDecorator $block = null)
+    {
+        $fixed_children = [];
         $prev_child = null;
         $child = $this->_frame->get_first_child();
         $current_page = 0;
@@ -103,10 +105,10 @@ class Page extends AbstractFrameReflower {
 
             // Pages are only concerned with margins
             $cb = $this->_frame->get_containing_block();
-            $left = (float) $style->length_in_pt($style->margin_left, $cb["w"]);
-            $right = (float) $style->length_in_pt($style->margin_right, $cb["w"]);
-            $top = (float) $style->length_in_pt($style->margin_top, $cb["h"]);
-            $bottom = (float) $style->length_in_pt($style->margin_bottom, $cb["h"]);
+            $left = (float)$style->length_in_pt($style->margin_left, $cb["w"]);
+            $right = (float)$style->length_in_pt($style->margin_right, $cb["w"]);
+            $top = (float)$style->length_in_pt($style->margin_top, $cb["h"]);
+            $bottom = (float)$style->length_in_pt($style->margin_bottom, $cb["h"]);
 
             $content_x = $cb["x"] + $left;
             $content_y = $cb["y"] + $top;
@@ -175,7 +177,8 @@ class Page extends AbstractFrameReflower {
      * @param string $event the type of event
      * @param Frame $frame  the frame that event is triggered on
      */
-    protected function _check_callbacks($event, $frame) {
+    protected function _check_callbacks($event, $frame)
+    {
         if (!isset($this->_callbacks)) {
             $dompdf = $this->_frame->get_dompdf();
             $this->_callbacks = $dompdf->get_callbacks();
@@ -183,10 +186,10 @@ class Page extends AbstractFrameReflower {
         }
 
         if (is_array($this->_callbacks) && isset($this->_callbacks[$event])) {
-            $info = array(
+            $info = [
                 0 => $this->_canvas, "canvas" => $this->_canvas,
-                1 => $frame, "frame" => $frame,
-            );
+                1 => $frame,         "frame"  => $frame,
+            ];
             $fs = $this->_callbacks[$event];
             foreach ($fs as $f) {
                 if (is_callable($f)) {
@@ -199,5 +202,4 @@ class Page extends AbstractFrameReflower {
             }
         }
     }
-
 }

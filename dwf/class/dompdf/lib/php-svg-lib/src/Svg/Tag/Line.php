@@ -1,22 +1,23 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class Line extends Shape {
-
+class Line extends Shape
+{
     protected $x1 = 0;
     protected $y1 = 0;
+
     protected $x2 = 0;
     protected $y2 = 0;
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         if (isset($attributes['x1'])) {
             $this->x1 = $attributes['x1'];
         }
@@ -34,5 +35,4 @@ class Line extends Shape {
         $surface->moveTo($this->x1, $this->y1);
         $surface->lineTo($this->x2, $this->y2);
     }
-
-}
+} 

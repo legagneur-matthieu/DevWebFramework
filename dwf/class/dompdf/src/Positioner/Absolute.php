@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -14,12 +13,14 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
 /**
  * Positions absolutely positioned frames
  */
-class Absolute extends AbstractPositioner {
+class Absolute extends AbstractPositioner
+{
 
     /**
      * @param AbstractFrameDecorator $frame
      */
-    function position(AbstractFrameDecorator $frame) {
+    function position(AbstractFrameDecorator $frame)
+    {
         $style = $frame->get_style();
 
         $p = $frame->find_positionned_parent();
@@ -36,13 +37,13 @@ class Absolute extends AbstractPositioner {
             list($x, $y, $w, $h) = $p->get_padding_box();
         }
 
-        list($width, $height) = array($frame->get_margin_width(), $frame->get_margin_height());
+        list($width, $height) = [$frame->get_margin_width(), $frame->get_margin_height()];
 
         $orig_style = $frame->get_original_style();
         $orig_width = $orig_style->width;
         $orig_height = $orig_style->height;
 
-        /*         * **************************
+        /****************************
          *
          * Width auto:
          * ____________| left=auto | left=fixed |
@@ -53,7 +54,7 @@ class Absolute extends AbstractPositioner {
          * ____________| left=auto | left=fixed |
          * right=auto  |     E     |     F      |
          * right=fixed |     G     |     H      |
-         * *************************** */
+         *****************************/
 
         if ($left === "auto") {
             if ($right === "auto") {
@@ -71,14 +72,14 @@ class Absolute extends AbstractPositioner {
         } else {
             if ($right === "auto") {
                 // B or F
-                $x += (float) $left;
+                $x += (float)$left;
             } else {
                 if ($orig_width === "auto") {
                     // D - TODO change width
-                    $x += (float) $left;
+                    $x += (float)$left;
                 } else {
                     // H - Everything is fixed: left + width win
-                    $x += (float) $left;
+                    $x += (float)$left;
                 }
             }
         }
@@ -91,28 +92,27 @@ class Absolute extends AbstractPositioner {
             } else {
                 if ($orig_height === "auto") {
                     // C
-                    $y += (float) $h - $height - (float) $bottom;
+                    $y += (float)$h - $height - (float)$bottom;
                 } else {
                     // G
-                    $y += (float) $h - $height - (float) $bottom;
+                    $y += (float)$h - $height - (float)$bottom;
                 }
             }
         } else {
             if ($bottom === "auto") {
                 // B or F
-                $y += (float) $top;
+                $y += (float)$top;
             } else {
                 if ($orig_height === "auto") {
                     // D - TODO change height
-                    $y += (float) $top;
+                    $y += (float)$top;
                 } else {
                     // H - Everything is fixed: top + height win
-                    $y += (float) $top;
+                    $y += (float)$top;
                 }
             }
         }
 
         $frame->set_position($x, $y);
     }
-
 }

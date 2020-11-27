@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\Frame;
 
 use Dompdf\Css\Style;
@@ -30,9 +28,10 @@ use Dompdf\Positioner\AbstractPositioner;
  * @access  private
  * @package dompdf
  */
-class Factory {
+class Factory
+{
 
-    /**
+     /**
      * Array of positioners for specific frame types
      *
      * @var AbstractPositioner[]
@@ -47,7 +46,8 @@ class Factory {
      *
      * @return PageFrameDecorator
      */
-    static function decorate_root(Frame $root, Dompdf $dompdf) {
+    static function decorate_root(Frame $root, Dompdf $dompdf)
+    {
         $frame = new PageFrameDecorator($root, $dompdf);
         $frame->set_reflower(new PageFrameReflower($frame));
         $root->set_decorator($frame);
@@ -66,7 +66,8 @@ class Factory {
      * @return AbstractFrameDecorator
      * FIXME: this is admittedly a little smelly...
      */
-    static function decorate_frame(Frame $frame, Dompdf $dompdf, Frame $root = null) {
+    static function decorate_frame(Frame $frame, Dompdf $dompdf, Frame $root = null)
+    {
         if (is_null($dompdf)) {
             throw new Exception("The DOMPDF argument is required");
         }
@@ -181,7 +182,7 @@ class Factory {
                 break;
 
             default:
-            // FIXME: should throw some sort of warning or something?
+                // FIXME: should throw some sort of warning or something?
             case "none":
                 if ($style->_dompdf_keep !== "yes") {
                     // Remove the node and the frame
@@ -215,8 +216,8 @@ class Factory {
             $reflower = "Image";
         }
 
-        $decorator = "Dompdf\\FrameDecorator\\$decorator";
-        $reflower = "Dompdf\\FrameReflower\\$reflower";
+        $decorator  = "Dompdf\\FrameDecorator\\$decorator";
+        $reflower   = "Dompdf\\FrameReflower\\$reflower";
 
         /** @var AbstractFrameDecorator $deco */
         $deco = new $decorator($frame, $dompdf);
@@ -250,7 +251,7 @@ class Factory {
                     if (!$parent_node->hasAttribute("dompdf-counter")) {
                         $index = ($parent_node->hasAttribute("start") ? $parent_node->getAttribute("start") : 1);
                     } else {
-                        $index = (int) $parent_node->getAttribute("dompdf-counter") + 1;
+                        $index = (int)$parent_node->getAttribute("dompdf-counter") + 1;
                     }
                 }
 
@@ -275,12 +276,12 @@ class Factory {
      * @param string $type type of positioner to use
      * @return AbstractPositioner
      */
-    protected static function getPositionerInstance($type) {
+    protected static function getPositionerInstance($type)
+    {
         if (!isset(self::$_positioners[$type])) {
-            $class = '\\Dompdf\\Positioner\\' . $type;
+            $class = '\\Dompdf\\Positioner\\'.$type;
             self::$_positioners[$type] = new $class();
         }
         return self::$_positioners[$type];
     }
-
 }

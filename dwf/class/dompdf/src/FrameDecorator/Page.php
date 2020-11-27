@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameDecorator;
 
 use Dompdf\Css\Style;
@@ -21,7 +19,8 @@ use Dompdf\Renderer;
  * @access  private
  * @package dompdf
  */
-class Page extends AbstractFrameDecorator {
+class Page extends AbstractFrameDecorator
+{
 
     /**
      * y value of bottom page margin
@@ -56,7 +55,7 @@ class Page extends AbstractFrameDecorator {
      *
      * @var array
      */
-    protected $_floating_frames = array();
+    protected $_floating_frames = [];
 
     //........................................................................
 
@@ -66,7 +65,8 @@ class Page extends AbstractFrameDecorator {
      * @param Frame $frame the frame to decorate
      * @param Dompdf $dompdf
      */
-    function __construct(Frame $frame, Dompdf $dompdf) {
+    function __construct(Frame $frame, Dompdf $dompdf)
+    {
         parent::__construct($frame, $dompdf);
         $this->_page_full = false;
         $this->_in_table = 0;
@@ -78,7 +78,8 @@ class Page extends AbstractFrameDecorator {
      *
      * @param Renderer $renderer the renderer to use
      */
-    function set_renderer($renderer) {
+    function set_renderer($renderer)
+    {
         $this->_renderer = $renderer;
     }
 
@@ -87,7 +88,8 @@ class Page extends AbstractFrameDecorator {
      *
      * @return Renderer
      */
-    function get_renderer() {
+    function get_renderer()
+    {
         return $this->_renderer;
     }
 
@@ -99,7 +101,8 @@ class Page extends AbstractFrameDecorator {
      * @param float $w
      * @param float $h
      */
-    function set_containing_block($x = null, $y = null, $w = null, $h = null) {
+    function set_containing_block($x = null, $y = null, $w = null, $h = null)
+    {
         parent::set_containing_block($x, $y, $w, $h);
         //$w = $this->get_containing_block("w");
         if (isset($h)) {
@@ -112,15 +115,17 @@ class Page extends AbstractFrameDecorator {
      *
      * @return bool
      */
-    function is_full() {
+    function is_full()
+    {
         return $this->_page_full;
     }
 
     /**
      * Start a new page by resetting the full flag.
      */
-    function next_page() {
-        $this->_floating_frames = array();
+    function next_page()
+    {
+        $this->_floating_frames = [];
         $this->_renderer->new_page();
         $this->_page_full = false;
     }
@@ -128,14 +133,16 @@ class Page extends AbstractFrameDecorator {
     /**
      * Indicate to the page that a table is currently being reflowed.
      */
-    function table_reflow_start() {
+    function table_reflow_start()
+    {
         $this->_in_table++;
     }
 
     /**
      * Indicate to the page that table reflow is finished.
      */
-    function table_reflow_end() {
+    function table_reflow_end()
+    {
         $this->_in_table--;
     }
 
@@ -144,7 +151,8 @@ class Page extends AbstractFrameDecorator {
      *
      * @return bool
      */
-    function in_nested_table() {
+    function in_nested_table()
+    {
         return $this->_in_table > 1;
     }
 
@@ -159,15 +167,15 @@ class Page extends AbstractFrameDecorator {
      *
      * @return bool true if a page break occured
      */
-    function check_forced_page_break(Frame $frame) {
-
+    function check_forced_page_break(Frame $frame)
+    {
         // Skip check if page is already split
         if ($this->_page_full) {
             return null;
         }
 
-        $block_types = array("block", "list-item", "table", "inline");
-        $page_breaks = array("always", "left", "right");
+        $block_types = ["block", "list-item", "table", "inline"];
+        $page_breaks = ["always", "left", "right"];
 
         $style = $frame->get_style();
 
@@ -186,9 +194,10 @@ class Page extends AbstractFrameDecorator {
             // Prevent cascading splits
             $frame->split(null, true);
             // We have to grab the style again here because split() resets
-            // $frame->style to the frame's orignal style.
+            // $frame->style to the frame's original style.
             $frame->get_style()->page_break_before = "auto";
             $this->_page_full = true;
+            $frame->_already_pushed = true;
 
             return true;
         }
@@ -198,6 +207,7 @@ class Page extends AbstractFrameDecorator {
             $frame->split(null, true);
             $prev->get_style()->page_break_after = "auto";
             $this->_page_full = true;
+            $frame->_already_pushed = true;
 
             return true;
         }
@@ -208,6 +218,7 @@ class Page extends AbstractFrameDecorator {
                 $frame->split(null, true);
                 $prev_last_child->get_style()->page_break_after = "auto";
                 $this->_page_full = true;
+                $frame->_already_pushed = true;
 
                 return true;
             }
@@ -226,6 +237,10 @@ class Page extends AbstractFrameDecorator {
      *    break occurs here, the used values of the relevant
      *    'margin-top' and 'margin-bottom' properties are set to '0'.
      *    2. Between line boxes inside a block box.
+     *    3. Between the content edge of a block container box and the
+     *    outer edges of its child content (margin edges of block-level
+     *    children or line box edges for inline-level children) if there
+     *    is a (non-zero) gap between them.
      *
      * These breaks are subject to the following rules:
      *
@@ -265,8 +280,9 @@ class Page extends AbstractFrameDecorator {
      *
      * @return bool true if a break is allowed, false otherwise
      */
-    protected function _page_break_allowed(Frame $frame) {
-        $block_types = array("block", "list-item", "table", "-dompdf-image");
+    protected function _page_break_allowed(Frame $frame)
+    {
+        $block_types = ["block", "list-item", "table", "-dompdf-image"];
         Helpers::dompdf_debug("page-break", "_page_break_allowed(" . $frame->get_node()->nodeName . ")");
         $display = $frame->get_style()->display;
 
@@ -274,7 +290,7 @@ class Page extends AbstractFrameDecorator {
         if (in_array($display, $block_types)) {
 
             // Avoid breaks within table-cells
-            if ($this->_in_table) {
+            if ($this->_in_table > ($display === "table" ? 1 : 0)) {
                 Helpers::dompdf_debug("page-break", "In table: " . $this->_in_table);
 
                 return false;
@@ -320,15 +336,20 @@ class Page extends AbstractFrameDecorator {
                 return false;
             }
 
-            // If the frame is the first block-level frame, use the value from
-            // $frame's parent instead.
+            // If the frame is the first block-level frame, only allow a page
+            // break if there is a (non-zero) gap between the frame and its
+            // parent
             if (!$prev && $parent) {
-                return $this->_page_break_allowed($parent);
+                Helpers::dompdf_debug("page-break", "First block level frame, checking gap");
+
+                return $frame->get_style()->length_in_pt($frame->get_style()->margin_top) != 0
+                    || $parent->get_style()->length_in_pt($parent->get_style()->padding_top) != 0;
             }
 
             Helpers::dompdf_debug("page-break", "block: break allowed");
 
             return true;
+
         } // Inline frames (2):
         else {
             if (in_array($display, Style::$INLINE_TYPES)) {
@@ -350,6 +371,7 @@ class Page extends AbstractFrameDecorator {
 
                 // FIXME: Checking widows is tricky without having laid out the
                 // remaining line boxes.  Just ignore it for now...
+
                 // Rule D
                 $p = $block_parent;
                 while ($p) {
@@ -385,7 +407,7 @@ class Page extends AbstractFrameDecorator {
 
                 return true;
 
-                // Table-rows
+            // Table-rows
             } else {
                 if ($display === "table-row") {
                     // Simply check if the parent table's page_break_inside property is
@@ -402,7 +424,7 @@ class Page extends AbstractFrameDecorator {
                         $p = $p->find_block_parent();
                     }
 
-                    // Avoid breaking after the first row of a table
+                    // Avoid breaking before the first row of a table
                     if ($table && $table->get_first_child() === $frame || $table->get_first_child()->get_first_child() === $frame) {
                         Helpers::dompdf_debug("page-break", "table: first-row");
 
@@ -424,6 +446,7 @@ class Page extends AbstractFrameDecorator {
 
                         // Disallow breaks at row-groups: only split at row boundaries
                         return false;
+
                     } else {
                         Helpers::dompdf_debug("page-break", "? " . $frame->get_style()->display . "");
 
@@ -443,53 +466,24 @@ class Page extends AbstractFrameDecorator {
      *
      * @return bool
      */
-    function check_page_break(Frame $frame) {
-        //FIXME: should not need to do this since we're tracking table status in `$this->_in_table`
-        $p = $frame;
-        $in_table = false;
-        while ($p) {
-            if ($p->is_table()) {
-                $in_table = true;
-                break;
-            }
-            $p = $p->get_parent();
-        }
-        // Do not split if we have already or if the frame was already
-        // pushed to the next page (prevents infinite loops)
-        if ($in_table) {
-            if ($this->_page_full && $frame->_already_pushed) {
-                return false;
-            }
-        } elseif ($this->_page_full || $frame->_already_pushed) {
+    function check_page_break(Frame $frame)
+    {
+        if ($this->_page_full || $frame->_already_pushed) {
             return false;
         }
 
-        //FIXME: work-around for infinite loop due to tables 
-        if ($in_table && $frame->_already_pushed) {
-            return false;
-        }
         $p = $frame;
         do {
             $display = $p->get_style()->display;
             if ($display == "table-row") {
-                if ($p->_already_pushed) {
-                    return false;
-                }
+                if ($p->_already_pushed) { return false; }
             }
         } while ($p = $p->get_parent());
 
-        // If the frame is absolute of fixed it shouldn't break
+        // If the frame is absolute or fixed it shouldn't break
         $p = $frame;
         do {
             if ($p->is_absolute()) {
-                return false;
-            }
-
-            // FIXME If the row is taller than the page and
-            // if it the first of the page, we don't break
-            $display = $p->get_style()->display;
-            if ($display === "table-row" && !$p->get_prev_sibling() && $p->get_margin_height() > $this->get_margin_height()
-            ) {
                 return false;
             }
         } while ($p = $p->get_parent());
@@ -497,16 +491,15 @@ class Page extends AbstractFrameDecorator {
         $margin_height = $frame->get_margin_height();
 
         // Determine the frame's maximum y value
-        $max_y = (float) $frame->get_position("y") + $margin_height;
+        $max_y = (float)$frame->get_position("y") + $margin_height;
 
         // If a split is to occur here, then the bottom margins & paddings of all
         // parents of $frame must fit on the page as well:
         $p = $frame->get_parent();
         while ($p) {
-            $max_y += $p->get_style()->computed_bottom_spacing();
+            $max_y += (float) $p->get_style()->computed_bottom_spacing();
             $p = $p->get_parent();
         }
-
 
         // Check if $frame flows off the page
         if ($max_y <= $this->_bottom_page_margin) {
@@ -520,6 +513,7 @@ class Page extends AbstractFrameDecorator {
         // yes: determine page break location
         $iter = $frame;
         $flg = false;
+        $pushed_flg = false;
 
         $in_table = $this->_in_table;
 
@@ -532,11 +526,14 @@ class Page extends AbstractFrameDecorator {
                 break;
             }
 
-            if ($this->_page_break_allowed($iter)) {
+            if ($iter->_already_pushed) {
+                $pushed_flg = true;
+            } elseif ($this->_page_break_allowed($iter)) {
                 Helpers::dompdf_debug("page-break", "break allowed, splitting.");
                 $iter->split(null, true);
                 $this->_page_full = true;
                 $this->_in_table = $in_table;
+                $iter->_already_pushed = true;
                 $frame->_already_pushed = true;
 
                 return true;
@@ -550,7 +547,13 @@ class Page extends AbstractFrameDecorator {
                 }
 
                 $iter = $next;
+                $pushed_flg = false;
                 continue;
+            }
+
+            if ($pushed_flg) {
+                // The frame was already pushed, avoid breaking on a previous page
+                break;
             }
 
             if ($next = $iter->get_prev_sibling()) {
@@ -596,6 +599,7 @@ class Page extends AbstractFrameDecorator {
 
             if ($iter) {
                 $iter->split(null, true);
+                $iter->_already_pushed = true;
             } else {
                 return false;
             }
@@ -615,7 +619,8 @@ class Page extends AbstractFrameDecorator {
      * @param Frame|null $frame
      * @param bool $force_pagebreak
      */
-    function split(Frame $frame = null, $force_pagebreak = false) {
+    function split(Frame $frame = null, $force_pagebreak = false)
+    {
         // Do nothing
     }
 
@@ -626,21 +631,24 @@ class Page extends AbstractFrameDecorator {
      *
      * @return void
      */
-    function add_floating_frame(Frame $frame) {
+    function add_floating_frame(Frame $frame)
+    {
         array_unshift($this->_floating_frames, $frame);
     }
 
     /**
      * @return Frame[]
      */
-    function get_floating_frames() {
+    function get_floating_frames()
+    {
         return $this->_floating_frames;
     }
 
     /**
      * @param $key
      */
-    public function remove_floating_frame($key) {
+    public function remove_floating_frame($key)
+    {
         unset($this->_floating_frames[$key]);
     }
 
@@ -648,7 +656,8 @@ class Page extends AbstractFrameDecorator {
      * @param Frame $child
      * @return int|mixed
      */
-    public function get_lowest_float_offset(Frame $child) {
+    public function get_lowest_float_offset(Frame $child)
+    {
         $style = $child->get_style();
         $side = $style->clear;
         $float = $style->float;
@@ -670,5 +679,4 @@ class Page extends AbstractFrameDecorator {
 
         return $y;
     }
-
 }

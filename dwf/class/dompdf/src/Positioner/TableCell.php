@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -17,15 +16,16 @@ use Dompdf\FrameDecorator\Table;
  *
  * @package dompdf
  */
-class TableCell extends AbstractPositioner {
+class TableCell extends AbstractPositioner
+{
 
     /**
      * @param AbstractFrameDecorator $frame
      */
-    function position(AbstractFrameDecorator $frame) {
+    function position(AbstractFrameDecorator $frame)
+    {
         $table = Table::find_parent_table($frame);
         $cellmap = $table->get_cellmap();
         $frame->set_position($cellmap->get_frame_position($frame));
     }
-
 }

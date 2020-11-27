@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameReflower;
 
 use Dompdf\FrameDecorator\Block as BlockFrameDecorator;
@@ -19,20 +17,22 @@ use Dompdf\Exception;
  *
  * @package dompdf
  */
-class TableRow extends AbstractFrameReflower {
-
+class TableRow extends AbstractFrameReflower
+{
     /**
      * TableRow constructor.
      * @param TableRowFrameDecorator $frame
      */
-    function __construct(TableRowFrameDecorator $frame) {
+    function __construct(TableRowFrameDecorator $frame)
+    {
         parent::__construct($frame);
     }
 
     /**
      * @param BlockFrameDecorator|null $block
      */
-    function reflow(BlockFrameDecorator $block = null) {
+    function reflow(BlockFrameDecorator $block = null)
+    {
         $page = $this->_frame->get_root();
 
         if ($page->is_full()) {
@@ -67,8 +67,8 @@ class TableRow extends AbstractFrameReflower {
     /**
      * @throws Exception
      */
-    function get_min_max_width() {
+    function get_min_max_width()
+    {
         throw new Exception("Min/max width is undefined for table rows");
     }
-
 }

@@ -1,21 +1,21 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class Text extends Shape {
-
+class Text extends Shape
+{
     protected $x = 0;
     protected $y = 0;
     protected $text = "";
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         $document = $this->document;
         $height = $this->document->getHeight();
         $this->y = $height;
@@ -30,7 +30,8 @@ class Text extends Shape {
         $document->getSurface()->transform(1, 0, 0, -1, 0, $height);
     }
 
-    public function end() {
+    public function end()
+    {
         $surface = $this->document->getSurface();
         $x = $this->x;
         $y = $this->y;
@@ -52,16 +53,18 @@ class Text extends Shape {
         $surface->fillText($this->getText(), $x, $y);
     }
 
-    protected function after() {
+    protected function after()
+    {
         $this->document->getSurface()->restore();
     }
 
-    public function appendText($text) {
+    public function appendText($text)
+    {
         $this->text .= $text;
     }
 
-    public function getText() {
+    public function getText()
+    {
         return trim($this->text);
     }
-
-}
+} 

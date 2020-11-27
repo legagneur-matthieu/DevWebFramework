@@ -1,10 +1,9 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
@@ -12,26 +11,30 @@ namespace Svg\Tag;
 use Svg\Document;
 use Svg\Style;
 
-abstract class AbstractTag {
-
+abstract class AbstractTag
+{
     /** @var Document */
     protected $document;
+
     public $tagName;
 
     /** @var Style */
     protected $style;
-    protected $attributes;
+
+    protected $attributes = array();
+
     protected $hasShape = true;
 
     /** @var self[] */
     protected $children = array();
 
-    public function __construct(Document $document, $tagName) {
+    public function __construct(Document $document, $tagName)
+    {
         $this->document = $document;
         $this->tagName = $tagName;
     }
 
-    public function getDocument() {
+    public function getDocument(){
         return $this->document;
     }
 
@@ -40,7 +43,7 @@ abstract class AbstractTag {
      */
     public function getParentGroup() {
         $stack = $this->getDocument()->getStack();
-        for ($i = count($stack) - 2; $i >= 0; $i--) {
+        for ($i = count($stack)-2; $i >= 0; $i--) {
             $tag = $stack[$i];
 
             if ($tag instanceof Group || $tag instanceof Document) {
@@ -51,7 +54,8 @@ abstract class AbstractTag {
         return null;
     }
 
-    public function handle($attributes) {
+    public function handle($attributes)
+    {
         $this->attributes = $attributes;
 
         if (!$this->getDocument()->inDefs) {
@@ -60,34 +64,37 @@ abstract class AbstractTag {
         }
     }
 
-    public function handleEnd() {
+    public function handleEnd()
+    {
         if (!$this->getDocument()->inDefs) {
             $this->end();
             $this->after();
         }
     }
 
-    protected function before($attributes) {
-        
+    protected function before($attributes)
+    {
     }
 
-    protected function start($attributes) {
-        
+    protected function start($attributes)
+    {
     }
 
-    protected function end() {
-        
+    protected function end()
+    {
     }
 
-    protected function after() {
-        
+    protected function after()
+    {
     }
 
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
-    protected function setStyle(Style $style) {
+    protected function setStyle(Style $style)
+    {
         $this->style = $style;
 
         if ($style->display === "none") {
@@ -98,7 +105,8 @@ abstract class AbstractTag {
     /**
      * @return Style
      */
-    public function getStyle() {
+    public function getStyle()
+    {
         return $this->style;
     }
 
@@ -118,7 +126,8 @@ abstract class AbstractTag {
         return $style;
     }
 
-    protected function applyTransform($attributes) {
+    protected function applyTransform($attributes)
+    {
 
         if (isset($attributes["transform"])) {
             $surface = $this->document->getSurface();
@@ -127,7 +136,10 @@ abstract class AbstractTag {
 
             $match = array();
             preg_match_all(
-                    '/(matrix|translate|scale|rotate|skewX|skewY)\((.*?)\)/is', $transform, $match, PREG_SET_ORDER
+                '/(matrix|translate|scale|rotate|skewX|skewY)\((.*?)\)/is',
+                $transform,
+                $match,
+                PREG_SET_ORDER
             );
 
             $transformations = array();
@@ -154,7 +166,14 @@ abstract class AbstractTag {
                         break;
 
                     case "rotate":
-                        $surface->rotate($t[1]);
+                        if (isset($t[2])) {
+                            $t[3] = isset($t[3]) ? $t[3] : 0;
+                            $surface->translate($t[2], $t[3]);
+                            $surface->rotate($t[1]);
+                            $surface->translate(-$t[2], -$t[3]);
+                        } else {
+                            $surface->rotate($t[1]);
+                        }
                         break;
 
                     case "skewX":
@@ -168,5 +187,4 @@ abstract class AbstractTag {
             }
         }
     }
-
-}
+} 

@@ -1,16 +1,15 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
  * @author  Fabien M�nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class UseTag extends AbstractTag {
-
+class UseTag extends AbstractTag
+{
     protected $x = 0;
     protected $y = 0;
     protected $width;
@@ -19,7 +18,8 @@ class UseTag extends AbstractTag {
     /** @var AbstractTag */
     protected $reference;
 
-    protected function before($attributes) {
+    protected function before($attributes)
+    {
         if (isset($attributes['x'])) {
             $this->x = $attributes['x'];
         }
@@ -61,7 +61,8 @@ class UseTag extends AbstractTag {
         $this->getDocument()->getSurface()->restore();
     }
 
-    public function handle($attributes) {
+    public function handle($attributes)
+    {
         parent::handle($attributes);
 
         if (!$this->reference) {
@@ -78,7 +79,8 @@ class UseTag extends AbstractTag {
         }
     }
 
-    public function handleEnd() {
+    public function handleEnd()
+    {
         parent::handleEnd();
 
         if (!$this->reference) {
@@ -91,5 +93,4 @@ class UseTag extends AbstractTag {
             $_child->handleEnd();
         }
     }
-
-}
+} 

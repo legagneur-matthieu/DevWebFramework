@@ -1,21 +1,21 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class Circle extends Shape {
-
+class Circle extends Shape
+{
     protected $cx = 0;
     protected $cy = 0;
     protected $r;
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         if (isset($attributes['cx'])) {
             $this->cx = $attributes['cx'];
         }
@@ -28,5 +28,4 @@ class Circle extends Shape {
 
         $this->document->getSurface()->circle($this->cx, $this->cy, $this->r);
     }
-
-}
+} 

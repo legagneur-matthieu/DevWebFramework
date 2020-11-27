@@ -1,5 +1,4 @@
 <?php
-
 namespace Dompdf\Frame;
 
 use Dompdf\Frame;
@@ -11,8 +10,8 @@ use IteratorAggregate;
  * @access private
  * @package dompdf
  */
-class FrameList implements IteratorAggregate {
-
+class FrameList implements IteratorAggregate
+{
     /**
      * @var Frame
      */
@@ -21,15 +20,16 @@ class FrameList implements IteratorAggregate {
     /**
      * @param Frame $frame
      */
-    function __construct($frame) {
+    function __construct($frame)
+    {
         $this->_frame = $frame;
     }
 
     /**
      * @return FrameListIterator
      */
-    function getIterator() {
+    function getIterator()
+    {
         return new FrameListIterator($this->_frame);
     }
-
 }

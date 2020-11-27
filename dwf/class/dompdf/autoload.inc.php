@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -7,11 +6,14 @@
  * @author  Fabien Ménager <fabien.menager@gmail.com>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
+
 // HMLT5 Parser
-require_once __DIR__ . '/lib/html5lib/Parser.php';
+//FIXME: replace with masterminds HTML5
+//require_once __DIR__ . '/lib/html5lib/Parser.php';
 
 // Sabberworm
-spl_autoload_register(function($class) {
+spl_autoload_register(function($class)
+{
     if (strpos($class, 'Sabberworm') !== false) {
         $file = str_replace('\\', DIRECTORY_SEPARATOR, $class);
         $file = realpath(__DIR__ . '/lib/php-css-parser/lib/' . (empty($file) ? '' : DIRECTORY_SEPARATOR) . $file . '.php');

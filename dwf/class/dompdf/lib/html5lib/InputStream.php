@@ -2,35 +2,34 @@
 
 /*
 
-  Copyright 2009 Geoffrey Sneddon <http://gsnedders.com/>
+Copyright 2009 Geoffrey Sneddon <http://gsnedders.com/>
 
-  Permission is hereby granted, free of charge, to any person obtaining a
-  copy of this software and associated documentation files (the
-  "Software"), to deal in the Software without restriction, including
-  without limitation the rights to use, copy, modify, merge, publish,
-  distribute, sublicense, and/or sell copies of the Software, and to
-  permit persons to whom the Software is furnished to do so, subject to
-  the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-  The above copyright notice and this permission notice shall be included
-  in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
- */
+*/
 
 // Some conventions:
 // /* */ indicates verbatim text from the HTML 5 specification
 // // indicates regular comments
 
 class HTML5_InputStream {
-
     /**
      * The string data we're parsing.
      */
@@ -49,7 +48,7 @@ class HTML5_InputStream {
     /**
      * Parse errors.
      */
-    public $errors = array();
+    public $errors = [];
 
     /**
      * @param $data | Data to parse
@@ -58,14 +57,14 @@ class HTML5_InputStream {
     public function __construct($data) {
 
         /* Given an encoding, the bytes in the input stream must be
-          converted to Unicode characters for the tokeniser, as
-          described by the rules for that encoding, except that the
-          leading U+FEFF BYTE ORDER MARK character, if any, must not
-          be stripped by the encoding layer (it is stripped by the rule below).
+        converted to Unicode characters for the tokeniser, as
+        described by the rules for that encoding, except that the
+        leading U+FEFF BYTE ORDER MARK character, if any, must not
+        be stripped by the encoding layer (it is stripped by the rule below).
 
-          Bytes or sequences of bytes in the original byte stream that
-          could not be converted to Unicode characters must be converted
-          to U+FFFD REPLACEMENT CHARACTER code points. */
+        Bytes or sequences of bytes in the original byte stream that
+        could not be converted to Unicode characters must be converted
+        to U+FFFD REPLACEMENT CHARACTER code points. */
 
         // XXX currently assuming input data is UTF-8; once we
         // build encoding detection this will no longer be the case
@@ -82,53 +81,55 @@ class HTML5_InputStream {
         }
 
         /* One leading U+FEFF BYTE ORDER MARK character must be
-          ignored if any are present. */
+        ignored if any are present. */
         if (substr($data, 0, 3) === "\xEF\xBB\xBF") {
             $data = substr($data, 3);
         }
 
         /* All U+0000 NULL characters in the input must be replaced
-          by U+FFFD REPLACEMENT CHARACTERs. Any occurrences of such
-          characters is a parse error. */
+        by U+FFFD REPLACEMENT CHARACTERs. Any occurrences of such
+        characters is a parse error. */
         for ($i = 0, $count = substr_count($data, "\0"); $i < $count; $i++) {
-            $this->errors[] = array(
+            $this->errors[] = [
                 'type' => HTML5_Tokenizer::PARSEERROR,
                 'data' => 'null-character'
-            );
+            ];
         }
         /* U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED
-          (LF) characters are treated specially. Any CR characters
-          that are followed by LF characters must be removed, and any
-          CR characters not followed by LF characters must be converted
-          to LF characters. Thus, newlines in HTML DOMs are represented
-          by LF characters, and there are never any CR characters in the
-          input to the tokenization stage. */
+        (LF) characters are treated specially. Any CR characters
+        that are followed by LF characters must be removed, and any
+        CR characters not followed by LF characters must be converted
+        to LF characters. Thus, newlines in HTML DOMs are represented
+        by LF characters, and there are never any CR characters in the
+        input to the tokenization stage. */
         $data = str_replace(
-                array(
-            "\0",
-            "\r\n",
-            "\r"
-                ), array(
-            "\xEF\xBF\xBD",
-            "\n",
-            "\n"
-                ), $data
+            [
+                "\0",
+                "\r\n",
+                "\r"
+            ],
+            [
+                "\xEF\xBF\xBD",
+                "\n",
+                "\n"
+            ],
+            $data
         );
 
         /* Any occurrences of any characters in the ranges U+0001 to
-          U+0008, U+000B,  U+000E to U+001F,  U+007F  to U+009F,
-          U+D800 to U+DFFF , U+FDD0 to U+FDEF, and
-          characters U+FFFE, U+FFFF, U+1FFFE, U+1FFFF, U+2FFFE, U+2FFFF,
-          U+3FFFE, U+3FFFF, U+4FFFE, U+4FFFF, U+5FFFE, U+5FFFF, U+6FFFE,
-          U+6FFFF, U+7FFFE, U+7FFFF, U+8FFFE, U+8FFFF, U+9FFFE, U+9FFFF,
-          U+AFFFE, U+AFFFF, U+BFFFE, U+BFFFF, U+CFFFE, U+CFFFF, U+DFFFE,
-          U+DFFFF, U+EFFFE, U+EFFFF, U+FFFFE, U+FFFFF, U+10FFFE, and
-          U+10FFFF are parse errors. (These are all control characters
-          or permanently undefined Unicode characters.) */
+        U+0008, U+000B,  U+000E to U+001F,  U+007F  to U+009F,
+        U+D800 to U+DFFF , U+FDD0 to U+FDEF, and
+        characters U+FFFE, U+FFFF, U+1FFFE, U+1FFFF, U+2FFFE, U+2FFFF,
+        U+3FFFE, U+3FFFF, U+4FFFE, U+4FFFF, U+5FFFE, U+5FFFF, U+6FFFE,
+        U+6FFFF, U+7FFFE, U+7FFFF, U+8FFFE, U+8FFFF, U+9FFFE, U+9FFFF,
+        U+AFFFE, U+AFFFF, U+BFFFE, U+BFFFF, U+CFFFE, U+CFFFF, U+DFFFE,
+        U+DFFFF, U+EFFFE, U+EFFFF, U+FFFFE, U+FFFFF, U+10FFFE, and
+        U+10FFFF are parse errors. (These are all control characters
+        or permanently undefined Unicode characters.) */
         // Check PCRE is loaded.
         if (extension_loaded('pcre')) {
             $count = preg_match_all(
-                    '/(?:
+                '/(?:
                     [\x01-\x08\x0B\x0E-\x1F\x7F] # U+0001 to U+0008, U+000B,  U+000E to U+001F and U+007F
                 |
                     \xC2[\x80-\x9F] # U+0080 to U+009F
@@ -140,13 +141,15 @@ class HTML5_InputStream {
                     \xEF\xBF[\xBE\xBF] # U+FFFE and U+FFFF
                 |
                     [\xF0-\xF4][\x8F-\xBF]\xBF[\xBE\xBF] # U+nFFFE and U+nFFFF (1 <= n <= 10_{16})
-                )/x', $data, $matches
+                )/x',
+                $data,
+                $matches
             );
             for ($i = 0; $i < $count; $i++) {
-                $this->errors[] = array(
+                $this->errors[] = [
                     'type' => HTML5_Tokenizer::PARSEERROR,
                     'data' => 'invalid-codepoint'
-                );
+                ];
             }
         } else {
             // XXX: Need non-PCRE impl, probably using substr_count
@@ -154,7 +157,7 @@ class HTML5_InputStream {
 
         $this->data = $data;
         $this->char = 0;
-        $this->EOF = strlen($data);
+        $this->EOF  = strlen($data);
     }
 
     /**
@@ -207,7 +210,7 @@ class HTML5_InputStream {
             // 0x80 = 0x7F - 0 + 1 (one added to get inclusive range)
             // 0x33 = 0xF4 - 0x2C + 1 (one added to get inclusive range)
             return array_sum(array_slice($count, 0, 0x80)) +
-                    array_sum(array_slice($count, 0xC2, 0x33));
+                   array_sum(array_slice($count, 0xC2, 0x33));
         }
     }
 
@@ -218,7 +221,9 @@ class HTML5_InputStream {
      * @return bool|string
      */
     public function char() {
-        return ($this->char++ < $this->EOF) ? $this->data[$this->char - 1] : false;
+        return ($this->char++ < $this->EOF)
+            ? $this->data[$this->char - 1]
+            : false;
     }
 
     /**
@@ -291,5 +296,4 @@ class HTML5_InputStream {
             $this->char--;
         }
     }
-
 }

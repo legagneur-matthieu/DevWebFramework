@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -7,7 +6,6 @@
  * @author  Helmut Tischer <htischer@weihenstephan.org>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameDecorator;
 
 use Dompdf\Dompdf;
@@ -18,7 +16,8 @@ use Dompdf\Frame;
  *
  * @package dompdf
  */
-class ListBullet extends AbstractFrameDecorator {
+class ListBullet extends AbstractFrameDecorator
+{
 
     const BULLET_PADDING = 1; // Distance from bullet to text in pt
     // As fraction of font size (including descent). See also DECO_THICKNESS.
@@ -26,28 +25,30 @@ class ListBullet extends AbstractFrameDecorator {
     const BULLET_DESCENT = 0.3; //descent of font below baseline. Todo: Guessed for now.
     const BULLET_SIZE = 0.35; // bullet diameter. For now 0.5 of font_size without descent.
 
-    static $BULLET_TYPES = array("disc", "circle", "square");
+    static $BULLET_TYPES = ["disc", "circle", "square"];
 
     /**
      * ListBullet constructor.
      * @param Frame $frame
      * @param Dompdf $dompdf
      */
-    function __construct(Frame $frame, Dompdf $dompdf) {
+    function __construct(Frame $frame, Dompdf $dompdf)
+    {
         parent::__construct($frame, $dompdf);
     }
 
     /**
      * @return float|int
      */
-    function get_margin_width() {
+    function get_margin_width()
+    {
         $style = $this->_frame->get_style();
 
         if ($style->list_style_type === "none") {
             return 0;
         }
 
-        return $style->get_font_size() * self::BULLET_SIZE + 2 * self::BULLET_PADDING;
+        return $style->font_size * self::BULLET_SIZE + 2 * self::BULLET_PADDING;
     }
 
     /**
@@ -55,27 +56,30 @@ class ListBullet extends AbstractFrameDecorator {
      *
      * @return float|int
      */
-    function get_margin_height() {
+    function get_margin_height()
+    {
         $style = $this->_frame->get_style();
 
         if ($style->list_style_type === "none") {
             return 0;
         }
 
-        return $style->get_font_size() * self::BULLET_SIZE + 2 * self::BULLET_PADDING;
+        return $style->font_size * self::BULLET_SIZE + 2 * self::BULLET_PADDING;
     }
 
     /**
      * @return float|int
      */
-    function get_width() {
+    function get_width()
+    {
         return $this->get_margin_width();
     }
 
     /**
      * @return float|int
      */
-    function get_height() {
+    function get_height()
+    {
         return $this->get_margin_height();
     }
 

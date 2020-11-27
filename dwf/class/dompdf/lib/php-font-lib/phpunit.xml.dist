@@ -9,7 +9,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="vendor/autoload.php"
->
+        >
     <testsuites>
         <testsuite name="PHP Font Lib Test Suite">
             <directory>./tests/FontLib/</directory>

@@ -1,17 +1,17 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class Polyline extends Shape {
-
-    public function start($attributes) {
+class Polyline extends Shape
+{
+    public function start($attributes)
+    {
         $tmp = array();
         preg_match_all('/([\-]*[0-9\.]+)/', $attributes['points'], $tmp);
 
@@ -28,5 +28,4 @@ class Polyline extends Shape {
             $surface->lineTo($x, $y);
         }
     }
-
-}
+} 

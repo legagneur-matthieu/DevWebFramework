@@ -1,9 +1,8 @@
 <?php
-
 namespace Dompdf;
 
-class Helpers {
-
+class Helpers
+{
     /**
      * print_r wrapper for html/cli output
      *
@@ -15,7 +14,8 @@ class Helpers {
      *
      * @return string|null
      */
-    public static function pre_r($mixed, $return = false) {
+    public static function pre_r($mixed, $return = false)
+    {
         if ($return) {
             return "<pre>" . print_r($mixed, true) . "</pre>";
         }
@@ -37,7 +37,7 @@ class Helpers {
         return null;
     }
 
-    /**
+      /**
      * builds a full url given a protocol, hostname, base path and url
      *
      * @param string $protocol
@@ -54,7 +54,8 @@ class Helpers {
      * Vice versa, on using the local file system path of a file, make sure that the slash
      * is appended (o.k. also for Windows)
      */
-    public static function build_url($protocol, $host, $base_path, $url) {
+    public static function build_url($protocol, $host, $base_path, $url)
+    {
         $protocol = mb_strtolower($protocol);
         if (strlen($url) == 0) {
             //return $protocol . $host . rtrim($base_path, "/\\") . "/";
@@ -62,19 +63,28 @@ class Helpers {
         }
 
         // Is the url already fully qualified, a Data URI, or a reference to a named anchor?
-        if (mb_strpos($url, "://") !== false || mb_substr($url, 0, 1) === "#" || mb_strpos($url, "data:") === 0 || mb_strpos($url, "mailto:") === 0) {
+        // File-protocol URLs may require additional processing (e.g. for URLs with a relative path)
+        if ((mb_strpos($url, "://") !== false && substr($url, 0, 7) !== "file://") || mb_substr($url, 0, 1) === "#" || mb_strpos($url, "data:") === 0 || mb_strpos($url, "mailto:") === 0 || mb_strpos($url, "tel:") === 0) {
             return $url;
         }
 
-        $ret = $protocol;
+        if (strpos($url, "file://") === 0) {
+            $url = substr($url, 7);
+            $protocol = "";
+        }
 
-        if (!in_array(mb_strtolower($protocol), array("http://", "https://", "ftp://", "ftps://"))) {
+        $ret = "";
+        if ($protocol != "file://") {
+            $ret = $protocol;
+        }
+
+        if (!in_array(mb_strtolower($protocol), ["http://", "https://", "ftp://", "ftps://"])) {
             //On Windows local file, an abs path can begin also with a '\' or a drive letter and colon
             //drive: followed by a relative path would be a drive specific default folder.
             //not known in php app code, treat as abs path
             //($url[1] !== ':' || ($url[2]!=='\\' && $url[2]!=='/'))
             if ($url[0] !== '/' && (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' || (mb_strlen($url) > 1 && $url[0] !== '\\' && $url[1] !== ':'))) {
-                // For rel path and local acess we ignore the host, and run the path through realpath()
+                // For rel path and local access we ignore the host, and run the path through realpath()
                 $ret .= realpath($base_path) . '/';
             }
             $ret .= $url;
@@ -95,6 +105,27 @@ class Helpers {
             $ret .= $host . $base_path . $url;
         }
 
+        // URL should now be complete, final cleanup
+        $parsed_url = parse_url($ret);
+
+        // reproduced from https://www.php.net/manual/en/function.parse-url.php#106731
+        $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+        $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+        $pass     = ($user || $pass) ? "$pass@" : '';
+        $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+        $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+        $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+        
+        // partially reproduced from https://stackoverflow.com/a/1243431/264628
+        /* replace '//' or '/./' or '/foo/../' with '/' */
+        $re = array('#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#');
+        for($n=1; $n>0; $path=preg_replace($re, '/', $path, -1, $n)) {}
+
+        $ret = "$scheme$user$pass$host$port$path$query$fragment";
+
         return $ret;
     }
 
@@ -110,7 +141,8 @@ class Helpers {
      * @param string $filename
      * @return string
      */
-    public static function buildContentDispositionHeader($dispositionType, $filename) {
+    public static function buildContentDispositionHeader($dispositionType, $filename)
+    {
         $encoding = mb_detect_encoding($filename);
         $fallbackfilename = mb_convert_encoding($filename, "ISO-8859-1", $encoding);
         $fallbackfilename = str_replace("\"", "", $fallbackfilename);
@@ -132,12 +164,13 @@ class Helpers {
      * @throws Exception
      * @return string
      */
-    public static function dec2roman($num) {
+    public static function dec2roman($num)
+    {
 
-        static $ones = array("", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix");
-        static $tens = array("", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc");
-        static $hund = array("", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm");
-        static $thou = array("", "m", "mm", "mmm");
+        static $ones = ["", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"];
+        static $tens = ["", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"];
+        static $hund = ["", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"];
+        static $thou = ["", "m", "mm", "mmm"];
 
         if (!is_numeric($num)) {
             throw new Exception("dec2roman() requires a numeric argument.");
@@ -147,7 +180,7 @@ class Helpers {
             return "(out of range)";
         }
 
-        $num = strrev((string) $num);
+        $num = strrev((string)$num);
 
         $ret = "";
         switch (mb_strlen($num)) {
@@ -177,7 +210,8 @@ class Helpers {
      *
      * @return bool
      */
-    public static function is_percent($value) {
+    public static function is_percent($value)
+    {
         return false !== mb_strpos($value, "%");
     }
 
@@ -189,17 +223,18 @@ class Helpers {
      *
      * @return array|bool The result with charset, mime type and decoded data
      */
-    public static function parse_data_uri($data_uri) {
+    public static function parse_data_uri($data_uri)
+    {
         if (!preg_match('/^data:(?P<mime>[a-z0-9\/+-.]+)(;charset=(?P<charset>[a-z0-9-])+)?(?P<base64>;base64)?\,(?P<data>.*)?/is', $data_uri, $match)) {
             return false;
         }
 
         $match['data'] = rawurldecode($match['data']);
-        $result = array(
+        $result = [
             'charset' => $match['charset'] ? $match['charset'] : 'US-ASCII',
             'mime' => $match['mime'] ? $match['mime'] : 'text/plain',
             'data' => $match['base64'] ? base64_decode($match['data']) : $match['data'],
-        );
+        ];
 
         return $result;
     }
@@ -221,17 +256,17 @@ class Helpers {
      * @return string The original URL with special characters encoded
      */
     public static function encodeURI($uri) {
-        $unescaped = array(
-            '%2D' => '-', '%5F' => '_', '%2E' => '.', '%21' => '!', '%7E' => '~',
-            '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')'
-        );
-        $reserved = array(
-            '%3B' => ';', '%2C' => ',', '%2F' => '/', '%3F' => '?', '%3A' => ':',
-            '%40' => '@', '%26' => '&', '%3D' => '=', '%2B' => '+', '%24' => '$'
-        );
-        $score = array(
-            '%23' => '#'
-        );
+        $unescaped = [
+            '%2D'=>'-','%5F'=>'_','%2E'=>'.','%21'=>'!', '%7E'=>'~',
+            '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')'
+        ];
+        $reserved = [
+            '%3B'=>';','%2C'=>',','%2F'=>'/','%3F'=>'?','%3A'=>':',
+            '%40'=>'@','%26'=>'&','%3D'=>'=','%2B'=>'+','%24'=>'$'
+        ];
+        $score = [
+            '%23'=>'#'
+        ];
         return strtr(rawurlencode(rawurldecode($uri)), array_merge($reserved, $unescaped, $score));
     }
 
@@ -244,7 +279,8 @@ class Helpers {
      *
      * @return string
      */
-    public static function rle8_decode($str, $width) {
+    public static function rle8_decode($str, $width)
+    {
         $lineWidth = $width + (3 - ($width - 1) % 4);
         $out = '';
         $cnt = strlen($str);
@@ -296,10 +332,11 @@ class Helpers {
      *
      * @return string
      */
-    public static function rle4_decode($str, $width) {
+    public static function rle4_decode($str, $width)
+    {
         $w = floor($width / 2) + ($width % 2);
         $lineWidth = $w + (3 - (($width - 1) / 2) % 4);
-        $pixels = array();
+        $pixels = [];
         $cnt = strlen($str);
         $c = 0;
 
@@ -367,14 +404,15 @@ class Helpers {
      * @param string $url
      * @return array
      */
-    public static function explode_url($url) {
+    public static function explode_url($url)
+    {
         $protocol = "";
         $host = "";
         $path = "";
         $file = "";
 
         $arr = parse_url($url);
-        if (isset($arr["scheme"])) {
+        if ( isset($arr["scheme"]) ) {
             $arr["scheme"] = mb_strtolower($arr["scheme"]);
         }
 
@@ -418,6 +456,7 @@ class Helpers {
             if (isset($arr["fragment"])) {
                 $file .= "#" . $arr["fragment"];
             }
+
         } else {
 
             $i = mb_stripos($url, "file://");
@@ -436,6 +475,7 @@ class Helpers {
             // Check that the path exists
             if ($path !== false) {
                 $path .= '/';
+
             } else {
                 // generate a url to access the file if no real path found.
                 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
@@ -450,11 +490,11 @@ class Helpers {
             }
         }
 
-        $ret = array($protocol, $host, $path, $file,
+        $ret = [$protocol, $host, $path, $file,
             "protocol" => $protocol,
             "host" => $host,
             "path" => $path,
-            "file" => $file);
+            "file" => $file];
         return $ret;
     }
 
@@ -464,7 +504,8 @@ class Helpers {
      * @param string $type The type of debug messages to print
      * @param string $msg The message to show
      */
-    public static function dompdf_debug($type, $msg) {
+    public static function dompdf_debug($type, $msg)
+    {
         global $_DOMPDF_DEBUG_TYPES, $_dompdf_show_warnings, $_dompdf_debug;
         if (isset($_DOMPDF_DEBUG_TYPES[$type]) && ($_dompdf_show_warnings || $_dompdf_debug)) {
             $arr = debug_backtrace();
@@ -489,9 +530,10 @@ class Helpers {
      *
      * @throws Exception
      */
-    public static function record_warnings($errno, $errstr, $errfile, $errline) {
+    public static function record_warnings($errno, $errstr, $errfile, $errline)
+    {
         // Not a warning or notice
-        if (!($errno & (E_WARNING | E_NOTICE | E_USER_NOTICE | E_USER_WARNING))) {
+        if (!($errno & (E_WARNING | E_NOTICE | E_USER_NOTICE | E_USER_WARNING | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED))) {
             throw new Exception($errstr . " $errno");
         }
 
@@ -509,18 +551,19 @@ class Helpers {
      * @param $c
      * @return bool|string
      */
-    public static function unichr($c) {
+    public static function unichr($c)
+    {
         if ($c <= 0x7F) {
             return chr($c);
         } else if ($c <= 0x7FF) {
             return chr(0xC0 | $c >> 6) . chr(0x80 | $c & 0x3F);
         } else if ($c <= 0xFFFF) {
             return chr(0xE0 | $c >> 12) . chr(0x80 | $c >> 6 & 0x3F)
-                    . chr(0x80 | $c & 0x3F);
+            . chr(0x80 | $c & 0x3F);
         } else if ($c <= 0x10FFFF) {
             return chr(0xF0 | $c >> 18) . chr(0x80 | $c >> 12 & 0x3F)
-                    . chr(0x80 | $c >> 6 & 0x3F)
-                    . chr(0x80 | $c & 0x3F);
+            . chr(0x80 | $c >> 6 & 0x3F)
+            . chr(0x80 | $c & 0x3F);
         }
         return false;
     }
@@ -535,9 +578,10 @@ class Helpers {
      *
      * @return float[]
      */
-    public static function cmyk_to_rgb($c, $m = null, $y = null, $k = null) {
+    public static function cmyk_to_rgb($c, $m = null, $y = null, $k = null)
+    {
         if (is_array($c)) {
-            list($c, $m, $y, $k) = $c;
+            [$c, $m, $y, $k] = $c;
         }
 
         $c *= 255;
@@ -559,57 +603,61 @@ class Helpers {
             $b = 0;
         }
 
-        return array(
+        return [
             $r, $g, $b,
             "r" => $r, "g" => $g, "b" => $b
-        );
+        ];
     }
 
     /**
      * getimagesize doesn't give a good size for 32bit BMP image v5
      *
      * @param string $filename
+     * @param resource $context
      * @return array The same format as getimagesize($filename)
      */
-    public static function dompdf_getimagesize($filename, $context = null) {
-        static $cache = array();
+    public static function dompdf_getimagesize($filename, $context = null)
+    {
+        static $cache = [];
 
         if (isset($cache[$filename])) {
             return $cache[$filename];
         }
 
-        list($width, $height, $type) = getimagesize($filename);
+        [$width, $height, $type] = getimagesize($filename);
 
         // Custom types
-        $types = array(
+        $types = [
             IMAGETYPE_JPEG => "jpeg",
-            IMAGETYPE_GIF => "gif",
-            IMAGETYPE_BMP => "bmp",
-            IMAGETYPE_PNG => "png",
-        );
+            IMAGETYPE_GIF  => "gif",
+            IMAGETYPE_BMP  => "bmp",
+            IMAGETYPE_PNG  => "png",
+        ];
 
         $type = isset($types[$type]) ? $types[$type] : null;
 
         if ($width == null || $height == null) {
-            list($data, $headers) = Helpers::getFileContent($filename, $context);
+            [$data, $headers] = Helpers::getFileContent($filename, $context);
 
-            if (substr($data, 0, 2) === "BM") {
-                $meta = unpack('vtype/Vfilesize/Vreserved/Voffset/Vheadersize/Vwidth/Vheight', $data);
-                $width = (int) $meta['width'];
-                $height = (int) $meta['height'];
-                $type = "bmp";
-            } else {
-                if (strpos($data, "<svg") !== false) {
-                    $doc = new \Svg\Document();
-                    $doc->loadFile($filename);
+            if (!empty($data)) {
+                if (substr($data, 0, 2) === "BM") {
+                    $meta = unpack('vtype/Vfilesize/Vreserved/Voffset/Vheadersize/Vwidth/Vheight', $data);
+                    $width = (int)$meta['width'];
+                    $height = (int)$meta['height'];
+                    $type = "bmp";
+                } else {
+                    if (strpos($data, "<svg") !== false) {
+                        $doc = new \Svg\Document();
+                        $doc->loadFile($filename);
 
-                    list($width, $height) = $doc->getDimensions();
-                    $type = "svg";
+                        [$width, $height] = $doc->getDimensions();
+                        $type = "svg";
+                    }
                 }
             }
         }
 
-        return $cache[$filename] = array($width, $height, $type);
+        return $cache[$filename] = [$width, $height, $type];
     }
 
     /**
@@ -617,7 +665,8 @@ class Helpers {
      * http://www.programmierer-forum.de/function-imagecreatefrombmp-welche-variante-laeuft-t143137.htm
      * Modified by Fabien Menager to support RGB555 BMP format
      */
-    public static function imagecreatefrombmp($filename, $context = null) {
+    public static function imagecreatefrombmp($filename, $context = null)
+    {
         if (!function_exists("imagecreatetruecolor")) {
             trigger_error("The PHP GD extension is required, but is not installed.", E_ERROR);
             return false;
@@ -674,7 +723,7 @@ class Helpers {
         $meta['colors'] = !$meta['colors'] ? pow(2, $meta['bits']) : $meta['colors'];
 
         // read color palette
-        $palette = array();
+        $palette = [];
         if ($meta['bits'] < 16) {
             $palette = unpack('l' . $meta['colors'], fread($fh, $meta['colors'] * 4));
             // in rare cases the color value is signed
@@ -716,14 +765,14 @@ class Helpers {
                 switch ($meta['bits']) {
                     case 32:
                     case 24:
-                        if (!($part = substr($data, $p, 3 /* $meta['bytes'] */))) {
+                        if (!($part = substr($data, $p, 3 /*$meta['bytes']*/))) {
                             trigger_error($error, E_USER_WARNING);
                             return $im;
                         }
                         $color = unpack('V', $part . $vide);
                         break;
                     case 16:
-                        if (!($part = substr($data, $p, 2 /* $meta['bytes'] */))) {
+                        if (!($part = substr($data, $p, 2 /*$meta['bytes']*/))) {
                             trigger_error($error, E_USER_WARNING);
                             return $im;
                         }
@@ -799,50 +848,64 @@ class Helpers {
      * @param resource $context (ignored if curl is used)
      * @param int $offset
      * @param int $maxlen (ignored if curl is used)
-     * @return bool|array
+     * @return string[]
      */
-    public static function getFileContent($uri, $context = null, $offset = 0, $maxlen = null) {
-        $result = false;
+    public static function getFileContent($uri, $context = null, $offset = 0, $maxlen = null)
+    {
+        $content = null;
         $headers = null;
-        list($proto, $host, $path, $file) = Helpers::explode_url($uri);
-        $is_local_path = ($proto == "" || $proto === "file://");
+        [$proto, $host, $path, $file] = Helpers::explode_url($uri);
+        $is_local_path = ($proto == '' || $proto === 'file://');
 
-        set_error_handler(array("\\Dompdf\\Helpers", "record_warnings"));
+        set_error_handler([self::class, 'record_warnings']);
 
-        if ($is_local_path || ini_get("allow_url_fopen")) {
-            if ($is_local_path === false) {
-                $uri = Helpers::encodeURI($uri);
-            }
-            if (isset($maxlen)) {
-                $result = file_get_contents($uri, null, $context, $offset, $maxlen);
-            } else {
-                $result = file_get_contents($uri, null, $context, $offset);
-            }
-            if (isset($http_response_header)) {
-                $headers = $http_response_header;
-            }
-        } elseif (function_exists("curl_exec")) {
-            $curl = curl_init($uri);
+        try {
+            if ($is_local_path || ini_get('allow_url_fopen')) {
+                if ($is_local_path === false) {
+                    $uri = Helpers::encodeURI($uri);
+                }
+                if (isset($maxlen)) {
+                    $result = file_get_contents($uri, null, $context, $offset, $maxlen);
+                } else {
+                    $result = file_get_contents($uri, null, $context, $offset);
+                }
+                if ($result !== false) {
+                    $content = $result;
+                }
+                if (isset($http_response_header)) {
+                    $headers = $http_response_header;
+                }
 
-            //TODO: use $context to define additional curl options
-            curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_HEADER, true);
-            if ($offset > 0) {
-                curl_setopt($curl, CURLOPT_RESUME_FROM, $offset);
-            }
+            } elseif (function_exists('curl_exec')) {
+                $curl = curl_init($uri);
 
-            $data = curl_exec($curl);
-            $raw_headers = substr($data, 0, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
-            $headers = preg_split("/[\n\r]+/", trim($raw_headers));
-            $result = substr($data, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
-            curl_close($curl);
+                //TODO: use $context to define additional curl options
+                curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+                curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_HEADER, true);
+                if ($offset > 0) {
+                    curl_setopt($curl, CURLOPT_RESUME_FROM, $offset);
+                }
+
+                $data = curl_exec($curl);
+
+                if ($data !== false && !curl_errno($curl)) {
+                    switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                        case 200:
+                            $raw_headers = substr($data, 0, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
+                            $headers = preg_split("/[\n\r]+/", trim($raw_headers));
+                            $content = substr($data, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
+                            break;
+                    }
+                }
+                curl_close($curl);
+            }
+        } finally {
+            restore_error_handler();
         }
 
-        restore_error_handler();
-
-        return array($result, $headers);
+        return [$content, $headers];
     }
 
     public static function mb_ucwords($str) {
@@ -853,7 +916,7 @@ class Helpers {
 
         $str = mb_strtoupper(mb_substr($str, 0, 1)) . mb_substr($str, 1);
 
-        foreach (array(' ', '.', ',', '!', '?', '-', '+') as $s) {
+        foreach ([' ', '.', ',', '!', '?', '-', '+'] as $s) {
             $pos = 0;
             while (($pos = mb_strpos($str, $s, $pos)) !== false) {
                 $pos++;
@@ -871,5 +934,4 @@ class Helpers {
 
         return $str;
     }
-
 }

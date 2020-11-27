@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf;
 
 use Dompdf\FrameDecorator\Table as TableFrameDecorator;
@@ -20,25 +18,25 @@ use Dompdf\FrameDecorator\TableCell as TableCellFrameDecorator;
  *
  * @package dompdf
  */
-class Cellmap {
-
+class Cellmap
+{
     /**
      * Border style weight lookup for collapsed border resolution.
      *
      * @var array
      */
-    protected static $_BORDER_STYLE_SCORE = array(
-        "inset" => 1,
+    protected static $_BORDER_STYLE_SCORE = [
+        "inset"  => 1,
         "groove" => 2,
         "outset" => 3,
-        "ridge" => 4,
+        "ridge"  => 4,
         "dotted" => 5,
         "dashed" => 6,
-        "solid" => 7,
+        "solid"  => 7,
         "double" => 8,
         "hidden" => 9,
-        "none" => 0,
-    );
+        "none"   => 0,
+    ];
 
     /**
      * The table object this cellmap is attached to.
@@ -111,14 +109,14 @@ class Cellmap {
     private $__row;
 
     /**
-     * Tells wether the columns' width can be modified
+     * Tells whether the columns' width can be modified
      *
      * @var bool
      */
     private $_columns_locked = false;
 
     /**
-     * Tells wether the table has table-layout:fixed
+     * Tells whether the table has table-layout:fixed
      *
      * @var bool
      */
@@ -127,7 +125,8 @@ class Cellmap {
     /**
      * @param TableFrameDecorator $table
      */
-    public function __construct(TableFrameDecorator $table) {
+    public function __construct(TableFrameDecorator $table)
+    {
         $this->_table = $table;
         $this->reset();
     }
@@ -135,20 +134,21 @@ class Cellmap {
     /**
      *
      */
-    public function reset() {
+    public function reset()
+    {
         $this->_num_rows = 0;
         $this->_num_cols = 0;
 
-        $this->_cells = array();
-        $this->_frames = array();
+        $this->_cells = [];
+        $this->_frames = [];
 
         if (!$this->_columns_locked) {
-            $this->_columns = array();
+            $this->_columns = [];
         }
 
-        $this->_rows = array();
+        $this->_rows = [];
 
-        $this->_borders = array();
+        $this->_borders = [];
 
         $this->__col = $this->__row = 0;
     }
@@ -156,56 +156,64 @@ class Cellmap {
     /**
      *
      */
-    public function lock_columns() {
+    public function lock_columns()
+    {
         $this->_columns_locked = true;
     }
 
     /**
      * @return bool
      */
-    public function is_columns_locked() {
+    public function is_columns_locked()
+    {
         return $this->_columns_locked;
     }
 
     /**
      * @param $fixed
      */
-    public function set_layout_fixed($fixed) {
+    public function set_layout_fixed($fixed)
+    {
         $this->_fixed_layout = $fixed;
     }
 
     /**
      * @return bool
      */
-    public function is_layout_fixed() {
+    public function is_layout_fixed()
+    {
         return $this->_fixed_layout;
     }
 
     /**
      * @return int
      */
-    public function get_num_rows() {
+    public function get_num_rows()
+    {
         return $this->_num_rows;
     }
 
     /**
      * @return int
      */
-    public function get_num_cols() {
+    public function get_num_cols()
+    {
         return $this->_num_cols;
     }
 
     /**
      * @return array
      */
-    public function &get_columns() {
+    public function &get_columns()
+    {
         return $this->_columns;
     }
 
     /**
      * @param $columns
      */
-    public function set_columns($columns) {
+    public function set_columns($columns)
+    {
         $this->_columns = $columns;
     }
 
@@ -214,17 +222,18 @@ class Cellmap {
      *
      * @return mixed
      */
-    public function &get_column($i) {
+    public function &get_column($i)
+    {
         if (!isset($this->_columns[$i])) {
-            $this->_columns[$i] = array(
-                "x" => 0,
-                "min-width" => 0,
-                "max-width" => 0,
+            $this->_columns[$i] = [
+                "x"          => 0,
+                "min-width"  => 0,
+                "max-width"  => 0,
                 "used-width" => null,
-                "absolute" => 0,
-                "percent" => 0,
-                "auto" => true,
-            );
+                "absolute"   => 0,
+                "percent"    => 0,
+                "auto"       => true,
+            ];
         }
 
         return $this->_columns[$i];
@@ -233,7 +242,8 @@ class Cellmap {
     /**
      * @return array
      */
-    public function &get_rows() {
+    public function &get_rows()
+    {
         return $this->_rows;
     }
 
@@ -242,13 +252,14 @@ class Cellmap {
      *
      * @return mixed
      */
-    public function &get_row($j) {
+    public function &get_row($j)
+    {
         if (!isset($this->_rows[$j])) {
-            $this->_rows[$j] = array(
-                "y" => 0,
+            $this->_rows[$j] = [
+                "y"            => 0,
                 "first-column" => 0,
-                "height" => null,
-            );
+                "height"       => null,
+            ];
         }
 
         return $this->_rows[$j];
@@ -262,13 +273,14 @@ class Cellmap {
      *
      * @return mixed
      */
-    public function get_border($i, $j, $h_v, $prop = null) {
+    public function get_border($i, $j, $h_v, $prop = null)
+    {
         if (!isset($this->_borders[$i][$j][$h_v])) {
-            $this->_borders[$i][$j][$h_v] = array(
+            $this->_borders[$i][$j][$h_v] = [
                 "width" => 0,
                 "style" => "solid",
                 "color" => "black",
-            );
+            ];
         }
 
         if (isset($prop)) {
@@ -284,13 +296,14 @@ class Cellmap {
      *
      * @return array
      */
-    public function get_border_properties($i, $j) {
-        return array(
-            "top" => $this->get_border($i, $j, "horizontal"),
-            "right" => $this->get_border($i, $j + 1, "vertical"),
+    public function get_border_properties($i, $j)
+    {
+        return [
+            "top"    => $this->get_border($i, $j, "horizontal"),
+            "right"  => $this->get_border($i, $j + 1, "vertical"),
             "bottom" => $this->get_border($i + 1, $j, "horizontal"),
-            "left" => $this->get_border($i, $j, "vertical"),
-        );
+            "left"   => $this->get_border($i, $j, "vertical"),
+        ];
     }
 
     /**
@@ -298,7 +311,8 @@ class Cellmap {
      *
      * @return null|Frame
      */
-    public function get_spanned_cells(Frame $frame) {
+    public function get_spanned_cells(Frame $frame)
+    {
         $key = $frame->get_id();
 
         if (isset($this->_frames[$key])) {
@@ -313,7 +327,8 @@ class Cellmap {
      *
      * @return bool
      */
-    public function frame_exists_in_cellmap(Frame $frame) {
+    public function frame_exists_in_cellmap(Frame $frame)
+    {
         $key = $frame->get_id();
 
         return isset($this->_frames[$key]);
@@ -325,7 +340,8 @@ class Cellmap {
      * @return array
      * @throws Exception
      */
-    public function get_frame_position(Frame $frame) {
+    public function get_frame_position(Frame $frame)
+    {
         global $_dompdf_warnings;
 
         $key = $frame->get_id();
@@ -351,7 +367,7 @@ class Cellmap {
             $y = $this->_rows[$row]["y"];
         }
 
-        return array($x, $y, "x" => $x, "y" => $y);
+        return [$x, $y, "x" => $x, "y" => $y];
     }
 
     /**
@@ -360,7 +376,8 @@ class Cellmap {
      * @return int
      * @throws Exception
      */
-    public function get_frame_width(Frame $frame) {
+    public function get_frame_width(Frame $frame)
+    {
         $key = $frame->get_id();
 
         if (!isset($this->_frames[$key])) {
@@ -383,7 +400,8 @@ class Cellmap {
      * @throws Exception
      * @throws Exception
      */
-    public function get_frame_height(Frame $frame) {
+    public function get_frame_height(Frame $frame)
+    {
         $key = $frame->get_id();
 
         if (!isset($this->_frames[$key])) {
@@ -407,14 +425,15 @@ class Cellmap {
      * @param int $j
      * @param mixed $width
      */
-    public function set_column_width($j, $width) {
+    public function set_column_width($j, $width)
+    {
         if ($this->_columns_locked) {
             return;
         }
 
-        $col = & $this->get_column($j);
+        $col =& $this->get_column($j);
         $col["used-width"] = $width;
-        $next_col = & $this->get_column($j + 1);
+        $next_col =& $this->get_column($j + 1);
         $next_col["x"] = $next_col["x"] + $width;
     }
 
@@ -422,15 +441,16 @@ class Cellmap {
      * @param int $i
      * @param mixed $height
      */
-    public function set_row_height($i, $height) {
-        $row = & $this->get_row($i);
+    public function set_row_height($i, $height)
+    {
+        $row =& $this->get_row($i);
 
         if ($row["height"] !== null && $height <= $row["height"]) {
             return;
         }
 
         $row["height"] = $height;
-        $next_row = & $this->get_row($i + 1);
+        $next_row =& $this->get_row($i + 1);
         $next_row["y"] = $row["y"] + $height;
     }
 
@@ -442,7 +462,8 @@ class Cellmap {
      *
      * @return mixed
      */
-    protected function _resolve_border($i, $j, $h_v, $border_spec) {
+    protected function _resolve_border($i, $j, $h_v, $border_spec)
+    {
         $n_width = $border_spec["width"];
         $n_style = $border_spec["style"];
 
@@ -461,7 +482,9 @@ class Cellmap {
                 $n_width > $o_width ||
                 $o_style === "none")
 
-                or ( $o_width == $n_width &&
+            or
+
+            ($o_width == $n_width &&
                 in_array($n_style, self::$_BORDER_STYLE_SCORE) &&
                 self::$_BORDER_STYLE_SCORE[$n_style] > self::$_BORDER_STYLE_SCORE[$o_style])
         ) {
@@ -474,7 +497,8 @@ class Cellmap {
     /**
      * @param Frame $frame
      */
-    public function add_frame(Frame $frame) {
+    public function add_frame(Frame $frame)
+    {
         $style = $frame->get_style();
         $display = $style->display;
 
@@ -482,9 +506,9 @@ class Cellmap {
 
         // Recursively add the frames within tables, table-row-groups and table-rows
         if ($display === "table-row" ||
-                $display === "table" ||
-                $display === "inline-table" ||
-                in_array($display, TableFrameDecorator::$ROW_GROUPS)
+            $display === "table" ||
+            $display === "inline-table" ||
+            in_array($display, TableFrameDecorator::$ROW_GROUPS)
         ) {
             $start_row = $this->__row;
             foreach ($frame->get_children() as $child) {
@@ -615,7 +639,7 @@ class Cellmap {
         if (!$this->_columns_locked) {
             // Resolve the frame's width
             if ($this->_fixed_layout) {
-                list($frame_min, $frame_max) = array(0, 10e-10);
+                list($frame_min, $frame_max) = [0, 10e-10];
             } else {
                 list($frame_min, $frame_max) = $frame->get_min_max_width();
             }
@@ -625,7 +649,7 @@ class Cellmap {
             $val = null;
             if (Helpers::is_percent($width)) {
                 $var = "percent";
-                $val = (float) rtrim($width, "% ") / $colspan;
+                $val = (float)rtrim($width, "% ") / $colspan;
             } else if ($width !== "auto") {
                 $var = "absolute";
                 $val = $style->length_in_pt($frame_min) / $colspan;
@@ -636,7 +660,7 @@ class Cellmap {
             for ($cs = 0; $cs < $colspan; $cs++) {
 
                 // Resolve the frame's width(s) with other cells
-                $col = & $this->get_column($this->__col + $cs);
+                $col =& $this->get_column($this->__col + $cs);
 
                 // Note: $var is either 'percent' or 'absolute'.  We compare the
                 // requested percentage or absolute values with the existing widths
@@ -655,7 +679,7 @@ class Cellmap {
                 // FIXME try to avoid putting this dummy value when table-layout:fixed
                 $inc = ($this->is_layout_fixed() ? 10e-10 : ($frame_min - $min) / $colspan);
                 for ($c = 0; $c < $colspan; $c++) {
-                    $col = & $this->get_column($this->__col + $c);
+                    $col =& $this->get_column($this->__col + $c);
                     $col["min-width"] += $inc;
                 }
             }
@@ -664,7 +688,7 @@ class Cellmap {
                 // FIXME try to avoid putting this dummy value when table-layout:fixed
                 $inc = ($this->is_layout_fixed() ? 10e-10 : ($frame_max - $max) / $colspan);
                 for ($c = 0; $c < $colspan; $c++) {
-                    $col = & $this->get_column($this->__col + $c);
+                    $col =& $this->get_column($this->__col + $c);
                     $col["max-width"] += $inc;
                 }
             }
@@ -679,7 +703,8 @@ class Cellmap {
     /**
      *
      */
-    public function add_row() {
+    public function add_row()
+    {
         $this->__row++;
         $this->_num_rows++;
 
@@ -697,7 +722,8 @@ class Cellmap {
      *
      * @param Frame
      */
-    public function remove_row(Frame $row) {
+    public function remove_row(Frame $row)
+    {
         $key = $row->get_id();
         if (!isset($this->_frames[$key])) {
             return; // Presumably this row has alredy been removed
@@ -744,7 +770,8 @@ class Cellmap {
      *
      * @param Frame $group The group to remove
      */
-    public function remove_row_group(Frame $group) {
+    public function remove_row_group(Frame $group)
+    {
         $key = $group->get_id();
         if (!isset($this->_frames[$key])) {
             return; // Presumably this row has alredy been removed
@@ -766,7 +793,8 @@ class Cellmap {
      * @param Frame $group    The group to update
      * @param Frame $last_row The last row in the row group
      */
-    public function update_row_group(Frame $group, Frame $last_row) {
+    public function update_row_group(Frame $group, Frame $last_row)
+    {
         $g_key = $group->get_id();
         $r_key = $last_row->get_id();
 
@@ -777,7 +805,8 @@ class Cellmap {
     /**
      *
      */
-    public function assign_x_positions() {
+    public function assign_x_positions()
+    {
         // Pre-condition: widths must be resolved and assigned to columns and
         // column[0]["x"] must be set.
 
@@ -795,7 +824,8 @@ class Cellmap {
     /**
      *
      */
-    public function assign_frame_heights() {
+    public function assign_frame_heights()
+    {
         // Pre-condition: widths and heights of each column & row must be
         // calcluated
         foreach ($this->_frames as $arr) {
@@ -822,7 +852,8 @@ class Cellmap {
     /**
      * Re-adjust frame height if the table height is larger than its content
      */
-    public function set_frame_heights($table_height, $content_height) {
+    public function set_frame_heights($table_height, $content_height)
+    {
         // Distribute the increased height proportionally amongst each row
         foreach ($this->_frames as $arr) {
             $frame = $arr["frame"];
@@ -855,7 +886,8 @@ class Cellmap {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         $str = "";
         $str .= "Columns:<br/>";
         $str .= Helpers::pre_r($this->_columns, true);
@@ -863,18 +895,19 @@ class Cellmap {
         $str .= Helpers::pre_r($this->_rows, true);
 
         $str .= "Frames:<br/>";
-        $arr = array();
+        $arr = [];
         foreach ($this->_frames as $key => $val) {
-            $arr[$key] = array("columns" => $val["columns"], "rows" => $val["rows"]);
+            $arr[$key] = ["columns" => $val["columns"], "rows" => $val["rows"]];
         }
 
         $str .= Helpers::pre_r($arr, true);
 
         if (php_sapi_name() == "cli") {
-            $str = strip_tags(str_replace(array("<br/>", "<b>", "</b>"), array("\n", chr(27) . "[01;33m", chr(27) . "[0m"), $str));
+            $str = strip_tags(str_replace(["<br/>", "<b>", "</b>"],
+                ["\n", chr(27) . "[01;33m", chr(27) . "[0m"],
+                $str));
         }
 
         return $str;
     }
-
 }

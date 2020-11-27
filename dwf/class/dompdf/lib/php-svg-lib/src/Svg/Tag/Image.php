@@ -1,23 +1,23 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
-class Image extends AbstractTag {
-
+class Image extends AbstractTag
+{
     protected $x = 0;
     protected $y = 0;
     protected $width = 0;
     protected $height = 0;
     protected $href = null;
 
-    protected function before($attributes) {
+    protected function before($attributes)
+    {
         parent::before($attributes);
 
         $surface = $this->document->getSurface();
@@ -26,7 +26,8 @@ class Image extends AbstractTag {
         $this->applyTransform($attributes);
     }
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         $document = $this->document;
         $height = $this->document->getHeight();
         $this->y = $height;
@@ -54,8 +55,8 @@ class Image extends AbstractTag {
         $document->getSurface()->drawImage($this->href, $this->x, $this->y, $this->width, $this->height);
     }
 
-    protected function after() {
+    protected function after()
+    {
         $this->document->getSurface()->restore();
     }
-
-}
+} 

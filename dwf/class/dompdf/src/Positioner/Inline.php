@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -18,13 +17,15 @@ use Dompdf\Exception;
  *
  * @package dompdf
  */
-class Inline extends AbstractPositioner {
+class Inline extends AbstractPositioner
+{
 
     /**
      * @param AbstractFrameDecorator $frame
      * @throws Exception
      */
-    function position(AbstractFrameDecorator $frame) {
+    function position(AbstractFrameDecorator $frame)
+    {
         /**
          * Find our nearest block level parent and access its lines property.
          * @var BlockFrameDecorator
@@ -32,9 +33,11 @@ class Inline extends AbstractPositioner {
         $p = $frame->find_block_parent();
 
         // Debugging code:
+
         // Helpers::pre_r("\nPositioning:");
         // Helpers::pre_r("Me: " . $frame->get_node()->nodeName . " (" . spl_object_hash($frame->get_node()) . ")");
         // Helpers::pre_r("Parent: " . $p->get_node()->nodeName . " (" . spl_object_hash($p->get_node()) . ")");
+
         // End debugging
 
         if (!$p) {
@@ -58,8 +61,8 @@ class Inline extends AbstractPositioner {
         $f = $frame;
 
         if (!$is_fixed && $f->get_parent() &&
-                $f->get_parent() instanceof InlineFrameDecorator &&
-                $f->is_text_node()
+            $f->get_parent() instanceof InlineFrameDecorator &&
+            $f->is_text_node()
         ) {
             $min_max = $f->get_reflower()->get_min_max_width();
 
@@ -71,5 +74,4 @@ class Inline extends AbstractPositioner {
 
         $f->set_position($cb["x"] + $line->w, $line->y);
     }
-
 }

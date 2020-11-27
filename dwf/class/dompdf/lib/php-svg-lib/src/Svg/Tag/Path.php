@@ -1,18 +1,17 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg\Tag;
 
 use Svg\Surface\SurfaceInterface;
 
-class Path extends Shape {
-
+class Path extends Shape
+{
     static $commandLengths = array(
         'm' => 2,
         'l' => 2,
@@ -24,12 +23,14 @@ class Path extends Shape {
         't' => 2,
         'a' => 7,
     );
+
     static $repeatedCommands = array(
         'm' => 'l',
         'M' => 'L',
     );
 
-    public function start($attributes) {
+    public function start($attributes)
+    {
         if (!isset($attributes['d'])) {
             $this->hasShape = false;
 
@@ -48,9 +49,9 @@ class Path extends Shape {
                 $commandLower = strtolower($c[1]);
 
                 if (
-                        isset(self::$commandLengths[$commandLower]) &&
-                        ($commandLength = self::$commandLengths[$commandLower]) &&
-                        count($item) > $commandLength
+                    isset(self::$commandLengths[$commandLower]) &&
+                    ($commandLength = self::$commandLengths[$commandLower]) &&
+                    count($item) > $commandLength
                 ) {
                     $repeatedCommand = isset(self::$repeatedCommands[$c[1]]) ? self::$repeatedCommands[$c[1]] : $c[1];
                     $command = $c[1];
@@ -66,6 +67,7 @@ class Path extends Shape {
                     array_unshift($item, $c[1]);
                     $path[] = $item;
                 }
+
             } else {
                 $item = array($c[1]);
 
@@ -148,11 +150,12 @@ class Path extends Shape {
                     $controlX = $x + $current[3];
                     $controlY = $y + $current[4];
                     $surface->bezierCurveTo(
-                            $x + $current[1] + $l, // x1
-                            $y + $current[2] + $t, // y1
-                            $controlX + $l, // x2
-                            $controlY + $t, // y2
-                            $tempX + $l, $tempY + $t
+                        $x + $current[1] + $l, // x1
+                        $y + $current[2] + $t, // y1
+                        $controlX + $l, // x2
+                        $controlY + $t, // y2
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -164,11 +167,17 @@ class Path extends Shape {
                     $controlX = $current[3];
                     $controlY = $current[4];
                     $surface->bezierCurveTo(
-                            $current[1] + $l, $current[2] + $t, $controlX + $l, $controlY + $t, $x + $l, $y + $t
+                        $current[1] + $l,
+                        $current[2] + $t,
+                        $controlX + $l,
+                        $controlY + $t,
+                        $x + $l,
+                        $y + $t
                     );
                     break;
 
                 case 's': // shorthand cubic bezierCurveTo, relative
+
                     // transform to absolute x,y
                     $tempX = $x + $current[3];
                     $tempY = $y + $current[4];
@@ -185,7 +194,12 @@ class Path extends Shape {
                     }
 
                     $surface->bezierCurveTo(
-                            $controlX + $l, $controlY + $t, $x + $current[1] + $l, $y + $current[2] + $t, $tempX + $l, $tempY + $t
+                        $controlX + $l,
+                        $controlY + $t,
+                        $x + $current[1] + $l,
+                        $y + $current[2] + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     // set control point to 2nd one of this command
                     // "... the first control point is assumed to be
@@ -214,7 +228,12 @@ class Path extends Shape {
                     }
 
                     $surface->bezierCurveTo(
-                            $controlX + $l, $controlY + $t, $current[1] + $l, $current[2] + $t, $tempX + $l, $tempY + $t
+                        $controlX + $l,
+                        $controlY + $t,
+                        $current[1] + $l,
+                        $current[2] + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -237,7 +256,10 @@ class Path extends Shape {
                     $controlY = $y + $current[2];
 
                     $surface->quadraticCurveTo(
-                            $controlX + $l, $controlY + $t, $tempX + $l, $tempY + $t
+                        $controlX + $l,
+                        $controlY + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -248,7 +270,10 @@ class Path extends Shape {
                     $tempY = $current[4];
 
                     $surface->quadraticCurveTo(
-                            $current[1] + $l, $current[2] + $t, $tempX + $l, $tempY + $t
+                        $current[1] + $l,
+                        $current[2] + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -257,6 +282,7 @@ class Path extends Shape {
                     break;
 
                 case 't': // shorthand quadraticCurveTo, relative
+
                     // transform to absolute x,y
                     $tempX = $x + $current[1];
                     $tempY = $y + $current[2];
@@ -284,7 +310,10 @@ class Path extends Shape {
                     $tempControlY = $controlY;
 
                     $surface->quadraticCurveTo(
-                            $controlX + $l, $controlY + $t, $tempX + $l, $tempY + $t
+                        $controlX + $l,
+                        $controlY + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -300,7 +329,10 @@ class Path extends Shape {
                     $controlX = 2 * $x - $controlX;
                     $controlY = 2 * $y - $controlY;
                     $surface->quadraticCurveTo(
-                            $controlX + $l, $controlY + $t, $tempX + $l, $tempY + $t
+                        $controlX + $l,
+                        $controlY + $t,
+                        $tempX + $l,
+                        $tempY + $t
                     );
                     $x = $tempX;
                     $y = $tempY;
@@ -309,15 +341,18 @@ class Path extends Shape {
                 case 'a':
                     // TODO: optimize this
                     $this->drawArc(
-                            $surface, $x + $l, $y + $t, array(
-                        $current[1],
-                        $current[2],
-                        $current[3],
-                        $current[4],
-                        $current[5],
-                        $current[6] + $x + $l,
-                        $current[7] + $y + $t
-                            )
+                        $surface,
+                        $x + $l,
+                        $y + $t,
+                        array(
+                            $current[1],
+                            $current[2],
+                            $current[3],
+                            $current[4],
+                            $current[5],
+                            $current[6] + $x + $l,
+                            $current[7] + $y + $t
+                        )
                     );
                     $x += $current[6];
                     $y += $current[7];
@@ -326,15 +361,18 @@ class Path extends Shape {
                 case 'A':
                     // TODO: optimize this
                     $this->drawArc(
-                            $surface, $x + $l, $y + $t, array(
-                        $current[1],
-                        $current[2],
-                        $current[3],
-                        $current[4],
-                        $current[5],
-                        $current[6] + $l,
-                        $current[7] + $t
-                            )
+                        $surface,
+                        $x + $l,
+                        $y + $t,
+                        array(
+                            $current[1],
+                            $current[2],
+                            $current[3],
+                            $current[4],
+                            $current[5],
+                            $current[6] + $l,
+                            $current[7] + $t
+                        )
                     );
                     $x = $current[6];
                     $y = $current[7];
@@ -351,7 +389,8 @@ class Path extends Shape {
         }
     }
 
-    function drawArc(SurfaceInterface $surface, $fx, $fy, $coords) {
+    function drawArc(SurfaceInterface $surface, $fx, $fy, $coords)
+    {
         $rx = $coords[0];
         $ry = $coords[1];
         $rot = $coords[2];
@@ -380,7 +419,8 @@ class Path extends Shape {
         }
     }
 
-    function arcToSegments($toX, $toY, $rx, $ry, $large, $sweep, $rotateX) {
+    function arcToSegments($toX, $toY, $rx, $ry, $large, $sweep, $rotateX)
+    {
         $th = $rotateX * M_PI / 180;
         $sinTh = sin($th);
         $cosTh = cos($th);
@@ -431,7 +471,17 @@ class Path extends Shape {
 
         for ($i = 0; $i < $segments; $i++) {
             $result[$i] = $this->segmentToBezier(
-                    $mTheta, $th3, $cosTh, $sinTh, $rx, $ry, $cx1, $cy1, $mT, $fromX, $fromY
+                $mTheta,
+                $th3,
+                $cosTh,
+                $sinTh,
+                $rx,
+                $ry,
+                $cx1,
+                $cy1,
+                $mT,
+                $fromX,
+                $fromY
             );
             $fromX = $result[$i][4];
             $fromY = $result[$i][5];
@@ -442,7 +492,8 @@ class Path extends Shape {
         return $result;
     }
 
-    function segmentToBezier($th2, $th3, $cosTh, $sinTh, $rx, $ry, $cx1, $cy1, $mT, $fromX, $fromY) {
+    function segmentToBezier($th2, $th3, $cosTh, $sinTh, $rx, $ry, $cx1, $cy1, $mT, $fromX, $fromY)
+    {
         $costh2 = cos($th2);
         $sinth2 = sin($th2);
         $costh3 = cos($th3);
@@ -464,7 +515,8 @@ class Path extends Shape {
         );
     }
 
-    function calcVectorAngle($ux, $uy, $vx, $vy) {
+    function calcVectorAngle($ux, $uy, $vx, $vy)
+    {
         $ta = atan2($uy, $ux);
         $tb = atan2($vy, $vx);
         if ($tb >= $ta) {
@@ -473,5 +525,4 @@ class Path extends Shape {
             return 2 * M_PI - ($ta - $tb);
         }
     }
-
-}
+} 

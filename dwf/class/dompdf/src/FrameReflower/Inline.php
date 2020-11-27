@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameReflower;
 
 use Dompdf\Frame;
@@ -18,20 +16,23 @@ use Dompdf\FrameDecorator\Text as TextFrameDecorator;
  *
  * @package dompdf
  */
-class Inline extends AbstractFrameReflower {
+class Inline extends AbstractFrameReflower
+{
 
     /**
      * Inline constructor.
      * @param Frame $frame
      */
-    function __construct(Frame $frame) {
+    function __construct(Frame $frame)
+    {
         parent::__construct($frame);
     }
 
     /**
      * @param BlockFrameDecorator|null $block
      */
-    function reflow(BlockFrameDecorator $block = null) {
+    function reflow(BlockFrameDecorator $block = null)
+    {
         $frame = $this->_frame;
 
         // Check if a page break is forced
@@ -83,7 +84,8 @@ class Inline extends AbstractFrameReflower {
      *
      * @return float
      */
-    public function calculate_auto_width() {
+    public function calculate_auto_width()
+    {
         $width = 0;
 
         foreach ($this->_frame->get_children() as $child) {
@@ -98,5 +100,4 @@ class Inline extends AbstractFrameReflower {
 
         return $this->_frame->get_margin_width();
     }
-
 }

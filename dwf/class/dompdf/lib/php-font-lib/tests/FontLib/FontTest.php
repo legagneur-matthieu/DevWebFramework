@@ -3,23 +3,27 @@
 namespace FontLib\Tests;
 
 use FontLib\Font;
+use PHPUnit\Framework\TestCase;
 
-class FontTest extends \PHPUnit_Framework_TestCase {
-
+class FontTest extends TestCase
+{
     /**
      * @expectedException \Fontlib\Exception\FontNotFoundException
      */
-    public function testLoadFileNotFound() {
+    public function testLoadFileNotFound()
+    {
         Font::load('non-existing/font.ttf');
     }
 
-    public function testLoadTTFFontSuccessfully() {
+    public function testLoadTTFFontSuccessfully()
+    {
         $trueTypeFont = Font::load('sample-fonts/IntelClear-Light.ttf');
 
         $this->assertInstanceOf('FontLib\TrueType\File', $trueTypeFont);
     }
 
-    public function test12CmapFormat() {
+    public function test12CmapFormat()
+    {
         $trueTypeFont = Font::load('sample-fonts/NotoSansShavian-Regular.ttf');
 
         $trueTypeFont->parse();

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -16,12 +15,14 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
  *
  * @package dompdf
  */
-class TableRow extends AbstractPositioner {
+class TableRow extends AbstractPositioner
+{
 
     /**
      * @param AbstractFrameDecorator $frame
      */
-    function position(AbstractFrameDecorator $frame) {
+    function position(AbstractFrameDecorator $frame)
+    {
         $cb = $frame->get_containing_block();
         $p = $frame->get_prev_sibling();
 
@@ -32,5 +33,4 @@ class TableRow extends AbstractPositioner {
         }
         $frame->set_position($cb["x"], $y);
     }
-
 }

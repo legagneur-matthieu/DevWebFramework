@@ -27,11 +27,11 @@ use Dompdf\Exception;
  *
  * @package dompdf
  */
-abstract class AbstractFrameDecorator extends Frame {
-
+abstract class AbstractFrameDecorator extends Frame
+{
     const DEFAULT_COUNTER = "-dompdf-default-counter";
 
-    public $_counters = array(); // array([id] => counter_value) (for generated content)
+    public $_counters = []; // array([id] => counter_value) (for generated content)
 
     /**
      * The root node of the DOM tree
@@ -83,7 +83,7 @@ abstract class AbstractFrameDecorator extends Frame {
     private $_positionned_parent;
 
     /**
-     * Cache for the get_parent wehile loop results
+     * Cache for the get_parent while loop results
      *
      * @var Frame
      */
@@ -95,7 +95,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param Frame $frame   The decoration target
      * @param Dompdf $dompdf The Dompdf object
      */
-    function __construct(Frame $frame, Dompdf $dompdf) {
+    function __construct(Frame $frame, Dompdf $dompdf)
+    {
         $this->_frame = $frame;
         $this->_root = null;
         $this->_dompdf = $dompdf;
@@ -107,7 +108,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @param bool $recursive if true, call dispose on all children
      */
-    function dispose($recursive = false) {
+    function dispose($recursive = false)
+    {
         if ($recursive) {
             while ($child = $this->get_first_child()) {
                 $child->dispose(true);
@@ -135,7 +137,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return Frame
      */
-    function copy(DOMNode $node) {
+    function copy(DOMNode $node)
+    {
         $frame = new Frame($node);
         $frame->set_style(clone $this->_frame->get_original_style());
 
@@ -147,7 +150,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return Frame
      */
-    function deep_copy() {
+    function deep_copy()
+    {
         $node = $this->_frame->get_node();
 
         if ($node instanceof DOMElement && $node->hasAttribute("id")) {
@@ -170,12 +174,14 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * Delegate calls to decorated frame object
      */
-    function reset() {
+    function reset()
+    {
         $this->_frame->reset();
 
-        $this->_counters = array();
+        $this->_counters = [];
 
         $this->_cached_parent = null; //clear get_parent() cache
+
         // Reset all children
         foreach ($this->get_children() as $child) {
             $child->reset();
@@ -187,35 +193,40 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return string
      */
-    function get_id() {
+    function get_id()
+    {
         return $this->_frame->get_id();
     }
 
     /**
      * @return Frame
      */
-    function get_frame() {
+    function get_frame()
+    {
         return $this->_frame;
     }
 
     /**
      * @return DOMElement|DOMText
      */
-    function get_node() {
+    function get_node()
+    {
         return $this->_frame->get_node();
     }
 
     /**
      * @return Style
      */
-    function get_style() {
+    function get_style()
+    {
         return $this->_frame->get_style();
     }
 
     /**
      * @return Style
      */
-    function get_original_style() {
+    function get_original_style()
+    {
         return $this->_frame->get_original_style();
     }
 
@@ -224,7 +235,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return array|float
      */
-    function get_containing_block($i = null) {
+    function get_containing_block($i = null)
+    {
         return $this->_frame->get_containing_block($i);
     }
 
@@ -233,63 +245,72 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return array|float
      */
-    function get_position($i = null) {
+    function get_position($i = null)
+    {
         return $this->_frame->get_position($i);
     }
 
     /**
      * @return Dompdf
      */
-    function get_dompdf() {
+    function get_dompdf()
+    {
         return $this->_dompdf;
     }
 
     /**
      * @return float
      */
-    function get_margin_height() {
+    function get_margin_height()
+    {
         return $this->_frame->get_margin_height();
     }
 
     /**
      * @return float
      */
-    function get_margin_width() {
+    function get_margin_width()
+    {
         return $this->_frame->get_margin_width();
     }
 
     /**
      * @return array
      */
-    function get_content_box() {
+    function get_content_box()
+    {
         return $this->_frame->get_content_box();
     }
 
     /**
      * @return array
      */
-    function get_padding_box() {
+    function get_padding_box()
+    {
         return $this->_frame->get_padding_box();
     }
 
     /**
      * @return array
      */
-    function get_border_box() {
+    function get_border_box()
+    {
         return $this->_frame->get_border_box();
     }
 
     /**
      * @param integer $id
      */
-    function set_id($id) {
+    function set_id($id)
+    {
         $this->_frame->set_id($id);
     }
 
     /**
      * @param Style $style
      */
-    function set_style(Style $style) {
+    function set_style(Style $style)
+    {
         $this->_frame->set_style($style);
     }
 
@@ -299,7 +320,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param float $w
      * @param float $h
      */
-    function set_containing_block($x = null, $y = null, $w = null, $h = null) {
+    function set_containing_block($x = null, $y = null, $w = null, $h = null)
+    {
         $this->_frame->set_containing_block($x, $y, $w, $h);
     }
 
@@ -307,28 +329,32 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param float $x
      * @param float $y
      */
-    function set_position($x = null, $y = null) {
+    function set_position($x = null, $y = null)
+    {
         $this->_frame->set_position($x, $y);
     }
 
     /**
      * @return bool
      */
-    function is_auto_height() {
+    function is_auto_height()
+    {
         return $this->_frame->is_auto_height();
     }
 
     /**
      * @return bool
      */
-    function is_auto_width() {
+    function is_auto_width()
+    {
         return $this->_frame->is_auto_width();
     }
 
     /**
      * @return string
      */
-    function __toString() {
+    function __toString()
+    {
         return $this->_frame->__toString();
     }
 
@@ -336,7 +362,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param Frame $child
      * @param bool $update_node
      */
-    function prepend_child(Frame $child, $update_node = true) {
+    function prepend_child(Frame $child, $update_node = true)
+    {
         while ($child instanceof AbstractFrameDecorator) {
             $child = $child->_frame;
         }
@@ -348,7 +375,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param Frame $child
      * @param bool $update_node
      */
-    function append_child(Frame $child, $update_node = true) {
+    function append_child(Frame $child, $update_node = true)
+    {
         while ($child instanceof AbstractFrameDecorator) {
             $child = $child->_frame;
         }
@@ -361,7 +389,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param Frame $ref
      * @param bool $update_node
      */
-    function insert_child_before(Frame $new_child, Frame $ref, $update_node = true) {
+    function insert_child_before(Frame $new_child, Frame $ref, $update_node = true)
+    {
         while ($new_child instanceof AbstractFrameDecorator) {
             $new_child = $new_child->_frame;
         }
@@ -378,7 +407,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param Frame $ref
      * @param bool $update_node
      */
-    function insert_child_after(Frame $new_child, Frame $ref, $update_node = true) {
+    function insert_child_after(Frame $new_child, Frame $ref, $update_node = true)
+    {
         $insert_frame = $new_child;
         while ($insert_frame instanceof AbstractFrameDecorator) {
             $insert_frame = $insert_frame->_frame;
@@ -398,7 +428,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return Frame
      */
-    function remove_child(Frame $child, $update_node = true) {
+    function remove_child(Frame $child, $update_node = true)
+    {
         while ($child instanceof AbstractFrameDecorator) {
             $child = $child->_frame;
         }
@@ -407,9 +438,11 @@ abstract class AbstractFrameDecorator extends Frame {
     }
 
     /**
+     * @param bool $use_cache
      * @return AbstractFrameDecorator
      */
-    function get_parent($use_cache = true) {
+    function get_parent($use_cache = true)
+    {
         if ($use_cache && $this->_cached_parent) {
             return $this->_cached_parent;
         }
@@ -428,7 +461,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return AbstractFrameDecorator
      */
-    function get_first_child() {
+    function get_first_child()
+    {
         $c = $this->_frame->get_first_child();
         if ($c && $deco = $c->get_decorator()) {
             while ($tmp = $deco->get_decorator()) {
@@ -448,7 +482,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return AbstractFrameDecorator
      */
-    function get_last_child() {
+    function get_last_child()
+    {
         $c = $this->_frame->get_last_child();
         if ($c && $deco = $c->get_decorator()) {
             while ($tmp = $deco->get_decorator()) {
@@ -468,7 +503,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return AbstractFrameDecorator
      */
-    function get_prev_sibling() {
+    function get_prev_sibling()
+    {
         $s = $this->_frame->get_prev_sibling();
         if ($s && $deco = $s->get_decorator()) {
             while ($tmp = $deco->get_decorator()) {
@@ -488,7 +524,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return AbstractFrameDecorator
      */
-    function get_next_sibling() {
+    function get_next_sibling()
+    {
         $s = $this->_frame->get_next_sibling();
         if ($s && $deco = $s->get_decorator()) {
             while ($tmp = $deco->get_decorator()) {
@@ -508,18 +545,21 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return FrameTreeList
      */
-    function get_subtree() {
+    function get_subtree()
+    {
         return new FrameTreeList($this);
     }
 
-    function set_positioner(AbstractPositioner $posn) {
+    function set_positioner(AbstractPositioner $posn)
+    {
         $this->_positioner = $posn;
         if ($this->_frame instanceof AbstractFrameDecorator) {
             $this->_frame->set_positioner($posn);
         }
     }
 
-    function set_reflower(AbstractFrameReflower $reflower) {
+    function set_reflower(AbstractFrameReflower $reflower)
+    {
         $this->_reflower = $reflower;
         if ($this->_frame instanceof AbstractFrameDecorator) {
             $this->_frame->set_reflower($reflower);
@@ -529,14 +569,16 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return \Dompdf\FrameReflower\AbstractFrameReflower
      */
-    function get_reflower() {
+    function get_reflower()
+    {
         return $this->_reflower;
     }
 
     /**
      * @param Frame $root
      */
-    function set_root(Frame $root) {
+    function set_root(Frame $root)
+    {
         $this->_root = $root;
 
         if ($this->_frame instanceof AbstractFrameDecorator) {
@@ -547,14 +589,16 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return Page
      */
-    function get_root() {
+    function get_root()
+    {
         return $this->_root;
     }
 
     /**
      * @return Block
      */
-    function find_block_parent() {
+    function find_block_parent()
+    {
         // Find our nearest block level parent
         $p = $this->get_parent();
 
@@ -572,7 +616,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return AbstractFrameDecorator
      */
-    function find_positionned_parent() {
+    function find_positionned_parent()
+    {
         // Find our nearest relative positionned parent
         $p = $this->get_parent();
         while ($p) {
@@ -602,13 +647,14 @@ abstract class AbstractFrameDecorator extends Frame {
      * @throws Exception
      * @return void
      */
-    function split(Frame $child = null, $force_pagebreak = false) {
+    function split(Frame $child = null, $force_pagebreak = false)
+    {
         // decrement any counters that were incremented on the current node, unless that node is the body
         $style = $this->_frame->get_style();
         if (
-                $this->_frame->get_node()->nodeName !== "body" &&
-                $style->counter_increment &&
-                ($decrement = $style->counter_increment) !== "none"
+            $this->_frame->get_node()->nodeName !== "body" &&
+            $style->counter_increment &&
+            ($decrement = $style->counter_increment) !== "none"
         ) {
             $this->decrement_counters($decrement);
         }
@@ -620,8 +666,8 @@ abstract class AbstractFrameDecorator extends Frame {
             if (!$this->is_text_node() && $this->get_node()->hasAttribute("dompdf_before_frame_id")) {
                 foreach ($this->_frame->get_children() as $child) {
                     if (
-                            $this->get_node()->getAttribute("dompdf_before_frame_id") == $child->get_id() &&
-                            $child->get_position('x') !== null
+                        $this->get_node()->getAttribute("dompdf_before_frame_id") == $child->get_id() &&
+                        $child->get_position('x') !== null
                     ) {
                         $style = $child->get_style();
                         if ($style->counter_increment && ($decrement = $style->counter_increment) !== "none") {
@@ -707,14 +753,16 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param string $id
      * @param int $value
      */
-    function reset_counter($id = self::DEFAULT_COUNTER, $value = 0) {
+    function reset_counter($id = self::DEFAULT_COUNTER, $value = 0)
+    {
         $this->get_parent()->_counters[$id] = intval($value);
     }
 
     /**
      * @param $counters
      */
-    function decrement_counters($counters) {
+    function decrement_counters($counters)
+    {
         foreach ($counters as $id => $increment) {
             $this->increment_counter($id, intval($increment) * -1);
         }
@@ -723,7 +771,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @param $counters
      */
-    function increment_counters($counters) {
+    function increment_counters($counters)
+    {
         foreach ($counters as $id => $increment) {
             $this->increment_counter($id, intval($increment));
         }
@@ -733,7 +782,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param string $id
      * @param int $increment
      */
-    function increment_counter($id = self::DEFAULT_COUNTER, $increment = 1) {
+    function increment_counter($id = self::DEFAULT_COUNTER, $increment = 1)
+    {
         $counter_frame = $this->lookup_counter_frame($id);
 
         if ($counter_frame) {
@@ -749,7 +799,8 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param string $id
      * @return AbstractFrameDecorator|null
      */
-    function lookup_counter_frame($id = self::DEFAULT_COUNTER) {
+    function lookup_counter_frame($id = self::DEFAULT_COUNTER)
+    {
         $f = $this->get_parent();
 
         while ($f) {
@@ -775,7 +826,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * TODO: What version is the best : this one or the one in ListBullet ?
      */
-    function counter_value($id = self::DEFAULT_COUNTER, $type = "decimal") {
+    function counter_value($id = self::DEFAULT_COUNTER, $type = "decimal")
+    {
         $type = mb_strtolower($type);
 
         if (!isset($this->_counters[$id])) {
@@ -817,7 +869,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      *
      */
-    final function position() {
+    final function position()
+    {
         $this->_positioner->position($this);
     }
 
@@ -826,14 +879,16 @@ abstract class AbstractFrameDecorator extends Frame {
      * @param $offset_y
      * @param bool $ignore_self
      */
-    final function move($offset_x, $offset_y, $ignore_self = false) {
+    final function move($offset_x, $offset_y, $ignore_self = false)
+    {
         $this->_positioner->move($this, $offset_x, $offset_y, $ignore_self);
     }
 
     /**
      * @param Block|null $block
      */
-    final function reflow(Block $block = null) {
+    final function reflow(Block $block = null)
+    {
         // Uncomment this to see the frames before they're laid out, instead of
         // during rendering.
         //echo $this->_frame; flush();
@@ -843,7 +898,8 @@ abstract class AbstractFrameDecorator extends Frame {
     /**
      * @return array
      */
-    final function get_min_max_width() {
+    final function get_min_max_width()
+    {
         return $this->_reflower->get_min_max_width();
     }
 
@@ -852,8 +908,8 @@ abstract class AbstractFrameDecorator extends Frame {
      *
      * @return float
      */
-    final function calculate_auto_width() {
+    final function calculate_auto_width()
+    {
         return $this->_reflower->calculate_auto_width();
     }
-
 }

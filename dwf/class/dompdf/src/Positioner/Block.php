@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -19,7 +18,8 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
  */
 class Block extends AbstractPositioner {
 
-    function position(AbstractFrameDecorator $frame) {
+    function position(AbstractFrameDecorator $frame)
+    {
         $style = $frame->get_style();
         $cb = $frame->get_containing_block();
         $p = $frame->find_block_parent();
@@ -31,6 +31,7 @@ class Block extends AbstractPositioner {
                 $p->add_line(true);
             }
             $y = $p->get_current_line_box()->y;
+
         } else {
             $y = $cb["y"];
         }
@@ -39,10 +40,10 @@ class Block extends AbstractPositioner {
 
         // Relative positionning
         if ($style->position === "relative") {
-            $top = (float) $style->length_in_pt($style->top, $cb["h"]);
+            $top = (float)$style->length_in_pt($style->top, $cb["h"]);
             //$right =  (float)$style->length_in_pt($style->right,  $cb["w"]);
             //$bottom = (float)$style->length_in_pt($style->bottom, $cb["h"]);
-            $left = (float) $style->length_in_pt($style->left, $cb["w"]);
+            $left = (float)$style->length_in_pt($style->left, $cb["w"]);
 
             $x += $left;
             $y += $top;
@@ -50,5 +51,4 @@ class Block extends AbstractPositioner {
 
         $frame->set_position($x, $y);
     }
-
 }

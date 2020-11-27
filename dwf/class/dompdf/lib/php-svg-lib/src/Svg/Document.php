@@ -1,10 +1,9 @@
 <?php
-
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
- * @author  Fabien M�nager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license GNU LGPLv3+ http://www.gnu.org/copyleft/lesser.html
  */
 
 namespace Svg;
@@ -28,14 +27,16 @@ use Svg\Tag\Text;
 use Svg\Tag\StyleTag;
 use Svg\Tag\UseTag;
 
-class Document extends AbstractTag {
-
+class Document extends AbstractTag
+{
     protected $filename;
     public $inDefs = false;
+
     protected $x;
     protected $y;
     protected $width;
     protected $height;
+
     protected $subPathInit;
     protected $pathBBox;
     protected $viewBox;
@@ -55,7 +56,8 @@ class Document extends AbstractTag {
     /** @var \Sabberworm\CSS\CSSList\Document[] */
     protected $styleSheets = array();
 
-    public function loadFile($filename) {
+    public function loadFile($filename)
+    {
         $this->filename = $filename;
     }
 
@@ -63,35 +65,42 @@ class Document extends AbstractTag {
         $parser = xml_parser_create("utf-8");
         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, false);
         xml_set_element_handler(
-                $parser, array($this, "_tagStart"), array($this, "_tagEnd")
+            $parser,
+            array($this, "_tagStart"),
+            array($this, "_tagEnd")
         );
         xml_set_character_data_handler(
-                $parser, array($this, "_charData")
+            $parser,
+            array($this, "_charData")
         );
 
         return $this->parser = $parser;
     }
 
     public function __construct() {
-        
+
     }
 
     /**
      * @return SurfaceInterface
      */
-    public function getSurface() {
+    public function getSurface()
+    {
         return $this->surface;
     }
 
-    public function getStack() {
+    public function getStack()
+    {
         return $this->stack;
     }
 
-    public function getWidth() {
+    public function getWidth()
+    {
         return $this->width;
     }
 
-    public function getHeight() {
+    public function getHeight()
+    {
         return $this->height;
     }
 
@@ -101,15 +110,15 @@ class Document extends AbstractTag {
         $parser = xml_parser_create("utf-8");
         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, false);
         xml_set_element_handler(
-                $parser, function ($parser, $name, $attributes) use (&$rootAttributes) {
-            if ($name === "svg" && $rootAttributes === null) {
-                $attributes = array_change_key_case($attributes, CASE_LOWER);
+            $parser,
+            function ($parser, $name, $attributes) use (&$rootAttributes) {
+                if ($name === "svg" && $rootAttributes === null) {
+                    $attributes = array_change_key_case($attributes, CASE_LOWER);
 
-                $rootAttributes = $attributes;
-            }
-        }, function ($parser, $name) {
-            
-        }
+                    $rootAttributes = $attributes;
+                }
+            },
+            function ($parser, $name) {}
         );
 
         $fp = fopen($this->filename, "r");
@@ -126,11 +135,11 @@ class Document extends AbstractTag {
         return $this->handleSizeAttributes($rootAttributes);
     }
 
-    public function handleSizeAttributes($attributes) {
+    public function handleSizeAttributes($attributes){
         if ($this->width === null) {
             if (isset($attributes["width"])) {
                 $width = Style::convertSize($attributes["width"], 400);
-                $this->width = $width;
+                $this->width  = $width;
             }
 
             if (isset($attributes["height"])) {
@@ -155,14 +164,15 @@ class Document extends AbstractTag {
         }
 
         return array(
-            0 => $this->width,
-            1 => $this->height,
-            "width" => $this->width,
+            0        => $this->width,
+            1        => $this->height,
+
+            "width"  => $this->width,
             "height" => $this->height,
         );
     }
 
-    public function getDocument() {
+    public function getDocument(){
         return $this;
     }
 
@@ -184,7 +194,8 @@ class Document extends AbstractTag {
         return $this->styleSheets;
     }
 
-    protected function before($attributes) {
+    protected function before($attributes)
+    {
         $surface = $this->getSurface();
 
         $style = new DefaultStyle();
@@ -196,7 +207,8 @@ class Document extends AbstractTag {
         $surface->setStyle($style);
     }
 
-    public function render(SurfaceInterface $surface) {
+    public function render(SurfaceInterface $surface)
+    {
         $this->inDefs = false;
         $this->surface = $surface;
 
@@ -216,7 +228,8 @@ class Document extends AbstractTag {
         xml_parser_free($parser);
     }
 
-    protected function svgOffset($attributes) {
+    protected function svgOffset($attributes)
+    {
         $this->attributes = $attributes;
 
         $this->handleSizeAttributes($attributes);
@@ -228,7 +241,8 @@ class Document extends AbstractTag {
         return isset($this->defs[$id]) ? $this->defs[$id] : null;
     }
 
-    private function _tagStart($parser, $name, $attributes) {
+    private function _tagStart($parser, $name, $attributes)
+    {
         $this->x = 0;
         $this->y = 0;
 
@@ -244,7 +258,8 @@ class Document extends AbstractTag {
             case 'svg':
                 if (count($this->attributes)) {
                     $tag = new Group($this, $name);
-                } else {
+                }
+                else {
                     $tag = $this;
                     $this->svgOffset($attributes);
                 }
@@ -318,12 +333,16 @@ class Document extends AbstractTag {
             case 'text':
                 $tag = new Text($this, $name);
                 break;
+
+            case 'desc':
+                return;
         }
 
         if ($tag) {
             if (isset($attributes["id"])) {
                 $this->defs[$attributes["id"]] = $tag;
-            } else {
+            }
+            else {
                 /** @var AbstractTag $top */
                 $top = end($this->stack);
                 if ($top && $top != $tag) {
@@ -334,12 +353,11 @@ class Document extends AbstractTag {
             $this->stack[] = $tag;
 
             $tag->handle($attributes);
-        } else {
-            echo "Unknown: '$name'\n";
         }
     }
 
-    function _charData($parser, $data) {
+    function _charData($parser, $data)
+    {
         $stack_top = end($this->stack);
 
         if ($stack_top instanceof Text || $stack_top instanceof StyleTag) {
@@ -347,7 +365,8 @@ class Document extends AbstractTag {
         }
     }
 
-    function _tagEnd($parser, $name) {
+    function _tagEnd($parser, $name)
+    {
         /** @var AbstractTag $tag */
         $tag = null;
         switch (strtolower($name)) {
@@ -382,5 +401,4 @@ class Document extends AbstractTag {
             $tag->handleEnd();
         }
     }
-
-}
+} 

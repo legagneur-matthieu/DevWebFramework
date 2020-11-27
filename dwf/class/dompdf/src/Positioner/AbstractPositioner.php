@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -19,7 +18,8 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
  * @access  private
  * @package dompdf
  */
-abstract class AbstractPositioner {
+abstract class AbstractPositioner
+{
 
     /**
      * @param AbstractFrameDecorator $frame
@@ -33,7 +33,8 @@ abstract class AbstractPositioner {
      * @param $offset_y
      * @param bool $ignore_self
      */
-    function move(AbstractFrameDecorator $frame, $offset_x, $offset_y, $ignore_self = false) {
+    function move(AbstractFrameDecorator $frame, $offset_x, $offset_y, $ignore_self = false)
+    {
         list($x, $y) = $frame->get_position();
 
         if (!$ignore_self) {
@@ -44,5 +45,4 @@ abstract class AbstractPositioner {
             $child->move($offset_x, $offset_y);
         }
     }
-
 }

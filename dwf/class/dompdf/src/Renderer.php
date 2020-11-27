@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf;
 
 use Dompdf\Renderer\AbstractRenderer;
@@ -24,7 +22,8 @@ use Dompdf\Renderer\Text;
  *
  * @package dompdf
  */
-class Renderer extends AbstractRenderer {
+class Renderer extends AbstractRenderer
+{
 
     /**
      * Array of renderers for specific frame types
@@ -43,7 +42,8 @@ class Renderer extends AbstractRenderer {
     /**
      * Advance the canvas to the next page
      */
-    function new_page() {
+    function new_page()
+    {
         $this->_canvas->new_page();
     }
 
@@ -52,7 +52,8 @@ class Renderer extends AbstractRenderer {
      *
      * @param Frame $frame the frame to render
      */
-    public function render(Frame $frame) {
+    public function render(Frame $frame)
+    {
         global $_dompdf_debug;
 
         $this->_check_callbacks("begin_frame", $frame);
@@ -64,7 +65,7 @@ class Renderer extends AbstractRenderer {
 
         $style = $frame->get_style();
 
-        if (in_array($style->visibility, array("hidden", "collapse"))) {
+        if (in_array($style->visibility, ["hidden", "collapse"])) {
             return;
         }
 
@@ -83,10 +84,10 @@ class Renderer extends AbstractRenderer {
                 }
 
                 $values = array_map("floatval", $values);
-                $values[] = $x + (float) $style->length_in_pt($origin[0], (float) $style->length_in_pt($style->width));
-                $values[] = $y + (float) $style->length_in_pt($origin[1], (float) $style->length_in_pt($style->height));
+                $values[] = $x + (float)$style->length_in_pt($origin[0], (float)$style->length_in_pt($style->width));
+                $values[] = $y + (float)$style->length_in_pt($origin[1], (float)$style->length_in_pt($style->height));
 
-                call_user_func_array(array($this->_canvas, $function), $values);
+                call_user_func_array([$this->_canvas, $function], $values);
             }
         }
 
@@ -131,12 +132,12 @@ class Renderer extends AbstractRenderer {
 
                 if ($node->nodeName === "script") {
                     if ($node->getAttribute("type") === "text/php" ||
-                            $node->getAttribute("language") === "php"
+                        $node->getAttribute("language") === "php"
                     ) {
                         // Evaluate embedded php scripts
                         $this->_render_frame("php", $frame);
                     } elseif ($node->getAttribute("type") === "text/javascript" ||
-                            $node->getAttribute("language") === "javascript"
+                        $node->getAttribute("language") === "javascript"
                     ) {
                         // Insert JavaScript
                         $this->_render_frame("javascript", $frame);
@@ -148,6 +149,7 @@ class Renderer extends AbstractRenderer {
 
             default:
                 break;
+
         }
 
         // Starts the overflow: hidden box
@@ -159,13 +161,13 @@ class Renderer extends AbstractRenderer {
             list($tl, $tr, $br, $bl) = $style->get_computed_border_radius($w, $h);
 
             if ($tl + $tr + $br + $bl > 0) {
-                $this->_canvas->clipping_roundrectangle($x, $y, (float) $w, (float) $h, $tl, $tr, $br, $bl);
+                $this->_canvas->clipping_roundrectangle($x, $y, (float)$w, (float)$h, $tl, $tr, $br, $bl);
             } else {
-                $this->_canvas->clipping_rectangle($x, $y, (float) $w, (float) $h);
+                $this->_canvas->clipping_rectangle($x, $y, (float)$w, (float)$h);
             }
         }
 
-        $stack = array();
+        $stack = [];
 
         foreach ($frame->get_children() as $child) {
             // < 0 : nagative z-index
@@ -213,14 +215,15 @@ class Renderer extends AbstractRenderer {
      * @param string $event the type of event
      * @param Frame $frame  the frame that event is triggered on
      */
-    protected function _check_callbacks($event, $frame) {
+    protected function _check_callbacks($event, $frame)
+    {
         if (!isset($this->_callbacks)) {
             $this->_callbacks = $this->_dompdf->getCallbacks();
         }
 
         if (is_array($this->_callbacks) && isset($this->_callbacks[$event])) {
-            $info = array(0 => $this->_canvas, "canvas" => $this->_canvas,
-                1 => $frame, "frame" => $frame);
+            $info = [0 => $this->_canvas, "canvas" => $this->_canvas,
+                1 => $frame, "frame" => $frame];
             $fs = $this->_callbacks[$event];
             foreach ($fs as $f) {
                 if (is_callable($f)) {
@@ -242,7 +245,8 @@ class Renderer extends AbstractRenderer {
      * @param string $type type of renderer to use
      * @param Frame $frame the frame to render
      */
-    protected function _render_frame($type, $frame) {
+    protected function _render_frame($type, $frame)
+    {
 
         if (!isset($this->_renderers[$type])) {
 
@@ -282,10 +286,10 @@ class Renderer extends AbstractRenderer {
                 case "javascript":
                     $this->_renderers[$type] = new JavascriptEmbedder($this->_dompdf);
                     break;
+
             }
         }
 
         $this->_renderers[$type]->render($frame);
     }
-
 }

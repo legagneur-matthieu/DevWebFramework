@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package dompdf
  * @link    http://dompdf.github.com/
@@ -7,7 +6,6 @@
  * @author  Helmut Tischer <htischer@weihenstephan.org>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
 namespace Dompdf\FrameDecorator;
 
 use DOMElement;
@@ -21,14 +19,16 @@ use Dompdf\Exception;
  * @access  private
  * @package dompdf
  */
-class Inline extends AbstractFrameDecorator {
+class Inline extends AbstractFrameDecorator
+{
 
     /**
      * Inline constructor.
      * @param Frame $frame
      * @param Dompdf $dompdf
      */
-    function __construct(Frame $frame, Dompdf $dompdf) {
+    function __construct(Frame $frame, Dompdf $dompdf)
+    {
         parent::__construct($frame, $dompdf);
     }
 
@@ -37,7 +37,8 @@ class Inline extends AbstractFrameDecorator {
      * @param bool $force_pagebreak
      * @throws Exception
      */
-    function split(Frame $frame = null, $force_pagebreak = false) {
+    function split(Frame $frame = null, $force_pagebreak = false)
+    {
         if (is_null($frame)) {
             $this->get_parent()->split($this, $force_pagebreak);
             return;
@@ -77,7 +78,8 @@ class Inline extends AbstractFrameDecorator {
         //On continuation of inline element on next line,
         //don't repeat non-vertically repeatble background images
         //See e.g. in testcase image_variants, long desriptions
-        if (($url = $style->background_image) && $url !== "none" && ($repeat = $style->background_repeat) && $repeat !== "repeat" && $repeat !== "repeat-y"
+        if (($url = $style->background_image) && $url !== "none"
+            && ($repeat = $style->background_repeat) && $repeat !== "repeat" && $repeat !== "repeat-y"
         ) {
             $style->background_image = "none";
         }
@@ -91,11 +93,11 @@ class Inline extends AbstractFrameDecorator {
             $split->append_child($frame);
         }
 
-        $page_breaks = array("always", "left", "right");
+        $page_breaks = ["always", "left", "right"];
         $frame_style = $frame->get_style();
         if ($force_pagebreak ||
-                in_array($frame_style->page_break_before, $page_breaks) ||
-                in_array($frame_style->page_break_after, $page_breaks)
+            in_array($frame_style->page_break_before, $page_breaks) ||
+            in_array($frame_style->page_break_after, $page_breaks)
         ) {
             $this->get_parent()->split($split, true);
         }

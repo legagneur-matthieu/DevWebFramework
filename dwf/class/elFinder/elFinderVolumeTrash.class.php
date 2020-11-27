@@ -4,22 +4,24 @@
  * elFinder driver for trash bin at local filesystem.
  *
  * @author NaokiSawada
- * */
-class elFinderVolumeTrash extends elFinderVolumeLocalFileSystem {
-
+ **/
+class elFinderVolumeTrash extends elFinderVolumeLocalFileSystem
+{
     /**
      * Driver id
      * Must be started from letter and contains [a-z0-9]
      * Used as part of volume id.
      *
      * @var string
-     * */
+     **/
     protected $driverId = 't';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         // original option of the Trash
         $this->options['lockEverything'] = false; // Lock all items in the trash to disable delete, move, rename.
+
         // common options as the volume driver
         $this->options['alias'] = 'Trash';
         $this->options['quarantine'] = '';
@@ -29,7 +31,8 @@ class elFinderVolumeTrash extends elFinderVolumeLocalFileSystem {
         $this->options['disabled'] = array('archive', 'duplicate', 'edit', 'extract', 'mkfile', 'places', 'put', 'rename', 'resize', 'upload');
     }
 
-    public function mount(array $opts) {
+    public function mount(array $opts)
+    {
         if ($this->options['lockEverything']) {
             if (!is_array($opts['attributes'])) {
                 $opts['attributes'] = array();
@@ -45,5 +48,4 @@ class elFinderVolumeTrash extends elFinderVolumeLocalFileSystem {
 
         return parent::mount($opts);
     }
-
 }

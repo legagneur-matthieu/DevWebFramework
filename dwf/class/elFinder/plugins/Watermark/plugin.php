@@ -2,96 +2,111 @@
 
 /**
  * elFinder Plugin Watermark
- *
  * Print watermark on file upload.
- *
  * ex. binding, configure on connector options
- * 	$opts = array(
- * 		'bind' => array(
- * 			'upload.presave' => array(
- * 				'Plugin.Watermark.onUpLoadPreSave'
- * 			)
- * 		),
- * 		// global configure (optional)
- * 		'plugin' => array(
- * 			'Watermark' => array(
- * 				'enable'         => true,       // For control by volume driver
- * 				'source'         => 'logo.png', // Path to Water mark image
- * 				'marginRight'    => 5,          // Margin right pixel
- * 				'marginBottom'   => 5,          // Margin bottom pixel
- * 				'quality'        => 95,         // JPEG image save quality
- * 				'transparency'   => 70,         // Water mark image transparency ( other than PNG )
- * 				'targetType'     => IMG_GIF|IMG_JPG|IMG_PNG|IMG_WBMP, // Target image formats ( bit-field )
- * 				'targetMinPixel' => 200,        // Target image minimum pixel size
- * 				'interlace'      => IMG_GIF|IMG_JPG, // Set interlacebit image formats ( bit-field )
- * 				'offDropWith'    => null,       // Enabled by default. To disable it if it is dropped with pressing the meta key
- * 				                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
- * 				                                // In case of using any key, specify it as an array
- * 				'onDropWith'     => null        // Disabled by default. To enable it if it is dropped with pressing the meta key
- * 				                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
- * 				                                // In case of using any key, specify it as an array
- * 			)
- * 		),
- * 		// each volume configure (optional)
- * 		'roots' => array(
- * 			array(
- * 				'driver' => 'LocalFileSystem',
- * 				'path'   => '/path/to/files/',
- * 				'URL'    => 'http://localhost/to/files/'
- * 				'plugin' => array(
- * 					'Watermark' => array(
- * 			 			'enable'         => true,       // For control by volume driver
- * 						'source'         => 'logo.png', // Path to Water mark image
- * 						'marginRight'    => 5,          // Margin right pixel
- * 						'marginBottom'   => 5,          // Margin bottom pixel
- * 						'quality'        => 95,         // JPEG image save quality
- * 						'transparency'   => 70,         // Water mark image transparency ( other than PNG )
- * 						'targetType'     => IMG_GIF|IMG_JPG|IMG_PNG|IMG_WBMP, // Target image formats ( bit-field )
- * 						'targetMinPixel' => 200,        // Target image minimum pixel size
- * 						'interlace'      => IMG_GIF|IMG_JPG, // Set interlacebit image formats ( bit-field )
- *        				'offDropWith'    => null,       // Enabled by default. To disable it if it is dropped with pressing the meta key
- *        				                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
- *        				                                // In case of using any key, specify it as an array
- *        				'onDropWith'     => null        // Disabled by default. To enable it if it is dropped with pressing the meta key
- * 						                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
- * 						                                // In case of using any key, specify it as an array
- * 					)
- * 				)
- * 			)
- * 		)
- * 	);
+ *    $opts = array(
+ *        'bind' => array(
+ *            'upload.presave' => array(
+ *                'Plugin.Watermark.onUpLoadPreSave'
+ *            )
+ *        ),
+ *        // global configure (optional)
+ *        'plugin' => array(
+ *            'Watermark' => array(
+ *                'enable'         => true,       // For control by volume driver
+ *                'source'         => 'logo.png', // Path to Water mark image
+ *                'ratio'          => 0.2,        // Ratio to original image (ratio > 0 and ratio <= 1)
+ *                'position'       => 'RB',       // Position L(eft)/C(enter)/R(ight) and T(op)/M(edium)/B(ottom)
+ *                'marginX'        => 5,          // Margin horizontal pixel
+ *                'marginY'        => 5,          // Margin vertical pixel
+ *                'quality'        => 95,         // JPEG image save quality
+ *                'transparency'   => 70,         // Water mark image transparency ( other than PNG )
+ *                'targetType'     => IMG_GIF|IMG_JPG|IMG_PNG|IMG_WBMP, // Target image formats ( bit-field )
+ *                'targetMinPixel' => 200,        // Target image minimum pixel size
+ *                'interlace'      => IMG_GIF|IMG_JPG, // Set interlacebit image formats ( bit-field )
+ *                'offDropWith'    => null,       // Enabled by default. To disable it if it is dropped with pressing the meta key
+ *                                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
+ *                                                // In case of using any key, specify it as an array
+ *                'onDropWith'     => null        // Disabled by default. To enable it if it is dropped with pressing the meta key
+ *                                                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
+ *                                                // In case of using any key, specify it as an array
+ *            )
+ *        ),
+ *        // each volume configure (optional)
+ *        'roots' => array(
+ *            array(
+ *                'driver' => 'LocalFileSystem',
+ *                'path'   => '/path/to/files/',
+ *                'URL'    => 'http://localhost/to/files/'
+ *                'plugin' => array(
+ *                    'Watermark' => array(
+ *                        'enable'         => true,       // For control by volume driver
+ *                        'source'         => 'logo.png', // Path to Water mark image
+ *                        'ratio'          => 0.2,        // Ratio to original image (ratio > 0 and ratio <= 1)
+ *                        'position'       => 'RB',       // Position L(eft)/C(enter)/R(ight) and T(op)/M(edium)/B(ottom)
+ *                        'marginX'        => 5,          // Margin horizontal pixel
+ *                        'marginY'        => 5,          // Margin vertical pixel
+ *                        'quality'        => 95,         // JPEG image save quality
+ *                        'transparency'   => 70,         // Water mark image transparency ( other than PNG )
+ *                        'targetType'     => IMG_GIF|IMG_JPG|IMG_PNG|IMG_WBMP, // Target image formats ( bit-field )
+ *                        'targetMinPixel' => 200,        // Target image minimum pixel size
+ *                        'interlace'      => IMG_GIF|IMG_JPG, // Set interlacebit image formats ( bit-field )
+ *                        'offDropWith'    => null,       // Enabled by default. To disable it if it is dropped with pressing the meta key
+ *                                                        // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
+ *                                                        // In case of using any key, specify it as an array
+ *                        'onDropWith'     => null        // Disabled by default. To enable it if it is dropped with pressing the meta key
+ *                                                        // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
+ *                                                        // In case of using any key, specify it as an array
+ *                    )
+ *                )
+ *            )
+ *        )
+ *    );
  *
  * @package elfinder
- * @author Naoki Sawada
+ * @author  Naoki Sawada
  * @license New BSD
  */
-class elFinderPluginWatermark extends elFinderPlugin {
+class elFinderPluginWatermark extends elFinderPlugin
+{
 
     private $watermarkImgInfo = null;
 
-    public function __construct($opts) {
+    public function __construct($opts)
+    {
         $defaults = array(
-            'enable' => true, // For control by volume driver
+            'enable' => true,       // For control by volume driver
             'source' => 'logo.png', // Path to Water mark image
-            'marginRight' => 5, // Margin right pixel
-            'marginBottom' => 5, // Margin bottom pixel
-            'quality' => 95, // JPEG image save quality
-            'transparency' => 70, // Water mark image transparency ( other than PNG )
+            'ratio' => 0.2,        // Ratio to original image (ratio > 0 and ratio <= 1)
+            'position' => 'RB',       // Position L(eft)/C(enter)/R(ight) and T(op)/M(edium)/B(ottom)
+            'marginX' => 5,          // Margin horizontal pixel
+            'marginY' => 5,          // Margin vertical pixel
+            'quality' => 95,         // JPEG image save quality
+            'transparency' => 70,         // Water mark image transparency ( other than PNG )
             'targetType' => IMG_GIF | IMG_JPG | IMG_PNG | IMG_WBMP, // Target image formats ( bit-field )
-            'targetMinPixel' => 200, // Target image minimum pixel size
+            'targetMinPixel' => 200,        // Target image minimum pixel size
             'interlace' => IMG_GIF | IMG_JPG, // Set interlacebit image formats ( bit-field )
-            'offDropWith' => null        // To disable it if it is dropped with pressing the meta key
-                // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
-                // In case of using any key, specify it as an array
+            'offDropWith' => null,       // To disable it if it is dropped with pressing the meta key
+            // Alt: 8, Ctrl: 4, Meta: 2, Shift: 1 - sum of each value
+            // In case of using any key, specify it as an array
+            'marginRight' => 0,          // Deprecated - marginX should be used
+            'marginBottom' => 0,          // Deprecated - marginY should be used
+            'disableWithContentSaveId' => true // Disable on URL upload with post data "contentSaveId"
         );
 
         $this->opts = array_merge($defaults, $opts);
+
     }
 
-    public function onUpLoadPreSave(&$thash, &$name, $src, $elfinder, $volume) {
+    public function onUpLoadPreSave(&$thash, &$name, $src, $elfinder, $volume)
+    {
+        if (!$src) {
+            return false;
+        }
+
         $opts = $this->getCurrentOpts($volume);
 
-        if (!$this->iaEnabled($opts)) {
+        if (!$this->iaEnabled($opts, $elfinder)) {
             return false;
         }
 
@@ -105,6 +120,9 @@ class elFinderPluginWatermark extends elFinderPlugin {
         }
         if (extension_loaded('exif') && function_exists('exif_imagetype')) {
             $imageType = exif_imagetype($src);
+            if ($imageType === false) {
+                return false;
+            }
         } else {
             $srcImgInfo = getimagesize($src);
             if ($srcImgInfo === false) {
@@ -151,8 +169,6 @@ class elFinderPluginWatermark extends elFinderPlugin {
         }
 
         $watermark = $opts['source'];
-        $marginLeft = $opts['marginRight'];
-        $marginBottom = $opts['marginBottom'];
         $quality = $opts['quality'];
         $transparency = $opts['transparency'];
 
@@ -163,21 +179,74 @@ class elFinderPluginWatermark extends elFinderPlugin {
 
         $watermark_width = $watermarkImgInfo[0];
         $watermark_height = $watermarkImgInfo[1];
-        $dest_x = $srcImgInfo[0] - $watermark_width - $marginLeft;
-        $dest_y = $srcImgInfo[1] - $watermark_height - $marginBottom;
+
+        // Specified as a ratio to the image size
+        if ($opts['ratio'] && $opts['ratio'] > 0 && $opts['ratio'] <= 1) {
+            $maxW = $srcImgInfo[0] * $opts['ratio'] - ($opts['marginX'] * 2);
+            $maxH = $srcImgInfo[1] * $opts['ratio'] - ($opts['marginY'] * 2);
+            $dx = $dy = 0;
+            if (($maxW >= $watermarkImgInfo[0] && $maxH >= $watermarkImgInfo[0]) || ($maxW <= $watermarkImgInfo[0] && $maxH <= $watermarkImgInfo[0])) {
+                $dx = abs($srcImgInfo[0] - $watermarkImgInfo[0]);
+                $dy = abs($srcImgInfo[1] - $watermarkImgInfo[1]);
+            } else if ($maxW < $watermarkImgInfo[0]) {
+                $dx = -1;
+            } else {
+                $dy = -1;
+            }
+            if ($dx < $dy) {
+                $ww = $maxW;
+                $wh = $watermarkImgInfo[1] * ($ww / $watermarkImgInfo[0]);
+            } else {
+                $wh = $maxH;
+                $ww = $watermarkImgInfo[0] * ($wh / $watermarkImgInfo[1]);
+            }
+            $watermarkImgInfo[0] = $ww;
+            $watermarkImgInfo[1] = $wh;
+        } else {
+            $opts['ratio'] = null;
+        }
+
+        $opts['position'] = strtoupper($opts['position']);
+
+        // Set vertical position
+        if (strpos($opts['position'], 'T') !== false) {
+            // Top
+            $dest_x = $opts['marginX'];
+        } else if (strpos($opts['position'], 'M') !== false) {
+            // Middle
+            $dest_x = ($srcImgInfo[0] - $watermarkImgInfo[0]) / 2;
+        } else {
+            // Bottom
+            $dest_x = $srcImgInfo[0] - $watermarkImgInfo[0] - max($opts['marginBottom'], $opts['marginX']);
+        }
+
+        // Set horizontal position
+        if (strpos($opts['position'], 'L') !== false) {
+            // Left
+            $dest_y = $opts['marginY'];
+        } else if (strpos($opts['position'], 'C') !== false) {
+            // Middle
+            $dest_y = ($srcImgInfo[1] - $watermarkImgInfo[1]) / 2;
+        } else {
+            // Right
+            $dest_y = $srcImgInfo[1] - $watermarkImgInfo[1] - max($opts['marginRight'], $opts['marginY']);
+        }
+
 
         // check interlace
         $opts['interlace'] = ($opts['interlace'] & $imgTypes[$imageType]);
 
-        if (class_exists('Imagick', false)) {
-            return $this->watermarkPrint_imagick($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $opts);
-        } else {
+        // Repeated use of Imagick::compositeImage() may cause PHP to hang, so disable it
+        //if (class_exists('Imagick', false)) {
+        //    return $this->watermarkPrint_imagick($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $opts);
+        //} else {
             elFinder::expandMemoryForGD(array($watermarkImgInfo, $srcImgInfo));
             return $this->watermarkPrint_gd($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $srcImgInfo, $opts);
-        }
+        //}
     }
 
-    private function watermarkPrint_imagick($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $opts) {
+    private function watermarkPrint_imagick($src, $watermarkSrc, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $opts)
+    {
 
         try {
 
@@ -185,7 +254,12 @@ class elFinderPluginWatermark extends elFinderPlugin {
             $img = new Imagick($src);
 
             // Open the watermark
-            $watermark = new Imagick($watermark);
+            $watermark = new Imagick($watermarkSrc);
+
+            // zoom
+            if ($opts['ratio']) {
+                $watermark->scaleImage($watermarkImgInfo[0], $watermarkImgInfo[1]);
+            }
 
             // Set transparency
             if (strtoupper($watermark->getImageFormat()) !== 'PNG') {
@@ -219,7 +293,8 @@ class elFinderPluginWatermark extends elFinderPlugin {
         }
     }
 
-    private function watermarkPrint_gd($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $srcImgInfo, $opts) {
+    private function watermarkPrint_gd($src, $watermark, $dest_x, $dest_y, $quality, $transparency, $watermarkImgInfo, $srcImgInfo, $opts)
+    {
 
         $watermark_width = $watermarkImgInfo[0];
         $watermark_height = $watermarkImgInfo[1];
@@ -260,7 +335,19 @@ class elFinderPluginWatermark extends elFinderPlugin {
                 break;
         }
 
+
         if (!$ermsg) {
+            // zoom
+            if ($opts['ratio']) {
+                $tmpImg = imagecreatetruecolor($watermarkImgInfo[0], $watermarkImgInfo[1]);
+                imagealphablending($tmpImg, false);
+                imagesavealpha($tmpImg, true);
+                imagecopyresampled($tmpImg, $oWatermarkImg, 0, 0, 0, 0, $watermarkImgInfo[0], $watermarkImgInfo[1], imagesx($oWatermarkImg), imagesy($oWatermarkImg));
+                imageDestroy($oWatermarkImg);
+                $oWatermarkImg = $tmpImg;
+                $tmpImg = null;
+            }
+
             switch ($srcImgInfo['mime']) {
                 case 'image/gif':
                     if (imagetypes() & IMG_GIF) {
@@ -342,5 +429,4 @@ class elFinderPluginWatermark extends elFinderPlugin {
 
         return true;
     }
-
 }

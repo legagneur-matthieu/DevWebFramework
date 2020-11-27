@@ -1,11 +1,8 @@
 <?php
-
 /**
  * Copyright (c) 2011, oov. All rights reserved.
- *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
  *  - Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  *  - Redistributions in binary form must reproduce the above copyright notice,
@@ -14,7 +11,6 @@
  *  - Neither the name of the oov nor the names of its contributors may be used to
  *    endorse or promote products derived from this software without specific prior
  *    written permission.
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -25,20 +21,16 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
  * bmp ファイルを GD で使えるように
- *
  * 使用例:
  *   //ファイルから読み込む場合はGDでPNGなどを読み込むのと同じような方法で可
  *   $image = imagecreatefrombmp("test.bmp");
  *   imagedestroy($image);
- *
  *   //文字列から読み込む場合は以下の方法で可
  *   $image = GdBmp::loadFromString(file_get_contents("test.bmp"));
  *   //自動判定されるので破損ファイルでなければこれでも上手くいく
  *   //$image = imagecreatefrombmp(file_get_contents("test.bmp"));
  *   imagedestroy($image);
- *
  *   //その他任意のストリームからの読み込みも可能
  *   $stream = fopen("http://127.0.0.1/test.bmp");
  *   $image = GdBmp::loadFromStream($stream);
@@ -46,7 +38,6 @@
  *   //$image = imagecreatefrombmp($stream);
  *   fclose($stream);
  *   imagedestroy($image);
- *
  * 対応フォーマット
  *   1bit
  *   4bit
@@ -59,23 +50,25 @@
  *   BITMAPINFOHEADER の biCompression が BI_PNG / BI_JPEG の画像
  *   すべての形式でトップダウン/ボトムアップの両方をサポート
  *   特殊なビットフィールドでもビットフィールドデータが正常なら読み込み可能
- *
  * 以下のものは非対応
  *   BITMAPV4HEADER と BITMAPV5HEADER に含まれる色空間に関する様々な機能
+ *
  * @param $filename_or_stream_or_binary
+ *
  * @return bool|resource
  */
-if (!function_exists('imagecreatefrombmp')) {
 
-    function imagecreatefrombmp($filename_or_stream_or_binary) {
+if (!function_exists('imagecreatefrombmp')) {
+    function imagecreatefrombmp($filename_or_stream_or_binary)
+    {
         return elFinderLibGdBmp::load($filename_or_stream_or_binary);
     }
-
 }
 
-class elFinderLibGdBmp {
-
-    public static function load($filename_or_stream_or_binary) {
+class elFinderLibGdBmp
+{
+    public static function load($filename_or_stream_or_binary)
+    {
         if (is_resource($filename_or_stream_or_binary)) {
             return self::loadFromStream($filename_or_stream_or_binary);
         } else if (is_string($filename_or_stream_or_binary) && strlen($filename_or_stream_or_binary) >= 26) {
@@ -87,7 +80,8 @@ class elFinderLibGdBmp {
         return self::loadFromFile($filename_or_stream_or_binary);
     }
 
-    public static function loadFromFile($filename) {
+    public static function loadFromFile($filename)
+    {
         $fp = fopen($filename, "rb");
         if ($fp === false) {
             return false;
@@ -99,7 +93,8 @@ class elFinderLibGdBmp {
         return $bmp;
     }
 
-    public static function loadFromString($str) {
+    public static function loadFromString($str)
+    {
         //data scheme より古いバージョンから対応しているようなので php://memory を使う
         $fp = fopen("php://memory", "r+b");
         if ($fp === false) {
@@ -122,7 +117,8 @@ class elFinderLibGdBmp {
         return $bmp;
     }
 
-    public static function loadFromStream($stream) {
+    public static function loadFromStream($stream)
+    {
         $buf = fread($stream, 14); //2+4+2+2+4
         if ($buf === false) {
             return false;
@@ -134,18 +130,19 @@ class elFinderLibGdBmp {
         }
 
         $bitmap_file_header = unpack(
-                //BITMAPFILEHEADER構造体
-                "vtype/" .
-                "Vsize/" .
-                "vreserved1/" .
-                "vreserved2/" .
-                "Voffbits", $buf
+        //BITMAPFILEHEADER構造体
+            "vtype/" .
+            "Vsize/" .
+            "vreserved1/" .
+            "vreserved2/" .
+            "Voffbits", $buf
         );
 
         return self::loadFromStreamAndFileHeader($stream, $bitmap_file_header);
     }
 
-    public static function loadFromStreamAndFileHeader($stream, array $bitmap_file_header) {
+    public static function loadFromStreamAndFileHeader($stream, array $bitmap_file_header)
+    {
         if ($bitmap_file_header["type"] != 0x4d42) {
             return false;
         }
@@ -165,11 +162,11 @@ class elFinderLibGdBmp {
             }
 
             extract(unpack(
-                            //BITMAPCOREHEADER構造体 - OS/2 Bitmap
-                            "vwidth/" .
-                            "vheight/" .
-                            "vplanes/" .
-                            "vbit_count", $buf
+            //BITMAPCOREHEADER構造体 - OS/2 Bitmap
+                "vwidth/" .
+                "vheight/" .
+                "vplanes/" .
+                "vbit_count", $buf
             ));
             //飛んでこない分は 0 で初期化しておく
             $clr_used = $clr_important = $alpha_mask = $compression = 0;
@@ -190,17 +187,29 @@ class elFinderLibGdBmp {
 
             //BITMAPINFOHEADER構造体 - Windows Bitmap
             extract(unpack(
-                            "Vwidth/" .
-                            "Vheight/" .
-                            "vplanes/" .
-                            "vbit_count/" .
-                            "Vcompression/" .
-                            "Vsize_image/" .
-                            "Vx_pels_per_meter/" .
-                            "Vy_pels_per_meter/" .
-                            "Vclr_used/" .
-                            "Vclr_important", $buf
+                "Vwidth/" .
+                "Vheight/" .
+                "vplanes/" .
+                "vbit_count/" .
+                "Vcompression/" .
+                "Vsize_image/" .
+                "Vx_pels_per_meter/" .
+                "Vy_pels_per_meter/" .
+                "Vclr_used/" .
+                "Vclr_important", $buf
             ));
+            /**
+             * @var integer $width
+             * @var integer $height
+             * @var integer $planes
+             * @var integer $bit_count
+             * @var integer $compression
+             * @var integer $size_image
+             * @var integer $x_pels_per_meter
+             * @var integer $y_pels_per_meter
+             * @var integer $clr_used
+             * @var integer $clr_important
+             */
             //負の整数を受け取る可能性があるものは自前で変換する
             if ($width & 0x80000000) {
                 $width = -(~$width & 0xffffffff) - 1;
@@ -237,12 +246,12 @@ class elFinderLibGdBmp {
                 }
 
                 extract(unpack(
-                                //BITMAPV4HEADER構造体(Windows95以降)
-                                //BITMAPV5HEADER構造体(Windows98/2000以降)
-                                "Vred_mask/" .
-                                "Vgreen_mask/" .
-                                "Vblue_mask/" .
-                                "Valpha_mask", $buf . str_repeat("\x00", 120)
+                //BITMAPV4HEADER構造体(Windows95以降)
+                //BITMAPV5HEADER構造体(Windows98/2000以降)
+                    "Vred_mask/" .
+                    "Vgreen_mask/" .
+                    "Vblue_mask/" .
+                    "Valpha_mask", $buf . str_repeat("\x00", 120)
                 ));
             } else {
                 $alpha_mask = $red_mask = $green_mask = $blue_mask = 0;
@@ -250,9 +259,9 @@ class elFinderLibGdBmp {
 
             //パレットがないがカラーマスクもない時
             if (
-                    ($bit_count == 16 || $bit_count == 24 || $bit_count == 32) &&
-                    $compression == 0 &&
-                    $red_mask == 0 && $green_mask == 0 && $blue_mask == 0
+                ($bit_count == 16 || $bit_count == 24 || $bit_count == 32) &&
+                $compression == 0 &&
+                $red_mask == 0 && $green_mask == 0 && $blue_mask == 0
             ) {
                 //もしカラーマスクを所持していない場合は
                 //規定のカラーマスクを適用する
@@ -273,15 +282,15 @@ class elFinderLibGdBmp {
         }
 
         if (
-                ($width == 0) ||
-                ($height == 0) ||
-                ($planes != 1) ||
-                (($alpha_mask & $red_mask ) != 0) ||
-                (($alpha_mask & $green_mask) != 0) ||
-                (($alpha_mask & $blue_mask ) != 0) ||
-                (($red_mask & $green_mask) != 0) ||
-                (($red_mask & $blue_mask ) != 0) ||
-                (($green_mask & $blue_mask ) != 0)
+            ($width == 0) ||
+            ($height == 0) ||
+            ($planes != 1) ||
+            (($alpha_mask & $red_mask) != 0) ||
+            (($alpha_mask & $green_mask) != 0) ||
+            (($alpha_mask & $blue_mask) != 0) ||
+            (($red_mask & $green_mask) != 0) ||
+            (($red_mask & $blue_mask) != 0) ||
+            (($green_mask & $blue_mask) != 0)
         ) {
             //不正な画像
             return false;
@@ -320,6 +329,12 @@ class elFinderLibGdBmp {
                     return false;
                 }
                 extract(unpack("Cb/Cg/Cr/Cx", $buf . "\x00"));
+                /**
+                 * @var integer $b
+                 * @var integer $g
+                 * @var integer $r
+                 * @var integer $x
+                 */
                 $palette[] = imagecolorallocate($img, $r, $g, $b);
             }
 
@@ -330,7 +345,7 @@ class elFinderLibGdBmp {
             if ($compression == 1 || $compression == 2) {
                 $x = 0;
                 $qrt_mod2 = $bit_count >> 2 & 1;
-                for (;;) {
+                for (; ;) {
                     //もし描写先が範囲外になっている場合デコード処理がおかしくなっているので抜ける
                     //変なデータが渡されたとしても最悪なケースで255回程度の無駄なので目を瞑る
                     if ($x < -1 || $x > $width || $y < -1 || $y > $height) {
@@ -455,5 +470,4 @@ class elFinderLibGdBmp {
         }
         return $img;
     }
-
 }

@@ -440,76 +440,70 @@ function animate(id) {
     this.slideOutUp = function () {
         return this.anim("slideOutUp");
     };
-    this.delay_2s = function () {
+    this.rm_delay = function () {
         $.each(["delay-2s", "delay-3s", "delay-4s", "delay-5s"], function (k, v) {
             $(_id).removeClass("animate__" + v);
         });
+        return this;
+    };
+    this.delay_2s = function () {
+        this.rm_delay();
         return this.anim("delay-2s");
     };
     this.delay_3s = function () {
-        $.each(["delay-2s", "delay-3s", "delay-4s", "delay-5s"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_delay();
         return this.anim("delay-3s");
     };
     this.delay_4s = function () {
-        $.each(["delay-2s", "delay-3s", "delay-4s", "delay-5s"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_delay();
         return this.anim("delay-4s");
     };
     this.delay_5s = function () {
-        $.each(["delay-2s", "delay-3s", "delay-4s", "delay-5s"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_delay();
         return this.anim("delay-5s");
     };
-    this.slow = function () {
+    this.rm_speed = function () {
         $.each(["slow", "slower", "fast", "faster"], function (k, v) {
             $(_id).removeClass("animate__" + v);
         });
+        return this;
+    };
+    this.slow = function () {
+        this.rm_speed();
         return this.anim("slow");
     };
     this.slower = function () {
-        $.each(["slow", "slower", "fast", "faster"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_speed();
         return this.anim("slower");
     };
     this.fast = function () {
-        $.each(["slow", "slower", "fast", "faster"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_speed();
         return this.anim("fast");
     };
     this.faster = function () {
-        $.each(["slow", "slower", "fast", "faster"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_speed();
         return this.anim("faster");
     };
-    this.repeat_1 = function () {
+    this.rm_repeat = function () {
         $.each(["repeat-1", "repeat-2", "repeat-3", "infinite"], function (k, v) {
             $(_id).removeClass("animate__" + v);
         });
+        return this;
+    };
+    this.repeat_1 = function () {
+        this.rm_repeat();
         return this.anim("repeat-1");
     };
     this.repeat_2 = function () {
-        $.each(["repeat-1", "repeat-2", "repeat-3", "infinite"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_repeat();
         return this.anim("repeat-2");
     };
     this.repeat_3 = function () {
-        $.each(["repeat-1", "repeat-2", "repeat-3", "infinite"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_repeat();
         return this.anim("repeat-3");
     };
     this.infinite = function () {
-        $.each(["repeat-1", "repeat-2", "repeat-3", "infinite"], function (k, v) {
-            $(_id).removeClass("animate__" + v);
-        });
+        this.rm_repeat();
         return this.anim("infinite");
     };
 }

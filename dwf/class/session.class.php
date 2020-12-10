@@ -14,17 +14,11 @@ class session {
      */
     public static function start($regenerate_id = true) {
         session_start();
-        if ($regenerate_id) {
-            session_regenerate_id(true);
-        }
-        if (!self::get_val("ip")) {
-            self::set_val("ip", $_SERVER["REMOTE_ADDR"]);
-            if(!isset($_SERVER["HTTP_USER_AGENT"])){
-                $_SERVER["HTTP_USER_AGENT"]="Unknown";
-            }
-            self::set_val("browser", $_SERVER["HTTP_USER_AGENT"]);
-        }
-        if (self::get_val("ip") != $_SERVER["REMOTE_ADDR"] or self::get_val("browser") != $_SERVER["HTTP_USER_AGENT"]) {
+        ($regenerate_id ? session_regenerate_id(true) : null);
+        $_SERVER["HTTP_USER_AGENT"] = (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Unknown");
+        $hash = hash(config::$_hash_algo, "{$_SERVER["REMOTE_ADDR"]}_{$_SERVER["HTTP_USER_AGENT"]}");
+        (!self::get_val("security_token") ? self::set_val("security_token", $hash) : null);
+        if (self::get_val("security_token") != $hash) {
             session_destroy();
             ?>
             <script type="text/javascript">

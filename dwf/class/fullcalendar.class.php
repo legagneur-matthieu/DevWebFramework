@@ -27,7 +27,7 @@ class fullcalendar {
      * array(
      *     array("title"=>"titre",
      *           "start"=>"yyyy-mm-ddThh:mm:ss",
-     *           "end"=>"yyyy-mm-ddThh:mm:ss", //optionel
+     *           "end"=>"yyyy-mm-ddThh:mm:ss",
      *           "url"=>"https://duckduckgo.com" //optionel
      *     ),
      *     ...)
@@ -47,9 +47,9 @@ class fullcalendar {
                     ["url", "string", false]
                 ]
             ]);
-            echo html_structures::script("./src/fullcalendar-5.4.0/lib/main.js");
-            echo html_structures::script("./src/fullcalendar-5.4.0/lib/locales-all.js");
-            echo html_structures::link_in_body("./src/fullcalendar-5.4.0/lib/main.css");
+            echo html_structures::script("../commun/src/js/fullcalendar/lib/main.js");
+            echo html_structures::script("../commun/src/js/fullcalendar/lib/locales-all.js");
+            echo html_structures::link_in_body("../commun/src/js/fullcalendar/lib/main.css");
         }
         ?>
         <script type="text/javascript">

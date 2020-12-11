@@ -818,14 +818,20 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche l'administration du Fullcalendar\n"
-                . "(new fullcalendar())->admin();\n\n"
-                . "//Affiche le fullcalendar avec les évènements et ressources enregistrés en base de données\n"
-                . "(new fullcalendar())->events(fullcalendar_event::get_table_array(), fullcalendar_resource::get_table_array());\n\n"
-                . "//Affiche le fullcalendar avec l'agenda d'un ou plusieurs comptes Google\n"
-                . "(new fullcalendar())->gcal($" . "api, array('abcd1234@group.calendar.google.com'));\n"
+                . "fullcalendar::admin();\n\n"
+                . "//Affiche le fullcalendar avec les évènements enregistrés en base de données\n"
+                . "new fullcalendar($" . "id=\"fullcanlendar\", fullcalendar_event::get_table_array());\n\n"
+                . "//Affiche le fullcalendar avec l'agenda d'un compte Google\n"
+                . "new fullcalendar($" . "id=\"fullcanlendar\", null, $" . "api_key, 'abcd1234@group.calendar.google.com');\n"
                 . "?>", $this->_brush);
         ?><p>Exemple</p><?php
-        (new fullcalendar())->events(array(array("title" => "événement de démonstation", "start" => date("Y-m-d") . "T" . date("H:i:s"))));
+        new fullcalendar("fullcalendar", [
+            [
+                "title" => "événement de démonstation",
+                "start" => date("Y-m-d") . " " . date("H:i:s"),
+                "end" => date("Y-m-d") . " " . (date("H") + 1) . date(":i:s")
+            ]
+        ]);
     }
 
     private function g_agenda() {
@@ -1890,7 +1896,7 @@ class docPHP_natives {
         <p>Cette classe permet de recuperer une ressource en passant par tor</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "$"."data = (new tor())->wget($" . "url);\n"
+                . "$" . "data = (new tor())->wget($" . "url);\n"
                 . "?>", $this->_brush);
     }
 

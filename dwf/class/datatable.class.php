@@ -18,7 +18,7 @@ class datatable {
      * 
      * @var array
      */
-    private $_params = ["language" => "{url: '../commun/src/js/DataTables/lang/French.lang.json'}"];
+    private $_params = ["language" => "{url: '../commun/src/js/DataTables/i18n/French.lang.json'}"];
 
     /**
      * Applique les fonctionnalitées de la librairie datatable à un tableau HTML
@@ -28,7 +28,7 @@ class datatable {
      */
     public function __construct($id = "datatable", $params = []) {
         if (!self::$_called) {
-            echo html_structures::script("../commun/src/js/DataTables/datatables.min.js") ;
+            echo html_structures::script("../commun/src/js/DataTables/datatables.min.js");
             compact_css::get_instance()->add_css_file("../commun/src/js/DataTables/datatables.min.css");
             self::$_called = true;
         }

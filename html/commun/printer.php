@@ -12,7 +12,7 @@ class print_pdf {
      * 
      * @param string $content contenu HTML du PDF
      */
-    public function __construct($lib, $content) {
+    public function __construct($lib, $content, $filename) {
         switch ($lib) {
             case "dompdf":
                 include_once '../../dwf/class/dompdf/autoload.inc.php';
@@ -20,7 +20,7 @@ class print_pdf {
                 $dompdf->load_html($content);
                 ob_end_clean();
                 $dompdf->render();
-                $dompdf->stream("printer.pdf", array('Attachment' => 0));
+                $dompdf->stream($filename, array('Attachment' => 0));
                 break;
             case"debug":
                 echo $content;
@@ -31,5 +31,5 @@ class print_pdf {
 }
 
 if (isset($_POST["content"])) {
-    $printer = new print_pdf($_POST["lib"], base64_decode($_POST["content"]));
+    $printer = new print_pdf($_POST["lib"], base64_decode($_POST["content"]), (isset($_POST["filename"]) ? $_POST["filename"] : "printer.pdf"));
 }       

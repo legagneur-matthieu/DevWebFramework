@@ -66,12 +66,14 @@ class printer {
     /**
      * Affiche le bouton d'impression ouvrant le PDF dans print.php
      */
-    public function print_buton() {
+    public function print_buton($filename = "printer.pdf") {
         echo tags::tag("form", ["action" => "../commun/printer.php", "target" => "_blank", "method" => "post"], tags::tag(
                         "div", ["class" => "form-group"], tags::tag(
                                 "input", ["type" => "hidden", "class" => "form-control", "name" => "content", "value" => base64_encode(($this->return_content()))]) .
                         tags::tag(
                                 "input", ["type" => "hidden", "class" => "form-control", "name" => "lib", "value" => $this->_lib]) .
+                        tags::tag(
+                                "input", ["type" => "hidden", "class" => "form-control", "name" => "filename", "value" => $filename]) .
                         tags::tag(
                                 "input", ["type" => "submit", "class" => "btn btn-secondary", "value" => "Version imprimable (PDF)"])
                 )

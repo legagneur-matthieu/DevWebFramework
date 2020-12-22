@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Cette classe génére un PDF à partir d'un code HTML généré préalablement (cf class/printer.class.php)

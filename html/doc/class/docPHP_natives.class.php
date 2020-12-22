@@ -1351,7 +1351,7 @@ class docPHP_natives {
                 . "//Affiche un bouton qui ouvre un onglet vers un export PDF\n"
                 . "$" . "pdf=new printer($" . "lib); //$" . "lib = html2pdf ou dompdf\n"
                 . "$" . "pdf->add_content($" . "content); //contenu HTML\n"
-                . "$" . "pdf->print_buton(); //affiche le bouton(formulaire)\n"
+                . "$" . "pdf->print_buton($" . "filename='printer.pdf'); //affiche le bouton(formulaire) et defini le nom du fichier\n"
                 . "?>", $this->_brush);
     }
 

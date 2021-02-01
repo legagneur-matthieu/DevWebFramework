@@ -78,9 +78,9 @@ class bootstrap_theme {
      * @return string Lien modal
      */
     public static function user_custom() {
-        if (isset($_POST["bootstrap_theme"])) {
-            if (in_array($_POST["bootstrap_theme"], self::$_theme)) {
-                session::set_val("theme", $_POST["bootstrap_theme"]);
+        if (isset($_POST["dwf_bootstrap_theme"])) {
+            if (in_array($_POST["dwf_bootstrap_theme"], self::$_theme)) {
+                session::set_val("theme", $_POST["dwf_bootstrap_theme"]);
             } else {
                 session::set_val("theme", "default");
             }
@@ -94,9 +94,29 @@ class bootstrap_theme {
         foreach (self::$_theme as $t) {
             $option[] = [$t, ucfirst($t), ($t == self::get_theme())];
         }
-        $form->select("Theme", "bootstrap_theme", $option);
+        $form->select("Theme", "dwf_bootstrap_theme", $option);
         $form->submit("btn-primary");
         return (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
+    }
+
+    /**
+     * Permet à l'utilisateur de passer du thème par defaut à un autre prédéfinit et inversement.
+     * (Généralement utilisé pour proposer un thème clair et un thème sombre)
+     * @param string $theme thème a appliquer (Darkly par defaut)
+     * @param array $labels les labels a afficher pour passer d'un theme a l'autre (["Thème clair", "Thème sombre"] par defaut)
+     * @return string Formulaire du switch
+     */
+    public static function switch_theme($theme = "darkly", $labels = ["Thème clair", "Thème sombre"]) {
+        if (isset($_POST["dwf_bootstap_switch_theme"])) {
+            session::set_val("theme", ($_POST["dwf_bootstap_switch_theme"] == 0 ? config::$_theme : $theme));
+            js::redir("");
+            exit();
+        }
+        $value = (session::get_val("theme") == $theme ? 0 : 1);
+        $form = new form();
+        $form->hidden("dwf_bootstap_switch_theme", $value);
+        $form->submit("btn-primary", $labels[$value]);
+        return $form->render();
     }
 
 }

@@ -153,14 +153,13 @@ ul.file_explorer, ul.ftp_explorer{
 .mcd_entity{
     border: black solid 1px;
     width: 200px;
+    background-color: white;
+    color: black;
 }
 .mcd_entity_name{
     text-align: center;
     border: gray solid 1px;
     background-color: lightgrey;
-}
-.mcd_entity .mcd_entity{
-    background-color: white;
 }
 
 /*carousel*/

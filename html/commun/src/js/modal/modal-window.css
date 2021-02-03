@@ -19,6 +19,7 @@
     padding: 5px;
     border: thin black solid;
     background-color:white;
+    color: black;
     z-index:3; /* places the modal dialog on top of everything else */
     position:fixed;
     top:20px;

@@ -112,6 +112,10 @@ ul.file_explorer, ul.ftp_explorer{
     margin: 5px;
 }
 /*Accordion*/
+.ui-widget-content{
+    background-color: transparent;
+    color: inherit;
+}
 .ui-widget-content a {
     color: #337ab7;
 }

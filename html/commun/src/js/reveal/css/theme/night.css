@@ -8,11 +8,9 @@
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
-body {
-    background: #111;
-    background-color: #111; }
-
 .reveal {
+    background: #111;
+    background-color: #111; 
     font-family: "Open Sans", sans-serif;
     font-size: 40px;
     font-weight: normal;

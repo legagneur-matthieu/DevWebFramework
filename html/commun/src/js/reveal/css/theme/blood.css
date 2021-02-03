@@ -13,11 +13,9 @@
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
-body {
-    background: #222;
-    background-color: #222; }
-
 .reveal {
+    background: #222;
+    background-color: #222; 
     font-family: Ubuntu, "sans-serif";
     font-size: 40px;
     font-weight: normal;

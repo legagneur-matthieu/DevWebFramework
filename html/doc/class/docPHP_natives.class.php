@@ -136,7 +136,10 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche une interface (modal) permettant à l'utilisateur de choisir un thème\n"
-                . "echo bootstrap_theme::user_custom();\n"
+                . "echo bootstrap_theme::user_custom();\n\n"
+                . "//Permet à l'utilisateur de passer du thème par defaut à un autre prédéfinit et inversement.\n"
+                . "//(Généralement utilisé pour proposer un thème clair et un thème sombre)\n"
+                . "echo bootstrap_theme::switch_theme($" . "theme = 'darkly', $" . "labels = ['Thème clair', 'Thème sombre'])\n"
                 . "?>", $this->_brush);
     }
 

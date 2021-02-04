@@ -19,9 +19,14 @@ class pages { /**
      */
 
     public function header() {
+        compact_css::get_instance()->add_style(
+                (new css())->add_rule("header #boostap_switch_theme", [
+                    "position" => "absolute", "right" => "-160px", "top" => "70px"
+        ]));
         ?> 
         <header class="page-header bg-info">
             <h1>Documentation <br /><small>Documentation de DWF</small></h1> 
+            <div id="boostap_switch_theme"><?= bootstrap_theme::switch_theme() ?></div>
         </header> 
         <?php
     }

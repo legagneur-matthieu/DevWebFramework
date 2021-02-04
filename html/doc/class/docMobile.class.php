@@ -5,7 +5,7 @@ class docMobile {
     public function __construct() {
         $doc = array(
             "introduction",
-            "debuter",
+            "débuter",
             "heritage_du_framework_php"
         );
         js::accordion("accordion", true, true);
@@ -36,7 +36,7 @@ class docMobile {
         <div class="alert alert-warning">
             <p>
                 <strong>Note du développeur</strong> <br />
-                La version cordova du framework n'est plus maintenu depuis 2018 par manque de temps. <br />
+                La version cordova du framework n'est plus maintenue depuis 2018 par manque de temps. <br />
                 Mais il n'est pas abandonné ! Une mise à niveau sera faite dès que cela sera possible.
             </p>
         </div>
@@ -119,7 +119,7 @@ class docMobile {
                 . "        function utilise_dans_un_contexte(){\n"
                 . "            if(!my_proto_called){ //on verifie si le script n'a pas déjà été appelé\n"
                 . "                $" . "dwf.include_script(\"my_scripts_dir/my_proto.js\"); //on inclue my_proto.js\n"
-                . "                my_proto_called = true; //on passe la variable a true\n"
+                . "                my_proto_called = true; //on passe la variable à true\n"
                 . "            }\n"
                 . "            //suite d'instructions\n"
                 . "        }\n"
@@ -128,7 +128,7 @@ class docMobile {
         ?>
         <h4>Vérifier la connexion réseau du téléphone</h4>
         <p>
-            Admettons que votre application aura obligatoirement besoin d'une connexion internet (wifi ou 3G/4G) vous pouvez effectuer une vérification grâce à <br />
+            Admettons que votre application aura obligatoirement besoin d'une connexion internet (wifi ou 3G/4G), vous pouvez effectuer une vérification grâce à <br />
             <em>$dwf.cordova().is_connected_web();</em> qui retourne true si l'appareil est connecté, sinon false;
 
         </p>
@@ -165,7 +165,7 @@ class docMobile {
                 . "    ]);\n"
                 . "    mon_form.submit(\"btn-primary\", \"Valider\"); //ajout du bouton de soumission\n\n"
                 . "    $(\"#mon_form\").submit(function (e) { //etape 4\n"
-                . "        e.preventDefault(); //evite le rafraichissement du formulaire\n"
+                . "        e.preventDefault(); //évite le rafraichissement du formulaire\n"
                 . "        mon_form.get_post(); //étape 5\n\n"
                 . "        //utilisation d'une saisie formulaire dans localStorage\n"
                 . "        localStorage.setItem(\"clé\", $" . "_post[\"name_input\"]);\n"

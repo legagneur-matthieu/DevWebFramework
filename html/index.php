@@ -71,7 +71,7 @@ class parcour_sites {
         return tags::tag("head", [], tags::tag(
                                 "meta", ["charset" => "UTF-8"]) .
                         tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]) .
-                        tags::tag("title", [], "Parcour des sites") .
+                        tags::tag("title", [], "Parcours des sites") .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-reboot.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-glyphicon.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-grid.min.css"]) .

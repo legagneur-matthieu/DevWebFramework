@@ -1002,9 +1002,9 @@ class docPHP_natives {
                 . "html5::before_title($" . "text);\n"
                 . "//Définit la description de la page en cours\n"
                 . "html5::set_description($" . "description);\n"
-                . "//Défini les mots clé de la page en cours\n"
+                . "//Défini les mots clés de la page en cours\n"
                 . "html5::set_keywords($" . "keywords);\n"
-                . "//Ajoute des mots clé de la page en cours\n"
+                . "//Ajoute des mots clés de la page en cours\n"
                 . "html5::add_keywords($" . "keywords);\n"
                 . "?>", $this->_brush);
     }
@@ -1035,15 +1035,15 @@ class docPHP_natives {
                 )
         );
         ?>
-        <p>Methodes (toutes static) :</p>
+        <p>Méthodes (toutes static) :</p>
         <?php
-        echo html_structures::table(["Methode", "Description"], [
+        echo html_structures::table(["Méthode", "Description"], [
             ["table", "Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données"],
             ["ul, ol, dl", "Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des array)"],
             ["a_link", "Retourne un lien"],
             ["Ancre", "Retourne une ancre a"],
             ["img", "Retourne une image img"],
-            ["figure", "Retourne une figure ( illustration + légende )"],
+            ["figure", "Retourne une figure ( illustration et légende )"],
             ["new_map, area et close_map", "Mapping d'image"],
             ["media", "Retourne les données passées en paramètres sous forme de média (bootstrap)"],
             ["glyphicon", "Retourne un glyphicon (avec un texte alternative)"],
@@ -1051,9 +1051,9 @@ class docPHP_natives {
             ["time", "La balise time permet d'afficher une date avec une valeur SEO sémantique"],
             ["link_in_body", "Permet de faire appel à une balise LINK dans le body"],
             ["script_in_body", "Permet de faire appel à une balise SCRIPT dans le body"],
-            ["script et link", "Sont utilisé par le framework (dans html5.class.php)"],
+            ["script et link", "Sont utilisés par le framework (dans html5.class.php)"],
             ["popover", "Permet d'afficher un lien avec un popover"],
-            ["parallax", "Permet d'afficher une DIV qui aurra un effet de parallax"]
+            ["parallax", "Permet d'afficher une DIV qui aura un effet de parallaxe"]
         ]);
     }
 
@@ -1111,7 +1111,7 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//instencie l'objet de log\n"
                 . "$" . "log=new log_file($" . "a_log_a_day=false);\n"
-                . "//inscrits un message d'informations dans le log\n"
+                . "//inscrit un message d'informations dans le log\n"
                 . "$" . "log->info($" . "message);\n"
                 . "//inscrit un message d'alerte dans le log\n"
                 . "$" . "log->warning($" . "message);\n"
@@ -1142,7 +1142,7 @@ class docPHP_natives {
             Le texte est généré depuis le vocabulaire du texte de Cicero : De finibus. 
             <br />Sources : <br />
             <a href="http://www.thelatinlibrary.com/cicero/fin1.shtml">Liber Primus</a> <br />
-            <a href="http://www.thelatinlibrary.com/cicero/fin.shtml">Oeuvre compléte</a></p>
+            <a href="http://www.thelatinlibrary.com/cicero/fin.shtml">Oeuvre complète</a></p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Lorem Ipsum de 100 mots ne commencant pas par \"Lorem ipsum ...\"\n"
@@ -1191,12 +1191,12 @@ class docPHP_natives {
                 . "$" . "form->submit(\"btn-primary\");\n"
                 . "echo $" . "form->render();\n"
                 . "if(isset($" . "_POST[\"masknumber\"])){\n"
-                . "    maskNumber::get(\"masknumber\"); //converti les saisis dans $" . "_POST\n"
+                . "    maskNumber::get(\"masknumber\"); //convertit les saisies dans $" . "_POST\n"
                 . "}\n"
                 . "?>", $this->_brush);
         ?>
-        <p>Attention ! maskNumber::set() doit être executé avant l'execution du formulaire ! <br />
-            Resultat :</p>
+        <p>Attention ! maskNumber::set() doit être executé avant l'exécution du formulaire ! <br />
+            Résultat :</p>
         <?php
         maskNumber::set("masknumber");
         $form = new form();
@@ -1218,20 +1218,20 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//Purge les messages de plus de 2 ans\n"
                 . "messagerie::purge_msg($" . "table_msg, $" . "years = 2);\n"
-                . "//créé une interface de messagerie pour les utilisateurs\n"
+                . "//Créé une interface de messagerie pour les utilisateurs\n"
                 . "new messagerie($" . "table_user, $" . "tuple_user);\n"
                 . "?>", $this->_brush);
     }
 
     private function modal() {
         ?>
-        <p>"Modal" est une classe permettant d'afficher des modals (appelés aussi layout ou pop-in). Une "modal" s'ouvre lors d'un clic sur un lien lui correspondant</p>
+        <p>"Modal" est une classe permettant d'afficher des modals (appelées aussi layout ou pop-in). Une "modal" s'ouvre lors d'un clic sur un lien lui correspondant</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "a_text='Cliquez ici pour ouvrir la modal';\n"
                 . "$" . "id='demo_modal';\n"
                 . "$" . "title='(pop-up)';\n"
-                . "$" . "titre='Démonstartion';\n"
+                . "$" . "titre='Démonstration';\n"
                 . "$" . "data='<p class=\"text-center\">Bienvenue sur la démonstration de modals</p>';\n"
                 . "$" . "class='';\n"
                 . "echo (new modal())->link_open_modal($" . "a_text, $" . "id, $" . "title, $" . "titre, $" . "data, $" . "class);\n"
@@ -1239,7 +1239,7 @@ class docPHP_natives {
         ?>
         <p>Résultat :</p>
         <?php
-        echo (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstartion", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
+        echo (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstration", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
     }
 
     private function openweather() {
@@ -1248,7 +1248,7 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php new openweather($" . "api_key, $" . "city); ?>", $this->_brush);
         ?>
-        <p>Le resultat est le suivant (exemple fictif) :</p>        
+        <p>Le résultat est le suivant (exemple fictif) :</p>        
         <div class = "openwether">
             <p>
                 <span class = "dt">Météo de [$city] (<?php date("d/m H:i"); ?>)</span><br>
@@ -1280,11 +1280,11 @@ class docPHP_natives {
 
     private function paypal() {
         ?>
-        <p>Cette classe permet de créer, verifier et executer des payment via l'API REST de PayPal</p>
+        <p>Cette classe permet de créer, verifier et exécuter des paiements via l'API REST de PayPal</p>
         <p>Exemple d'utilisation :</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//liste des produit que veux acheter l'utilisateur\n"
+                . "//liste des produits que veut acheter l'utilisateur\n"
                 . "$" . "item_list = [\n"
                 . "    [\n"
                 . "        'Name' => 'produit1',\n"
@@ -1297,7 +1297,7 @@ class docPHP_natives {
                 . "        'Quantity' => 5\n"
                 . "    ]\n"
                 . "];\n\n"
-                . "//Id et Secret renseigné dans l'application de l'API REST de PayPal\n"
+                . "//Id et Secret renseignés dans l'application de l'API REST de PayPal\n"
                 . "$" . "clientId='Votre-clientId';\n"
                 . "$" . "clientSecret='Votre-clientSecret';\n"
                 . "$" . "paypal = new paypal($" . "clientId, $" . "clientSecret);\n\n"
@@ -1307,22 +1307,22 @@ class docPHP_natives {
                 . "switch ($" . "_GET['paypal_action']) {\n"
                 . "    case 'return':\n"
                 . "        $" . "payment = $" . "paypal->get_payment($" . "_GET['paymentId']);\n"
-                . "        //TODO: verifier les données du payment\n"
-                . "        //Execute le payment\n"
+                . "        //TODO: verifier les données du paiement\n"
+                . "        //Execute le paiement\n"
                 . "        $" . "paypal->execute_payment($" . "payment);\n"
                 . "        //TODO : envoyer une copie de la facture par mail\n"
-                . "        js::alertify_alert_redir('Payment accepté! retour a l\'accueil', 'index.php');\n"
+                . "        js::alertify_alert_redir('Paiement accepté! retour à l\'accueil', 'index.php');\n"
                 . "        break;\n"
                 . "    case 'cancel':\n"
-                . "        js::alertify_alert_redir('Vous avez annulé le payment, retour a l\'accueil', 'index.php');\n"
+                . "        js::alertify_alert_redir('Vous avez annulé le paiement, retour à l\'accueil', 'index.php');\n"
                 . "        break;\n"
                 . "    default:\n"
                 . "        $" . "url = 'http://monsite.fr/' . strtr(application::get_url(['paypal_action']), ['&amp;' => '&']);\n"
-                . "        //créé le payment et retourne le lien de payment pour l'utilisateur ou false en cas d'erreur\n"
+                . "        //créé le paiement et retourne le lien de paiement pour l'utilisateur ou false en cas d'erreur\n"
                 . "        if ($" . "link = $" . "paypal->create_payment(\n"
                 . "                $" . "item_list, 20, 'Ventes de monsite.fr', $" . "url . 'paypal_action = return', $" . "url . 'paypal_action = cancel'\n"
                 . "                )) {\n"
-                . "            //affiche le lien pour le payment ( à fournir à l'utilisateur)\n"
+                . "            //affiche le lien pour le paiement ( à fournir à l'utilisateur)\n"
                 . "            //A adapter si vous voulez afficher un bouton PayPal \"officiel\"\n"
                 . "            echo html_structures::a_link($" . "link, 'Payer');\n"
                 . "        }\n"
@@ -1330,7 +1330,7 @@ class docPHP_natives {
                 . "}\n"
                 . "?>", $this->_brush);
         ?>
-        <p>Plus de renseignements dans la doc technique et sur <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a></p>
+        <p>Plus de renseignements dans la documentation technique et sur <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a></p>
         <?php
     }
 
@@ -1347,20 +1347,20 @@ class docPHP_natives {
                 . "//Affiche le qrcode contenant le texte ou l'URL passé en paramètre\n"
                 . "phpQRCode::print_img('texte ou url');\n\n"
                 . "//Affiche le qrcode contenant l'URL de la page courante, utilise un modal !\n"
-                . "//utile pour les utilisateurs qui désirent continuer une lecture sur leur smartphone\n"
+                . "//Utile pour les utilisateurs qui désirent continuer une lecture sur leur smartphone\n"
                 . "phpQRCode::this_page_to_qr();\n\n"
                 . "//Affiche un lien qui ouvre un onglet vers un export CSV des données passées en paramètre\n"
                 . "new printcsv($" . "data);\n\n"
                 . "//Affiche un bouton qui ouvre un onglet vers un export PDF\n"
                 . "$" . "pdf=new printer($" . "lib); //$" . "lib = html2pdf ou dompdf\n"
                 . "$" . "pdf->add_content($" . "content); //contenu HTML\n"
-                . "$" . "pdf->print_buton($" . "filename='printer.pdf'); //affiche le bouton(formulaire) et defini le nom du fichier\n"
+                . "$" . "pdf->print_buton($" . "filename='printer.pdf'); //affiche le bouton (formulaire) et definit le nom du fichier\n"
                 . "?>", $this->_brush);
     }
 
     private function php_finediff() {
         ?>
-        <p>Permets d'afficher les différences entre deux chaines de caractères</p>
+        <p>Permet d'afficher les différences entre deux chaines de caractères</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . 'echo php_finediff::DiffToHTML("Texte de départ", "Texte final");'
@@ -1386,27 +1386,27 @@ class docPHP_natives {
     private function phpini() {
         ?>
         <p>
-            Cette classe permet de gèrer des profils de configuration PHP (comme avoir plusieurs fichier php.ini interchangeable à volonté)            
+            Cette classe permet de gérer des profils de configuration PHP (comme avoir plusieurs fichiers php.ini interchangeable à volonté)            
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "// Affiche l'interface pour créer vos propres profils de configuration.\n"
-                . "// Est accèssible de base par le fichier html/index.php -> PHPini\n"
+                . "// Est accessible de base par le fichier html/index.php -> PHPini\n"
                 . "phpini::admin();\n\n"
                 . "//Charge un profil standard\n"
                 . "phpini::set_mode(phpini::MODE_DEFAULT);\n\n"
-                . "//Les diferants profils standard sont :\n"
-                . "//Congiguration par défaut tel que décrite dans la doc officiel de php.ini\n"
+                . "//Les différents profils standards sont :\n"
+                . "//Configuration par défaut telle que décrite dans la documentation officielle de php.ini\n"
                 . "phpini::MODE_DEFAULT;\n\n"
-                . "//Congiguration de développement tel que décrite dans la doc officiel de php.ini\n"
+                . "//Configuration de développement telle que décrite dans la documentation officiele de php.ini\n"
                 . "phpini::MODE_DEV;\n\n"
-                . "//Congiguration de production tel que décrite dans la doc officiel de php.ini\n"
+                . "//Configuration de production telle que décrite dans la documentation officiel de php.ini\n"
                 . "phpini::MODE_PROD;\n\n"
-                . "//Congiguration de développement conseillé pour DWF\n"
+                . "//Configuration de développement conseillé pour DWF\n"
                 . "phpini::MODE_DWF_DEV;\n\n"
-                . "//Congiguration de production conseillé pour DWF\n"
+                . "//Configuration de production conseillée pour DWF\n"
                 . "phpini::MODE_DWF_PROD;\n\n"
-                . "//Charge un profi de configuration de votre création\n"
+                . "//Charge un profil de configuration de votre création\n"
                 . "phpini::set_mode(phpini::MODE_CUSTOM,'mon_profil');\n\n"
                 . "?>", $this->_brush);
     }
@@ -1414,15 +1414,15 @@ class docPHP_natives {
     private function pseudo_cron() {
         ?>
         <p>Cette classe permet de lancer des "pseudo cron", <br />
-            contairement à des vrais cron qui s'executent a des heures fixes planifié par le sistème, <br />
-            ici les pseudo cron s'executent : lors d'une activité utilisateur et si il n'a pas été executé depuis un certain temps définis</p>
+            contairement à des vrais cron qui s'executent à des heures fixes planifiées par le système, <br />
+            ici les pseudos cron s'exécutent : lors d'une activité utilisateur et s'il n'a pas été executé depuis un certain temps défin</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "// Instanciation du sistème de pseudo cron en utilisant un registre json (ou SQL par defaut)\n"
+                . "// Instanciation du système de pseudo cron en utilisant un registre json (ou SQL par defaut)\n"
                 . "//pseudo_cron est un singleton\n"
                 . "$" . "pcron = pseudo_cron::get_instance('json');\n\n"
-                . "// Execute la fonction lors d'une activité utilisateur \n"
-                . "// et si la fonction n'a pas été appelé au cours des dernières 24 heurs (86400 secondes) \n"
+                . "// Exécute la fonction lors d'une activité utilisateur \n"
+                . "// et si la fonction n'a pas été appelée au cours des dernières 24 heures (86400 secondes) \n"
                 . "$" . "nom = 'world';\n"
                 . "$" . "pcron->fn(86400, function($" . "nom){\n"
                 . "    echo 'hello '.$" . "nom;\n"
@@ -1438,12 +1438,12 @@ class docPHP_natives {
                 . "if($" . "result !== null){\n"
                 . "    echo $" . "result;\n"
                 . "}\n\n"
-                . "// Execute un fichier (toujours dans les mêmes conditions)\n"
-                . "// le fichier est executé dans une console !\n"
+                . "// Exécute un fichier (toujours dans les mêmes conditions)\n"
+                . "// le fichier est exécuté dans une console !\n"
                 . "$" . "pcron->file(86400,'mon_chemain/mon_script.php');\n"
                 . "?>", $this->_brush);
         ?>
-        <p>L'intéret des cron étant de pouvoir lancer des operations lourdes a un rithme régulié sans ralentir l'utilisateur <br />
+        <p>L'intéret des cron étant de pouvoir lancer des opérations lourdes à un rythme régulier sans ralentir l'utilisateur <br />
             il est possible de lancer un pseudo cron de façon "asynchrone" en utilisant un service et la methode service::HTTP_POST().
         </p>
         <?php
@@ -1453,8 +1453,8 @@ class docPHP_natives {
                 . "});\n"
                 . "?>", $this->_brush);
         ?>
-        <p>Les pseudo cron sont renseigné dans un registe ( soit un fichier json soit une table en base de donnée ) <br />
-            une entré est supprimé si elle n'est pas mise a jour (executé) pendant 1 an, cette durée peut être modifié via la methode</p>
+        <p>Les pseudos cron sont renseignés dans un registe ( soit un fichier json soit une table en base de données ) <br />
+            une entrée est supprimée si elle n'est pas mise à jour (executée) pendant 1 an, cette durée peut être modifiée via la méthode</p>
         <?php
         js::syntaxhighlighter("<?php pseudo_cron::get_instance()->set_clear(31536000); ?>", $this->_brush);
     }
@@ -1569,7 +1569,7 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "session::get_user(); \n"
-                . "//equivaut à $" . "_SESSION[config::$" . "_prefix . '_user'];\n\n"
+                . "//équivaut à $" . "_SESSION[config::$" . "_prefix . '_user'];\n\n"
                 . "session::set_val($" . "key, $" . "value);\n"
                 . "//plus simple que $" . "_SESSION[config::$" . "_prefix . '_' . $" . "key] = $" . "value;\n\n"
                 . "session::get_val($" . "key);\n"
@@ -1587,7 +1587,7 @@ class docPHP_natives {
         ?>
         <p>
             Cette classe sert de base pour créer des singleton. <br />
-            la methode "get_instance" retournera toujours la même instance.
+            la méthode "get_instance" retournera toujours la même instance.
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -1620,7 +1620,7 @@ class docPHP_natives {
         <p>Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer des SMS depuis une application Web. <br />
             Cette classe a été conçue pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.<br />
             <a href="https://dwf.sytes.net/smsgateway">SMS Gateway</a><br />
-            Si vous utilisez un autre programme, veillez à adapter les paramètres en conséquence.</p>
+            Si vous utilisez un autre programme, veuillez à adapter les paramètres en conséquence.</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "sms_gateway = new sms_gateway($" . "gateway_host, $" . "gateway_port = 8080, $" . "gateway_page_send = 'sendmsg', $" . "gateway_page_index = 'run');\n"
@@ -1664,13 +1664,13 @@ class docPHP_natives {
         <p>en attendant que le bug JS soit corrigé, cette classe reste très pratique pour échanger des messages chiffrés entre deux services PHP par exemple.</p>           
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//créé les clés publiques et privés\n"
+                . "//créé les clés publiques et privées\n"
                 . "$" . "ssl = new ssl($" . "bits = 1024);\n"
                 . "//retourne la clé publique\n"
                 . "$" . "ssl->get_public_key();\n"
                 . "//Chiffre un message avec la clé publique\n"
                 . "$" . "ssl->encrypt($" . "data);\n"
-                . "//Charge les librairie JS et chiffre la saisie des utilisateurs dans les formulaires de la page\n"
+                . "//Charge les librairies JS et chiffre la saisie des utilisateurs dans les formulaires de la page\n"
                 . "$" . "ssl->ssl_js();\n"
                 . "//Déchiffre les variables $" . "_POST ( cf $" . "ssl->ssl_js() )\n"
                 . "$" . "ssl->decrypt_post();\n"
@@ -1693,7 +1693,7 @@ class docPHP_natives {
 
     private function statistiques() {
         ?>
-        <p>Cette classe permet de recueillir et d'afficher des statistiques liés à l'activité des utilisateurs</p>
+        <p>Cette classe permet de recueillir et d'afficher des statistiques liées à l'activité des utilisateurs</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "stat=new statistiques();\n"
@@ -1706,18 +1706,18 @@ class docPHP_natives {
 
     private function sub_menu() {
         ?>
-        <p>La classe sub_menu vous permet de créer un sous_menu en utilisant un système de "sous-routes"</p>
+        <p>La classe sub_menu vous permet de créer un sous-menu en utilisant un système de "sous-routes"</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "$" . "key = 'key'; //clé principale utilisé dans les sous-routes\n"
+                . "$" . "key = 'key'; //clé principale utilisée dans les sous-routes\n"
                 . "$" . "route = array(\n"
                 . "    array('key' => 'sous_route_1', 'title' => 'title 1', 'text' => 'texte 1'),\n"
                 . "    array('key' => 'sous_route_2', 'title' => 'title 2', 'text' => 'texte 2'),\n"
-                . "    array('key' => 'sous_route_masque', 'title' => 'title de la route masqué'),\n"
+                . "    array('key' => 'sous_route_masque', 'title' => 'titre de la route masquée'),\n"
                 . ");\n"
-                . "$" . "route_default = 'sous_route_1'; //route par defaut\n"
+                . "$" . "route_default = 'sous_route_1'; //route par défaut\n"
                 . "new sub_menu($" . "this, $" . "route, $" . "key, $" . "route_default);\n"
-                . "//$" . "this est l'assesseur de la classe courante,\n"
+                . "//$" . "this est l'ascenseur de la classe courante,\n"
                 . "//cette classe devra par la suite disposer de méthodes publiques ayant pour nom les valeurs des routes\n"
                 . "//ici notre classe devra contenir les méthodes publiques : \n"
                 . "//sous_route_1(), sous_route_2() et sous_route_masque()\n"
@@ -1746,25 +1746,25 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//Créé une balise p.maClasse et la retourne sous forme d'une chaine de caractère\n"
                 . "echo tags::tag('p',['class'=>'maClasse'],'mon contenu');\n\n"
-                . "//Créé une balise auto-fermé\n"
+                . "//Créé une balise auto-fermée\n"
                 . "echo tags::tag('input',['name'=>'monInput'],false);\n\n"
                 . "//Créé une balise ul.maListe sous forme d'objet\n"
                 . "$" . "ul = tags::ul(['class'=>'maListe'],'');\n\n"
-                . "//Ajout/modification d'un atribut \n"
+                . "//Ajout/modification d'un attribut \n"
                 . "$" . "ul->set_attr('id','maListe');\n\n"
                 . "//Suppression d'un attribut \n"
                 . "$" . "ul->del_attr('class');\n\n"
                 . "//Retourne la valeur d'un attribut\n"
                 . "$" . "ul->get_attr('class'); //retournera null si l'attribut n'existe pas\n\n"
-                . "//Retourne le tag de la balse\n"
+                . "//Retourne le tag de la balise\n"
                 . "$" . "ul->get_tag(); //retourne 'ul'\n\n"
-                . "//Redéfini le tag de la balise \n"
+                . "//Redéfinit le tag de la balise \n"
                 . "$" . "ul->set_tag('ol');\n\n"
                 . "//Retourne le contenu de la balise\n"
                 . "$" . "ul->get_content();\n\n"
-                . "//Redefini le contenu de la balise, (ici une balise li)\n"
+                . "//Redefinit le contenu de la balise, (ici une balise li)\n"
                 . "$" . "ul->set_content(tags::tag(li,[],'1e item'));\n\n"
-                . "//Ajoute du contenu a la balise\n"
+                . "//Ajoute du contenu à la balise\n"
                 . "$" . "ul->append_content(tags::tag(li,[],'2e item'));\n\n"
                 . "//Affiche la balise et son contenu\n"
                 . "echo $" . "ul;\n"
@@ -1795,7 +1795,7 @@ class docPHP_natives {
                 ?>
             </div>
             <div class="col-sm-6">
-                <p>Resultat :</p>
+                <p>Résultat :</p>
                 <?php
                 echo tags::tag('div', [], tags::tag(
                                 'p', [], 'Ma liste de ' . tags::tag(
@@ -1811,15 +1811,15 @@ class docPHP_natives {
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
             <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
-        <p>Les templates doivent étre créé dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
+        <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
-            les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donné au service web
+            les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donnés au service web
         </p>
         <p>exemple, ficher <em>mon_template.tpl</em></p>
         <?php
         js::syntaxhighlighter(""
-                . "<p>Bienvenu { $" . "name}</p>\n"
+                . "<p>Bienvenue { $" . "name}</p>\n"
                 . "<div class=\"row\">\n"
                 . "    <div class=\"col-sm-6\">\n"
                 . "        <ul>\n"
@@ -1864,7 +1864,7 @@ class docPHP_natives {
                 . "time::chronometer_start($" . "id = 0);\n\n"
                 . "//Retourne le temps mesuré par un chronomètre depuis son lancement\n"
                 . "time::chronometer_get($" . "id = 0);\n\n"
-                . "//retourne si une année est bisextile ou non.\n"
+                . "//retourne si une année est bissextile ou non.\n"
                 . "time::anne_bisextile($" . "an);\n\n"
                 . "//Retourne le mois \"en lettres\" du numéro de mois passé en paramètre\n"
                 . "time::convert_mois($" . "num_mois);\n\n"
@@ -1879,10 +1879,10 @@ class docPHP_natives {
                 . "time::form_date($" . "label, $" . "post, $" . "value = null);\n\n"
                 . "//Retourne la date saisie dans l'élément de formulaire time::form_date()\n"
                 . "time::get_form_date($" . "post);\n\n"
-                . "//Retourne un tableau d'information sur la date passée en paramètre\n"
+                . "//Retourne un tableau d'informations sur la date passée en paramètre\n"
                 . "time::get_info_from_date($" . "date_us);\n\n"
                 . "//Retourne le nombre de jours dans un mois \n"
-                . "//(l'année doit être renseignée pour gérer les années bisextiles)\n"
+                . "//(l'année doit être renseignée pour gérer les années bissextiles)\n"
                 . "time::get_nb_jour($" . "num_mois, $" . "an);\n\n"
                 . "//Retourne l'âge actuel en fonction d'une date de naissance\n"
                 . "time::get_yers_old($" . "d, $" . "m, $" . "y);\n\n"
@@ -1896,7 +1896,7 @@ class docPHP_natives {
 
     private function tor() {
         ?>
-        <p>Cette classe permet de recuperer une ressource en passant par tor</p>
+        <p>Cette classe permet de recupérer une ressource en passant par tor</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "data = (new tor())->wget($" . "url);\n"
@@ -1906,9 +1906,9 @@ class docPHP_natives {
     private function trad() {
         ?>
         <p>Cette classe permet de créer des traductions à partir de clés, <br />
-            l'administration de clé=>traductions se fait par une interface à placer dans la partie administration de l'application. <br />
+            l'administration de clés=>traductions se fait par une interface à placer dans la partie administration de l'application. <br />
             le langage de l'utilisateur est défini dans session::get_lang() (peut être modifié par session::set_lang()) <br />
-            Les traductions peuvent être gérées en base de données (par défaut) ou par des fichier JSON (cf paramètres du constructeur)
+            Les traductions peuvent être gérées en base de données (par défaut) ou par des fichier JSON (CF : paramètres du constructeur)
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -1923,7 +1923,7 @@ class docPHP_natives {
 
     private function update_dwf() {
         ?>
-        <p>Cette classe permet de gérer les mises à jour de DWF (a plasser dans une inerface d'administration) <br />
+        <p>Cette classe permet de gérer les mises à jour de DWF (à placer dans une interface d'administration) <br />
             ATTENTION ! Git doit être installé sur la machine hôte !
         </p>
         <?php
@@ -1931,7 +1931,7 @@ class docPHP_natives {
         $vers = "21.18.08";
         $versm1 = "21.18.07";
         $vgit = "2.18.0";
-        echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Status / Mise à jour"], [
+        echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Statut / Mise à jour"], [
             ["git version " . $vgit, $vers, $vers, "Already up-to-date."],
             ["OU", "", "", ""],
             ["git version " . $vgit, $versm1, $vers, '<input type="submit" class="btn btn-block btn-primary" value="Update from ' . $versm1 . ' to ' . $vers . '" />']
@@ -1962,7 +1962,7 @@ class docPHP_natives {
             requiert que le sitemap soit actif, et que le site soit en ligne </p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//vérifie si les pages du sites sont conformes W3C\n"
+                . "//vérifie si les pages du site sont conformes W3C\n"
                 . "new w3c_validate();\n"
                 . "//Retourne le statut de la page passée en paramètre\n"
                 . "//(si la page est conforme W3C)\n"
@@ -1972,12 +1972,12 @@ class docPHP_natives {
 
     private function writer() {
         ?>
-        <p>Cette classe permet de gèrer un buffer a l'ecriture de fichiers </p>
+        <p>Cette classe permet de gèrer un buffer à l'écriture de fichiers </p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Ajoute un fichier au buffer\n"
                 . "writer::get_instance()->add($" . "file, $" . "content);\n\n"
-                . "//Verifie si un ficher est dans le buffer\n"
+                . "//Vérifie si un ficher est dans le buffer\n"
                 . "writer::get_instance()->exist($" . "file);\n\n"
                 . "//Retourne le contenu d'un fichier du buffer (chaine vide si non)\n"
                 . "writer::get_instance()->content($" . "file);\n\n"
@@ -1987,9 +1987,9 @@ class docPHP_natives {
                 . "writer::get_instance()->clear($" . "file);\n\n"
                 . "//Supprime tout les fichiers du buffer\n"
                 . "writer::get_instance()->clear();\n\n"
-                . "//Ecris les fichier du buffer sur le disque dur (et vide le buffer)\n"
+                . "//Ecrit les fichiers du buffer sur le disque dur (et vide le buffer)\n"
                 . "writer::get_instance()->write();\n\n"
-                . "//Ecris les fichier du buffer dans une archive (et vide le buffer)\n"
+                . "//Ecrit les fichiers du buffer dans une archive (et vide le buffer)\n"
                 . "writer::get_instance()->write_zip($" . "zipname);\n"
                 . "?>", $this->_brush);
     }

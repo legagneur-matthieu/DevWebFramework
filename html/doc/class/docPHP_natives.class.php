@@ -7,7 +7,7 @@ class docPHP_natives {
     public function __construct() {
         ?>
         <p>
-            Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (doc technique) <br />
+            Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (document technique) <br />
             si une classe/fonction a mal été commentée ( ou pas du tout commentée) merci de nous le signaler. <br />
             (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?= count(glob("../../dwf/class/*.class.php")); ?> classes natives)
         </p>
@@ -46,7 +46,7 @@ class docPHP_natives {
         ?>
         <p>
             Si l'entité contient un champ "array", ce champ n’apparaitra pas dans les datatables. <br />
-            Dans les formulaires les données de ce champ seront accessible en JSON dans un input de type hidden. <br />
+            Dans les formulaires, les données de ce champ seront accessible en JSON dans un input de type hidden. <br />
             Vous devrez créer une interface en JavaScript pour administrer ce champ à votre convenance (en manipulant la chaine JSON). 
         </p>
         <?php
@@ -101,7 +101,7 @@ class docPHP_natives {
         ?>
         <p>
             Auth est la classe qui gère l'authentification des utilisateurs, <br />
-            il prend en paramètres : le nom de la table/entité utilisateur ( dans cette doc : 'user'), le nom du champ de login ('login'), le nom du champ de mot de passe ('psw'). <br />
+            il prend en paramètres : le nom de la table/entité utilisateur ( dans cette documentation : 'user'), le nom du champ de login ('login'), le nom du champ de mot de passe ('psw'). <br />
             auth utilise deux variables de sessions accessibles via la classe "session" <br />
             (session::set_auth(),session::get_auth(),session::set_user() et session::get_user()) <br />
             lorsque l'utilisateur est autentifié, session::get_auth() retourne true et session::get_user() contient l'identifiant de l'utilisateur (id de la base de données) <br />
@@ -142,16 +142,16 @@ class docPHP_natives {
 
     private function cache() {
         ?>
-        <p>Cette classe permet de gerer une mise en cache ( coté serveur ) <br />
+        <p>Cette classe permet de gérer une mise en cache ( côté serveur ) <br />
             utilise session::set_val("cache",[ ]) et session::get_val("cache")</p>        
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "if($" . "contenu= cache::get('ma_cle')){\n"
                 . "    echo $" . "contenu;\n"
                 . "}else{\n"
-                . "    //Fonction longue à executer\n"
+                . "    //Fonction longue à éxecuter\n"
                 . "    echo ($" . "contenu = fonction_longue_a_executer()); \n"
-                . "    //Stock le resultat de la fonction longue en cache pour 5 minutes\n"
+                . "    //Stocke le résultat de la fonction longue en cache pour 5 minutes\n"
                 . "    cache::set('ma_cle', $" . "contenu, 600);\n"
                 . "}\n"
                 . "//Supprimer une valeur dans le cache \n"
@@ -163,7 +163,7 @@ class docPHP_natives {
 
     private function cards() {
         ?>
-        <p>Cette classe permet de gèrer un paquet de 32, 52, 54 ou 78 cartes</p>
+        <p>Cette classe permet de gérer un paquet de 32, 52, 54 ou 78 cartes</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Génère un paquet de 52 cartes (par defaut)\n"
@@ -199,16 +199,16 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "if (isset($" . "_POST[\"psw\"])) {\n\n"
-                . "    // Verifie le mot de passe avec la politique suivante ( par défaut) :\n"
+                . "    // Vérifie le mot de passe avec la politique suivante ( par défaut) :\n"
                 . "    // - Le mot de passe doit faire au minimum 8 caractères\n"
                 . "    // - Contenir au moins un nombre, une majuscule et une minuscule\n"
                 . "    // - L'utilisation de caractères spéciaux est ici facultatif\n"
                 . "    $" . "check = new check_password($" . "_POST[\"psw\"], $" . "minlen = 8, $" . "special = false, $" . "number = true, $" . "upper = true, $" . "lower = true);\n\n"
-                . "    // On verifie si le mot de passe est conforme à la politique de mots de passe\n"
+                . "    // On vérifie si le mot de passe est conforme à la politique de mots de passe\n"
                 . "    if ($" . "check->is_valid()) {\n"
                 . "        //mot de passe ok \n"
                 . "    } else {\n\n"
-                . "        //si le mot de passe n'est pas conforme on affiche un message d'erreur\n"
+                . "        //si le mot de passe n'est pas conforme, on affiche un message d'erreur\n"
                 . "        $" . "check->print_errormsg();\n"
                 . "    }\n"
                 . "}\n"
@@ -281,7 +281,7 @@ class docPHP_natives {
                 . "        ->add_style($" . "style)\n"
                 . "?>", $this->_brush);
         ?>
-        <p>La methode <em>"render()"</em> est utilisé automatiquement dans <em>html5.class.php</em>, il n'est pas utile de l'appeler</p>
+        <p>La méthode <em>"render()"</em> est utilisée automatiquement dans <em>html5.class.php</em>, il n'est pas utile de l'appeler</p>
         <?php
     }
 
@@ -298,11 +298,11 @@ class docPHP_natives {
 
     private function css() {
         ?>
-        <p>Cette classe permet de génerer des feuilles de style personalisé. <br />            
+        <p>Cette classe permet de génerer des feuilles de style personalisée. <br />            
             A utiliser avec <em>"compact_src::get_instance()->add_style()"</em></p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//Defini une regle CSS\n"
+                . "//Definit une regle CSS\n"
                 . "((new css())->add_rule($" . "selector, $" . "rules));\n"
                 . "//exemple (avec un echo. Fluent peut être utilisé)\n"
                 . "echo (new css())->add_rule(\"p\", [\"padding\" => \"5px\"])\n"
@@ -313,8 +313,8 @@ class docPHP_natives {
                 . "                ->add_rule(\"#mon_id\", [\"background-color\" => \"lightblue\"]);\n"
                 . "?>", $this->_brush);
         ?>
-        <p>La feuille de style retourné sera optimisé et minifié,<br />
-            dans l'exemple nous voyons que "p" et "div" ont la même régle de padding, elles seront donc fusionnées. <br />
+        <p>La feuille de style retournée sera optimisée et minifiée,<br />
+            dans l'exemple nous voyons que "p" et "div" ont la même règle de padding, elles seront donc fusionnées. <br />
             Voici le resultat :</p>
         <?php
         debug::print_r((string) (new css())->add_rule("p", ["padding" => "5px"])
@@ -402,7 +402,7 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche la structure d'une variable ( optimisé pour les arrays et objets )\n"
                 . "debug::print_r($" . "var);\n\n"
-                . "//Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booleans )\n"
+                . "//Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booléans )\n"
                 . "debug::var_dump($" . "var);\n\n"
                 . "//Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)\n"
                 . "debug::get_trace();\n\n"
@@ -413,14 +413,14 @@ class docPHP_natives {
 
     private function dictionary() {
         ?>
-        <p>Cette classe permet convertir et gerrer une liste lourde comme étant un dictionnaire</p>
+        <p>Cette classe permet de convertir et gérer une liste lourde comme étant un dictionnaire</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//créé un dictionnaire\n"
                 . "$" . "dictionnaire = new dictionary($" . "words = [\"All\", \"My\", \"Words\"], $" . "chunk_size = 100000);\n\n"
                 . "//Ajoute des mots\n"
                 . "$" . "dictionnaire->add([\"New\", \"Elements\"]);\n\n"
-                . "//Verifie si un mot existe\n"
+                . "//Vérifie si un mot existe\n"
                 . "$" . "dictionnaire->word_exist(\"Words\");\n\n"
                 . "//Supprime des mots\n"
                 . "$" . "dictionnaire->remove([\"Words\", \"Elements\"]);\n\n"
@@ -438,7 +438,7 @@ class docPHP_natives {
     private function dlc() {
         ?><p>Cette classe permet de générer des fichiers :</p><?php
         echo html_structures::ul([
-            "DLC (Download Link Container, recomandé)",
+            "DLC (Download Link Container, recommandé)",
             "CCF (CryptLoad Container File)",
             "RSDF (RapidShare Download File)"
         ]);
@@ -449,11 +449,11 @@ class docPHP_natives {
                 . "    'http://url/image2.jpg',\n"
                 . "    'http://url/image3.jpg'\n"
                 . "];\n"
-                . "//Genere un fichier DLC\n"
+                . "//Génère un fichier DLC\n"
                 . "dlc::generate_DLC('monDLC.dlc', $" . "data);\n\n"
-                . "//Genere un fichier CCF\n"
+                . "//Génère un fichier CCF\n"
                 . "dlc::generate_CCF('monCCF.ccf', $" . "data);\n\n"
-                . "//Genere un fichier RSDF\n"
+                . "//Génère un fichier RSDF\n"
                 . "dlc::generate_RSDF('monRSDF.rsdf', $" . "data);\n"
                 . "?>", $this->_brush);
     }
@@ -463,10 +463,10 @@ class docPHP_natives {
         <p>Cette classe gère les exceptions du framework <br />
             les codes d'erreurs des exceptions natives du framework sont compris entre 600 et 699 :</p>
         <ul>
-            <li>les codes d'erreurs 60X concerne la base de données</li>
-            <li>les codes d'erreurs 61X concerne les routes et méthodes</li>
-            <li>les codes d'erreurs 62X concerne les services</li>
-            <li>les codes d'erreurs 63X concerne le système</li>
+            <li>les codes d'erreurs 60X concernent la base de données</li>
+            <li>les codes d'erreurs 61X concernent les routes et méthodes</li>
+            <li>les codes d'erreurs 62X concernent les services</li>
+            <li>les codes d'erreurs 63X concernent le système</li>
         </ul>
         <p>Il est cependant possible pour vous de créer des exceptions personnalisées avec dwf_exeption :</p>
         <?php
@@ -485,7 +485,7 @@ class docPHP_natives {
                 . "}\n"
                 . "?>", $this->_brush);
         ?>
-        <p>Les exceptions sont toujours retranscries dans un log : <em>dwf/log/log_[votre_projet]_[date_format_us].txt</em></p>
+        <p>Les exceptions sont toujours retranscrites dans un log : <em>dwf/log/log_[votre_projet]_[date_format_us].txt</em></p>
         <p>Exemple de <em>dwf_exception::warning_exception()</em> :</p>
         <div class="alert alert-danger" role="alert">
             <p>DWF EXCEPTION ! Code 700 : "Exemple d'exception"</p>
@@ -517,12 +517,12 @@ class docPHP_natives {
             <li>Entre le 25/05 et 31/05 : Fête des mères (dernier dimanche de mai), un collier de nouilles "bonne fête maman" en pied de page</li>
             <li>21/06 : Été, la lueur chaude du soleil apparait en pied de page</li>
             <li>Entre le 16/05 et 22/06 : Fête des pères (troisième dimanche de mai) un modal avec le diplôme du père de l'année apparait (qu'une fois par session)</li>
-            <li>14/07 : Fête Nationale française, des feux d'artifice sont tirés sur le site</li>
+            <li>14/07 : Fête Nationale française, des feux d'artifices sont tirés sur le site</li>
             <li>23/09 : Automne, des feuilles mortes tombent sur le site</li>
             <li>25/11 : Sainte-Catherine, un chapeau de Sainte-Catherine en pied de page</li>
-            <li>Du 22/12 aux 25/15 : Hiver et Noel, des flocons de neiges tombent sur le site</li>
+            <li>Du 22/12 aux 25/15 : Hiver et Noël, des flocons de neiges tombent sur le site</li>
         </ul>
-        <p>Astuce : une interface pour activer les eastereggs peut être affiché en tapant le "Konami code" : ↑ ↑ ↓ ↓ ← → ← → B A</p>
+        <p>Astuce : une interface pour activer les eastereggs peut être affichée en tapant le "Konami code" : ↑ ↑ ↓ ↓ ← → ← → B A</p>
         <p>Pour activer les eastereggs sur toutes les pages, placez cette ligne dans <em>pages->header()</em></p>
         <?php
         js::syntaxhighlighter("<?php new easteregg(); ?>", $this->_brush);
@@ -533,15 +533,15 @@ class docPHP_natives {
     }
 
     private function entity_model() {
-        ?><p>Cettle classe permet d'afficher des pseudo MCD a partir de vos entités</p><?php
+        ?><p>Cette classe permet d'afficher des pseudos MCD à partir de vos entités</p><?php
         js::syntaxhighlighter("<?php\n"
-                . "//Exemple avec la petite structure vu dans 'Entity'\n\n"
+                . "//Exemple avec la petite structure vue dans 'Entity'\n\n"
                 . "//Affiche un pseudo MCD sous forme de tableau HTML\n"
                 . "echo entity_model::table('user');\n\n"
                 . "//Affiche un pseudo MCD sous forme de div HTML\n"
                 . "echo entity_model::div('user');\n"
                 . "?>", $this->_brush);
-        ?><p>Resultats :</p>
+        ?><p>Résultats :</p>
         <div class="row">
             <div class="col-sm-6">
                 <p>- entity_model::table("user") :</p>
@@ -559,21 +559,21 @@ class docPHP_natives {
         ?>
         <p>
             Cette classe permet de créer des événements (listener et emiter) <br />
-            l'utilisation de cette classe différe des "méthodes événementielles" dans la mesure ou ces dernières font appel à des methodes "static" d'autres classes.
+            l'utilisation de cette classe différe des "méthodes événementielles" dans la mesure où ces dernières font appel à des methodes "static" d'autres classes.
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//Definit un listener et une action associé\n"
+                . "//Définit un listener et une action associée\n"
                 . "event::on('mon_listener',function(){\n"
                 . "    //do somthings\n"
                 . "}\n\n"
-                . "//Ajoute une autre action au listener associé\n"
+                . "//Ajoute une autre action au listener associée\n"
                 . "event::on('mon_listener',function(){\n"
                 . "    //do another somthings\n"
                 . "}\n\n"
-                . "//Déclanche l'événement (emiter)\n"
+                . "//Déclenche l'événement (emiter)\n"
                 . "event::run('mon_listener');\n\n"
-                . "//autre exemple avec des parametres\n"
+                . "//Autre exemple avec des paramètres\n"
                 . "event::on('alert.warning',function($" . "text){\n"
                 . "    ?>\n"
                 . "        <p class='alert alert-warning'>\n"
@@ -594,13 +594,13 @@ class docPHP_natives {
     private function fb() {
         ?>
         <p>
-            Cette classe permet de gérer une autentification via FaceBook. <br />
-            Requière la création d'une application sur https://developers.facebook.com/ <br />
+            Cette classe permet de gérer une authentification via FaceBook. <br />
+            Requiert la création d'une application sur https://developers.facebook.com/ <br />
             Exemple d'usage :
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//execution en cas de Logout\n"
+                . "//Execution en cas de Logout\n"
                 . "if(isset($" . "_GET['fb']) and $" . "_GET['fb']=='logout'){\n"
                 . "    session_destroy();\n"
                 . "    js::redir('index.php');\n"
@@ -609,7 +609,7 @@ class docPHP_natives {
                 . "if ($" . "fb->getAccessToken_session()) {\n"
                 . "    //Bouton logout\n"
                 . "    echo html_structures::a_link($" . "fb->getLogoutUrl('http://mon-site/index.php?fb=logout'), 'logout');\n\n"
-                . "    //Donnés de l'utilisateur FB\n"
+                . "    //Données de l'utilisateur FB\n"
                 . "    debug::print_r($" . "fb->getGraphUser());\n\n"
                 . "    //TODO : utilisez session::set_auth(true) et requetes SQL\n"
                 . "} else {\n"
@@ -622,13 +622,13 @@ class docPHP_natives {
     private function file_explorer() {
         ?><p>Cette classe permet d'afficher et explorer une arborescence</p><?php
         js::syntaxhighlighter("<?php new file_explorer(\"./files\"); ?>", $this->_brush);
-        ?> <p>Resultat :</p><?php
+        ?> <p>Résultat :</p><?php
         new file_explorer("./files");
     }
 
     private function form() {
         ?>
-        <p>La classe form permet de créer des formulaires en php stylisé par bootstrap, accessible et respectant les normes W3C</p>
+        <p>La classe form permet de créer des formulaires en php stylisés par bootstrap, accessibles et respectant les normes W3C</p>
         <?php
         js::accordion("accordion_classes_natives_form", true, true);
         ?>
@@ -653,25 +653,25 @@ class docPHP_natives {
                         . "//création d\"un CKEditor\n"
                         . "$" . "form->textarea(\"Un ckeditor\", \"ta_2\");\n"
                         . "$" . "cke = js::ckeditor(\"ta_2\");\n"
-                        . "//bouton de soumition\n"
+                        . "//bouton de soumission\n"
                         . "$" . "form->submit(\"btn-primary\");\n"
                         . "//Rendu du formulaire\n"
                         . "echo $" . "form->render();\n"
-                        . "//execution du formulaire\n"
+                        . "//Exécution du formulaire\n"
                         . "if (isset($" . "_POST[\"input_1\"])) {\n"
                         . "\n"
-                        . "    //recupere la date du datepicker au format US\n"
+                        . "    //Récupère la date du datepicker au format US\n"
                         . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
-                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    //Filtre les balises utilisées dans CKEditor, protection XSS\n"
                         . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
                         . "\n"
-                        . "    //message de succes ou erreur\n"
+                        . "    //Message de succès ou erreur\n"
                         . "    js::alert(\"le formulaire a bien été soumis\");\n"
-                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    //Redirection vers la page courante = rafraichissement de la page\n"
                         . "    js::redir(\"\");\n"
                         . "}\n?>", $this->_brush);
                 ?>
-                <p>Seconde méthode : affichage directe</p>
+                <p>Seconde méthode : affichage direct</p>
                 <?php
                 js::syntaxhighlighter("<?php\n"
                         . "//création du formulaire\n"
@@ -691,21 +691,21 @@ class docPHP_natives {
                         . "//création d\"un CKEditor\n"
                         . "echo $" . "form->textarea(\"Un ckeditor\", \"ta_2\");\n"
                         . "$" . "cke = js::ckeditor(\"ta_2\");\n"
-                        . "//bouton de soumition\n"
+                        . "//bouton de soumission\n"
                         . "echo $" . "form->submit(\"btn-primary\");\n"
                         . "//affichage de la balise de fermeture\n"
                         . "echo $" . "form->get_close_form();\n"
                         . "//execution du formulaire\n"
                         . "if (isset($" . "_POST[\"input_1\"])) {\n"
                         . "\n"
-                        . "    //recupere la date du datepicker au format US\n"
+                        . "    //récupère la date du datepicker au format US\n"
                         . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
-                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    //filtre les balises utilisées dans CKEditor, protection XSS\n"
                         . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
                         . "\n"
-                        . "    //message de succes ou erreur\n"
+                        . "    //message de succès ou erreur\n"
                         . "    js::alert(\"le formulaire a bien été soumis\");\n"
-                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    //redirection vers la page courante = rafraichissement de la page\n"
                         . "    js::redir(\"\");\n"
                         . "}\n?>", $this->_brush);
                 ?>
@@ -731,28 +731,28 @@ class docPHP_natives {
                         . "form::textarea(\"Un ckeditor\", \"ta_2\");\n"
                         . "$" . "cke = js::ckeditor(\"ta_2\");\n"
                         . "\n"
-                        . "//bouton de soumition\n"
+                        . "//bouton de soumission\n"
                         . "form::submit(\"btn-primary\");\n"
                         . "//fermeture du formulaire\n"
                         . "form::close_form();\n"
                         . "\n"
-                        . "//execution du formulaire\n"
+                        . "//exécution du formulaire\n"
                         . "if (isset($" . "_POST[\"input_1\"])) {\n"
                         . "\n"
-                        . "    //recupere la date du datepicker au format US\n"
+                        . "    //récupère la date du datepicker au format US\n"
                         . "    $" . "date = form::get_datepicker_us(\"datepicker_1\");\n"
-                        . "    //filtre les balises utilisé dans CKEditor, protection XSS\n"
+                        . "    //filtre les balises utilisées dans CKEditor, protection XSS\n"
                         . "    $" . "ta_2 = $" . "cke->parse($" . "_POST[\"ta_2\"]);\n"
                         . "\n"
-                        . "    //message de succes ou erreur\n"
+                        . "    //message de succès ou erreur\n"
                         . "    js::alert(\"le formulaire a bien été soumis\");\n"
-                        . "    //redirection vers la page courante = rafraichisement de la page\n"
+                        . "    //redirection vers la page courante = rafraichissement de la page\n"
                         . "    js::redir(\"\");\n"
                         . "}\n?>", $this->_brush);
                 ?>
             </div>
         </div>
-        <p>Résultat (visuel uniquement, execution désactivée):</p>
+        <p>Résultat (visuel uniquement, exécution désactivée):</p>
         <div class="row" style="border: 1px solid #ccc; border-radius: 4px;">
             <div class="col-sm-3">
                 <script type="text/javascript">
@@ -772,9 +772,9 @@ class docPHP_natives {
                 $form->input("Input de type password", "input_2", "password");
                 $form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");
                 $form->datepicker("Un datepicker", "datepicker_1");
-                $form->select("Un selecteur", "select_1", [
+                $form->select("Un sélecteur", "select_1", [
                     [1, "Abricots"],
-                    [2, "Poires", true], //Poires est selectioné par défaut
+                    [2, "Poires", true], //Poires est sélectioné par défaut
                     [3, "Pommes"],
                 ]);
                 $form->textarea("Un textarea", "ta_1");
@@ -793,7 +793,7 @@ class docPHP_natives {
         ?>
         <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile". <br />
             Il est préferable d'appeler cette librairie via <em>js::freetile()</em> <br />
-            Les sous éléments peuvent être des images ou des DIV de diverentes tailles.
+            Les sous éléments peuvent être des images ou des DIV de différentes tailles.
         </p>
         <?php
         js::syntaxhighlighter("<?php js::freetile('freetile'); ?>\n"
@@ -803,7 +803,7 @@ class docPHP_natives {
     private function ftp_explorer() {
         ?> 
         <p>Cette classe permet d'afficher et explorer une arborescence FTP <strong>PUBLIQUE</strong> <br />
-            le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucuns droits d'ajout/modification/suppression) <br />
+            le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucun droit d'ajout/modification/suppression) <br />
             le rendu est le même que <em>file_explorer()</em>
         </p>
         <?php
@@ -827,7 +827,7 @@ class docPHP_natives {
         ?><p>Exemple</p><?php
         new fullcalendar("fullcalendar", [
             [
-                "title" => "événement de démonstation",
+                "title" => "évènement de démonstation",
                 "start" => date("Y-m-d") . " " . date("H:i:s"),
                 "end" => date("Y-m-d") . " " . (date("H") + 1) . date(":i:s")
             ]
@@ -836,7 +836,7 @@ class docPHP_natives {
 
     private function g_agenda() {
         ?>
-        <p>Cette classe permet de gérer un agenda d'évènements minimaliste, <br />
+        <p>Cette classe permet de gérer un agenda d'évènements minimalistes, <br />
             souvent utilisé pour avertir des visiteurs des prochains évenements<br />
             (salons, conventions, spectacles, ...)</p>
         <?php
@@ -853,7 +853,7 @@ class docPHP_natives {
         <p>Cette classe affiche le gestionnaire de fichiers elFinder <br />
             Il n'est pas recommandé de mettre deux instances de cette classe dans une même page<br />
             Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);<br />
-            Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)
+            Cf : le fichier connector.php (généré par cette classe) pour plus de détails et options)
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -989,15 +989,15 @@ class docPHP_natives {
         ?>
         <p>
             Cette classe gère l'en-tête HTML5 et son pied de page. <br />
-            Cette classe est utilisé automatiquement par le framework dans <em>application.class.php</em> <br />
-            Les balises : title, meta description et meta keywords peuvent être modifié grace au fonction suivantes :
+            Cette classe est utilisée automatiquement par le framework dans <em>application.class.php</em> <br />
+            Les balises : title, meta description et meta keywords peuvent être modifiées grâce aux fonction suivantes :
 
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//Ajoute un préfixe au titre de la page en cours\n"
                 . "html5::before_title($" . "text);\n"
-                . "//Défini la décription de la page en cours\n"
+                . "//Définit la description de la page en cours\n"
                 . "html5::set_description($" . "description);\n"
                 . "//Défini les mots clé de la page en cours\n"
                 . "html5::set_keywords($" . "keywords);\n"

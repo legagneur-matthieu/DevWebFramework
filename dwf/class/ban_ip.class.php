@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Cette classe offre une légère protection anti-DDOS en bannissant des ip ayant un ratio "requettes/secondes" supérieur à 2.
- * Si l'ip est bannie, l'exécution est interrompue là oÃ¹ ban_ip a été instancié !
+ * Cette classe offre une légère protection anti-DDOS en bannissant des ip ayant un ratio "requêtes/secondes" supérieur à 2.
+ * Si l'ip est bannie, l'exécution est interrompue là où ban_ip a été instancié !
  * Il est donc recommandé de placer cette fonction dans le constructeur de "page.class.php"
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>

@@ -29,8 +29,8 @@ class auth {
     private $_tuple_psw;
 
     /**
-     * Le formulaire doit-il posseder un token
-     * @var boolean Le formulaire doit-il posseder un token
+     * Le formulaire doit-il posséder un token
+     * @var boolean Le formulaire doit-il posséder un token
      */
     private $_use_token;
 
@@ -40,7 +40,7 @@ class auth {
      * @param string $table table des utilisateurs
      * @param string $tuple_login tuble du login
      * @param string $tuple_psw tuple du mot de passe
-     * @param boolean $use_token Le formulaire doit-il posseder un token (sécurité, true/false, false par defaut)
+     * @param boolean $use_token Le formulaire doit-il posséder un token (sécurité, true/false, false par defaut)
      * @param boolean $call_session_start l'application doit lancer un session_start() (true/false)
      */
     public function __construct($table, $tuple_login, $tuple_psw, $use_token = false, $call_session_start = FALSE) {

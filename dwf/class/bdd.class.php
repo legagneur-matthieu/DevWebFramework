@@ -76,8 +76,8 @@ class bdd extends singleton {
     }
 
     /**
-     * Cette fonction suprimme les protections de la fonction protect_var() afin que la variable puisse être 
-     * réexploitée sans problèmes.
+     * Cette fonction supprime les protections de la fonction protect_var() afin que la variable puisse être 
+     * reexploitée sans problème.
      * 
      * @param string $var variable à afficher
      * @return string variable affichée
@@ -97,14 +97,14 @@ class bdd extends singleton {
     }
 
     /**
-     * ATTENTION : cette fonction a été créé temporairement en attendant la refonte
-     * de entity_generator.class.php (qui a été faite en version 21.18.03 afin de gérer proprement des JSON en base de donnée)
-     * cette fonction sera supprimé dans la version 21.18.04 de DWF !
+     * ATTENTION : cette fonction a été créée temporairement en attendant la refonte
+     * de entity_generator.class.php (qui a été faite en version 21.18.03 afin de gérer proprement des JSON en base de données)
+     * cette fonction sera supprimée dans la version 21.18.04 de DWF !
      * 
-     * Convertis un json provenant de la base de donné en tableau
+     * Convertit un json provenant de la base de données en tableau
      * 
-     * @param string $json json provenant de la base de donné
-     * @return array Tableau de donnée
+     * @param string $json json provenant de la base de données
+     * @return array Tableau de données
      */
     public function json_decode($json) {
         return json_decode(strtr($json, ["&quot;" => '"']), true);
@@ -127,7 +127,7 @@ class bdd extends singleton {
     }
 
     /**
-     * Exécute une requête type select et renvoie un tableau à 2 dimensions contenant les données.     * 
+     * Exécute une requête type select et renvoie un tableau à deux dimensions contenant les données.     * 
      * Pour plus de securité: voir la méthode protect_var.
      * 
      * @param string|statement $statement requête SQL

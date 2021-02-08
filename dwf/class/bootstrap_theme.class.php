@@ -94,16 +94,16 @@ class bootstrap_theme {
         foreach (self::$_theme as $t) {
             $option[] = [$t, ucfirst($t), ($t == self::get_theme())];
         }
-        $form->select("Theme", "dwf_bootstrap_theme", $option);
+        $form->select("Thème", "dwf_bootstrap_theme", $option);
         $form->submit("btn-primary");
-        return (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le theme du site"), "bootstrap_theme_param", "Modifier le theme du site", "Theme du site", $form->render(), "");
+        return (new modal())->link_open_modal(html_structures::glyphicon("cog", "Modifier le thème du site"), "bootstrap_theme_param", "Modifier le thème du site", "Thème du site", $form->render(), "");
     }
 
     /**
-     * Permet à l'utilisateur de passer du thème par defaut à un autre prédéfinit et inversement.
+     * Permet à l'utilisateur de passer du thème par défaut à un autre prédéfini et inversement.
      * (Généralement utilisé pour proposer un thème clair et un thème sombre)
-     * @param string $theme thème a appliquer (Darkly par defaut)
-     * @param array $labels les labels a afficher pour passer d'un theme a l'autre (["Thème clair", "Thème sombre"] par defaut)
+     * @param string $theme thème à appliquer (Darkly par defaut)
+     * @param array $labels les labels à afficher pour passer d'un thème à l'autre (["Thème clair", "Thème sombre"] par defaut)
      * @return string Formulaire du switch
      */
     public static function switch_theme($theme = "darkly", $labels = ["Thème clair", "Thème sombre"]) {

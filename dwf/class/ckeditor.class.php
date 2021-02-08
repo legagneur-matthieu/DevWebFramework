@@ -24,7 +24,7 @@ class ckeditor {
      * Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
      * 
      * @param array $id Id du textarea
-     * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
+     * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la documentation )
      */
     public function __construct($id, $params = []) {
         if (!self::$_called) {

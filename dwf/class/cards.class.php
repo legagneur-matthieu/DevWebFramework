@@ -20,7 +20,7 @@ class cards {
      * soit le "type" de paquet a générer : <br />
      * 32 : paquet de cartes pour la belote par exemple <br />
      * 52 : paquet standard ( paquet par défaut) <br />
-     * 54 : paquet standard, plus 2 jokers <br />
+     * 54 : paquet standard, plus deux jokers <br />
      * 78 : paquet de tarot
      */
     public function __construct($deck = 52) {
@@ -63,7 +63,7 @@ class cards {
 
     /**
      * Retourne le paquet de cartes courant
-     * @return array Le paquet de carte courant
+     * @return array Le paquet de cartes courant
      */
     public function get_deck() {
         return $this->_deck;
@@ -71,22 +71,22 @@ class cards {
 
     /**
      * Redéfinit le paquet de cartes courant
-     * @param array $deck Le paquet de carte
+     * @param array $deck Le paquet de cartes
      */
     public function set_deck($deck) {
         $this->_deck = $_deck;
     }
 
     /**
-     * Melange le paquet de cartes
+     * Mélange le paquet de cartes
      */
     public function shuffle_deck() {
         shuffle($this->_deck);
     }
 
     /**
-     * Tire une carte du paquet ( la carte est retiré du paquet !)
-     * @return string|boolean La carte tiré, false si le paquet est vide
+     * Tire une carte du paquet ( La carte est retiré du paquet !)
+     * @return string|boolean La carte tirée, false si le paquet est vide.
      */
     public function drow_from_deck() {
         if ($count = count($this->_deck) > 0) {

@@ -9,8 +9,8 @@
 class ddg_api {
 
     /**
-     * Varibles retournées par l'API de DuckDuckGo
-     * @var bool Varibles retournées par l'API de DuckDuckGo
+     * Variables retournées par l'API de DuckDuckGo
+     * @var bool Variables retournées par l'API de DuckDuckGo
      */
     private $_Abstract = false,
             $_AbstractText = false,

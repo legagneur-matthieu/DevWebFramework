@@ -2,7 +2,7 @@
 
 /**
  * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
- * Requirer une régle CSS sur l'ID CSS
+ * Requiert une règle CSS sur l'ID CSS
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class cytoscape {
@@ -15,7 +15,7 @@ class cytoscape {
 
     /**
      * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
-     * Requirer une régle CSS sur l'ID CSS
+     * Requiert une règle CSS sur l'ID CSS
      * @param string $id ID CSS
      * @param array $data Données du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      */
@@ -43,7 +43,7 @@ class cytoscape {
     }
 
     /**
-     * Fonction recursive qui formate les données pour le graphe
+     * Fonction récursive qui formate les données pour le graphe
      * @param array $data Données du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      * @param string $kp clé parente
      * @return string cytoscape.elements

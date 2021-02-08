@@ -8,13 +8,13 @@
 class debug {
 
     /**
-     * Permet de verifier si la fonction show_report() a été appelée pour afficher le rapport à la fin de l'execution
-     * @var boolean Permet de verifier si la fonction show_report() a été appelé
+     * Permet de vérifier si la fonction show_report() a été appelée pour afficher le rapport à la fin de l'exécution
+     * @var boolean Permet de vérifier si la fonction show_report() a été appelée
      */
     private static $_show_report = false;
 
     /**
-     * Affiche la structure d'une variable ( optimisé pour les arrays et objets )
+     * Affiche la structure d'une variable ( optimisée pour les arrays et objets )
      * @param array|object $var variable à verifier 
      */
     public static function print_r($var) {
@@ -36,7 +36,7 @@ class debug {
     }
 
     /**
-     * Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)
+     * Affiche la trace de l'application pour arriver au point de débug ( traces des fichiers et méthodes qui ont été appelés)
      */
     public static function getTrace() {
         self::print_r((new dwf_exception("Trace"))->getTraceAsString());
@@ -115,9 +115,9 @@ class debug {
                     <div class="col-sm-4">
                         <?=
                         tags::tag("p", [], tags::tag(
-                                        "strong", [], "Memoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
+                                        "strong", [], "Mémoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
                                 tags::tag("br") .
-                                tags::tag("strong", [], "Memoire utilisé (%) : ") . (memory_get_usage() / ((int) strtr($limit, $puissance))) . " %"
+                                tags::tag("strong", [], "Mémoire utilisée (%) : ") . (memory_get_usage() / ((int) strtr($limit, $puissance))) . " %"
                         );
                         ?>
                     </div>

@@ -87,7 +87,7 @@ class dlc {
 
     /**
      * Créer un fichier DLC (Download Link Container)
-     * @param string $filename Chemain et nom pour le fichier .dlc a générer
+     * @param string $filename Chemin et nom pour le fichier .dlc à générer
      * @param array $data Liste d'url
      * @param string $packagename Nom du package
      */
@@ -103,7 +103,7 @@ class dlc {
 
     /**
      * Créer un fichier CCF (CryptLoad Container File)
-     * @param string $filename Chemain et nom pour le fichier .ccf a générer
+     * @param string $filename Chemin et nom pour le fichier .ccf à générer
      * @param array $data Liste d'url
      * @param string $packagename Nom du package
      */
@@ -118,7 +118,7 @@ class dlc {
 
     /**
      * Créer un fichier RSDF (RapidShare Download File)
-     * @param string $filename Chemain et nom pour le fichier .rsdf a générer
+     * @param string $filename Chemin et nom pour le fichier .rsdf à générer
      * @param array $data Liste d'url
      * @param string $packagename Nom du package
      */

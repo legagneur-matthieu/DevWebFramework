@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette class permet de charger CSSTidy
+ * Cette classe permet de charger CSSTidy
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class csstidy_loader {
 
     /**
-     * Cette class permet de charger CSSTidy
+     * Cette classe permet de charger CSSTidy
      */
     public static function autoloader() {
         if (!class_exists("csstidy")) {

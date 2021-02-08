@@ -15,7 +15,7 @@ class pages { /**
     }
 
     /*
-     * Entete des pages 
+     * Entête des pages 
      */
 
     public function header() {
@@ -38,7 +38,7 @@ class pages { /**
     }
 
     /**
-     * Fonction par défaut / page d'accueil 
+     * Fonction par défaut / Page d'accueil 
      */
     public function index() {
         ?>

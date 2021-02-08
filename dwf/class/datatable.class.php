@@ -21,10 +21,10 @@ class datatable {
     private $_params = ["language" => "{url: '../commun/src/js/DataTables/i18n/French.lang.json'}"];
 
     /**
-     * Applique les fonctionnalitées de la librairie datatable à un tableau HTML
+     * Applique les fonctionnalités de la librairie datatable à un tableau HTML
      * 
      * @param string $id id du tableau HTML
-     * @param array $params surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la doc)
+     * @param array $params surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la documentation )
      */
     public function __construct($id = "datatable", $params = []) {
         if (!self::$_called) {

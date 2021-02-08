@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Compresse des scripts CSS en deux fichiers minifié
+ * Compresse des scripts CSS en deux fichiers minifiés
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class compact_css extends singleton {
 
     /**
-     * Liste de fichier CSS
-     * @var array Liste de fichier CSS 
+     * Liste de fichiers CSS
+     * @var array Liste de fichiers CSS 
      */
     private $_files = [];
 
     /**
-     * Liste de script CSS et JS 
-     * @var array Liste de script CSS et JS 
+     * Liste de scripts CSS et JS 
+     * @var array Liste de scripts CSS et JS 
      */
     private $_custom = [];
 
@@ -36,7 +36,7 @@ class compact_css extends singleton {
 
     /**
      * Ajoute un fichier CSS
-     * @param string $href Chemain du fichier CSS
+     * @param string $href Chemin du fichier CSS
      * @return $this
      */
     public function add_css_file($href) {
@@ -56,7 +56,7 @@ class compact_css extends singleton {
 
     /**
      * Compacte les fichiers en un seul
-     * @return string Nom du fichier compréssé
+     * @return string Nom du fichier compressé
      */
     private function compact_files() {
         if (!file_exists("./src")) {
@@ -94,7 +94,7 @@ class compact_css extends singleton {
 
     /**
      * Compacte les scripts en un seul fichier
-     * @return string Nom du fichier compréssé
+     * @return string Nom du fichier compressé
      */
     private function compact_custom() {
         if (($fc = count($this->_custom)) === 0) {
@@ -137,7 +137,7 @@ class compact_css extends singleton {
     }
 
     /**
-     * Affiche les scripts de liaison des fichiers compréssé
+     * Affiche les scripts de liaison des fichiers compressé
      */
     public function render() {
         $files = [

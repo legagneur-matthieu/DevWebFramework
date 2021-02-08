@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet convertir et gerrer une liste lourde comme étant un dictionnaire
+ * Cette classe permet de convertir et de gérer une liste lourde comme étant un dictionnaire
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -20,8 +20,8 @@ class dictionary {
     private $_chunk_size = 100000;
 
     /**
-     * Cette classe permet convertir et gerrer une liste lourde comme étant un dictionnaire
-     * @param array $words Liste de mots a entrer dans le dictionnaire
+     * Cette classe permet de convertir et de gérer une liste lourde comme étant un dictionnaire
+     * @param array $words Liste de mots à entrer dans le dictionnaire
      * @param int $chunk_size Taille d'une section du dictionnaire (100 000 mots par defaut)
      */
     public function __construct($words = [], $chunk_size = 100000) {
@@ -38,7 +38,7 @@ class dictionary {
     }
 
     /**
-     * Definis la taille d'une section du dictionnaire
+     * Définit la taille d'une section du dictionnaire
      * @param int $chunk_size Taille d'une section du dictionnaire
      */
     public function set_chunk_size($chunk_size) {
@@ -71,8 +71,8 @@ class dictionary {
     }
 
     /**
-     * Verifie si un mot existe dans le dictionnaire (true ou false)
-     * @param string $word mot a verifier
+     * Vérifie si un mot existe dans le dictionnaire (true ou false)
+     * @param string $word mot à verifier
      * @return boolean true : le mot est dans le dictionnaire, false : il n'y est pas
      */
     public function word_exist($word) {
@@ -85,7 +85,7 @@ class dictionary {
     }
 
     /**
-     * Ajoute une liste de mots au dictionaire et re-sectione le dictionnaire
+     * Ajoute une liste de mots au dictionnaire et re-sectione le dictionnaire
      * @param array $words Mots à ajouter
      */
     public function add($words) {
@@ -102,8 +102,8 @@ class dictionary {
 
     /**
      * Supprime une liste de mots du dictionnaire
-     * @param array $words Mots a supprimer
-     * @param boolean $reorder le dictionnaire doit-il être re_sectioné après les suppresions ? (true ou false, false par defaut)
+     * @param array $words Mots à supprimer
+     * @param boolean $reorder le dictionnaire doit-il être re-sectioné après les suppressions ? (true ou false, false par defaut)
      */
     public function remove($words, $reorder = false) {
         if (!is_array($words)) {

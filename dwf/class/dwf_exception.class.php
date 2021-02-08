@@ -44,7 +44,7 @@ class dwf_exception extends Exception {
     }
 
     /**
-     * affiche une exception qui n'interrompt pasle script en cours
+     * Affiche une exception qui n'interrompt pas le script en cours
      * Il est possible de renseigner une exception personalisée comme par exemple : 
      * dwf_exception::warning_exception($code_erreur,array("msg"=>"$text_erreur"));
      * @param int $errcode Erreur code de l'exception
@@ -94,7 +94,7 @@ class dwf_exception extends Exception {
 
     /**
      * Vérifie si un fichier a pu être écrit correctement, renvoit une exception 631 dans le cas contraire
-     * @param string $file Chemain du fichier a verrifier.
+     * @param string $file Chemin du fichier à vérifier.
      */
     public static function check_file_writed($file) {
         if (!file_exists($file)) {

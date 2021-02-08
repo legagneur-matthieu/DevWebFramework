@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de génerer des feuilles de style personalisé
+ * Cette classe permet de génerer des feuilles de style personalisées
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -28,7 +28,7 @@ class css {
     }
 
     /**
-     * Ajoute une règle à la feuille de style a une balise     * 
+     * Ajoute une règle à la feuille de style à une balise     * 
      * @param string $name Selector CSS
      * @param array $rules Règles CSS, exemple : ["margin" => "5px", padding => "5px", ...]
      * @return css $this Fluent
@@ -38,7 +38,7 @@ class css {
     }
 
     /**
-     * Compact les règles CSS de la feuilles de style
+     * Compact les règles CSS de la feuille de style
      */
     private function compact() {
         foreach ($this->_css as $selector => $rules) {
@@ -63,8 +63,8 @@ class css {
     }
 
     /**
-     * Retourn la feuilles de style minifié
-     * @return string Retourn la feuilles de style minifié
+     * Retourne la feuille de style minifiée
+     * @return string Retourne la feuille de style minifiée
      */
     public function __toString() {
         $this->compact();

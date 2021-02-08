@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent à certaines dates de l'année
+ * Cette classe permet d'afficher des "oeufs de Pâques" qui s'affichent à certaines dates de l'année
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class easteregg {
 
     /**
-     * Cette classe permet d'afficher des "oeufs de PÃ¢ques" qui s'affichent à certaines dates de l'année    * 
+     * Cette classe permet d'afficher des "oeufs de Pâques" qui s'affichent à certaines dates de l'année    * 
      */
     public function __construct() {
         $date = date("dm");
@@ -16,7 +16,7 @@ class easteregg {
             $date = session::get_val("eggday");
         }
         switch ($date) {
-            case "3112"://jour de l'an
+            case "3112"://Jour de l'an
             case "0101":
                 $this->jour_de_an();
                 break;
@@ -26,7 +26,7 @@ class easteregg {
             case "1402": // Saint-Valentin
                 $this->valentin();
                 break;
-//            case "0003": // PÃ¢ques ? (dimanche qui suit la première pleine lune aprés le 21 mars ?)
+//            case "0003": // Pâques ? (dimanche qui suit la première pleine lune aprés le 21 mars ?)
 //                break;
             case "2103": // Printemps
                 $this->printemp();
@@ -67,7 +67,7 @@ class easteregg {
                 break;
             case "2212": //Hiver
             case "2312":
-            case "2412": //NoÃ«l
+            case "2412": //Noël
             case "2512":
                 $this->noel();
                 break;
@@ -75,9 +75,9 @@ class easteregg {
 //                break;
 //            case "0805": // victoire 1945
 //                break;
-//            case "0005": // PentecÃ´te (49 jours après PÃ¢ques)?
+//            case "0005": // Pentecôte (49 jours après Pâques)?
 //                break;
-//            case "1508": // Assomption
+//            case "1508": // Ascension
 //                break;
 //            case "0111": // Toussaint
 //                break;
@@ -88,7 +88,7 @@ class easteregg {
     }
 
     /**
-     * Detecte si un easteregg doit s'activer aujourd'hui
+     * Détecte si un easteregg doit s'activer aujourd'hui
      */
     private function kegg() {
         $events = [
@@ -146,7 +146,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de l'epiphanie
+     * easteregg de l'épiphanie
      */
     private function epiphanie() {
         compact_css::get_instance()->add_css_file('../commun/src/js/eastereggs/epiphanie/epiphanie.css');
@@ -154,7 +154,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de la saint-Valentin
+     * easteregg de la Saint-Valentin
      */
     private function valentin() {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
@@ -203,7 +203,7 @@ class easteregg {
     }
 
     /**
-     * Verifie si on est un dimanche
+     * Vérifie si le jour est bien un dimanche
      */
     private function is_sunday() {
         $wday = time::get_info_from_date(date("Y-m-d"));
@@ -212,7 +212,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de la fete de mères
+     * easteregg de la fete des mères
      */
     private function fete_mere() {
         if ($this->is_sunday()) {
@@ -222,7 +222,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de la fete de pères
+     * easteregg de la fete des pères
      */
     private function fete_pere() {
         if ($this->is_sunday()) {
@@ -283,7 +283,7 @@ class easteregg {
     }
 
     /**
-     * easteregg de NoÃ«l
+     * easteregg de Noël
      */
     private function noel() {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");

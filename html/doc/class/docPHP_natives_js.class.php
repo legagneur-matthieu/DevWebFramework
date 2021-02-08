@@ -76,7 +76,7 @@ class docPHP_natives_js {
 
     public function redir() {
         ?> 
-        <p>Redirige l'utilisateur vers l'url renseigné en paramètre (peut être un chemin relatif)</p>
+        <p>Redirige l'utilisateur vers l'url renseignée en paramètre (peut être un chemin relatif)</p>
         <?php
         js::syntaxhighlighter("<?php js::redir($" . "url); ?>", $this->_brush);
     }
@@ -118,8 +118,8 @@ class docPHP_natives_js {
                 . "//création d'un tableau HTML avec html_structures (cf html_structures)\n"
                 . "echo html_structures::table(array('#', 'Film', 'Année', 'Genre', 'Entrées (France)'), array(\n"
                 . "        array(1, 'La Ligne Verte', '1999', 'Fantastique, Drame', '1 714 080'),\n"
-                . "        array(2, 'Le Cinquième Élément', '1997', 'Science-fiction', '7 727 697'),\n"
-                . "        array(3, 'Matrix', '1999', 'Action, Science-fiction', '2 426 543'),\n"
+                . "        array(2, 'Le Cinquième Élément', '1997', 'Science-Fiction', '7 727 697'),\n"
+                . "        array(3, 'Matrix', '1999', 'Action, Science-Fiction', '2 426 543'),\n"
                 . "    ), '', 'datatable');\n"
                 . "?>", $this->_brush);
         ?>
@@ -128,8 +128,8 @@ class docPHP_natives_js {
         js::datatable($id = 'datatable');
         echo html_structures::table(array('#', 'Film', 'Année', 'Genre', 'Entrées (France)'), array(
             array(1, 'La Ligne Verte', '1999', 'Fantastique, Drame', '1 714 080'),
-            array(2, 'Le Cinquième Élément', '1997', 'Science-fiction', '7 727 697'),
-            array(3, 'Matrix', '1999', 'Action, Science-fiction', '2 426 543'),
+            array(2, 'Le Cinquième Élément', '1997', 'Science-Fiction', '7 727 697'),
+            array(3, 'Matrix', '1999', 'Action, Science-Fiction', '2 426 543'),
                 ), '', 'datatable');
     }
 
@@ -159,7 +159,7 @@ class docPHP_natives_js {
 
     public function fancybox() {
         ?>
-        <p>Cette classe permet l'affichage de galeries photo et vidéos via la librairie Fancybox <br />
+        <p>Cette classe permet l'affichage de galeries photos et vidéos via la librairie Fancybox <br />
             la clé "caption" dans le tableau $data est facultative.
         </p>
         <?php

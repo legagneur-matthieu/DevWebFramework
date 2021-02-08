@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de gerer une mise en cache ( coté serveur )
+ * Cette classe permet de gérer une mise en cache ( côté serveur )
  * utilise session::set_val("cache",[]) et session::get_val("cache")
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
@@ -15,7 +15,7 @@ class cache extends singleton {
     private $_cache;
 
     /**
-     * Cette classe permet de gerer une mise en cache ( coté serveur )
+     * Cette classe permet de gérer une mise en cache ( côté serveur )
      * utilise session::set_val("cache",[]) et session::get_val("cache")
      */
     public function __construct() {
@@ -23,14 +23,14 @@ class cache extends singleton {
     }
 
     /**
-     * Sauve les données du cache a la destruction de l'objet
+     * Sauve les données du cache à la destruction de l'objet
      */
     public function __destruct() {
         $this->save();
     }
 
     /**
-     * Charge les donées du cache
+     * Charge les données du cache
      */
     private function load() {
         $this->_cache = (session::get_val("cache") ? session::get_val("cache") : []);
@@ -57,10 +57,10 @@ class cache extends singleton {
     }
 
     /**
-     * Stock une donnée dans le cache pour un temps defini ou jusqu'a expiration de la session.
+     * Stocke une donnée dans le cache pour un temps défini ou jusqu'à expiration de la session.
      * @param string $key Clé de la donnée dans le cache
      * @param mixed $value Valeur de la donnée
-     * @param boolean|int $timeout Durée de vie de la donnée dans le cache en seconde (false par defaut : vie jusqu'a expriration de la session)
+     * @param boolean|int $timeout Durée de vie de la donnée dans le cache en seconde (false par defaut : vie jusqu'à expriration de la session)
      */
     public static function set($key, $value, $timeout = false) {
         self::get_instance()->_cache[$key]["value"] = $value;
@@ -70,9 +70,9 @@ class cache extends singleton {
     }
 
     /**
-     * Retourne une donnée du cache ( false si le donnée est inexistante ou expiré)
+     * Retourne une donnée du cache ( false si la donnée est inexistante ou expirée)
      * @param string $key Clé de la donnée dans le cache
-     * @return boolean|mixed Donée
+     * @return boolean|mixed Donnée
      */
     public static function get($key) {
         if (isset(self::get_instance()->_cache[$key]["timeout"]) and self::get_instance()->_cache[$key]["timeout"] < microtime(true)) {

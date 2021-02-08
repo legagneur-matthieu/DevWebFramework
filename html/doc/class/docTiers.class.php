@@ -13,8 +13,8 @@ class docTiers {
             10 => "AUTRES (Copyleft, copyright particuliers, ...)"
         ];
         js::datatable();
-        echo tags::tag("p", [], "Vous trouverez ici la liste de toutes les librairies tiers utilisées par le framework.") .
-        html_structures::table(["Libairie", "Version", "Auteur", "Langage", "Licence"], [
+        echo tags::tag("p", [], "Vous trouverez ici la liste de toutes les librairies tierces utilisées par le framework.") .
+        html_structures::table(["Librairie", "Version", "Auteur", "Langage", "Licence"], [
             ["Alertify", "1.13.1", "Fabien Doiron", "JS", $licences[0]],
             ["Animate", "4.1.1", "Daniel Eden", "JS", $licences[0]],
             ["Bootsrap", "4.3.1", "Twitter, Inc.", "CSS, JS", $licences[0]],
@@ -57,10 +57,10 @@ class docTiers {
             ["Vticker", "1.0", "Tadas Juozapaitis", "JS", "<em>Aucune</em>"],
             ["Xhtml-formatter", "1.0", "Vladimír Macháček", "PHP", $licences[3]],
                 ], "", "datatable") . html_structures::hr() .
-        tags::tag("p", [], "Du au fait que certaines librairies tiers soient sous " .
+        tags::tag("p", [], "Dû au fait que certaines librairies tierces soient sous " .
                 html_structures::a_link("http://www.gnu.org/licenses/gpl.html", "licence GNU GPL") .
                 "le DevWebFramework est diffusé sous la même licence. " . "<br />" .
-                "L'auteur vous remercie pour tous crédits que vous porterez à son travail.");
+                "L'auteur vous remercie pour tous les crédits que vous porterez à son travail.");
     }
 
 }

@@ -30,7 +30,7 @@ class bbParser {
     }
 
     /**
-     * Convertit une chaÃ®ne BBCode en HTML
+     * Convertit une chaîne BBCode en HTML
      * 
      * @param string $str code BBCode à convertir en HTML
      * @return string HTML

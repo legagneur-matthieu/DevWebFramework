@@ -8,7 +8,7 @@
 class admin_controle {
 
     /**
-     * Nom de l'entity
+     * Nom de l'entité
      * 
      * @var string Nom de l'entity
      */
@@ -51,7 +51,7 @@ class admin_controle {
 
     /**
      * Créé une interface d'administration 'user-friendly' pour une table 
-     * @param string $entity Nom de l'entity
+     * @param string $entity Nom de l'entité
      * @param array $relations association entre une clé étrangère et un tuple de la table étrangère : array("cle_etrangere1"=>"tuple_de_la_table_etrengerre1",...) <br />
      * exemple : array("rang"=>"nom");
      */
@@ -108,7 +108,7 @@ class admin_controle {
     }
 
     /**
-     * Affiche le tableau qui liste les entity
+     * Affiche le tableau listant les entités
      */
     private function table() {
         js::datatable();
@@ -166,7 +166,7 @@ class admin_controle {
     }
 
     /**
-     * Execution du formulaire d'ajout
+     * Exécution du formulaire d'ajout
      */
     private function ajout_exec() {
         if (isset($_POST["admin_form_ajout"])) {
@@ -289,7 +289,7 @@ class admin_controle {
         }
         js::datatable("supp_datatable");
         $form = new form("form-inline");
-        echo tags::tag("p", ["class" => "text-center"], "ESTES VOUS SUR DE VOULOIR SUPPRIMER CETTE ÉLÉMENT :").
+        echo tags::tag("p", ["class" => "text-center"], "ETES VOUS SUR DE VOULOIR SUPPRIMER CETTE ELÉMENT :").
         html_structures::table($this->_head, $data, "supp_datatable").
         $form->get_open_form() .
         $form->hidden("admin_form_supp", "1") .

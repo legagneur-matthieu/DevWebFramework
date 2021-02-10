@@ -9,7 +9,7 @@ class robotstxt {
 
     /**
      * Cette classe permet de générer le robot.txt d'un site 
-     * @param string $data lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)
+     * @param string $data Lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)
      */
     public function __construct($data = "") {
         $robots_file = "./robots.txt";

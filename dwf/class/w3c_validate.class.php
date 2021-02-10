@@ -28,7 +28,7 @@ class w3c_validate {
     }
 
     /**
-     * Retourne le statut de la page passé en paramètre
+     * Retourne le statut de la page passée en paramètre
      * @param string $url url à evaluer
      * @return string statut de la page au format JSON
      */

@@ -110,8 +110,8 @@ class html_structures {
      * 
      * @param string $href URL
      * @param string $text Texte
-     * @param string $class Class CSS
-     * @param string $title Title du lien
+     * @param string $class Classe CSS
+     * @param string $title Titre du lien
      * @param boolean $target_blank Ouvrir dans un nouvel onglet
      * @return string lien
      */
@@ -142,7 +142,7 @@ class html_structures {
     /**
      * Retourne une image img
      * 
-     * @param string $src chemain de l'image
+     * @param string $src chemin de l'image
      * @param string $alt alternative
      * @param string $usemap pour maper l'image
      */
@@ -154,10 +154,10 @@ class html_structures {
         return $img;
     }
 
-    /** Retourne une figure ( illustration + légende )
+    /** Retourne une figure ( illustration et légende )
      * 
      * @param string $src chemin de l'image
-     * @param string $caption legende de l'image
+     * @param string $caption légende de l'image
      * @param string $alt alternative
      */
     public static function figure($src, $caption, $alt = "") {
@@ -226,7 +226,7 @@ class html_structures {
      * Retourne un glyphicon (avec un texte alternative)
      * 
      * @param string $glyphicon nom du glyphicon (code : glyphicon glyphcon-$glyphicon )
-     * @param string $alt aleternative accessible aux synthéses vocales
+     * @param string $alt alternative accessible aux synthéses vocales
      * @return string Glyphicon
      */
     public static function glyphicon($glyphicon, $alt = "") {
@@ -273,8 +273,8 @@ class html_structures {
     }
 
     /**
-     * Retourne une balise script pour incule un fichier JS
-     * @param string $src chemain vers le fichier JS
+     * Retourne une balise script pour inclure un fichier JS
+     * @param string $src chemin vers le fichier JS
      * @return string balise script
      */
     public static function script($src) {
@@ -282,8 +282,8 @@ class html_structures {
     }
 
     /**
-     * Retourne une balise link pour incule un fichier CSS
-     * @param string $src chemain vers le fichier CSS
+     * Retourne une balise link pour inclure un fichier CSS
+     * @param string $src chemin vers le fichier CSS
      * @return string balise link
      */
     public static function link($href) {
@@ -293,10 +293,10 @@ class html_structures {
     /**
      * Permet d'afficher un lien avec un popover
      * @param string $id Id CSS
-     * @param string $text Text du lien
+     * @param string $text Texte du lien
      * @param string $title Title / Titre du popover
      * @param string $content Contenu du popover
-     * @param string $class class CSS
+     * @param string $class classe CSS
      * @return string popover
      */
     public static function popover($id, $text, $title, $content, $class = "") {
@@ -304,7 +304,7 @@ class html_structures {
     }
 
     /**
-     * Permet d'afficher une DIV qui aurra un effet de parallax
+     * Permet d'afficher une DIV qui aura un effet de parallax
      * @param tags|string $content Contenu de la div
      * @param float $speed Vitesse de déplacement par rapport au scroll
      * @param null|string $src Background-image de la div

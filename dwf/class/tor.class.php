@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de recuperer une ressource en passant par tor
+ * Cette classe permet de récuperer une ressource en passant par tor
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -11,7 +11,7 @@ class tor {
     private $_port;
 
     /**
-     * Cette classe permet de recuperer une ressource en passant par tor
+     * Cette classe permet de récuperer une ressource en passant par tor
      * @param string $host IP du proxy tor
      * @param type $port Port du proxy tor
      */
@@ -22,7 +22,7 @@ class tor {
 
     /**
      * 
-     * @param string $url URL de la ressource a recuperer
+     * @param string $url URL de la ressource à récuperer
      * @return mixed Ressource
      */
     public function wget($url) {

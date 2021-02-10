@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de gèrer un buffer a l'ecriture de fichiers
+ * Cette classe permet de gèrer un buffer a l'écriture de fichiers
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -11,7 +11,7 @@ class writer extends singleton {
 
     /**
      * Ajoute un fichier au buffer
-     * @param string $file Chemain du fichier qui sera écris
+     * @param string $file Chemin du fichier qui sera écrit
      * @param string $content Contenu du fichier
      * @param boolean $rewrite Si le fichier est déja en buffer, faut-il le réecrire ? (true ou false, true par defaut)
      */
@@ -22,8 +22,8 @@ class writer extends singleton {
     }
 
     /**
-     * Vide le buffer ou suprime le fichier entré en paramètre
-     * @param strig/boolean $file fichier a supprimer du buffer ou false (par defaut) pour vider entierement le buffer
+     * Vide le buffer ou supprime le fichier entré en paramètre
+     * @param strig/boolean $file fichier à supprimer du buffer ou false (par defaut) pour vider entièrement le buffer
      */
     public function clear($file = false) {
         if ($file) {
@@ -36,7 +36,7 @@ class writer extends singleton {
     }
 
     /**
-     * Ecris les fichiers mis en buffer et le vide
+     * Ecrit les fichiers mis en buffer et le vide
      */
     public function write() {
         foreach ($this->_buffer as $file => $content) {
@@ -46,9 +46,9 @@ class writer extends singleton {
     }
 
     /**
-     * Ecris les fichiers mis en buffer dans une achive et vide le buffer
+     * Ecrit les fichiers mis en buffer dans une achive et vide le buffer
      * @param string $zipname Nom de l'achive ("Archive.zip", par exemple)
-     * @param booelan $memory_less Si true alors l'ecriture de l'archive prendra moins de memoire mais sera plus lente
+     * @param booelan $memory_less Si true alors l'ecriture de l'archive prendra moins de mémoire mais sera plus lente
      */
     public function write_zip($zipname, $memory_less = false) {
         if ($memory_less) {
@@ -94,7 +94,7 @@ class writer extends singleton {
     }
 
     /**
-     * Ecris les fichiers
+     * Ecrit les fichiers
      */
     public function __destruct() {
         $this->write();

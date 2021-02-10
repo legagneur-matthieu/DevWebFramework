@@ -14,7 +14,7 @@ class leaflet {
     private static $_called = false;
 
     /**
-     * Tableau indiqant la vue initiale de la carte : array("x" => 0, "y" => 0, "zoom" => 13)
+     * Tableau indiquant la vue initiale de la carte : array("x" => 0, "y" => 0, "zoom" => 13)
      * @var array Tableau indiquant la vue initiale de la carte : array("x" => 0, "y" => 0, "zoom" => 13)
      */
     private $_view_init;
@@ -53,7 +53,7 @@ class leaflet {
      * Cette classe permet d'afficher une carte exploitant OSM (OpenStreetMap) !
      * @param array $view_init Tableau indiqant la vue initiale de la carte (x -> latitude , y -> longitude) : array("x" => 0, "y" => 0, "zoom" => 13)
      * @param string $id Identifiant CSS
-     * @param string $height hauteur CSS 
+     * @param string $height Hauteur CSS 
      */
     public function __construct($view_init = ["x" => 0, "y" => 0, "zoom" => 13], $id = "leaflet", $height = "300px") {
         $this->_view_init = $view_init;
@@ -78,8 +78,8 @@ class leaflet {
 
     /**
      * Ajoute un marqueur sur la carte
-     * @param float $x coordoné X (latitide) du marqueur
-     * @param float $y coordoné Y (longitude) du marqueur
+     * @param float $x coordonnées X (latitide) du marqueur
+     * @param float $y coordonnées Y (longitude) du marqueur
      * @param string $desc Description HTML du marqueur (s'affiche en "popup")
      * @param boolean $first Premier marqueur de l'itinéraire, à préciser si $this->optimise_itineraire() est utilisé
      */
@@ -91,7 +91,7 @@ class leaflet {
      * Ajoute une zone circulaire sur la carte
      * @param float $x Coordonnées X du centre du cercle
      * @param float $y Coordonnées Y du centre du cercle
-     * @param int $rayon Rayon du cercle ( en métre )
+     * @param int $rayon Rayon du cercle ( en mètre )
      * @param string $desc Description HTML du cercle (s'affiche en "popup")
      * @param string $color couleur du cercle (couleur CSS)
      * @param float $opacity opacité du cercle ( entre 0 et 1 )
@@ -110,7 +110,7 @@ class leaflet {
     }
 
     /**
-     * Optimise l'ordre des markers destinés à être affichés dans un itineraire 
+     * Optimise l'ordre des markers destinés à être affichés dans un itinéraire 
      * A utiliser avant $this->print_map et $this->tracer_itineraire
      */
     public function optimise_itineraire() {
@@ -118,7 +118,7 @@ class leaflet {
         $data_copy = $this->_markers;
         $data_distances = [];
 
-        //on créé un tableau qui contient toutes les combinaisons de traget et les distances entre chaque points
+        //on créé un tableau qui contient toutes les combinaisons de trajet et les distances entre chaque points
         foreach ($this->_markers as $key => $a) {
             if ($a["first"]) {
                 $first = $key;

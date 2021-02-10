@@ -8,32 +8,32 @@
 class phpini {
 
     /**
-     * Congiguration par défaut tel que décrite dans la doc officiel de php.ini
+     * Configuration par défaut telle que décrite dans la documentation officielle de php.ini
      */
     const MODE_DEFAULT = "default";
 
     /**
-     * Congiguration de développement tel que décrite dans la doc officiel de php.ini
+     * Configuration de développement telle que décrite dans la documentation officielle de php.ini
      */
     const MODE_DEV = "dev";
 
     /**
-     * Congiguration de production tel que décrite dans la doc officiel de php.ini
+     * Configuration de production telle que décrite dans la documentation officielle de php.ini
      */
     const MODE_PROD = "PROD";
 
     /**
-     * Congiguration de développement conseillé pour DWF
+     * Configuration de développement conseillée pour DWF
      */
     const MODE_DWF_DEV = "dwf_dev";
 
     /**
-     * Congiguration de production conseillé pour DWF
+     * Configuration de production conseillée pour DWF
      */
     const MODE_DWF_PROD = "dwf_prod";
 
     /**
-     * Configuration perssonalisé
+     * Configuration perssonalisée
      */
     const MODE_CUSTOM = "custom";
 
@@ -146,7 +146,7 @@ class phpini {
     ];
 
     /**
-     * Charge des configuration personalisé
+     * Charge des configurations personalisées
      */
     private static function set_custom() {
         $file = __DIR__ . "/phpini/custom.json";
@@ -158,8 +158,8 @@ class phpini {
 
     /**
      * Charge une configutation
-     * @param string $mode Configuration a charger : phpini::MODE_DEFAULT, phpini::MODE_DEV, phpini::MODE_PROD, phpini::MODE_DWF_DEV, phpini::MODE_DWF_PROD ou phpini::MODE_CUSTOM
-     * @param string $profil Nom de la configuration personalisé si $mode = phpini::MODE_CUSTOM
+     * @param string $mode Configuration à charger : phpini::MODE_DEFAULT, phpini::MODE_DEV, phpini::MODE_PROD, phpini::MODE_DWF_DEV, phpini::MODE_DWF_PROD ou phpini::MODE_CUSTOM
+     * @param string $profil Nom de la configuration personalisée si $mode = phpini::MODE_CUSTOM
      */
     public static function set_mode($mode, $profil = "") {
         if ($mode !== self::MODE_CUSTOM) {
@@ -206,7 +206,7 @@ class phpini {
     }
 
     /**
-     * Execution du formulaire d'administration
+     * Exécution du formulaire d'administration
      */
     private static function admin_exec() {
         self::$_ini[self::MODE_CUSTOM][$_POST["profil_name"]] = [
@@ -372,8 +372,8 @@ class phpini {
     /**
      * Retourne les options des select (On, Off) 
      * @param string $name Nom de la variable de configuration
-     * @param string $default valeur par defaut ( On par défaut ou Off)
-     * @return array tableu des options
+     * @param string $default Valeur par defaut ( On par défaut ou Off)
+     * @return array Tableau des options
      */
     private static function get_option($name, $default = "On") {
         return [

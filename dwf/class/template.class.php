@@ -24,8 +24,8 @@ class template {
      * Cette classe permet d'utiliser des template 
      * (en utilisant la librairie Smarty https://www.smarty.net/docsv2/fr/index.tpl)
      * 
-     * @param string $tplname nom du templaite ( nom du fichier sans l'extention .tpl !)
-     * @param array $data Tableau associatif de donnée, les clé de la première dimention sont les variables du template
+     * @param string $tplname Nom du template ( nom du fichier sans l'extension .tpl !)
+     * @param array $data Tableau associatif de données, les clés de la première dimension sont les variables du template
      */
     public function __construct($tplname, $data) {
         if (!self::$_called) {
@@ -49,11 +49,11 @@ class template {
     }
 
     /**
-     * Permet d'utiliser des template 
+     * Permet d'utiliser des templates 
      * (en utilisant la librairie Smarty https://www.smarty.net/docsv2/fr/index.tpl)
      * 
-     * @param string $tplname nom du templaite ( nom du fichier sans l'extention .tpl !)
-     * @param array $data Tableau associatif de donnée, les clé de la première dimention sont les variables du template
+     * @param string $tplname Nom du template ( nom du fichier sans l'extension .tpl !)
+     * @param array $data Tableau associatif de données, les clés de la première dimension sont les variables du template
      */
     public static function render($tplname, $data) {
         new template($tplname, $data);

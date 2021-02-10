@@ -24,7 +24,7 @@ class printer {
     /**
      * Cette classe permet la création d'un PDF (passe par printer.php )
      * 
-     * @param string $lib Librairie a utiliser (dompdf ou debug)
+     * @param string $lib Librairie à utiliser (dompdf ou debug)
      */
     public function __construct($lib = "dompdf") {
         $this->_lib = $lib;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de gerer des QRCode 
+ * Cette classe permet de gérer des QRCode 
  * (communique avec /commun/qrcode_printer.php)
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
@@ -25,7 +25,7 @@ class phpQRCode {
 
     /**
      * Cette fonction permet d'avoir le QRCode en base 64.
-     * @param string $text Text à transformer en QRCode
+     * @param string $text Texte à transformer en QRCode
      * @return string QRCode (image) en Base64 
      */
     public static function get_img_b64($text) {

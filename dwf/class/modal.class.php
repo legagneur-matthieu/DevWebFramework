@@ -32,7 +32,7 @@ class modal {
     /**
      * Créé un lien avec les données que contiendra le modal
      * @param string $a_text Texte du lien
-     * @param string $id identifiant unique du lien
+     * @param string $id Identifiant unique du lien
      * @param string $title Title du lien
      * @param string $titre Titre du modal
      * @param string $data HTML du modal

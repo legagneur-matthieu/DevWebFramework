@@ -44,7 +44,7 @@ class log_file {
     }
 
     /**
-     * Ã‰crit un message de type "info" dans le log
+     * Écrit un message de type "info" dans le log
      * 
      * @param string $message message à écrire dans le log
      */
@@ -53,7 +53,7 @@ class log_file {
     }
 
     /**
-     * Ã‰crit un message de type "warning" dans le log
+     * Écrit un message de type "warning" dans le log
      * 
      * @param string $message message à écrire dans le log
      */
@@ -62,7 +62,7 @@ class log_file {
     }
 
     /**
-     * Ã‰crit un message de type "sévère" dans le log
+     * Écrit un message de type "sévère" dans le log
      * 
      * @param string $message message à écrire dans le log
      */

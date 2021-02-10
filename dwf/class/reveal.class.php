@@ -13,7 +13,7 @@ class reveal {
      * Les diaporamas s'organisent avec des balises "section"
      * @param int $width Largeur en px des slides
      * @param int $height Hauteur en px des slides
-     * @param string $theme théme des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
+     * @param string $theme Théme des slides (white par defaut, beige,black,blood,league,noon,night,serif,simple,sky,solarized)
      */
     public function __construct($width = 600, $height = 600, $theme = "white") {
         compact_css::get_instance()->add_css_file("../commun/src/js/reveal/css/reveal.css");

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de créer, verifier et executer des payment via l'API REST de PayPal 
+ * Cette classe permet de créer, vérifier et exécuter des paiements via l'API REST de PayPal 
  * @autor LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class paypal {
@@ -13,14 +13,14 @@ class paypal {
     private $_api_context;
 
     /**
-     * Devise utilisé ("EUR" par defaut)
-     * @var string Devise utilisé ("EUR" par defaut)
+     * Devise utilisée ("EUR" par defaut)
+     * @var string Devise utilisée ("EUR" par defaut)
      */
     private $_currency;
 
     /**
-     * Methode de paymoent utilisé ("paypal" par defaut)
-     * @var string Methode de paymoent utilisé ("paypal" par defaut)
+     * Méthode de paiement utilisée ("paypal" par defaut)
+     * @var string Méthode de paiement utilisée ("paypal" par defaut)
      */
     private $_payment_method;
 
@@ -31,12 +31,12 @@ class paypal {
     private static $_called = false;
 
     /**
-     * Cette classe permet de créer, verifier et executer des payment via l'API REST de PayPal 
+     * Cette classe permet de créer, verifier et exécuter des paiements via l'API REST de PayPal 
      * 
      * @param string $clientId clientId renseigné dans l'application de l'API REST de PayPal
      * @param string $clientSecret clientSecret renseigné dans l'application de l'API REST de PayPal
-     * @param string $currency Devise utilisé ("EUR" par defaut)
-     * @param string $payment_method Methode de paymoent utilisé ("paypal" par defaut)
+     * @param string $currency Devise utilisée ("EUR" par defaut)
+     * @param string $payment_method Méthode de paiement utilisée ("paypal" par defaut)
      */
     public function __construct($clientId, $clientSecret, $currency = "EUR", $payment_method = "paypal") {
         if (!self::$_called) {
@@ -49,21 +49,21 @@ class paypal {
     }
 
     /**
-     * Créé un Payment
-     * @param array $item_list Liste des articles vendu sous la forme : 
+     * Créé un paiement
+     * @param array $item_list Liste des articles vendus sous la forme : 
      *     [ 
      *         ["Name"=>"article1", "Price"=>"10.50", "Quantity"=>"1"],
      *         ["Name"=>"article2","Price"=>"1.99","Quantity"=>"5"]
      *     ]
-     *     ATTENTION : Les majuscules aux noms des clé son importantes !
+     *     ATTENTION : Les majuscules aux noms des clés sont importantes !
      * @param int|float $vat Taux de TVA (exemple : 20 pour 20% de TVA)
      * @param string $description Description de la transaction
-     * @param string $returnurl Url de retour lors du suucées de la création de payment
-     * @param string $cancelurl Url  de retour en cas d'annulation ou d'erreur du payment
-     * @param string $custom Champ libre pour stoquer des données lié au payment (json utilisable)
-     * @param int|float $shipping frais de livraison (0 aur defaut)
+     * @param string $returnurl Url de retour lors du suucées de la création de paiement
+     * @param string $cancelurl Url de retour en cas d'annulation ou d'erreur du paiement
+     * @param string $custom Champ libre pour stocker des données liés au paiement (json utilisable)
+     * @param int|float $shipping frais de livraison (0 par defaut)
      * @param string $intent Type de transaction ( par defaut "sale" pour une vente directe)
-     * @return string|boolean Retourne le lien de payment pour l'utilisateur ou false en cas d'erreur.
+     * @return string|boolean Retourne le lien de paiement pour l'utilisateur ou false en cas d'erreur.
      */
     public function create_payment($item_list, $vat, $description, $returnurl, $cancelurl, $shipping = 0, $custom = "", $intent = "sale") {
         $amt = 0;
@@ -94,17 +94,17 @@ class paypal {
     }
 
     /**
-     * Retourne le payment retourné par PayPal
+     * Retourne le paiement retourné par PayPal
      * @param string $paymentId $_GET["paymentId"]
-     * @return \PayPal\Api\Payment Payment retourné par PayPal
+     * @return \PayPal\Api\Payment Paiement retourné par PayPal
      */
     public function get_payment($paymentId) {
         return \PayPal\Api\Payment::get($paymentId, $this->_api_context);
     }
 
     /**
-     * Execute un payment
-     * @param PayPal\Api\Payment $payment le payment retourné par PayPal
+     * Execute un paiement
+     * @param PayPal\Api\Payment $payment le paieent retourné par PayPal
      * @return boolean false en cas d'erreur ( true = OK )
      */
     public function execute_payment(PayPal\Api\Payment $payment) {
@@ -121,7 +121,7 @@ class paypal {
     }
 
     /**
-     * Convertis une liste d'articles "array" en \PayPal\Api\ItemList()
+     * Convertit une liste d'articles "array" en \PayPal\Api\ItemList()
      * @param array $item_list Liste d'articles
      * @return \PayPal\Api\ItemList Objet ItemList 
      */

@@ -18,7 +18,7 @@ class ratioblocks {
      * 
      * @param string $id CSS du bloc
      * @param int $width largeur du bloc en PX
-     * @param float $ratio ratio du bloc en decimale
+     * @param float $ratio ratio du bloc en décimale
      * @param string $contenu contenu HTML du bloc
      */
     public function __construct($id, $width, $ratio, $contenu) {

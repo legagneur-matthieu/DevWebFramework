@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Permets d'afficher les différences entre deux chaines de caractères
+ * Permet d'afficher les différences entre deux chaines de caractères
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
@@ -14,8 +14,8 @@ class php_finediff {
     private static $_called = false;
 
     /**
-     * Retourne le HTML du finediff entre les neux chaines
-     * @param string $from_text Texte d'orrigine
+     * Retourne le HTML du finediff entre les deux chaines
+     * @param string $from_text Texte d'origine
      * @param string $to_text Texte final
      * @return string HTML du finediff
      */

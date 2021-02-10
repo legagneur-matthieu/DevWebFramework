@@ -2,7 +2,7 @@
 
 /**
  * Cette classe permet de rendre une autre classe pseudo-fluent.
- * Utilisez l'heritage :
+ * Utilisez l'héritage :
  * class ma_classe extends fluent{ }
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
@@ -12,7 +12,7 @@ class fluent {
     private $_fuent_buffer = [];
 
     /**
-     * Execute la méthode et retourne l'instance si la fonction ne retourne rien ou null
+     * Exécute la méthode et retourne l'instance si la fonction ne retourne rien ou null
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
      * @return $this|mixed
@@ -23,7 +23,7 @@ class fluent {
     }
 
     /**
-     * Execute la méthode et retourne l'instance iniquement (tout éventuel retour de la methode n'est pas recuperable)
+     * Exécute la méthode et retourne l'instance uniquement (tout éventuel retour de la méthode n'est pas récuperable)
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
      * @return $this
@@ -34,8 +34,8 @@ class fluent {
     }
 
     /**
-     * Execute la méthode et retourne l'instance iniquement,
-     * tout éventuel retour de la methode et mis dans un cache récuperable via getFluentBuffer()
+     * Exécute la méthode et retourne l'instance uniquement,
+     * tout éventuel retour de la methode est mis dans un cache récuperable via getFluentBuffer()
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
      * @return $this

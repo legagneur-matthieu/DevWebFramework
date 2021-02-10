@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de créer des evenements (listener et emiter)
+ * Cette classe permet de créer des évènements (listener et emiter)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -14,15 +14,15 @@ class event extends singleton {
     private $_events = [];
 
     /**
-     * Liste des listener et des actions à executer qu'une fois
-     * @var array Liste des listener et des actions à executer qu'une fois
+     * Liste des listener et des actions à exécuter qu'une fois
+     * @var array Liste des listener et des actions à exécuter qu'une fois
      */
     private $_events_once = [];
 
     /**
-     * Ajoute une action à un listener (créé le listener si il n'existe pas)
+     * Ajoute une action à un listener (créé le listener s'il n'existe pas)
      * @param string $event_name nom du listener
-     * @param callable $callable action a ajouter au listener
+     * @param callable $callable action à ajouter au listener
      */
     public static function on($event_name, callable $callable) {
         $obj = self::get_instance();
@@ -33,9 +33,9 @@ class event extends singleton {
     }
 
     /**
-     * Ajoute une action à executer qu'une fois à un listener (créé le listener si il n'existe pas)
+     * Ajoute une action à exécuter qu'une fois à un listener (créé le listener s'il n'existe pas)
      * @param string $event_name nom du listener
-     * @param callable $callable action a ajouter au listener
+     * @param callable $callable action à ajouter au listener
      */
     public static function once($event_name, callable $callable) {
         $obj = self::get_instance();
@@ -65,9 +65,9 @@ class event extends singleton {
     }
 
     /**
-     * Déclanche les actions d'un listener
+     * Déclenche les actions d'un listener
      * @param boolean|string $event_name nom du listener
-     * @param mixed $parameter parametres pour le listener
+     * @param mixed $parameter paramètres pour le listener
      */
     public static function run($event_name, $parameter = null) {
         $obj = self::get_instance();

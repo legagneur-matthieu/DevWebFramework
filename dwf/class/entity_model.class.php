@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cettle classe permet d'afficher des pseudo MCD a partir de vos entités
+ * Cettle classe permet d'afficher des pseudos MCD à partir de vos entités
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */

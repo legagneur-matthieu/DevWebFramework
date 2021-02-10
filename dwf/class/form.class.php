@@ -17,7 +17,7 @@ class form {
      * Créé un nouveau formulaire
      * @param string $class Classe CSS
      * @param string $action Action du formulaire
-     * @param string $method Methode du formulaire
+     * @param string $method Méthode du formulaire
      */
     public function __construct($class = "", $action = "#", $method = "post") {
         $this->_form = tags::form(["class" => $class, "action" => $action, "method" => $method], "");
@@ -32,7 +32,7 @@ class form {
     }
 
     /**
-     * Retourne la balise de fermeture du formulaire et eventuelement un token
+     * Retourne la balise de fermeture du formulaire et éventuellement un token
      * @param boolean $use_token Ajouter un token (true/false, false par defaut)
      * @return string Balise de fermeture du formulaire
      */
@@ -104,8 +104,8 @@ class form {
      * Ajoute un input de type range
      * @param string $label Label de l'input
      * @param string $name Nom de l'input
-     * @param int $min Valeur minimal de l'input
-     * @param int $max Valeur maximal de l'input
+     * @param int $min Valeur minimale de l'input
+     * @param int $max Valeur maximale de l'input
      * @param int $value $value Valeur de l'input (0 par défaut)
      * @param int $step Pas de l'input
      * @param string $class Classe CSS
@@ -135,7 +135,7 @@ class form {
     }
 
     /**
-     * Créé et retourne une dataliste associé a un input
+     * Créé et retourne une dataliste associée à un input
      * @param string $list Id de la liste
      * @param array $data array(valeur1, valeur2, ... );
      * @return string La dataliste
@@ -223,11 +223,11 @@ class form {
                     $doc[] = $_FILES[$name]["name"][$i];
                 } else {
                     $error = true;
-                    js::alert("erreur lors de l'upload du ficchier {$i}");
+                    js::alert("Erreur lors de l'upload du fichier !{$i}");
                 }
             } else {
                 $error = true;
-                js::alert("le fichier {$i} n'est pas du bon type !");
+                js::alert("Le fichier {$i} n'est pas du bon type !");
             }
             $i++;
         }
@@ -239,10 +239,10 @@ class form {
      * @param $img String Chemin absolu de l'image d'origine.
      * @param $to String Chemin absolu de l'image générée (.png).
      * @param $width Int Largeur de l'image générée. Si 0, valeur calculée en fonction de $height.
-     * @param $height Int Hauteur de l'image génétée. Si 0, valeur calculée en fonction de $width.
+     * @param $height Int Hauteur de l'image générée. Si 0, valeur calculée en fonction de $width.
      * Si $height = 0 et $width = 0, dimensions conservées mais conversion en .png
      * @param boolean $alpha Garder la transparence du PNG ? (true/false, true par defaut)
-     * @param int $color Couleur de transition à utiliser pour la transparence, a générer avec imagecolorallocate() (blanc par défaut) 
+     * @param int $color Couleur de transition à utiliser pour la transparence, à générer avec imagecolorallocate() (blanc par défaut) 
      * @return boolean
      */
     public static function resize_img($img, $to, $width = 0, $height = 0, $alpha = true, $color = 16777215) {
@@ -360,10 +360,10 @@ class form {
     }
 
     /**
-     * Retourne le script nécéssaire a faire fonctioner le datepicker
+     * Retourne le script necéssaire à faire fonctionner le datepicker
      * @param string $name Nom du datepicker
      * @param string $fn Fonction du datepiker
-     * @return string Le script nécéssaire a faire fonctioner le datepicker
+     * @return string Le script nécéssaire à faire fonctionner le datepicker
      */
     private function datepicker_script($name, $fn) {
         return $this->append(tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () { $(\"#{$name}\").{$fn}($.timepicker.regional[\"fr\"]).{$fn}({dateFormat: \"dd/mm/yy\"}).attr(\"readonly\", true).attr(\"placeholder\", \"Cliquez pour choisir une date\");});"));
@@ -418,7 +418,7 @@ class form {
     }
 
     /**
-     * Créé et retourne le timepicker de jquery-ui (heur seulement)    * 
+     * Créé et retourne le timepicker de jquery-ui (heure seulement)    * 
      * @param string $label Label du timepicker
      * @param string $name Nom du timepicker
      * @param null|string $value Valeur (null par defaut)
@@ -446,7 +446,7 @@ class form {
 
     /**
      * Créé et retourne un sélecteur (balise select) <br />
-     * les options y sont renseignés par un tableau à deux dimensions (cf $option)
+     * les options y sont renseignées par un tableau à deux dimensions (cf $option)
      * 
      * @param string $label Label du selecteur
      * @param string $name Nom du selecteur
@@ -464,8 +464,8 @@ class form {
     }
 
     /**
-     * Créé et retourne les options des selecteurs
-     * @param array $option Options du selecteur
+     * Créé et retourne les options des sélecteurs
+     * @param array $option Options du sélecteur
      * @return string Options
      */
     private function options($option) {
@@ -505,10 +505,10 @@ class form {
     }
 
     /**
-     * Créé et retourne un champs de formulaire pour les signatures numeriques     * 
+     * Créé et retourne un champ de formulaires pour les signatures numeriques     * 
      * @param string $id id CSS pour jSignature
      * @param string $label Label de la jSignature
-     * @param string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30
+     * @param string $dataformat Format de donnés retourné : svgbase64 (defaut), svg ou base30
      * @return string La jSignature
      */
     public function jSignature($id, $label = "Signature", $dataformat = "svgbase64") {

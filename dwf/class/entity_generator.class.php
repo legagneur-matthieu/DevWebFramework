@@ -2,7 +2,7 @@
 
 /**
  * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
- * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSSEZ A application::$_bdd->protect_var();
+ * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A application::$_bdd->protect_var();
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -23,12 +23,12 @@ class entity_generator {
     private static $_table;
 
     /**
-     * Cette classe génère les entités destinées à faire l'interface entre la base de donnée et le code <br />
-     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSSEZ A application::$_bdd->protect_var();
+     * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
+     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A application::$_bdd->protect_var();
      * 
      * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
-     * le champ clé primaire n'est qu'un boolean à true ou false , si il est a true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
+     * le champ clé primaire n'est qu'un boolean à true ou false , s'il est a true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
      * @param string $table nom de la table correspondant aux entités, ce nom sera également le "type" des entités générées
      * @param boolean $overwrite le générateur doit-il écraser les entités générées déjà existantes ? (true/false)
      * @param boolean $create_table le générateur doit-il créer la table de l'entité dans la base de données ? (true/false)
@@ -43,12 +43,12 @@ class entity_generator {
     }
 
     /**
-     * Cette classe génère les entités destinées à faire l'interface entre la base de donnée et le code <br />
-     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSSEZ A application::$_bdd->protect_var();
+     * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
+     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A application::$_bdd->protect_var();
      * 
      * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
-     * le champ clé primaire n'est qu'un boolean à true ou false , si il est a true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
+     * le champ clé primaire n'est qu'un boolean à true ou false , s'il est à true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
      * @param string $table nom de la table correspondant aux entités, ce nom sera également le "type" des entités générées
      * @param boolean $overwrite le générateur doit-il écraser les entités générées déjà existantes ? (true/false)
      * @param boolean $create_table le générateur doit-il créer la table de l'entité dans la base de données ? (true/false)
@@ -72,7 +72,7 @@ class entity_generator {
      */
     private static function get_class() {
         $n = "\n";
-        //génére la class
+        //génére la classe
         $class = "<?php" . $n
                 . "/** Entité de la table " . self::$_table . $n
                 . "* @autor entity_generator by LEGAGNEUR Matthieu */" . $n
@@ -84,10 +84,10 @@ class entity_generator {
         $tuple_etter = "";
         $tuple_destruct = "";
         foreach (self::$_data as $tuple) {
-            //génére les atributs 
+            //génére les attributs 
             $class .= "/** " . $tuple[0] . " " . $n
                     . "* @var " . $tuple[1] . ' ' . $tuple[0] . " */\n private $" . "_" . $tuple[0] . ";" . $n;
-            //génére lecontenu du constructeur 
+            //génére le contenu du constructeur 
             $tuple_construct .= "$" . "this->set_" . $tuple[0] . "($" . "data[\"" . $tuple[0] . "\"]);" . $n;
             if (!$tuple[2]) {
                 $p .= ", $" . $tuple[0];
@@ -97,7 +97,7 @@ class entity_generator {
                     $tuple_ajout .= "$" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . $tuple[0] . ");" . $n;
                 }
             }
-            //génére les geteur avec leur type si besoin
+            //génère les geteur avec leur type si besoin
             if (!(in_array($tuple[1], ["int", "integer", "string", "mail", "array"]))) {
                 $tuple_etter .= " /** @return " . $tuple[1] . " */" . $n;
             }
@@ -127,7 +127,7 @@ class entity_generator {
                     break;
             }
             $tuple_etter .= ' $this->_this_was_modified = true; }' . $n;
-            //génére lecontenu du destructeur 
+            //génère le contenu du destructeur 
             switch ($tuple[1]) {
                 case "int":
                 case "integer":
@@ -159,7 +159,7 @@ class entity_generator {
         $class .= '$this->_this_was_modified = false;' . $n . ' }' . $n;
 
         //génére la fonction statique ( static ) d'ajout
-        $class .= "/** Ajoute une entrée en base de donnée */" . $n
+        $class .= "/** Ajoute une entrée en base de données */" . $n
                 . " public static function ajout(";
         $class .= strtr($p, ["1__," => ""]) . ") { " . $n;
         $class .= $tuple_ajout;
@@ -187,13 +187,13 @@ class entity_generator {
         }
         $class .= ");\"); } ";
 
-        //génére la fonction statiques ( static ) get_structure
+        //génére la fonction statique ( static ) get_structure
         $class .= "/** Retourne la structure de l'entity au format json */" . $n
                 . "public static function get_structure() {" . $n
                 . "    return json_decode('" . json_encode(self::$_data) . "', true);" . $n
                 . "}" . $n;
 
-        //génére la fonction statiques ( static ) get_collection
+        //génére la fonction statique ( static ) get_collection
         $class .= "/** Retourne le contenu de la table sout forme d'une collection " . $n
                 . "*ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_collection($" . "where = \"\" ) {" . $n
@@ -211,7 +211,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_table_array()
-        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions " . $n
+        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimensions " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_table_array($" . "where = \"\") {" . $n
                 . "    $" . "data = application::$" . "_bdd->fetch(\"select * from " . self::$_table . "\" . (!empty($" . "where) ? \" where \" . $" . "where : \"\") . \";\");" . $n
@@ -230,7 +230,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_table_ordored_array
-        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clé est l'identifiant de l'entité " . $n
+        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions dont la clé est l'identifiant de l'entité " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_table_ordored_array($" . "where = \"\") {" . $n
                 . "    $" . "data = [];" . $n
@@ -242,7 +242,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_count()
-        $class .= "/** Retourne le nombre d'entré " . $n
+        $class .= "/** Retourne le nombre d'entrées " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
                 . "public static function get_count($" . "where = \"\" ) {" . $n
                 . "    $" . "data = application::$" . "_bdd->fetch(\"select count(*) as count from " . self::$_table . "\".(!empty($" . "where)?\" where \" . $" . "where:\"\").\";\");" . $n
@@ -250,7 +250,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_from_id
-        $class .= "/** Retourne une entité sous forme d'objet a partir de son identifiant " . $n
+        $class .= "/** Retourne une entité sous forme d'objet à partir de son identifiant " . $n
                 . "* @return " . self::$_table . "|boolean */" . $n
                 . "public static function get_from_id($" . "id) {" . $n
                 . "    if (isset(self::$" . "_entity_memento[$" . "id])) {" . $n
@@ -262,7 +262,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction statique ( static ) get_json_object
-        $class .= "/** Retourne le contenu de la table sout forme d'un objet json (utile pour les services) " . $n
+        $class .= "/** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) " . $n
                 . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); " . $n
                 . "* @return string Objet json */" . $n
                 . "public static function get_json_object($" . "where = \"\") {" . $n
@@ -276,7 +276,7 @@ class entity_generator {
                 . "}" . $n;
 
         //génére la fonction de suppresion
-        $class .= "/** Supprime l'entité a la fin du script*/" . $n
+        $class .= "/** Supprime l'entité à la fin du script*/" . $n
                 . "public function delete() {" . $n
                 . "    $" . "this->_this_was_delete=true;" . $n
                 . "}" . $n;
@@ -333,7 +333,7 @@ class entity_generator {
      * Fonction servant à l'écriture de la classe dans un fichier
      * 
      * @param string $file chemin et nom du fichier à créer
-     * @param string $class contenu du fichier a inscrire
+     * @param string $class contenu du fichier à inscrire
      */
     private static function write($file, $class) {
         file_put_contents($file, $class);

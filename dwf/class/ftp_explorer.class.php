@@ -2,7 +2,7 @@
 
 /**
  * Cette classe permet d'afficher et explorer une arborescence FTP <strong>PUBLIQUE</strong>
- * le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucun droits d'ajout/modification/suppression)
+ * le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucun droit d'ajout/modification/suppression)
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -22,8 +22,8 @@ class ftp_explorer {
 
     /**
      * Cette classe permet d'afficher et explorer une arborescence FTP <strong>PUBLIQUE</strong>
-     * le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucun droits d'ajout/modification/suppression)
-     * @param string $host hÃ´te du serveur FTP ( ne pas indiquer ftp:// !)
+     * le compte FTP renseigné dans cette classe ne doit avoir que des droits de consultation ( aucun droit d'ajout/modification/suppression)
+     * @param string $host hôte du serveur FTP ( ne pas indiquer ftp:// !)
      * @param string $user login du compte FTP publique
      * @param string $psw mot de passe du compte FTP publique ( LE MOT DE PASSE EST VISIBLE DANS L'EXPLORATEUR !)
      * @param boolean $ssl utiliser le protocole FTPS/SFTP ? (true ou false, false par default)

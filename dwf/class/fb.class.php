@@ -19,7 +19,7 @@ class fb {
     private static $_called = false;
 
     /**
-     * Cette classe permet de gérer une autentification via FaceBook
+     * Cette classe permet de gérer une authentification via FaceBook
      * 
      * @param string $app_id app_id de votre application FaceBook
      * @param string $app_secret secret de votre application FaceBook
@@ -39,7 +39,7 @@ class fb {
     /**
      * Retourne l'url pour le bouton de connexion
      * @param string $redirect_url URL de redirection
-     * @param array $permissions Tableau des permitions demandées pour l'authentification ( le mail est demandé par defaut)
+     * @param array $permissions Tableau des permissions demandées pour l'authentification ( le mail est demandé par defaut)
      * @return string URL de connexion
      */
     public function getLoginUrl($redirect_url, $permissions = ["email"]) {
@@ -47,9 +47,9 @@ class fb {
     }
 
     /**
-     * Retourne l'url pour le bouton de deconnexion
+     * Retourne l'url pour le bouton de déconnexion
      * @param string $redirect_url URL de redirection
-     * @return string URL de deconnexion
+     * @return string URL de déconnexion
      */
     public function getLogoutUrl($redirect_url) {
         return $this->_fb_helper->getLogoutUrl(session::get_val(fb::FB_SESSION_KEY), $redirect_url);
@@ -72,10 +72,10 @@ class fb {
     }
 
     /**
-     * Permet de lancer une requete a l'API de FaceBook et retourne le resultat
-     * @param string $method methode a utiliser (get, post ou del)
-     * @param string $req requete à envoyer
-     * @return mixed reponse de l'API
+     * Permet de lancer une requête à l'API de FaceBook et retourne le résultat
+     * @param string $method méthode à utiliser (get, post ou del)
+     * @param string $req requête à envoyer
+     * @return mixed réponse de l'API
      */
     public function request($method = "get", $req = "/me") {
         return (session::get_val(fb::FB_SESSION_KEY) ? $this->_fb->$method($req, session::get_val(fb::FB_SESSION_KEY)) : false);

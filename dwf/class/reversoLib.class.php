@@ -2,7 +2,7 @@
 
 /**
  * Cette classe utilise l'API de Reverso pour corriger un texte et 
- * vous affiche les corrections à appliquer au texte grace à la librairie finediff <br />
+ * vous affiche les corrections à appliquer au texte grâce à la librairie finediff <br />
  * Auteur original : Dyrk<br />
  * Modifié par LEGAGNEUR Matthieu
  * @url https://dyrk.org/2015/12/11/php-une-api-pour-la-correction-de-vos-fautes-dorthographe/
@@ -23,9 +23,9 @@ class reversoLib {
 
     /**
      * Utilise l'API de Reverso pour corriger un texte et 
-     * vous affiche les corrections a appliquer au texte grace a la librairie finediff
+     * vous affiche les corrections à appliquer au texte grâce à la librairie finediff
      * @param string $txt Texte à corriger
-     * @return type Texte avec les correction a appliquer
+     * @return type Texte avec les correction à appliquer
      */
     public function correctionText($txt) {
         curl_setopt($ch = curl_init(), CURLOPT_HTTPHEADER, [

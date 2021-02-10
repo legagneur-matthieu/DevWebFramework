@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe contient quelques fonctions mathématique de base ainsi que des fonctions pour verifier le type de variables
+ * Cette classe contient quelques fonctions mathématiques de base ainsi que des fonctions pour verifier le type de variables
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
@@ -17,8 +17,8 @@ class math {
 
     /**
      * Retourne le PGCD de deux nombres ( calculé par l'algorithme d'Euclide )
-     * @param int $nb1 Nombre entier non nul superieur a $nb2
-     * @param int $nb2 Nombre entier non nul inferieur a $nb1
+     * @param int $nb1 Nombre entier non nul supérieur a $nb2
+     * @param int $nb2 Nombre entier non nul inférieur a $nb1
      * @return int|boolean Retourne le PGCD ou false en cas d'erreur
      */
     public static function pgcd($nb1, $nb2) {
@@ -71,8 +71,8 @@ class math {
 
     /**
      * Retourne le périmètre d'un cercle à partir de son diamètre
-     * @param float $nb Diametre
-     * @return float Perimetre
+     * @param float $nb Diamètre
+     * @return float Périmètre
      */
     public static function cercle_get_perimetre_from_diametre($nb) {
         return ($nb * pi());
@@ -80,19 +80,19 @@ class math {
 
     /**
      * Retourne le diamètre d'un cercle à partir de son perimètre
-     * @param float $nb Perimetre
-     * @return float Diametre
+     * @param float $nb Périmètre
+     * @return float Diamètre
      */
     public static function cercle_get_diametre_from_perimetre($nb) {
         return ($nb / pi());
     }
 
     /**
-     * Calcule la distance entre deux points depuis leurs coordonées X (latitude) et Y (longitude)
-     * @param float $xa Coordoné x du point a
-     * @param float $ya Coordoné y du point a
-     * @param float $xb Coordoné x du point b
-     * @param float $yb Coordoné y du point b
+     * Calcule la distance entre deux points depuis leurs coordonnées X (latitude) et Y (longitude)
+     * @param float $xa Coordonnées x du point a
+     * @param float $ya Coordonnées y du point a
+     * @param float $xb Coordonnées x du point b
+     * @param float $yb Coordonnées y du point b
      * @return float distance entre les deux points
      */
     public static function distance_entre_deux_points($xa, $ya, $xb, $yb) {
@@ -112,7 +112,7 @@ class math {
     /**
      * $a=>$b <br />
      * $c=>$d <br />
-     * Effectue un produit en croix ( ou régle de trois) <br />
+     * Effectue un produit en croix ( ou règle de trois) <br />
      * La valeur "null" doit etre appliquée à la valeur recherchée (que retournera la fonction)
      *
      * @param float|null $a Valeur a
@@ -136,11 +136,11 @@ class math {
     }
 
     /**
-     * Applique le théoreme de Pythagore ($c est la longueur de l'hypotenuse)<br />
+     * Applique le théoreme de Pythagore ($c est la longueur de l'hypoténuse)<br />
      * La valeur "null" doit etre appliquée à la valeur recherchée (que retournera la fonction)
      * @param float|null $a Premier coté adjacent
      * @param float|null $b Second coté adjacent
-     * @param float|null $c Hypotenuse du triangle
+     * @param float|null $c Hypoténuse du triangle
      * @return float|boolean Retourne la valeur cherchée ou false en cas d'erreur
      */
     public static function pythagore($a, $b, $c) {
@@ -230,7 +230,7 @@ class math {
 
     /**
      * Retourne si un nombre est tétraédrique
-     * @param int $nb Nombre entier a évaluer
+     * @param int $nb Nombre entier à évaluer
      * @return boolean True si le nombre est tétraédrique, false si non tétraédrique
      */
     public static function is_tetrahedral($nb) {
@@ -291,7 +291,7 @@ class math {
 
     /**
      * Retourne la moyenne d'une liste de nombres
-     * @param array $array Liste de nombre : array(n1, n2, n3, ...)
+     * @param array $array Liste de nombres : array(n1, n2, n3, ...)
      * @return float Moyenne
      */
     public static function moyenne($array) {
@@ -309,7 +309,7 @@ class math {
     /**
      * Retourne true si la variable est un int, false dans le cas contraire
      * 
-     * @param int $nb Variable a évaluer
+     * @param int $nb Variable à évaluer
      * @return boolean La variable est-il un int ? (true/false)
      */
     public static function is_int($nb) {
@@ -337,21 +337,21 @@ class math {
     }
 
     /**
-     * Nombre d'arrangements ordonné de k parmis n
+     * Nombre d'arrangements ordonnés de k parmis n
      * @param int $k Nombre d'objets
      * @param int $n Nombre d'ensemble
-     * @return int Nombre d'arrangements ordonné de k parmis n
+     * @return int Nombre d'arrangements ordonnés de k parmis n
      */
     public static function arrangements($k, $n) {
         return ($k <= $n ? (self::factorielle($n) / self::factorielle($n - $k)) : 0);
     }
 
     /**
-     * Nombre d'arrangements non ordonné de k parmis n 
+     * Nombre d'arrangements non ordonnés de k parmis n 
      * (binomial)
      * @param int $k Nombre d'objets
      * @param int $n Nombre d'ensemble
-     * @return int Nombre d'arrangements non ordonné de k parmis n
+     * @return int Nombre d'arrangements non ordonnés de k parmis n
      */
     public static function combinaisons($k, $n) {
         return (self::arrangements($k, $n) / self::factorielle($k));
@@ -367,7 +367,7 @@ class math {
     }
 
     /**
-     * Retourne la somme de la plage des entiers comprit entre $start et $end
+     * Retourne la somme de la plage des entiers compris entre $start et $end
      * @param int $start Premier nombre de la plage 
      * @param int $end Dernier nombre de la plage (> $start)
      * @return int Somme de la plage des entiers
@@ -377,7 +377,7 @@ class math {
     }
 
     /**
-     * Retourne le produit de la plage des entiers comprit entre $start et $end
+     * Retourne le produit de la plage des entiers compris entre $start et $end
      * @param int $start Premier nombre de la plage (entier >= 1)
      * @param int $end Dernier nombre de la plage (> $start)
      * @return int Produit de la plage des entiers
@@ -388,9 +388,9 @@ class math {
 
     /**
      * Retourne la somme harmonique de 1 + 1/(2^p) + 1/(3^p) + ... + 1/(n^p)
-     * @param int $n Linite de la somme harmonique
-     * @param float $p puissance au dénominateur de la somme harmonique
-     * @return float Resultat de la somme harmonique
+     * @param int $n Limite de la somme harmonique
+     * @param float $p Puissance au dénominateur de la somme harmonique
+     * @return float Résultat de la somme harmonique
      */
     public static function harmonic_sum($n, $p = 1) {
         foreach ($s = range(1, $n) as $k => $v) {
@@ -403,7 +403,7 @@ class math {
      * Tire un nombre aléatoire
      * @param float|int $min Valeur minimal
      * @param float|int $max Valeur maximal
-     * @param boolean $get_as_float Le nombre retourné doit il etre un INT ou un FLOAT
+     * @param boolean $get_as_float Le nombre retourné doit-il être un INT ou un FLOAT
      *      (true = float, false = int)
      * @param int $mask Masque, influe sur la randomisation,
      *      (0 = pas de masque,
@@ -446,7 +446,7 @@ class math {
     /**
      * Fonction de la suite logistique 
      * https://fr.wikipedia.org/wiki/Suite_logistique
-     * @param float $x Nombre en entré (float compris entre 0 et 1)
+     * @param float $x Nombre en entrée (float compris entre 0 et 1)
      * @param float $r Valeur de µ (float compris entre 0 et 4, 4 par defaut)
      * @return float Nombre en sortie (float compris entre 0 et 1)
      */
@@ -459,7 +459,7 @@ class math {
      * si $k=null, retourne le nombre de partition de $n
      * @param int $n
      * @param int|null $k
-     * @return int partition ou nombre de partition
+     * @return int partition ou nombre de partitions
      */
     public static function int_partition($n, $k = null) {
         if ($k === null) {
@@ -487,9 +487,9 @@ class math {
     }
 
     /**
-     * Retourne le nombre dans la suite de Fibonacci a l'index $n
+     * Retourne le nombre dans la suite de Fibonacci à l'index $n
      * @param int $n Index du nombre dans la suite
-     * @return int Le nombre dans la suite de Fibonacci a l'index $n
+     * @return int Le nombre dans la suite de Fibonacci à l'index $n
      */
     public static function fibonacci($n) {
         $negative = false;
@@ -504,7 +504,7 @@ class math {
     /**
      * Retourne un bingint (cf phpseclib/Math/BigInteger.php)
      * @param int|Math_BigInteger $x Nombre entier
-     * @param int $base Base a utiliser (10 par defaut)
+     * @param int $base Base à utiliser (10 par defaut)
      * @return \Math_BigInteger bingint (cf phpseclib/Math/BigInteger.php)
      */
     public static function bigint($x = 0, $base = 10) {

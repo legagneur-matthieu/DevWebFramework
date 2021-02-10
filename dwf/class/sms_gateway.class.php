@@ -2,7 +2,7 @@
 
 /**
  * Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer des SMS depuis une application Web.
- * Cette classe a été conçu pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.
+ * Cette classe a été conçue pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.
  * https://dwf.sytes.net/smsgateway
  * Si vous utilisez un autre progranme, veillez à adapter les paramètres en conséquence.
  * 
@@ -18,7 +18,7 @@ class sms_gateway {
 
     /**
      * Cette classe permet de faciliter l'utilisation d'un gateway SMS afin de pouvoir envoyer des SMS depuis une application Web.
-     * Cette classe a été conçu pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.
+     * Cette classe a été conçue pour fonctionner par défaut avec le logiciel SMS Gateway installé sur un appareil Android.
      * https://dwf.sytes.net/smsgateway
      * Si vous utilisez un autre progranme, veillez à adapter les paramètres en conséquence.
      * 

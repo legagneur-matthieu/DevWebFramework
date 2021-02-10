@@ -79,7 +79,7 @@ class gestion_article {
     }
 
     /**
-     * Ne pas appeler cette fontion : géré par $this->admin();
+     * Ne pas appeler cette fontion : gérée par $this->admin();
      * Affiche l'administration des catégories d'articles
      */
     public function g_categorie() {
@@ -87,7 +87,7 @@ class gestion_article {
     }
 
     /**
-     * Ne pas appeler cette fontion : géré par $this->admin();
+     * Ne pas appeler cette fontion : gérée par $this->admin();
      * Affiche l'administration des modules 
      */
     public function g_module() {

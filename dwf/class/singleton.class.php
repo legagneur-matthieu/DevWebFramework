@@ -2,7 +2,7 @@
 
 /**
  * Cette classe sert de base pour créer des singleton.
- * Utilisez l'heritage :
+ * Utilisez l'héritage :
  * class ma_classe extends singleton{ }
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
@@ -10,8 +10,8 @@
 class singleton {
 
     /**
-     * Instances des classes sigleton
-     * @var array Instances des classes sigleton
+     * Instance des classes sigleton
+     * @var array Instance des classes sigleton
      */
     public static $_instances = [];
 

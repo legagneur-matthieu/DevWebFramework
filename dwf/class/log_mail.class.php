@@ -22,9 +22,9 @@ class log_mail {
     private $_ip_client;
 
     /**
-     * Sujet de l'Email
+     * Sujet de l'email
      * 
-     * @var string Sujet de l'Email
+     * @var string Sujet de l'email
      */
     private $_subject;
 
@@ -76,7 +76,7 @@ class log_mail {
     }
 
     /**
-     * Ã‰crit un message de type "info" dans le log
+     * Écrit un message de type "info" dans le log
      * 
      * @param string $message message à écrire dans le log
      */
@@ -85,7 +85,7 @@ class log_mail {
     }
 
     /**
-     * Ã‰crit un message de type "warning" dans le log
+     * Écrit un message de type "warning" dans le log
      * 
      * @param string $message message à écrire dans le log
      */
@@ -94,7 +94,7 @@ class log_mail {
     }
 
     /**
-     * Ã‰crit un message de type "sévère" dans le log
+     * Écrit un message de type "sévère" dans le log
      * 
      * @param string $message message à écrire dans le log
      */

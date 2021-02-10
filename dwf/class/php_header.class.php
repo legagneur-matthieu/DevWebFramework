@@ -41,9 +41,9 @@ class php_header {
 
     /**
      * Renseigne le type (mime) du document.
-     * Renseignez juste l'extention du fichier ( par exemple "json" ou "csv"), la fonction sera retrouvée le mime corespondant.
+     * Renseignez juste l'extension du fichier ( par exemple "json" ou "csv"), la fonction sera retrouvée le mime corespondant.
      * @param string $type extension du fichier (sans le point "." ) ou le mime du fichier
-     * @param string $force_upload_file forcer le navigateur à télécharger le fichier, si oui : renseigner le nom du fichier (avec son extention)
+     * @param string $force_upload_file forcer le navigateur à télécharger le fichier, si oui : renseigner le nom du fichier (avec son extension)
      * @param string $charset charset du fichier, UTF-8 par défaut
      */
     public function content_type($type, $force_upload_file = "", $charset = "UTF-8") {

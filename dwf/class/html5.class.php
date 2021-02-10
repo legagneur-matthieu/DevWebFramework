@@ -2,7 +2,7 @@
 
 /**
  * Cette classe gère l'entête HTML5 et son pied de page.
- * Les métas descriptions et keyword sont à ajouter par vous même dans le constructeur
+ * Les métas description et keyword sont à ajouter par vous même dans le constructeur
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
@@ -15,20 +15,20 @@ class html5 {
     public static $_called = false;
 
     /**
-     * Contien le titre (title) de la page HTML
-     * @var string Contien le titre (title) de la page HTML
+     * Contient le titre (title) de la page HTML
+     * @var string Contient le titre (title) de la page HTML
      */
     public static $_real_title = "";
 
     /**
-     * Contien la description (meta description) de la page HTML
-     * @var string Contien la description (meta description) de la page HTML
+     * Contient la description (meta description) de la page HTML
+     * @var string Contient la description (meta description) de la page HTML
      */
     public static $_real_description = "";
 
     /**
-     * Contien les mots clé (meta keywords) de la page HTML
-     * @var string Contien les mots clé (meta keywords) de la page HTML
+     * Contient les mots clé (meta keywords) de la page HTML
+     * @var string Contient les mots clé (meta keywords) de la page HTML
      */
     public static $_real_keywords = "";
 
@@ -185,7 +185,7 @@ class html5 {
     }
 
     /**
-     * Défini la décription de la page en cours (conseil SEO : pas plus de 200 caractères)
+     * Définit la decription de la page en cours (conseil SEO : pas plus de 200 caractères)
      * 
      * @param string $description Description de la page
      */
@@ -194,16 +194,16 @@ class html5 {
     }
 
     /**
-     * Défini les mots clé de la page en cours
+     * Définit les mots clé de la page en cours
      * 
-     * @param string $keywords Mots clé de la page
+     * @param string $keywords Mots clés de la page
      */
     public static function set_keywords($keywords) {
         self::$_real_keywords = $keywords;
     }
 
     /**
-     * Ajoute des mots clé à la page en cours (séparer chaques mots par une virgule)
+     * Ajoute des mots clés à la page en cours (séparer chaques mots par une virgule)
      * 
      * @param string $keywords Mots clé à ajouter à la page
      */

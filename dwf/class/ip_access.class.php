@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÃ‰E !
+ * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÉE !
  * Cette classe sert à blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
@@ -23,7 +23,7 @@ class ip_access {
     private $_redir;
 
     /**
-     * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÃ‰E !
+     * CETTE CLASSE EST EXPERIMENTALE ET N'A PAS ETE TESTÉE !
      * Cette classe sert à blacklister une liste de plages d'adresses IP en les redirigeant vers un autre site
      * 
      * 
@@ -64,7 +64,7 @@ class ip_access {
      * Formate l'adresse IPv4 entrée en paramètre
      * 
      * @param string $ip ip v4 à formater
-     * @return string ip formaté
+     * @return string ip formatée
      */
     private function ipv4_to_int($ip) {
         explode(".", $ip);

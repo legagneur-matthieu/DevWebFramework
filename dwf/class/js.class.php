@@ -168,7 +168,7 @@ class js {
      * 
      * @param array $data Liste des phrases à afficher
      * @param string $id Id CSS du vTicker
-     * @param array $params Surcharge les paramètres à appliquer au vTicker ( laissez par défaut ou voir la doc ...)
+     * @param array $params Surcharge les paramètres à appliquer au vTicker ( laissez par défaut ou voir la documentation )
      * @return \vticker Créé un vTicker (suite de phrases qui défilent)
      */
     public static function vTicker($data, $id = "vticker", $params = []) {
@@ -179,7 +179,7 @@ class js {
      * Transforme un tableau HTML en Datatable
      * 
      * @param string $id Id CSS du datatable
-     * @param string $params Surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la doc)
+     * @param string $params Surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la documentation )
      * @return \datatable Applique les fonctionnalitées de la librairie datatable à un tableau HTML
      */
     public static function datatable($id = "datatable", $params = []) {
@@ -193,16 +193,16 @@ class js {
      * @param string $brush Le brush est lié au langage à utiliser (js par deafaut)<br />
      * Astuce script html/php : "php; html-script: true" <br />
      *  http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
-     * @param string $theme Le theme de SyntaxHightlighter a utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/
+     * @param string $theme Le theme de SyntaxHightlighter à utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/
      */
     public static function syntaxhighlighter($code, $brush = "js", $theme = "Default") {
         new syntaxhighlighter($code, $brush, $theme);
     }
 
     /**
-     * Permet l'affichage de galeries photo et vidéos via la librairie Fancybox
+     * Permet l'affichage de galeries photos et vidéos via la librairie Fancybox
      * @param string $id Id du conteneur et nom de la galerie
-     * @param array $data tableau de donnée de la galerie :
+     * @param array $data tableau de données de la galerie :
      * [ 
      *     [ "small"=>"minature.jpg", "big"=>"photo.jpg", "caption"=>"description HTML facultative" ],
      *     [ "small"=>"minature2.png", "big"=>"video.webm", "caption"=>"description HTML facultative" ],
@@ -241,12 +241,12 @@ class js {
     }
 
     /**
-     * REQUIERS JQUERY-UI
+     * REQUIERT JQUERY-UI
      * Affiche la boite de dialogue de jquery-ui
      * 
-     * @param string $name Som de la boite de dialogue
+     * @param string $name Nom de la boite de dialogue
      * @param string $title Titre de la boite de dialogue
-     * @param string $html Contenu de le boite de dialogue ( au format HTML)
+     * @param string $html Contenu de la boite de dialogue ( au format HTML)
      */
     public static function dialog($name, $title, $html) {
         echo tags::tag("div", ["id" => $name, "title" => $title], $html);

@@ -8,9 +8,9 @@
 class time {
 
     /**
-     * Array contenant les microtimes des chronometres utilisés
+     * Array contenant les microtimes des chronomètres utilisés
      * 
-     * @var array Array contenant les microtimes des chronometres utilisés
+     * @var array Array contenant les microtimes des chronomètres utilisés
      */
     private static $_chronometer;
 
@@ -33,7 +33,7 @@ class time {
     }
 
     /**
-     * (DEPPRECIÃ‰)
+     * (DEPPRECIÉ)
      * Convertit une date du format US en format FR (mois en toutes lettres)
      * 
      * @param string $date date US
@@ -81,7 +81,7 @@ class time {
 
     /**
      * Retourne le nombre de jours dans un mois 
-     * (l'année doit être renseignée pour gérer les années bisextiles)
+     * (l'année doit être renseignée pour gérer les années bissextiles)
      * 
      * @param string $num_mois numéro du mois ( à 2 chiffres)
      * @param string $an année du mois à évaluer
@@ -109,10 +109,10 @@ class time {
     }
 
     /**
-     * retourne si une année est bisextile ou non.
+     * retourne si une année est bissextile ou non.
      * 
      * @param int $an année à évaluer
-     * @return boolean l'année est bisextile ? true/false
+     * @return boolean l'année est bissextile ? true/false
      */
     public static function anne_bisextile($an) {
         return ($an % 4 == 0 and $an % 100 != 0 or $an % 400 == 0);
@@ -155,7 +155,7 @@ class time {
     }
 
     /**
-     * Retourne l'age actuel en fonction d'une date de naissance
+     * Retourne l'âge actuel en fonction d'une date de naissance
      * 
      * @param int $d jour de naissance
      * @param int $m mois de naissance
@@ -200,7 +200,7 @@ class time {
     }
 
     /**
-     * Démarre un chronomètre pour chronometrer la durée d'execution d'un bout de code,
+     * Démarre un chronomètre pour chronometrer la durée d'exécution d'un bout de code,
      * il est possible d'utiliser plusieurs chronomètres en leurs spécifiant un identifiant
      * l'identifiant peut être un nombre ou une chaine de caractères
      * 
@@ -272,7 +272,7 @@ class time {
     }
 
     /**
-     * Retourne un tableau d'information sur la date passée en paramètre
+     * Retourne un tableau d'informations sur la date passée en paramètre
      * @param string $date_us Date au format US
      * @return array https://secure.php.net/manual/fr/function.getdate.php
      */

@@ -2,42 +2,42 @@
 
 /**
  * Cette classe permet de lancer des pseudo cron : 
- * L'activation du pseudo cron ce fait par comparaison du timestamp lors d'une activité utilisateur
+ * L'activation du pseudo cron se fait par comparaison du timestamp lors d'une activité utilisateur
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class pseudo_cron extends singleton {
 
     /**
-     * Liste des pseudo cron
-     * @var array Liste des pseudo cron
+     * Liste des pseudos cron
+     * @var array Liste des pseudos cron
      */
     private $_pcron;
 
     /**
-     * Type de stockage des pseudo cron
-     * @var string Type de stockage des pseudo cron
+     * Type de stockage des pseudos cron
+     * @var string Type de stockage des pseudos cron
      */
     private $_db;
 
     /**
-     * Chemain d'accès réel/absolut au fichier pcron.js
-     * @var string Chemain d'accès réel/absolut au fichier pcron.js
+     * Chemin d'accès réel/absolu au fichier pcron.js
+     * @var string Chemin d'accès réel/absolu au fichier pcron.js
      */
     private $_rp;
     /**
-     * Durée de vie maximal d'un pseudo cron inactif (en secondes)
-     * @var int Durée de vie maximal d'un pseudo cron inactif (en secondes)
+     * Durée de vie maximale d'un pseudo cron inactif (en secondes)
+     * @var int Durée de vie maximale d'un pseudo cron inactif (en secondes)
      */
     private $_ttl = 31536000;
 
     /**
-     * Cette classe permet de lancer des pseudo cron : 
-     * L'activation du pseudo cron ce fait par comparaison du timestamp lors d'une activité utilisateur
+     * Cette classe permet de lancer des pseudos cron : 
+     * L'activation du pseudo cron se fait par comparaison du timestamp lors d'une activité utilisateur
      * 
-     * @param string $db Type de stockage des pseudo cron :
-     * - sql : par defaut, une entity "pcron" sera créé
-     * - json : un dossier "pcron" sera créé dans le dossier "class" du projet
+     * @param string $db Type de stockage des pseudos cron :
+     * - sql : par defaut, une entity "pcron" sera créée
+     * - json : un dossier "pcron" sera créée dans le dossier "class" du projet
      */
     public function __construct($db = "sql") {
         $this->_db = $db;
@@ -68,9 +68,9 @@ class pseudo_cron extends singleton {
     }
 
     /**
-     * Retourne de timestamp de la dernière execution d'un pseudo cron
+     * Retourne de timestamp de la dernière exécution d'un pseudo cron
      * @param string $hkey hkey du pseudo cron
-     * @return float Timestamp de la dernière execution
+     * @return float Timestamp de la dernière exécution
      */
     private function get_mt_from_hkey($hkey) {
         foreach ($this->_pcron as $pcron) {
@@ -83,7 +83,7 @@ class pseudo_cron extends singleton {
     }
 
     /**
-     * Créé une nouvelle entré dans le registre des pseudo cron
+     * Créé une nouvelle entrée dans le registre des pseudos cron
      * @param string $hkey hkey du pseudo cron
      */
     private function new_pcron($hkey) {
@@ -144,19 +144,19 @@ class pseudo_cron extends singleton {
     }
 
     /**
-     * redefini la durée de vie maximal d'un pseudo cron inactif
-     * @param int $ttl Durée de vie maximal d'un pseudo cron inactif (en secondes, 31536000 par defaut soit 1 an)
+     * Redéfinit la durée de vie maximale d'un pseudo cron inactif
+     * @param int $ttl Durée de vie maximale d'un pseudo cron inactif (en secondes, 31536000 par défaut soit 1 an)
      */
     public function set_clear($ttl = 31536000) {
         $this->_ttl = $ttl;
     }
 
     /**
-     * Execute la fonction de callback lors d'une activité utilisateur si elle n'a pas été éxécuté depuis le temps défini dans l'interval
-     * @param int $interval Intervale de temps minimal entre deux executions (en secondes)
+     * Exécute la fonction de callback lors d'une activité utilisateur si elle n'a pas été éxécutée depuis le temps défini dans l'intervalle
+     * @param int $interval Intervalle de temps minimal entre deux exécutions (en secondes)
      * @param Closure $callback Fonction à executer
-     * @param array $args eventuels arguments de la fonction
-     * @return Mixed Retour de la foncion si elle retourne une valeur, null si la fonction de retourne rien ou n'est pas executé
+     * @param array $args Eventuels arguments de la fonction
+     * @return Mixed Retour de la foncion si elle retourne une valeur, null si la fonction de retourne rien ou n'est pas executée
      */
     public function fn($interval, Closure $callback, $args = []) {
         $result = null;
@@ -169,11 +169,11 @@ class pseudo_cron extends singleton {
     }
 
     /**
-     * Execute un fichier php lors d'une activité utilisateur si elle n'a pas été éxécuté depuis le temps défini dans l'interval
-     * Requière que php soit reconue comme commande interne du serveur.
+     * Exécute un fichier php lors d'une activité utilisateur si elle n'a pas été éxécutée depuis le temps défini dans l'intervalle
+     * Requiert que php soit reconnu comme commande interne du serveur.
      * A MANIPULER AVEC PRECAUTIONS !
-     * @param int $interval Intervale de temps minimal entre deux executions (en secondes)
-     * @param string $file Chemain absolu vers le fichier php a executer 
+     * @param int $interval Intervalle de temps minimal entre deux exécutions (en secondes)
+     * @param string $file Chemin absolu vers le fichier php à exécuter 
      * @return string|null Retour de la console, null si le fichier n'est pas éxécuté
      */
     public function file($interval, $file) {
@@ -187,7 +187,7 @@ class pseudo_cron extends singleton {
     }
 
     /**
-     * supprime les entrées des pseudo cron qui n'ont pas été éxécuté depuis le temps défini par pseudo_cron::set_clear() (1 an par défaut)
+     * Supprime les entrées des pseudos cron qui n'ont pas été éxécuté depuis le temps défini par pseudo_cron::set_clear() (1 an par défaut)
      */
     public function __destruct() {
         $hkeys = [];

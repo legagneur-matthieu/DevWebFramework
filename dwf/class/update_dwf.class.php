@@ -2,7 +2,7 @@
 
 /**
  * Cette classe permet de gérer les mises à jour de DWF
- * (a plasser dans une inerface d'administration)
+ * (a placer dans une inerface d'administration)
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -12,7 +12,7 @@ class update_dwf {
 
     /**
      * Cette classe permet de gérer les mises à jour de DWF
-     * (a plasser dans une inerface d'administration)
+     * (a placer dans une inerface d'administration)
      */
     public function __construct($path = "../../") {
         set_time_limit(0);
@@ -68,7 +68,7 @@ class update_dwf {
      * Compare les versions (tags) locale et distante 
      * @param array $local_tags Version (tag) locale
      * @param array $remote_tags Version (tag) distante
-     * @return array Resultat de la comparaison
+     * @return array Résultat de la comparaison
      */
     private function compare_version($local_tags, $remote_tags) {
         $remote_tags = explode("/", $remote_tags[count($remote_tags) - 1]);

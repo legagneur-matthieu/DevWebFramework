@@ -52,14 +52,14 @@ class messagerie {
     private function sub_menu() {
         $route = [
             ["action" => "get", "title" => "Boite de réception", "text" => "BOITE DE RECEPTION"],
-            ["action" => "write", "title" => "Ecrire un message", "text" => "ECRIRE UN MESSAGE"],
+            ["action" => "write", "title" => "Écrire un message", "text" => "ECRIRE UN MESSAGE"],
             ["action" => "send", "title" => "Message envoyé", "text" => "MESSAGE ENVOYE"]
         ];
         (new sub_menu($this, $route, "action", "get"));
     }
 
     /**
-     * Vue de l'envoie de message
+     * Vue de l'envoi de message
      */
     public function write() {
         if (!isset($_GET["dest"])) {
@@ -108,13 +108,13 @@ class messagerie {
             <script type="text/javascript">
                 $(document).ready(function () {
                     $(".btn_supp").click(function () {
-                        return confirm("Estes vous sur de vouloir supprimer ce message ?");
+                        return confirm("Etes-vous sur de vouloir supprimer ce message ?");
                     });
                 });
             </script>
             <?php
 
-            echo tags::tag("div", ["class" => "datatable"], html_structures::table(["date", "Emetteur", "Message", "Supprimer"], $data, "Messages reÃ§us", "datatable"));
+            echo tags::tag("div", ["class" => "datatable"], html_structures::table(["date", "Emetteur", "Message", "Supprimer"], $data, "Messages reçus", "datatable"));
         }
     }
 

@@ -113,7 +113,7 @@ class ssl {
     }
 
     /**
-     * Dechiffre les variables $_POST ( cf $this->ssl_js() )
+     * Déchiffre les variables $_POST ( cf $this->ssl_js() )
      */
     public function decrypt_post() {
         foreach ($_POST as $key => $value) {
@@ -130,7 +130,7 @@ class ssl {
             $this->_RSA->loadKey(session::get_val("client_ssl_public_key"));
             echo tags::tag("div", ["class" => "jsencrypt"], base64_encode($this->_RSA->encrypt($html)));
         } else {
-            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "Une erreur est survenu, ce comptenu ne peux être affiché"));
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "Une erreur est survenue, ce contenu ne peut être affiché"));
         }
     }
 

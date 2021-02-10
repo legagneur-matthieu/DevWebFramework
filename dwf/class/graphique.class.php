@@ -22,7 +22,7 @@ class graphique {
     /**
      * Cette classe permet d'afficher un graphique 
      * @param string $id Id CSS du graphique     * 
-     * @param array $size dimentions du graphique (par defaut : array("width"=>"600px","height"=>"300px")) 
+     * @param array $size dimensions du graphique (par defaut : array("width"=>"600px","height"=>"300px")) 
      */
     public function __construct($id, $size = ["width" => "600px", "height" => "300px"]) {
         if (!self::$_called) {
@@ -53,7 +53,7 @@ class graphique {
     }
 
     /**
-     * Affiche un graphique lineaire
+     * Affiche un graphique linéaire
      * @param array $data array( <br />
      * array("label"=> "label1,<br />
      * "data"=> array(<br />
@@ -113,7 +113,7 @@ class graphique {
      * ...<br />
      * );<br />
      * @param array $ticks Tableau de subtitution pour les graduations de l'axe X : array(array(x,"substitution"), ...);
-     * @param boolean $show_points afficher les points sur le graphique ? (true/false, true par defaut)
+     * @param boolean $show_points Afficher les points sur le graphique ? (true/false, true par defaut)
      */
     public function points($data, $ticks = []) {
         $this->graph_render($data, [
@@ -130,7 +130,7 @@ class graphique {
     }
 
     /**
-     * Affiche un graphique en bares
+     * Affiche un graphique en barres
      * @param array $data array( <br />
      * array("label"=> "label1,<br />
      * "data"=> array(<br />
@@ -189,7 +189,7 @@ class graphique {
     }
 
     /**
-     * Affiche un graphique en "camambert"
+     * Affiche un graphique en "camembert"
      * @param array $data array( <br />
      *     array("label"=>"label1", <br />
      *         "data"=>10 <br />
@@ -240,7 +240,7 @@ class graphique {
 
     /**
      * Affiche un graphe d'analyse et de visualisation (jquery cytoscape)
-     * Requiert une régle CSS sur l'ID CSS
+     * Requiert une règle CSS sur l'ID CSS
      * @param string $id ID CSS
      * @param array $data Données du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      */

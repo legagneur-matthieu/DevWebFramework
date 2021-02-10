@@ -14,7 +14,7 @@ class shuffle_letters {
     private static $_called = false;
 
     /**
-     * Applique l'effet "shuffleLetters" a un élément au chargement de la page
+     * Applique l'effet "shuffleLetters" à un élément au chargement de la page
      * 
      * @param string $id id CSS de l'élément
      */

@@ -40,9 +40,9 @@ class selectorDOM {
     /**
      * Retourne les éléments du DOM indiqué par le selecteur 
      * (les selecteurs ont la même syntaxe que Jquery)
-     * @param string $selector Selecteur dans le DOM
-     * @param boolean $as_array le resultat doit-il être sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
-     * @return array|DOMNodeList éléments du DOM indiqué par le selecteur 
+     * @param string $selector Sélecteur dans le DOM
+     * @param boolean $as_array Le resultat doit-il être sous forme de tableau (true) ou d'objet DOMNodeList (false) ? (true par defaut)
+     * @return array|DOMNodeList Eléments du DOM indiqué par le selecteur 
      */
     public function select($selector, $as_array = true) {
         $elements = $this->xpath->evaluate($this->selector_to_xpath($selector));

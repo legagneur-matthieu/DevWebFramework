@@ -68,8 +68,8 @@ class service {
     }
 
     /**
-     * Retourne le statut d'une page (utile pour verifier l'état d'un service)
-     * @param string $host adresse hÃ´te, exemple : www.duckduckgo.com
+     * Retourne le statut d'une page (utile pour vérifier l'état d'un service)
+     * @param string $host adresse hôte, exemple : www.duckduckgo.com
      * @param string $port port à verifier (80 par defaut)
      * @param string $page page à verifier (index.php par defaut)
      * @return string statut code ( sous forme : "HTTP/1.1 404 Not Found")
@@ -86,7 +86,7 @@ class service {
     }
 
     /**
-     * Fonction de whitelite à mettre au début du service , si une IP non autorisée tente d'acceder au service, le script s'arrête sans executer la suite
+     * Fonction de whitelite à mettre au début du service , si une IP non autorisée tente d'acceder au service, le script s'arrête sans exécuter la suite
      * 
      * @param array $IP_Allow liste des IP à autoriser
      */

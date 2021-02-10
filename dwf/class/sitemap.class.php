@@ -17,14 +17,14 @@ class sitemap {
     private $_sitemap;
 
     /**
-     * Chemain relatif du sitemap JSON
-     * @var string Chemain relatif du sitemap JSON
+     * Chemin relatif du sitemap JSON
+     * @var string Chemin relatif du sitemap JSON
      */
     private static $_file_json = "./sitemap.json";
 
     /**
-     * Chemain relatif du sitemap XML
-     * @var string Chemain relatif du sitemap XML
+     * Chemin relatif du sitemap XML
+     * @var string Chemin relatif du sitemap XML
      */
     private static $_file_xml = "./sitemap.xml";
 

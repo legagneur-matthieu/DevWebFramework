@@ -38,7 +38,7 @@ class vticker {
      * 
      * @param array $data liste des phrases à afficher
      * @param string $id id CSS du vTicker
-     * @param array $params surcharge les paramètres à appliquer au vTicker ( laissez par defaut ou voir la doc ...)
+     * @param array $params surcharge les paramètres à appliquer au vTicker ( laissez par defaut ou voir la documentation )
      */
     public function __construct($data, $id = "vticker", $params = array()) {
         if (!self::$_called) {

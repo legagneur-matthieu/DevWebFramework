@@ -17,7 +17,7 @@ class syntaxhighlighter {
      * Cette classe permet d'afficher du code formaté et stylisé par la librairie SyntaxHightlighter
      *
      * @param strig $code Le code à afficher
-     * @param string $brush Le brush est lié au langage a utiliser (js par défaut) <br />
+     * @param string $brush Le brush est lié au langage à utiliser (js par défaut) <br />
      * Astuce script html/php : "php; html-script: true" <br />
      *  http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
      * @param string $theme Le thème de SyntaxHightlighter à utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/

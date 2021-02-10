@@ -20,8 +20,8 @@ class tags {
     private $_attr = [];
 
     /**
-     * Contenue de la balise (false = balise auto fermante)
-     * @var string|\tags Contenue de la balise (false = balise auto fermante)
+     * Contenu de la balise (false = balise auto fermante)
+     * @var string|\tags Contenu de la balise (false = balise auto fermante)
      */
     private $_content;
 

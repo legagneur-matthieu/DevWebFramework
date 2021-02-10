@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Cette classe permet de gérer un agenda d'evenements minimaliste,
- * souvent utilisé pour avertir des visiteurs des prochains évenements
+ * Cette classe permet de gérer un agenda d'évènements minimaliste,
+ * souvent utilisé pour avertir des visiteurs des prochains évènements
  * (salons, conventions, spectacles, ...)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
@@ -10,8 +10,8 @@
 class g_agenda {
 
     /**
-     * Cette classe permet de gérer un agenda d'evenements minimaliste,
-     * souvent utilisé pour avertir des visiteurs des prochains évenements
+     * Cette classe permet de gérer un agenda d'évènements minimaliste,
+     * souvent utilisé pour avertir des visiteurs des prochains évènements
      * (salons, conventions, spectacles, ...)
      */
     public function __construct() {

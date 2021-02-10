@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Créé un champs de formulaire pour les signatures numeriques
- * Peut être appelé depuis la methode statique form::jSignature()
+ * Créé un champ de formulaire pour les signatures numériques
+ * Peut être appelé depuis la méthode statique form::jSignature()
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -27,17 +27,17 @@ class jSignature {
     private $_label;
 
     /**
-     * Format de donné returné : svgbase64 (defaut), svg ou base30 
-     * @var string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30 
+     * Format de données retournées : svgbase64 (defaut), svg ou base30 
+     * @var string $dataformat Format de données returnées : svgbase64 (defaut), svg ou base30 
      */
     private $_dataformat;
 
     /**
-     * Créé un champs de formulaire pour les signatures numeriques
+     * Créé un champ de formulaire pour les signatures numériques
      * 
      * @param string $id id CSS pour jSignature
      * @param string $label Label
-     * @param string $dataformat Format de donné returné : svgbase64 (defaut), svg ou base30
+     * @param string $dataformat Format de données returnées : svgbase64 (defaut), svg ou base30
      */
     public function __construct($id, $label = "Signature", $dataformat = "svgbase64") {
         if (!self::$_called) {

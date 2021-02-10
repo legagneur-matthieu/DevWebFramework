@@ -20,7 +20,7 @@ class mail {
     private $_phpmailer;
 
     /**
-     * Cette classe permet d'envoyer des mails, la configuration du SMTP ce fait dans la class config.class.php     * 
+     * Cette classe permet d'envoyer des mails, la configuration du SMTP se fait dans la class config.class.php     * 
      */
     public function __construct() {
         if (!self::$_called) {
@@ -54,11 +54,11 @@ class mail {
     /**
      * Envoi un mail
      * @param string $from Email de l'émetteur 
-     * @param string $from_name Nom / pseudo de l'émetteur
+     * @param string $from_name Nom / Peudo de l'émetteur
      * @param string $to Email du destinataire
      * @param string $subject Sujet du massage
      * @param string $msg Contenu du message ( peut-être en HTML )
-     * @return boolean Succes ou erreur
+     * @return boolean Succès ou erreur
      */
     public function send($from, $from_name, $to, $subject, $msg) {
         $this->_phpmailer->setFrom($from, $from_name);
@@ -73,8 +73,8 @@ class mail {
     }
 
     /**
-     * Ajoute une piece jointe au mail
-     * @param string $path chemin d'acces du fichier à joindre
+     * Ajoute une pièce jointe au mail
+     * @param string $path chemin d'accès du fichier à joindre
      * @param string $name (facultatif) renomme le fichier avant envoi
      */
     public function join_file($path, $name = "") {
@@ -82,7 +82,7 @@ class mail {
     }
 
     /**
-     * Supprimes les pieces jointes du mail
+     * Supprime les pièces jointes du mail
      */
     public function unjoin_files() {
         $this->_phpmailer->clearAttachments();

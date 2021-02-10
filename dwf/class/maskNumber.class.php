@@ -8,8 +8,8 @@
 class maskNumber {
 
     /**
-     * Liste des INPUT formaté
-     * @var array  Liste des INPUT formaté
+     * Liste des INPUT formatés
+     * @var array  Liste des INPUT formatés
      */
     private static $_inputs = [];
 
@@ -17,8 +17,8 @@ class maskNumber {
      * Formater l'affichage d'un nombre dans un INPUT de type text
      * @param string $name nom de l'input
      * @param boolean $integer true = int, false = float
-     * @param string $thousands Symbole separateur entre milliers, millions, milliards, ... (un espace par defaut)
-     * @param string $decimal Symbole pour les decimeaux ( un point par defaut)
+     * @param string $thousands Symbole séparateur entre milliers, millions, milliards, ... (un espace par defaut)
+     * @param string $decimal Symbole pour les décimeaux ( un point par défaut)
      */
     public static function set($name, $integer = false, $thousands = " ", $decimal = ".") {
         $int = ($integer ? "true" : "false");
@@ -28,7 +28,7 @@ class maskNumber {
     }
 
     /**
-     * Convertis les nombres formaté en type integer/float dans le tableau $_POST
+     * Convertit les nombres formatés en type integer/float dans le tableau $_POST
      */
     public static function get() {
         foreach (self::$_inputs as $input) {

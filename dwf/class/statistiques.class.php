@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet de recueillir et d'afficher des statistiques liès a l'activitè des utilisateurs
+ * Cette classe permet de recueillir et d'afficher des statistiques liès à l'activitè des utilisateurs
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class statistiques {
 
     /**
-     * Cette classe permet de recueillir et d'afficher des statistiques liès a l'activitè des utilisateurs
+     * Cette classe permet de recueillir et d'afficher des statistiques liès à l'activitè des utilisateurs
      */
     public function __construct() {
         if (config::$_statistiques) {
@@ -50,7 +50,7 @@ class statistiques {
     }
 
     /**
-     * Cette fonction permet d'afficher les statistiques ( il est conseillè ne ne pas appeler cette fonction sur une page "publique" )
+     * Cette fonction permet d'afficher les statistiques ( il est conseillè de ne pas appeler cette fonction sur une page "publique" )
      */
     public function get_stat() {
         //compact_css::get_instance()->add_css_file("../commun/src/css/statistiques.css");
@@ -68,15 +68,15 @@ class statistiques {
     }
 
     /**
-     * fonction appelèe par $this->get_stat(), à ne pas utiliser !
+     * Fonction appelèe par $this->get_stat(), à ne pas utiliser !
      */
     public function get_stat_an() {
         $default = $this->check_form();
         $this->form($default);
         echo html_structures::hr() .
-        tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Nombre de visiteurs unique " . tags::tag("sup", ["title" => "Un visiteur unique est dèfini par son cookie de session et son ip"], "*")));
+        tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Nombre de visiteurs unique " . tags::tag("sup", ["title" => "Un visiteur unique est défini par son cookie de session et son ip"], "*")));
         $this->get_uniques_visitors($default);
-        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Indicateur d'activitè par heures"));
+        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Indicateur d'activité par heure"));
         $this->get_activity_per_hours($default);
         echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Navigateurs"));
         $this->get_browser($default);
@@ -142,13 +142,13 @@ class statistiques {
     }
 
     /**
-     * Affiche les statistiques d'activitès par heures
+     * Affiche les statistiques d'activitès par heure
      * @param array $default $this->check_form()
      */
     private function get_activity_per_hours($default) {
         $data = [
             [
-                "label" => "Pages visitèes",
+                "label" => "Pages visitées",
                 "data" => $this->get_plot_activity_per_hours($default)
             ]
         ];
@@ -237,7 +237,7 @@ class statistiques {
 
     /**
      * Fonction appelèe par $this->get_stat(), à ne pas utiliser ! <br />
-     * Affiche les statistiques dètaillèes d'un mois
+     * Affiche les statistiques détaillées d'un mois
      */
     public function consult() {
         if (isset($_GET["date"])) {
@@ -289,7 +289,7 @@ class statistiques {
     }
 
     /**
-     * Affiche le formulaire de selection d'annèes
+     * Affiche le formulaire de sélection d'années
      * @param array $default $this->check_form()
      */
     private function form($default) {
@@ -306,7 +306,7 @@ class statistiques {
     }
 
     /**
-     * Retourne la valeur par default à utiliser dans les statistiques
+     * Retourne la valeur par défault à utiliser dans les statistiques
      * @return array retourne $default["an"]
      */
     private function check_form() {
@@ -320,7 +320,7 @@ class statistiques {
     }
 
     /**
-     * Récupére le title de l'url passè en paramétre 
+     * Récupére le title de l'url passè en paramètre 
      * @param string $url URL
      * @return string Title de l'url
      */

@@ -10,7 +10,7 @@ class session {
     /**
      * Démarre la session avec vérification de l'ip et du navigateur
      * 
-     * @param boolean $regenerate_id l'id de la session doit-il étre régénéré : à mettre à false si utilisé dans un service !
+     * @param boolean $regenerate_id l'id de la session doit-il étre régénérée : à mettre à false si utilisé dans un service !
      */
     public static function start($regenerate_id = true) {
         session_start();

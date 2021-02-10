@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe affiche le gestionaire de fichiers elFinder
+ * Cette classe affiche le gestionnaire de fichiers elFinder
  * Il n'est pas recommandé de mettre deux instances de cette classe dans une même page
  * Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
  * Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)
@@ -11,7 +11,7 @@
 class g_elFinder {
 
     /**
-     * Cette classe affiche le gestionaire de fichiers elFinder
+     * Cette classe affiche le gestionnaire de fichiers elFinder
      * Il n'est pas recommandé de mettre deux instances de cette classe dans une même page
      * Pour autoriser un utilisateur à utiliser elFinder, vous devrez utiliser session::set_val("elFinder", true);
      * Cf le fichier connector.php (généré par cette classe) pour plus de détails et options)

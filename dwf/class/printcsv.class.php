@@ -9,7 +9,7 @@ class printcsv {
 
     /**
      * Cette classe permet l'affichage de données dans un tableau à partir du fichier .csv     * 
-     * @param array $data tableau de données a 2 dimensions
+     * @param array $data Tableau de données a 2 dimensions
      */
     public function __construct($data) {
         $csv = "";

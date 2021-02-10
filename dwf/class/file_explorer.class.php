@@ -9,7 +9,7 @@ class file_explorer {
 
     /**
      * Cette classe permet d'afficher et explorer une arborescence
-     * @param string $dir Dossier a explorer 
+     * @param string $dir Dossier à explorer 
      */
     public function __construct($dir) {
         ?>

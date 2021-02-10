@@ -22,8 +22,8 @@ class fullcalendar {
     /**
      * Créé un Fullcalendar
      * @param string $id id CSS du Fullcalendar
-     * @param array|null $events Liste des evenements a afficher, null pour utiliser un google agenda.
-     * le tableau des efevement doit avoir la forme suivante :
+     * @param array|null $events Liste des evenements à afficher, null pour utiliser un google agenda.
+     * le tableau des évènements doit avoir la forme suivante :
      * array(
      *     array("title"=>"titre",
      *           "start"=>"yyyy-mm-ddThh:mm:ss",
@@ -31,8 +31,8 @@ class fullcalendar {
      *           "url"=>"https://duckduckgo.com" //optionel
      *     ),
      *     ...)
-     * @param string $gapi Clé API pour le google agenda ($events doit être a null ou false)
-     * @param string $gid Identifiant du google agenda ("abcd1234@group.calendar.google.com", $events doit être a null ou false)
+     * @param string $gapi Clé API pour le google agenda ($events doit être à null ou false)
+     * @param string $gid Identifiant du google agenda ("abcd1234@group.calendar.google.com", $events doit être à null ou false)
      */
     public function __construct($id = "fullcalendar", $events = [], $gapi = "", $gid = "") {
         $this->_id = $id;
@@ -118,7 +118,7 @@ class fullcalendar {
     }
 
     /**
-     * Affiche les événements en base de donnée et le formulaire d'ajout
+     * Affiche les événements en base de données et le formulaire d'ajout
      */
     private static function admin_default() {
         $events = [];
@@ -142,7 +142,7 @@ class fullcalendar {
             $end = form::get_datetimepicker_us("end");
             $url = ((isset($_POST["url"]) and!empty($_POST["url"])) ? $_POST["url"] : "");
             fullcalendar_event::ajout($_POST["calendar"], $_POST["title"], $start, $end, $url);
-            js::alertify_alert_redir("L'evenement a bien été ajouté", "");
+            js::alertify_alert_redir("L'événement a bien été ajouté", "");
         } else {
             $form = new form();
             $form->open_fieldset("Ajouter un événement");
@@ -170,7 +170,7 @@ class fullcalendar {
             $event->set_start(form::get_datetimepicker_us("start"));
             $event->set_end(form::get_datetimepicker_us("end"));
             $event->set_url((isset($_POST["url"]) and!empty($_POST["url"])) ? $_POST["url"] : "");
-            js::alertify_alert_redir("L'evenement a bien été modifié", application::get_url(["action", "id"]));
+            js::alertify_alert_redir("L'événement a bien été modifié", application::get_url(["action", "id"]));
         } else {
             $form = new form();
             $form->open_fieldset("Modifier un événement");
@@ -194,7 +194,7 @@ class fullcalendar {
      */
     private static function admin_del($id) {
         $event = fullcalendar_event::get_from_id($id);
-        ?><p>Estes vous sur de vouloir suprimer l'evenement : <br />
+        ?><p>Etes-vous sur de vouloir supprimer l'événement : <br />
             <?= "{$event->get_title()} de {$event->get_start()} à {$event->get_end()} ?" ?>
         </p>
         <div class="row">
@@ -202,7 +202,7 @@ class fullcalendar {
                 <?php
                 if (isset($_POST["del"])) {
                     $event->delete();
-                    js::alertify_alert_redir("L'evenement a bien été supprimé", application::get_url(["action", "id"]));
+                    js::alertify_alert_redir("L'événement a bien été supprimé", application::get_url(["action", "id"]));
                 } else {
                     $form = new form();
                     $form->hidden("del", $event->get_id());

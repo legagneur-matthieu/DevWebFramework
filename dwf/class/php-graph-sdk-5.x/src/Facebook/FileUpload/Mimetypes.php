@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\FileUpload;
 
 /**
@@ -34,8 +32,8 @@ namespace Facebook\FileUpload;
  *
  * @link http://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/mime.types
  */
-class Mimetypes {
-
+class Mimetypes
+{
     /** @var self */
     protected static $instance;
 
@@ -953,7 +951,8 @@ class Mimetypes {
      * @return self
      * @codeCoverageIgnore
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance) {
             self::$instance = new self();
         }
@@ -968,7 +967,8 @@ class Mimetypes {
      *
      * @return string|null
      */
-    public function fromExtension($extension) {
+    public function fromExtension($extension)
+    {
         $extension = strtolower($extension);
 
         return isset($this->mimetypes[$extension]) ? $this->mimetypes[$extension] : null;
@@ -981,8 +981,8 @@ class Mimetypes {
      *
      * @return string|null
      */
-    public function fromFilename($filename) {
+    public function fromFilename($filename)
+    {
         return $this->fromExtension(pathinfo($filename, PATHINFO_EXTENSION));
     }
-
 }

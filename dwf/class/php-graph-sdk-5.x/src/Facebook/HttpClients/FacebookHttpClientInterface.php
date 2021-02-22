@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\HttpClients;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\HttpClients;
  *
  * @package Facebook
  */
-interface FacebookHttpClientInterface {
-
+interface FacebookHttpClientInterface
+{
     /**
      * Sends a request to the server and returns the raw response.
      *

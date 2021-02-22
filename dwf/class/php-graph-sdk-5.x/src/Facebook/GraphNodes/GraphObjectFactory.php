@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\GraphNodes;
 
 use Facebook\Exceptions\FacebookSDKException;
@@ -35,8 +33,8 @@ use Facebook\Exceptions\FacebookSDKException;
  * @deprecated 5.0.0 GraphObjectFactory has been renamed to GraphNodeFactory
  * @todo v6: Remove this class
  */
-class GraphObjectFactory extends GraphNodeFactory {
-
+class GraphObjectFactory extends GraphNodeFactory
+{
     /**
      * @const string The base graph object class.
      */
@@ -56,7 +54,8 @@ class GraphObjectFactory extends GraphNodeFactory {
      *
      * @deprecated 5.0.0 GraphObjectFactory has been renamed to GraphNodeFactory
      */
-    public function makeGraphObject($subclassName = null) {
+    public function makeGraphObject($subclassName = null)
+    {
         return $this->makeGraphNode($subclassName);
     }
 
@@ -67,7 +66,8 @@ class GraphObjectFactory extends GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphEvent() {
+    public function makeGraphEvent()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphEvent');
     }
 
@@ -81,8 +81,8 @@ class GraphObjectFactory extends GraphNodeFactory {
      *
      * @deprecated 5.0.0 GraphObjectFactory has been renamed to GraphNodeFactory
      */
-    public function makeGraphList($subclassName = null, $auto_prefix = true) {
+    public function makeGraphList($subclassName = null, $auto_prefix = true)
+    {
         return $this->makeGraphEdge($subclassName, $auto_prefix);
     }
-
 }

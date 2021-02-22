@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,11 +21,13 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 /**
  * You only need this file if you are not using composer.
  * Why are you not using composer?
  * https://getcomposer.org/
  */
+
 if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     throw new Exception('The Facebook SDK requires PHP version 5.4 or higher.');
 }

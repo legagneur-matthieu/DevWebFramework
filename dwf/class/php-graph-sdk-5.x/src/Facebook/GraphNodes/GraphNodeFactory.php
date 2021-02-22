@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\GraphNodes;
 
 use Facebook\FacebookResponse;
@@ -42,8 +40,8 @@ use Facebook\Exceptions\FacebookSDKException;
  * GraphNode - MAY contain DateTime's "primitives"
  * GraphNode - MAY contain string's "primitives"
  */
-class GraphNodeFactory {
-
+class GraphNodeFactory
+{
     /**
      * @const string The base graph object class.
      */
@@ -74,7 +72,8 @@ class GraphNodeFactory {
      *
      * @param FacebookResponse $response The response entity from Graph.
      */
-    public function __construct(FacebookResponse $response) {
+    public function __construct(FacebookResponse $response)
+    {
         $this->response = $response;
         $this->decodedBody = $response->getDecodedBody();
     }
@@ -88,7 +87,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphNode($subclassName = null) {
+    public function makeGraphNode($subclassName = null)
+    {
         $this->validateResponseAsArray();
         $this->validateResponseCastableAsGraphNode();
 
@@ -102,7 +102,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphAchievement() {
+    public function makeGraphAchievement()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphAchievement');
     }
 
@@ -113,7 +114,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphAlbum() {
+    public function makeGraphAlbum()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphAlbum');
     }
 
@@ -124,7 +126,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphPage() {
+    public function makeGraphPage()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphPage');
     }
 
@@ -135,7 +138,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphSessionInfo() {
+    public function makeGraphSessionInfo()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphSessionInfo');
     }
 
@@ -146,7 +150,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphUser() {
+    public function makeGraphUser()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphUser');
     }
 
@@ -157,7 +162,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphEvent() {
+    public function makeGraphEvent()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphEvent');
     }
 
@@ -168,7 +174,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphGroup() {
+    public function makeGraphGroup()
+    {
         return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphGroup');
     }
 
@@ -182,7 +189,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function makeGraphEdge($subclassName = null, $auto_prefix = true) {
+    public function makeGraphEdge($subclassName = null, $auto_prefix = true)
+    {
         $this->validateResponseAsArray();
         $this->validateResponseCastableAsGraphEdge();
 
@@ -198,7 +206,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function validateResponseAsArray() {
+    public function validateResponseAsArray()
+    {
         if (!is_array($this->decodedBody)) {
             throw new FacebookSDKException('Unable to get response from Graph as array.', 620);
         }
@@ -209,10 +218,12 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function validateResponseCastableAsGraphNode() {
+    public function validateResponseCastableAsGraphNode()
+    {
         if (isset($this->decodedBody['data']) && static::isCastableAsGraphEdge($this->decodedBody['data'])) {
             throw new FacebookSDKException(
-            'Unable to convert response from Graph to a GraphNode because the response looks like a GraphEdge. Try using GraphNodeFactory::makeGraphEdge() instead.', 620
+                'Unable to convert response from Graph to a GraphNode because the response looks like a GraphEdge. Try using GraphNodeFactory::makeGraphEdge() instead.',
+                620
             );
         }
     }
@@ -222,10 +233,12 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function validateResponseCastableAsGraphEdge() {
+    public function validateResponseCastableAsGraphEdge()
+    {
         if (!(isset($this->decodedBody['data']) && static::isCastableAsGraphEdge($this->decodedBody['data']))) {
             throw new FacebookSDKException(
-            'Unable to convert response from Graph to a GraphEdge because the response does not look like a GraphEdge. Try using GraphNodeFactory::makeGraphNode() instead.', 620
+                'Unable to convert response from Graph to a GraphEdge because the response does not look like a GraphEdge. Try using GraphNodeFactory::makeGraphNode() instead.',
+                620
             );
         }
     }
@@ -240,7 +253,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function safelyMakeGraphNode(array $data, $subclassName = null) {
+    public function safelyMakeGraphNode(array $data, $subclassName = null)
+    {
         $subclassName = $subclassName ?: static::BASE_GRAPH_NODE_CLASS;
         static::validateSubclass($subclassName);
 
@@ -256,7 +270,9 @@ class GraphNodeFactory {
                 // This is always empty on the GraphNode collection, but subclasses can define
                 // their own array of smart-casting types.
                 $graphObjectMap = $subclassName::getObjectMap();
-                $objectSubClass = isset($graphObjectMap[$k]) ? $graphObjectMap[$k] : null;
+                $objectSubClass = isset($graphObjectMap[$k])
+                    ? $graphObjectMap[$k]
+                    : null;
 
                 // Could be a GraphEdge or GraphNode
                 $items[$k] = $this->castAsGraphNodeOrGraphEdge($v, $objectSubClass, $k, $parentNodeId);
@@ -280,14 +296,17 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function castAsGraphNodeOrGraphEdge(array $data, $subclassName = null, $parentKey = null, $parentNodeId = null) {
+    public function castAsGraphNodeOrGraphEdge(array $data, $subclassName = null, $parentKey = null, $parentNodeId = null)
+    {
         if (isset($data['data'])) {
             // Create GraphEdge
             if (static::isCastableAsGraphEdge($data['data'])) {
                 return $this->safelyMakeGraphEdge($data, $subclassName, $parentKey, $parentNodeId);
             }
             // Sometimes Graph is a weirdo and returns a GraphNode under the "data" key
-            $data = $data['data'];
+            $outerData = $data;
+            unset($outerData['data']);
+            $data = $data['data'] + $outerData;
         }
 
         // Create GraphNode
@@ -306,7 +325,8 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public function safelyMakeGraphEdge(array $data, $subclassName = null, $parentKey = null, $parentNodeId = null) {
+    public function safelyMakeGraphEdge(array $data, $subclassName = null, $parentKey = null, $parentNodeId = null)
+    {
         if (!isset($data['data'])) {
             throw new FacebookSDKException('Cannot cast data to GraphEdge. Expected a "data" key.', 620);
         }
@@ -332,7 +352,8 @@ class GraphNodeFactory {
      *
      * @return array
      */
-    public function getMetaData(array $data) {
+    public function getMetaData(array $data)
+    {
         unset($data['data']);
 
         return $data;
@@ -345,7 +366,8 @@ class GraphNodeFactory {
      *
      * @return boolean
      */
-    public static function isCastableAsGraphEdge(array $data) {
+    public static function isCastableAsGraphEdge(array $data)
+    {
         if ($data === []) {
             return true;
         }
@@ -361,12 +383,12 @@ class GraphNodeFactory {
      *
      * @throws FacebookSDKException
      */
-    public static function validateSubclass($subclassName) {
+    public static function validateSubclass($subclassName)
+    {
         if ($subclassName == static::BASE_GRAPH_NODE_CLASS || is_subclass_of($subclassName, static::BASE_GRAPH_NODE_CLASS)) {
             return;
         }
 
         throw new FacebookSDKException('The given subclass "' . $subclassName . '" is not valid. Cannot cast to an object that is not a GraphNode subclass.', 620);
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Exceptions;
 
 /**
@@ -30,6 +28,6 @@ namespace Facebook\Exceptions;
  *
  * @package Facebook
  */
-class FacebookSDKException extends \Exception {
-    
+class FacebookSDKException extends \Exception
+{
 }

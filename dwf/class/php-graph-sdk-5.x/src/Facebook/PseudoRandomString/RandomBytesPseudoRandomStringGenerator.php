@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,13 +21,12 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\PseudoRandomString;
 
 use Facebook\Exceptions\FacebookSDKException;
 
-class RandomBytesPseudoRandomStringGenerator implements PseudoRandomStringGeneratorInterface {
-
+class RandomBytesPseudoRandomStringGenerator implements PseudoRandomStringGeneratorInterface
+{
     use PseudoRandomStringGeneratorTrait;
 
     /**
@@ -39,11 +37,12 @@ class RandomBytesPseudoRandomStringGenerator implements PseudoRandomStringGenera
     /**
      * @throws FacebookSDKException
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (!function_exists('random_bytes')) {
             throw new FacebookSDKException(
-            static::ERROR_MESSAGE .
-            'The function random_bytes() does not exist.'
+                static::ERROR_MESSAGE .
+                'The function random_bytes() does not exist.'
             );
         }
     }
@@ -51,10 +50,10 @@ class RandomBytesPseudoRandomStringGenerator implements PseudoRandomStringGenera
     /**
      * @inheritdoc
      */
-    public function getPseudoRandomString($length) {
+    public function getPseudoRandomString($length)
+    {
         $this->validateLength($length);
 
         return $this->binToHex(random_bytes($length), $length);
     }
-
 }

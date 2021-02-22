@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\PersistentData;
 
 use Facebook\Exceptions\FacebookSDKException;
@@ -32,8 +30,8 @@ use Facebook\Exceptions\FacebookSDKException;
  *
  * @package Facebook
  */
-class FacebookSessionPersistentDataHandler implements PersistentDataInterface {
-
+class FacebookSessionPersistentDataHandler implements PersistentDataInterface
+{
     /**
      * @var string Prefix to use for session variables.
      */
@@ -46,10 +44,12 @@ class FacebookSessionPersistentDataHandler implements PersistentDataInterface {
      *
      * @throws FacebookSDKException
      */
-    public function __construct($enableSessionCheck = true) {
+    public function __construct($enableSessionCheck = true)
+    {
         if ($enableSessionCheck && session_status() !== PHP_SESSION_ACTIVE) {
             throw new FacebookSDKException(
-            'Sessions are not active. Please make sure session_start() is at the top of your script.', 720
+                'Sessions are not active. Please make sure session_start() is at the top of your script.',
+                720
             );
         }
     }
@@ -57,7 +57,8 @@ class FacebookSessionPersistentDataHandler implements PersistentDataInterface {
     /**
      * @inheritdoc
      */
-    public function get($key) {
+    public function get($key)
+    {
         if (isset($_SESSION[$this->sessionPrefix . $key])) {
             return $_SESSION[$this->sessionPrefix . $key];
         }
@@ -68,8 +69,8 @@ class FacebookSessionPersistentDataHandler implements PersistentDataInterface {
     /**
      * @inheritdoc
      */
-    public function set($key, $value) {
+    public function set($key, $value)
+    {
         $_SESSION[$this->sessionPrefix . $key] = $value;
     }
-
 }

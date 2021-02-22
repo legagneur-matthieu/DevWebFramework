@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Authentication;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\Authentication;
  *
  * @package Facebook
  */
-class AccessToken {
-
+class AccessToken
+{
     /**
      * The access token value.
      *
@@ -52,7 +50,8 @@ class AccessToken {
      * @param string $accessToken
      * @param int    $expiresAt
      */
-    public function __construct($accessToken, $expiresAt = 0) {
+    public function __construct($accessToken, $expiresAt = 0)
+    {
         $this->value = $accessToken;
         if ($expiresAt) {
             $this->setExpiresAtFromTimeStamp($expiresAt);
@@ -66,7 +65,8 @@ class AccessToken {
      *
      * @return string
      */
-    public function getAppSecretProof($appSecret) {
+    public function getAppSecretProof($appSecret)
+    {
         return hash_hmac('sha256', $this->value, $appSecret);
     }
 
@@ -75,7 +75,8 @@ class AccessToken {
      *
      * @return \DateTime|null
      */
-    public function getExpiresAt() {
+    public function getExpiresAt()
+    {
         return $this->expiresAt;
     }
 
@@ -84,7 +85,8 @@ class AccessToken {
      *
      * @return bool
      */
-    public function isAppAccessToken() {
+    public function isAppAccessToken()
+    {
         return strpos($this->value, '|') !== false;
     }
 
@@ -93,7 +95,8 @@ class AccessToken {
      *
      * @return bool
      */
-    public function isLongLived() {
+    public function isLongLived()
+    {
         if ($this->expiresAt) {
             return $this->expiresAt->getTimestamp() > time() + (60 * 60 * 2);
         }
@@ -110,7 +113,8 @@ class AccessToken {
      *
      * @return boolean|null
      */
-    public function isExpired() {
+    public function isExpired()
+    {
         if ($this->getExpiresAt() instanceof \DateTime) {
             return $this->getExpiresAt()->getTimestamp() < time();
         }
@@ -127,7 +131,8 @@ class AccessToken {
      *
      * @return string
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -136,7 +141,8 @@ class AccessToken {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getValue();
     }
 
@@ -145,10 +151,10 @@ class AccessToken {
      *
      * @param int $timeStamp
      */
-    protected function setExpiresAtFromTimeStamp($timeStamp) {
+    protected function setExpiresAtFromTimeStamp($timeStamp)
+    {
         $dt = new \DateTime();
         $dt->setTimestamp($timeStamp);
         $this->expiresAt = $dt;
     }
-
 }

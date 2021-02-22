@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,14 +21,14 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\PersistentData;
 
 use InvalidArgumentException;
 
-class PersistentDataFactory {
-
-    private function __construct() {
+class PersistentDataFactory
+{
+    private function __construct()
+    {
         // a factory constructor should never be invoked
     }
 
@@ -42,9 +41,12 @@ class PersistentDataFactory {
      *
      * @return PersistentDataInterface
      */
-    public static function createPersistentDataHandler($handler) {
+    public static function createPersistentDataHandler($handler)
+    {
         if (!$handler) {
-            return session_status() === PHP_SESSION_ACTIVE ? new FacebookSessionPersistentDataHandler() : new FacebookMemoryPersistentDataHandler();
+            return session_status() === PHP_SESSION_ACTIVE
+                ? new FacebookSessionPersistentDataHandler()
+                : new FacebookMemoryPersistentDataHandler();
         }
 
         if ($handler instanceof PersistentDataInterface) {
@@ -60,5 +62,4 @@ class PersistentDataFactory {
 
         throw new InvalidArgumentException('The persistent data handler must be set to "session", "memory", or be an instance of Facebook\PersistentData\PersistentDataInterface');
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Url;
 
 /**
@@ -30,12 +28,13 @@ namespace Facebook\Url;
  *
  * @package Facebook
  */
-class FacebookUrlDetectionHandler implements UrlDetectionInterface {
-
+class FacebookUrlDetectionHandler implements UrlDetectionInterface
+{
     /**
      * @inheritdoc
      */
-    public function getCurrentUrl() {
+    public function getCurrentUrl()
+    {
         return $this->getHttpScheme() . '://' . $this->getHostName() . $this->getServerVar('REQUEST_URI');
     }
 
@@ -44,7 +43,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return string
      */
-    protected function getHttpScheme() {
+    protected function getHttpScheme()
+    {
         return $this->isBehindSsl() ? 'https' : 'http';
     }
 
@@ -53,7 +53,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return boolean
      */
-    protected function isBehindSsl() {
+    protected function isBehindSsl()
+    {
         // Check for proxy first
         $protocol = $this->getHeader('X_FORWARDED_PROTO');
         if ($protocol) {
@@ -65,7 +66,7 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
             return $this->protocolWithActiveSsl($protocol);
         }
 
-        return (string) $this->getServerVar('SERVER_PORT') === '443';
+        return (string)$this->getServerVar('SERVER_PORT') === '443';
     }
 
     /**
@@ -75,8 +76,9 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return boolean
      */
-    protected function protocolWithActiveSsl($protocol) {
-        $protocol = strtolower((string) $protocol);
+    protected function protocolWithActiveSsl($protocol)
+    {
+        $protocol = strtolower((string)$protocol);
 
         return in_array($protocol, ['on', '1', 'https', 'ssl'], true);
     }
@@ -90,7 +92,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return string
      */
-    protected function getHostName() {
+    protected function getHostName()
+    {
         // Check for proxy first
         $header = $this->getHeader('X_FORWARDED_HOST');
         if ($header && $this->isValidForwardedHost($header)) {
@@ -119,19 +122,20 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
         return $host . $appendPort;
     }
 
-    protected function getCurrentPort() {
+    protected function getCurrentPort()
+    {
         // Check for proxy first
         $port = $this->getHeader('X_FORWARDED_PORT');
         if ($port) {
-            return (string) $port;
+            return (string)$port;
         }
 
-        $protocol = (string) $this->getHeader('X_FORWARDED_PROTO');
+        $protocol = (string)$this->getHeader('X_FORWARDED_PROTO');
         if ($protocol === 'https') {
             return '443';
         }
 
-        return (string) $this->getServerVar('SERVER_PORT');
+        return (string)$this->getServerVar('SERVER_PORT');
     }
 
     /**
@@ -141,7 +145,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return string
      */
-    protected function getServerVar($key) {
+    protected function getServerVar($key)
+    {
         return isset($_SERVER[$key]) ? $_SERVER[$key] : '';
     }
 
@@ -152,7 +157,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return string
      */
-    protected function getHeader($key) {
+    protected function getHeader($key)
+    {
         return $this->getServerVar('HTTP_' . $key);
     }
 
@@ -164,13 +170,13 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface {
      *
      * @return boolean
      */
-    protected function isValidForwardedHost($header) {
+    protected function isValidForwardedHost($header)
+    {
         $elements = explode(',', $header);
         $host = $elements[count($elements) - 1];
-
+        
         return preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $host) //valid chars check
-                && 0 < strlen($host) && strlen($host) < 254 //overall length check
-                && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $host); //length of each label
+            && 0 < strlen($host) && strlen($host) < 254 //overall length check
+            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $host); //length of each label
     }
-
 }

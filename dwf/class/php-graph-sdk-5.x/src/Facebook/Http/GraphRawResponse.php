@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Http;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\Http;
  *
  * @package Facebook
  */
-class GraphRawResponse {
-
+class GraphRawResponse
+{
     /**
      * @var array The response headers in the form of an associative array.
      */
@@ -54,9 +52,10 @@ class GraphRawResponse {
      * @param string       $body           The raw response body.
      * @param int          $httpStatusCode The HTTP response code (if sending headers as parsed array).
      */
-    public function __construct($headers, $body, $httpStatusCode = null) {
+    public function __construct($headers, $body, $httpStatusCode = null)
+    {
         if (is_numeric($httpStatusCode)) {
-            $this->httpResponseCode = (int) $httpStatusCode;
+            $this->httpResponseCode = (int)$httpStatusCode;
         }
 
         if (is_array($headers)) {
@@ -73,7 +72,8 @@ class GraphRawResponse {
      *
      * @return array
      */
-    public function getHeaders() {
+    public function getHeaders()
+    {
         return $this->headers;
     }
 
@@ -82,7 +82,8 @@ class GraphRawResponse {
      *
      * @return string
      */
-    public function getBody() {
+    public function getBody()
+    {
         return $this->body;
     }
 
@@ -91,7 +92,8 @@ class GraphRawResponse {
      *
      * @return int
      */
-    public function getHttpResponseCode() {
+    public function getHttpResponseCode()
+    {
         return $this->httpResponseCode;
     }
 
@@ -100,9 +102,11 @@ class GraphRawResponse {
      *
      * @param string $rawResponseHeader
      */
-    public function setHttpResponseCodeFromHeader($rawResponseHeader) {
-        preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $rawResponseHeader, $match);
-        $this->httpResponseCode = (int) $match[1];
+    public function setHttpResponseCodeFromHeader($rawResponseHeader)
+    {
+        // https://tools.ietf.org/html/rfc7230#section-3.1.2
+        list($version, $status, $reason) = array_pad(explode(' ', $rawResponseHeader, 3), 3, null);
+        $this->httpResponseCode = (int) $status;
     }
 
     /**
@@ -110,7 +114,8 @@ class GraphRawResponse {
      *
      * @param string $rawHeaders The raw headers from the response.
      */
-    protected function setHeadersFromString($rawHeaders) {
+    protected function setHeadersFromString($rawHeaders)
+    {
         // Normalize line breaks
         $rawHeaders = str_replace("\r\n", "\n", $rawHeaders);
 
@@ -130,5 +135,4 @@ class GraphRawResponse {
             }
         }
     }
-
 }

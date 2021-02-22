@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,16 +21,16 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\HttpClients;
 
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use Exception;
 
-class HttpClientsFactory {
-
-    private function __construct() {
+class HttpClientsFactory
+{
+    private function __construct()
+    {
         // a factory constructor should never be invoked
     }
 
@@ -45,7 +44,8 @@ class HttpClientsFactory {
      *
      * @return FacebookHttpClientInterface
      */
-    public static function createHttpClient($handler) {
+    public static function createHttpClient($handler)
+    {
         if (!$handler) {
             return self::detectDefaultClient();
         }
@@ -84,7 +84,8 @@ class HttpClientsFactory {
      *
      * @return FacebookHttpClientInterface
      */
-    private static function detectDefaultClient() {
+    private static function detectDefaultClient()
+    {
         if (extension_loaded('curl')) {
             return new FacebookCurlHttpClient();
         }
@@ -95,5 +96,4 @@ class HttpClientsFactory {
 
         return new FacebookStreamHttpClient();
     }
-
 }

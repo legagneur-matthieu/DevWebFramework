@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\GraphNodes;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\GraphNodes;
  *
  * @package Facebook
  */
-class GraphPage extends GraphNode {
-
+class GraphPage extends GraphNode
+{
     /**
      * @var array Maps object key names to Graph object types.
      */
@@ -48,7 +46,8 @@ class GraphPage extends GraphNode {
      *
      * @return string|null
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->getField('id');
     }
 
@@ -57,7 +56,8 @@ class GraphPage extends GraphNode {
      *
      * @return string|null
      */
-    public function getCategory() {
+    public function getCategory()
+    {
         return $this->getField('category');
     }
 
@@ -66,7 +66,8 @@ class GraphPage extends GraphNode {
      *
      * @return string|null
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->getField('name');
     }
 
@@ -75,7 +76,8 @@ class GraphPage extends GraphNode {
      *
      * @return GraphPage|null
      */
-    public function getBestPage() {
+    public function getBestPage()
+    {
         return $this->getField('best_page');
     }
 
@@ -84,7 +86,8 @@ class GraphPage extends GraphNode {
      *
      * @return GraphPage|null
      */
-    public function getGlobalBrandParentPage() {
+    public function getGlobalBrandParentPage()
+    {
         return $this->getField('global_brand_parent_page');
     }
 
@@ -93,7 +96,8 @@ class GraphPage extends GraphNode {
      *
      * @return GraphLocation|null
      */
-    public function getLocation() {
+    public function getLocation()
+    {
         return $this->getField('location');
     }
 
@@ -102,7 +106,8 @@ class GraphPage extends GraphNode {
      *
      * @return GraphCoverPhoto|null
      */
-    public function getCover() {
+    public function getCover()
+    {
         return $this->getField('cover');
     }
 
@@ -111,7 +116,8 @@ class GraphPage extends GraphNode {
      *
      * @return GraphPicture|null
      */
-    public function getPicture() {
+    public function getPicture()
+    {
         return $this->getField('picture');
     }
 
@@ -122,7 +128,8 @@ class GraphPage extends GraphNode {
      *
      * @return string|null
      */
-    public function getAccessToken() {
+    public function getAccessToken()
+    {
         return $this->getField('access_token');
     }
 
@@ -133,8 +140,18 @@ class GraphPage extends GraphNode {
      *
      * @return array|null
      */
-    public function getPerms() {
+    public function getPerms()
+    {
         return $this->getField('perms');
     }
 
+    /**
+     * Returns the `fan_count` (Number of people who likes to page) as int if present.
+     *
+     * @return int|null
+     */
+    public function getFanCount()
+    {
+        return $this->getField('fan_count');
+    }
 }

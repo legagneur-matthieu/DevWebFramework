@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Url;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\Url;
  *
  * @package Facebook
  */
-class FacebookUrlManipulator {
-
+class FacebookUrlManipulator
+{
     /**
      * Remove params from a URL.
      *
@@ -40,7 +38,8 @@ class FacebookUrlManipulator {
      *
      * @return string The URL with the params removed.
      */
-    public static function removeParamsFromUrl($url, array $paramsToFilter) {
+    public static function removeParamsFromUrl($url, array $paramsToFilter)
+    {
         $parts = parse_url($url);
 
         $query = '';
@@ -75,7 +74,8 @@ class FacebookUrlManipulator {
      *
      * @return string
      */
-    public static function appendParamsToUrl($url, array $newParams = []) {
+    public static function appendParamsToUrl($url, array $newParams = [])
+    {
         if (empty($newParams)) {
             return $url;
         }
@@ -104,7 +104,8 @@ class FacebookUrlManipulator {
      *
      * @return array
      */
-    public static function getParamsAsArray($url) {
+    public static function getParamsAsArray($url)
+    {
         $query = parse_url($url, PHP_URL_QUERY);
         if (!$query) {
             return [];
@@ -125,7 +126,8 @@ class FacebookUrlManipulator {
      *
      * @return string The $urlToAddTo with any new params from $urlToStealFrom.
      */
-    public static function mergeUrlParams($urlToStealFrom, $urlToAddTo) {
+    public static function mergeUrlParams($urlToStealFrom, $urlToAddTo)
+    {
         $newParams = static::getParamsAsArray($urlToStealFrom);
         // Nothing new to add, return as-is
         if (!$newParams) {
@@ -142,7 +144,8 @@ class FacebookUrlManipulator {
      *
      * @return string|null
      */
-    public static function forceSlashPrefix($string) {
+    public static function forceSlashPrefix($string)
+    {
         if (!$string) {
             return $string;
         }
@@ -157,8 +160,8 @@ class FacebookUrlManipulator {
      *
      * @return string The $urlToTrim with the hostname and Graph version removed.
      */
-    public static function baseGraphUrlEndpoint($urlToTrim) {
+    public static function baseGraphUrlEndpoint($urlToTrim)
+    {
         return '/' . preg_replace('/^https:\/\/.+\.facebook\.com(\/v.+?)?\//', '', $urlToTrim);
     }
-
 }

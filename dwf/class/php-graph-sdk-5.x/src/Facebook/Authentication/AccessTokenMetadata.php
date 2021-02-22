@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\Authentication;
 
 use Facebook\Exceptions\FacebookSDKException;
@@ -35,8 +33,8 @@ use Facebook\Exceptions\FacebookSDKException;
  * @package Facebook
  * @see     https://developers.facebook.com/docs/graph-api/reference/debug_token
  */
-class AccessTokenMetadata {
-
+class AccessTokenMetadata
+{
     /**
      * The access token metadata.
      *
@@ -56,7 +54,8 @@ class AccessTokenMetadata {
      *
      * @throws FacebookSDKException
      */
-    public function __construct(array $metadata) {
+    public function __construct(array $metadata)
+    {
         if (!isset($metadata['data'])) {
             throw new FacebookSDKException('Unexpected debug token response data.', 401);
         }
@@ -74,7 +73,8 @@ class AccessTokenMetadata {
      *
      * @return mixed
      */
-    public function getField($field, $default = null) {
+    public function getField($field, $default = null)
+    {
         if (isset($this->metadata[$field])) {
             return $this->metadata[$field];
         }
@@ -93,7 +93,8 @@ class AccessTokenMetadata {
      * @deprecated 5.0.0 getProperty() has been renamed to getField()
      * @todo v6: Remove this method
      */
-    public function getProperty($field, $default = null) {
+    public function getProperty($field, $default = null)
+    {
         return $this->getField($field, $default);
     }
 
@@ -106,7 +107,8 @@ class AccessTokenMetadata {
      *
      * @return mixed
      */
-    public function getChildProperty($parentField, $field, $default = null) {
+    public function getChildProperty($parentField, $field, $default = null)
+    {
         if (!isset($this->metadata[$parentField])) {
             return $default;
         }
@@ -126,7 +128,8 @@ class AccessTokenMetadata {
      *
      * @return mixed
      */
-    public function getErrorProperty($field, $default = null) {
+    public function getErrorProperty($field, $default = null)
+    {
         return $this->getChildProperty('error', $field, $default);
     }
 
@@ -138,7 +141,8 @@ class AccessTokenMetadata {
      *
      * @return mixed
      */
-    public function getMetadataProperty($field, $default = null) {
+    public function getMetadataProperty($field, $default = null)
+    {
         return $this->getChildProperty('metadata', $field, $default);
     }
 
@@ -147,7 +151,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getAppId() {
+    public function getAppId()
+    {
         return $this->getField('app_id');
     }
 
@@ -156,7 +161,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getApplication() {
+    public function getApplication()
+    {
         return $this->getField('application');
     }
 
@@ -166,7 +172,8 @@ class AccessTokenMetadata {
      *
      * @return bool|null
      */
-    public function isError() {
+    public function isError()
+    {
         return $this->getField('error') !== null;
     }
 
@@ -175,7 +182,8 @@ class AccessTokenMetadata {
      *
      * @return int|null
      */
-    public function getErrorCode() {
+    public function getErrorCode()
+    {
         return $this->getErrorProperty('code');
     }
 
@@ -184,7 +192,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getErrorMessage() {
+    public function getErrorMessage()
+    {
         return $this->getErrorProperty('message');
     }
 
@@ -193,7 +202,8 @@ class AccessTokenMetadata {
      *
      * @return int|null
      */
-    public function getErrorSubcode() {
+    public function getErrorSubcode()
+    {
         return $this->getErrorProperty('subcode');
     }
 
@@ -202,7 +212,8 @@ class AccessTokenMetadata {
      *
      * @return \DateTime|null
      */
-    public function getExpiresAt() {
+    public function getExpiresAt()
+    {
         return $this->getField('expires_at');
     }
 
@@ -211,7 +222,8 @@ class AccessTokenMetadata {
      *
      * @return boolean|null
      */
-    public function getIsValid() {
+    public function getIsValid()
+    {
         return $this->getField('is_valid');
     }
 
@@ -225,7 +237,8 @@ class AccessTokenMetadata {
      *
      * @return \DateTime|null
      */
-    public function getIssuedAt() {
+    public function getIssuedAt()
+    {
         return $this->getField('issued_at');
     }
 
@@ -235,7 +248,8 @@ class AccessTokenMetadata {
      *
      * @return array|null
      */
-    public function getMetadata() {
+    public function getMetadata()
+    {
         return $this->getField('metadata');
     }
 
@@ -244,7 +258,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getSso() {
+    public function getSso()
+    {
         return $this->getMetadataProperty('sso');
     }
 
@@ -253,7 +268,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getAuthType() {
+    public function getAuthType()
+    {
         return $this->getMetadataProperty('auth_type');
     }
 
@@ -262,7 +278,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getAuthNonce() {
+    public function getAuthNonce()
+    {
         return $this->getMetadataProperty('auth_nonce');
     }
 
@@ -272,7 +289,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getProfileId() {
+    public function getProfileId()
+    {
         return $this->getField('profile_id');
     }
 
@@ -282,7 +300,8 @@ class AccessTokenMetadata {
      *
      * @return array
      */
-    public function getScopes() {
+    public function getScopes()
+    {
         return $this->getField('scopes');
     }
 
@@ -291,7 +310,8 @@ class AccessTokenMetadata {
      *
      * @return string|null
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->getField('user_id');
     }
 
@@ -303,7 +323,8 @@ class AccessTokenMetadata {
      *
      * @throws FacebookSDKException
      */
-    public function validateAppId($appId) {
+    public function validateAppId($appId)
+    {
         if ($this->getAppId() !== $appId) {
             throw new FacebookSDKException('Access token metadata contains unexpected app ID.', 401);
         }
@@ -317,7 +338,8 @@ class AccessTokenMetadata {
      *
      * @throws FacebookSDKException
      */
-    public function validateUserId($userId) {
+    public function validateUserId($userId)
+    {
         if ($this->getUserId() !== $userId) {
             throw new FacebookSDKException('Access token metadata contains unexpected user ID.', 401);
         }
@@ -328,7 +350,8 @@ class AccessTokenMetadata {
      *
      * @throws FacebookSDKException
      */
-    public function validateExpiration() {
+    public function validateExpiration()
+    {
         if (!$this->getExpiresAt() instanceof \DateTime) {
             return;
         }
@@ -345,7 +368,8 @@ class AccessTokenMetadata {
      *
      * @return \DateTime
      */
-    private function convertTimestampToDateTime($timestamp) {
+    private function convertTimestampToDateTime($timestamp)
+    {
         $dt = new \DateTime();
         $dt->setTimestamp($timestamp);
 
@@ -355,12 +379,12 @@ class AccessTokenMetadata {
     /**
      * Casts the unix timestamps as DateTime entities.
      */
-    private function castTimestampsToDateTime() {
+    private function castTimestampsToDateTime()
+    {
         foreach (static::$dateProperties as $key) {
             if (isset($this->metadata[$key]) && $this->metadata[$key] !== 0) {
                 $this->metadata[$key] = $this->convertTimestampToDateTime($this->metadata[$key]);
             }
         }
     }
-
 }

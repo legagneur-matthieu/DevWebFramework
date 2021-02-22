@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\GraphNodes;
 
 /**
@@ -30,8 +28,8 @@ namespace Facebook\GraphNodes;
  *
  * @package Facebook
  */
-class GraphEvent extends GraphNode {
-
+class GraphEvent extends GraphNode
+{
     /**
      * @var array Maps object key names to GraphNode types.
      */
@@ -47,7 +45,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->getField('id');
     }
 
@@ -56,7 +55,8 @@ class GraphEvent extends GraphNode {
      *
      * @return GraphCoverPhoto|null
      */
-    public function getCover() {
+    public function getCover()
+    {
         return $this->getField('cover');
     }
 
@@ -65,7 +65,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->getField('description');
     }
 
@@ -74,7 +75,8 @@ class GraphEvent extends GraphNode {
      *
      * @return \DateTime|null
      */
-    public function getEndTime() {
+    public function getEndTime()
+    {
         return $this->getField('end_time');
     }
 
@@ -83,7 +85,8 @@ class GraphEvent extends GraphNode {
      *
      * @return bool|null
      */
-    public function getIsDateOnly() {
+    public function getIsDateOnly()
+    {
         return $this->getField('is_date_only');
     }
 
@@ -92,7 +95,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->getField('name');
     }
 
@@ -101,7 +105,8 @@ class GraphEvent extends GraphNode {
      *
      * @return GraphNode|null
      */
-    public function getOwner() {
+    public function getOwner()
+    {
         return $this->getField('owner');
     }
 
@@ -110,7 +115,8 @@ class GraphEvent extends GraphNode {
      *
      * @return GraphGroup|null
      */
-    public function getParentGroup() {
+    public function getParentGroup()
+    {
         return $this->getField('parent_group');
     }
 
@@ -119,7 +125,8 @@ class GraphEvent extends GraphNode {
      *
      * @return GraphPage|null
      */
-    public function getPlace() {
+    public function getPlace()
+    {
         return $this->getField('place');
     }
 
@@ -128,7 +135,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getPrivacy() {
+    public function getPrivacy()
+    {
         return $this->getField('privacy');
     }
 
@@ -137,7 +145,8 @@ class GraphEvent extends GraphNode {
      *
      * @return \DateTime|null
      */
-    public function getStartTime() {
+    public function getStartTime()
+    {
         return $this->getField('start_time');
     }
 
@@ -146,7 +155,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getTicketUri() {
+    public function getTicketUri()
+    {
         return $this->getField('ticket_uri');
     }
 
@@ -155,7 +165,8 @@ class GraphEvent extends GraphNode {
      *
      * @return string|null
      */
-    public function getTimezone() {
+    public function getTimezone()
+    {
         return $this->getField('timezone');
     }
 
@@ -164,7 +175,8 @@ class GraphEvent extends GraphNode {
      *
      * @return \DateTime|null
      */
-    public function getUpdatedTime() {
+    public function getUpdatedTime()
+    {
         return $this->getField('updated_time');
     }
 
@@ -173,7 +185,8 @@ class GraphEvent extends GraphNode {
      *
      * @return GraphPicture|null
      */
-    public function getPicture() {
+    public function getPicture()
+    {
         return $this->getField('picture');
     }
 
@@ -182,7 +195,8 @@ class GraphEvent extends GraphNode {
      *
      * @return int|null
      */
-    public function getAttendingCount() {
+    public function getAttendingCount()
+    {
         return $this->getField('attending_count');
     }
 
@@ -191,7 +205,8 @@ class GraphEvent extends GraphNode {
      *
      * @return int|null
      */
-    public function getDeclinedCount() {
+    public function getDeclinedCount()
+    {
         return $this->getField('declined_count');
     }
 
@@ -200,7 +215,8 @@ class GraphEvent extends GraphNode {
      *
      * @return int|null
      */
-    public function getMaybeCount() {
+    public function getMaybeCount()
+    {
         return $this->getField('maybe_count');
     }
 
@@ -209,7 +225,8 @@ class GraphEvent extends GraphNode {
      *
      * @return int|null
      */
-    public function getNoreplyCount() {
+    public function getNoreplyCount()
+    {
         return $this->getField('noreply_count');
     }
 
@@ -218,8 +235,8 @@ class GraphEvent extends GraphNode {
      *
      * @return int|null
      */
-    public function getInvitedCount() {
+    public function getInvitedCount()
+    {
         return $this->getField('invited_count');
     }
-
 }

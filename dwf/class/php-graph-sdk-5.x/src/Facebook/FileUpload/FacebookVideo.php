@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook\FileUpload;
 
 /**
@@ -30,6 +28,6 @@ namespace Facebook\FileUpload;
  *
  * @package Facebook
  */
-class FacebookVideo extends FacebookFile {
-    
+class FacebookVideo extends FacebookFile
+{
 }

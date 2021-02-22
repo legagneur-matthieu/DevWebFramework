@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook;
 
 use ArrayIterator;
@@ -34,8 +32,8 @@ use ArrayAccess;
  *
  * @package Facebook
  */
-class FacebookBatchResponse extends FacebookResponse implements IteratorAggregate, ArrayAccess {
-
+class FacebookBatchResponse extends FacebookResponse implements IteratorAggregate, ArrayAccess
+{
     /**
      * @var FacebookBatchRequest The original entity that made the batch request.
      */
@@ -52,7 +50,8 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
      * @param FacebookBatchRequest $batchRequest
      * @param FacebookResponse     $response
      */
-    public function __construct(FacebookBatchRequest $batchRequest, FacebookResponse $response) {
+    public function __construct(FacebookBatchRequest $batchRequest, FacebookResponse $response)
+    {
         $this->batchRequest = $batchRequest;
 
         $request = $response->getRequest();
@@ -70,7 +69,8 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
      *
      * @return array
      */
-    public function getResponses() {
+    public function getResponses()
+    {
         return $this->responses;
     }
 
@@ -80,7 +80,8 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
      *
      * @param array $responses
      */
-    public function setResponses(array $responses) {
+    public function setResponses(array $responses)
+    {
         $this->responses = [];
 
         foreach ($responses as $key => $graphResponse) {
@@ -94,7 +95,8 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
      * @param int        $key
      * @param array|null $response
      */
-    public function addResponse($key, $response) {
+    public function addResponse($key, $response)
+    {
         $originalRequestName = isset($this->batchRequest[$key]['name']) ? $this->batchRequest[$key]['name'] : $key;
         $originalRequest = isset($this->batchRequest[$key]['request']) ? $this->batchRequest[$key]['request'] : null;
 
@@ -104,42 +106,50 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
         $httpResponseHeaders = isset($response['headers']) ? $this->normalizeBatchHeaders($response['headers']) : [];
 
         $this->responses[$originalRequestName] = new FacebookResponse(
-                $originalRequest, $httpResponseBody, $httpResponseCode, $httpResponseHeaders
+            $originalRequest,
+            $httpResponseBody,
+            $httpResponseCode,
+            $httpResponseHeaders
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         return new ArrayIterator($this->responses);
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         $this->addResponse($offset, $value);
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->responses[$offset]);
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->responses[$offset]);
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return isset($this->responses[$offset]) ? $this->responses[$offset] : null;
     }
 
@@ -151,7 +161,8 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
      *
      * @return array
      */
-    private function normalizeBatchHeaders(array $batchHeaders) {
+    private function normalizeBatchHeaders(array $batchHeaders)
+    {
         $headers = [];
 
         foreach ($batchHeaders as $header) {
@@ -160,5 +171,4 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
 
         return $headers;
     }
-
 }

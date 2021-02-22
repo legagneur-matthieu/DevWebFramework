@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2017 Facebook, Inc.
  *
@@ -22,7 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
 namespace Facebook;
 
 use Facebook\GraphNodes\GraphNodeFactory;
@@ -34,8 +32,8 @@ use Facebook\Exceptions\FacebookSDKException;
  *
  * @package Facebook
  */
-class FacebookResponse {
-
+class FacebookResponse
+{
     /**
      * @var int The HTTP status code response from Graph.
      */
@@ -74,7 +72,8 @@ class FacebookResponse {
      * @param int|null        $httpStatusCode
      * @param array|null      $headers
      */
-    public function __construct(FacebookRequest $request, $body = null, $httpStatusCode = null, array $headers = []) {
+    public function __construct(FacebookRequest $request, $body = null, $httpStatusCode = null, array $headers = [])
+    {
         $this->request = $request;
         $this->body = $body;
         $this->httpStatusCode = $httpStatusCode;
@@ -88,7 +87,8 @@ class FacebookResponse {
      *
      * @return FacebookRequest
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         return $this->request;
     }
 
@@ -97,7 +97,8 @@ class FacebookResponse {
      *
      * @return FacebookApp
      */
-    public function getApp() {
+    public function getApp()
+    {
         return $this->request->getApp();
     }
 
@@ -106,7 +107,8 @@ class FacebookResponse {
      *
      * @return string|null
      */
-    public function getAccessToken() {
+    public function getAccessToken()
+    {
         return $this->request->getAccessToken();
     }
 
@@ -115,7 +117,8 @@ class FacebookResponse {
      *
      * @return int
      */
-    public function getHttpStatusCode() {
+    public function getHttpStatusCode()
+    {
         return $this->httpStatusCode;
     }
 
@@ -124,7 +127,8 @@ class FacebookResponse {
      *
      * @return array
      */
-    public function getHeaders() {
+    public function getHeaders()
+    {
         return $this->headers;
     }
 
@@ -133,7 +137,8 @@ class FacebookResponse {
      *
      * @return string
      */
-    public function getBody() {
+    public function getBody()
+    {
         return $this->body;
     }
 
@@ -142,7 +147,8 @@ class FacebookResponse {
      *
      * @return array
      */
-    public function getDecodedBody() {
+    public function getDecodedBody()
+    {
         return $this->decodedBody;
     }
 
@@ -151,7 +157,8 @@ class FacebookResponse {
      *
      * @return string|null
      */
-    public function getAppSecretProof() {
+    public function getAppSecretProof()
+    {
         return $this->request->getAppSecretProof();
     }
 
@@ -160,7 +167,8 @@ class FacebookResponse {
      *
      * @return string|null
      */
-    public function getETag() {
+    public function getETag()
+    {
         return isset($this->headers['ETag']) ? $this->headers['ETag'] : null;
     }
 
@@ -169,7 +177,8 @@ class FacebookResponse {
      *
      * @return string|null
      */
-    public function getGraphVersion() {
+    public function getGraphVersion()
+    {
         return isset($this->headers['Facebook-API-Version']) ? $this->headers['Facebook-API-Version'] : null;
     }
 
@@ -178,7 +187,8 @@ class FacebookResponse {
      *
      * @return boolean
      */
-    public function isError() {
+    public function isError()
+    {
         return isset($this->decodedBody['error']);
     }
 
@@ -187,14 +197,16 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function throwException() {
+    public function throwException()
+    {
         throw $this->thrownException;
     }
 
     /**
      * Instantiates an exception to be thrown later.
      */
-    public function makeException() {
+    public function makeException()
+    {
         $this->thrownException = FacebookResponseException::create($this);
     }
 
@@ -203,7 +215,8 @@ class FacebookResponse {
      *
      * @return FacebookResponseException|null
      */
-    public function getThrownException() {
+    public function getThrownException()
+    {
         return $this->thrownException;
     }
 
@@ -218,7 +231,8 @@ class FacebookResponse {
      *    a short-lived access token for a long-lived access token
      * - And sometimes nothing :/ but that'd be a bug.
      */
-    public function decodeBody() {
+    public function decodeBody()
+    {
         $this->decodedBody = json_decode($this->body, true);
 
         if ($this->decodedBody === null) {
@@ -254,7 +268,8 @@ class FacebookResponse {
      * @deprecated 5.0.0 getGraphObject() has been renamed to getGraphNode()
      * @todo v6: Remove this method
      */
-    public function getGraphObject($subclassName = null) {
+    public function getGraphObject($subclassName = null)
+    {
         return $this->getGraphNode($subclassName);
     }
 
@@ -267,7 +282,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphNode($subclassName = null) {
+    public function getGraphNode($subclassName = null)
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphNode($subclassName);
@@ -280,7 +296,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphAlbum() {
+    public function getGraphAlbum()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphAlbum();
@@ -293,7 +310,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphPage() {
+    public function getGraphPage()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphPage();
@@ -306,7 +324,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphSessionInfo() {
+    public function getGraphSessionInfo()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphSessionInfo();
@@ -319,7 +338,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphUser() {
+    public function getGraphUser()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphUser();
@@ -332,7 +352,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphEvent() {
+    public function getGraphEvent()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphEvent();
@@ -345,7 +366,8 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphGroup() {
+    public function getGraphGroup()
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphGroup();
@@ -364,7 +386,8 @@ class FacebookResponse {
      * @deprecated 5.0.0 getGraphList() has been renamed to getGraphEdge()
      * @todo v6: Remove this method
      */
-    public function getGraphList($subclassName = null, $auto_prefix = true) {
+    public function getGraphList($subclassName = null, $auto_prefix = true)
+    {
         return $this->getGraphEdge($subclassName, $auto_prefix);
     }
 
@@ -378,10 +401,10 @@ class FacebookResponse {
      *
      * @throws FacebookSDKException
      */
-    public function getGraphEdge($subclassName = null, $auto_prefix = true) {
+    public function getGraphEdge($subclassName = null, $auto_prefix = true)
+    {
         $factory = new GraphNodeFactory($this);
 
         return $factory->makeGraphEdge($subclassName, $auto_prefix);
     }
-
 }

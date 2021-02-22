@@ -36,7 +36,7 @@ class vticker {
     /**
      * Créé un vTicker (suite de phrases qui défilent)
      * 
-     * @param array $data liste des phrases à afficher
+     * @param array $data liste des éléments à afficher
      * @param string $id id CSS du vTicker
      * @param array $params surcharge les paramètres à appliquer au vTicker ( laissez par defaut ou voir la documentation )
      */

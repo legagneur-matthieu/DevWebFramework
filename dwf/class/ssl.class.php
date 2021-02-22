@@ -97,7 +97,7 @@ class ssl {
      */
     public function ssl_js($enable_client_ssl = false) {
         if (!self::$_called[0]) {
-            echo html_structures::script("../commun/src/js/jsencrypt/jsencrypt.js") .
+            echo html_structures::script("../commun/src/js/jsencrypt/jsencrypt.min.js") .
             html_structures::script("../commun/src/js/jsencrypt/ssl.jsencrypt.js");
             ?>
             <script type="text/javascript">

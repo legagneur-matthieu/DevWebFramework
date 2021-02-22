@@ -8,7 +8,7 @@ $(document).ready(function () {
     }
     $("form").submit(function ($e) {
         function error() {
-            alert("une erreur est survenu, veuillez réessayer ou renir plus tard");
+            alert("une erreur est survenu, veuillez réessayer ou revenir plus tard");
             window.location = "";
             $e.preventDefault();
         }

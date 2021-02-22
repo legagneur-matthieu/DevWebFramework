@@ -10,37 +10,24 @@
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      now: '2020-09-07',
-      editable: true, // enable draggable events
-      aspectRatio: 1.8,
-      scrollTime: '00:00', // undo default 6am scrollTime
       headerToolbar: {
-        left: 'today prev,next',
+        left: 'prev,next today',
         center: 'title',
-        right: 'resourceTimelineDay,resourceTimelineThreeDays,timeGridWeek,dayGridMonth'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       },
-      initialView: 'resourceTimelineDay',
-      views: {
-        resourceTimelineThreeDays: {
-          type: 'resourceTimeline',
-          duration: { days: 3 },
-          buttonText: '3 days'
-        }
-      },
-      resourceAreaHeaderContent: 'Rooms',
-
-      resources: { // you can also specify a plain string like 'json/resources.json'
-        url: 'json/resources.json',
+      initialDate: '2020-09-12',
+      editable: true,
+      navLinks: true, // can click day/week names to navigate views
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: {
+        url: 'php/get-events.php',
         failure: function() {
-          document.getElementById('script-warning').style.display = 'block';
+          document.getElementById('script-warning').style.display = 'block'
         }
       },
-
-      events: { // you can also specify a plain string like 'json/events-for-resources.json'
-        url: 'json/events-for-resources.json',
-        failure: function() {
-          document.getElementById('script-warning').style.display = 'block';
-        }
+      loading: function(bool) {
+        document.getElementById('loading').style.display =
+          bool ? 'block' : 'none';
       }
     });
 
@@ -78,7 +65,8 @@
 
   #calendar {
     max-width: 1100px;
-    margin: 50px auto;
+    margin: 40px auto;
+    padding: 0 10px;
   }
 
 </style>
@@ -86,7 +74,7 @@
 <body>
 
   <div id='script-warning'>
-    This page should be running from a webserver, to allow fetching from the <code>json/</code> directory.
+    <code>php/get-events.php</code> must be running.
   </div>
 
   <div id='loading'>loading...</div>

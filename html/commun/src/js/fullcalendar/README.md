@@ -1,14 +1,11 @@
 
-# FullCalendar Scheduler
+# FullCalendar [![Build Status](https://travis-ci.com/fullcalendar/fullcalendar.svg?branch=master)](https://travis-ci.com/fullcalendar/fullcalendar)
 
-A premium add-on to [FullCalendar](http://fullcalendar.io/) for displaying events and resources.
+A full-sized drag & drop JavaScript event calendar
 
-- [Project website and demos](http://fullcalendar.io/scheduler)
-- [License](http://fullcalendar.io/scheduler/license)
-- [Changelog](CHANGELOG.md)
+- [Project website and demos](http://fullcalendar.io/)
+- [Documentation](http://fullcalendar.io/docs)
+- [Support](http://fullcalendar.io/support)
 - [Contributing](CONTRIBUTING.md)
-
-
-## Development Setup
-
-This repo is not capable of building dist files on its own. You must develop in the [main fullcalendar repo](https://github.com/fullcalendar/fullcalendar), which is a monorepo that references this one via git submodules.
+- [Changelog](CHANGELOG.md)
+- [License](LICENSE.txt)

@@ -31,7 +31,7 @@ class video {
             });
         </script>
         <?php
-        echo tags::tag("video", ["id" => $id, "class" => "video-js vjs-default-skin", "controls" => "true", "preload" => "auto", "width" => "600", "data-setup" => "{'language':'fr'}"], tags::tag("source", ["src" => $src, "type" => mime_content_type($src)]));
+        echo tags::tag("video", ["id" => $id, "class" => "video-js vjs-default-skin vjs-big-play-centered", "controls" => "true", "preload" => "auto", "width" => "600", "data-setup" => "{'language':'fr'}"], tags::tag("source", ["src" => $src, "type" => mime_content_type($src)]));
     }
 
 }

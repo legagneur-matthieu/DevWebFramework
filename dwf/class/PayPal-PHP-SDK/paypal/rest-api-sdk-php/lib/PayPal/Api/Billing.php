@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string billing_agreement_id
  */
-class Billing extends PayPalModel {
-
+class Billing extends PayPalModel
+{
     /**
      * Identifier of the instrument in PayPal Wallet
      *
@@ -24,7 +24,8 @@ class Billing extends PayPalModel {
      * 
      * @return $this
      */
-    public function setBillingAgreementId($billing_agreement_id) {
+    public function setBillingAgreementId($billing_agreement_id)
+    {
         $this->billing_agreement_id = $billing_agreement_id;
         return $this;
     }
@@ -34,7 +35,8 @@ class Billing extends PayPalModel {
      *
      * @return string
      */
-    public function getBillingAgreementId() {
+    public function getBillingAgreementId()
+    {
         return $this->billing_agreement_id;
     }
 

@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property string national_number
  * @property string extension
  */
-class Phone extends PayPalModel {
-
+class Phone extends PayPalModel
+{
     /**
      * Country code (from in E.164 format)
      *
@@ -24,7 +24,8 @@ class Phone extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCountryCode($country_code) {
+    public function setCountryCode($country_code)
+    {
         $this->country_code = $country_code;
         return $this;
     }
@@ -34,7 +35,8 @@ class Phone extends PayPalModel {
      *
      * @return string
      */
-    public function getCountryCode() {
+    public function getCountryCode()
+    {
         return $this->country_code;
     }
 
@@ -45,7 +47,8 @@ class Phone extends PayPalModel {
      * 
      * @return $this
      */
-    public function setNationalNumber($national_number) {
+    public function setNationalNumber($national_number)
+    {
         $this->national_number = $national_number;
         return $this;
     }
@@ -55,7 +58,8 @@ class Phone extends PayPalModel {
      *
      * @return string
      */
-    public function getNationalNumber() {
+    public function getNationalNumber()
+    {
         return $this->national_number;
     }
 
@@ -66,7 +70,8 @@ class Phone extends PayPalModel {
      * 
      * @return $this
      */
-    public function setExtension($extension) {
+    public function setExtension($extension)
+    {
         $this->extension = $extension;
         return $this;
     }
@@ -76,7 +81,8 @@ class Phone extends PayPalModel {
      *
      * @return string
      */
-    public function getExtension() {
+    public function getExtension()
+    {
         return $this->extension;
     }
 

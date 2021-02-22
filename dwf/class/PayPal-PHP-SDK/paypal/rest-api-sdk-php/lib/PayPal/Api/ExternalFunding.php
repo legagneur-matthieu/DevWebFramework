@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Amount amount
  * @property string funding_instruction
  */
-class ExternalFunding extends PayPalModel {
-
+class ExternalFunding extends PayPalModel
+{
     /**
      * Unique identifier for the external funding
      *
@@ -27,7 +27,8 @@ class ExternalFunding extends PayPalModel {
      * 
      * @return $this
      */
-    public function setReferenceId($reference_id) {
+    public function setReferenceId($reference_id)
+    {
         $this->reference_id = $reference_id;
         return $this;
     }
@@ -37,7 +38,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return string
      */
-    public function getReferenceId() {
+    public function getReferenceId()
+    {
         return $this->reference_id;
     }
 
@@ -48,7 +50,8 @@ class ExternalFunding extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCode($code) {
+    public function setCode($code)
+    {
         $this->code = $code;
         return $this;
     }
@@ -58,7 +61,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return string
      */
-    public function getCode() {
+    public function getCode()
+    {
         return $this->code;
     }
 
@@ -69,7 +73,8 @@ class ExternalFunding extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFundingAccountId($funding_account_id) {
+    public function setFundingAccountId($funding_account_id)
+    {
         $this->funding_account_id = $funding_account_id;
         return $this;
     }
@@ -79,7 +84,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return string
      */
-    public function getFundingAccountId() {
+    public function getFundingAccountId()
+    {
         return $this->funding_account_id;
     }
 
@@ -90,7 +96,8 @@ class ExternalFunding extends PayPalModel {
      * 
      * @return $this
      */
-    public function setDisplayText($display_text) {
+    public function setDisplayText($display_text)
+    {
         $this->display_text = $display_text;
         return $this;
     }
@@ -100,7 +107,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return string
      */
-    public function getDisplayText() {
+    public function getDisplayText()
+    {
         return $this->display_text;
     }
 
@@ -111,7 +119,8 @@ class ExternalFunding extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -121,7 +130,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return \PayPal\Api\Amount
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
@@ -133,7 +143,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return $this
      */
-    public function setFundingInstruction($funding_instruction) {
+    public function setFundingInstruction($funding_instruction)
+    {
         $this->funding_instruction = $funding_instruction;
         return $this;
     }
@@ -143,8 +154,8 @@ class ExternalFunding extends PayPalModel {
      *
      * @return string
      */
-    public function getFundingInstruction() {
+    public function getFundingInstruction()
+    {
         return $this->funding_instruction;
     }
-
 }

@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string field_name
  * @property \PayPal\Api\TemplateSettingsMetadata display_preference
  */
-class TemplateSettings extends PayPalModel {
-
+class TemplateSettings extends PayPalModel
+{
     /**
      * The field name (for any field in template_data) for which the corresponding display preferences will be mapped to.
      *
@@ -23,7 +23,8 @@ class TemplateSettings extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFieldName($field_name) {
+    public function setFieldName($field_name)
+    {
         $this->field_name = $field_name;
         return $this;
     }
@@ -33,7 +34,8 @@ class TemplateSettings extends PayPalModel {
      *
      * @return string
      */
-    public function getFieldName() {
+    public function getFieldName()
+    {
         return $this->field_name;
     }
 
@@ -44,7 +46,8 @@ class TemplateSettings extends PayPalModel {
      * 
      * @return $this
      */
-    public function setDisplayPreference($display_preference) {
+    public function setDisplayPreference($display_preference)
+    {
         $this->display_preference = $display_preference;
         return $this;
     }
@@ -54,7 +57,8 @@ class TemplateSettings extends PayPalModel {
      *
      * @return \PayPal\Api\TemplateSettingsMetadata
      */
-    public function getDisplayPreference() {
+    public function getDisplayPreference()
+    {
         return $this->display_preference;
     }
 

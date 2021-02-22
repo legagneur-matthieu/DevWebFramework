@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property string name
  * @property string description
  */
-class FmfDetails extends PayPalModel {
-
+class FmfDetails extends PayPalModel
+{
     /**
      * Type of filter.
      * Valid Values: ["ACCEPT", "PENDING", "DENY", "REPORT"]
@@ -26,7 +26,8 @@ class FmfDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFilterType($filter_type) {
+    public function setFilterType($filter_type)
+    {
         $this->filter_type = $filter_type;
         return $this;
     }
@@ -36,7 +37,8 @@ class FmfDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getFilterType() {
+    public function getFilterType()
+    {
         return $this->filter_type;
     }
 
@@ -48,7 +50,8 @@ class FmfDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFilterId($filter_id) {
+    public function setFilterId($filter_id)
+    {
         $this->filter_id = $filter_id;
         return $this;
     }
@@ -58,7 +61,8 @@ class FmfDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getFilterId() {
+    public function getFilterId()
+    {
         return $this->filter_id;
     }
 
@@ -69,7 +73,8 @@ class FmfDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -79,7 +84,8 @@ class FmfDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -90,7 +96,8 @@ class FmfDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
@@ -100,7 +107,8 @@ class FmfDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 

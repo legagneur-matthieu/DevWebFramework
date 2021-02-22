@@ -12,8 +12,8 @@ namespace PayPal\Api;
  * @property string phone
  * @property string type
  */
-class Address extends BaseAddress {
-
+class Address extends BaseAddress
+{
     /**
      * Phone number in E.123 format. 50 characters max.
      *
@@ -21,7 +21,8 @@ class Address extends BaseAddress {
      * 
      * @return $this
      */
-    public function setPhone($phone) {
+    public function setPhone($phone)
+    {
         $this->phone = $phone;
         return $this;
     }
@@ -31,7 +32,8 @@ class Address extends BaseAddress {
      *
      * @return string
      */
-    public function getPhone() {
+    public function getPhone()
+    {
         return $this->phone;
     }
 
@@ -42,7 +44,8 @@ class Address extends BaseAddress {
      *
      * @return $this
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -52,8 +55,8 @@ class Address extends BaseAddress {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
-
 }

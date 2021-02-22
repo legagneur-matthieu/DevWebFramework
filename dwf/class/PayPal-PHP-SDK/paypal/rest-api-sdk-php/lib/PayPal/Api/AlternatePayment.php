@@ -17,8 +17,8 @@ use PayPal\Common\PayPalModel;
  * @property string external_customer_id
  * @property string alternate_payment_provider_id
  */
-class AlternatePayment extends PayPalModel {
-
+class AlternatePayment extends PayPalModel
+{
     /**
      * The unique identifier of the alternate payment account.
      *
@@ -26,7 +26,8 @@ class AlternatePayment extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAlternatePaymentAccountId($alternate_payment_account_id) {
+    public function setAlternatePaymentAccountId($alternate_payment_account_id)
+    {
         $this->alternate_payment_account_id = $alternate_payment_account_id;
         return $this;
     }
@@ -36,7 +37,8 @@ class AlternatePayment extends PayPalModel {
      *
      * @return string
      */
-    public function getAlternatePaymentAccountId() {
+    public function getAlternatePaymentAccountId()
+    {
         return $this->alternate_payment_account_id;
     }
 
@@ -47,7 +49,8 @@ class AlternatePayment extends PayPalModel {
      * 
      * @return $this
      */
-    public function setExternalCustomerId($external_customer_id) {
+    public function setExternalCustomerId($external_customer_id)
+    {
         $this->external_customer_id = $external_customer_id;
         return $this;
     }
@@ -57,7 +60,8 @@ class AlternatePayment extends PayPalModel {
      *
      * @return string
      */
-    public function getExternalCustomerId() {
+    public function getExternalCustomerId()
+    {
         return $this->external_customer_id;
     }
 
@@ -68,7 +72,8 @@ class AlternatePayment extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAlternatePaymentProviderId($alternate_payment_provider_id) {
+    public function setAlternatePaymentProviderId($alternate_payment_provider_id)
+    {
         $this->alternate_payment_provider_id = $alternate_payment_provider_id;
         return $this;
     }
@@ -78,7 +83,8 @@ class AlternatePayment extends PayPalModel {
      *
      * @return string
      */
-    public function getAlternatePaymentProviderId() {
+    public function getAlternatePaymentProviderId()
+    {
         return $this->alternate_payment_provider_id;
     }
 

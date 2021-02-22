@@ -18,8 +18,8 @@ use PayPal\Validation\NumericValidator;
  * @property \PayPal\Api\number percent
  * @property \PayPal\Api\Currency amount
  */
-class Tax extends PayPalModel {
-
+class Tax extends PayPalModel
+{
     /**
      * The resource ID.
      *
@@ -27,7 +27,8 @@ class Tax extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -37,7 +38,8 @@ class Tax extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -48,7 +50,8 @@ class Tax extends PayPalModel {
      * 
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -58,7 +61,8 @@ class Tax extends PayPalModel {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -69,7 +73,8 @@ class Tax extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPercent($percent) {
+    public function setPercent($percent)
+    {
         NumericValidator::validate($percent, "Percent");
         $percent = FormatConverter::formatToPrice($percent);
         $this->percent = $percent;
@@ -81,7 +86,8 @@ class Tax extends PayPalModel {
      *
      * @return string
      */
-    public function getPercent() {
+    public function getPercent()
+    {
         return $this->percent;
     }
 
@@ -92,7 +98,8 @@ class Tax extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -102,7 +109,8 @@ class Tax extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 

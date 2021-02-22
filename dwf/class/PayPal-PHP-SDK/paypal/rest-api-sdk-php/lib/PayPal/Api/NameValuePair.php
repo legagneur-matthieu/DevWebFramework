@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string name
  * @property string value
  */
-class NameValuePair extends PayPalModel {
-
+class NameValuePair extends PayPalModel
+{
     /**
      * Key for the name value pair.  The value name types should be correlated 
      *
@@ -23,7 +23,8 @@ class NameValuePair extends PayPalModel {
      * 
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -33,7 +34,8 @@ class NameValuePair extends PayPalModel {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -44,7 +46,8 @@ class NameValuePair extends PayPalModel {
      * 
      * @return $this
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->value = $value;
         return $this;
     }
@@ -54,7 +57,8 @@ class NameValuePair extends PayPalModel {
      *
      * @return string
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 

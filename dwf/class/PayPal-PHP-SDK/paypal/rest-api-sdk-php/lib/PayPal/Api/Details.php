@@ -22,8 +22,8 @@ use PayPal\Validation\NumericValidator;
  * @property string gift_wrap
  * @property string fee
  */
-class Details extends PayPalModel {
-
+class Details extends PayPalModel
+{
     /**
      * Amount of the subtotal of the items. **Required** if line items are specified. 10 characters max, with support for 2 decimal places.
      *
@@ -31,7 +31,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setSubtotal($subtotal) {
+    public function setSubtotal($subtotal)
+    {
         NumericValidator::validate($subtotal, "Subtotal");
         $subtotal = FormatConverter::formatToPrice($subtotal);
         $this->subtotal = $subtotal;
@@ -43,7 +44,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getSubtotal() {
+    public function getSubtotal()
+    {
         return $this->subtotal;
     }
 
@@ -54,7 +56,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setShipping($shipping) {
+    public function setShipping($shipping)
+    {
         NumericValidator::validate($shipping, "Shipping");
         $shipping = FormatConverter::formatToPrice($shipping);
         $this->shipping = $shipping;
@@ -66,7 +69,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getShipping() {
+    public function getShipping()
+    {
         return $this->shipping;
     }
 
@@ -77,7 +81,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTax($tax) {
+    public function setTax($tax)
+    {
         NumericValidator::validate($tax, "Tax");
         $tax = FormatConverter::formatToPrice($tax);
         $this->tax = $tax;
@@ -89,7 +94,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getTax() {
+    public function getTax()
+    {
         return $this->tax;
     }
 
@@ -100,7 +106,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setHandlingFee($handling_fee) {
+    public function setHandlingFee($handling_fee)
+    {
         NumericValidator::validate($handling_fee, "Handling Fee");
         $handling_fee = FormatConverter::formatToPrice($handling_fee);
         $this->handling_fee = $handling_fee;
@@ -112,7 +119,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getHandlingFee() {
+    public function getHandlingFee()
+    {
         return $this->handling_fee;
     }
 
@@ -123,7 +131,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setShippingDiscount($shipping_discount) {
+    public function setShippingDiscount($shipping_discount)
+    {
         NumericValidator::validate($shipping_discount, "Shipping Discount");
         $shipping_discount = FormatConverter::formatToPrice($shipping_discount);
         $this->shipping_discount = $shipping_discount;
@@ -135,7 +144,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getShippingDiscount() {
+    public function getShippingDiscount()
+    {
         return $this->shipping_discount;
     }
 
@@ -146,7 +156,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setInsurance($insurance) {
+    public function setInsurance($insurance)
+    {
         NumericValidator::validate($insurance, "Insurance");
         $insurance = FormatConverter::formatToPrice($insurance);
         $this->insurance = $insurance;
@@ -158,7 +169,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getInsurance() {
+    public function getInsurance()
+    {
         return $this->insurance;
     }
 
@@ -169,7 +181,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setGiftWrap($gift_wrap) {
+    public function setGiftWrap($gift_wrap)
+    {
         NumericValidator::validate($gift_wrap, "Gift Wrap");
         $gift_wrap = FormatConverter::formatToPrice($gift_wrap);
         $this->gift_wrap = $gift_wrap;
@@ -181,7 +194,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getGiftWrap() {
+    public function getGiftWrap()
+    {
         return $this->gift_wrap;
     }
 
@@ -192,7 +206,8 @@ class Details extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFee($fee) {
+    public function setFee($fee)
+    {
         NumericValidator::validate($fee, "Fee");
         $fee = FormatConverter::formatToPrice($fee);
         $this->fee = $fee;
@@ -204,7 +219,8 @@ class Details extends PayPalModel {
      *
      * @return string
      */
-    public function getFee() {
+    public function getFee()
+    {
         return $this->fee;
     }
 

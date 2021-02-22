@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string charge_id
  * @property \PayPal\Api\Currency amount
  */
-class OverrideChargeModel extends PayPalModel {
-
+class OverrideChargeModel extends PayPalModel
+{
     /**
      * ID of charge model.
      *
@@ -23,7 +23,8 @@ class OverrideChargeModel extends PayPalModel {
      * 
      * @return $this
      */
-    public function setChargeId($charge_id) {
+    public function setChargeId($charge_id)
+    {
         $this->charge_id = $charge_id;
         return $this;
     }
@@ -33,7 +34,8 @@ class OverrideChargeModel extends PayPalModel {
      *
      * @return string
      */
-    public function getChargeId() {
+    public function getChargeId()
+    {
         return $this->charge_id;
     }
 
@@ -44,7 +46,8 @@ class OverrideChargeModel extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -54,7 +57,8 @@ class OverrideChargeModel extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 

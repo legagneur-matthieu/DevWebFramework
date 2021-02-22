@@ -21,8 +21,8 @@ use PayPal\Rest\ApiContext;
  * @property \PayPal\Api\Template[] templates
  * @property \PayPal\Api\Links[] links
  */
-class Templates extends PayPalResourceModel {
-
+class Templates extends PayPalResourceModel
+{
     /**
      * List of addresses in merchant's profile.
      *
@@ -30,7 +30,8 @@ class Templates extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setAddresses($addresses) {
+    public function setAddresses($addresses)
+    {
         $this->addresses = $addresses;
         return $this;
     }
@@ -40,7 +41,8 @@ class Templates extends PayPalResourceModel {
      *
      * @return \PayPal\Api\Address[]
      */
-    public function getAddresses() {
+    public function getAddresses()
+    {
         return $this->addresses;
     }
 
@@ -50,12 +52,13 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Address $address
      * @return $this
      */
-    public function addAddress($address) {
+    public function addAddress($address)
+    {
         if (!$this->getAddresses()) {
             return $this->setAddresses(array($address));
         } else {
             return $this->setAddresses(
-                            array_merge($this->getAddresses(), array($address))
+                array_merge($this->getAddresses(), array($address))
             );
         }
     }
@@ -66,9 +69,10 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Address $address
      * @return $this
      */
-    public function removeAddress($address) {
+    public function removeAddress($address)
+    {
         return $this->setAddresses(
-                        array_diff($this->getAddresses(), array($address))
+            array_diff($this->getAddresses(), array($address))
         );
     }
 
@@ -79,7 +83,8 @@ class Templates extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setEmails($emails) {
+    public function setEmails($emails)
+    {
         $this->emails = $emails;
         return $this;
     }
@@ -89,7 +94,8 @@ class Templates extends PayPalResourceModel {
      *
      * @return string[]
      */
-    public function getEmails() {
+    public function getEmails()
+    {
         return $this->emails;
     }
 
@@ -99,12 +105,13 @@ class Templates extends PayPalResourceModel {
      * @param string $string
      * @return $this
      */
-    public function addEmail($string) {
+    public function addEmail($string)
+    {
         if (!$this->getEmails()) {
             return $this->setEmails(array($string));
         } else {
             return $this->setEmails(
-                            array_merge($this->getEmails(), array($string))
+                array_merge($this->getEmails(), array($string))
             );
         }
     }
@@ -115,9 +122,10 @@ class Templates extends PayPalResourceModel {
      * @param string $string
      * @return $this
      */
-    public function removeEmail($string) {
+    public function removeEmail($string)
+    {
         return $this->setEmails(
-                        array_diff($this->getEmails(), array($string))
+            array_diff($this->getEmails(), array($string))
         );
     }
 
@@ -128,7 +136,8 @@ class Templates extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setPhones($phones) {
+    public function setPhones($phones)
+    {
         $this->phones = $phones;
         return $this;
     }
@@ -138,7 +147,8 @@ class Templates extends PayPalResourceModel {
      *
      * @return \PayPal\Api\Phone[]
      */
-    public function getPhones() {
+    public function getPhones()
+    {
         return $this->phones;
     }
 
@@ -148,12 +158,13 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Phone $phone
      * @return $this
      */
-    public function addPhone($phone) {
+    public function addPhone($phone)
+    {
         if (!$this->getPhones()) {
             return $this->setPhones(array($phone));
         } else {
             return $this->setPhones(
-                            array_merge($this->getPhones(), array($phone))
+                array_merge($this->getPhones(), array($phone))
             );
         }
     }
@@ -164,9 +175,10 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Phone $phone
      * @return $this
      */
-    public function removePhone($phone) {
+    public function removePhone($phone)
+    {
         return $this->setPhones(
-                        array_diff($this->getPhones(), array($phone))
+            array_diff($this->getPhones(), array($phone))
         );
     }
 
@@ -177,7 +189,8 @@ class Templates extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setTemplates($templates) {
+    public function setTemplates($templates)
+    {
         $this->templates = $templates;
         return $this;
     }
@@ -187,7 +200,8 @@ class Templates extends PayPalResourceModel {
      *
      * @return \PayPal\Api\Template[]
      */
-    public function getTemplates() {
+    public function getTemplates()
+    {
         return $this->templates;
     }
 
@@ -197,12 +211,13 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Template $template
      * @return $this
      */
-    public function addTemplate($template) {
+    public function addTemplate($template)
+    {
         if (!$this->getTemplates()) {
             return $this->setTemplates(array($template));
         } else {
             return $this->setTemplates(
-                            array_merge($this->getTemplates(), array($template))
+                array_merge($this->getTemplates(), array($template))
             );
         }
     }
@@ -213,9 +228,10 @@ class Templates extends PayPalResourceModel {
      * @param \PayPal\Api\Template $template
      * @return $this
      */
-    public function removeTemplate($template) {
+    public function removeTemplate($template)
+    {
         return $this->setTemplates(
-                        array_diff($this->getTemplates(), array($template))
+            array_diff($this->getTemplates(), array($template))
         );
     }
 
@@ -229,11 +245,17 @@ class Templates extends PayPalResourceModel {
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
      * @return Template
      */
-    public static function get($templateId, $apiContext = null, $restCall = null) {
+    public static function get($templateId, $apiContext = null, $restCall = null)
+    {
         ArgumentValidator::validate($templateId, 'templateId');
         $payLoad = "";
         $json = self::executeCall(
-                        "/v1/invoicing/templates/$templateId", "GET", $payLoad, null, $apiContext, $restCall
+            "/v1/invoicing/templates/$templateId",
+            "GET",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
         );
         $ret = new Template();
         $ret->fromJson($json);
@@ -248,18 +270,23 @@ class Templates extends PayPalResourceModel {
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
      * @return Templates
      */
-    public static function getAll($params = array(), $apiContext = null, $restCall = null) {
+    public static function getAll($params = array(), $apiContext = null, $restCall = null)
+    {
         ArgumentValidator::validate($params, 'params');
         $payLoad = "";
         $allowedParams = array(
-            'fields' => 1,
-        );
+          'fields' => 1,
+      );
         $json = self::executeCall(
-                        "/v1/invoicing/templates/" . "?" . http_build_query(array_intersect_key($params, $allowedParams)), "GET", $payLoad, null, $apiContext, $restCall
+            "/v1/invoicing/templates/" . "?" . http_build_query(array_intersect_key($params, $allowedParams)),
+            "GET",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
         );
         $ret = new Templates();
         $ret->fromJson($json);
         return $ret;
     }
-
 }

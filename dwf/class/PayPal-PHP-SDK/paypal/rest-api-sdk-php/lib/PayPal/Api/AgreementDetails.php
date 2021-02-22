@@ -20,8 +20,8 @@ use PayPal\Common\PayPalModel;
  * @property string final_payment_date
  * @property string failed_payment_count
  */
-class AgreementDetails extends PayPalModel {
-
+class AgreementDetails extends PayPalModel
+{
     /**
      * The outstanding balance for this agreement.
      *
@@ -29,7 +29,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setOutstandingBalance($outstanding_balance) {
+    public function setOutstandingBalance($outstanding_balance)
+    {
         $this->outstanding_balance = $outstanding_balance;
         return $this;
     }
@@ -39,7 +40,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getOutstandingBalance() {
+    public function getOutstandingBalance()
+    {
         return $this->outstanding_balance;
     }
 
@@ -50,7 +52,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCyclesRemaining($cycles_remaining) {
+    public function setCyclesRemaining($cycles_remaining)
+    {
         $this->cycles_remaining = $cycles_remaining;
         return $this;
     }
@@ -60,7 +63,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getCyclesRemaining() {
+    public function getCyclesRemaining()
+    {
         return $this->cycles_remaining;
     }
 
@@ -71,7 +75,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCyclesCompleted($cycles_completed) {
+    public function setCyclesCompleted($cycles_completed)
+    {
         $this->cycles_completed = $cycles_completed;
         return $this;
     }
@@ -81,7 +86,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getCyclesCompleted() {
+    public function getCyclesCompleted()
+    {
         return $this->cycles_completed;
     }
 
@@ -92,7 +98,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setNextBillingDate($next_billing_date) {
+    public function setNextBillingDate($next_billing_date)
+    {
         $this->next_billing_date = $next_billing_date;
         return $this;
     }
@@ -102,7 +109,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getNextBillingDate() {
+    public function getNextBillingDate()
+    {
         return $this->next_billing_date;
     }
 
@@ -113,7 +121,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastPaymentDate($last_payment_date) {
+    public function setLastPaymentDate($last_payment_date)
+    {
         $this->last_payment_date = $last_payment_date;
         return $this;
     }
@@ -123,7 +132,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getLastPaymentDate() {
+    public function getLastPaymentDate()
+    {
         return $this->last_payment_date;
     }
 
@@ -134,7 +144,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastPaymentAmount($last_payment_amount) {
+    public function setLastPaymentAmount($last_payment_amount)
+    {
         $this->last_payment_amount = $last_payment_amount;
         return $this;
     }
@@ -144,7 +155,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getLastPaymentAmount() {
+    public function getLastPaymentAmount()
+    {
         return $this->last_payment_amount;
     }
 
@@ -155,7 +167,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFinalPaymentDate($final_payment_date) {
+    public function setFinalPaymentDate($final_payment_date)
+    {
         $this->final_payment_date = $final_payment_date;
         return $this;
     }
@@ -165,7 +178,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getFinalPaymentDate() {
+    public function getFinalPaymentDate()
+    {
         return $this->final_payment_date;
     }
 
@@ -176,7 +190,8 @@ class AgreementDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFailedPaymentCount($failed_payment_count) {
+    public function setFailedPaymentCount($failed_payment_count)
+    {
         $this->failed_payment_count = $failed_payment_count;
         return $this;
     }
@@ -186,7 +201,8 @@ class AgreementDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getFailedPaymentCount() {
+    public function getFailedPaymentCount()
+    {
         return $this->failed_payment_count;
     }
 

@@ -18,8 +18,8 @@ use PayPal\Validation\ArgumentValidator;
  * @property \PayPal\Api\PayoutItem[] items
  * @property \PayPal\Api\Links[] links
  */
-class Payout extends PayPalResourceModel {
-
+class Payout extends PayPalResourceModel
+{
     /**
      * The original batch header as provided by the payment sender.
      *
@@ -27,7 +27,8 @@ class Payout extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setSenderBatchHeader($sender_batch_header) {
+    public function setSenderBatchHeader($sender_batch_header)
+    {
         $this->sender_batch_header = $sender_batch_header;
         return $this;
     }
@@ -37,7 +38,8 @@ class Payout extends PayPalResourceModel {
      *
      * @return \PayPal\Api\PayoutSenderBatchHeader
      */
-    public function getSenderBatchHeader() {
+    public function getSenderBatchHeader()
+    {
         return $this->sender_batch_header;
     }
 
@@ -48,7 +50,8 @@ class Payout extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setItems($items) {
+    public function setItems($items)
+    {
         $this->items = $items;
         return $this;
     }
@@ -58,7 +61,8 @@ class Payout extends PayPalResourceModel {
      *
      * @return \PayPal\Api\PayoutItem[]
      */
-    public function getItems() {
+    public function getItems()
+    {
         return $this->items;
     }
 
@@ -68,12 +72,13 @@ class Payout extends PayPalResourceModel {
      * @param \PayPal\Api\PayoutItem $payoutItem
      * @return $this
      */
-    public function addItem($payoutItem) {
+    public function addItem($payoutItem)
+    {
         if (!$this->getItems()) {
             return $this->setItems(array($payoutItem));
         } else {
             return $this->setItems(
-                            array_merge($this->getItems(), array($payoutItem))
+                array_merge($this->getItems(), array($payoutItem))
             );
         }
     }
@@ -84,9 +89,10 @@ class Payout extends PayPalResourceModel {
      * @param \PayPal\Api\PayoutItem $payoutItem
      * @return $this
      */
-    public function removeItem($payoutItem) {
+    public function removeItem($payoutItem)
+    {
         return $this->setItems(
-                        array_diff($this->getItems(), array($payoutItem))
+            array_diff($this->getItems(), array($payoutItem))
         );
     }
 
@@ -98,7 +104,8 @@ class Payout extends PayPalResourceModel {
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
      * @return PayoutBatch
      */
-    public function create($params = array(), $apiContext = null, $restCall = null) {
+    public function create($params = array(), $apiContext = null, $restCall = null)
+    {
         $params = $params ? $params : array();
         ArgumentValidator::validate($params, 'params');
         $payLoad = $this->toJSON();
@@ -106,7 +113,12 @@ class Payout extends PayPalResourceModel {
             'sync_mode' => 1,
         );
         $json = self::executeCall(
-                        "/v1/payments/payouts" . "?" . http_build_query(array_intersect_key($params, $allowedParams)), "POST", $payLoad, null, $apiContext, $restCall
+            "/v1/payments/payouts" . "?" . http_build_query(array_intersect_key($params, $allowedParams)),
+            "POST",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
         );
         $ret = new PayoutBatch();
         $ret->fromJson($json);
@@ -120,7 +132,8 @@ class Payout extends PayPalResourceModel {
      * @param PayPalRestCall $restCall
      * @return PayoutBatch
      */
-    public function createSynchronous($apiContext = null, $restCall = null) {
+    public function createSynchronous($apiContext = null, $restCall = null)
+    {
         $params = array('sync_mode' => 'true');
         return $this->create($params, $apiContext, $restCall);
     }
@@ -133,11 +146,17 @@ class Payout extends PayPalResourceModel {
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
      * @return PayoutBatch
      */
-    public static function get($payoutBatchId, $apiContext = null, $restCall = null) {
+    public static function get($payoutBatchId, $apiContext = null, $restCall = null)
+    {
         ArgumentValidator::validate($payoutBatchId, 'payoutBatchId');
         $payLoad = "";
         $json = self::executeCall(
-                        "/v1/payments/payouts/$payoutBatchId", "GET", $payLoad, null, $apiContext, $restCall
+            "/v1/payments/payouts/$payoutBatchId",
+            "GET",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
         );
         $ret = new PayoutBatch();
         $ret->fromJson($json);

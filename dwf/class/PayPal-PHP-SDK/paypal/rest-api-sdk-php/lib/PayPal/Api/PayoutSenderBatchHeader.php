@@ -16,8 +16,8 @@ use PayPal\Common\PayPalModel;
  * @property string recipient_type
  * @property string batch_status
  */
-class PayoutSenderBatchHeader extends PayPalModel {
-
+class PayoutSenderBatchHeader extends PayPalModel
+{
     /**
      * A sender-specified ID number. Tracks the batch payout in an accounting system.<blockquote><strong>Note:</strong> PayPal prevents duplicate batches from being processed. If you specify a `sender_batch_id` that was used in the last 30 days, the API rejects the request and returns an error message that indicates the duplicate `sender_batch_id` and includes a HATEOAS link to the original batch payout with the same `sender_batch_id`. If you receive a HTTP `5nn` status code, you can safely retry the request with the same `sender_batch_id`. In any case, the API completes a payment only once for a specific `sender_batch_id` that is used within 30 days.</blockquote>
      *
@@ -25,7 +25,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
      * 
      * @return $this
      */
-    public function setSenderBatchId($sender_batch_id) {
+    public function setSenderBatchId($sender_batch_id)
+    {
         $this->sender_batch_id = $sender_batch_id;
         return $this;
     }
@@ -35,7 +36,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
      *
      * @return string
      */
-    public function getSenderBatchId() {
+    public function getSenderBatchId()
+    {
         return $this->sender_batch_id;
     }
 
@@ -46,7 +48,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
      * 
      * @return $this
      */
-    public function setEmailSubject($email_subject) {
+    public function setEmailSubject($email_subject)
+    {
         $this->email_subject = $email_subject;
         return $this;
     }
@@ -56,7 +59,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
      *
      * @return string
      */
-    public function getEmailSubject() {
+    public function getEmailSubject()
+    {
         return $this->email_subject;
     }
 
@@ -67,7 +71,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
      * 
      * @return $this
      */
-    public function setRecipientType($recipient_type) {
+    public function setRecipientType($recipient_type)
+    {
         $this->recipient_type = $recipient_type;
         return $this;
     }
@@ -77,14 +82,16 @@ class PayoutSenderBatchHeader extends PayPalModel {
      *
      * @return string
      */
-    public function getRecipientType() {
+    public function getRecipientType()
+    {
         return $this->recipient_type;
     }
 
     /**
      * @deprecated This property is unused
      */
-    public function setBatchStatus($batch_status) {
+    public function setBatchStatus($batch_status)
+    {
         $this->batch_status = $batch_status;
         return $this;
     }
@@ -92,7 +99,8 @@ class PayoutSenderBatchHeader extends PayPalModel {
     /**
      * @deprecated This property is unused
      */
-    public function getBatchStatus() {
+    public function getBatchStatus()
+    {
         return $this->batch_status;
     }
 

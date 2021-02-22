@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string verification_status
  */
-class VerifyWebhookSignatureResponse extends PayPalModel {
-
+class VerifyWebhookSignatureResponse extends PayPalModel
+{
     /**
      * The status of the signature verification. Value is `SUCCESS` or `FAILURE`.
      * Valid Values: ["SUCCESS", "FAILURE"]
@@ -23,7 +23,8 @@ class VerifyWebhookSignatureResponse extends PayPalModel {
      * 
      * @return $this
      */
-    public function setVerificationStatus($verification_status) {
+    public function setVerificationStatus($verification_status)
+    {
         $this->verification_status = $verification_status;
         return $this;
     }
@@ -33,7 +34,8 @@ class VerifyWebhookSignatureResponse extends PayPalModel {
      *
      * @return string
      */
-    public function getVerificationStatus() {
+    public function getVerificationStatus()
+    {
         return $this->verification_status;
     }
 

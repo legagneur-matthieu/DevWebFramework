@@ -17,15 +17,16 @@ use PayPal\Common\PayPalModel;
  * @property string postal_code
  * @property string country
  */
-class OpenIdAddress extends PayPalModel {
-
+class OpenIdAddress extends PayPalModel
+{
     /**
      * Full street address component, which may include house number, street name.
      *
      * @param string $street_address
      * @return self
      */
-    public function setStreetAddress($street_address) {
+    public function setStreetAddress($street_address)
+    {
         $this->street_address = $street_address;
         return $this;
     }
@@ -35,7 +36,8 @@ class OpenIdAddress extends PayPalModel {
      *
      * @return string
      */
-    public function getStreetAddress() {
+    public function getStreetAddress()
+    {
         return $this->street_address;
     }
 
@@ -45,7 +47,8 @@ class OpenIdAddress extends PayPalModel {
      * @param string $locality
      * @return self
      */
-    public function setLocality($locality) {
+    public function setLocality($locality)
+    {
         $this->locality = $locality;
         return $this;
     }
@@ -55,7 +58,8 @@ class OpenIdAddress extends PayPalModel {
      *
      * @return string
      */
-    public function getLocality() {
+    public function getLocality()
+    {
         return $this->locality;
     }
 
@@ -65,7 +69,8 @@ class OpenIdAddress extends PayPalModel {
      * @param string $region
      * @return self
      */
-    public function setRegion($region) {
+    public function setRegion($region)
+    {
         $this->region = $region;
         return $this;
     }
@@ -75,7 +80,8 @@ class OpenIdAddress extends PayPalModel {
      *
      * @return string
      */
-    public function getRegion() {
+    public function getRegion()
+    {
         return $this->region;
     }
 
@@ -85,7 +91,8 @@ class OpenIdAddress extends PayPalModel {
      * @param string $postal_code
      * @return self
      */
-    public function setPostalCode($postal_code) {
+    public function setPostalCode($postal_code)
+    {
         $this->postal_code = $postal_code;
         return $this;
     }
@@ -95,7 +102,8 @@ class OpenIdAddress extends PayPalModel {
      *
      * @return string
      */
-    public function getPostalCode() {
+    public function getPostalCode()
+    {
         return $this->postal_code;
     }
 
@@ -105,7 +113,8 @@ class OpenIdAddress extends PayPalModel {
      * @param string $country
      * @return self
      */
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
@@ -115,8 +124,10 @@ class OpenIdAddress extends PayPalModel {
      *
      * @return string
      */
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
+
 
 }

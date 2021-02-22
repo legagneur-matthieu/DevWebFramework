@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property int count
  * @property string next_id
  */
-class PaymentHistory extends PayPalModel {
-
+class PaymentHistory extends PayPalModel
+{
     /**
      * A list of Payment resources
      *
@@ -24,7 +24,8 @@ class PaymentHistory extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPayments($payments) {
+    public function setPayments($payments)
+    {
         $this->payments = $payments;
         return $this;
     }
@@ -34,7 +35,8 @@ class PaymentHistory extends PayPalModel {
      *
      * @return \PayPal\Api\Payment[]
      */
-    public function getPayments() {
+    public function getPayments()
+    {
         return $this->payments;
     }
 
@@ -44,12 +46,13 @@ class PaymentHistory extends PayPalModel {
      * @param \PayPal\Api\Payment $payment
      * @return $this
      */
-    public function addPayment($payment) {
+    public function addPayment($payment)
+    {
         if (!$this->getPayments()) {
             return $this->setPayments(array($payment));
         } else {
             return $this->setPayments(
-                            array_merge($this->getPayments(), array($payment))
+                array_merge($this->getPayments(), array($payment))
             );
         }
     }
@@ -60,9 +63,10 @@ class PaymentHistory extends PayPalModel {
      * @param \PayPal\Api\Payment $payment
      * @return $this
      */
-    public function removePayment($payment) {
+    public function removePayment($payment)
+    {
         return $this->setPayments(
-                        array_diff($this->getPayments(), array($payment))
+            array_diff($this->getPayments(), array($payment))
         );
     }
 
@@ -73,7 +77,8 @@ class PaymentHistory extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCount($count) {
+    public function setCount($count)
+    {
         $this->count = $count;
         return $this;
     }
@@ -83,7 +88,8 @@ class PaymentHistory extends PayPalModel {
      *
      * @return int
      */
-    public function getCount() {
+    public function getCount()
+    {
         return $this->count;
     }
 
@@ -94,7 +100,8 @@ class PaymentHistory extends PayPalModel {
      * 
      * @return $this
      */
-    public function setNextId($next_id) {
+    public function setNextId($next_id)
+    {
         $this->next_id = $next_id;
         return $this;
     }
@@ -104,7 +111,8 @@ class PaymentHistory extends PayPalModel {
      *
      * @return string
      */
-    public function getNextId() {
+    public function getNextId()
+    {
         return $this->next_id;
     }
 

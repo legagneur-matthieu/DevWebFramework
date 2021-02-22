@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string country_code
  */
-class CountryCode extends PayPalModel {
-
+class CountryCode extends PayPalModel
+{
     /**
      * ISO country code based on 2-character IS0-3166-1 codes.
      *
@@ -22,7 +22,8 @@ class CountryCode extends PayPalModel {
      *
      * @return $this
      */
-    public function setCountryCode($country_code) {
+    public function setCountryCode($country_code)
+    {
         $this->country_code = $country_code;
         return $this;
     }
@@ -32,7 +33,8 @@ class CountryCode extends PayPalModel {
      *
      * @return string
      */
-    public function getCountryCode() {
+    public function getCountryCode()
+    {
         return $this->country_code;
     }
 

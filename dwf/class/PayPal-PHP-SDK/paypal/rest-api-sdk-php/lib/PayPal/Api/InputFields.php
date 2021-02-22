@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property int no_shipping
  * @property int address_override
  */
-class InputFields extends PayPalModel {
-
+class InputFields extends PayPalModel
+{
     /**
      * Indicates whether the buyer can enter a note to the merchant on the PayPal page during checkout.
      *
@@ -24,7 +24,8 @@ class InputFields extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAllowNote($allow_note) {
+    public function setAllowNote($allow_note)
+    {
         $this->allow_note = $allow_note;
         return $this;
     }
@@ -34,7 +35,8 @@ class InputFields extends PayPalModel {
      *
      * @return bool
      */
-    public function getAllowNote() {
+    public function getAllowNote()
+    {
         return $this->allow_note;
     }
 
@@ -45,7 +47,8 @@ class InputFields extends PayPalModel {
      * 
      * @return $this
      */
-    public function setNoShipping($no_shipping) {
+    public function setNoShipping($no_shipping)
+    {
         $this->no_shipping = $no_shipping;
         return $this;
     }
@@ -55,7 +58,8 @@ class InputFields extends PayPalModel {
      *
      * @return int
      */
-    public function getNoShipping() {
+    public function getNoShipping()
+    {
         return $this->no_shipping;
     }
 
@@ -66,7 +70,8 @@ class InputFields extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAddressOverride($address_override) {
+    public function setAddressOverride($address_override)
+    {
         $this->address_override = $address_override;
         return $this;
     }
@@ -76,7 +81,8 @@ class InputFields extends PayPalModel {
      *
      * @return int
      */
-    public function getAddressOverride() {
+    public function getAddressOverride()
+    {
         return $this->address_override;
     }
 

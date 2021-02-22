@@ -17,8 +17,8 @@ use PayPal\Common\PayPalModel;
  * @property string phone_source
  * @property \PayPal\Api\CountryCode country_code
  */
-class CarrierAccount extends PayPalModel {
-
+class CarrierAccount extends PayPalModel
+{
     /**
      * The ID of the carrier account of the payer. Use in subsequent REST API calls. For example, to make payments.
      *
@@ -26,7 +26,8 @@ class CarrierAccount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -36,7 +37,8 @@ class CarrierAccount extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -47,7 +49,8 @@ class CarrierAccount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPhoneNumber($phone_number) {
+    public function setPhoneNumber($phone_number)
+    {
         $this->phone_number = $phone_number;
         return $this;
     }
@@ -57,7 +60,8 @@ class CarrierAccount extends PayPalModel {
      *
      * @return string
      */
-    public function getPhoneNumber() {
+    public function getPhoneNumber()
+    {
         return $this->phone_number;
     }
 
@@ -68,7 +72,8 @@ class CarrierAccount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setExternalCustomerId($external_customer_id) {
+    public function setExternalCustomerId($external_customer_id)
+    {
         $this->external_customer_id = $external_customer_id;
         return $this;
     }
@@ -78,7 +83,8 @@ class CarrierAccount extends PayPalModel {
      *
      * @return string
      */
-    public function getExternalCustomerId() {
+    public function getExternalCustomerId()
+    {
         return $this->external_customer_id;
     }
 
@@ -90,7 +96,8 @@ class CarrierAccount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPhoneSource($phone_source) {
+    public function setPhoneSource($phone_source)
+    {
         $this->phone_source = $phone_source;
         return $this;
     }
@@ -100,7 +107,8 @@ class CarrierAccount extends PayPalModel {
      *
      * @return string
      */
-    public function getPhoneSource() {
+    public function getPhoneSource()
+    {
         return $this->phone_source;
     }
 
@@ -111,7 +119,8 @@ class CarrierAccount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCountryCode($country_code) {
+    public function setCountryCode($country_code)
+    {
         $this->country_code = $country_code;
         return $this;
     }
@@ -121,7 +130,8 @@ class CarrierAccount extends PayPalModel {
      *
      * @return \PayPal\Api\CountryCode
      */
-    public function getCountryCode() {
+    public function getCountryCode()
+    {
         return $this->country_code;
     }
 

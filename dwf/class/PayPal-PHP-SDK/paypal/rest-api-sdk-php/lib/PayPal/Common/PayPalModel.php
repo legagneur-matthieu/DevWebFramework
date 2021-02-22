@@ -9,7 +9,8 @@ use PayPal\Validation\JsonValidator;
  * Stores all member data in a Hashmap that enables easy
  * JSON encoding/decoding
  */
-class PayPalModel {
+class PayPalModel
+{
 
     private $_propMap = array();
 
@@ -26,7 +27,8 @@ class PayPalModel {
      * @deprecated Pass ApiContext to create/get methods instead
      * @param \PayPal\Auth\OAuthTokenCredential $credential
      */
-    public static function setCredential($credential) {
+    public static function setCredential($credential)
+    {
         self::$credential = $credential;
     }
 
@@ -39,7 +41,8 @@ class PayPalModel {
      * @param array|string|null $data
      * @throws \InvalidArgumentException
      */
-    public function __construct($data = null) {
+    public function __construct($data = null)
+    {
         switch (gettype($data)) {
             case "NULL":
                 break;
@@ -61,7 +64,8 @@ class PayPalModel {
      * @param mixed $data Array object or json string representation
      * @return array
      */
-    public static function getList($data) {
+    public static function getList($data)
+    {
         // Return Null if Null
         if ($data === null) {
             return null;
@@ -104,7 +108,8 @@ class PayPalModel {
      * @param $key
      * @return mixed
      */
-    public function __get($key) {
+    public function __get($key)
+    {
         if ($this->__isset($key)) {
             return $this->_propMap[$key];
         }
@@ -117,7 +122,8 @@ class PayPalModel {
      * @param $key
      * @param $value
      */
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         if (!is_array($value) && $value === null) {
             $this->__unset($key);
         } else {
@@ -131,7 +137,8 @@ class PayPalModel {
      * @param $key
      * @return mixed
      */
-    private function convertToCamelCase($key) {
+    private function convertToCamelCase($key)
+    {
         return str_replace(' ', '', ucwords(str_replace(array('_', '-'), ' ', $key)));
     }
 
@@ -141,7 +148,8 @@ class PayPalModel {
      * @param $key
      * @return bool
      */
-    public function __isset($key) {
+    public function __isset($key)
+    {
         return isset($this->_propMap[$key]);
     }
 
@@ -150,7 +158,8 @@ class PayPalModel {
      *
      * @param $key
      */
-    public function __unset($key) {
+    public function __unset($key)
+    {
         unset($this->_propMap[$key]);
     }
 
@@ -160,7 +169,8 @@ class PayPalModel {
      * @param $param
      * @return array
      */
-    private function _convertToArray($param) {
+    private function _convertToArray($param)
+    {
         $ret = array();
         foreach ($param as $k => $v) {
             if ($v instanceof PayPalModel) {
@@ -188,7 +198,8 @@ class PayPalModel {
      * @param $arr
      * @return $this
      */
-    public function fromArray($arr) {
+    public function fromArray($arr)
+    {
         if (!empty($arr)) {
             // Iterate over each element in array
             foreach ($arr as $k => $v) {
@@ -237,8 +248,9 @@ class PayPalModel {
         return $this;
     }
 
-    private function assignValue($key, $value) {
-        $setter = 'set' . $this->convertToCamelCase($key);
+    private function assignValue($key, $value)
+    {
+        $setter = 'set'. $this->convertToCamelCase($key);
         // If we find the setter, use that, otherwise use magic method.
         if (method_exists($this, $setter)) {
             $this->$setter($value);
@@ -253,7 +265,8 @@ class PayPalModel {
      * @param $json
      * @return $this
      */
-    public function fromJson($json) {
+    public function fromJson($json)
+    {
         return $this->fromArray(json_decode($json, true));
     }
 
@@ -262,7 +275,8 @@ class PayPalModel {
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return $this->_convertToArray($this->_propMap);
     }
 
@@ -272,7 +286,8 @@ class PayPalModel {
      * @param int $options http://php.net/manual/en/json.constants.php
      * @return string
      */
-    public function toJSON($options = 0) {
+    public function toJSON($options = 0)
+    {
         // Because of PHP Version 5.3, we cannot use JSON_UNESCAPED_SLASHES option
         // Instead we would use the str_replace command for now.
         // TODO: Replace this code with return json_encode($this->toArray(), $options | 64); once we support PHP >= 5.4
@@ -287,8 +302,8 @@ class PayPalModel {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toJSON(128);
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * API handler for OAuth Token Request REST API calls
  */
@@ -16,8 +15,8 @@ use PayPal\Exception\PayPalMissingCredentialException;
 /**
  * Class OauthHandler
  */
-class OauthHandler implements IPayPalHandler {
-
+class OauthHandler implements IPayPalHandler
+{
     /**
      * Private Variable
      *
@@ -30,7 +29,8 @@ class OauthHandler implements IPayPalHandler {
      *
      * @param \Paypal\Rest\ApiContext $apiContext
      */
-    public function __construct($apiContext) {
+    public function __construct($apiContext)
+    {
         $this->apiContext = $apiContext;
     }
 
@@ -43,18 +43,19 @@ class OauthHandler implements IPayPalHandler {
      * @throws PayPalInvalidCredentialException
      * @throws PayPalMissingCredentialException
      */
-    public function handle($httpConfig, $request, $options) {
+    public function handle($httpConfig, $request, $options)
+    {
         $config = $this->apiContext->getConfig();
 
         $httpConfig->setUrl(
-                rtrim(trim($this->_getEndpoint($config)), '/') .
-                (isset($options['path']) ? $options['path'] : '')
+            rtrim(trim($this->_getEndpoint($config)), '/') .
+            (isset($options['path']) ? $options['path'] : '')
         );
 
         $headers = array(
-            "User-Agent" => PayPalUserAgent::getValue(PayPalConstants::SDK_NAME, PayPalConstants::SDK_VERSION),
+            "User-Agent"    => PayPalUserAgent::getValue(PayPalConstants::SDK_NAME, PayPalConstants::SDK_VERSION),
             "Authorization" => "Basic " . base64_encode($options['clientId'] . ":" . $options['clientSecret']),
-            "Accept" => "*/*"
+            "Accept"        => "*/*"
         );
         $httpConfig->setHeaders($headers);
 
@@ -73,7 +74,8 @@ class OauthHandler implements IPayPalHandler {
      * @return PayPalHttpConfig
      * @throws \PayPal\Exception\PayPalConfigurationException
      */
-    private static function _getEndpoint($config) {
+    private static function _getEndpoint($config)
+    {
         if (isset($config['oauth.EndPoint'])) {
             $baseEndpoint = $config['oauth.EndPoint'];
         } elseif (isset($config['service.EndPoint'])) {
@@ -98,5 +100,4 @@ class OauthHandler implements IPayPalHandler {
 
         return $baseEndpoint;
     }
-
 }

@@ -20,8 +20,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Currency amount
  * @property \PayPal\Api\ChargeModel[] charge_models
  */
-class PaymentDefinition extends PayPalModel {
-
+class PaymentDefinition extends PayPalModel
+{
     /**
      * Identifier of the payment_definition. 128 characters max.
      *
@@ -29,7 +29,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -39,7 +40,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -50,7 +52,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -60,7 +63,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -71,7 +75,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -81,7 +86,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -92,7 +98,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFrequencyInterval($frequency_interval) {
+    public function setFrequencyInterval($frequency_interval)
+    {
         $this->frequency_interval = $frequency_interval;
         return $this;
     }
@@ -102,7 +109,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getFrequencyInterval() {
+    public function getFrequencyInterval()
+    {
         return $this->frequency_interval;
     }
 
@@ -113,7 +121,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFrequency($frequency) {
+    public function setFrequency($frequency)
+    {
         $this->frequency = $frequency;
         return $this;
     }
@@ -123,7 +132,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getFrequency() {
+    public function getFrequency()
+    {
         return $this->frequency;
     }
 
@@ -134,7 +144,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCycles($cycles) {
+    public function setCycles($cycles)
+    {
         $this->cycles = $cycles;
         return $this;
     }
@@ -144,7 +155,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return string
      */
-    public function getCycles() {
+    public function getCycles()
+    {
         return $this->cycles;
     }
 
@@ -155,7 +167,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -165,7 +178,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
@@ -176,7 +190,8 @@ class PaymentDefinition extends PayPalModel {
      * 
      * @return $this
      */
-    public function setChargeModels($charge_models) {
+    public function setChargeModels($charge_models)
+    {
         $this->charge_models = $charge_models;
         return $this;
     }
@@ -186,7 +201,8 @@ class PaymentDefinition extends PayPalModel {
      *
      * @return \PayPal\Api\ChargeModel[]
      */
-    public function getChargeModels() {
+    public function getChargeModels()
+    {
         return $this->charge_models;
     }
 
@@ -196,12 +212,13 @@ class PaymentDefinition extends PayPalModel {
      * @param \PayPal\Api\ChargeModel $chargeModel
      * @return $this
      */
-    public function addChargeModel($chargeModel) {
+    public function addChargeModel($chargeModel)
+    {
         if (!$this->getChargeModels()) {
             return $this->setChargeModels(array($chargeModel));
         } else {
             return $this->setChargeModels(
-                            array_merge($this->getChargeModels(), array($chargeModel))
+                array_merge($this->getChargeModels(), array($chargeModel))
             );
         }
     }
@@ -212,9 +229,10 @@ class PaymentDefinition extends PayPalModel {
      * @param \PayPal\Api\ChargeModel $chargeModel
      * @return $this
      */
-    public function removeChargeModel($chargeModel) {
+    public function removeChargeModel($chargeModel)
+    {
         return $this->setChargeModels(
-                        array_diff($this->getChargeModels(), array($chargeModel))
+            array_diff($this->getChargeModels(), array($chargeModel))
         );
     }
 

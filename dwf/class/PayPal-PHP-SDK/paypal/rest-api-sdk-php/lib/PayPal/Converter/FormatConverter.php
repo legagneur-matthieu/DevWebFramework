@@ -2,8 +2,8 @@
 
 namespace PayPal\Converter;
 
-class FormatConverter {
-
+class FormatConverter
+{
     /**
      * Format the data based on the input formatter value
      *
@@ -11,7 +11,8 @@ class FormatConverter {
      * @param $formatter
      * @return string
      */
-    public static function format($value, $formatter) {
+    public static function format($value, $formatter)
+    {
         return sprintf($formatter, $value);
     }
 
@@ -24,7 +25,8 @@ class FormatConverter {
      * @param int $decimals
      * @return null|string
      */
-    public static function formatToNumber($value, $decimals = 2) {
+    public static function formatToNumber($value, $decimals = 2)
+    {
         if (trim($value) != null) {
             return number_format($value, $decimals, '.', '');
         }
@@ -41,7 +43,8 @@ class FormatConverter {
      * @param null $currency
      * @return null|string
      */
-    public static function formatToPrice($value, $currency = null) {
+    public static function formatToPrice($value, $currency = null)
+    {
         $decimals = 2;
         $currencyDecimals = array('JPY' => 0, 'TWD' => 0, 'HUF' => 0);
         if ($currency && array_key_exists($currency, $currencyDecimals)) {
@@ -56,5 +59,4 @@ class FormatConverter {
         }
         return self::formatToNumber($value, $decimals);
     }
-
 }

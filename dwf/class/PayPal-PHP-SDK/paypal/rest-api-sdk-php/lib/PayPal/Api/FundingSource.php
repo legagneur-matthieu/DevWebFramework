@@ -21,8 +21,8 @@ use PayPal\Common\PayPalModel;
  * @property string additional_text
  * @property \PayPal\Api\Links[] links
  */
-class FundingSource extends FundingInstrument {
-
+class FundingSource extends FundingInstrument
+{
     /**
      * specifies funding mode of the instrument
      * Valid Values: ["INSTANT_TRANSFER", "MANUAL_BANK_TRANSFER", "DELAYED_TRANSFER", "ECHECK", "PAY_UPON_INVOICE"]
@@ -31,7 +31,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setFundingMode($funding_mode) {
+    public function setFundingMode($funding_mode)
+    {
         $this->funding_mode = $funding_mode;
         return $this;
     }
@@ -41,7 +42,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return string
      */
-    public function getFundingMode() {
+    public function getFundingMode()
+    {
         return $this->funding_mode;
     }
 
@@ -53,7 +55,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setFundingInstrumentType($funding_instrument_type) {
+    public function setFundingInstrumentType($funding_instrument_type)
+    {
         $this->funding_instrument_type = $funding_instrument_type;
         return $this;
     }
@@ -63,7 +66,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return string
      */
-    public function getFundingInstrumentType() {
+    public function getFundingInstrumentType()
+    {
         return $this->funding_instrument_type;
     }
 
@@ -74,7 +78,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setSoftDescriptor($soft_descriptor) {
+    public function setSoftDescriptor($soft_descriptor)
+    {
         $this->soft_descriptor = $soft_descriptor;
         return $this;
     }
@@ -84,7 +89,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return string
      */
-    public function getSoftDescriptor() {
+    public function getSoftDescriptor()
+    {
         return $this->soft_descriptor;
     }
 
@@ -95,7 +101,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -105,7 +112,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
@@ -116,7 +124,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setNegativeBalanceAmount($negative_balance_amount) {
+    public function setNegativeBalanceAmount($negative_balance_amount)
+    {
         $this->negative_balance_amount = $negative_balance_amount;
         return $this;
     }
@@ -126,7 +135,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getNegativeBalanceAmount() {
+    public function getNegativeBalanceAmount()
+    {
         return $this->negative_balance_amount;
     }
 
@@ -137,7 +147,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setLegalText($legal_text) {
+    public function setLegalText($legal_text)
+    {
         $this->legal_text = $legal_text;
         return $this;
     }
@@ -147,7 +158,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return string
      */
-    public function getLegalText() {
+    public function getLegalText()
+    {
         return $this->legal_text;
     }
 
@@ -158,7 +170,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setFundingDetail($funding_detail) {
+    public function setFundingDetail($funding_detail)
+    {
         $this->funding_detail = $funding_detail;
         return $this;
     }
@@ -168,7 +181,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return \PayPal\Api\FundingDetail
      */
-    public function getFundingDetail() {
+    public function getFundingDetail()
+    {
         return $this->funding_detail;
     }
 
@@ -179,7 +193,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setAdditionalText($additional_text) {
+    public function setAdditionalText($additional_text)
+    {
         $this->additional_text = $additional_text;
         return $this;
     }
@@ -189,7 +204,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return string
      */
-    public function getAdditionalText() {
+    public function getAdditionalText()
+    {
         return $this->additional_text;
     }
 
@@ -202,7 +218,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return $this
      */
-    public function setExtends($extends) {
+    public function setExtends($extends)
+    {
         $this->extends = $extends;
         return $this;
     }
@@ -214,7 +231,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return \PayPal\Api\FundingInstrument
      */
-    public function getExtends() {
+    public function getExtends()
+    {
         return $this->extends;
     }
 
@@ -225,7 +243,8 @@ class FundingSource extends FundingInstrument {
      * 
      * @return $this
      */
-    public function setLinks($links) {
+    public function setLinks($links)
+    {
         $this->links = $links;
         return $this;
     }
@@ -235,7 +254,8 @@ class FundingSource extends FundingInstrument {
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks() {
+    public function getLinks()
+    {
         return $this->links;
     }
 
@@ -245,12 +265,13 @@ class FundingSource extends FundingInstrument {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function addLink($links) {
+    public function addLink($links)
+    {
         if (!$this->getLinks()) {
             return $this->setLinks(array($links));
         } else {
             return $this->setLinks(
-                            array_merge($this->getLinks(), array($links))
+                array_merge($this->getLinks(), array($links))
             );
         }
     }
@@ -261,9 +282,10 @@ class FundingSource extends FundingInstrument {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function removeLink($links) {
+    public function removeLink($links)
+    {
         return $this->setLinks(
-                        array_diff($this->getLinks(), array($links))
+            array_diff($this->getLinks(), array($links))
         );
     }
 

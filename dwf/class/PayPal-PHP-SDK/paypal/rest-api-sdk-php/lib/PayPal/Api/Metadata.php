@@ -23,8 +23,8 @@ use PayPal\Validation\UrlValidator;
  * @property string last_sent_by
  * @property string payer_view_url
  */
-class Metadata extends PayPalModel {
-
+class Metadata extends PayPalModel
+{
     /**
      * The date and time when the resource was created.
      *
@@ -32,7 +32,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCreatedDate($created_date) {
+    public function setCreatedDate($created_date)
+    {
         $this->created_date = $created_date;
         return $this;
     }
@@ -42,7 +43,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getCreatedDate() {
+    public function getCreatedDate()
+    {
         return $this->created_date;
     }
 
@@ -53,7 +55,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCreatedBy($created_by) {
+    public function setCreatedBy($created_by)
+    {
         $this->created_by = $created_by;
         return $this;
     }
@@ -63,7 +66,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getCreatedBy() {
+    public function getCreatedBy()
+    {
         return $this->created_by;
     }
 
@@ -74,7 +78,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCancelledDate($cancelled_date) {
+    public function setCancelledDate($cancelled_date)
+    {
         $this->cancelled_date = $cancelled_date;
         return $this;
     }
@@ -84,7 +89,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getCancelledDate() {
+    public function getCancelledDate()
+    {
         return $this->cancelled_date;
     }
 
@@ -95,7 +101,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setCancelledBy($cancelled_by) {
+    public function setCancelledBy($cancelled_by)
+    {
         $this->cancelled_by = $cancelled_by;
         return $this;
     }
@@ -105,7 +112,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getCancelledBy() {
+    public function getCancelledBy()
+    {
         return $this->cancelled_by;
     }
 
@@ -116,7 +124,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastUpdatedDate($last_updated_date) {
+    public function setLastUpdatedDate($last_updated_date)
+    {
         $this->last_updated_date = $last_updated_date;
         return $this;
     }
@@ -126,7 +135,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getLastUpdatedDate() {
+    public function getLastUpdatedDate()
+    {
         return $this->last_updated_date;
     }
 
@@ -137,7 +147,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastUpdatedBy($last_updated_by) {
+    public function setLastUpdatedBy($last_updated_by)
+    {
         $this->last_updated_by = $last_updated_by;
         return $this;
     }
@@ -147,7 +158,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getLastUpdatedBy() {
+    public function getLastUpdatedBy()
+    {
         return $this->last_updated_by;
     }
 
@@ -158,7 +170,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFirstSentDate($first_sent_date) {
+    public function setFirstSentDate($first_sent_date)
+    {
         $this->first_sent_date = $first_sent_date;
         return $this;
     }
@@ -168,7 +181,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getFirstSentDate() {
+    public function getFirstSentDate()
+    {
         return $this->first_sent_date;
     }
 
@@ -179,7 +193,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastSentDate($last_sent_date) {
+    public function setLastSentDate($last_sent_date)
+    {
         $this->last_sent_date = $last_sent_date;
         return $this;
     }
@@ -189,7 +204,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getLastSentDate() {
+    public function getLastSentDate()
+    {
         return $this->last_sent_date;
     }
 
@@ -200,7 +216,8 @@ class Metadata extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastSentBy($last_sent_by) {
+    public function setLastSentBy($last_sent_by)
+    {
         $this->last_sent_by = $last_sent_by;
         return $this;
     }
@@ -210,7 +227,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getLastSentBy() {
+    public function getLastSentBy()
+    {
         return $this->last_sent_by;
     }
 
@@ -221,7 +239,8 @@ class Metadata extends PayPalModel {
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setPayerViewUrl($payer_view_url) {
+    public function setPayerViewUrl($payer_view_url)
+    {
         UrlValidator::validate($payer_view_url, "PayerViewUrl");
         $this->payer_view_url = $payer_view_url;
         return $this;
@@ -232,7 +251,8 @@ class Metadata extends PayPalModel {
      *
      * @return string
      */
-    public function getPayerViewUrl() {
+    public function getPayerViewUrl()
+    {
         return $this->payer_view_url;
     }
 

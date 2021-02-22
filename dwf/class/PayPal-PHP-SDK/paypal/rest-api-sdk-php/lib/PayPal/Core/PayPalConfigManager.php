@@ -10,7 +10,8 @@ namespace PayPal\Core;
  *
  * @package PayPal\Core
  */
-class PayPalConfigManager {
+class PayPalConfigManager
+{
 
     /**
      * Configuration Options
@@ -30,11 +31,13 @@ class PayPalConfigManager {
     /**
      * Private Constructor
      */
-    private function __construct() {
+    private function __construct()
+    {
         if (defined('PP_CONFIG_PATH')) {
             $configFile = constant('PP_CONFIG_PATH') . '/sdk_config.ini';
         } else {
-            $configFile = implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), "..", "config", "sdk_config.ini"));
+            $configFile = implode(DIRECTORY_SEPARATOR,
+                array(dirname(__FILE__), "..", "config", "sdk_config.ini"));
         }
         if (file_exists($configFile)) {
             $this->addConfigFromIni($configFile);
@@ -46,7 +49,8 @@ class PayPalConfigManager {
      *
      * @return $this
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!isset(self::$instance)) {
             self::$instance = new self();
         }
@@ -59,7 +63,8 @@ class PayPalConfigManager {
      * @param string $fileName
      * @return $this
      */
-    public function addConfigFromIni($fileName) {
+    public function addConfigFromIni($fileName)
+    {
         if ($configs = parse_ini_file($fileName)) {
             $this->addConfigs($configs);
         }
@@ -74,7 +79,8 @@ class PayPalConfigManager {
      * @param array $configs
      * @return $this
      */
-    public function addConfigs($configs = array()) {
+    public function addConfigs($configs = array())
+    {
         $this->configs = $configs + $this->configs;
         return $this;
     }
@@ -87,7 +93,8 @@ class PayPalConfigManager {
      * @param string $searchKey
      * @return array
      */
-    public function get($searchKey) {
+    public function get($searchKey)
+    {
         if (array_key_exists($searchKey, $this->configs)) {
             return $this->configs[$searchKey];
         } else {
@@ -114,7 +121,8 @@ class PayPalConfigManager {
      * @param string|null $userId
      * @return array|string
      */
-    public function getIniPrefix($userId = null) {
+    public function getIniPrefix($userId = null)
+    {
         if ($userId == null) {
             $arr = array();
             foreach ($this->configs as $key => $value) {
@@ -136,15 +144,16 @@ class PayPalConfigManager {
     /**
      * returns the config file hashmap
      */
-    public function getConfigHashmap() {
+    public function getConfigHashmap()
+    {
         return $this->configs;
     }
 
     /**
      * Disabling __clone call
      */
-    public function __clone() {
+    public function __clone()
+    {
         trigger_error('Clone is not allowed.', E_USER_ERROR);
     }
-
 }

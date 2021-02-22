@@ -16,8 +16,8 @@ use PayPal\Common\PayPalResourceModel;
  * @property int total_items
  * @property int total_pages
  */
-class CreditCardList extends PayPalResourceModel {
-
+class CreditCardList extends PayPalResourceModel
+{
     /**
      * A list of credit card resources
      *
@@ -25,7 +25,8 @@ class CreditCardList extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setItems($items) {
+    public function setItems($items)
+    {
         $this->items = $items;
         return $this;
     }
@@ -35,7 +36,8 @@ class CreditCardList extends PayPalResourceModel {
      *
      * @return \PayPal\Api\CreditCard[]
      */
-    public function getItems() {
+    public function getItems()
+    {
         return $this->items;
     }
 
@@ -45,12 +47,13 @@ class CreditCardList extends PayPalResourceModel {
      * @param \PayPal\Api\CreditCard $creditCard
      * @return $this
      */
-    public function addItem($creditCard) {
+    public function addItem($creditCard)
+    {
         if (!$this->getItems()) {
             return $this->setItems(array($creditCard));
         } else {
             return $this->setItems(
-                            array_merge($this->getItems(), array($creditCard))
+                array_merge($this->getItems(), array($creditCard))
             );
         }
     }
@@ -61,9 +64,10 @@ class CreditCardList extends PayPalResourceModel {
      * @param \PayPal\Api\CreditCard $creditCard
      * @return $this
      */
-    public function removeItem($creditCard) {
+    public function removeItem($creditCard)
+    {
         return $this->setItems(
-                        array_diff($this->getItems(), array($creditCard))
+            array_diff($this->getItems(), array($creditCard))
         );
     }
 
@@ -74,7 +78,8 @@ class CreditCardList extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setTotalItems($total_items) {
+    public function setTotalItems($total_items)
+    {
         $this->total_items = $total_items;
         return $this;
     }
@@ -84,7 +89,8 @@ class CreditCardList extends PayPalResourceModel {
      *
      * @return int
      */
-    public function getTotalItems() {
+    public function getTotalItems()
+    {
         return $this->total_items;
     }
 
@@ -95,7 +101,8 @@ class CreditCardList extends PayPalResourceModel {
      * 
      * @return $this
      */
-    public function setTotalPages($total_pages) {
+    public function setTotalPages($total_pages)
+    {
         $this->total_pages = $total_pages;
         return $this;
     }
@@ -105,7 +112,8 @@ class CreditCardList extends PayPalResourceModel {
      *
      * @return int
      */
-    public function getTotalPages() {
+    public function getTotalPages()
+    {
         return $this->total_pages;
     }
 

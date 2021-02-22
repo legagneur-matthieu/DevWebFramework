@@ -11,8 +11,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string image
  */
-class Image extends PayPalModel {
-
+class Image extends PayPalModel
+{
     /**
      * List of invoices belonging to a merchant.
      *
@@ -20,7 +20,8 @@ class Image extends PayPalModel {
      * 
      * @return $this
      */
-    public function setImage($imageBase64String) {
+    public function setImage($imageBase64String)
+    {
         $this->image = $imageBase64String;
         return $this;
     }
@@ -30,7 +31,8 @@ class Image extends PayPalModel {
      *
      * @return string
      */
-    public function getImage() {
+    public function getImage()
+    {
         return $this->image;
     }
 
@@ -40,7 +42,8 @@ class Image extends PayPalModel {
      * @param string $name File Name
      * @return string File name
      */
-    public function saveToFile($name = null) {
+    public function saveToFile($name = null)
+    {
         // Self Generate File Location
         if (!$name) {
             $name = uniqid() . '.png';

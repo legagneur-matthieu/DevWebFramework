@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property int total_count
  * @property \PayPal\Api\Invoice[] invoices
  */
-class InvoiceSearchResponse extends PayPalModel {
-
+class InvoiceSearchResponse extends PayPalModel
+{
     /**
      * Total number of invoices.
      *
@@ -23,7 +23,8 @@ class InvoiceSearchResponse extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTotalCount($total_count) {
+    public function setTotalCount($total_count)
+    {
         $this->total_count = $total_count;
         return $this;
     }
@@ -33,7 +34,8 @@ class InvoiceSearchResponse extends PayPalModel {
      *
      * @return int
      */
-    public function getTotalCount() {
+    public function getTotalCount()
+    {
         return $this->total_count;
     }
 
@@ -44,7 +46,8 @@ class InvoiceSearchResponse extends PayPalModel {
      * 
      * @return $this
      */
-    public function setInvoices($invoices) {
+    public function setInvoices($invoices)
+    {
         $this->invoices = $invoices;
         return $this;
     }
@@ -54,7 +57,8 @@ class InvoiceSearchResponse extends PayPalModel {
      *
      * @return \PayPal\Api\Invoice[]
      */
-    public function getInvoices() {
+    public function getInvoices()
+    {
         return $this->invoices;
     }
 
@@ -64,12 +68,13 @@ class InvoiceSearchResponse extends PayPalModel {
      * @param \PayPal\Api\Invoice $invoice
      * @return $this
      */
-    public function addInvoice($invoice) {
+    public function addInvoice($invoice)
+    {
         if (!$this->getInvoices()) {
             return $this->setInvoices(array($invoice));
         } else {
             return $this->setInvoices(
-                            array_merge($this->getInvoices(), array($invoice))
+                array_merge($this->getInvoices(), array($invoice))
             );
         }
     }
@@ -80,9 +85,10 @@ class InvoiceSearchResponse extends PayPalModel {
      * @param \PayPal\Api\Invoice $invoice
      * @return $this
      */
-    public function removeInvoice($invoice) {
+    public function removeInvoice($invoice)
+    {
         return $this->setInvoices(
-                        array_diff($this->getInvoices(), array($invoice))
+            array_diff($this->getInvoices(), array($invoice))
         );
     }
 

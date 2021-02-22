@@ -11,16 +11,16 @@ use Psr\Log\LoggerInterface;
  *
  * @package PayPal\Log
  */
-class PayPalDefaultLogFactory implements PayPalLogFactory {
-
+class PayPalDefaultLogFactory implements PayPalLogFactory
+{
     /**
      * Returns logger instance implementing LoggerInterface.
      *
      * @param string $className
      * @return LoggerInterface instance of logger object implementing LoggerInterface
      */
-    public function getLogger($className) {
+    public function getLogger($className)
+    {
         return new PayPalLogger($className);
     }
-
 }

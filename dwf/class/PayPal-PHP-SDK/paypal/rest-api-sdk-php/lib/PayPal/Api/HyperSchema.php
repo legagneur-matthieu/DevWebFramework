@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property string pathStart
  * @property string mediaType
  */
-class HyperSchema extends PayPalModel {
-
+class HyperSchema extends PayPalModel
+{
     /**
      * Sets Links
      *
@@ -27,7 +27,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLinks($links) {
+    public function setLinks($links)
+    {
         $this->links = $links;
         return $this;
     }
@@ -37,7 +38,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks() {
+    public function getLinks()
+    {
         return $this->links;
     }
 
@@ -47,12 +49,13 @@ class HyperSchema extends PayPalModel {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function addLink($links) {
+    public function addLink($links)
+    {
         if (!$this->getLinks()) {
             return $this->setLinks(array($links));
         } else {
             return $this->setLinks(
-                            array_merge($this->getLinks(), array($links))
+                array_merge($this->getLinks(), array($links))
             );
         }
     }
@@ -63,9 +66,10 @@ class HyperSchema extends PayPalModel {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function removeLink($links) {
+    public function removeLink($links)
+    {
         return $this->setLinks(
-                        array_diff($this->getLinks(), array($links))
+            array_diff($this->getLinks(), array($links))
         );
     }
 
@@ -76,7 +80,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFragmentResolution($fragmentResolution) {
+    public function setFragmentResolution($fragmentResolution)
+    {
         $this->fragmentResolution = $fragmentResolution;
         return $this;
     }
@@ -86,7 +91,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return string
      */
-    public function getFragmentResolution() {
+    public function getFragmentResolution()
+    {
         return $this->fragmentResolution;
     }
 
@@ -97,7 +103,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setReadonly($readonly) {
+    public function setReadonly($readonly)
+    {
         $this->readonly = $readonly;
         return $this;
     }
@@ -107,7 +114,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return bool
      */
-    public function getReadonly() {
+    public function getReadonly()
+    {
         return $this->readonly;
     }
 
@@ -118,7 +126,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setContentEncoding($contentEncoding) {
+    public function setContentEncoding($contentEncoding)
+    {
         $this->contentEncoding = $contentEncoding;
         return $this;
     }
@@ -128,7 +137,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return string
      */
-    public function getContentEncoding() {
+    public function getContentEncoding()
+    {
         return $this->contentEncoding;
     }
 
@@ -139,7 +149,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPathStart($pathStart) {
+    public function setPathStart($pathStart)
+    {
         $this->pathStart = $pathStart;
         return $this;
     }
@@ -149,7 +160,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return string
      */
-    public function getPathStart() {
+    public function getPathStart()
+    {
         return $this->pathStart;
     }
 
@@ -160,7 +172,8 @@ class HyperSchema extends PayPalModel {
      * 
      * @return $this
      */
-    public function setMediaType($mediaType) {
+    public function setMediaType($mediaType)
+    {
         $this->mediaType = $mediaType;
         return $this;
     }
@@ -170,7 +183,8 @@ class HyperSchema extends PayPalModel {
      *
      * @return string
      */
-    public function getMediaType() {
+    public function getMediaType()
+    {
         return $this->mediaType;
     }
 

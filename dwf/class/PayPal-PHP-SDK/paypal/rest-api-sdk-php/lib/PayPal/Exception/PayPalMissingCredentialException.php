@@ -7,7 +7,8 @@ namespace PayPal\Exception;
  *
  * @package PayPal\Exception
  */
-class PayPalMissingCredentialException extends \Exception {
+class PayPalMissingCredentialException extends \Exception
+{
 
     /**
      * Default Constructor
@@ -15,7 +16,8 @@ class PayPalMissingCredentialException extends \Exception {
      * @param string $message
      * @param int  $code
      */
-    public function __construct($message = null, $code = 0) {
+    public function __construct($message = null, $code = 0)
+    {
         parent::__construct($message, $code);
     }
 
@@ -24,11 +26,11 @@ class PayPalMissingCredentialException extends \Exception {
      *
      * @return string
      */
-    public function errorMessage() {
+    public function errorMessage()
+    {
         $errorMsg = 'Error on line ' . $this->getLine() . ' in ' . $this->getFile()
-                . ': <b>' . $this->getMessage() . '</b>';
+            . ': <b>' . $this->getMessage() . '</b>';
 
         return $errorMsg;
     }
-
 }

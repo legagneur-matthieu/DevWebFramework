@@ -2,6 +2,7 @@
 
 namespace PayPal\Api;
 
+
 /**
  * Class DetailedRefund
  *
@@ -16,8 +17,8 @@ namespace PayPal\Api;
  * @property \PayPal\Api\Currency refund_from_received_amount
  * @property \PayPal\Api\Currency total_refunded_amount
  */
-class DetailedRefund extends Refund {
-
+class DetailedRefund extends Refund
+{
     /**
      * free-form field for the use of clients
      *
@@ -25,7 +26,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setCustom($custom) {
+    public function setCustom($custom)
+    {
         $this->custom = $custom;
         return $this;
     }
@@ -35,7 +37,8 @@ class DetailedRefund extends Refund {
      *
      * @return string
      */
-    public function getCustom() {
+    public function getCustom()
+    {
         return $this->custom;
     }
 
@@ -46,7 +49,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setRefundToPayer($refund_to_payer) {
+    public function setRefundToPayer($refund_to_payer)
+    {
         $this->refund_to_payer = $refund_to_payer;
         return $this;
     }
@@ -56,7 +60,8 @@ class DetailedRefund extends Refund {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getRefundToPayer() {
+    public function getRefundToPayer()
+    {
         return $this->refund_to_payer;
     }
 
@@ -67,7 +72,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setRefundToExternalFunding($refund_to_external_funding) {
+    public function setRefundToExternalFunding($refund_to_external_funding)
+    {
         $this->refund_to_external_funding = $refund_to_external_funding;
         return $this;
     }
@@ -77,7 +83,8 @@ class DetailedRefund extends Refund {
      *
      * @return \PayPal\Api\ExternalFunding[]
      */
-    public function getRefundToExternalFunding() {
+    public function getRefundToExternalFunding()
+    {
         return $this->refund_to_external_funding;
     }
 
@@ -88,7 +95,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setRefundFromTransactionFee($refund_from_transaction_fee) {
+    public function setRefundFromTransactionFee($refund_from_transaction_fee)
+    {
         $this->refund_from_transaction_fee = $refund_from_transaction_fee;
         return $this;
     }
@@ -98,7 +106,8 @@ class DetailedRefund extends Refund {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getRefundFromTransactionFee() {
+    public function getRefundFromTransactionFee()
+    {
         return $this->refund_from_transaction_fee;
     }
 
@@ -109,7 +118,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setRefundFromReceivedAmount($refund_from_received_amount) {
+    public function setRefundFromReceivedAmount($refund_from_received_amount)
+    {
         $this->refund_from_received_amount = $refund_from_received_amount;
         return $this;
     }
@@ -119,7 +129,8 @@ class DetailedRefund extends Refund {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getRefundFromReceivedAmount() {
+    public function getRefundFromReceivedAmount()
+    {
         return $this->refund_from_received_amount;
     }
 
@@ -130,7 +141,8 @@ class DetailedRefund extends Refund {
      * 
      * @return $this
      */
-    public function setTotalRefundedAmount($total_refunded_amount) {
+    public function setTotalRefundedAmount($total_refunded_amount)
+    {
         $this->total_refunded_amount = $total_refunded_amount;
         return $this;
     }
@@ -140,7 +152,8 @@ class DetailedRefund extends Refund {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getTotalRefundedAmount() {
+    public function getTotalRefundedAmount()
+    {
         return $this->total_refunded_amount;
     }
 

@@ -7,8 +7,8 @@ namespace PayPal\Handler;
  *
  * @package PayPal\Handler
  */
-interface IPayPalHandler {
-
+interface IPayPalHandler
+{
     /**
      *
      * @param \Paypal\Core\PayPalHttpConfig $httpConfig

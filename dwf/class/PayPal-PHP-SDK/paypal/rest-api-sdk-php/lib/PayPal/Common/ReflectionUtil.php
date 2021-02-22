@@ -9,7 +9,8 @@ use PayPal\Exception\PayPalConfigurationException;
  *
  * @package PayPal\Common
  */
-class ReflectionUtil {
+class ReflectionUtil
+{
 
     /**
      * Reflection Methods
@@ -25,6 +26,7 @@ class ReflectionUtil {
      */
     private static $propertiesType = array();
 
+
     /**
      * Gets Property Class of the given property.
      * If the class is null, it returns null.
@@ -35,7 +37,8 @@ class ReflectionUtil {
      * @return null|string
      * @throws PayPalConfigurationException
      */
-    public static function getPropertyClass($class, $propertyName) {
+    public static function getPropertyClass($class, $propertyName)
+    {
         if ($class == get_class(new PayPalModel())) {
             // Make it generic if PayPalModel is used for generating this
             return get_class(new PayPalModel());
@@ -66,7 +69,8 @@ class ReflectionUtil {
      * @return null|boolean
      * @throws PayPalConfigurationException
      */
-    public static function isPropertyClassArray($class, $propertyName) {
+    public static function isPropertyClassArray($class, $propertyName)
+    {
         // If the class doesn't exist, or the method doesn't exist, return null.
         if (!class_exists($class) || !method_exists($class, self::getter($class, $propertyName))) {
             return null;
@@ -77,7 +81,7 @@ class ReflectionUtil {
         }
 
         if (isset($param)) {
-            return substr($param, -strlen('[]')) === '[]';
+            return substr($param, -strlen('[]'))==='[]';
         } else {
             throw new PayPalConfigurationException("Getter function for '$propertyName' in '$class' class should have a proper return type.");
         }
@@ -91,17 +95,18 @@ class ReflectionUtil {
      * @throws \RuntimeException
      * @return mixed
      */
-    public static function propertyAnnotations($class, $propertyName) {
+    public static function propertyAnnotations($class, $propertyName)
+    {
         $class = is_object($class) ? get_class($class) : $class;
         if (!class_exists('ReflectionProperty')) {
             throw new \RuntimeException("Property type of " . $class . "::{$propertyName} cannot be resolved");
         }
 
-        if ($annotations = & self::$propertiesType[$class][$propertyName]) {
+        if ($annotations =& self::$propertiesType[$class][$propertyName]) {
             return $annotations;
         }
 
-        if (!($refl = & self::$propertiesRefl[$class][$propertyName])) {
+        if (!($refl =& self::$propertiesRefl[$class][$propertyName])) {
             $getter = self::getter($class, $propertyName);
             $refl = new \ReflectionMethod($class, $getter);
             self::$propertiesRefl[$class][$propertyName] = $refl;
@@ -109,7 +114,10 @@ class ReflectionUtil {
 
         // todo: smarter regexp
         if (!preg_match_all(
-                        '~\@([^\s@\(]+)[\t ]*(?:\(?([^\n@]+)\)?)?~i', $refl->getDocComment(), $annots, PREG_PATTERN_ORDER)) {
+            '~\@([^\s@\(]+)[\t ]*(?:\(?([^\n@]+)\)?)?~i',
+            $refl->getDocComment(),
+            $annots,
+            PREG_PATTERN_ORDER)) {
             return null;
         }
         foreach ($annots[1] as $i => $annot) {
@@ -125,7 +133,8 @@ class ReflectionUtil {
      * @param $match
      * @return string
      */
-    private static function replace_callback($match) {
+    private static function replace_callback($match)
+    {
         return ucwords($match[2]);
     }
 
@@ -137,10 +146,10 @@ class ReflectionUtil {
      * @param string $propertyName
      * @return string getter function name
      */
-    public static function getter($class, $propertyName) {
+    public static function getter($class, $propertyName)
+    {
         return method_exists($class, "get" . ucfirst($propertyName)) ?
-                "get" . ucfirst($propertyName) :
-                "get" . preg_replace_callback("/([_\-\s]?([a-z0-9]+))/", "self::replace_callback", $propertyName);
+            "get" . ucfirst($propertyName) :
+            "get" . preg_replace_callback("/([_\-\s]?([a-z0-9]+))/", "self::replace_callback", $propertyName);
     }
-
 }

@@ -21,8 +21,8 @@ use PayPal\Common\PayPalModel;
  * @property string additional_info
  * @property \PayPal\Api\Address address
  */
-class Participant extends PayPalModel {
-
+class Participant extends PayPalModel
+{
     /**
      * The participant email address.
      *
@@ -30,7 +30,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
@@ -40,7 +41,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
@@ -51,7 +53,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFirstName($first_name) {
+    public function setFirstName($first_name)
+    {
         $this->first_name = $first_name;
         return $this;
     }
@@ -61,7 +64,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->first_name;
     }
 
@@ -72,7 +76,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastName($last_name) {
+    public function setLastName($last_name)
+    {
         $this->last_name = $last_name;
         return $this;
     }
@@ -82,7 +87,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->last_name;
     }
 
@@ -93,7 +99,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setBusinessName($business_name) {
+    public function setBusinessName($business_name)
+    {
         $this->business_name = $business_name;
         return $this;
     }
@@ -103,7 +110,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getBusinessName() {
+    public function getBusinessName()
+    {
         return $this->business_name;
     }
 
@@ -114,7 +122,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPhone($phone) {
+    public function setPhone($phone)
+    {
         $this->phone = $phone;
         return $this;
     }
@@ -124,7 +133,8 @@ class Participant extends PayPalModel {
      *
      * @return \PayPal\Api\Phone
      */
-    public function getPhone() {
+    public function getPhone()
+    {
         return $this->phone;
     }
 
@@ -135,7 +145,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFax($fax) {
+    public function setFax($fax)
+    {
         $this->fax = $fax;
         return $this;
     }
@@ -145,7 +156,8 @@ class Participant extends PayPalModel {
      *
      * @return \PayPal\Api\Phone
      */
-    public function getFax() {
+    public function getFax()
+    {
         return $this->fax;
     }
 
@@ -156,7 +168,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setWebsite($website) {
+    public function setWebsite($website)
+    {
         $this->website = $website;
         return $this;
     }
@@ -166,7 +179,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getWebsite() {
+    public function getWebsite()
+    {
         return $this->website;
     }
 
@@ -177,7 +191,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAdditionalInfo($additional_info) {
+    public function setAdditionalInfo($additional_info)
+    {
         $this->additional_info = $additional_info;
         return $this;
     }
@@ -187,7 +202,8 @@ class Participant extends PayPalModel {
      *
      * @return string
      */
-    public function getAdditionalInfo() {
+    public function getAdditionalInfo()
+    {
         return $this->additional_info;
     }
 
@@ -198,7 +214,8 @@ class Participant extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
         return $this;
     }
@@ -208,7 +225,8 @@ class Participant extends PayPalModel {
      *
      * @return \PayPal\Api\Address
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 

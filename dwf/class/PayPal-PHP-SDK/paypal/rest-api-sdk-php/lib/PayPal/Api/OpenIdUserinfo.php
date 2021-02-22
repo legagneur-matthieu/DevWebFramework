@@ -1,5 +1,4 @@
 <?php
-
 namespace PayPal\Api;
 
 use PayPal\Common\PayPalResourceModel;
@@ -32,7 +31,8 @@ use PayPal\Rest\ApiContext;
  * @property string age_range
  * @property string payer_id
  */
-class OpenIdUserinfo extends PayPalResourceModel {
+class OpenIdUserinfo extends PayPalResourceModel
+{
 
     /**
      * Subject - Identifier for the End-User at the Issuer.
@@ -40,7 +40,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $user_id
      * @return self
      */
-    public function setUserId($user_id) {
+    public function setUserId($user_id)
+    {
         $this->user_id = $user_id;
         return $this;
     }
@@ -50,7 +51,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->user_id;
     }
 
@@ -60,7 +62,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $sub
      * @return self
      */
-    public function setSub($sub) {
+    public function setSub($sub)
+    {
         $this->sub = $sub;
         return $this;
     }
@@ -70,7 +73,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getSub() {
+    public function getSub()
+    {
         return $this->sub;
     }
 
@@ -80,7 +84,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -90,7 +95,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -100,7 +106,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $given_name
      * @return self
      */
-    public function setGivenName($given_name) {
+    public function setGivenName($given_name)
+    {
         $this->given_name = $given_name;
         return $this;
     }
@@ -110,7 +117,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getGivenName() {
+    public function getGivenName()
+    {
         return $this->given_name;
     }
 
@@ -120,7 +128,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $family_name
      * @return self
      */
-    public function setFamilyName($family_name) {
+    public function setFamilyName($family_name)
+    {
         $this->family_name = $family_name;
         return $this;
     }
@@ -130,7 +139,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getFamilyName() {
+    public function getFamilyName()
+    {
         return $this->family_name;
     }
 
@@ -140,7 +150,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $middle_name
      * @return self
      */
-    public function setMiddleName($middle_name) {
+    public function setMiddleName($middle_name)
+    {
         $this->middle_name = $middle_name;
         return $this;
     }
@@ -150,7 +161,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getMiddleName() {
+    public function getMiddleName()
+    {
         return $this->middle_name;
     }
 
@@ -160,7 +172,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $picture
      * @return self
      */
-    public function setPicture($picture) {
+    public function setPicture($picture)
+    {
         $this->picture = $picture;
         return $this;
     }
@@ -170,7 +183,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getPicture() {
+    public function getPicture()
+    {
         return $this->picture;
     }
 
@@ -180,7 +194,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $email
      * @return self
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
@@ -190,7 +205,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
@@ -200,7 +216,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param boolean $email_verified
      * @return self
      */
-    public function setEmailVerified($email_verified) {
+    public function setEmailVerified($email_verified)
+    {
         $this->email_verified = $email_verified;
         return $this;
     }
@@ -210,7 +227,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return boolean
      */
-    public function getEmailVerified() {
+    public function getEmailVerified()
+    {
         return $this->email_verified;
     }
 
@@ -220,7 +238,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $gender
      * @return self
      */
-    public function setGender($gender) {
+    public function setGender($gender)
+    {
         $this->gender = $gender;
         return $this;
     }
@@ -230,7 +249,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getGender() {
+    public function getGender()
+    {
         return $this->gender;
     }
 
@@ -240,7 +260,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $birthday
      * @return self
      */
-    public function setBirthday($birthday) {
+    public function setBirthday($birthday)
+    {
         $this->birthday = $birthday;
         return $this;
     }
@@ -250,7 +271,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getBirthday() {
+    public function getBirthday()
+    {
         return $this->birthday;
     }
 
@@ -260,7 +282,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $zoneinfo
      * @return self
      */
-    public function setZoneinfo($zoneinfo) {
+    public function setZoneinfo($zoneinfo)
+    {
         $this->zoneinfo = $zoneinfo;
         return $this;
     }
@@ -270,7 +293,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getZoneinfo() {
+    public function getZoneinfo()
+    {
         return $this->zoneinfo;
     }
 
@@ -280,7 +304,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $locale
      * @return self
      */
-    public function setLocale($locale) {
+    public function setLocale($locale)
+    {
         $this->locale = $locale;
         return $this;
     }
@@ -290,7 +315,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getLocale() {
+    public function getLocale()
+    {
         return $this->locale;
     }
 
@@ -300,7 +326,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $language
      * @return self
      */
-    public function setLanguage($language) {
+    public function setLanguage($language)
+    {
         $this->language = $language;
         return $this;
     }
@@ -310,7 +337,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $this->language;
     }
 
@@ -320,7 +348,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param boolean $verified
      * @return self
      */
-    public function setVerified($verified) {
+    public function setVerified($verified)
+    {
         $this->verified = $verified;
         return $this;
     }
@@ -330,7 +359,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return boolean
      */
-    public function getVerified() {
+    public function getVerified()
+    {
         return $this->verified;
     }
 
@@ -340,7 +370,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $phone_number
      * @return self
      */
-    public function setPhoneNumber($phone_number) {
+    public function setPhoneNumber($phone_number)
+    {
         $this->phone_number = $phone_number;
         return $this;
     }
@@ -350,7 +381,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getPhoneNumber() {
+    public function getPhoneNumber()
+    {
         return $this->phone_number;
     }
 
@@ -360,7 +392,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param \PayPal\Api\OpenIdAddress $address
      * @return self
      */
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
         return $this;
     }
@@ -370,7 +403,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return \PayPal\Api\OpenIdAddress
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
@@ -380,7 +414,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param boolean $verified_account
      * @return self
      */
-    public function setVerifiedAccount($verified_account) {
+    public function setVerifiedAccount($verified_account)
+    {
         $this->verified_account = $verified_account;
         return $this;
     }
@@ -390,7 +425,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return boolean
      */
-    public function getVerifiedAccount() {
+    public function getVerifiedAccount()
+    {
         return $this->verified_account;
     }
 
@@ -400,7 +436,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $account_type
      * @return self
      */
-    public function setAccountType($account_type) {
+    public function setAccountType($account_type)
+    {
         $this->account_type = $account_type;
         return $this;
     }
@@ -410,7 +447,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getAccountType() {
+    public function getAccountType()
+    {
         return $this->account_type;
     }
 
@@ -420,7 +458,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $age_range
      * @return self
      */
-    public function setAgeRange($age_range) {
+    public function setAgeRange($age_range)
+    {
         $this->age_range = $age_range;
         return $this;
     }
@@ -430,7 +469,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getAgeRange() {
+    public function getAgeRange()
+    {
         return $this->age_range;
     }
 
@@ -440,7 +480,8 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param string $payer_id
      * @return self
      */
-    public function setPayerId($payer_id) {
+    public function setPayerId($payer_id)
+    {
         $this->payer_id = $payer_id;
         return $this;
     }
@@ -450,9 +491,11 @@ class OpenIdUserinfo extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getPayerId() {
+    public function getPayerId()
+    {
         return $this->payer_id;
     }
+
 
     /**
      * returns user details
@@ -465,22 +508,28 @@ class OpenIdUserinfo extends PayPalResourceModel {
      * @param PayPalRestCall $restCall
      * @return OpenIdUserinfo
      */
-    public static function getUserinfo($params, $apiContext = null, $restCall = null) {
+    public static function getUserinfo($params, $apiContext = null, $restCall = null)
+    {
         static $allowedParams = array('schema' => 1);
 
-        $params = is_array($params) ? $params : array();
+        $params = is_array($params)  ? $params : array();
 
         if (!array_key_exists('schema', $params)) {
             $params['schema'] = 'openid';
         }
         $requestUrl = "/v1/identity/openidconnect/userinfo?"
-                . http_build_query(array_intersect_key($params, $allowedParams));
+            . http_build_query(array_intersect_key($params, $allowedParams));
 
         $json = self::executeCall(
-                        $requestUrl, "GET", "", array(
-                    'Authorization' => "Bearer " . $params['access_token'],
-                    'Content-Type' => 'x-www-form-urlencoded'
-                        ), $apiContext, $restCall
+            $requestUrl,
+            "GET",
+            "",
+            array(
+                'Authorization' => "Bearer " . $params['access_token'],
+                'Content-Type' => 'x-www-form-urlencoded'
+            ),
+            $apiContext,
+            $restCall
         );
 
         $ret = new OpenIdUserinfo();
@@ -488,5 +537,4 @@ class OpenIdUserinfo extends PayPalResourceModel {
 
         return $ret;
     }
-
 }

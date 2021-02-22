@@ -23,8 +23,8 @@ use PayPal\Common\PayPalModel;
  * @property string additional_info_label
  * @property string additional_info
  */
-class MerchantInfo extends PayPalModel {
-
+class MerchantInfo extends PayPalModel
+{
     /**
      * The merchant email address. Maximum length is 260 characters.
      *
@@ -32,7 +32,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
@@ -42,7 +43,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
@@ -53,7 +55,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFirstName($first_name) {
+    public function setFirstName($first_name)
+    {
         $this->first_name = $first_name;
         return $this;
     }
@@ -63,7 +66,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->first_name;
     }
 
@@ -74,7 +78,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLastName($last_name) {
+    public function setLastName($last_name)
+    {
         $this->last_name = $last_name;
         return $this;
     }
@@ -84,7 +89,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->last_name;
     }
 
@@ -95,7 +101,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
         return $this;
     }
@@ -105,7 +112,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return \PayPal\Api\InvoiceAddress
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
@@ -116,7 +124,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setBusinessName($business_name) {
+    public function setBusinessName($business_name)
+    {
         $this->business_name = $business_name;
         return $this;
     }
@@ -126,7 +135,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getBusinessName() {
+    public function getBusinessName()
+    {
         return $this->business_name;
     }
 
@@ -137,7 +147,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPhone($phone) {
+    public function setPhone($phone)
+    {
         $this->phone = $phone;
         return $this;
     }
@@ -147,7 +158,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return \PayPal\Api\Phone
      */
-    public function getPhone() {
+    public function getPhone()
+    {
         return $this->phone;
     }
 
@@ -158,7 +170,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setFax($fax) {
+    public function setFax($fax)
+    {
         $this->fax = $fax;
         return $this;
     }
@@ -168,7 +181,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return \PayPal\Api\Phone
      */
-    public function getFax() {
+    public function getFax()
+    {
         return $this->fax;
     }
 
@@ -179,7 +193,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setWebsite($website) {
+    public function setWebsite($website)
+    {
         $this->website = $website;
         return $this;
     }
@@ -189,7 +204,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getWebsite() {
+    public function getWebsite()
+    {
         return $this->website;
     }
 
@@ -200,7 +216,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTaxId($tax_id) {
+    public function setTaxId($tax_id)
+    {
         $this->tax_id = $tax_id;
         return $this;
     }
@@ -210,7 +227,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getTaxId() {
+    public function getTaxId()
+    {
         return $this->tax_id;
     }
 
@@ -221,7 +239,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAdditionalInfoLabel($additional_info_label) {
+    public function setAdditionalInfoLabel($additional_info_label)
+    {
         $this->additional_info_label = $additional_info_label;
         return $this;
     }
@@ -231,7 +250,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getAdditionalInfoLabel() {
+    public function getAdditionalInfoLabel()
+    {
         return $this->additional_info_label;
     }
 
@@ -242,7 +262,8 @@ class MerchantInfo extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAdditionalInfo($additional_info) {
+    public function setAdditionalInfo($additional_info)
+    {
         $this->additional_info = $additional_info;
         return $this;
     }
@@ -252,7 +273,8 @@ class MerchantInfo extends PayPalModel {
      *
      * @return string
      */
-    public function getAdditionalInfo() {
+    public function getAdditionalInfo()
+    {
         return $this->additional_info;
     }
 

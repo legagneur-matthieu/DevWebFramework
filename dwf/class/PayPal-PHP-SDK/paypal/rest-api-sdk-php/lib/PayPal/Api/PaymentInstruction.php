@@ -21,8 +21,8 @@ use PayPal\Validation\ArgumentValidator;
  * @property string                                  note
  * @property \PayPal\Api\Links[]                     links
  */
-class PaymentInstruction extends PayPalResourceModel {
-
+class PaymentInstruction extends PayPalResourceModel
+{
     /**
      * ID of payment instruction
      *
@@ -30,7 +30,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setReferenceNumber($reference_number) {
+    public function setReferenceNumber($reference_number)
+    {
         $this->reference_number = $reference_number;
         return $this;
     }
@@ -40,7 +41,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getReferenceNumber() {
+    public function getReferenceNumber()
+    {
         return $this->reference_number;
     }
 
@@ -52,7 +54,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setInstructionType($instruction_type) {
+    public function setInstructionType($instruction_type)
+    {
         $this->instruction_type = $instruction_type;
         return $this;
     }
@@ -62,7 +65,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getInstructionType() {
+    public function getInstructionType()
+    {
         return $this->instruction_type;
     }
 
@@ -73,7 +77,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setRecipientBankingInstruction($recipient_banking_instruction) {
+    public function setRecipientBankingInstruction($recipient_banking_instruction)
+    {
         $this->recipient_banking_instruction = $recipient_banking_instruction;
         return $this;
     }
@@ -83,7 +88,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return \PayPal\Api\RecipientBankingInstruction
      */
-    public function getRecipientBankingInstruction() {
+    public function getRecipientBankingInstruction()
+    {
         return $this->recipient_banking_instruction;
     }
 
@@ -94,7 +100,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -104,7 +111,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
@@ -115,7 +123,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setPaymentDueDate($payment_due_date) {
+    public function setPaymentDueDate($payment_due_date)
+    {
         $this->payment_due_date = $payment_due_date;
         return $this;
     }
@@ -125,7 +134,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getPaymentDueDate() {
+    public function getPaymentDueDate()
+    {
         return $this->payment_due_date;
     }
 
@@ -136,7 +146,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return $this
      */
-    public function setNote($note) {
+    public function setNote($note)
+    {
         $this->note = $note;
         return $this;
     }
@@ -146,7 +157,8 @@ class PaymentInstruction extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getNote() {
+    public function getNote()
+    {
         return $this->note;
     }
 
@@ -158,11 +170,17 @@ class PaymentInstruction extends PayPalResourceModel {
      * @param PayPalRestCall $restCall   is the Rest Call Service that is used to make rest calls
      * @return PaymentInstruction
      */
-    public static function get($paymentId, $apiContext = null, $restCall = null) {
+    public static function get($paymentId, $apiContext = null, $restCall = null)
+    {
         ArgumentValidator::validate($paymentId, 'paymentId');
         $payLoad = "";
         $json = self::executeCall(
-                        "/v1/payments/payment/$paymentId/payment-instruction", "GET", $payLoad, null, $apiContext, $restCall
+            "/v1/payments/payment/$paymentId/payment-instruction",
+            "GET",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
         );
         $ret = new PaymentInstruction();
         $ret->fromJson($json);

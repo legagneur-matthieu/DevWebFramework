@@ -16,7 +16,8 @@ use PayPal\Security\Cipher;
 /**
  * Class OAuthTokenCredential
  */
-class OAuthTokenCredential extends PayPalResourceModel {
+class OAuthTokenCredential extends PayPalResourceModel
+{
 
     public static $CACHE_PATH = '/../../../var/auth.cache';
 
@@ -45,6 +46,11 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @var string $clientSecret
      */
     private $clientSecret;
+
+    /**
+     * Target subject
+     */
+    private $targetSubject;
 
     /**
      * Generated Access Token
@@ -80,10 +86,12 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @param string $clientId     client id obtained from the developer portal
      * @param string $clientSecret client secret obtained from the developer portal
      */
-    public function __construct($clientId, $clientSecret) {
+    public function __construct($clientId, $clientSecret, $targetSubject = null)
+    {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->cipher = new Cipher($this->clientSecret);
+        $this->targetSubject = $targetSubject;
     }
 
     /**
@@ -91,7 +99,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getClientId() {
+    public function getClientId()
+    {
         return $this->clientId;
     }
 
@@ -100,7 +109,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      *
      * @return string
      */
-    public function getClientSecret() {
+    public function getClientSecret()
+    {
         return $this->clientSecret;
     }
 
@@ -111,7 +121,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      *
      * @return null|string
      */
-    public function getAccessToken($config) {
+    public function getAccessToken($config)
+    {
         // Check if we already have accessToken in Cache
         if ($this->accessToken && (time() - $this->tokenCreateTime) < ($this->tokenExpiresIn - self::$expiryBufferTime)) {
             return $this->accessToken;
@@ -142,8 +153,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
         // for API call delays and any delay between the time the token is
         // retrieved and subsequently used
         if (
-                $this->accessToken != null &&
-                (time() - $this->tokenCreateTime) > ($this->tokenExpiresIn - self::$expiryBufferTime)
+            $this->accessToken != null &&
+            (time() - $this->tokenCreateTime) > ($this->tokenExpiresIn - self::$expiryBufferTime)
         ) {
             $this->accessToken = null;
         }
@@ -159,6 +170,7 @@ class OAuthTokenCredential extends PayPalResourceModel {
         return $this->accessToken;
     }
 
+
     /**
      * Get a Refresh Token from Authorization Code
      *
@@ -167,7 +179,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @param array $params optional arrays to override defaults
      * @return string|null
      */
-    public function getRefreshToken($config, $authorizationCode = null, $params = array()) {
+    public function getRefreshToken($config, $authorizationCode = null, $params = array())
+    {
         static $allowedParams = array(
             'grant_type' => 'authorization_code',
             'code' => 1,
@@ -198,7 +211,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @param string|null $refreshToken
      * @return string
      */
-    public function updateAccessToken($config, $refreshToken = null) {
+    public function updateAccessToken($config, $refreshToken = null)
+    {
         $this->generateAccessToken($config, $refreshToken);
         return $this->accessToken;
     }
@@ -214,7 +228,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @throws PayPalConfigurationException
      * @throws \PayPal\Exception\PayPalConnectionException
      */
-    protected function getToken($config, $clientId, $clientSecret, $payload) {
+    protected function getToken($config, $clientId, $clientSecret, $payload)
+    {
         $httpConfig = new PayPalHttpConfig(null, 'POST', $config);
 
         // if proxy set via config, add it
@@ -227,7 +242,7 @@ class OAuthTokenCredential extends PayPalResourceModel {
         /** @var IPayPalHandler $handler */
         foreach ($handlers as $handler) {
             if (!is_object($handler)) {
-                $fullHandler = "\\" . (string) $handler;
+                $fullHandler = "\\" . (string)$handler;
                 $handler = new $fullHandler(new ApiContext($this));
             }
             $handler->handle($httpConfig, $payload, array('clientId' => $clientId, 'clientSecret' => $clientSecret));
@@ -240,6 +255,7 @@ class OAuthTokenCredential extends PayPalResourceModel {
         return $response;
     }
 
+
     /**
      * Generates a new access token
      *
@@ -248,13 +264,17 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @return null
      * @throws PayPalConnectionException
      */
-    private function generateAccessToken($config, $refreshToken = null) {
+    private function generateAccessToken($config, $refreshToken = null)
+    {
         $params = array('grant_type' => 'client_credentials');
         if ($refreshToken != null) {
             // If the refresh token is provided, it would get access token using refresh token
             // Used for Future Payments
             $params['grant_type'] = 'refresh_token';
             $params['refresh_token'] = $refreshToken;
+        }
+        if ($this->targetSubject != null) {
+            $params['target_subject'] = $this->targetSubject;
         }
         $payload = http_build_query($params);
         $response = $this->getToken($config, $this->clientId, $this->clientSecret, $payload);
@@ -279,7 +299,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @param $data
      * @return string
      */
-    public function encrypt($data) {
+    public function encrypt($data)
+    {
         return $this->cipher->encrypt($data);
     }
 
@@ -289,8 +310,8 @@ class OAuthTokenCredential extends PayPalResourceModel {
      * @param $data
      * @return string
      */
-    public function decrypt($data) {
+    public function decrypt($data)
+    {
         return $this->cipher->decrypt($data);
     }
-
 }

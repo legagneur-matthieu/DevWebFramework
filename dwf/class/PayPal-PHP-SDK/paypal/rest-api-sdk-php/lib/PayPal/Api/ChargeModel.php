@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property string type
  * @property \PayPal\Api\Currency amount
  */
-class ChargeModel extends PayPalModel {
-
+class ChargeModel extends PayPalModel
+{
     /**
      * Identifier of the charge model. 128 characters max.
      *
@@ -24,7 +24,8 @@ class ChargeModel extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -34,7 +35,8 @@ class ChargeModel extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -45,7 +47,8 @@ class ChargeModel extends PayPalModel {
      * 
      * @return $this
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -55,7 +58,8 @@ class ChargeModel extends PayPalModel {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -66,7 +70,8 @@ class ChargeModel extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -76,7 +81,8 @@ class ChargeModel extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 

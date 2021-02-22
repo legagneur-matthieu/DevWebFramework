@@ -5,8 +5,8 @@ namespace Psr\Log;
 /**
  * Describes a logger-aware instance.
  */
-interface LoggerAwareInterface {
-
+interface LoggerAwareInterface
+{
     /**
      * Sets a logger instance on the object.
      *

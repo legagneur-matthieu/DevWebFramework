@@ -10,8 +10,8 @@ use Psr\Log\LoggerInterface;
  * This does an error_log for now
  * Potential frameworks to use are PEAR logger, log4php from Apache
  */
-class PayPalLoggingManager {
-
+class PayPalLoggingManager
+{
     /**
      * @var array of logging manager instances with class name as key
      */
@@ -37,7 +37,8 @@ class PayPalLoggingManager {
      * @param string $loggerName
      * @return $this
      */
-    public static function getInstance($loggerName = __CLASS__) {
+    public static function getInstance($loggerName = __CLASS__)
+    {
         if (array_key_exists($loggerName, PayPalLoggingManager::$instances)) {
             return PayPalLoggingManager::$instances[$loggerName];
         }
@@ -51,7 +52,8 @@ class PayPalLoggingManager {
      *
      * @param string $loggerName Generally represents the class name.
      */
-    private function __construct($loggerName) {
+    private function __construct($loggerName)
+    {
         $config = PayPalConfigManager::getInstance()->getConfigHashmap();
         // Checks if custom factory defined, and is it an implementation of @PayPalLogFactory
         $factory = array_key_exists('log.AdapterFactory', $config) && in_array('PayPal\Log\PayPalLogFactory', class_implements($config['log.AdapterFactory'])) ? $config['log.AdapterFactory'] : '\PayPal\Log\PayPalDefaultLogFactory';
@@ -66,7 +68,8 @@ class PayPalLoggingManager {
      *
      * @param string $message
      */
-    public function error($message) {
+    public function error($message)
+    {
         $this->logger->error($message);
     }
 
@@ -75,7 +78,8 @@ class PayPalLoggingManager {
      *
      * @param string $message
      */
-    public function warning($message) {
+    public function warning($message)
+    {
         $this->logger->warning($message);
     }
 
@@ -84,7 +88,8 @@ class PayPalLoggingManager {
      *
      * @param string $message
      */
-    public function info($message) {
+    public function info($message)
+    {
         $this->logger->info($message);
     }
 
@@ -93,7 +98,8 @@ class PayPalLoggingManager {
      *
      * @param string $message
      */
-    public function fine($message) {
+    public function fine($message)
+    {
         $this->info($message);
     }
 
@@ -102,12 +108,12 @@ class PayPalLoggingManager {
      *
      * @param string $message
      */
-    public function debug($message) {
+    public function debug($message)
+    {
         $config = PayPalConfigManager::getInstance()->getConfigHashmap();
         // Disable debug in live mode.
         if (array_key_exists('mode', $config) && $config['mode'] != 'live') {
             $this->logger->debug($message);
         }
     }
-
 }

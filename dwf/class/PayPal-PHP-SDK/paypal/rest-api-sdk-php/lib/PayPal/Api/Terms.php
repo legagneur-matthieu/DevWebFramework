@@ -18,8 +18,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Currency amount_range
  * @property string buyer_editable
  */
-class Terms extends PayPalModel {
-
+class Terms extends PayPalModel
+{
     /**
      * Identifier of the terms. 128 characters max.
      *
@@ -27,7 +27,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -37,7 +38,8 @@ class Terms extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -48,7 +50,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -58,7 +61,8 @@ class Terms extends PayPalModel {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -69,7 +73,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setMaxBillingAmount($max_billing_amount) {
+    public function setMaxBillingAmount($max_billing_amount)
+    {
         $this->max_billing_amount = $max_billing_amount;
         return $this;
     }
@@ -79,7 +84,8 @@ class Terms extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getMaxBillingAmount() {
+    public function getMaxBillingAmount()
+    {
         return $this->max_billing_amount;
     }
 
@@ -90,7 +96,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setOccurrences($occurrences) {
+    public function setOccurrences($occurrences)
+    {
         $this->occurrences = $occurrences;
         return $this;
     }
@@ -100,7 +107,8 @@ class Terms extends PayPalModel {
      *
      * @return string
      */
-    public function getOccurrences() {
+    public function getOccurrences()
+    {
         return $this->occurrences;
     }
 
@@ -111,7 +119,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmountRange($amount_range) {
+    public function setAmountRange($amount_range)
+    {
         $this->amount_range = $amount_range;
         return $this;
     }
@@ -121,7 +130,8 @@ class Terms extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmountRange() {
+    public function getAmountRange()
+    {
         return $this->amount_range;
     }
 
@@ -132,7 +142,8 @@ class Terms extends PayPalModel {
      * 
      * @return $this
      */
-    public function setBuyerEditable($buyer_editable) {
+    public function setBuyerEditable($buyer_editable)
+    {
         $this->buyer_editable = $buyer_editable;
         return $this;
     }
@@ -142,7 +153,8 @@ class Terms extends PayPalModel {
      *
      * @return string
      */
-    public function getBuyerEditable() {
+    public function getBuyerEditable()
+    {
         return $this->buyer_editable;
     }
 

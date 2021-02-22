@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string label
  * @property \PayPal\Api\Currency amount
  */
-class CustomAmount extends PayPalModel {
-
+class CustomAmount extends PayPalModel
+{
     /**
      * The custom amount label. Maximum length is 25 characters.
      *
@@ -23,7 +23,8 @@ class CustomAmount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLabel($label) {
+    public function setLabel($label)
+    {
         $this->label = $label;
         return $this;
     }
@@ -33,7 +34,8 @@ class CustomAmount extends PayPalModel {
      *
      * @return string
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
@@ -44,7 +46,8 @@ class CustomAmount extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -54,7 +57,8 @@ class CustomAmount extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 

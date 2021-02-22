@@ -10,7 +10,8 @@ use PayPal\Exception\PayPalConnectionException;
  * Requires the PHP curl module to be enabled.
  * See for full requirements the PHP manual: http://php.net/curl
  */
-class PayPalHttpConnection {
+class PayPalHttpConnection
+{
 
     /**
      * @var PayPalHttpConfig
@@ -41,7 +42,8 @@ class PayPalHttpConnection {
      * @param array            $config
      * @throws PayPalConfigurationException
      */
-    public function __construct(PayPalHttpConfig $httpConfig, array $config) {
+    public function __construct(PayPalHttpConfig $httpConfig, array $config)
+    {
         if (!function_exists("curl_init")) {
             throw new PayPalConfigurationException("Curl module is not available on this system");
         }
@@ -54,7 +56,8 @@ class PayPalHttpConnection {
      *
      * @return array
      */
-    private function getHttpHeaders() {
+    private function getHttpHeaders()
+    {
         $ret = array();
         foreach ($this->httpConfig->getHeaders() as $k => $v) {
             $ret[] = "$k: $v";
@@ -80,6 +83,11 @@ class PayPalHttpConnection {
             return strlen($data);
         }
 
+        // Added condition to ignore extra header which dont have colon ( : )
+        if (strpos($trimmedData, ":") == false) {
+            return strlen($data);
+        }
+        
         list($key, $value) = explode(":", $trimmedData, 2);
 
         $key = trim($key);
@@ -97,6 +105,7 @@ class PayPalHttpConnection {
         return strlen($data);
     }
 
+
     /**
      * Implodes a key/value array for printing.
      *
@@ -105,7 +114,7 @@ class PayPalHttpConnection {
      */
     protected function implodeArray($arr) {
         $retStr = '';
-        foreach ($arr as $key => $value) {
+        foreach($arr as $key => $value) {
             $retStr .= $key . ': ' . $value . ', ';
         }
         rtrim($retStr, ', ');
@@ -119,7 +128,8 @@ class PayPalHttpConnection {
      * @return mixed
      * @throws PayPalConnectionException
      */
-    public function execute($data) {
+    public function execute($data)
+    {
         //Initialize the logger
         $this->logger->info($this->httpConfig->getMethod() . ' ' . $this->httpConfig->getUrl());
 
@@ -174,7 +184,9 @@ class PayPalHttpConnection {
         //Throw Exception if Retries and Certificates doenst work
         if (curl_errno($ch)) {
             $ex = new PayPalConnectionException(
-                    $this->httpConfig->getUrl(), curl_error($ch), curl_errno($ch)
+                $this->httpConfig->getUrl(),
+                curl_error($ch),
+                curl_errno($ch)
             );
             curl_close($ch);
             throw $ex;
@@ -193,7 +205,9 @@ class PayPalHttpConnection {
         //More Exceptions based on HttpStatus Code
         if ($httpStatus < 200 || $httpStatus >= 300) {
             $ex = new PayPalConnectionException(
-                    $this->httpConfig->getUrl(), "Got Http response code $httpStatus when accessing {$this->httpConfig->getUrl()}.", $httpStatus
+                $this->httpConfig->getUrl(),
+                "Got Http response code $httpStatus when accessing {$this->httpConfig->getUrl()}.",
+                $httpStatus
             );
             $ex->setData($result);
             $this->logger->error("Got Http response code $httpStatus when accessing {$this->httpConfig->getUrl()}. " . $result);
@@ -206,5 +220,4 @@ class PayPalHttpConnection {
         //Return result object
         return $result;
     }
-
 }

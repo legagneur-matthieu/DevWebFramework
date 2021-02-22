@@ -22,8 +22,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\Error errors
  * @property \PayPal\Api\Links[] links
  */
-class PayoutItemDetails extends PayPalModel {
-
+class PayoutItemDetails extends PayPalModel
+{
     /**
      * The ID for the payout item. Viewable when you show details for a batch payout.
      *
@@ -31,7 +31,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPayoutItemId($payout_item_id) {
+    public function setPayoutItemId($payout_item_id)
+    {
         $this->payout_item_id = $payout_item_id;
         return $this;
     }
@@ -41,7 +42,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getPayoutItemId() {
+    public function getPayoutItemId()
+    {
         return $this->payout_item_id;
     }
 
@@ -52,7 +54,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTransactionId($transaction_id) {
+    public function setTransactionId($transaction_id)
+    {
         $this->transaction_id = $transaction_id;
         return $this;
     }
@@ -62,7 +65,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getTransactionId() {
+    public function getTransactionId()
+    {
         return $this->transaction_id;
     }
 
@@ -73,7 +77,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTransactionStatus($transaction_status) {
+    public function setTransactionStatus($transaction_status)
+    {
         $this->transaction_status = $transaction_status;
         return $this;
     }
@@ -83,7 +88,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getTransactionStatus() {
+    public function getTransactionStatus()
+    {
         return $this->transaction_status;
     }
 
@@ -94,7 +100,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPayoutItemFee($payout_item_fee) {
+    public function setPayoutItemFee($payout_item_fee)
+    {
         $this->payout_item_fee = $payout_item_fee;
         return $this;
     }
@@ -104,7 +111,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return \PayPal\Api\Currency
      */
-    public function getPayoutItemFee() {
+    public function getPayoutItemFee()
+    {
         return $this->payout_item_fee;
     }
 
@@ -115,7 +123,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPayoutBatchId($payout_batch_id) {
+    public function setPayoutBatchId($payout_batch_id)
+    {
         $this->payout_batch_id = $payout_batch_id;
         return $this;
     }
@@ -125,7 +134,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getPayoutBatchId() {
+    public function getPayoutBatchId()
+    {
         return $this->payout_batch_id;
     }
 
@@ -136,7 +146,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setSenderBatchId($sender_batch_id) {
+    public function setSenderBatchId($sender_batch_id)
+    {
         $this->sender_batch_id = $sender_batch_id;
         return $this;
     }
@@ -146,7 +157,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getSenderBatchId() {
+    public function getSenderBatchId()
+    {
         return $this->sender_batch_id;
     }
 
@@ -157,7 +169,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setPayoutItem($payout_item) {
+    public function setPayoutItem($payout_item)
+    {
         $this->payout_item = $payout_item;
         return $this;
     }
@@ -167,7 +180,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return \PayPal\Api\PayoutItem
      */
-    public function getPayoutItem() {
+    public function getPayoutItem()
+    {
         return $this->payout_item;
     }
 
@@ -178,7 +192,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setTimeProcessed($time_processed) {
+    public function setTimeProcessed($time_processed)
+    {
         $this->time_processed = $time_processed;
         return $this;
     }
@@ -188,7 +203,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return string
      */
-    public function getTimeProcessed() {
+    public function getTimeProcessed()
+    {
         return $this->time_processed;
     }
 
@@ -199,7 +215,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setErrors($errors) {
+    public function setErrors($errors)
+    {
         $this->errors = $errors;
         return $this;
     }
@@ -209,7 +226,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return \PayPal\Api\Error
      */
-    public function getErrors() {
+    public function getErrors()
+    {
         return $this->errors;
     }
 
@@ -220,7 +238,8 @@ class PayoutItemDetails extends PayPalModel {
      * 
      * @return $this
      */
-    public function setLinks($links) {
+    public function setLinks($links)
+    {
         $this->links = $links;
         return $this;
     }
@@ -230,7 +249,8 @@ class PayoutItemDetails extends PayPalModel {
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks() {
+    public function getLinks()
+    {
         return $this->links;
     }
 
@@ -240,12 +260,13 @@ class PayoutItemDetails extends PayPalModel {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function addLink($links) {
+    public function addLink($links)
+    {
         if (!$this->getLinks()) {
             return $this->setLinks(array($links));
         } else {
             return $this->setLinks(
-                            array_merge($this->getLinks(), array($links))
+                array_merge($this->getLinks(), array($links))
             );
         }
     }
@@ -256,9 +277,10 @@ class PayoutItemDetails extends PayPalModel {
      * @param \PayPal\Api\Links $links
      * @return $this
      */
-    public function removeLink($links) {
+    public function removeLink($links)
+    {
         return $this->setLinks(
-                        array_diff($this->getLinks(), array($links))
+            array_diff($this->getLinks(), array($links))
         );
     }
 

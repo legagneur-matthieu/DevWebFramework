@@ -14,8 +14,8 @@ use PayPal\Common\PayPalModel;
  * @property string id
  * @property string type
  */
-class Credit extends PayPalModel {
-
+class Credit extends PayPalModel
+{
     /**
      * Unique identifier of credit resource.
      *
@@ -23,7 +23,8 @@ class Credit extends PayPalModel {
      * 
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -33,7 +34,8 @@ class Credit extends PayPalModel {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -45,7 +47,8 @@ class Credit extends PayPalModel {
      * 
      * @return $this
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -55,7 +58,8 @@ class Credit extends PayPalModel {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 

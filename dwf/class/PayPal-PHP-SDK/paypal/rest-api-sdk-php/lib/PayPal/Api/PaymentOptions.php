@@ -13,8 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string allowed_payment_method
  */
-class PaymentOptions extends PayPalModel {
-
+class PaymentOptions extends PayPalModel
+{
     /**
      * Payment method requested for this purchase unit
      * Valid Values: ["UNRESTRICTED", "INSTANT_FUNDING_SOURCE", "IMMEDIATE_PAY"]
@@ -23,7 +23,8 @@ class PaymentOptions extends PayPalModel {
      * 
      * @return $this
      */
-    public function setAllowedPaymentMethod($allowed_payment_method) {
+    public function setAllowedPaymentMethod($allowed_payment_method)
+    {
         $this->allowed_payment_method = $allowed_payment_method;
         return $this;
     }
@@ -33,7 +34,8 @@ class PaymentOptions extends PayPalModel {
      *
      * @return string
      */
-    public function getAllowedPaymentMethod() {
+    public function getAllowedPaymentMethod()
+    {
         return $this->allowed_payment_method;
     }
 
@@ -44,7 +46,8 @@ class PaymentOptions extends PayPalModel {
      * 
      * @return $this
      */
-    public function setRecurringFlag($recurring_flag) {
+    public function setRecurringFlag($recurring_flag)
+    {
         $this->recurring_flag = $recurring_flag;
         return $this;
     }
@@ -54,7 +57,8 @@ class PaymentOptions extends PayPalModel {
      * @deprecated Not publicly available
      * @return bool
      */
-    public function getRecurringFlag() {
+    public function getRecurringFlag()
+    {
         return $this->recurring_flag;
     }
 
@@ -65,7 +69,8 @@ class PaymentOptions extends PayPalModel {
      * 
      * @return $this
      */
-    public function setSkipFmf($skip_fmf) {
+    public function setSkipFmf($skip_fmf)
+    {
         $this->skip_fmf = $skip_fmf;
         return $this;
     }
@@ -75,7 +80,8 @@ class PaymentOptions extends PayPalModel {
      * @deprecated Not publicly available
      * @return bool
      */
-    public function getSkipFmf() {
+    public function getSkipFmf()
+    {
         return $this->skip_fmf;
     }
 

@@ -15,8 +15,8 @@ use PayPal\Validation\UrlValidator;
  * @property string return_url
  * @property string cancel_url
  */
-class RedirectUrls extends PayPalModel {
-
+class RedirectUrls extends PayPalModel
+{
     /**
      * Url where the payer would be redirected to after approving the payment. **Required for PayPal account payments.**
      *
@@ -24,7 +24,8 @@ class RedirectUrls extends PayPalModel {
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setReturnUrl($return_url) {
+    public function setReturnUrl($return_url)
+    {
         UrlValidator::validate($return_url, "ReturnUrl");
         $this->return_url = $return_url;
         return $this;
@@ -35,7 +36,8 @@ class RedirectUrls extends PayPalModel {
      *
      * @return string
      */
-    public function getReturnUrl() {
+    public function getReturnUrl()
+    {
         return $this->return_url;
     }
 
@@ -46,7 +48,8 @@ class RedirectUrls extends PayPalModel {
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function setCancelUrl($cancel_url) {
+    public function setCancelUrl($cancel_url)
+    {
         UrlValidator::validate($cancel_url, "CancelUrl");
         $this->cancel_url = $cancel_url;
         return $this;
@@ -57,7 +60,8 @@ class RedirectUrls extends PayPalModel {
      *
      * @return string
      */
-    public function getCancelUrl() {
+    public function getCancelUrl()
+    {
         return $this->cancel_url;
     }
 

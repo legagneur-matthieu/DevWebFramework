@@ -15,8 +15,8 @@ use PayPal\Common\PayPalModel;
  * @property \PayPal\Api\PayoutItemDetails[] items
  * @property \PayPal\Api\Links[] links
  */
-class PayoutBatch extends PayPalModel {
-
+class PayoutBatch extends PayPalModel
+{
     /**
      * A batch header. Includes the generated batch status.
      *
@@ -24,7 +24,8 @@ class PayoutBatch extends PayPalModel {
      * 
      * @return $this
      */
-    public function setBatchHeader($batch_header) {
+    public function setBatchHeader($batch_header)
+    {
         $this->batch_header = $batch_header;
         return $this;
     }
@@ -34,7 +35,8 @@ class PayoutBatch extends PayPalModel {
      *
      * @return \PayPal\Api\PayoutBatchHeader
      */
-    public function getBatchHeader() {
+    public function getBatchHeader()
+    {
         return $this->batch_header;
     }
 
@@ -45,7 +47,8 @@ class PayoutBatch extends PayPalModel {
      * 
      * @return $this
      */
-    public function setItems($items) {
+    public function setItems($items)
+    {
         $this->items = $items;
         return $this;
     }
@@ -55,7 +58,8 @@ class PayoutBatch extends PayPalModel {
      *
      * @return \PayPal\Api\PayoutItemDetails[]
      */
-    public function getItems() {
+    public function getItems()
+    {
         return $this->items;
     }
 
@@ -65,12 +69,13 @@ class PayoutBatch extends PayPalModel {
      * @param \PayPal\Api\PayoutItemDetails $payoutItemDetails
      * @return $this
      */
-    public function addItem($payoutItemDetails) {
+    public function addItem($payoutItemDetails)
+    {
         if (!$this->getItems()) {
             return $this->setItems(array($payoutItemDetails));
         } else {
             return $this->setItems(
-                            array_merge($this->getItems(), array($payoutItemDetails))
+                array_merge($this->getItems(), array($payoutItemDetails))
             );
         }
     }
@@ -81,11 +86,13 @@ class PayoutBatch extends PayPalModel {
      * @param \PayPal\Api\PayoutItemDetails $payoutItemDetails
      * @return $this
      */
-    public function removeItem($payoutItemDetails) {
+    public function removeItem($payoutItemDetails)
+    {
         return $this->setItems(
-                        array_diff($this->getItems(), array($payoutItemDetails))
+            array_diff($this->getItems(), array($payoutItemDetails))
         );
     }
+
 
     /**
      * Sets Links
@@ -94,7 +101,8 @@ class PayoutBatch extends PayPalModel {
      *
      * @return $this
      */
-    public function setLinks($links) {
+    public function setLinks($links)
+    {
         $this->links = $links;
         return $this;
     }
@@ -104,7 +112,8 @@ class PayoutBatch extends PayPalModel {
      *
      * @return \PayPal\Api\Links[]
      */
-    public function getLinks() {
+    public function getLinks()
+    {
         return $this->links;
     }
 

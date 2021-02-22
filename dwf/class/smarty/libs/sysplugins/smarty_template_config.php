@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Smarty Config Source Plugin
  *
@@ -15,10 +14,9 @@
  * @package    Smarty
  * @subpackage TemplateResources
  * @author     Uwe Tews
- *
  */
-class Smarty_Template_Config extends Smarty_Template_Source {
-
+class Smarty_Template_Config extends Smarty_Template_Source
+{
     /**
      * array of section names, single section or null
      *
@@ -65,14 +63,18 @@ class Smarty_Template_Config extends Smarty_Template_Source {
      * initialize Source Object for given resource
      * Either [$_template] or [$smarty, $template_resource] must be specified
      *
-     * @param  Smarty_Internal_Template $_template         template object
-     * @param  Smarty                   $smarty            smarty object
-     * @param  string                   $template_resource resource identifier
+     * @param Smarty_Internal_Template $_template         template object
+     * @param Smarty                   $smarty            smarty object
+     * @param string                   $template_resource resource identifier
      *
      * @return Smarty_Template_Config Source Object
      * @throws SmartyException
      */
-    public static function load(Smarty_Internal_Template $_template = null, Smarty $smarty = null, $template_resource = null) {
+    public static function load(
+        Smarty_Internal_Template $_template = null,
+        Smarty $smarty = null,
+        $template_resource = null
+    ) {
         static $_incompatible_resources = array('extends' => true, 'php' => true);
         if ($_template) {
             $smarty = $_template->smarty;
@@ -84,7 +86,7 @@ class Smarty_Template_Config extends Smarty_Template_Source {
         // parse resource_name, load resource handler
         list($name, $type) = Smarty_Resource::parseResourceName($template_resource, $smarty->default_config_type);
         // make sure configs are not loaded via anything smarty can't handle
-        if (isset($_incompatible_resources[$type])) {
+        if (isset($_incompatible_resources[ $type ])) {
             throw new SmartyException("Unable to use resource '{$type}' for config");
         }
         $source = new Smarty_Template_Config($smarty, $template_resource, $type, $name);
@@ -95,5 +97,4 @@ class Smarty_Template_Config extends Smarty_Template_Source {
         }
         return $source;
     }
-
 }

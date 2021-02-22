@@ -9,8 +9,8 @@
  * @subpackage PluginsInternal
  * @author     Uwe Tews
  */
-class Smarty_Internal_Method_GetConfigVars {
-
+class Smarty_Internal_Method_GetConfigVars
+{
     /**
      * Valid for all objects
      *
@@ -25,18 +25,19 @@ class Smarty_Internal_Method_GetConfigVars {
      * @link http://www.smarty.net/docs/en/api.get.config.vars.tpl
      *
      * @param \Smarty_Internal_Data|\Smarty_Internal_Template|\Smarty $data
-     * @param  string                                                 $varname        variable name or null
-     * @param  bool                                                   $search_parents include parent templates?
+     * @param string                                                  $varname        variable name or null
+     * @param bool                                                    $search_parents include parent templates?
      *
      * @return mixed variable value or or array of variables
      */
-    public function getConfigVars(Smarty_Internal_Data $data, $varname = null, $search_parents = true) {
+    public function getConfigVars(Smarty_Internal_Data $data, $varname = null, $search_parents = true)
+    {
         $_ptr = $data;
         $var_array = array();
         while ($_ptr !== null) {
             if (isset($varname)) {
-                if (isset($_ptr->config_vars[$varname])) {
-                    return $_ptr->config_vars[$varname];
+                if (isset($_ptr->config_vars[ $varname ])) {
+                    return $_ptr->config_vars[ $varname ];
                 }
             } else {
                 $var_array = array_merge($_ptr->config_vars, $var_array);
@@ -54,5 +55,4 @@ class Smarty_Internal_Method_GetConfigVars {
             return $var_array;
         }
     }
-
 }

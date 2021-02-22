@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Smarty Internal Plugin Resource String
  *
@@ -17,17 +16,18 @@
  * @package    Smarty
  * @subpackage TemplateResources
  */
-class Smarty_Internal_Resource_String extends Smarty_Resource {
-
+class Smarty_Internal_Resource_String extends Smarty_Resource
+{
     /**
      * populate Source Object with meta data from Resource
      *
-     * @param  Smarty_Template_Source   $source    source object
-     * @param  Smarty_Internal_Template $_template template object
+     * @param Smarty_Template_Source   $source    source object
+     * @param Smarty_Internal_Template $_template template object
      *
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null) {
+    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
+    {
         $source->uid = $source->filepath = sha1($source->name . $source->smarty->_joined_template_dir);
         $source->timestamp = $source->exists = true;
     }
@@ -37,22 +37,24 @@ class Smarty_Internal_Resource_String extends Smarty_Resource {
      *
      * @uses decode() to decode base64 and urlencoded template_resources
      *
-     * @param  Smarty_Template_Source $source source object
+     * @param Smarty_Template_Source $source source object
      *
      * @return string                 template source
      */
-    public function getContent(Smarty_Template_Source $source) {
+    public function getContent(Smarty_Template_Source $source)
+    {
         return $this->decode($source->name);
     }
 
     /**
      * decode base64 and urlencode
      *
-     * @param  string $string template_resource to decode
+     * @param string $string template_resource to decode
      *
      * @return string decoded template_resource
      */
-    protected function decode($string) {
+    protected function decode($string)
+    {
         // decode if specified
         if (($pos = strpos($string, ':')) !== false) {
             if (!strncmp($string, 'base64', 6)) {
@@ -61,20 +63,20 @@ class Smarty_Internal_Resource_String extends Smarty_Resource {
                 return urldecode(substr($string, 10));
             }
         }
-
         return $string;
     }
 
     /**
      * modify resource_name according to resource handlers specifications
      *
-     * @param  Smarty  $smarty        Smarty instance
-     * @param  string  $resource_name resource_name to make unique
-     * @param  boolean $isConfig      flag for config resource
+     * @param Smarty  $smarty        Smarty instance
+     * @param string  $resource_name resource_name to make unique
+     * @param boolean $isConfig      flag for config resource
      *
      * @return string unique resource name
      */
-    public function buildUniqueResourceName(Smarty $smarty, $resource_name, $isConfig = false) {
+    public function buildUniqueResourceName(Smarty $smarty, $resource_name, $isConfig = false)
+    {
         return get_class($this) . '#' . $this->decode($resource_name);
     }
 
@@ -82,22 +84,25 @@ class Smarty_Internal_Resource_String extends Smarty_Resource {
      * Determine basename for compiled filename
      * Always returns an empty string.
      *
-     * @param  Smarty_Template_Source $source source object
+     * @param Smarty_Template_Source $source source object
      *
      * @return string                 resource's basename
      */
-    public function getBasename(Smarty_Template_Source $source) {
+    public function getBasename(Smarty_Template_Source $source)
+    {
         return '';
     }
 
     /*
-     * Disable timestamp checks for string resource.
-     *
+        * Disable timestamp checks for string resource.
+        *
+        * @return bool
+        */
+    /**
      * @return bool
      */
-
-    public function checkTimestamps() {
+    public function checkTimestamps()
+    {
         return false;
     }
-
 }

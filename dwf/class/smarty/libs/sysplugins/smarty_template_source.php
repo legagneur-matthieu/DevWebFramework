@@ -7,10 +7,9 @@
  * @package    Smarty
  * @subpackage TemplateResources
  * @author     Rodney Rehm
- *
  */
-class Smarty_Template_Source {
-
+class Smarty_Template_Source
+{
     /**
      * Unique Template ID
      *
@@ -126,15 +125,18 @@ class Smarty_Template_Source {
     /**
      * create Source Object container
      *
-     * @param Smarty_Resource $handler  Resource Handler this source object communicates with
-     * @param Smarty          $smarty   Smarty instance this source object belongs to
-     * @param string          $resource full template_resource
-     * @param string          $type     type of resource
-     * @param string          $name     resource name
+     * @param Smarty $smarty   Smarty instance this source object belongs to
+     * @param string $resource full template_resource
+     * @param string $type     type of resource
+     * @param string $name     resource name
      *
+     * @throws   \SmartyException
+     * @internal param \Smarty_Resource $handler Resource Handler this source object communicates with
      */
-    public function __construct(Smarty $smarty, $resource, $type, $name) {
-        $this->handler = isset($smarty->_cache['resource_handlers'][$type]) ? $smarty->_cache['resource_handlers'][$type] :
+    public function __construct(Smarty $smarty, $resource, $type, $name)
+    {
+        $this->handler =
+            isset($smarty->_cache[ 'resource_handlers' ][ $type ]) ? $smarty->_cache[ 'resource_handlers' ][ $type ] :
                 Smarty_Resource::load($smarty, $type);
         $this->smarty = $smarty;
         $this->resource = $resource;
@@ -146,14 +148,18 @@ class Smarty_Template_Source {
      * initialize Source Object for given resource
      * Either [$_template] or [$smarty, $template_resource] must be specified
      *
-     * @param  Smarty_Internal_Template $_template         template object
-     * @param  Smarty                   $smarty            smarty object
-     * @param  string                   $template_resource resource identifier
+     * @param Smarty_Internal_Template $_template         template object
+     * @param Smarty                   $smarty            smarty object
+     * @param string                   $template_resource resource identifier
      *
      * @return Smarty_Template_Source Source Object
      * @throws SmartyException
      */
-    public static function load(Smarty_Internal_Template $_template = null, Smarty $smarty = null, $template_resource = null) {
+    public static function load(
+        Smarty_Internal_Template $_template = null,
+        Smarty $smarty = null,
+        $template_resource = null
+    ) {
         if ($_template) {
             $smarty = $_template->smarty;
             $template_resource = $_template->template_resource;
@@ -163,8 +169,8 @@ class Smarty_Template_Source {
         }
         // parse resource_name, load resource handler, identify unique resource name
         if (preg_match('/^([A-Za-z0-9_\-]{2,})[:]([\s\S]*)$/', $template_resource, $match)) {
-            $type = $match[1];
-            $name = $match[2];
+            $type = $match[ 1 ];
+            $name = $match[ 2 ];
         } else {
             // no resource given, use default
             // or single character before the colon is not a resource type, but part of the filepath
@@ -186,7 +192,8 @@ class Smarty_Template_Source {
      *
      * @return int
      */
-    public function getTimeStamp() {
+    public function getTimeStamp()
+    {
         if (!isset($this->timestamp)) {
             $this->handler->populateTimestamp($this);
         }
@@ -197,9 +204,10 @@ class Smarty_Template_Source {
      * Get source content
      *
      * @return string
+     * @throws \SmartyException
      */
-    public function getContent() {
+    public function getContent()
+    {
         return isset($this->content) ? $this->content : $this->handler->getContent($this);
     }
-
 }

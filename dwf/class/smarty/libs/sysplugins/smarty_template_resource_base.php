@@ -7,8 +7,8 @@
  * @subpackage TemplateResources
  * @author     Rodney Rehm
  */
-abstract class Smarty_Template_Resource_Base {
-
+abstract class Smarty_Template_Resource_Base
+{
     /**
      * Compiled Filepath
      *
@@ -73,16 +73,11 @@ abstract class Smarty_Template_Resource_Base {
     public $content = null;
 
     /**
-     * required plugins
+     * Included sub templates
+     * - index name
+     * - value use count
      *
-     * @var array
-     */
-    public $required_plugins = array();
-
-    /**
-     * Included subtemplates
-     *
-     * @var array
+     * @var int[]
      */
     public $includes = array();
 
@@ -108,7 +103,8 @@ abstract class Smarty_Template_Resource_Base {
      *
      * @throws \Exception
      */
-    public function getRenderedTemplateCode(Smarty_Internal_Template $_template, $unifunc = null) {
+    public function getRenderedTemplateCode(Smarty_Internal_Template $_template, $unifunc = null)
+    {
         $smarty = &$_template->smarty;
         $_template->isRenderingCache = $this->isCache;
         $level = ob_get_level();
@@ -146,11 +142,11 @@ abstract class Smarty_Template_Resource_Base {
      *
      * @return int
      */
-    public function getTimeStamp() {
+    public function getTimeStamp()
+    {
         if ($this->exists && !$this->timestamp) {
             $this->timestamp = filemtime($this->filepath);
         }
         return $this->timestamp;
     }
-
 }

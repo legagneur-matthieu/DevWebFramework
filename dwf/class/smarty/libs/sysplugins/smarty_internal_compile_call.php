@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Smarty Internal Plugin Compile Function_Call
  * Compiles the calls of user defined tags defined by {function}
@@ -15,8 +14,8 @@
  * @package    Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
-
+class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
+{
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -44,22 +43,23 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
     /**
      * Compiles the calls of user defined tags defined by {function}
      *
-     * @param  array  $args     array with attributes from parser
-     * @param  object $compiler compiler object
+     * @param array  $args     array with attributes from parser
+     * @param object $compiler compiler object
      *
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         // save possible attributes
-        if (isset($_attr['assign'])) {
+        if (isset($_attr[ 'assign' ])) {
             // output will be stored in a smarty variable instead of being displayed
-            $_assign = $_attr['assign'];
+            $_assign = $_attr[ 'assign' ];
         }
-        //$_name = trim($_attr['name'], "'\"");
-        $_name = $_attr['name'];
-        unset($_attr['name'], $_attr['assign'], $_attr['nocache']);
+        //$_name = trim($_attr['name'], "''");
+        $_name = $_attr[ 'name' ];
+        unset($_attr[ 'name' ], $_attr[ 'assign' ], $_attr[ 'nocache' ]);
         // set flag (compiled code of {function} must be included in cache file
         if (!$compiler->template->caching || $compiler->nocache || $compiler->tag_nocache) {
             $_nocache = 'true';
@@ -74,15 +74,16 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
                 $_paramsArray[] = "'$_key'=>$_value";
             }
         }
-        $_params = 'array(' . implode(",", $_paramsArray) . ')';
+        $_params = 'array(' . implode(',', $_paramsArray) . ')';
         //$compiler->suppressNocacheProcessing = true;
         // was there an assign attribute
         if (isset($_assign)) {
-            $_output = "<?php ob_start();\n\$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});\n\$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
+            $_output =
+                "<?php ob_start();\n\$_smarty_tpl->smarty->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});\n\$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
         } else {
-            $_output = "<?php \$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});?>\n";
+            $_output =
+                "<?php \$_smarty_tpl->smarty->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});?>\n";
         }
         return $_output;
     }
-
 }

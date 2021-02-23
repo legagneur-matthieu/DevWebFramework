@@ -10,7 +10,7 @@
  * @author    Jim Jagielski (jimjag) <jimjag@gmail.com>
  * @author    Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author    Brent R. Matzelle (original founder)
- * @copyright 2012 - 2015 Marcus Bointon
+ * @copyright 2012 - 2020 Marcus Bointon
  * @copyright 2010 - 2012 Jim Jagielski
  * @copyright 2004 - 2009 Andy Prevost
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
@@ -33,8 +33,8 @@ use League\OAuth2\Client\Token\AccessToken;
  *
  * @author  Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  */
-class OAuth {
-
+class OAuth
+{
     /**
      * An instance of the League OAuth Client Provider.
      *
@@ -84,7 +84,8 @@ class OAuth {
      * @param array $options Associative array containing
      *                       `provider`, `userName`, `clientSecret`, `clientId` and `refreshToken` elements
      */
-    public function __construct($options) {
+    public function __construct($options)
+    {
         $this->provider = $options['provider'];
         $this->oauthUserEmail = $options['userName'];
         $this->oauthClientSecret = $options['clientSecret'];
@@ -97,7 +98,8 @@ class OAuth {
      *
      * @return RefreshToken
      */
-    protected function getGrant() {
+    protected function getGrant()
+    {
         return new RefreshToken();
     }
 
@@ -106,9 +108,11 @@ class OAuth {
      *
      * @return AccessToken
      */
-    protected function getToken() {
+    protected function getToken()
+    {
         return $this->provider->getAccessToken(
-                        $this->getGrant(), ['refresh_token' => $this->oauthRefreshToken]
+            $this->getGrant(),
+            ['refresh_token' => $this->oauthRefreshToken]
         );
     }
 
@@ -117,19 +121,19 @@ class OAuth {
      *
      * @return string
      */
-    public function getOauth64() {
+    public function getOauth64()
+    {
         // Get a new token if it's not available or has expired
-        if (null === $this->oauthToken or $this->oauthToken->hasExpired()) {
+        if (null === $this->oauthToken || $this->oauthToken->hasExpired()) {
             $this->oauthToken = $this->getToken();
         }
 
         return base64_encode(
-                'user=' .
-                $this->oauthUserEmail .
-                "\001auth=Bearer " .
-                $this->oauthToken .
-                "\001\001"
+            'user=' .
+            $this->oauthUserEmail .
+            "\001auth=Bearer " .
+            $this->oauthToken .
+            "\001\001"
         );
     }
-
 }

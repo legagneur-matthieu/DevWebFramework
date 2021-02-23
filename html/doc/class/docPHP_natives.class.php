@@ -1649,42 +1649,6 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
-    private function ssl() {
-        ?>
-        <p>Cette classe permet de chiffrer et déchiffrer des messages <br />
-            actuellement, un bug est connu dans la librairie JS: <br />
-            si <em>(new ssl())->ssl_js()</em> est utilisé pour que l'utilisateur puisse chiffrer ces messages,<br />
-            la taille de la clé limite la taille maximale du message à chiffrer : <br />
-        </p>
-        <ul>
-            <li>1024 bits = 117 caractères</li>
-            <li>2048 bits = 245 caractères</li>
-            <li>4096 bits = 501 caractères</li>
-        </ul>
-        <p>en attendant que le bug JS soit corrigé, cette classe reste très pratique pour échanger des messages chiffrés entre deux services PHP par exemple.</p>           
-        <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//créé les clés publiques et privées\n"
-                . "$" . "ssl = new ssl($" . "bits = 1024);\n"
-                . "//retourne la clé publique\n"
-                . "$" . "ssl->get_public_key();\n"
-                . "//Chiffre un message avec la clé publique\n"
-                . "$" . "ssl->encrypt($" . "data);\n"
-                . "//Charge les librairies JS et chiffre la saisie des utilisateurs dans les formulaires de la page\n"
-                . "$" . "ssl->ssl_js();\n"
-                . "//Déchiffre les variables $" . "_POST ( cf $" . "ssl->ssl_js() )\n"
-                . "$" . "ssl->decrypt_post();\n"
-                . "?>", $this->_brush);
-        ?><p>Exemple, message à chiffrer : "Hello World"</p><?php
-        $ssl = new ssl();
-        ?><p>Clé publique ssl (<em>$ssl->get_public_key()</em>) :</p><?php
-        debug::print_r($ssl->get_public_key());
-        ?><p>Message chiffré (<em>$msg=$ssl->encrypt("Hello World")</em>) :</p><?php
-        debug::print_r($msg = $ssl->encrypt("Hello World"));
-        ?><p>Message déchiffré (<em>$ssl->decrypt($msg)</em>) :</p><?php
-        debug::print_r($ssl->decrypt($msg));
-    }
-
     private function stalactite() {
         ?>
         <p>(cf js)</p>

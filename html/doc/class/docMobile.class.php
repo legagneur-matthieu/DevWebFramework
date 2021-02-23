@@ -5,7 +5,7 @@ class docMobile {
     public function __construct() {
         $doc = array(
             "introduction",
-            "débuter",
+            "debuter",
             "heritage_du_framework_php"
         );
         js::accordion("accordion", true, true);

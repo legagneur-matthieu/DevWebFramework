@@ -5,31 +5,29 @@
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class print_pdf {
+class printer {
 
-    /**
-     * Cette classe génére un PDF à partir d'un code HTML généré préalablement (cf class/printer.class.php)
-     * 
-     * @param string $content contenu HTML du PDF
-     */
-    public function __construct($lib, $content, $filename) {
-        switch ($lib) {
-            case "dompdf":
-                include_once '../../dwf/class/dompdf/autoload.inc.php';
-                $dompdf = new \Dompdf\Dompdf();
-                $dompdf->load_html($content);
-                ob_end_clean();
-                $dompdf->render();
-                $dompdf->stream($filename, array('Attachment' => 0));
-                break;
-            case"debug":
-                echo $content;
-                break;
+    public function __construct() {
+        if (isset($_POST["type"])) {
+            switch (strtoupper($_POST["type"])) {
+                case "PDF":
+                    include_once __DIR__ . "/printer/printer_pdf.class.php";
+                    new printer_pdf(gzuncompress(base64_decode($_POST["content"])), $_POST["filename"]);
+                    break;
+                case "CSV":
+                    include_once __DIR__ . "/printer/printer_csv.class.php";
+                    new printer_csv(json_decode(gzuncompress(base64_decode($_POST["content"]))), $_POST["filename"]);
+                    break;
+                case "QRCODE":
+                    include_once __DIR__ . "/printer/printer_qrcode.class.php";
+                    new printer_qrcode(gzuncompress(base64_decode($_POST["content"])));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
 }
 
-if (isset($_POST["content"])) {
-    $printer = new print_pdf($_POST["lib"], base64_decode($_POST["content"]), (isset($_POST["filename"]) ? $_POST["filename"] : "printer.pdf"));
-}       
+new printer();

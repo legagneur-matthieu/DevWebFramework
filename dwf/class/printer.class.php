@@ -1,83 +1,64 @@
 <?php
 
 /**
- * Cette classe permet la création d'un PDF (passe par printer.php et les classes html2pdf)
- * 
- * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
+ * Cette classe permet l'export de données aux formats PDF, CSV ou QRCode
+ *
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class printer {
 
     /**
-     * Librairie à utiliser 
-     * 
-     * @var string Librairie a utiliser 
+     * Retourne un formulaire pour exporter un contenu HTML en PDF
+     * @param string $content HTML, corps du PDF
+     * @param string $filename Nom du fichier
+     * @return \form Formulaire d'export
      */
-    private $_lib;
-
-    /**
-     * Contenu du PDF
-     * 
-     * @var string Contenu du PDF
-     */
-    private $_content;
-
-    /**
-     * Cette classe permet la création d'un PDF (passe par printer.php )
-     * 
-     * @param string $lib Librairie à utiliser (dompdf ou debug)
-     */
-    public function __construct($lib = "dompdf") {
-        $this->_lib = $lib;
-        $this->init_printer();
+    public static function PDF($content, $filename) {
+        $content = '<html><head><meta charset="UTF-8"><title>' . $filename . '</title></head><body>' . $content . '</body></html>';
+        $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+        $form->hidden("type", "PDF");
+        $form->hidden("filename", $filename);
+        $form->hidden("content", base64_encode(gzcompress($content)));
+        $form->submit("btn btn-secondary", "Export PDF");
+        return $form->render();
     }
 
     /**
-     * Entête du PDF (le style CSS est à modifier à votre convenance)
+     * Retourne un formulaire pour exporter un array en CSV
+     * @param array $content Tableau de données a 2 dimentions
+     * @param string $filename Nom du fichier
+     * @return \form Formulaire d'export
      */
-    private function init_printer() {
-        switch ($this->_lib) {
-            case "dompdf":
-                $this->_content = '<html><head><meta charset="UTF-8"></head><body>';
-                break;
+    public static function CSV($content, $filename) {
+        $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+        $form->hidden("type", "CSV");
+        $form->hidden("filename", $filename);
+        $form->hidden("content", base64_encode(gzcompress(json_encode($content))));
+        $form->submit("btn btn-secondary", "Export CSV");
+        return $form->render();
+    }
+
+    /**
+     * Retourne soit un formulaire pour exporter un text ou une URL en QRCode
+     * soit le QRCode en png base64
+     * @param string $content Text ou URL
+     * @param boolean $get_png_b64 Si true la methode retournera le png en base64, 
+     *                              si false, un formulaire d'export (false par defaut)
+     * @return \form|string Formulaire d'export ou png base64
+     */
+    public static function QRCODE($content, $get_png_b64 = false) {
+        if ($get_png_b64) {
+            return "data:image/png;base64," . base64_encode(service::HTTP_POST_REQUEST($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . strtr($_SERVER["SCRIPT_NAME"], ["index.php" => ""]) . "../commun/printer.php", [
+                                "type" => "QRCODE",
+                                "content" => base64_encode(gzcompress($content))
+            ]));
+        } else {
+            $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+            $form->hidden("type", "QRCODE");
+            $form->hidden("content", base64_encode(gzcompress($content)));
+            $form->submit("btn btn-secondary", "Export QRCode");
+            return $form->render();
         }
-    }
-
-    /**
-     * Ajoute du contenu HTML au PDF
-     * @param string $content contenu HTML
-     */
-    public function add_content($content) {
-        $this->_content .= $content;
-    }
-
-    /**
-     * Retourne le contenu du PDF
-     * @return string contenu du PDF 
-     */
-    private function return_content() {
-        switch ($this->_lib) {
-            case "dompdf":
-                $this->_content .= '</body></html>';
-                break;
-        }
-        return $this->_content;
-    }
-
-    /**
-     * Affiche le bouton d'impression ouvrant le PDF dans print.php
-     */
-    public function print_buton($filename = "printer.pdf") {
-        echo tags::tag("form", ["action" => "../commun/printer.php", "target" => "_blank", "method" => "post"], tags::tag(
-                        "div", ["class" => "form-group"], tags::tag(
-                                "input", ["type" => "hidden", "class" => "form-control", "name" => "content", "value" => base64_encode(($this->return_content()))]) .
-                        tags::tag(
-                                "input", ["type" => "hidden", "class" => "form-control", "name" => "lib", "value" => $this->_lib]) .
-                        tags::tag(
-                                "input", ["type" => "hidden", "class" => "form-control", "name" => "filename", "value" => $filename]) .
-                        tags::tag(
-                                "input", ["type" => "submit", "class" => "btn btn-secondary", "value" => "Version imprimable (PDF)"])
-                )
-        );
     }
 
 }

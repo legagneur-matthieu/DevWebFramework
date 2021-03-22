@@ -1334,27 +1334,24 @@ class docPHP_natives {
         <?php
     }
 
-    private function phpQRCode__printcsv__printer() {
+    private function printer() {
         ?>
-        <p>Ces classes servent à afficher ou exporter des données en QRCode CSV ou PDF, ils utilisent les fichiers :</p>
-        <ul>
-            <li>html/commun/qrcode.php</li>
-            <li>html/commun/csv.php</li>
-            <li>html/commun/printer.php</li>
-        </ul>
+        <p>Cette classe permet l'export de données aux formats PDF, CSV ou QRCode,<br />
+            le script d'export est <i>html/commun/printer.php</i></p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//Affiche le qrcode contenant le texte ou l'URL passé en paramètre\n"
-                . "phpQRCode::print_img('texte ou url');\n\n"
-                . "//Affiche le qrcode contenant l'URL de la page courante, utilise un modal !\n"
-                . "//Utile pour les utilisateurs qui désirent continuer une lecture sur leur smartphone\n"
-                . "phpQRCode::this_page_to_qr();\n\n"
-                . "//Affiche un lien qui ouvre un onglet vers un export CSV des données passées en paramètre\n"
-                . "new printcsv($" . "data);\n\n"
-                . "//Affiche un bouton qui ouvre un onglet vers un export PDF\n"
-                . "$" . "pdf=new printer($" . "lib); //$" . "lib = html2pdf ou dompdf\n"
-                . "$" . "pdf->add_content($" . "content); //contenu HTML\n"
-                . "$" . "pdf->print_buton($" . "filename='printer.pdf'); //affiche le bouton (formulaire) et definit le nom du fichier\n"
+                . "//Affiche un bouton d'export PDF\n"
+                . "//(le contenu doit être en HTML sans les balises html et head)\n"
+                . "echo printer::PDF($" . "content, $" . "filename);\n\n"
+                . "//Affiche un bouton d'export CSV\n"
+                . "//(le contenu doit être un array a 2 dimentions)\n"
+                . "echo printer::CSV($" . "content, $" . "filename);\n\n"
+                . "//Affiche un bouton d'export QRCODE\n"
+                . "//(le contenu doit être un text ou une URL)\n"
+                . "echo printer::QRCODE($" . "content, $" . "get_png_b64 = false);\n\n"
+                . "//affiche directement le QRCode\n"
+                . "//(l'image est recupéré en PNG base64)\n"
+                . "echo html_structures::img(printer::QRCODE($" . "content, $" . "get_png_b64 = true));\n"
                 . "?>", $this->_brush);
     }
 

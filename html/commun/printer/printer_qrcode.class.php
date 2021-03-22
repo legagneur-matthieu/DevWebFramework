@@ -5,11 +5,11 @@
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class printer_pdf {
+class printer_qrcode {
 
     public function __construct($content) {
-        include_once '../../../dwf/class/phpqrcode/qrlib.php';
-        QRcode::png(base64_decode(gzuncompress($content)));
+        include '../../dwf/class/phpqrcode/qrlib.php';
+        QRcode::png($content);
     }
 
 }

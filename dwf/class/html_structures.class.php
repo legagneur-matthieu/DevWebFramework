@@ -124,7 +124,7 @@ class html_structures {
             $a->set_attr("title", $title);
         }
         if ($target_blank) {
-            $a->set_attr("target", "__blank");
+            $a->set_attr("target", "_blank");
         }
         return $a;
     }

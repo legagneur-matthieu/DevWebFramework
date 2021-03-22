@@ -15,7 +15,7 @@ class printer {
      */
     public static function PDF($content, $filename) {
         $content = '<html><head><meta charset="UTF-8"><title>' . $filename . '</title></head><body>' . $content . '</body></html>';
-        $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+        $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("type", "PDF");
         $form->hidden("filename", $filename);
         $form->hidden("content", base64_encode(gzcompress($content)));
@@ -30,7 +30,7 @@ class printer {
      * @return \form Formulaire d'export
      */
     public static function CSV($content, $filename) {
-        $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+        $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("type", "CSV");
         $form->hidden("filename", $filename);
         $form->hidden("content", base64_encode(gzcompress(json_encode($content))));
@@ -53,7 +53,7 @@ class printer {
                                 "content" => base64_encode(gzcompress($content))
             ]));
         } else {
-            $form = new form("\" target=\"_blank\"", "../commun/printer.php");
+            $form = new form("", "../commun/printer.php", "post", true);
             $form->hidden("type", "QRCODE");
             $form->hidden("content", base64_encode(gzcompress($content)));
             $form->submit("btn btn-secondary", "Export QRCode");

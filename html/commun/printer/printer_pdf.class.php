@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of printer_pdf
+ * printer_pdf
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */

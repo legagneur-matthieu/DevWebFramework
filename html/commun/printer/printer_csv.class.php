@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of printer_csv
+ * printer_csv
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */

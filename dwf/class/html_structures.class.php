@@ -277,8 +277,12 @@ class html_structures {
      * @param string $src chemin vers le fichier JS
      * @return string balise script
      */
-    public static function script($src) {
-        return tags::tag("script", ["type" => "text/javascript", "src" => $src], "");
+    public static function script($src, $async = false) {
+        $attr = ["type" => "text/javascript", "src" => $src];
+        if ($async) {
+            $attr["async"] = "true";
+        }
+        return tags::tag("script", $attr, "");
     }
 
     /**

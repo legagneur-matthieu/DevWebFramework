@@ -41,8 +41,8 @@ class html5 {
      */
     public function __construct() {
         self::$_called = true;
-        if(!isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])){
-            $_SERVER["HTTP_ACCEPT_LANGUAGE"]="fr";
+        if (!isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+            $_SERVER["HTTP_ACCEPT_LANGUAGE"] = "fr";
         }
         if (empty($lang = explode(";", explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"])[0])[0])) {
             $lang = "fr";
@@ -117,7 +117,7 @@ class html5 {
             "../commun/src/js/SimpleParallax.min.js",
             "../commun/src/js/js.js"
                 ] as $s) {
-                    $script .= html_structures::script($s);
+                    $script .= html_structures::script($s, true);
                 }
                 echo $script;
             }

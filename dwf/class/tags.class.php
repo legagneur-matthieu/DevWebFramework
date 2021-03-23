@@ -42,6 +42,7 @@ class tags {
      * @param string $tag Nom de la balise
      * @param array $attr Liste des attributs de la balise
      * @param string|\tags $content Contenu de la balise (false = balise auto fermante)
+     * @return string Balise HTML
      */
     public static function tag($tag, $attr = [], $content = false) {
         $str = "<{$tag}";

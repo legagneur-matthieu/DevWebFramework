@@ -275,6 +275,7 @@ class html_structures {
     /**
      * Retourne une balise script pour inclure un fichier JS
      * @param string $src chemin vers le fichier JS
+     * @param string $async le chargement doit-il etre ansynchrone ? (false par defaut)
      * @return string balise script
      */
     public static function script($src, $async = false) {

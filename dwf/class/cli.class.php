@@ -58,19 +58,19 @@ class cli {
 
     /**
      * Marque un temps de pause
-     * @param int $second Nombre de secondes que durera la pause
+     * @param float $second Nombre de secondes que durera la pause (peut être un nombre décimale)
      * @param boolean $show Afficher un minuteur (true/false, false par defaut)
      */
     public static function wait($second, $show = false) {
+        $mt = microtime(true) + $second;
         if ($show) {
-            $mt = microtime(true) + $second;
             self::write(time::parse_time($second));
             while (microtime(true) <= $mt) {
                 self::rewrite(time::parse_time($mt - microtime(true)));
             }
             self::rewrite("");
         } else {
-            sleep($second);
+            time_sleep_until($mt);
         }
     }
 

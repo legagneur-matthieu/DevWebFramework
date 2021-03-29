@@ -212,7 +212,7 @@ class math {
      * @return boolean True si le nombre est polygonal, false si non polygonal
      */
     public static function is_polygonal($nb, $x_gonal) {
-        if ($x_gonal < 3 or ! self::is_int($nb)) {
+        if ($x_gonal < 3 or!self::is_int($nb)) {
             return false;
         } else {
             $a = $x_gonal - 2;
@@ -234,7 +234,7 @@ class math {
      * @return boolean True si le nombre est tétraédrique, false si non tétraédrique
      */
     public static function is_tetrahedral($nb) {
-        if ($nb < 1 or ! self::is_int($nb)) {
+        if ($nb < 1 or!self::is_int($nb)) {
             return false;
         }
         $i = 1;
@@ -253,7 +253,7 @@ class math {
      * @return boolean True si le nombre est pyramidal carré, false si non pyramidal carré
      */
     public static function is_square_pyramidal($nb) {
-        if ($nb < 1 or ! self::is_int($nb)) {
+        if ($nb < 1 or!self::is_int($nb)) {
             return false;
         }
         $i = 1;
@@ -334,6 +334,22 @@ class math {
      */
     public static function is_bool($nb) {
         return (!is_object($nb) and ( (boolean) $nb) == $nb);
+    }
+
+    /**
+     * Converti une valeur en Bytes (Octets)
+     * Exemple : math::toBytes(1,"K") returne 1024
+     * @param int $n Valeur numerique a convertir
+     * @param string $unit Unité de base (B,K,M,G,T,P,E,Z ou Y)
+     * @return int Retourne la valeur en Bytes (Octets)
+     */
+    public static function toBytes($n, $unit) {
+        $m = [
+            "B" => 0, "K" => 1, "M" => 2,
+            "G" => 3, "T" => 4, "P" => 5,
+            "E" => 6, "Z" => 7, "Y" => 8,
+        ];
+        return $n * pow(1024, $m[$unit]);
     }
 
     /**

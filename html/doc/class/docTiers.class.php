@@ -34,7 +34,6 @@ class docTiers {
             [html_structures::a_link("https://github.com/yconst/Freetile", "Freetile", "", "", true), "0.3.1", "Ioannis (Yannis) Chatzikonstantinou", "JS", $licences[10]],
             [html_structures::a_link("https://fullcalendar.io", "Fullcalendar", "", "", true), "5.6.0", "Adam Shaw", "JS", $licences[0]],
             [html_structures::a_link("https://jquery.com", "JQuery, JQuery-UI", "", "", true), "1.12.1", "jQuery Foundation", "JS", $licences[0]],
-            [html_structures::a_link("https://github.com/travist/jsencrypt", "Jsencrypt.js", "", "", true), "3.0.1", "Travis Tidwell, Form.io", "JS", $licences[0]],
             [html_structures::a_link("https://willowsystems.github.io/jSignature", "JSignature", "", "", true), "2.0", "Willowsystems", "JS", $licences[0]],
             [html_structures::a_link("https://leafletjs.com", "Leaflet", "", "", true), "1.7.1", "Vladimir Agafonkin, CloudMade", "JS", $licences[10] . ", OSMF"],
             [html_structures::a_link("#", "Modal", "", "", true), "1.0", "<em>Inconnu</em>", "JS", $licences[10]],
@@ -53,7 +52,7 @@ class docTiers {
             [html_structures::a_link("https://jonobr1.com/stalactite/", "Stalactite", "", "", true), "0.1", "Jono Brandel", "JS", $licences[4]],
             [html_structures::a_link("https://github.com/syntaxhighlighter/syntaxhighlighter", "syntaxhighlighter", "", "", true), "3.0.83", "Alex Gorbatchev", "JS", $licences[0] . ', ' . $licences[1]],
             [html_structures::a_link("https://videojs.com/", "Videojs", "", "", true), "7.11.4", "Brightcove, Inc.", "JS", $licences[4]],
-            [html_structures::a_link("http://richhollis.github.io/vticker/", "Vticker", "", "", true), "1.21", "Richard Hollis", "JS", $licences[0].", ".$licences[3]],
+            [html_structures::a_link("http://richhollis.github.io/vticker/", "Vticker", "", "", true), "1.21", "Richard Hollis", "JS", $licences[0] . ", " . $licences[3]],
             [html_structures::a_link("https://github.com/Machy8/xhtml-formatter", "Xhtml-formatter", "", "", true), "1.0", "Vladimír Macháček", "PHP", $licences[3]],
                 ], "", "datatable") . html_structures::hr() .
         tags::tag("p", [], "Dû au fait que certaines librairies tierces soient sous " .

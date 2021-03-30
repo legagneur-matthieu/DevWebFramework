@@ -58,12 +58,11 @@ class bootstrap_theme {
     }
 
     /**
-     * Utilisé dans html5.class.php, 0 ne pas utiliser !
+     * Utilisé dans html5.class.php, ne pas utiliser !
      * Affiche les links des thèmes
      */
     public static function link_theme() {
         echo html_structures::link("../commun/src/dist/css/bootstrap-reboot.min.css") .
-        html_structures::link("../commun/src/dist/css/bootstrap-reboot.min.css") .
         html_structures::link("../commun/src/dist/css/bootstrap-glyphicon.min.css") .
         html_structures::link("../commun/src/dist/css/bootstrap-grid.min.css");
         if (in_array($theme = self::get_theme(), self::$_theme)) {

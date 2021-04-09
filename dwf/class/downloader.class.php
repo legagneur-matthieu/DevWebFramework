@@ -7,6 +7,12 @@
  */
 class downloader {
 
+    /**
+     * Cette classe permet a l'utilisateur de télécharger un fichier specifique sur le serveur
+     * @param string $fullPathFile Chemain complet et réel du fichier
+     * @param string $btn_txt Texte du bouton de téléchargement ("Télécharger" par defaut)
+     * @return string form render
+     */
     public static function file($fullPathFile, $btn_txt = "Télécharger") {
         $key = "dwf_downloads_allow";
         $_SESSION[$key] = (isset($_SESSION[$key]) ? $_SESSION[$key] : []);
@@ -17,6 +23,9 @@ class downloader {
         return $form->render();
     }
 
+    /**
+     * Supprime la liste des fichiers téléchargeable 
+     */
     public function clear() {
         $_SESSION["dwf_downloads_allow"] = [];
     }

@@ -461,6 +461,17 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function downloader() {
+        ?><p>Cette classe permet a l'utilisateur de télécharger un fichier specifique sur le serveur</p><?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Vide le cache des fichier téléchargeable\n"
+                . "downloader::clear();\n\n"
+                . "//rend un fichier du serveur téléchargeable \n"
+                . "//et affiche un bouton de téléchargement\n"
+                . "echo downloader::file($" . "fullPathFile, $" . "btn_txt = \"Télécharger\");\n"
+                . "?>", $this->_brush);
+    }
+
     private function dwf_exception() {
         ?> 
         <p>Cette classe gère les exceptions du framework <br />
@@ -1771,7 +1782,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

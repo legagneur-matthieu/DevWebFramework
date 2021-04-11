@@ -19,8 +19,8 @@ class g_elFinder {
      * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
      */
     public function __construct($conector_url = "connector.php") {
-        compact_css::get_instance()->add_css_file("../commun/src/js/elFinder/css/elfinder.min.css");
-        echo html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
+        echo html_structures::link_in_body("../commun/src/js/elFinder/css/elfinder.min.css") .
+        html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -31,7 +31,7 @@ class g_elFinder {
             })
         </script>
         <?php
-        echo tags::tag("div",["id"=>"elfinder"],"");
+        echo tags::tag("div", ["id" => "elfinder"], "");
         if (!file_exists($conector_url)) {
             $this->create_connector($conector_url);
         }

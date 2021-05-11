@@ -8,7 +8,7 @@
 class printer_qrcode {
 
     public function __construct($content) {
-        include '../../dwf/class/phpqrcode/qrlib.php';
+        include __DIR__ . '/../../../dwf/class/phpqrcode/qrlib.php';
         QRcode::png($content);
     }
 

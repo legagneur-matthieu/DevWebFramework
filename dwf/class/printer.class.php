@@ -15,10 +15,11 @@ class printer {
      */
     public static function PDF($content, $filename) {
         $content = '<html><head><meta charset="UTF-8"><title>' . $filename . '</title></head><body>' . $content . '</body></html>';
+        $key = "PDF_" . sha1($content);
+        $_SESSION[$key] = $content;
         $form = new form("", "../commun/printer.php", "post", true);
-        $form->hidden("type", "PDF");
         $form->hidden("filename", $filename);
-        $form->hidden("content", base64_encode(gzcompress($content)));
+        $form->hidden("content", $key);
         $form->submit("btn btn-secondary", "Export PDF");
         return $form->render();
     }
@@ -30,10 +31,12 @@ class printer {
      * @return \form Formulaire d'export
      */
     public static function CSV($content, $filename) {
+        $content = json_encode($content);
+        $key = "CSV_" . sha1($content);
+        $_SESSION[$key] = $content;
         $form = new form("", "../commun/printer.php", "post", true);
-        $form->hidden("type", "CSV");
         $form->hidden("filename", $filename);
-        $form->hidden("content", base64_encode(gzcompress(json_encode($content))));
+        $form->hidden("content", $key);
         $form->submit("btn btn-secondary", "Export CSV");
         return $form->render();
     }
@@ -47,6 +50,8 @@ class printer {
      * @return \form|string Formulaire d'export ou png base64
      */
     public static function QRCODE($content, $get_png_b64 = false) {
+        $key = "QRCODE_" . sha1($content);
+        $_SESSION[$key] = $content;
         if ($get_png_b64) {
             return "data:image/png;base64," . base64_encode(service::HTTP_POST_REQUEST($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . strtr($_SERVER["SCRIPT_NAME"], ["index.php" => ""]) . "../commun/printer.php", [
                                 "type" => "QRCODE",
@@ -54,8 +59,7 @@ class printer {
             ]));
         } else {
             $form = new form("", "../commun/printer.php", "post", true);
-            $form->hidden("type", "QRCODE");
-            $form->hidden("content", base64_encode(gzcompress($content)));
+            $form->hidden("content", $key);
             $form->submit("btn btn-secondary", "Export QRCode");
             return $form->render();
         }

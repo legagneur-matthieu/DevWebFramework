@@ -8,7 +8,7 @@
 class printer_pdf {
 
     public function __construct($content, $filename) {
-        include_once '../../dwf/class/dompdf/autoload.inc.php';
+        include_once __DIR__ . '/../../../dwf/class/dompdf/autoload.inc.php';
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->load_html($content);
         ob_end_clean();

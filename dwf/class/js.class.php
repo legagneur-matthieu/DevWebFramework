@@ -39,7 +39,9 @@ class js {
     public static function alertify_alert($msg, $title = "Message") {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?= $title; ?>", "<?= $msg; ?>");
+            $(document).ready(function () {
+                alertify.alert("<?= $title; ?>", "<?= $msg; ?>");
+            });
         </script>
         <?php
     }
@@ -53,9 +55,12 @@ class js {
     public static function alertify_alert_redir($msg, $url, $title = "Message") {
         ?>
         <script type="text/javascript">
-            alertify.alert("<?= $title; ?>", "<?= $msg; ?>", function () {
-                window.location = '<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>';
-            });</script>
+            $(document).ready(function () {
+                alertify.alert("<?= $title; ?>", "<?= $msg; ?>", function () {
+                    window.location = '<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>';
+                });
+            });
+        </script>
         <?php
     }
 
@@ -67,7 +72,9 @@ class js {
     public static function log_std($msg) {
         ?>
         <script type="text/javascript">
-            alertify.log("<?= $msg; ?>");
+            $(document).ready(function () {
+                alertify.log("<?= $msg; ?>");
+            });
         </script>
         <?php
     }
@@ -80,7 +87,9 @@ class js {
     public static function log_success($msg) {
         ?>
         <script type="text/javascript">
-            alertify.success("<?= $msg; ?>");
+            $(document).ready(function () {
+                alertify.success("<?= $msg; ?>");
+            });
         </script>
         <?php
     }
@@ -93,7 +102,9 @@ class js {
     public static function log_error($msg) {
         ?>
         <script type="text/javascript">
-            alertify.error("<?= $msg; ?>");
+            $(document).ready(function () {
+                alertify.error("<?= $msg; ?>");
+            });
         </script>
         <?php
     }

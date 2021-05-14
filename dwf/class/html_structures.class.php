@@ -234,6 +234,17 @@ class html_structures {
     }
 
     /**
+     * Retourne une Bootstrap Icon ("bi", avec un texte alternative)
+     * 
+     * @param string $bi nom du bi (code : bi bi-$bi )
+     * @param string $alt alternative accessible aux synthéses vocales
+     * @return string bi
+     */
+    public static function bi($bi, $alt = "") {
+        return tags::tag("span", ["class" => "bi bi-" . $bi], tags::tag("span", ["class" => "sr-only"], $alt . "&nbsp;"));
+    }
+
+    /**
      * Retourne un séparateur horizontal
      * 
      * @return string Séparateur horizontal

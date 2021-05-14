@@ -11,7 +11,6 @@ $(document).ready(function () {
             $(".carousel-pause").attr("data-slide", "pause");
         }
     });
-    $('[data-toggle="popover"]').popover();
     $('[data-toggle="tooltip"]').tooltip();
     //parallax
     (function () {

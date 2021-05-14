@@ -17,8 +17,9 @@ class docTiers {
         html_structures::table(["Librairie", "Version", "Auteur", "Langage", "Licence"], [
             [html_structures::a_link("https://alertifyjs.com", "Alertify", "", "", true), "1.13.1", "Fabien Doiron", "JS", $licences[0]],
             [html_structures::a_link("https://animate.style", "Animate", "", "", true), "4.1.1", "Daniel Eden", "JS", $licences[0]],
-            [html_structures::a_link("https://getbootstrap.com", "Bootsrap", "", "", true), "4.6.0", "Twitter, Inc.", "CSS, JS", $licences[0]],
-            [html_structures::a_link("https://bootswatch.com", "Bootswatch", "", "", true), "4.6.0", "Thomas Park", "CSS", $licences[0]],
+            [html_structures::a_link("https://getbootstrap.com", "Bootsrap", "", "", true), "5.0.1", "Twitter, Inc.", "CSS, JS", $licences[0]],
+            [html_structures::a_link("https://icons.getbootstrap.com", "Bootsrap Icons", "", "", true), "1.5.0", "Twitter, Inc.", "CSS", $licences[0]],
+            [html_structures::a_link("https://bootswatch.com", "Bootswatch", "", "", true), "5.0.0", "Thomas Park", "CSS", $licences[0]],
             [html_structures::a_link("https://ckeditor.com/ckeditor-4/", "Ckeditor", "", "", true), "4.16.0", "Frederico Knabben", "JS", $licences[1]],
             [html_structures::a_link("http://csstidy.sourceforge.net", "CSSTidy", "", "", true), "1.6.5", "Florian Schmitz", "PHP", $licences[2]],
             [html_structures::a_link("https://js.cytoscape.org", "Cytoscape", "", "", true), "3.18.1", "The Cytoscape Consortium", "JS", $licences[10]],

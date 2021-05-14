@@ -908,12 +908,12 @@ var defaults = function defaults(_defaults) {
     return filledOpts;
   };
 };
-var removeFromArray = function removeFromArray(arr, ele, manyCopies) {
-  for (var i = arr.length; i >= 0; i--) {
+var removeFromArray = function removeFromArray(arr, ele, oneCopy) {
+  for (var i = arr.length - 1; i >= 0; i--) {
     if (arr[i] === ele) {
       arr.splice(i, 1);
 
-      if (!manyCopies) {
+      if (oneCopy) {
         break;
       }
     }
@@ -1733,6 +1733,7 @@ var elesfn$3 = {
           gScore[wid] = tempScore;
           fScore[wid] = tempScore + heuristic(w);
           cameFrom[wid] = cMin;
+          cameFromEdge[wid] = e;
         }
       } // End of neighbors update
 
@@ -24758,6 +24759,7 @@ BRp$c.load = function () {
         }
 
         cy.panBy(deltaP);
+        cy.emit('dragpan');
         r.hoverData.dragged = true;
       } // Needs reproject due to pan changing viewport
 
@@ -25142,6 +25144,7 @@ BRp$c.load = function () {
           y: rpos[1]
         }
       });
+      cy.emit(e.type === 'gesturechange' ? 'pinchzoom' : 'scrollzoom');
     }
   }; // Functions to help with whether mouse wheel should trigger zooming
   // --
@@ -25669,6 +25672,7 @@ BRp$c.load = function () {
           pan: pan2,
           cancelOnFailedZoom: true
         });
+        cy.emit('pinchzoom');
         distance1 = distance2;
         f1x1 = f1x2;
         f1y1 = f1y2;
@@ -25824,12 +25828,14 @@ BRp$c.load = function () {
                 x: disp[0] * zoom,
                 y: disp[1] * zoom
               });
+              cy.emit('dragpan');
             } else if (isOverThresholdDrag) {
               r.swipePanning = true;
               cy.panBy({
                 x: dx * zoom,
                 y: dy * zoom
               });
+              cy.emit('dragpan');
 
               if (start) {
                 start.unactivate();
@@ -31631,7 +31637,7 @@ sheetfn.appendToStyle = function (style) {
   return style;
 };
 
-var version = "3.18.1";
+var version = "3.19.0";
 
 var cytoscape = function cytoscape(options) {
   // if no options specified, use default

@@ -75,11 +75,17 @@ class application {
                                         "a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " text-light" : "")], $page["text"]));
             }
         }
-        echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"], tags::tag("button", ["class" => "navbar-toggler", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag("span", ["class" => "visually-hidden"], "Dérouler le menu") .
-                        html_structures::glyphicon("menu-hamburger")) .
-                tags::tag(
-                        "div", ["class" => "collapse navbar-collapse"], tags::tag(
-                                "ul", ["class" => "navbar-nav"], $lis)
+        echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"],
+                tags::tag("div", ["class" => "container-fluid"],
+                        tags::tag("button", ["class" => "navbar-toggler", "data-bs-toggle" => "collapse", "data-bs-target" => ".navbar-collapse", "type" => "button", "aria-controls" => "navbar-collapse", "aria-expanded" => "false", "aria-label" => "Afficher ou masquer Navigation"],
+                                tags::tag("span", ["class" => "navbar-toggler-icon"],
+                                        tags::tag("span", ["class" => "visually-hidden"], "Dérouler le menu")
+                                )
+                        ) .
+                        tags::tag(
+                                "div", ["class" => "collapse navbar-collapse"], tags::tag(
+                                        "ul", ["class" => "navbar-nav me-auto mb-2 mb-lg-0"], $lis)
+                        )
                 )
         ) . tags::tag(
                 "p", ["class" => "min alert alert-info"], tags::tag(
@@ -97,8 +103,8 @@ class application {
                 $page_finded = true;
                 $html = new html5();
                 html5::before_title("{$page["title"]} - ");
-                html5::set_description((isset($page["description"])?$page["description"]:""));
-                html5::set_keywords((isset($page["keywords"])?$page["keywords"]:""));
+                html5::set_description((isset($page["description"]) ? $page["description"] : ""));
+                html5::set_keywords((isset($page["keywords"]) ? $page["keywords"] : ""));
                 $this->_pages->header();
                 $this->menu();
                 $p = $page["page"];

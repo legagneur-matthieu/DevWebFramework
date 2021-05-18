@@ -175,6 +175,18 @@ class js {
     }
 
     /**
+     * Permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML
+     * Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input
+     * Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page
+     * @param string $id ID de l'ement HTML cible
+     * @param boolean $dedug affiche la webcam sur la page pour calibrer la lecture des QRCodes
+     * @return \jsqr
+     */
+    public static function jsqr($id, $debug = false) {
+        return new jsqr($id, $dedug);
+    }
+
+    /**
      * Créé un vTicker (suite de phrases qui défilent)
      * 
      * @param array $data Liste des phrases à afficher
@@ -308,7 +320,7 @@ class js {
     public static function menu($id = "menu") {
         ?>
         <script>
-        $(document).ready(function () {
+                    $(document).ready(function () {
             $("#<?= $id; ?>").menu();
             });</script>
         <?php

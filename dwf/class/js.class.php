@@ -308,7 +308,7 @@ class js {
     public static function menu($id = "menu") {
         ?>
         <script>
-                    $(document).ready(function () {
+        $(document).ready(function () {
             $("#<?= $id; ?>").menu();
             });</script>
         <?php
@@ -324,7 +324,7 @@ class js {
         //Indicators
         $ol = tags::ol(["class" => "carousel-indicators", "data-ride" => "carousel"]);
         for ($i = 0; $i < count($data); $i++) {
-            $li = tags::li(["data-target" => "#" . $id, "data-slide-to" => $i], html_structures::a_link("#", tags::tag("span", ["class" => "sr-only"], "slide " . $i)));
+            $li = tags::li(["data-target" => "#" . $id, "data-slide-to" => $i], html_structures::a_link("#", tags::tag("span", ["class" => "visually-hidden"], "slide " . $i)));
             if ($i == 0) {
                 $li->set_attr("class", "active");
             }

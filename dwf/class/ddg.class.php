@@ -30,7 +30,7 @@ class ddg {
         echo tags::tag("div", ["class" => "ddg"], tags::tag(
                         "form", ["action" => "https://duckduckgo.com/", "target" => "_blank", "class" => "form-inline", "method" => "post"], tags::tag(
                                 "label", ["for" => "q"], $this->svg() . " " . tags::tag(
-                                        "span", ["class" => "sr-only"], "Rechercher sur DuckDuckGo")
+                                        "span", ["class" => "visually-hidden"], "Rechercher sur DuckDuckGo")
                         ) .
                         tags::tag("input", ["id" => "q", "type" => "text", "name" => "q", "class" => "form-control"]).
                         tags::tag("button",["class"=>"btn btn-success"], html_structures::glyphicon("search", "Rechercher"))

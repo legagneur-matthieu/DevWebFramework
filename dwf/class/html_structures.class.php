@@ -230,7 +230,7 @@ class html_structures {
      * @return string Glyphicon
      */
     public static function glyphicon($glyphicon, $alt = "") {
-        return tags::tag("span", ["class" => "glyphicon glyphicon-" . $glyphicon], tags::tag("span", ["class" => "sr-only"], $alt . "&nbsp;"));
+        return tags::tag("span", ["class" => "glyphicon glyphicon-" . $glyphicon], tags::tag("span", ["class" => "visually-hidden"], $alt . "&nbsp;"));
     }
 
     /**
@@ -241,7 +241,7 @@ class html_structures {
      * @return string bi
      */
     public static function bi($bi, $alt = "") {
-        return tags::tag("span", ["class" => "bi bi-" . $bi], tags::tag("span", ["class" => "sr-only"], $alt . "&nbsp;"));
+        return tags::tag("span", ["class" => "bi bi-" . $bi], tags::tag("span", ["class" => "visually-hidden"], $alt . "&nbsp;"));
     }
 
     /**

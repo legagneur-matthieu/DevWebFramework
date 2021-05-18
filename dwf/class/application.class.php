@@ -75,7 +75,7 @@ class application {
                                         "a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " text-light" : "")], $page["text"]));
             }
         }
-        echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"], tags::tag("button", ["class" => "navbar-toggler", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag("span", ["class" => "sr-only"], "Dérouler le menu") .
+        echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"], tags::tag("button", ["class" => "navbar-toggler", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"], tags::tag("span", ["class" => "visually-hidden"], "Dérouler le menu") .
                         html_structures::glyphicon("menu-hamburger")) .
                 tags::tag(
                         "div", ["class" => "collapse navbar-collapse"], tags::tag(

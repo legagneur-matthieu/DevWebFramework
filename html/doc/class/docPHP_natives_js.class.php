@@ -102,6 +102,19 @@ class docPHP_natives_js {
         <?php
     }
 
+    public function jsqr() {
+        ?> 
+        <p>Cette classe permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML <br />
+            Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input <br />
+            Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page</p>
+        <?php
+        js::syntaxhighlighter("<?php \n"
+                . "$" . "form=new form();\n"
+                . "$" . "form->input('Mon input','mon_input');\n"
+                . "echo $" . "form->render();\n"
+                . "js::jsqr('mon_input');\n?>", $this->_brush);
+    }
+
     public function vTicker() {
         ?> 
         <p>Créé un vTicker (suite de phrases qui défilent)</p>

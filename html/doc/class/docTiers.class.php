@@ -36,6 +36,7 @@ class docTiers {
             [html_structures::a_link("https://fullcalendar.io", "Fullcalendar", "", "", true), "5.7.0", "Adam Shaw", "JS", $licences[0]],
             [html_structures::a_link("https://jquery.com", "JQuery, JQuery-UI", "", "", true), "1.12.1", "jQuery Foundation", "JS", $licences[0]],
             [html_structures::a_link("https://willowsystems.github.io/jSignature", "JSignature", "", "", true), "2.0", "Willowsystems", "JS", $licences[0]],
+            [html_structures::a_link("https://github.com/cozmo/jsQR", "jsQR", "", "", true), "2021.04", "Cozmo", "JS", $licences[4]],
             [html_structures::a_link("https://leafletjs.com", "Leaflet", "", "", true), "1.7.1", "Vladimir Agafonkin, CloudMade", "JS", $licences[10] . ", OSMF"],
             [html_structures::a_link("#", "Modal", "", "", true), "1.0", "<em>Inconnu</em>", "JS", $licences[10]],
             [html_structures::a_link("http://paypal.github.io/PayPal-PHP-SDK/", "PayPal-PHP-SDK", "", "", true), "1.14.0", "PAYPAL INC.", "PHP", $licences[10]],

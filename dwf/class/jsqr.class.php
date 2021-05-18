@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette class permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML
+ * Cette classe permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML
  * Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input
  * Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page
  *
@@ -13,7 +13,7 @@ class jsqr {
     private static $_called = false;
 
     /**
-     * Cette class permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML
+     * Cette classe permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML
      * Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input
      * Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page
      * 

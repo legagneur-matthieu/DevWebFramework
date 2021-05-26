@@ -121,7 +121,7 @@ class html5 {
             "../commun/src/js/SimpleParallax.min.js",
             "../commun/src/js/js.js"
                 ] as $s) {
-                    $script .= html_structures::script($s, true);
+                    $script .= html_structures::script_async($s);
                 }
                 echo $script;
             }

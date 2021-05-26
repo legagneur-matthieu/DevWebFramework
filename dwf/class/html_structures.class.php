@@ -286,15 +286,28 @@ class html_structures {
     /**
      * Retourne une balise script pour inclure un fichier JS
      * @param string $src chemin vers le fichier JS
-     * @param string $async le chargement doit-il etre ansynchrone ? (false par defaut)
      * @return string balise script
      */
-    public static function script($src, $async = false) {
-        $attr = ["type" => "text/javascript", "src" => $src];
-        if ($async) {
-            $attr["async"] = "true";
-        }
-        return tags::tag("script", $attr, "");
+    public static function script($src) {
+        return tags::tag("script", ["type" => "text/javascript", "src" => $src], "");
+    }
+
+    /**
+     * Retourne une balise script asynchrone pour inclure un fichier JS
+     * @param string $src chemin vers le fichier JS
+     * @return string balise script
+     */
+    public static function script_async($src) {
+        return tags::tag("script", ["type" => "text/javascript", "src" => $src, "async" => "true"], "");
+    }
+
+    /**
+     * Retourne une balise script différé pour inclure un fichier JS
+     * @param string $src chemin vers le fichier JS
+     * @return string balise script
+     */
+    public static function script_defer($src) {
+        return tags::tag("script", ["type" => "text/javascript", "src" => $src, "defer" => "true"], "");
     }
 
     /**

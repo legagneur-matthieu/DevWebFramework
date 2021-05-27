@@ -18,7 +18,7 @@ class entity_model {
                 . '<th style="border-left:0;" class="active"></th></tr><tr><th>Champ</th><th>Type</th></tr></thead><tbody>';
         foreach ($entity::get_structure() as $value) {
             $str .= '<tr><td>';
-            $pk = !in_array($value[1], ["int", "integer", "string", "mail", "array"]);
+            $pk = !in_array($value[1], ["int", "integer","bool","boolean", "string", "mail", "array"]);
             if ($value[2]) {
                 $str .= '<u>' . $value[0] . '</u>';
             } elseif ($pk) {
@@ -40,7 +40,7 @@ class entity_model {
     public static function div($entity) {
         $str = '<div class="mcd_entity"><div class="mcd_entity_name"><p>' . $entity . '</p></div><div class="mcd_entity_data"><ul>';
         foreach ($entity::get_structure() as $value) {
-            $pk = !in_array($value[1], ["int", "integer", "string", "mail", "array"]);
+            $pk = !in_array($value[1], ["int", "integer","bool","boolean", "string", "mail", "array"]);
             $str .= '<li>';
             if ($value[2]) {
                 $str .= '<u>' . $value[0] . '</u>';

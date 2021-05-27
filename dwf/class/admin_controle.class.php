@@ -69,6 +69,11 @@ class admin_controle {
         $this->_data = $entity::get_table_array();
         $url = application::get_url(["action", "id"]);
         foreach ($this->_structure as $value) {
+            if (in_array($value[1], ["bool", "boolean"])) {
+                foreach ($this->_data as $key => $row) {
+                    $this->_data[$key][$value[0]] = ($this->_data[$key][$value[0]] ? "Oui" : "Non");
+                }
+            }
             if (!$value[2] and $value[1] != "array") {
                 $this->_head[] = ucfirst($value[0]);
             } elseif ($value[1] == "array") {
@@ -134,6 +139,10 @@ class admin_controle {
                     case "int":
                     case "interger":
                         $form->input(ucfirst($element[0]), $element[0], "number");
+                        break;
+                    case "bool":
+                    case "boolean":
+                        $form->select(ucfirst($element[0]), $element[0], [[0, "Non", false], [1, "Oui", false]]);
                         break;
                     case "mail":
                         $form->input(ucfirst($element[0]), $element[0], "email");
@@ -208,6 +217,10 @@ class admin_controle {
                     case "interger":
                         $form->input(ucfirst($element[0]), $element[0], "number", $object->$geter());
                         break;
+                    case "bool":
+                    case "boolean":
+                        $form->select(ucfirst($element[0]), $element[0], [[0, "Non", $object->$geter() == 0], [1, "Oui", $object->$geter() == 1]]);
+                        break;
                     case "mail":
                         $form->input(ucfirst($element[0]), $element[0], "email", $object->$geter());
                         break;
@@ -281,6 +294,11 @@ class admin_controle {
             unset($data[$key]['id']);
         }
         foreach ($this->_structure as $value) {
+            if (in_array($value[1], ["bool", "boolean"])) {
+                foreach ($data as $key => $row) {
+                    $data[$key][$value[0]] = ($data[$key][$value[0]] ? "Oui" : "Non");
+                }
+            }
             if ($value[1] == "array") {
                 foreach ($data as $key => $row) {
                     unset($data[$key][$value[0]]);
@@ -289,8 +307,8 @@ class admin_controle {
         }
         js::datatable("supp_datatable");
         $form = new form("form-inline");
-        echo tags::tag("p", ["class" => "text-center"], "ETES VOUS SUR DE VOULOIR SUPPRIMER CETTE ELÉMENT :").
-        html_structures::table($this->_head, $data, "supp_datatable").
+        echo tags::tag("p", ["class" => "text-center"], "ETES VOUS SUR DE VOULOIR SUPPRIMER CETTE ELÉMENT :") .
+        html_structures::table($this->_head, $data, "supp_datatable") .
         $form->get_open_form() .
         $form->hidden("admin_form_supp", "1") .
         $form->submit("btn-danger", "Oui") .

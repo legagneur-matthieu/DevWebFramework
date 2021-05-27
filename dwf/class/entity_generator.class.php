@@ -98,7 +98,7 @@ class entity_generator {
                 }
             }
             //génère les geteur avec leur type si besoin
-            if (!(in_array($tuple[1], ["int", "integer", "string", "mail", "array"]))) {
+            if (!(in_array($tuple[1], ["int", "integer", "bool", "boolean", "string", "mail", "array"]))) {
                 $tuple_etter .= " /** @return " . $tuple[1] . " */" . $n;
             }
             $tuple_etter .= "public function get_" . $tuple[0] . "() {" . $n
@@ -116,6 +116,10 @@ class entity_generator {
                 case "integer":
                     $tuple_etter .= "$" . "this->_" . $tuple[0] . " = (int) $" . $tuple[0] . ";" . $n;
                     break;
+                case "bool":
+                case "boolen":
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = ($" . $tuple[0] . "?1:0);" . $n;
+                    break;
                 case "mail":
                     $tuple_etter .= "if (application::$" . "_bdd->verif_email($" . $tuple[0] . " )) { $" . "this->_" . $tuple[0] . " = $" . $tuple[0] . ";}" . $n;
                     break;
@@ -131,6 +135,8 @@ class entity_generator {
             switch ($tuple[1]) {
                 case "int":
                 case "integer":
+                case "bool":
+                case "boolen":
                 case "string":
                 case "mail":
                     $tuple_destruct .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . "this->get_" . $tuple[0] . "());" . $n;

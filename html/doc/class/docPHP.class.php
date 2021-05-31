@@ -431,6 +431,7 @@ class docPHP {
         <?php
         echo html_structures::table(["Type (code PHP)", "Type (SQL)", "Description"], [
             ["int, integer", "int(11)", "un champ de nombre entiers"],
+            ["bool, boolean", "int(1)", "0 ou 1"],
             ["string", "text", "un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
             ["mail", "text", "un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de données"],
             ["array", "text", "(depuis la version 21.18.03) un champ de texte JSON, les conversions de array (coté PHP) en JSON (coté SQL) et inversement sont gérées en PHP par l'entité. <br />"

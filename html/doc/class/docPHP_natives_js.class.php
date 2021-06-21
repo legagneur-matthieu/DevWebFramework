@@ -350,4 +350,18 @@ class docPHP_natives_js {
         ));
     }
 
+    private function wled() {
+        ?>
+        <p>Cette classe permet d'exploiter l'API HTTP de <a href="https://github.com/Aircoookie/WLED" target="_blank">WLED</a></p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//créé un objet WLED\n"
+                . "var wled = new wled('192.168.1.10');\n"
+                . "//change les couleur rouge, vert et bleu et envois la requête a WLED\n"
+                . "wled.set_red(255).set_green(255).set_blue(255).exec();\n"
+                . "//redémarre WLED\n"
+                . "wled.reboot().exec();\n"
+                . "?>", $this->_brush);
+    }
+
 }

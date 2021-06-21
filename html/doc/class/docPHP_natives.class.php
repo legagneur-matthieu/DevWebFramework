@@ -1782,7 +1782,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
@@ -1939,6 +1939,20 @@ class docPHP_natives {
                 . "//Retourne le statut de la page passée en paramètre\n"
                 . "//(si la page est conforme W3C)\n"
                 . "w3c_validate::validate_from_url($" . "url);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function wled() {
+        ?>
+        <p>Cette classe permet d'exploiter l'API HTTP de <a href="https://github.com/Aircoookie/WLED" target="_blank">WLED</a></p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//créé un objet WLED\n"
+                . "$" . "wled = new wled('192.168.1.10');\n"
+                . "//change les couleur rouge, vert et bleu et envois la requête a WLED\n"
+                . "$" . "wled->set_red(255)->set_green(255)->set_blue(255)->exec();\n"
+                . "//redémarre WLED\n"
+                . "$" . "wled->sreboot()->exec();\n"
                 . "?>", $this->_brush);
     }
 

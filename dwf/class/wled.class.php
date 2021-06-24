@@ -21,7 +21,7 @@ class wled {
     public function exec() {
         $params = "";
         foreach ($this->params as $key => $value) {
-            $params .= ($value == "ON" ? "&{$key}" : "&{$key}={$value}");
+            $params .= ($value === "ON" ? "&{$key}" : "&{$key}={$value}");
         }
         $curl = curl_init($this->_url . $params);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -558,11 +558,11 @@ class wled {
 
     /**
      * Définit le segment principal
-     * @param int $SM entre 1 et 9
+     * @param int $SM entre 0 et 15
      * @return $this
      */
     public function set_main_segment($SM) {
-        if ($SM >= 0 and $SM <= 9) {
+        if ($SM >= 0) {
             $this->params["SM"] = $SM;
         }
         return $this;
@@ -570,11 +570,11 @@ class wled {
 
     /**
      * Définit quel segment à selectionner
-     * @param int $SS entre 1 et 9
+     * @param int $SS entre 0 et 15
      * @return $this
      */
     public function set_select_segment($SS) {
-        if ($SS >= 0 and $SS <= 9) {
+        if ($SS >= 0) {
             $this->params["SS"] = $SS;
         }
         return $this;
@@ -582,6 +582,9 @@ class wled {
 
     /**
      * Définit si le segment doit être selectionné 
+     * 0 : non
+     * 1 : oui
+     * 2 : switch
      * @param type $SV
      * @return $this
      */

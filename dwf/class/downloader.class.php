@@ -26,8 +26,8 @@ class downloader {
     /**
      * Supprime la liste des fichiers téléchargeable 
      */
-    public function clear() {
-        $_SESSION["dwf_downloads_allow"] = [];
+    public static function clear() {
+        $_SESSION[$key = "dwf_downloads_allow"] = [];
     }
 
 }

@@ -30,7 +30,9 @@ class change_reload extends singleton {
                 $ft = filemtime($value);
                 $rs_ft = ($ft > $rs_ft ? $ft : $rs_ft);
             }
-            echo tags::tag("span", ["class" => "d-none", "id" => "DWF_Change"], $rs_ft) .
+            echo tags::tag("div", ["class" => "d-none"],
+                    tags::tag("span", ["id" => "DWF_Change"], $rs_ft)
+            ) .
             html_structures::script("../commun/src/js/change_reload.js");
             change_reload::$_called = true;
         }

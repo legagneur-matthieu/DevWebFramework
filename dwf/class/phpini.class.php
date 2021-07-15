@@ -61,6 +61,7 @@ class phpini {
             "memory_limit" => "128M",
             "post_max_size" => "8M",
             "session__gc_maxlifetime" => "1440",
+            "session.cookie_samesite" => "Lax",
         ],
         "dev" => [
             "display_errors" => "On",
@@ -81,6 +82,7 @@ class phpini {
             "memory_limit" => "128M",
             "post_max_size" => "8M",
             "session__gc_maxlifetime" => "1440",
+            "session.cookie_samesite" => "Lax",
         ],
         "prod" => [
             "display_errors" => "Off",
@@ -101,6 +103,7 @@ class phpini {
             "memory_limit" => "128M",
             "post_max_size" => "8M",
             "session__gc_maxlifetime" => "1440",
+            "session.cookie_samesite" => "Lax",
         ],
         "dwf_dev" => [
             "display_errors" => "On",
@@ -121,6 +124,7 @@ class phpini {
             "memory_limit" => "256M",
             "post_max_size" => "100M",
             "session__gc_maxlifetime" => "3600",
+            "session.cookie_samesite" => "Lax",
         ],
         "dwf_prod" => [
             "display_errors" => "Off",
@@ -141,6 +145,7 @@ class phpini {
             "memory_limit" => "256M",
             "post_max_size" => "100M",
             "session__gc_maxlifetime" => "3600",
+            "session.cookie_samesite" => "Lax",
         ],
         "custom" => [],
     ];
@@ -188,13 +193,13 @@ class phpini {
      */
     public static function admin() {
         self::set_custom();
-        if (!isset($_POST["profil"]) and ! isset($_GET["new_profile"])) {
+        if (!isset($_POST["profil"]) and!isset($_GET["new_profile"])) {
             if (count(self::$_ini[self::MODE_CUSTOM]) != 0) {
                 $option = [];
                 foreach (array_keys(self::$_ini[self::MODE_CUSTOM]) as $profil) {
                     $option[] = [$profil, $profil, false];
                 }
-                $form=new form();
+                $form = new form();
                 $form->select("Profil", "profil", $option);
                 $form->submit("btn-primary", "Modifier");
                 echo $form->render();
@@ -227,7 +232,8 @@ class phpini {
             "max_execution_time" => $_POST["max_execution_time"],
             "memory_limit" => $_POST["memory_limit_qnt"] . $_POST["memory_limit_unit"],
             "post_max_size" => $_POST["post_max_size_qnt"] . $_POST["post_max_size_unit"],
-            "session__gc_maxlifetime" => $_POST["session__gc_maxlifetime"]
+            "session__gc_maxlifetime" => $_POST["session__gc_maxlifetime"],
+            "session__gc_maxlifetime" => "Lax"
         ];
         file_put_contents(__DIR__ . "/phpini/custom.json", json_encode(self::$_ini[self::MODE_CUSTOM]));
         js::alertify_alert_redir("Le profil PHPini " . $_POST["profil_name"] . " a bien été créé / modifié", application::get_url(["new_profile"]));
@@ -237,7 +243,7 @@ class phpini {
      * Formulaire d'administration
      */
     private static function admin_form() {
-        $form=new form("w100");
+        $form = new form("w100");
         echo $form->get_open_form();
         ?>
         <div class="row">
@@ -246,8 +252,8 @@ class phpini {
                 if (isset($_GET["new_profile"])) {
                     echo $form->input("Nom du profil", "profil_name");
                 } else {
-                    echo tags::tag("p", [], "Profil : " . $_POST["profil"]).
-                    $form->hidden("profil_name", $_POST["profil"]).
+                    echo tags::tag("p", [], "Profil : " . $_POST["profil"]) .
+                    $form->hidden("profil_name", $_POST["profil"]) .
                     $form->hidden("profil", $_POST["profil"]);
                 }
                 $option_on = [];
@@ -256,11 +262,11 @@ class phpini {
                 $display_startup_errors = "display_startup_errors";
                 $html_errors = "html_errors";
                 $log_errors = "log_errors";
-                echo $form->select($display_errors, $display_errors, self::get_option($display_errors)).
-                $form->select($display_startup_errors, $display_startup_errors, self::get_option($display_startup_errors, "Off")).
-                $form->select($html_errors, $html_errors, self::get_option($html_errors)).
-                $form->select($log_errors, $log_errors, self::get_option($log_errors, "Off")).
-                $form-> open_fieldset("error_reporting");
+                echo $form->select($display_errors, $display_errors, self::get_option($display_errors)) .
+                $form->select($display_startup_errors, $display_startup_errors, self::get_option($display_startup_errors, "Off")) .
+                $form->select($html_errors, $html_errors, self::get_option($html_errors)) .
+                $form->select($log_errors, $log_errors, self::get_option($log_errors, "Off")) .
+                $form->open_fieldset("error_reporting");
                 foreach (["E_NOTICE", "E_STRICT", "E_DEPRECATED"] as $E) { // E_ALL
                     $checked = (isset($_POST["profil"]) ? !strpos(self::$_ini[self::MODE_CUSTOM][$_POST["profil"]]["error_reporting"], "~" . $E) : false);
                     echo $form->checkbox($E, $E, "on", "", $checked);
@@ -277,9 +283,9 @@ class phpini {
                 $session__gc_divisor = "session__gc_divisor";
                 $session__sid_bits_per_character = "session__sid_bits_per_character";
                 $max_execution_time = "max_execution_time";
-                echo $form->input($max_input_time . " (-1 = Unlimited)", $max_input_time, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$max_input_time] : "-1")).
-                $form->select($output_buffering, $output_buffering, self::get_option($output_buffering, "Off")).
-                $form->select($register_argc_argv, $register_argc_argv, self::get_option($register_argc_argv)).
+                echo $form->input($max_input_time . " (-1 = Unlimited)", $max_input_time, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$max_input_time] : "-1")) .
+                $form->select($output_buffering, $output_buffering, self::get_option($output_buffering, "Off")) .
+                $form->select($register_argc_argv, $register_argc_argv, self::get_option($register_argc_argv)) .
                 $form->select($request_order, $request_order, [
                     ["None", "None", (isset($_GET["new_profile"]) ?
                                 true :
@@ -289,8 +295,8 @@ class phpini {
                                 false :
                                 (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$request_order] == "GP")
                         )]
-                ]).
-                $form->input(strtr($session__gc_divisor, ["__" => "."]) . " (default : 100, recommended : 1000)", $session__gc_divisor, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_divisor] : "100")).
+                ]) .
+                $form->input(strtr($session__gc_divisor, ["__" => "."]) . " (default : 100, recommended : 1000)", $session__gc_divisor, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_divisor] : "100")) .
                 $form->radios(strtr($session__sid_bits_per_character, ["__" => "."]), $session__sid_bits_per_character, [
                     [4, 4, (isset($_GET["new_profile"]) ?
                                 false :
@@ -304,9 +310,9 @@ class phpini {
                                 false :
                                 (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$$session__sid_bits_per_character] == 6)
                         )],
-                ]).
-                $form->input($max_execution_time . " (0 = Unlimited)", $max_execution_time, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$max_execution_time] : "30")).
-                $form-> open_fieldset("memory_limit");
+                ]) .
+                $form->input($max_execution_time . " (0 = Unlimited)", $max_execution_time, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$max_execution_time] : "30")) .
+                $form->open_fieldset("memory_limit");
                 $qnt = (isset($_GET["new_profile"]) ?
                         128 :
                         (int) (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]]["memory_limit"])
@@ -315,13 +321,13 @@ class phpini {
                         "M" :
                         strtr(self::$_ini[self::MODE_CUSTOM][$_POST["profil"]]["memory_limit"], [$qnt => ""])
                         );
-                echo $form->input("Quantité", "memory_limit_qnt", "number", $qnt).
+                echo $form->input("Quantité", "memory_limit_qnt", "number", $qnt) .
                 $form->select("Unité", "memory_limit_unit", [
                     ["K", "K", ("K" == $unit)],
                     ["M", "M", ("M" == $unit)],
                     ["G", "G", ("G" == $unit)],
                     ["T", "T", ("T" == $unit)],
-                ]).
+                ]) .
                 $form->close_fieldset();
                 ?>
             </div>
@@ -331,8 +337,8 @@ class phpini {
                 $track_errors = "track_errors";
                 $variables_order = "variables_order";
                 $session__gc_maxlifetime = "session__gc_maxlifetime";
-                echo $form->select($short_open_tag, $short_open_tag, self::get_option($short_open_tag, "Off")).
-                $form->select($track_errors, $track_errors, self::get_option($track_errors, "Off")).
+                echo $form->select($short_open_tag, $short_open_tag, self::get_option($short_open_tag, "Off")) .
+                $form->select($track_errors, $track_errors, self::get_option($track_errors, "Off")) .
                 $form->select($variables_order, $variables_order, [
                     ["EGPCS", "EGPCS", (isset($_GET["new_profile"]) ?
                                 true :
@@ -342,9 +348,9 @@ class phpini {
                                 false :
                                 (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$variables_order] == "GPCS")
                         )]
-                ]).
-                $form->input(strtr($session__gc_maxlifetime, ["__" => "."]), $session__gc_maxlifetime, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_maxlifetime] : "1440")).
-                $form-> open_fieldset("post_max_size");
+                ]) .
+                $form->input(strtr($session__gc_maxlifetime, ["__" => "."]), $session__gc_maxlifetime, "number", (isset($_POST["profil"]) ? self::$_ini[self::MODE_CUSTOM][$_POST["profil"]][$session__gc_maxlifetime] : "1440")) .
+                $form->open_fieldset("post_max_size");
                 $qnt = (isset($_GET["new_profile"]) ?
                         "8" :
                         (int) (self::$_ini[self::MODE_CUSTOM][$_POST["profil"]]["post_max_size"])
@@ -353,14 +359,14 @@ class phpini {
                         "M" :
                         strtr(self::$_ini[self::MODE_CUSTOM][$_POST["profil"]]["post_max_size"], [$qnt => ""])
                         );
-                echo $form->input("Quantité", "post_max_size_qnt", "number", $qnt).
+                echo $form->input("Quantité", "post_max_size_qnt", "number", $qnt) .
                 $form->select("Unité", "post_max_size_unit", [
                     ["K", "K", ("K" == $unit)],
                     ["M", "M", ("M" == $unit)],
                     ["G", "G", ("G" == $unit)],
                     ["T", "T", ("T" == $unit)],
-                ]).
-                $form->close_fieldset().
+                ]) .
+                $form->close_fieldset() .
                 $form->submit("btn-primary", "Enregistrer");
                 ?>
             </div>

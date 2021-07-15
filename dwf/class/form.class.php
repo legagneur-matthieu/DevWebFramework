@@ -131,11 +131,11 @@ class form {
      * @return type
      */
     public function input_switch($label, $name, $value, $class = "", $checked = false) {
-        $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "checkbox", "value" => $value, "class" => "custom-control-input"];
+        $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "checkbox", "value" => $value, "class" => "form-check-input"];
         if ($checked) {
             $attr["checked"] = "checked";
         }
-        return $this->append(tags::tag("div", ["class" => "custom-control custom-switch {$class}"], tags::tag("input", $attr, false) . tags::tag("label", ["for" => $name, "class" => "custom-control-label"], $label)));
+        return $this->append(tags::tag("div", ["class" => "form-check form-switch {$class}"], tags::tag("input", $attr, false) . tags::tag("label", ["for" => $name, "class" => "form-check-label"], $label)));
     }
 
     /**

@@ -90,7 +90,7 @@ class debug {
             $data .= '</ol>';
             $cl = "<dl class='row'>";
             foreach (website::$_class as $key => $value) {
-                $cl .= "<dt class='col-sm-2'>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd class='col-sm-10'>" . $key . "</dd>";
+                $cl .= "<dt class='col-sm-3'>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd class='col-sm-9'>" . $key . "</dd>";
             }
             $cl .= "</dl>";
             $modal = new modal();
@@ -105,9 +105,7 @@ class debug {
                 <div class="row" style="width: 98%; margin-left: 1%;">
                     <div class="col-sm-2">
                         <p>
-                            <?php
-                            $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, "")
-                            ?>
+                            <?= $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, ""); ?>
                             <br />
                             <strong>Temp d'execution : </strong><?= time::parse_time(time::chronometer_get("debug_exec")); ?>
                         </p>
@@ -131,12 +129,9 @@ class debug {
                         ?>
                     </div>
                     <div class="col-sm-2">
-                        <?php
-                        echo $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "");
-                        ?>
+                        <?= $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, ""); ?>
                     </div>
-                </div>
-                <p>                    
+                </div>              
             </div>
             <?php
         }

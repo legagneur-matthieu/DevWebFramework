@@ -196,6 +196,16 @@ class docPHP_natives {
         <?php
     }
 
+    private function change_reload() {
+        ?>
+        <p>Cette classe permet de recharger automatiquement la page courante lorsqu'une classe metier est modifié dans le dossier /class/ de votre projet <br />
+            (Cette classe est déconsillé en production)</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "change_reload::get_instance();\n"
+                . "?>", $this->_brush);
+    }
+
     private function check_password() {
         ?>
         <p>Cette classe permet d'appliquer une politique de mots de passe</p>
@@ -1782,7 +1792,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

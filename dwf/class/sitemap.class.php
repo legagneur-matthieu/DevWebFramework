@@ -1,10 +1,14 @@
 <?php
 
 /**
- * (Tests incomplets)
  * Cette classe gère les "sitemap" du site <br />
  * Pour les routes qui dépendent d'une variable, renseignez dans la route (par exemple): <br />
  * "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login")
+ * 
+ * L'utilisateur www-data doit avoir les droits d'ecritures.
+ * lancez $ php dwf/cli/start.php 
+ * ou $ php dwf/cli/sitemap_index.cli.php 
+ * pour generer le sitemap index de vos projets
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.fr>
  */
@@ -30,18 +34,22 @@ class sitemap {
 
     /**
      * Cette classe gère les "sitemap" du site
+     * @param string $host Domaine du site (ex : "https://dwf.sytes.net" )
      */
-    public function __construct() {
+    public function __construct($host = "") {
         if (config::$_sitemap) {
-            if (!isset($_SERVER["REQUEST_SCHEME"])) {
-                $schame = explode("://", $_SERVER["HTTP_REFERER"]);
-                $_SERVER["REQUEST_SCHEME"] = $schame[0];
+            if (empty($host)) {
+                if (!isset($_SERVER["REQUEST_SCHEME"])) {
+                    $schame = explode("://", $_SERVER["HTTP_REFERER"]);
+                    $_SERVER["REQUEST_SCHEME"] = $schame[0];
+                }
+                $host = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"];
             }
-            $host = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["SCRIPT_NAME"];
+            $host .= $_SERVER["SCRIPT_NAME"];
             foreach (config::$_route_unauth as $route) {
                 if (isset($route["sitemap"]["var"]) and isset($route["sitemap"]["entity"]) and isset($route["sitemap"]["tuple"])) {
                     $node = $route["sitemap"]["entity"];
-                    $node = $node::get_table_array(application::$_bdd);
+                    $node = $node::get_table_array();
                     foreach ($node as $value) {
                         $this->_sitemap[] = ["loc" => $host . "?page=" . $route["page"] . "&amp;" . $route["sitemap"]["var"] . "=" . $value["id"], "text" => $value[$route["sitemap"]["tuple"]], "cat" => $route["title"]];
                     }

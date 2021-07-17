@@ -30,7 +30,7 @@ class start {
         if (isset($_SERVER["REMOTE_ADDR"])) {
             exit();
         }
-        include __DIR__ . '../class/cli.class.php';
+        include __DIR__ . '/../class/cli.class.php';
         cli::classloader();
         cli::write("[START] \n");
         foreach (glob(__DIR__ . "/*.cli.php") as $cli) {

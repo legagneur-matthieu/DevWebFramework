@@ -1629,6 +1629,14 @@ class docPHP_natives {
             Pour les routes qui dépendent d'une variable, renseignez dans la route (par exemple): <br />
             "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login") <br />
             Le sitemap est généré automatiquement par <em>application.class.php</em> si <em>config::$_sitemap=true</em>
+            L'utilisateur www-data doit avoir les droits d'ecritures. <br /> <br />
+            Lancez 
+        </p>
+        <?php
+        js::syntaxhighlighter("$ php dwf/cli/start.php\n-- ou\n$ php dwf/cli/sitemap_index.cli.php", "shell");
+        ?>
+        <p>
+            pour generer le sitemap index de vos projets
         </p>
         <?php
     }
@@ -1792,7 +1800,7 @@ class docPHP_natives {
 
     private function template() {
         ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

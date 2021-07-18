@@ -1504,19 +1504,6 @@ class docPHP_natives {
                 . "<?php\n"
                 . "$" . "reveal->close_reveal();\n"
                 . "?>", $this->_brush);
-        $reveal = new reveal($width = 600, $height = 600, $theme = 'white');
-        $reveal->start_reveal();
-        ?>
-        <section><p style="font-size: 48px;">Ceci est un Reveal</p></section>
-        <section>
-            <section><p style="font-size: 48px;">Reveal est une librairie JS qui permet de faire des présentations en HTML</p></section>
-            <section><p style="font-size: 48px;">Le PowerPoint est mort, vive le Reveal !</p></section>
-        </section>
-        <section>
-            <p style="font-size: 48px;">Site officiel de Reveal : <br /><a href="http://lab.hakim.se/reveal-js/">http://lab.hakim.se/reveal-js/</a></p>
-        </section>
-        <?php
-        $reveal->close_reveal();
     }
 
     private function reversoLib() {

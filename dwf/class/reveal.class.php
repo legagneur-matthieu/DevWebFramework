@@ -24,9 +24,9 @@ class reveal {
     public function __construct($width = 600, $height = 600, $theme = "white") {
         if (!self::$_called) {
             $base = "../commun/src/js";
-            echo html_structures::link_in_body("$base/reveal/dist/reveal.css") .
-            html_structures::link_in_body("$base/reveal/dist/theme/$theme.css") .
-            html_structures::link_in_body("$base/reveal/plugin/highlight/monokai.css");
+            compact_css::get_instance()->add_css_file("$base/reveal/dist/reveal.css");
+            compact_css::get_instance()->add_css_file("$base/reveal/dist/theme/$theme.css");
+            compact_css::get_instance()->add_css_file("$base/reveal/plugin/highlight/monokai.css");
             foreach ([
         "$base/reveal/dist/reveal.js",
         "$base/reveal/plugin/highlight/highlight.js",

@@ -25,13 +25,15 @@
  * @author Florian Schmitz (floele at gmail dot com) 2005-2007
  * @author Brett Zamir (brettz9 at yahoo dot com) 2007
  */
+
+
 if (isset($_GET['lang'])) {
-    $l = $_GET['lang'];
+	$l = $_GET['lang'];
 } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-    $l = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-    $l = strtolower(substr($l, 0, 2));
+	$l = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	$l = strtolower(substr($l, 0, 2));
 } else {
-    $l = '';
+	$l = '';
 }
 
 $l = (in_array($l, array('de', 'fr', 'zh'))) ? $l : 'en';

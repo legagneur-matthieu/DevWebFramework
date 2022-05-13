@@ -12,6 +12,7 @@ class maskNumber {
      * @var array  Liste des INPUT formatés
      */
     private static $_inputs = [];
+    private static $_called = false;
 
     /**
      * Formater l'affichage d'un nombre dans un INPUT de type text
@@ -21,6 +22,10 @@ class maskNumber {
      * @param string $decimal Symbole pour les décimeaux ( un point par défaut)
      */
     public static function set($name, $integer = false, $thousands = " ", $decimal = ".") {
+        if (!self::$_called) {
+            echo html_structures::script("../commun/src/js/maskNumber.js");
+            self::$_called = true;
+        }
         $int = ($integer ? "true" : "false");
         $id = strtr($name, ["[" => "_", "]" => ""]);
         echo tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () {maskNumber(\"{$id}\", {$int}, \"{$thousands}\",\"{$decimal}\");});");

@@ -28,9 +28,7 @@ class ckeditor {
      */
     public function __construct($id, $params = []) {
         if (!self::$_called) {
-            ?>
-            <script type="text/javascript" src="../commun/src/js/ckeditor/ckeditor.js"></script>
-            <?php
+            echo html_structures::script("../commun/src/js/ckeditor/ckeditor.js");
             self::$_called = true;
         }
         ?>

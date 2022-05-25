@@ -2,7 +2,7 @@
 
 /**
  * Cette classe converti un texte en flux audio.
- * /!\ Nececite que espeak soit installé sur le serveur !
+ * /!\ Necesite que espeak soit installé sur le serveur !
  * http://espeak.sourceforge.net/
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>

@@ -31,9 +31,9 @@ class captcha {
     }
 
     /**
-     * 
-     * @param type $espeak
-     * @return type
+     * Retourne les données du captcha
+     * @param espeak $espeak
+     * @return array données du captcha
      */
     public function get($espeak = false) {
         $audio = "";

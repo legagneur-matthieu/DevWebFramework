@@ -20,6 +20,7 @@ class docTiers {
             [html_structures::a_link("https://getbootstrap.com", "Bootsrap", "", "", true), "5.0.2", "Twitter, Inc.", "CSS, JS", $licences[0]],
             [html_structures::a_link("https://icons.getbootstrap.com", "Bootsrap Icons", "", "", true), "1.5.0", "Twitter, Inc.", "CSS", $licences[0]],
             [html_structures::a_link("https://bootswatch.com", "Bootswatch", "", "", true), "5.0.2", "Thomas Park", "CSS", $licences[0]],
+            [html_structures::a_link("https://github.com/Gregwar/Captcha", "Captcha", "", "", true), "1.1.9", "Gregwar", "PHP", $licences[0]],
             [html_structures::a_link("https://ckeditor.com/ckeditor-4/", "Ckeditor", "", "", true), "4.16.1", "Frederico Knabben", "JS", $licences[1]],
             [html_structures::a_link("https://github.com/Cerdic/CSSTidy", "CSSTidy", "", "", true), "1.7.3", "Cedric Morin", "PHP", $licences[2]],
             [html_structures::a_link("https://js.cytoscape.org", "Cytoscape", "", "", true), "3.19.0", "The Cytoscape Consortium", "JS", $licences[10]],

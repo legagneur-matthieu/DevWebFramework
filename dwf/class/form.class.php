@@ -520,6 +520,35 @@ class form {
     }
 
     /**
+     * Créé un captcha, 
+     * requière espeak installé sur le serveur pour l'accessibilité
+     * 
+     * @param espeak $espeak instance de espeak (si false = instance par défaut) 
+     * @return string le captcha
+     */
+    public function captcha($espeak = false) {
+        $captcha = (new captcha())->get($espeak);
+        $tag = tags::tag("div", ["id" => "captcha_{$captcha["hash"]}"],
+                        html_structures::img($captcha["img"], "Captcha") .
+                        tags::tag("a", ["class" => "btn btn-light"], html_structures::bi("volume-up-fill", "Lire le captcha")) .
+                        tags::tag("audio", ["src" => $captcha["audio"]]) .
+                        " <script type=\"text/javascript\">"
+                        . "$(document).ready(function(){"
+                        . "$('#captcha_{$captcha["hash"]} a').click(function(){"
+                        . "document.querySelector('#captcha_{$captcha["hash"]} audio').play();"
+                        . "})"
+                        . "});"
+                        . "</script> "
+        );
+        return $this->append($tag) . $this->input("Captcha", $captcha["hash"]) . $this->hidden("captcha", $captcha["hash"]);
+    }
+
+    public static function check_captcha() {
+        $hash = $_POST["captcha"];
+        return captcha::check($hash, $_POST[$hash]);
+    }
+
+    /**
      * Retourne l'integalité du formulaire HTML
      * @return string Le formulaire HTML
      */

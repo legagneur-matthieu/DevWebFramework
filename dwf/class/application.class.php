@@ -72,7 +72,8 @@ class application {
             if (isset($page["text"]) and $page["text"] != "") {
                 $active = ($_GET["page"] == $page["page"]);
                 $lis .= tags::tag("li", ["class" => "nav-item" . ( $active ? " active bg-secondary" : "")], tags::tag(
-                                        "a", ["href" => "index.php?page=" . $page["page"], "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " text-light" : "")], $page["text"]));
+                                        "a", ["href" => "index.php?page={$page["page"]}", "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " text-light" : "")], $page["text"]));
+                http2::get_instance()->prerender("./index.php?page={$page["page"]}");
             }
         }
         echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"],

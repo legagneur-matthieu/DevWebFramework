@@ -289,6 +289,7 @@ class html_structures {
      * @return string balise script
      */
     public static function script($src) {
+        http2::get_instance()->preload($src);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src], "");
     }
 
@@ -298,6 +299,7 @@ class html_structures {
      * @return string balise script
      */
     public static function script_async($src) {
+        http2::get_instance()->preload($src);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src, "async" => "true"], "");
     }
 
@@ -307,6 +309,7 @@ class html_structures {
      * @return string balise script
      */
     public static function script_defer($src) {
+        http2::get_instance()->preload($src);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src, "defer" => "true"], "");
     }
 
@@ -316,6 +319,7 @@ class html_structures {
      * @return string balise link
      */
     public static function link($href) {
+        http2::get_instance()->preload($href);
         return tags::tag("link", ["rel" => "stylesheet", "href" => $href]);
     }
 

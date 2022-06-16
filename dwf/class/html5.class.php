@@ -153,6 +153,7 @@ class html5 {
     }
 
     public static function render($document) {
+        http2::get_instance()->make_link();
         if (class_exists("tidy")) {
             $tidy = new tidy();
             $tidy->parseString($document, [

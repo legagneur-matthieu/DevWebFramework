@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Cette classe gère un cervice SSE (Server-Sent Events)
+ * Optimisé pour http/2 et supperieur
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
+ */
+class sse {
+
+    /**
+     * Cette classe gère un cervice SSE (Server-Sent Events)
+     * Optimisé pour http/2 et supperieur 
+     */
+    public function __construct() {
+        header('Content-Type:text/event-stream');
+        header('Cache-Control: no-cache');
+        header('Connection: keep-alive');
+        header('X-Accel-Buffering: no');
+        foreach (sse_event::get_collection((session::get_auth() ? "user in (0, " . session::get_user() . ")" : "user=0") . " and id in (SELECT MAX(id) FROM sse_event GROUP BY event)") as $sse) {
+            echo "event: {$sse->get_event()}\ndata: {$sse->get_data}\n";
+        }
+        echo "\n";
+        ob_flush();
+        flush();
+    }
+
+}

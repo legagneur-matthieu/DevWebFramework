@@ -11,28 +11,34 @@
  * 
  * mais vous pouvez également y ajouter des variables diverses qui vous seront utile 
  */
-class config { 
+class config {
     /* PDO */
+
     public static $_PDO_type = "{{PDO_TYPE}}";
     public static $_PDO_host = "{{PDO_HOST}}";
     public static $_PDO_dbname = "{{PDO_DBNAME}}";
     public static $_PDO_login = "{{PDO_LOGIN}}";
-    public static $_PDO_psw = "{{PDO_PSW}}"; 
+    public static $_PDO_psw = "{{PDO_PSW}}";
     /* hash */
-    public static $_hash_algo = "{{HASH_ALGO}}"; 
+    public static $_hash_algo = "{{HASH_ALGO}}";
     /* routes */
     public static $_route_auth = array();
-    public static $_route_unauth = array(); 
+    public static $_route_unauth = array();
+    /* SMTP */
+    public static $_SMTP_host = "{{SMTP_HOST}}";
+    public static $_SMTP_auth = "{{SMTP_AUTH}}";
+    public static $_SMTP_login = "{{SMTP_LOGIN}}";
+    public static $_SMTP_psw = "{{SMTP_PSW}}";
+    /* WS */
+    public static $_WS_host = "{{WS_HOST}}";
+    public static $_WS_port = "{{WS_PORT}}";
+    public static $_WS_ssl = false;
     /* Data */
     public static $_title = "{{TITLE}}";
     public static $_favicon = "";
     public static $_debug = true;
     public static $_prefix = "{{PREFIX}}";
     public static $_theme = "{{THEME}}";
-    public static $_SMTP_host = "{{SMTP_HOST}}";
-    public static $_SMTP_auth = "{{SMTP_AUTH}}";
-    public static $_SMTP_login = "{{SMTP_LOGIN}}";
-    public static $_SMTP_psw = "{{SMTP_PSW}}";
     public static $_sitemap = false;
     public static $_statistiques = false;
 

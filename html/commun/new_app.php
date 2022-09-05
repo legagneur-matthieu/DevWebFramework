@@ -59,7 +59,7 @@ class new_app {
         echo $form->get_open_form();
         ?>
         <div class="row">
-            <div class="col-sm-4 border_right">
+            <div class="col-sm-6 border_right">
                 <?php
                 echo $form->open_fieldset("Application") .
                 $form->input("Nom du dossier (apparait dans l'url)", "dirname") .
@@ -108,24 +108,34 @@ class new_app {
                 $form->close_fieldset();
                 ?>
             </div>
-            <div class="col-sm-4 border_right">
-                <?php
-                echo $form->open_fieldset("PDO") .
+            <div class="col-sm-6">
+                <?= $form->open_fieldset("Base de données (PDO)") .
                 $form->select("type", "pdo_type", [
                     ["mysql", "MySQL", true],
-                    ["sqlite", "SQLite (déconseillé !)"],
+                    ["sqlite", "SQLite"],
                 ]) .
                 $form->input("Host", "pdo_host", "text", "localhost", false) .
                 $form->input("Login", "pdo_login", "text", "", false) .
                 $form->input("Password", "pdo_psw", "password", "", false) .
                 $form->input("Database", "pdo_dbname") .
-                $form->checkbox("Créer la base de donnée (si elle n'existe pas)", "dbcreate", "1", "", true) .
+                $form->checkbox("Créer la base de données (si elle n'existe pas)", "dbcreate", "1", "", true) .
                 $form->close_fieldset();
                 ?> 
             </div>
-            <div class="col-sm-4">
-                <?php
-                echo $form->open_fieldset("SMTP") .
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-6 border_right">
+                <?= $form->open_fieldset("Websocket") .
+                $form->checkbox("Créer le serveur de websocket dans le projet", "ws", "ws") .
+                $form->input("Host", "ws_host", "text", "0.0.0.0", false) .
+                $form->input("Port", "ws_port", "number", "9000", false) .
+                $form->select("SSL", "ws_ssl", [["1", "true"], ["0", "false", true]]) .
+                $form->close_fieldset();
+                ?>
+            </div>
+            <div class="col-sm-6">
+                <?= $form->open_fieldset("SMTP") .
                 $form->input("Host", "smtp_host", "text", "localhost") .
                 $form->select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]) .
                 $form->input("Login", "smtp_login", "text", "", false) .
@@ -134,15 +144,14 @@ class new_app {
                 ?> 
             </div>
         </div>
+        <hr />
         <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <?php
-                echo $form->submit("btn-primary", "Créer");
-                ?>
+            <div class="col-sm-5"></div>
+            <div class="col-sm-7">
+                <?= $form->submit("btn-primary", "Créer le projet"); ?>
             </div>
         </div>
+        <hr />
         <?php
         echo $form->get_close_form();
         $this->js();
@@ -155,6 +164,7 @@ class new_app {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
+                $("title").text("<?= config::$_title ?>");
                 $("#pdo_type").change(function () {
                     if ($("#pdo_type").val() == "sqlite") {
                         $("#pdo_host, #pdo_login, #pdo_psw").attr("disabled", "disabled").attr("readonly", "readonly");
@@ -229,8 +239,7 @@ class new_app {
         $htaccess = "Order Deny,Allow \n Deny from All \n Allow from localhost";
         $this->create_file($file_htaccess, $htaccess);
         /* index */
-        $index = '<?php class website { /** * Liste des classes metier et classes natives chargé par le framework * @var array Liste des classes metier et classes natives chargé par le framework      */public static $_class; /** * point de départ du site web  */ public function __construct() { self::$_class[__FILE__] = __CLASS__; spl_autoload_register([__CLASS__, "classloader"]); require_once "../../dwf/index.php"; try { new index(); } catch (Exception $e) { dwf_exception::print_exception($e); }  } /** * Inclut toutes les classes du dossier "class" se finissant par ".class.php" * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application */ private static function classloader($class) { $file = __DIR__ . "/class/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } else { $file = __DIR__ . "/class/entity/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; self::$_class[$file] = $class; } } } } new website();';
-        $this->create_file($file_index, $index);
+        $this->create_file($file_index, file_get_contents("./new_app_tpl/index"));
         /* page */
         $pages = strtr(file_get_contents("./new_app_tpl/pages"), [
             "{{TITLE}}" => $_POST["title"],
@@ -249,17 +258,27 @@ class new_app {
             "{{PREFIX}}" => $_POST["prefix"],
             "{{THEME}}" => $_POST["theme"],
             "{{SMTP_HOST}}" => $_POST["smtp_host"],
-            "{{SMTP_AUTH}}" => $_POST["smtp_auth"],
+            '"{{SMTP_AUTH}}"' => $_POST["smtp_auth"],
             "{{SMTP_LOGIN}}" => $_POST["smtp_login"],
             "{{SMTP_PSW}}" => $_POST["smtp_psw"],
+            "{{WS_HOST}}" => $_POST["ws_host"],
+            "{{WS_PORT}}" => $_POST["ws_port"],
+            '"{{WS_SSL}}"' => $_POST["ws_ssl"],
         ]);
         $this->create_file($file_config, $config);
+        //services
         if (isset($_POST["srv"])) {
             $dir_services = $dir . "/services";
-            $file_services = '<?php class index_service { /** * Cette classe est la première appelée, elle ouvre les variables de session et la connexion a la base de donnée, <br /> * redéfinie la time zone et fait appel à ces méthodes privées avant d\'appeler la class application (IDEM __construct()...) */ public function __construct() { try { $this->classloader(); include "../class/config.class.php"; if (isset($_REQUEST["service"])) { date_default_timezone_set("Europe/Paris"); $this->entityloader(); application::$_bdd = new bdd(); session::start(false); $this->serviceloader(); $this->security_purge(); $service = strtr($_REQUEST["service"], array("." => "", "/" => "", "\\\\" => "", "?" => "", "#" => "")); if (file_exists($service . ".service.php")) { $service = new $service(); } else { dwf_exception::throw_exception(622, array("_s_" => $service)); } } else { dwf_exception::throw_exception(621); } } catch (Exception $e) { dwf_exception::print_exception($e, "", true); } } /**     * Inclut toutes les classes du framework */ private function classloader() { spl_autoload_register(function($class) { $file = __DIR__ . "/../../../dwf/class/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; } }); } /**     * Inclut les entités du projet */ private function entityloader() { spl_autoload_register(function($class) { $file = __DIR__ . "/../class/entity/" . $class . ".class.php"; if (file_exists($file)) { require_once $file; } }); } /**     * Inclut toutes les classes du dossier "service" se finissant par ".service.php" */ private function serviceloader() {spl_autoload_register(function($class) {$file = __DIR__ . "/" . $class . ".service.php";if (file_exists($file)) {require_once $file;}});}/**     * Supprime tous les fichiers se terminant par .php~ (trill) dans le dossier "service" <br /> * Cette fonction est recommandée sur les serveurs de production Linux pour des raisons de sécurité <br /> * certains hébergeurs tolèrent mal cette fonction, elle peut être désactivée en commentant la ligne "$this->security_purge();" dans le constructeur. */private function security_purge() {foreach (glob("*.php~") as $trill) {unlink($trill);}}}new index_service();';
             mkdir($dir_services, 0775, true);
             $this->check_create_dir($dir_services);
-            $this->create_file($dir_services . "/index.php", $file_services);
+            $this->create_file($dir_services . "/index.php", file_get_contents("./new_app_tpl/services"));
+        }
+        //websocket
+        if (isset($_POST["ws"])) {
+            $dir_ws = $dir . "/websocket";
+            mkdir($dir_ws, 0775, true);
+            $this->check_create_dir($dir_ws);
+            $this->create_file($dir_ws . "/index.php", file_get_contents("./new_app_tpl/ws"));
         }
     }
 

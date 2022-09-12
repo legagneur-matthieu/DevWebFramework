@@ -71,67 +71,66 @@ class entity_generator {
      * @return string la class générée
      */
     private static function get_class() {
-        $n = "\n";
         //génére la classe
-        $class = "<?php" . $n
-                . "/** Entité de la table " . self::$_table . $n
-                . "* @autor entity_generator by LEGAGNEUR Matthieu */" . $n
-                . "class " . self::$_table . " {" . $n;
+        $class = "<?php" . PHP_EOL
+                . "/** Entité de la table " . self::$_table . PHP_EOL
+                . "* @autor entity_generator by LEGAGNEUR Matthieu */" . PHP_EOL
+                . "class " . self::$_table . " {" . PHP_EOL;
 
         $tuple_construct = "";
         $p = "1__";
         $tuple_ajout = "";
         $tuple_etter = "";
-        $tuple_destruct = "";
+        $tuple_update = "";
         foreach (self::$_data as $tuple) {
             //génére les attributs 
-            $class .= "/** " . $tuple[0] . " " . $n
-                    . "* @var " . $tuple[1] . ' ' . $tuple[0] . " */\n private $" . "_" . $tuple[0] . ";" . $n;
+            $class .= "/** " . $tuple[0] . " " . PHP_EOL
+                    . "* @var " . $tuple[1] . ' ' . $tuple[0] . " */\n private $" . "_" . $tuple[0] . ";" . PHP_EOL;
             //génére le contenu du constructeur 
-            $tuple_construct .= "$" . "this->set_" . $tuple[0] . "($" . "data[\"" . $tuple[0] . "\"]);" . $n;
+            $tuple_construct .= "$" . "this->set_" . $tuple[0] . "($" . "data[\"" . $tuple[0] . "\"]);" . PHP_EOL;
             if (!$tuple[2]) {
                 $p .= ", $" . $tuple[0];
                 if (in_array($tuple[1], ["array"])) {
-                    $tuple_ajout .= "$" . $tuple[0] . " = application::$" . "_bdd->protect_var(json_encode($" . $tuple[0] . "));" . $n;
+                    $tuple_ajout .= "$" . $tuple[0] . " = application::$" . "_bdd->protect_var(json_encode($" . $tuple[0] . "));" . PHP_EOL;
                 } else {
-                    $tuple_ajout .= "$" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . $tuple[0] . ");" . $n;
+                    $tuple_ajout .= "$" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . $tuple[0] . ");" . PHP_EOL;
                 }
             }
             //génère les geteur avec leur type si besoin
             if (!(in_array($tuple[1], ["int", "integer", "bool", "boolean", "string", "mail", "array"]))) {
-                $tuple_etter .= " /** @return " . $tuple[1] . " */" . $n;
+                $tuple_etter .= " /** @return " . $tuple[1] . " */" . PHP_EOL;
             }
-            $tuple_etter .= "public function get_" . $tuple[0] . "() {" . $n
-                    . "    return $" . "this->_" . $tuple[0] . ";" . $n
-                    . "}" . $n;
+            $tuple_etter .= "public function get_" . $tuple[0] . "() {" . PHP_EOL
+                    . "    return $" . "this->_" . $tuple[0] . ";" . PHP_EOL
+                    . "}" . PHP_EOL;
 
             //génére les seteur
             $tuple_etter .= $tuple[2] ? "private" : "public";
-            $tuple_etter .= " function set_" . $tuple[0] . "($" . $tuple[0] . ") {" . $n;
+            $tuple_etter .= " function set_" . $tuple[0] . "($" . $tuple[0] . ") {" . PHP_EOL;
             switch ($tuple[1]) {
                 case "string":
-                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = $" . $tuple[0] . ";" . $n;
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = $" . $tuple[0] . ";" . PHP_EOL;
                     break;
                 case "int":
                 case "integer":
-                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = (int) $" . $tuple[0] . ";" . $n;
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = (int) $" . $tuple[0] . ";" . PHP_EOL;
                     break;
                 case "bool":
                 case "boolen":
-                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = ($" . $tuple[0] . "?1:0);" . $n;
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = ($" . $tuple[0] . "?1:0);" . PHP_EOL;
                     break;
                 case "mail":
-                    $tuple_etter .= "if (application::$" . "_bdd->verif_email($" . $tuple[0] . " )) { $" . "this->_" . $tuple[0] . " = $" . $tuple[0] . ";}" . $n;
+                    $tuple_etter .= "if (application::$" . "_bdd->verif_email($" . $tuple[0] . " )) { $" . "this->_" . $tuple[0] . " = $" . $tuple[0] . ";}" . PHP_EOL;
                     break;
                 case "array":
-                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = (is_array($" . $tuple[0] . ") ? $" . $tuple[0] . ": json_decode($" . $tuple[0] . ", true));" . $n;
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = (is_array($" . $tuple[0] . ") ? $" . $tuple[0] . ": json_decode($" . $tuple[0] . ", true));" . PHP_EOL;
                     break;
                 default:
-                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = " . $tuple[1] . "::get_from_id($" . $tuple[0] . ");" . $n;
+                    $tuple_etter .= "$" . "this->_" . $tuple[0] . " = " . $tuple[1] . "::get_from_id($" . $tuple[0] . ");" . PHP_EOL;
                     break;
             }
-            $tuple_etter .= ' $this->_this_was_modified = true; }' . $n;
-            //génère le contenu du destructeur 
+            $tuple_etter .= ' $this->_this_was_modified = true; }' . PHP_EOL;
+            //génère le contenu de l'update 
             switch ($tuple[1]) {
                 case "int":
                 case "integer":
@@ -139,35 +138,35 @@ class entity_generator {
                 case "boolen":
                 case "string":
                 case "mail":
-                    $tuple_destruct .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . "this->get_" . $tuple[0] . "());" . $n;
+                    $tuple_update .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . "this->get_" . $tuple[0] . "());" . PHP_EOL;
                     break;
                 case "array":
-                    $tuple_destruct .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var(json_encode($" . "this->get_" . $tuple[0] . "()));" . $n;
+                    $tuple_update .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var(json_encode($" . "this->get_" . $tuple[0] . "()));" . PHP_EOL;
                     break;
                 default:
-                    $tuple_destruct .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . "this->get_" . $tuple[0] . "()->get_id());" . $n;
+                    $tuple_update .= " $" . $tuple[0] . " = application::$" . "_bdd->protect_var($" . "this->get_" . $tuple[0] . "()->get_id());" . PHP_EOL;
                     break;
             }
         }
-        $class .= "/** Indique si l'objet a été modifié ou non " . $n
-                . "* @var boolean Indique si l'objet a été modifié ou non */" . $n
-                . " private $" . "_this_was_modified;" . $n;
-        $class .= "/** Indique si l'objet a été supprimé ou non " . $n
-                . "* @var boolean Indique si l'objet a été supprimé ou non */" . $n
-                . "private $" . "_this_was_delete;" . $n;
-        $class .= "/** Memento des instances " . $n
-                . "* @var boolean Memento des instances */" . $n
-                . "private static $" . "_entity_memento=[];" . $n;
+        $class .= "/** Indique si l'objet a été modifié ou non " . PHP_EOL
+                . "* @var boolean Indique si l'objet a été modifié ou non */" . PHP_EOL
+                . " private $" . "_this_was_modified;" . PHP_EOL;
+        $class .= "/** Indique si l'objet a été supprimé ou non " . PHP_EOL
+                . "* @var boolean Indique si l'objet a été supprimé ou non */" . PHP_EOL
+                . "private $" . "_this_was_delete;" . PHP_EOL;
+        $class .= "/** Memento des instances " . PHP_EOL
+                . "* @var boolean Memento des instances */" . PHP_EOL
+                . "private static $" . "_entity_memento=[];" . PHP_EOL;
 
         //génére le constructeur
-        $class .= "/** Entité de la table " . self::$_table . " */\n public function __construct($" . "data) { " . $n;
+        $class .= "/** Entité de la table " . self::$_table . " */\n public function __construct($" . "data) { " . PHP_EOL;
         $class .= $tuple_construct;
-        $class .= '$this->_this_was_modified = false;' . $n . ' }' . $n;
+        $class .= '$this->_this_was_modified = false;' . PHP_EOL . ' }' . PHP_EOL;
 
         //génére la fonction statique ( static ) d'ajout
-        $class .= "/** Ajoute une entrée en base de données */" . $n
+        $class .= "/** Ajoute une entrée en base de données */" . PHP_EOL
                 . " public static function ajout(";
-        $class .= strtr($p, ["1__," => ""]) . ") { " . $n;
+        $class .= strtr($p, ["1__," => ""]) . ") { " . PHP_EOL;
         $class .= $tuple_ajout;
         $class .= "application::$" . "_bdd->query(\"INSERT INTO " . self::$_table . "(";
         $i = 0;
@@ -184,130 +183,136 @@ class entity_generator {
         $i = 0;
         while (isset(self::$_data[$i][0])) {
             if (!self::$_data[$i][2]) {
-                $class .= "'\" . $" . self::$_data[$i][0] . " . \"'";
+                $class .= "'$" . self::$_data[$i][0] . "'";
                 if (isset(self::$_data[$i + 1][0])) {
                     $class .= ", ";
                 }
             }
             $i++;
         }
-        $class .= ");\"); } ";
+        $class .= ");\"); } " . PHP_EOL;
 
         //génére la fonction statique ( static ) get_structure
-        $class .= "/** Retourne la structure de l'entity au format json */" . $n
-                . "public static function get_structure() {" . $n
-                . "    return json_decode('" . json_encode(self::$_data) . "', true);" . $n
-                . "}" . $n;
+        $class .= "/** Retourne la structure de l'entity au format json */" . PHP_EOL
+                . "public static function get_structure() {" . PHP_EOL
+                . "    return json_decode('" . json_encode(self::$_data) . "', true);" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_collection
-        $class .= "/** Retourne le contenu de la table sout forme d'une collection " . $n
-                . "*ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
-                . "public static function get_collection($" . "where = \"\" ) {" . $n
-                . "    $" . "col=[];" . $n
-                . "    foreach (" . self::$_table . "::get_table_array($" . "where) as $" . "entity) {" . $n
-                . "        if ($" . "entity != FALSE) {" . $n
-                . "            if (isset(self::$" . "_entity_memento[$" . "entity[\"id\"]])) {" . $n
-                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]];" . $n
-                . "            } else {" . $n
-                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]] = new " . self::$_table . "($" . "entity);" . $n
-                . "            }" . $n
-                . "        }" . $n
-                . "    }" . $n
-                . "    return $" . "col;" . $n
-                . "}" . $n;
+        $class .= "/** Retourne le contenu de la table sout forme d'une collection " . PHP_EOL
+                . "*ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . PHP_EOL
+                . "public static function get_collection($" . "where = \"\" ) {" . PHP_EOL
+                . "    $" . "col=[];" . PHP_EOL
+                . "    foreach (" . self::$_table . "::get_table_array($" . "where) as $" . "entity) {" . PHP_EOL
+                . "        if ($" . "entity != FALSE) {" . PHP_EOL
+                . "            if (isset(self::$" . "_entity_memento[$" . "entity[\"id\"]])) {" . PHP_EOL
+                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]];" . PHP_EOL
+                . "            } else {" . PHP_EOL
+                . "                $" . "col[] = self::$" . "_entity_memento[$" . "entity[\"id\"]] = new " . self::$_table . "($" . "entity);" . PHP_EOL
+                . "            }" . PHP_EOL
+                . "        }" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "    return $" . "col;" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_table_array()
-        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimensions " . $n
-                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
-                . "public static function get_table_array($" . "where = \"\") {" . $n
-                . "    $" . "data = application::$" . "_bdd->fetch(\"select * from " . self::$_table . "\" . (!empty($" . "where) ? \" where \" . $" . "where : \"\") . \";\");" . $n
-                . "    $" . "tuples_array = [];" . $n
-                . "    foreach (self::get_structure() as $" . "s) {" . $n
-                . "        if ($" . "s[1] == \"array\") {" . $n
-                . "            $" . "tuples_array[] = $" . "s[0];" . $n
-                . "        }" . $n
-                . "    }" . $n
-                . "    foreach ($" . "data as $" . "key => $" . "value) {" . $n
-                . "        foreach ($" . "tuples_array as $" . "t) {" . $n
-                . "            $" . "data[$" . "key][$" . "t] = json_decode(stripslashes($" . "data[$" . "key][$" . "t]), true);" . $n
-                . "        }" . $n
-                . "    }" . $n
-                . "    return $" . "data;" . $n
-                . "}" . $n;
+        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimensions " . PHP_EOL
+                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . PHP_EOL
+                . "public static function get_table_array($" . "where = \"\") {" . PHP_EOL
+                . "    $" . "data = application::$" . "_bdd->fetch(\"select * from " . self::$_table . "\" . (!empty($" . "where) ? \" where \" . $" . "where : \"\") . \";\");" . PHP_EOL
+                . "    $" . "tuples_array = [];" . PHP_EOL
+                . "    foreach (self::get_structure() as $" . "s) {" . PHP_EOL
+                . "        if ($" . "s[1] == \"array\") {" . PHP_EOL
+                . "            $" . "tuples_array[] = $" . "s[0];" . PHP_EOL
+                . "        }" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "    foreach ($" . "data as $" . "key => $" . "value) {" . PHP_EOL
+                . "        foreach ($" . "tuples_array as $" . "t) {" . PHP_EOL
+                . "            $" . "data[$" . "key][$" . "t] = json_decode(stripslashes($" . "data[$" . "key][$" . "t]), true);" . PHP_EOL
+                . "        }" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "    return $" . "data;" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_table_ordored_array
-        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions dont la clé est l'identifiant de l'entité " . $n
-                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
-                . "public static function get_table_ordored_array($" . "where = \"\") {" . $n
-                . "    $" . "data = [];" . $n
-                . "    foreach (" . self::$_table . "::get_table_array($" . "where) as $" . "value) {" . $n
-                . "        $" . "data[$" . "value[\"id\"]] = $" . "value;" . $n
-                . "        unset($" . "data[$" . "value[\"id\"]][\"id\"]);" . $n
-                . "    }" . $n
-                . "    return $" . "data;" . $n
-                . "}" . $n;
+        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions dont la clé est l'identifiant de l'entité " . PHP_EOL
+                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . PHP_EOL
+                . "public static function get_table_ordored_array($" . "where = \"\") {" . PHP_EOL
+                . "    $" . "data = [];" . PHP_EOL
+                . "    foreach (" . self::$_table . "::get_table_array($" . "where) as $" . "value) {" . PHP_EOL
+                . "        $" . "data[$" . "value[\"id\"]] = $" . "value;" . PHP_EOL
+                . "        unset($" . "data[$" . "value[\"id\"]][\"id\"]);" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "    return $" . "data;" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_count()
-        $class .= "/** Retourne le nombre d'entrées " . $n
-                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . $n
-                . "public static function get_count($" . "where = \"\" ) {" . $n
-                . "    $" . "data = application::$" . "_bdd->fetch(\"select count(*) as count from " . self::$_table . "\".(!empty($" . "where)?\" where \" . $" . "where:\"\").\";\");" . $n
-                . "    return $" . "data[0]['count'];" . $n
-                . "}" . $n;
+        $class .= "/** Retourne le nombre d'entrées " . PHP_EOL
+                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); */" . PHP_EOL
+                . "public static function get_count($" . "where = \"\" ) {" . PHP_EOL
+                . "    $" . "data = application::$" . "_bdd->fetch(\"select count(*) as count from " . self::$_table . "\".(!empty($" . "where)?\" where \" . $" . "where:\"\").\";\");" . PHP_EOL
+                . "    return $" . "data[0]['count'];" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_from_id
-        $class .= "/** Retourne une entité sous forme d'objet à partir de son identifiant " . $n
-                . "* @return " . self::$_table . "|boolean */" . $n
-                . "public static function get_from_id($" . "id) {" . $n
-                . "    if (isset(self::$" . "_entity_memento[$" . "id])) {" . $n
-                . "        return self::$" . "_entity_memento[$" . "id];" . $n
-                . "    } else {" . $n
-                . "        $" . "data = self::get_table_array(\"id='\" . application::$" . "_bdd->protect_var($" . "id) . \"'\");" . $n
-                . "        return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? self::$" . "_entity_memento[$" . "id]=new " . self::$_table . "($" . "data[0]) : false);" . $n
-                . "    }" . $n
-                . "}" . $n;
+        $class .= "/** Retourne une entité sous forme d'objet à partir de son identifiant " . PHP_EOL
+                . "* @return " . self::$_table . "|boolean */" . PHP_EOL
+                . "public static function get_from_id($" . "id) {" . PHP_EOL
+                . "    if (isset(self::$" . "_entity_memento[$" . "id])) {" . PHP_EOL
+                . "        return self::$" . "_entity_memento[$" . "id];" . PHP_EOL
+                . "    } else {" . PHP_EOL
+                . "        $" . "data = self::get_table_array(\"id='\" . application::$" . "_bdd->protect_var($" . "id) . \"'\");" . PHP_EOL
+                . "        return ((isset($" . "data[0]) and $" . "data[0] != FALSE) ? self::$" . "_entity_memento[$" . "id]=new " . self::$_table . "($" . "data[0]) : false);" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) get_json_object
-        $class .= "/** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) " . $n
-                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); " . $n
-                . "* @return string Objet json */" . $n
-                . "public static function get_json_object($" . "where = \"\") {" . $n
-                . "    return json_encode(" . self::$_table . "::get_table_ordored_array($" . "where));" . $n
-                . "}" . $n;
+        $class .= "/** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) " . PHP_EOL
+                . "* ATTENTION PENSEZ A UTILISER application::$" . "_bdd->protect_var(); " . PHP_EOL
+                . "* @return string Objet json */" . PHP_EOL
+                . "public static function get_json_object($" . "where = \"\") {" . PHP_EOL
+                . "    return json_encode(" . self::$_table . "::get_table_ordored_array($" . "where));" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction statique ( static ) delete_by_id
-        $class .= "/** Supprime l'entité*/" . $n
-                . "public static function delete_by_id($" . "id) {" . $n
-                . "    application::$" . "_bdd->query(\"delete from " . self::$_table . " where id='\" . application::$" . "_bdd->protect_var((int)$" . "id) . \"';\");" . $n
-                . "}" . $n;
+        $class .= "/** Supprime l'entité*/" . PHP_EOL
+                . "public static function delete_by_id($" . "id) {" . PHP_EOL
+                . "    application::$" . "_bdd->query(\"delete from " . self::$_table . " where id='\" . application::$" . "_bdd->protect_var((int)$" . "id) . \"';\");" . PHP_EOL
+                . "}" . PHP_EOL;
 
         //génére la fonction de suppresion
-        $class .= "/** Supprime l'entité à la fin du script*/" . $n
-                . "public function delete() {" . $n
-                . "    $" . "this->_this_was_delete=true;" . $n
-                . "}" . $n;
-
-        //getter et setter
-        $class .= $tuple_etter;
-
-        //génére le destructeur
-        $class .= ' public function __destruct() { if ($this->_this_was_modified and !$this->_this_was_delete) { ' . $n;
-        $class .= $tuple_destruct;
-        $class .= " application::$" . "_bdd->query(\"update " . self::$_table . " set ";
+        $class .= "/** Supprime l'entité à la fin du script*/" . PHP_EOL
+                . "public function delete() {" . PHP_EOL
+                . "    $" . "this->_this_was_delete=true;" . PHP_EOL
+                . "}" . PHP_EOL;
+        //génére la fonction de mise à jour
+        $class .= "/** Met a jour l'entité dans la base de donnée*/" . PHP_EOL
+                . 'public function update() { ' . PHP_EOL
+                . 'if ($this->_this_was_modified and !$this->_this_was_delete) { ' . PHP_EOL
+                . $tuple_update . PHP_EOL
+                . " application::$" . "_bdd->query(\"update " . self::$_table . " set ";
         $i = 0;
         while (isset(self::$_data[$i][0])) {
-            $class .= self::$_data[$i][0] . " = '\".$" . self::$_data[$i][0] . ".\"'";
+            $class .= self::$_data[$i][0] . " = '$" . self::$_data[$i][0] . "'";
             if (isset(self::$_data[$i + 1][0])) {
                 $class .= ", ";
             }
             $i++;
         }
-        $class .= " where id = '\" . $" . "id . \"';\");"
-                . "        }"
-                . "        if($" . "this->_this_was_delete){"
-                . "            self::delete_by_id($" . "this->get_id());"
-                . "        }" . $n
-                . "    }" . $n
+        $class .= " where id = '$" . "id';\");" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "    if($" . "this->_this_was_delete){" . PHP_EOL
+                . "        self::delete_by_id($" . "this->get_id());" . PHP_EOL
+                . "    }" . PHP_EOL
+                . "}";
+
+        //getter et setter
+        $class .= $tuple_etter;
+
+        //génére le destructeur
+        $class .= ' public function __destruct() { ' . PHP_EOL
+                . "     $" . "this->update();" . PHP_EOL
+                . " }" . PHP_EOL
                 . "}";
         return $class;
     }

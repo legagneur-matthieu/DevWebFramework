@@ -223,6 +223,7 @@ class websocket_server {
         } elseif ($count == 1) {
             $client->set_user($ws_token[0]->get_user()->get_id());
             $ws_token[0]->set_token("");
+            $ws_token[0]->update();
             self::log($client, "Auth Success");
             $client->write('{"auth":true,"message":"OK"}');
         } else {

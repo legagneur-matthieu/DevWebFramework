@@ -82,6 +82,19 @@ class entity_generator {
         $tuple_ajout = '';
         $tuple_etter = '';
         $tuple_update = '';
+        //check PK int id 
+        if (
+                self::$_data[0][0] != "id" and
+                self::$_data[0][1] != "int" and
+                !self::$_data[0][2]
+        ) {
+            $data = [];
+            $data[] = ["id", "int", true];
+            foreach (self::$_data as $tuple) {
+                $data[] = $tuple;
+            }
+            self::$_data = $data;
+        }
         foreach (self::$_data as $tuple) {
             //génére les attributs 
             $class .= '/** ' . $tuple[0] . ' ' . PHP_EOL

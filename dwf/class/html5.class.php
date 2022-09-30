@@ -105,6 +105,8 @@ class html5 {
             "../commun/src/dist/jquery-ui/i18n/datepicker-fr.js",
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.js",
             "../commun/src/js/datetimepicker/i18n/jquery-ui-timepicker-addon-i18n.js",
+            "../commun/src/js/alertify/alertify.min.js",
+            "../commun/src/js/SimpleParallax.min.js",
                 ] as $s) {
                     $script .= html_structures::script($s);
                 }
@@ -113,12 +115,10 @@ class html5 {
             "../commun/src/dist/js/bootstrap.min.js",
             "../commun/src/js/jquery.cookie.js",
             "../commun/src/js/datetimepicker/jquery-ui-sliderAccess.js",
-            "../commun/src/js/alertify/alertify.min.js",
             "../commun/src/js/animate/animate.js",
             "../commun/src/js/sarraltroff/sarraltroff.js",
             "../commun/src/js/phpjs/phpjs.min.js",
             "../commun/src/js/php/phpvm.js",
-            "../commun/src/js/SimpleParallax.min.js",
             "../commun/src/js/js.js"
                 ] as $s) {
                     $script .= html_structures::script_async($s);

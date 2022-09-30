@@ -18,7 +18,7 @@ class datatable {
      * 
      * @var array
      */
-    private $_params = ["language" => "{url: '../commun/src/js/DataTables/i18n/French.lang.json'}"];
+    private $_params = ["language" => "{url: '../commun/src/js/DataTables/i18n/fr-FR.json'}"];
 
     /**
      * Applique les fonctionnalités de la librairie datatable à un tableau HTML

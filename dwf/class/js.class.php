@@ -183,7 +183,7 @@ class js {
      * @return \jsqr
      */
     public static function jsqr($id, $debug = false) {
-        return new jsqr($id, $dedug);
+        return new jsqr($id, $debug);
     }
 
     /**
@@ -288,7 +288,7 @@ class js {
      */
     public static function accordion($id = "accordion", $collapsible = true, $heightStyle = false) {
         ?>
-        <script>
+        <script type="text/javascript">
             $(document).ready(function () {
             $("#<?= $id; ?>").accordion(
         <?php
@@ -319,10 +319,11 @@ class js {
      */
     public static function menu($id = "menu") {
         ?>
-        <script>
-                    $(document).ready(function () {
-            $("#<?= $id; ?>").menu();
-            });</script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#<?= $id; ?>").menu();
+            });
+        </script>
         <?php
     }
 
@@ -346,7 +347,6 @@ class js {
         $inner = tags::div(["class" => "carousel-inner", "role" => "listbox"]);
         $first = true;
         foreach ($data as $d) {
-
             $inner->append_content(tags::tag("div", ["class" => "carousel-item" . ($first ? " active" : "")],
                             tags::tag("img", ["class" => "d-block w-100", "src" => $d["img"], "alt" => (isset($d["alt"]) ? $d["alt"] : "")]) .
                             (isset($d["caption"]) ? tags::tag("div", ["class" => "carousel-caption"], $d["caption"]) : "")

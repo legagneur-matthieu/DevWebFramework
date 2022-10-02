@@ -10,28 +10,33 @@
  * 
  * mais vous pouvez également y ajouter des variables diverses qui vous seront utile 
  */
-class config { 
+class config {
     /* PDO */
-    public static $_PDO_type = "mysql";
+    public static $_PDO_type = "sqlite";
     public static $_PDO_host = "localhost";
     public static $_PDO_dbname = "test";
-    public static $_PDO_login = "root";
-    public static $_PDO_psw = ""; 
+    public static $_PDO_login = "";
+    public static $_PDO_psw = "";
     /* hash */
-    public static $_hash_algo = "sha256"; 
+    public static $_hash_algo = "sha256";
     /* routes */
     public static $_route_auth = array();
-    public static $_route_unauth = array(); 
+    public static $_route_unauth = array();
+    /* SMTP */
+    public static $_SMTP_host = "localhost";
+    public static $_SMTP_auth = false;
+    public static $_SMTP_login = "";
+    public static $_SMTP_psw = "";
+    /* WS */
+    public static $_WS_host = "0.0.0.0";
+    public static $_WS_port = 9000;
+    public static $_WS_ssl = false;
     /* Data */
     public static $_title = "test";
     public static $_favicon = "";
     public static $_debug = true;
     public static $_prefix = "test";
     public static $_theme = "default";
-    public static $_SMTP_host = "localhost";
-    public static $_SMTP_auth = false;
-    public static $_SMTP_login = "";
-    public static $_SMTP_psw = "";
     public static $_sitemap = false;
     public static $_statistiques = false;
 

@@ -132,7 +132,7 @@ class docMobile {
             <em>$dwf.cordova().is_connected_web();</em> qui retourne true si l'appareil est connecté, sinon false;
 
         </p>
-        <h4>les formulaires avec $dwf</h4>
+        <h4>Les formulaires avec $dwf</h4>
         <p>Le framework permet de gérer les formulaires en toute simplicité, en 6 étapes</p>
         <ol>
             <li>Création de la balise form avec jquery.html()</li>

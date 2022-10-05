@@ -27,7 +27,7 @@ class rang {
         $this->_this_was_modified = false;
     }
 
-    /** Ajoute une entrée en base de donnée */
+    /** Ajoute une entrée en base de données */
     public static function ajout($nom) {
         $nom = application::$_bdd->protect_var($nom);
         application::$_bdd->query("INSERT INTO rang(nom) VALUES('" . $nom . "');");
@@ -38,8 +38,8 @@ class rang {
         return json_decode('[["id","int",true],["nom","string",false]]', true);
     }
 
-    /** Retourne le contenu de la table sout forme d'une collection 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'une collection 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_collection($where = "") {
         $col = false;
         foreach (rang::get_table_array($where) as $entity) {
@@ -50,8 +50,8 @@ class rang {
         return $col;
     }
 
-    /** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'un tableau à deux dimensions 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_table_array($where = "") {
         $data = application::$_bdd->fetch("select * from rang" . (!empty($where) ? " where " . $where : "") . ";");
         $tuples_array = [];
@@ -68,8 +68,8 @@ class rang {
         return $data;
     }
 
-    /** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clé est l'identifiant de l'entité 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'un tableau à deux dimensions dont la clé est l'identifiant de l'entité 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_table_ordored_array($where = "") {
         $data = [];
         foreach (rang::get_table_array($where) as $value) {
@@ -79,14 +79,14 @@ class rang {
         return $data;
     }
 
-    /** Retourne le nombre d'entré 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le nombre d'entrée
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_count($where = "") {
         $data = application::$_bdd->fetch("select count(*) as count from rang" . (!empty($where) ? " where " . $where : "") . ";");
         return $data[0]['count'];
     }
 
-    /** Retourne une entité sous forme d'objet a partir de son identifiant 
+    /** Retourne une entité sous forme d'objet à partir de son identifiant 
      * @return rang|boolean */
     public static function get_from_id($id) {
         $data = self::get_table_array("id='" . application::$_bdd->protect_var($id) . "'");
@@ -105,7 +105,7 @@ class rang {
         application::$_bdd->query("delete from rang where id='" . application::$_bdd->protect_var((int) $id) . "';");
     }
 
-    /** Supprime l'entité a la fin du script */
+    /** Supprime l'entité à la fin du script */
     public function delete() {
         $this->_this_was_delete = true;
     }

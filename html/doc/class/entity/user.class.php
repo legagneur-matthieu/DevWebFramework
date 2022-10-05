@@ -37,7 +37,7 @@ class user {
         $this->_this_was_modified = false;
     }
 
-    /** Ajoute une entrée en base de donnée */
+    /** Ajoute une entrée en base de données */
     public static function ajout($login, $psw, $rang) {
         $login = application::$_bdd->protect_var($login);
         $psw = application::$_bdd->protect_var($psw);
@@ -50,8 +50,8 @@ class user {
         return json_decode('[["id","int",true],["login","string",false],["psw","string",false],["rang","rang",false]]', true);
     }
 
-    /** Retourne le contenu de la table sout forme d'une collection 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'une collection 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_collection($where = "") {
         $col = false;
         foreach (user::get_table_array($where) as $entity) {
@@ -62,8 +62,8 @@ class user {
         return $col;
     }
 
-    /** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'un tableau à deux dimensions 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_table_array($where = "") {
         $data = application::$_bdd->fetch("select * from user" . (!empty($where) ? " where " . $where : "") . ";");
         $tuples_array = [];
@@ -80,8 +80,8 @@ class user {
         return $data;
     }
 
-    /** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clé est l'identifiant de l'entité 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le contenu de la table sous forme d'un tableau à 2 dimensions dont la clé est l'identifiant de l'entité 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_table_ordored_array($where = "") {
         $data = [];
         foreach (user::get_table_array($where) as $value) {
@@ -91,22 +91,22 @@ class user {
         return $data;
     }
 
-    /** Retourne le nombre d'entré 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+    /** Retourne le nombre d'entrées
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
     public static function get_count($where = "") {
         $data = application::$_bdd->fetch("select count(*) as count from user" . (!empty($where) ? " where " . $where : "") . ";");
         return $data[0]['count'];
     }
 
-    /** Retourne une entité sous forme d'objet a partir de son identifiant 
+    /** Retourne une entité sous forme d'objet à partir de son identifiant 
      * @return user|boolean */
     public static function get_from_id($id) {
         $data = self::get_table_array("id='" . application::$_bdd->protect_var($id) . "'");
         return ((isset($data[0]) and $data[0] != FALSE) ? new user($data[0]) : false);
     }
 
-    /** Retourne le contenu de la table sout forme d'un objet json (utile pour les services) 
-     * ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); 
+    /** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) 
+     * ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); 
      * @return string Objet json */
     public static function get_json_object($where = "") {
         return json_encode(user::get_table_ordored_array($where));
@@ -117,7 +117,7 @@ class user {
         application::$_bdd->query("delete from user where id='" . application::$_bdd->protect_var((int) $id) . "';");
     }
 
-    /** Supprime l'entité a la fin du script */
+    /** Supprime l'entité à la fin du script */
     public function delete() {
         $this->_this_was_delete = true;
     }

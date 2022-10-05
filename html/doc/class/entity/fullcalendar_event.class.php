@@ -50,8 +50,8 @@ application::$_bdd->query("INSERT INTO fullcalendar_event(calendar, title, start
 public static function get_structure() {
     return json_decode('[["id","int",true],["calendar","string",false],["title","string",false],["start","string",false],["end","string",false],["url","string",false]]', true);
 }
-/** Retourne le contenu de la table sout forme d'une collection 
-*ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+/** Retourne le contenu de la table sous forme d'une collection 
+*ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
 public static function get_collection($where = "" ) {
     $col=[];
     foreach (fullcalendar_event::get_table_array($where) as $entity) {
@@ -65,8 +65,8 @@ public static function get_collection($where = "" ) {
     }
     return $col;
 }
-/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions 
-* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+/** Retourne le contenu de la table sous forme d'un tableau à deux dimensions 
+* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
 public static function get_table_array($where = "") {
     $data = application::$_bdd->fetch("select * from fullcalendar_event" . (!empty($where) ? " where " . $where : "") . ";");
     $tuples_array = [];
@@ -82,8 +82,8 @@ public static function get_table_array($where = "") {
     }
     return $data;
 }
-/** Retourne le contenu de la table sout forme d'un tableau a 2 dimentions dont la clé est l'identifiant de l'entité 
-* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+/** Retourne le contenu de la table sous forme d'un tableau à deux dimensions dont la clé est l'identifiant de l'entité 
+* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
 public static function get_table_ordored_array($where = "") {
     $data = [];
     foreach (fullcalendar_event::get_table_array($where) as $value) {
@@ -92,13 +92,13 @@ public static function get_table_ordored_array($where = "") {
     }
     return $data;
 }
-/** Retourne le nombre d'entré 
-* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */
+/** Retourne le nombre d'entrée
+* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */
 public static function get_count($where = "" ) {
     $data = application::$_bdd->fetch("select count(*) as count from fullcalendar_event".(!empty($where)?" where " . $where:"").";");
     return $data[0]['count'];
 }
-/** Retourne une entité sous forme d'objet a partir de son identifiant 
+/** Retourne une entité sous forme d'objet à partir de son identifiant 
 * @return fullcalendar_event|boolean */
 public static function get_from_id($id) {
     if (isset(self::$_entity_memento[$id])) {
@@ -108,8 +108,8 @@ public static function get_from_id($id) {
         return ((isset($data[0]) and $data[0] != FALSE) ? self::$_entity_memento[$id]=new fullcalendar_event($data[0]) : false);
     }
 }
-/** Retourne le contenu de la table sout forme d'un objet json (utile pour les services) 
-* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); 
+/** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) 
+* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); 
 * @return string Objet json */
 public static function get_json_object($where = "") {
     return json_encode(fullcalendar_event::get_table_ordored_array($where));
@@ -118,7 +118,7 @@ public static function get_json_object($where = "") {
 public static function delete_by_id($id) {
     application::$_bdd->query("delete from fullcalendar_event where id='" . application::$_bdd->protect_var((int)$id) . "';");
 }
-/** Supprime l'entité a la fin du script*/
+/** Supprime l'entité à la fin du script*/
 public function delete() {
     $this->_this_was_delete=true;
 }

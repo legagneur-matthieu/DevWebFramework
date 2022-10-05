@@ -62,7 +62,7 @@ class docPHP_natives_js {
 
     public function log_success() {
         ?> 
-        <p>Affiche un message de log (de succes) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message de log (de succès) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::syntaxhighlighter("<?php js::log_success($" . "msg); ?>", $this->_brush);
     }
@@ -104,8 +104,8 @@ class docPHP_natives_js {
 
     public function jsqr() {
         ?> 
-        <p>Cette classe permet de lire un QRCode depuis une camera et afficher le resultat dans un élément HTML <br />
-            Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input <br />
+        <p>Cette classe permet de lire un QRCode depuis une caméra et afficher le résultat dans un élément HTML.<br />
+            Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input.<br />
             Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page</p>
         <?php
         js::syntaxhighlighter("<?php \n"

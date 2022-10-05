@@ -18,6 +18,7 @@ class docPHP {
             "services_general",
             "services_interne",
             "CLI",
+            "WebSocket",
             "mise_en_ligne",
         );
         ?>
@@ -55,9 +56,9 @@ class docPHP {
             <li>Maîtriser la programmation orienté objet (POO) en PHP</li>
             <li>
                 Les classes dans les dossiers <em>html/[votre-projet]/class</em> et <em>dwf/class</em> doivent être nommées <em>[nom_de_classe].class.php</em> <br />
-                Ces classes seront chargées (inclu) automatiquement. Si vous créez des classes sans cette syntaxe ou dans des sous dossiers, vous devrez les inclure vous même.
+                Ces classes seront chargées (incluses) automatiquement. Si vous créez des classes sans cette syntaxe ou dans des sous dossiers, vous devrez les inclure vous même.
             </li>
-            <li>L'utilisateur ne quitte jamais le fichier <em>html/[votre-projet]/index.php</em> hormis pour les exports PDF/CSV ... qui s'ouvrent dans un nouvel onglet</li>            
+            <li>L'utilisateur ne quitte jamais le fichier <em>html/[votre-projet]/index.php</em> hormis pour les exports PDF/CSV ... qui s'ouvrent dans un nouvel onglet.</li>            
         </ul>
         <h4>Structure</h4>
         <?php
@@ -78,10 +79,10 @@ class docPHP {
                     <li><?= $arrow_glyph; ?> <em>Contient vos projets</em></li>
                     <li><?= $dir_glyph; ?> commun
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets.</em></li>
                             <li><?= $dir_glyph; ?> src
                                 <ul>
-                                    <li><?= $arrow_glyph; ?> <em>Contient tous les fichiers CSS et JS communs à tous les projets (et accessibles aux utilisateurs)</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient tous les fichiers CSS et JS communs à tous les projets (et accessibles aux utilisateurs).</em></li>
                                 </ul>
                             </li>
                             <li><?= $dir_glyph; ?> service
@@ -93,19 +94,19 @@ class docPHP {
                     </li>
                     <li><?= $dir_glyph; ?> [votre-projet]
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier !)</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier ).</em></li>
                             <li><?= $dir_glyph; ?> class
-                            <li><?= $arrow_glyph; ?> <em>Contient vos classes spécifiques au projet ainsi que le fichier de configuration</em>
+                            <li><?= $arrow_glyph; ?> <em>Contient vos classes spécifiques au projet ainsi que le fichier de configuration.</em>
                                 <ul>
                                     <li><?= $dir_glyph; ?> entity</li>
-                                    <li><?= $arrow_glyph; ?> <em>Contient les entités de votre projet</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient les entités de votre projet.</em></li>
                                 </ul>
                             </li>
                             <li><?= $dir_glyph; ?> src
-                            <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS, JS, et médias</em>
+                            <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS, JS, et médias.</em>
                                 <ul>
                                     <li><?= $dir_glyph; ?> compact</li>
-                                    <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS et JS minifiés par le framework</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS et JS minifiés par le framework.</em></li>
                                 </ul>
                             </li>
                         </ul>
@@ -116,17 +117,17 @@ class docPHP {
                 <ul>
                     <li><?= $dir_glyph; ?> class
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient les classes natives de DWF</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient les classes natives de DWF.</em></li>
                         </ul>
                     </li>
                     <li><?= $dir_glyph; ?> cron
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient vos éventuelles cron à faire tourner dans vos consoles</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient vos éventuels cron à faire tourner dans vos consoles.</em></li>
                         </ul>
                     </li>
                     <li><?= $dir_glyph; ?> log
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient les logs de vos projets</em></li>
+                            <li><?= $arrow_glyph; ?> <em>Contient les logs de vos projets.</em></li>
                         </ul>
                     </li>
                 </ul>
@@ -140,17 +141,17 @@ class docPHP {
         ?>
         <p>
             La création d'un nouveau projet est automatisé par le fichier <a href="../commun/new_app.php" target="_blank"><em>/html/commun/new_app.php</em></a> accédez à ce fichier par votre navigateur -> localhost <br />
-            Ce fichier ne peut se lancer que depuis votre localhost ! il n'est pas possible de s'en servir à distance sans en modifier le code. <br />
+            Ce fichier ne peut se lancer que depuis votre localhost. Il n'est pas possible de s'en servir à distance sans en modifier le code.<br/>
             Une fois l'interface de création de projet ouvert, remplissez les champs correctement. Ces paramètres seront modifiable dans <em>config.class.php</em>
         </p>
         <ul>
             <li>Application
                 <ul>
-                    <li>Nom du dossier (apparait dans l'url) : nom du dossier du projet, il est conseillé de l'écrire en minuscule</li>
-                    <li>Titre de l'application (apparait dans le "title" des pages) : nom réel de votre projet</li>
-                    <li>Préfixe (technique, utilisé pour les sessions, log ...) : le préfixe doit être unique à chaque projet, <br /> il sert à différencier les sessions et les logs utilisés dans les projets</li>
+                    <li>Nom du dossier (apparait dans l'url) : nom du dossier du projet, il est conseillé de l'écrire en minuscule.</li>
+                    <li>Titre de l'application (apparait dans le "title" des pages) : nom réel de votre projet.</li>
+                    <li>Préfixe (technique, utilisé pour les sessions, log ...) : le préfixe doit être unique à chaque projet, <br /> il sert à différencier les sessions et les logs utilisés dans les projets.</li>
                     <li>
-                        Hash (hash à utiliser pour chiffrer les mots de passe) : c'est ici que vous choisirez quel algorithme de chiffrement, vous utiliserez pour chiffrer vos mots de passe ou autres clés <br />
+                        Hash (hash à utiliser pour chiffrer les mots de passe) : c'est ici que vous choisirez quel algorithme de chiffrement, vous utiliserez pour chiffrer vos mots de passe ou autres clés<br />
                         l'algorithme est accessible dans le code via <em>config::$_hash_algo</em>
                     </li>
                 </ul>
@@ -162,7 +163,7 @@ class docPHP {
                     <li>Login : nom d'utilisateur</li>
                     <li>Password : mot de passe</li>
                     <li>Database : nom de la base de données</li>
-                    <li>Créer la base de données (si elle n'existe pas) : si la case est cochée et que la base de données n'existe pas, alors le framework pourra la créér.</li>
+                    <li>Créer la base de données (si elle n'existe pas) : si la case est cochée et que la base de données n'existe pas, alors le framework pourra la créer.</li>
                     <li>Service internes (un dossier de service sera créé dans le projet) : votre projet aura t-il besoin de services "internes" (spécifique) ?</li>
                 </ul>
             </li>
@@ -243,7 +244,7 @@ class docPHP {
         ?>
         <p>La classe "pages" est le point de départ de votre projet et est constitué des éléments suivants :</p>
         <ul>
-            <li>Le constructeur : contient les opérations commune à toutes les pages (génération / mise à jour de fichiers, vérifications sur les données/entités ...)  </li>
+            <li>Le constructeur : contient les opérations communes à toutes les pages (génération / mise à jour de fichiers, vérifications sur les données/entités ...)  </li>
             <li>Le header : c'est le haut de page de votre application, elle est commune à toutes les pages (mais vous pouvez utiliser un switch pour créer une entête à chaque page)</li>
             <li>Le footer : le pied de page, souvent commune à toutes les pages, contient généralement: date de création, contacts, les mentions légales, CGU ...</li>
             <li>Les fonctions liées au routes : ces fonctions doivent être publiques, le nom de la fonction doit correspondre à la valeur de la clé "page" d'une route</li>
@@ -257,10 +258,10 @@ class docPHP {
     private function classes_metiers() {
         ?>
         <p>
-            Les classes dites "metiers" sont les classes spécifiques à votre projet que vous aurez vous mêmes créé dans le dossier <em>html/[votre-projet]/class/</em>, <br />
-            contrairement à d'autres framework comme "symfony" ces classes ne nécessitent pas d'être étendues d'une classe natif de DWF ! <br />
+            Les classes dites "métiers" sont les classes spécifiques à votre projet que vous aurez vous mêmes créé dans le dossier <em>html/[votre-projet]/class/</em>, <br />
+            contrairement à d'autres framework comme "symfony" ces classes ne nécessitent pas d'être étendues d'une classe natif de DWF. <br />
             vous êtes libre de lui donner le nom que vous voulez ( sauf un nom déjà pris par une classe native ou une de vos entités) <br />
-            libre d'utiliser des "méthodes magiques" tels que les constructeurs, destructeurs ... <br />
+            libre d'utiliser des "méthodes magiques" tels que les constructeurs, destructeurs... <br />
             La seule restriction est le nom du fichier qui doit être comme ceci : <em>[nom_de_votre_classe]<strong>.class.php</strong></em>. <br />
             Une fois votre classe créée, vous pouvez l'appeler et l'utiliser dans <em>pages.class.php</em>
         </p>
@@ -299,12 +300,12 @@ class docPHP {
                 . "}\n?>", $this->_brush);
         ?>
         <p>
-            Comme indiqué, ces methodes doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités ! <br />
+            Comme indiqué, ces methodes doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités.<br />
             Ces méthodes ne prennent pas de paramètres et ne retourne rien.
         </p>
         <p class="alert alert-warning">ATTENTION : Depuis la version 21.17.12, <br />
-            pour que les methodes évenementielles ce déclenchent, la classe concernée doit avoir été appelée au moins une fois avant le déclencheur ! <br />
-            (instantiation ou appel d'une méthode statique)
+            pour que les methodes évenementielles se déclenchent, la classe concernée doit avoir été appelée au moins une fois avant le déclencheur.<br />
+            (instanciation ou appel d'une méthode statique)
         </p>
         <h4>Créer un déclencheur</h4>
         <p>
@@ -327,7 +328,7 @@ class docPHP {
             Les entités font office d'ORM dans votre projet,<br />
             une classe entité vous permet de lire, ajouter, modifier ou supprimer des entrées de votre base de données sans avoir à saisir une requête SQL <br />
             (ormis une eventuelle condition "where" ). Les entités exploitent un objet bdd accessible via <em>application::$_bdd</em> <br />
-            les entités seront capable de recréer la structure de leur base de données si celle-ci est perdue (mais ne permettent pas de sauvegarder les données !)
+            les entités seront capable de recréer la structure de leur base de données si celle-ci est perdue (mais ne permettent pas de sauvegarder les données ).
         </p>
         <h4>Créer des entités</h4>
         <p>
@@ -340,6 +341,8 @@ class docPHP {
                 . "                                     //la structure de l'entité et de sa table dans la base de données\n\n"
                 . "    array('id','int',true),          //créé un champ/attribut nommé 'id' de type entier,\n"
                 . "                                     //le 'true' indique une clé primaire, le setter de 'id' sera en privé\n"
+                . "                                     //Depuis la version 21.22.10 cette clé primaire est automatiquement renseigné,\n"
+                . "                                     //il n'est donc plus nessaicaire de la déclarer dans le code.\n"
                 . "    array('login','string',false),\n"
                 . "    array('psw','string',false),\n"
                 . ");\n"
@@ -442,7 +445,7 @@ class docPHP {
     private function bdd() {
         ?>
         <p>
-            L'objet bdd est l'objet qui permet de gèrer la connexion à la base de données et sécuriser les variables destinées à être utilisées dans des requêtes SQL. <br />
+            L'objet bdd est l'objet qui permet de gérer la connexion à la base de données et sécuriser les variables destinées à être utilisées dans des requêtes SQL. <br />
             Cet objet utilise les informations PDO qui sont renseignées dans le fichier de configuration. <br />
             Vos entités et de nombreuses classes native de DWF exploitent cette objet.
         </p>
@@ -474,7 +477,7 @@ class docPHP {
         <p>
             Les services sont des classes PHP qui répondent à des requêtes venant soit de plusieurs de vos propres projets,<br />
             soit d'applications extérieures (dans ce dernier cas on peut parler d'API ). <br />
-            ces classes doivent être placées dans <em>/html/commun/service</em>
+            Ces classes doivent être placées dans <em>/html/commun/service</em>
         </p>
         <p>En général les services ne retournent pas d'HTML, mais des données au format JSON (recommandé), XML, CSV ou Serialisé</p>
         <p>
@@ -511,15 +514,15 @@ class docPHP {
                 . "        if (isset($" . "_REQUEST[\"id\"])) {\n"
                 . "            //on charge le fichier de config\n"
                 . "            include '../../mon_projet/class/config.class.php';\n\n"
-                . "            //on charge les entités (cf. methode plus bas )\n"
+                . "            //on charge les entités (cf. méthode plus bas )\n"
                 . "            $" . "this->entityloader();\n\n"
-                . "            //on lance la connexion de la base de donées dans application::$" . "_bdd\n"
+                . "            //on lance la connexion de la base de données dans application::$" . "_bdd\n"
                 . "            application::$" . "_bdd = new bdd();\n\n"
                 . "            //on utilise l'entité\n"
                 . "            $" . "user = user::get_table_ordored_array(\"id='\".application::$" . "_bdd->protect_var($" . "_REQUEST[\"id\"]).\"'\");\n\n"
-                . "            //on enleve le mot de passe des données à retourner\n"
+                . "            //on enlève le mot de passe des données à retourner\n"
                 . "            unset($" . "user[$" . "_REQUEST[\"id\"]][\"psw\"]);\n\n"
-                . "            //on affiche le resultat en JSON\n"
+                . "            //on affiche le résultat en JSON\n"
                 . "            echo json_encode($" . "user);\n"
                 . "        }\n"
                 . "    }\n\n"
@@ -569,18 +572,18 @@ class docPHP {
             <li>Les entités</li>
         </ul>
         <p>Ces services sont à placer dans <em>html/[votre-projet]/services/</em> et les fichiers doivent être nommés tels que : <em>[nom-service]<strong>.service.php</strong></em></p>
-        <p>Pour que le fichier service/index.php soit créé correctement, la case "Services internes" doit être coché à la création du projet !</p>
+        <p>Pour que le fichier service/index.php soit créé correctement, la case "Services internes" doit être coché à la création du projet.</p>
         <?php
     }
 
     private function CLI() {
         ?>
         <p>Les CLI sont des script PHP destiné à tourner en mode console, <br /> 
-            très utile pour effectuer des opérations longues telles que des sauvegardes de grosses bases de données par exemple <br />
-            ces script sont souvent appelés dans des <a href="https://fr.wikipedia.org/wiki/Cron">CRON</a> <br />
+            très utile pour effectuer des opérations longues telles que des sauvegardes de grandes bases de données par exemple <br />
+            ces scripts sont souvent appelés dans des <a href="https://fr.wikipedia.org/wiki/Cron">CRON</a> <br />
             il existe deux types de CLI dans le Framework :</p>
         <h4>Les CLI généraux</h4>
-        <p>Ces CLI généraux se trouvent dans le dossier <strong>dwf/cli/</strong> et doivent répondre à certaines régles</p>
+        <p>Ces CLI généraux se trouvent dans le dossier <strong>dwf/cli/</strong> et doivent répondre à certaines règles.</p>
         <ol>
             <li>Les fichiers doivent être nommés comme suit : <em>[nom_du_cli]</em><strong>.cli.php</strong></li>
             <li>Les scripts ne doivent pas utiliser de boucles infinies</li>
@@ -606,7 +609,7 @@ class docPHP {
         <p>Les CLI métiers sont beaucoup moins contraignants, ils peuvent étre placés dans le dossier "class" de votre projet ou dans un sous-dossier que vous aurez créé <br />
             <strong>html/<em>[votre-projet]</em>/class/cli</strong> par exemple,<br />
             il est recommandé (mais pas obligatoire) de nommer le fichier en <strong>.cli.php</strong> <br />
-            ne le nommez pas en <strong>.class.php</strong> ! ou le CLI rentrerait en interraction avec l'application "web"
+            ne le nommez pas en <strong>.class.php</strong>. Ou le CLI rentrerait en interraction avec l'application "web"
         </p>
         <p>il est recommandé de charger et utiliser la classe "cli" dans vos CLI métiers, comme ceci :</p>
         <?php
@@ -648,10 +651,116 @@ class docPHP {
         js::syntaxhighlighter("php [chemin]/html/[votre-projet]/class/votre_cli.cli.php");
     }
 
+    private function WebSocket() {
+        ?>
+        <p> 
+            Les WebSocket permettent de faire de la communication en temps réel (Real Time Connexion, RTC). <br />
+            L'utilisation première des WebSocket est pour les tchats entre utilisateurs 
+            mais ils peuvent aussi être utilisé pour notifier un utilisateur <br />
+            ou afficher une donnée très variable dans le temps en temps réel (exemple : un stock dans une application de gestion)
+        </p>
+        <p>
+            Un serveur de WebSocket tourne indépendament du serveur web et écoute son propre port (9000 par défaut dans DWF, parametrable dans la config du projet). <br />
+            il est possible de lancer le serveur en mode console (CLI), notamment pour débugger :
+        </p>
+        <?php
+        js::syntaxhighlighter("php [chemin]/html/[votre-projet]/websocket/index.php");
+        ?>
+        <p>En production, il est possible de laisser l'application lancer elle même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "service::HTTP_POST(\"http://localhost/[votre-projet]/websocket/index.php\");\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>L'application ne lancera le serveur qu'une seule fois.</p>
+        <p>Coté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
+        <?php
+        js::syntaxhighlighter("<script type=\"text/javascript\">\n"
+                . "    var socket = null;\n"
+                . "    (function start_websocket() {\n"
+                . "        socket = new WebSocket(\"ws://localhost:9000/\");\n"
+                . "        socket.addEventListener(\"open\", function (e) {\n"
+                . "            //cette ligne permet d'authentifier un utilisateur qui serait authentifié sur l'aplication\n"
+                . "            socket.send('{\"action\": \"auth\", \"token\": \"<?= websocket_server::auth() ?>\"}');\n"
+                . "        });\n"
+                . "        socket.addEventListener(\"close\", function (e) {\n"
+                . "            //retente une connexion toutes les 10 secondes en cas de coupure\n"
+                . "            socket = null;\n"
+                . "            let si_ws_reco = setInterval(function () {\n"
+                . "                if (socket) {\n"
+                . "                    start_websocket();\n"
+                . "                    clearInterval(si_ws_reco);\n"
+                . "                }\n"
+                . "            }, 10000);\n"
+                . "        });\n"
+                . "        socket.addEventListener(\"message\", function (e) {\n"
+                . "            data = JSON.parse(e.data);\n"
+                . "            //verifie si l'utilisateur est authentifié\n"
+                . "            if (undefined != data.auth) {\n"
+                . "                if (data.auth) {\n"
+                . "                    //l'utilisateur est authentifié\n"
+                . "                } else {\n"
+                . "                    //l'utilisateur n'est pas authentifié, affiche l'erreur\n"
+                . "                    alert(data.message);\n"
+                . "                }\n"
+                . "            }\n"
+                . "        });\n"
+                . "    })();\n"
+                . "</script>", $this->_brush);
+        ?>
+        <p>
+            ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffreement (SSL/TLS), <br />
+            c'est à vous de le mettre en place via le système de proxy de votre serveur web.
+        </p>
+        <p>
+            Les websockets de DWF fonctionnent avec l'envoi et la reception de chaines JSON. <br />
+            dans les chaines d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
+            le reste des clés sont libre. <br />
+            la seule action définie par défaut et l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
+        </p>
+        <?php
+        js::syntaxhighlighter('{"action":"auth","token":""}');
+        ?>
+        <p>Le retour est une des ses possibilité :</p>
+        <?php
+        js::syntaxhighlighter('{"auth":false,"message":"Token empty"}' . PHP_EOL .
+                '{"auth":false,"message":"Invalid token"}' . PHP_EOL .
+                '{"auth":false,"message":"Token conflict"}' . PHP_EOL .
+                '{"auth":true,"message":"OK"}');
+        ?>
+        <p>Pour rajouter une action, il suffit de rajouter une classe dans le dossier "websocket" du projet qui sera nommé : <br />
+            <strong>[nomDeLAction].ws.php</strong> <br />
+            et qui doit avoir la forme suivante :
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "class nomDeLAction {\n"
+                . "\n"
+                . "    /**\n"
+                . "     * \n"
+                . "     * @param websocket_client $" . "client le client qui a emit la requête\n"
+                . "     * @param array $" . "message La chaine JSON déja convertie en tableau\n"
+                . "     */\n"
+                . "    public function __construct(&$" . "client, &$" . "message) {\n"
+                . "        //traitement à faire\n"
+                . "        //Les classes de DWF et les Entity du projet sont utilisables\n\n"
+                . "        //envoi une réponse à l'émetteur\n"
+                . "        $" . "client->write(\"réponse\");\n"
+                . "    }\n"
+                . "}\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>La classe <strong>websocket_client</strong> permet de gérer les utilisateurs connectés, <br />
+            elle possède aussi des méthodes statiques qui permettent de sélectionner d'autres utilisateurs connectés. <br />
+            Gardez en tête qu'un utilisateur peut avoir des connexions multiples (s'il ouvre plusieurs onglets par exemple).
+        </p>
+        <?php
+    }
+
     private function mise_en_ligne() {
         ?>
-        <p>Lors de la mise en ligne de vos projets, vous devrez définir votre "projet par defaut" pour cela : <br />
-            rendez vous dans le fichier <em>html/commun/config/default.json</em> et modifiez la ligne suivante à votre convenance.
+        <p>Lors de la mise en ligne de vos projets, vous devrez définir votre "projet par défaut" pour cela : <br />
+            rendez-vous dans le fichier <em>html/commun/config/default.json</em> et modifiez la ligne suivante à votre convenance.
         </p>
         <?php
         js::syntaxhighlighter("{\"project\":\"[Votre-projet-par-défaut]\"}", "js");

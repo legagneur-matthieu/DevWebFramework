@@ -179,7 +179,7 @@ class entity_generator {
         $class .= '$this->_this_was_modified = false;' . PHP_EOL . ' }' . PHP_EOL;
 
         //génére la fonction statique ( static ) d'ajout
-        $class .= '/** Ajoute une entrée en base de données */' . PHP_EOL
+        $class .= '/** Ajoute une entrée en base de donnée */' . PHP_EOL
                 . ' public static function ajout(';
         $class .= strtr($p, ['1__,' => '']) . ') { ' . PHP_EOL;
         $class .= $tuple_ajout;
@@ -214,8 +214,8 @@ class entity_generator {
                 . '}' . PHP_EOL;
 
         //génére la fonction statique ( static ) get_collection
-        $class .= "/** Retourne le contenu de la table sout forme d'une collection " . PHP_EOL
-                . '*ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
+        $class .= "/** Retourne le contenu de la table sous forme d'une collection " . PHP_EOL
+                . '*ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
                 . 'public static function get_collection($where = "" ) {' . PHP_EOL
                 . '    $col=[];' . PHP_EOL
                 . '    foreach (' . self::$_table . '::get_table_array($where) as $entity) {' . PHP_EOL
@@ -231,8 +231,8 @@ class entity_generator {
                 . '}' . PHP_EOL;
 
         //génére la fonction statique ( static ) get_table_array()
-        $class .= "/** Retourne le contenu de la table sout forme d'un tableau a 2 dimensions " . PHP_EOL
-                . '* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
+        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions " . PHP_EOL
+                . '* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
                 . 'public static function get_table_array($where = "") {' . PHP_EOL
                 . '    $data = application::$_bdd->fetch("select * from ' . self::$_table . '" . (!empty($where) ? " where " . $where : "") . ";");' . PHP_EOL
                 . '    $tuples_array = [];' . PHP_EOL
@@ -251,7 +251,7 @@ class entity_generator {
 
         //génére la fonction statique ( static ) get_table_ordored_array
         $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions dont la clé est l'identifiant de l'entité " . PHP_EOL
-                . '* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
+                . '* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); */' . PHP_EOL
                 . 'public static function get_table_ordored_array($where = "") {' . PHP_EOL
                 . '    $data = [];' . PHP_EOL
                 . '    foreach (' . self::$_table . '::get_table_array($where) as $value) {' . PHP_EOL
@@ -283,7 +283,7 @@ class entity_generator {
 
         //génére la fonction statique ( static ) get_json_object
         $class .= "/** Retourne le contenu de la table sous forme d'un objet json (utile pour les services) " . PHP_EOL
-                . '* ATTENTION PENSEZ A UTILISER application::$_bdd->protect_var(); ' . PHP_EOL
+                . '* ATTENTION, PENSEZ A UTILISER application::$_bdd->protect_var(); ' . PHP_EOL
                 . '* @return string Objet json */' . PHP_EOL
                 . 'public static function get_json_object($where = "") {' . PHP_EOL
                 . '    return json_encode(' . self::$_table . '::get_table_ordored_array($where));' . PHP_EOL

@@ -37,7 +37,7 @@ class session {
      * @param bool $value L'utilisateur est-il authentifié ? (true / false)
      */
     public static function set_auth($value) {
-        $_SESSION[config::$_prefix . "_auth"] = $value;
+        self::set_val("auth", $value);
     }
 
     /**
@@ -45,23 +45,42 @@ class session {
      * @return bool L'utilisateur est-il authentifié ? (true / false)
      */
     public static function get_auth() {
-        return (isset($_SESSION[config::$_prefix . "_auth"]) ? $_SESSION[config::$_prefix . "_auth"] : false);
+        return self::get_val("auth");
     }
 
     /**
      * Set l'identifiant de l'utilisateur
-     * @param int $value Identifiant de l'utilisateur
+     * @param int|user $user Identifiant ou Entity de l'utilisateur
+     * @param string $entity non de l'entity/table utilisateur ("user" par défaut)
      */
-    public static function set_user($value) {
-        $_SESSION[config::$_prefix . "_user"] = $value;
+    public static function set_user($user, $entity = "user") {
+        self::set_val("user", (math::is_int($user) ? $user : $entity->get_id()));
     }
 
     /**
      * Récupere l'identifiant de l'utilisateur
+     * @deprecated since version 21.22.11 use get_user_id() or get_user_entity()
      * @return int Identifiant de l'utilisateur
      */
     public static function get_user() {
-        return (isset($_SESSION[config::$_prefix . "_user"]) ? $_SESSION[config::$_prefix . "_user"] : false);
+        return self::get_user_id();
+    }
+
+    /**
+     * Retourne l'identifiant de l'utilisateur
+     * @return int Identifiant de l'utilisateur
+     */
+    public static function get_user_id() {
+        return self::get_val("user");
+    }
+
+    /**
+     * Retourne l'entity utilisateur
+     * @param string $entity non de l'entity/table utilisateur ("user" par défaut)
+     * @return user|boolean Entity utilisateur ou false
+     */
+    public static function get_user_entity($entity = "user") {
+        return $entity::get_from_id(self::get_user_id());
     }
 
     /**
@@ -69,7 +88,7 @@ class session {
      * @param string $value Langue de l'utilisateur
      */
     public static function set_lang($value) {
-        $_SESSION[config::$_prefix . "_lang"] = $value;
+        self::set_val("lang", $value);
     }
 
     /**
@@ -77,7 +96,7 @@ class session {
      * @return string Langue de l'utilisateur
      */
     public static function get_lang() {
-        return (isset($_SESSION[config::$_prefix . "_lang"]) ? $_SESSION[config::$_prefix . "_lang"] : false);
+        return self::get_val("lang");
     }
 
     /**

@@ -44,23 +44,24 @@ class check_password {
     public function __construct($password, $minlen = 8, $special = false, $number = true, $upper = true, $lower = true) {
         $this->_minlen = $minlen;
         $this->set_errormsg_minlen("Requiert " . $minlen . " caractères au minimum");
-        if (mb_strlen($password) < $minlen) {
+        $len = (function_exists("mb_strlen") ? mb_strlen($password) : strlen($password));
+        if ($len < $minlen) {
             $this->_error[] = "minlen";
         }
         $this->set_errormsg_special("Requiert au moins un caractère spécial");
-        if ($special and ! preg_match("/[^a-zA-Z0-9]/", $password)) {
+        if ($special and !preg_match("/[^a-zA-Z0-9]/", $password)) {
             $this->_error[] = "special";
         }
         $this->set_errormsg_number("Requiert au moins un chiffre");
-        if ($number and ! preg_match("/[0-9]/", $password)) {
+        if ($number and !preg_match("/[0-9]/", $password)) {
             $this->_error[] = "number";
         }
         $this->set_errormsg_upper("Requiert au moins une majuscule");
-        if ($upper and ! preg_match("/[A-Z]/", $password)) {
+        if ($upper and !preg_match("/[A-Z]/", $password)) {
             $this->_error[] = "upper";
         }
         $this->set_errormsg_lower("Requiert au moins une minuscule");
-        if ($lower and ! preg_match("/[a-z]/", $password)) {
+        if ($lower and !preg_match("/[a-z]/", $password)) {
             $this->_error[] = "lower";
         }
     }

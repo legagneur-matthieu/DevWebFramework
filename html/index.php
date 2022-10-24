@@ -151,6 +151,10 @@ class parcour_sites {
         if (!function_exists("gmp_init")) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP GMP est recomandé"));
+        }        
+        if (!function_exists("mb_strlen")) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP mbstring est recomandé"));
         }
         if ($DWFStatus) {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));

@@ -49,7 +49,7 @@ class parcour_sites {
     }
 
     private function autoloader() {
-        spl_autoload_register(function($class) {
+        spl_autoload_register(function ($class) {
             if (file_exists($filename = "../dwf/class/" . $class . ".class.php")) {
                 include_once $filename;
             } elseif (file_exists($filename = "./dwf/class/" . $class . ".class.php")) {
@@ -135,12 +135,12 @@ class parcour_sites {
     private function dwf_statut() {
         $DWFStatus = true;
         $conf = "./commun/conf/default.json";
-        if (!is_writable($conf) or ! is_readable($conf)) {
+        if (!is_writable($conf) or!is_readable($conf)) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
         $conf = "../dwf/log";
-        if (!is_writable($conf) or ! is_readable($conf)) {
+        if (!is_writable($conf) or!is_readable($conf)) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
@@ -151,10 +151,14 @@ class parcour_sites {
         if (!function_exists("gmp_init")) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP GMP est recomandé"));
-        }        
+        }
         if (!function_exists("mb_strlen")) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP mbstring est recomandé"));
+        }
+        if (!function_exists("opcache_get_status") && !opcache_get_status()) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP opcache est recomandé"));
         }
         if ($DWFStatus) {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));

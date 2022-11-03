@@ -33,6 +33,24 @@ class time {
     }
 
     /**
+     * Convertit une date au format US (yyyy-mm-dd hh:mm:ss) au format FR (dd/mm/yyyy hh:mm:ss)
+     * @param string $dateUS date au format US
+     * @return string date au format fr
+     */
+    public static function datetime_us_to_fr($dateUS) {
+        return date("d/m/Y H:i:s", strtotime(date($dateUS)));
+    }
+
+    /**
+     * Convertit une date au format FR (dd/mm/yyyy hh:mm:ss) au format US (yyyy-mm-dd hh:mm:ss)
+     * @param string $dateUS date au format US
+     * @return string date au format fr
+     */
+    public static function datetime_fr_to_us($dateFR) {
+        return date_format(date_create_from_format("d/m/Y H:i:s", $dateFR), "Y-m-d H:i:s");
+    }
+
+    /**
      * (DEPPRECIÉ)
      * Convertit une date du format US en format FR (mois en toutes lettres)
      * 
@@ -41,10 +59,7 @@ class time {
      */
     public static function convert_date($date) {
         $us = explode("-", $date);
-        if (!isset($us[0]) or ! isset($us[1]) or ! isset($us[2])) {
-            return false;
-        }
-        return $us[2] . " " . self::convert_mois($us[1]) . " " . $us[0];
+        return (!isset($us[0]) or!isset($us[1]) or!isset($us[2]) ? false : "{$us[2]} " . self::convert_mois($us[1]) . " {$us[0]}");
     }
 
     /**
@@ -53,7 +68,7 @@ class time {
      * @return array tableau des mois
      */
     public static function get_mois() {
-        return array("01" => "Janvier",
+        return ["01" => "Janvier",
             "02" => "Fevrier",
             "03" => "Mars",
             "04" => "Avril",
@@ -65,7 +80,7 @@ class time {
             "10" => "Octobre",
             "11" => "Novembre",
             "12" => "Decembre"
-        );
+        ];
     }
 
     /**
@@ -75,8 +90,7 @@ class time {
      * @return string mois "en lettres"
      */
     public static function convert_mois($num_mois) {
-        $mois = self::get_mois();
-        return $mois[$num_mois];
+        return self::get_mois()[$num_mois];
     }
 
     /**
@@ -88,9 +102,9 @@ class time {
      * @return int nombre de jours dans le mois
      */
     public static function get_nb_jour($num_mois, $an) {
-        $nb = array(
+        $nb = [
             "01" => 31,
-            "02" => 28,
+            "02" => (self::anne_bisextile($an) ? 29 : 28),
             "03" => 31,
             "04" => 30,
             "05" => 31,
@@ -101,10 +115,7 @@ class time {
             "10" => 31,
             "11" => 30,
             "12" => 31
-        );
-        if (self::anne_bisextile($an)) {
-            $nb["02"] = 29;
-        }
+        ];
         return $nb[$num_mois];
     }
 
@@ -130,9 +141,7 @@ class time {
         $value = ($value == null ? [date("Y"), date("m"), date("d")] : explode("-", $value));
         $option_j = [];
         foreach (range(0, 31) as $i) {
-            if ($i < 10) {
-                $i = "0" . $i;
-            }
+            $i = ($i < 10 ? "0{$i}" : $i);
             $option_j[] = [$i, $i, ($i == $value[2])];
         }
         $option_m = [];
@@ -151,7 +160,7 @@ class time {
      * @return string date au format US
      */
     public static function get_form_date($post) {
-        return ($_POST[$post . "an"] . "-" . $_POST[$post . "mois"] . "-" . $_POST[$post . "jour"]);
+        return"{$_POST[$post . "an"]}-{$_POST[$post . "mois"]}-{$_POST[$post . "jour"]}";
     }
 
     /**
@@ -164,10 +173,7 @@ class time {
      */
     public static function get_yers_old($d, $m, $y) {
         $yo = date("Y") - $y;
-        if (date("md") < ($m . $d)) {
-            $yo--;
-        }
-        return $yo;
+        return (date("md") < "{$m}{$d}" ? $yo - 1 : $yo);
     }
 
     /**
@@ -178,15 +184,12 @@ class time {
      */
     public static function date_plus_ou_moins_mois($date, $mois) {
         $date = explode("-", $date);
-        $point = abs($mois % 12);
-        if ($point == 0) {
-            $point = 12;
-        }
+        $point = ($point = abs($mois % 12) == 0 ? 12 : $point);
         $date[0] += ((int) ($mois / 12));
         if ($date[1] <= $point and $point != 12 and $mois < 0) {
-            $date[0] --;
+            $date[0]--;
         } elseif ($date[1] <= $point and $point != 12 and $mois > 0) {
-            $date[0] ++;
+            $date[0]++;
         }
         $k = 12 * 80000000;
         $date[1] = abs((($date[1] + $k + ($mois)) % 12));

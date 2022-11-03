@@ -19,9 +19,9 @@ class debug {
      */
     public static function print_r($var) {
         ?><pre class="border alert alert-light"><?php
-            echo "\r";
-            print_r($var);
-            ?></pre><?php
+        echo "\r";
+        print_r($var);
+        ?></pre><?php
     }
 
     /**
@@ -30,9 +30,9 @@ class debug {
      */
     public static function var_dump($var) {
         ?><pre class="border alert alert-light"><?php
-                echo "\r";
-                var_dump($var);
-                ?></pre><?php
+            echo "\r";
+            var_dump($var);
+            ?></pre><?php
     }
 
     /**
@@ -55,6 +55,11 @@ class debug {
      */
     public static function onhtml_body_end() {
         if (self::$_show_report) {
+            $opreset = html_structures::a_link(application::get_url() . "opreset=1", html_structures::glyphicon("refresh", "Reset OPCache"));
+            if (isset($_GET["opreset"]) and function_exists("opcache_reset")) {
+                opcache_reset();
+                js::redir(application::get_url(["opreset"]));
+            }
             $limit = ini_get("memory_limit");
             $puissance = [
                 "B" => strtr(pow(10, 0), ["1" => ""]),
@@ -84,56 +89,53 @@ class debug {
                 $data .= $key . " => " . (!is_array($value) ? $value : htmlspecialchars(json_encode($value))) . "\n";
             }
             $data .= '</pre><p>STATEMENTS</p><ol>';
+            bdd::$_debug["statements"] = (!isset(bdd::$_debug["statements"]) ? [] : bdd::$_debug["statements"]);
             foreach (bdd::$_debug["statements"] as $key => $value) {
                 $data .= '<li title="' . $value["trace"] . '"><p>' . $value["req"] . '</p></li>';
             }
             $data .= '</ol>';
-            $cl = "<dl class='row'>";
+            $cl = [];
             foreach (website::$_class as $key => $value) {
-                $cl .= "<dt class='col-sm-3'>" . (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value . "</dt><dd class='col-sm-9'>" . $key . "</dd>";
+                $cl[] = [
+                    (in_array($value, array_keys(singleton::$_instances)) ? "<small>(singleton)</small> " : "") . $value,
+                    $key,
+                    ((function_exists("opcache_is_script_cached") and opcache_is_script_cached($key)) ? html_structures::glyphicon("ok") : html_structures::glyphicon("remove"))
+                ];
             }
-            $cl .= "</dl>";
+            $cl = html_structures::table(["Class", "File", "OPCache {$opreset}"], $cl);
             $modal = new modal();
-            ?>
-            <div style="position: fixed; bottom: 0; width: 100%;margin: 0; padding: 0;margin-top: 600px;" class="alert alert-info">
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $("body").css("margin-bottom", "100px");
-                    });
-                </script>
-                <p>Debug report :</p>
-                <div class="row" style="width: 98%; margin-left: 1%;">
-                    <div class="col-sm-2">
-                        <p>
-                            <?= $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, ""); ?>
-                            <br />
-                            <strong>Temp d'execution : </strong><?= time::parse_time(time::chronometer_get("debug_exec")); ?>
-                        </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <?=
-                        tags::tag("p", [], tags::tag(
-                                        "strong", [], "Mémoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
-                                tags::tag("br") .
-                                tags::tag("strong", [], "Mémoire utilisée (%) : ") . (memory_get_usage() / ((int) strtr($limit, $puissance))) . " %"
-                        );
-                        ?>
-                    </div>
-                    <div class="col-sm-4">
-                        <?=
-                        tags::tag("p", [], tags::tag(
-                                        "strong", [], "Nombre de requêtes SQL : ") . bdd::$_debug["nb_req"] . tags::tag("br") .
-                                tags::tag("strong", [], "Memoire utilisé par PHP pour SQL : ") . number_format(bdd::$_debug["memory"], 0, ".", " ") . " Octet" . tags::tag("br") .
-                                tags::tag("strong", [], "Memoire utilisé par PHP pour SQL (%) : ") . number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " ") . " %"
-                        );
-                        ?>
-                    </div>
-                    <div class="col-sm-2">
-                        <?= $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, ""); ?>
-                    </div>
-                </div>              
-            </div>
-            <?php
+            echo
+            tags::tag("div", ["class" => "alert alert-info", "style" => "position: fixed; bottom: 0; width: 100%;margin: 0; padding: 0;margin-top: 600px;"],
+                    tags::tag("script", ["type" => "text/javascript"], '$(document).ready(function () {$("body").css("margin-bottom", "100px");});') .
+                    tags::tag("p", [], "Debug report :") .
+                    tags::tag("div", ["class" => "row", "style" => "width: 98%; margin-left: 1%;"],
+                            tags::tag("div", ["class" => "col-sm-2"],
+                                    tags::tag("p", [],
+                                            $modal->link_open_modal("<strong>Classes chargées : </strong>" . count(website::$_class), "debug_classloader", "Classes chargées", "Classes chargées", $cl, "")
+                                            . tags::tag("br") .
+                                            tags::tag("strong", [], "Temp d'execution : ") .
+                                            time::parse_time(time::chronometer_get("debug_exec"))
+                                    )
+                            ) .
+                            tags::tag("div", ["class" => "col-sm-4"],
+                                    tags::tag("p", [], tags::tag(
+                                                    "strong", [], "Mémoire utilisée / limit : ") . number_format($memory = memory_get_usage(), 0, ".", " ") . " Octet / " . $limit . "o" .
+                                            tags::tag("br") .
+                                            tags::tag("strong", [], "Mémoire utilisée (%) : ") . (memory_get_usage() / ((int) strtr($limit, $puissance))) . " %"
+                                    )
+                            ) .
+                            tags::tag("div", ["class" => "col-sm-4"],
+                                    tags::tag("p", [], tags::tag(
+                                                    "strong", [], "Nombre de requêtes SQL : ") . bdd::$_debug["nb_req"] . tags::tag("br") .
+                                            tags::tag("strong", [], "Memoire utilisé par PHP pour SQL : ") . number_format(bdd::$_debug["memory"], 0, ".", " ") . " Octet" . tags::tag("br") .
+                                            tags::tag("strong", [], "Memoire utilisé par PHP pour SQL (%) : ") . number_format(bdd::$_debug["memory"] / $memory * 100, 0, ".", " ") . " %"
+                                    )
+                            ) .
+                            tags::tag("div", ["class" => "col-sm-2"],
+                                    $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "")
+                            )
+                    )
+            );
         }
     }
 

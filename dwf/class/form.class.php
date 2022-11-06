@@ -556,4 +556,8 @@ class form {
         return (string) $this->_form;
     }
 
+    public function __toString() {
+        return $this->render();
+    }
+
 }

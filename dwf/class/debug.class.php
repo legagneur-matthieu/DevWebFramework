@@ -106,7 +106,7 @@ class debug {
             $modal = new modal();
             echo
             tags::tag("div", ["class" => "alert alert-info", "style" => "position: fixed; bottom: 0; width: 100%;margin: 0; padding: 0;margin-top: 600px;"],
-                    tags::tag("script", ["type" => "text/javascript"], '$(document).ready(function () {$("body").css("margin-bottom", "100px");});') .
+                    tags::tag("script", ["type" => "text/javascript"], '$(document).ready(function () {$("body").css("margin-bottom", "200px");});') .
                     tags::tag("p", [], "Debug report :") .
                     tags::tag("div", ["class" => "row", "style" => "width: 98%; margin-left: 1%;"],
                             tags::tag("div", ["class" => "col-sm-2"],

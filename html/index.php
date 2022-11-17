@@ -160,6 +160,14 @@ class parcour_sites {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP opcache est recomandé"));
         }
+        if (!function_exists("dom_import_simplexml")) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP xml est recomandé"));
+        }
+        if (!function_exists("imagepng")) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention gd opcache est recomandé"));
+        }
         if ($DWFStatus) {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));
         }

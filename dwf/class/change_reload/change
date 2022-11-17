@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Description of change
+ *
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
+class change {
+
+    public function __construct() {
+        opcache_reset();
+        $rs_ft = 0;
+        foreach (glob("class/*.class.php") as $value) {
+            $ft = filemtime($value);
+            $rs_ft = ($ft > $rs_ft ? $ft : $rs_ft);
+        }
+        header('Content-Type: application/json');
+        echo $ft;
+    }
+
+}
+
+new change();

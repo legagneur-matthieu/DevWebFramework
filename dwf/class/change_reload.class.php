@@ -23,18 +23,18 @@ class change_reload extends singleton {
      * (Cette classe est déconsillé en production)
      */
     public function __construct() {
-        if (!change_reload::$_called) {
-            opcache_reset();
-            $rs_ft = 0;
-            foreach (glob("class/*.class.php") as $value) {
-                $ft = filemtime($value);
-                $rs_ft = ($ft > $rs_ft ? $ft : $rs_ft);
+        if (!self::$_called) {
+            if (!file_exists("./change.php")) {
+                file_put_contents("./change.php", file_get_contents(__DIR__ . "/change_reload/change"));
             }
-            echo tags::tag("div", ["class" => "d-none"],
-                    tags::tag("span", ["id" => "DWF_Change"], $rs_ft)
-            ) .
-            html_structures::script("../commun/src/js/change_reload.js");
-            change_reload::$_called = true;
+            echo html_structures::script("../commun/src/js/change_reload.js");
+            self::$_called = true;
+        }
+    }
+
+    public static function clear() {
+        if (!self::$_called && file_exists("./change.php")) {
+            unlink("./change.php");
         }
     }
 

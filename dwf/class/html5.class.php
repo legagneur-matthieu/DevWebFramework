@@ -145,6 +145,7 @@ class html5 {
             public function __destruct() {
                 application::event("onhtml_body_end");
                 compact_css::get_instance()->render();
+                change_reload::clear();
                 ?>
             </body>
         </html>

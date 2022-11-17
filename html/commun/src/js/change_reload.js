@@ -1,11 +1,13 @@
 $(document).ready(function () {
-    rs_ft = parseInt($("#DWF_Change").text());
+    rs_ft = 0;
+    $.get("./change.php", {}, function (ft) {
+        rs_ft = ft;
+    }, "json");
     setInterval(function () {
-        $.get(window.location.href, {}, function (data) {
-            ft = parseInt($(data).children("#DWF_Change").text());
+        $.get("./change.php", {}, function (ft) {
             if (ft && ft > rs_ft) {
                 location.reload(true);
             }
-        }, "HTML")
+        }, "json");
     }, 1000);
 });

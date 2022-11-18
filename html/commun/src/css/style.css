@@ -113,7 +113,7 @@ ul.file_explorer, ul.ftp_explorer{
 }
 /*Accordion*/
 .ui-widget-content{
-    background-color: transparent;
+    background-color: inherit;
     color: inherit;
 }
 .ui-widget-content a {

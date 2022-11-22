@@ -45,7 +45,7 @@ class docTiers {
             [html_structures::a_link("https://phpjs.hertzen.com/", "Php.js", "", "", true), "1.2", "Niklas von Hertzen", "JS", $licences[0]],
             [html_structures::a_link("https://locutus.io/php/", "Phpjs", "", "", true), "1.3.2", "Kevin van Zonneveld, Locutus", "JS", $licences[0]],
             [html_structures::a_link("https://github.com/facebookarchive/php-graph-sdk", "Php-graph-sdk", "", "", true), "5.7.0", "Facebook INC.", "PHP", $licences[10]],
-            [html_structures::a_link("https://github.com/PHPMailer/PHPMailer", "Phpmailer", "", "", true), "6.6.4", "Marcus Bointon, Jim Jagielski, Andy Prevost, Brent R. Matzelle", "PHP", $licences[2]],
+            [html_structures::a_link("https://github.com/PHPMailer/PHPMailer", "Phpmailer", "", "", true), "6.6.5", "Marcus Bointon, Jim Jagielski, Andy Prevost, Brent R. Matzelle", "PHP", $licences[2]],
             [html_structures::a_link("http://phpqrcode.sourceforge.net/", "Phpqrcode", "", "", true), "1.1.4", "Dominik Dzienia", "PHP", $licences[2]],
             [html_structures::a_link("https://github.com/scottjehl/Respond", "Respond", "", "", true), "1.4.2", "Scott Jehl", "JS", $licences[0]],
             [html_structures::a_link("https://revealjs.com/", "Reveal", "", "", true), "4.3.1", "Hakim El Hattab", "JS", $licences[0]],

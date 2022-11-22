@@ -52,7 +52,7 @@ class docTiers {
             [html_structures::a_link("#", "ReversoLib", "", "", true), "1.0", "Dyrk", "PHP", "<em>Aucune</em>"],
             [html_structures::a_link("https://tutorialzine.com/2011/09/shuffle-letters-effect-jquery", "Shuffleletters", "", "", true), "1.0", "Martin Angelov", "JS", $licences[0]],
             [html_structures::a_link("https://github.com/christopherwk210/SimpleParallax", "SimpleParallax", "", "", true), "0.1", "Chris Anselmo (christopherwk210)", "JS", $licences[0]],
-            [html_structures::a_link("https://www.smarty.net", "Smarty", "", "", true), "4.2.1", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
+            [html_structures::a_link("https://www.smarty.net", "Smarty", "", "", true), "4.4.0", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
             [html_structures::a_link("https://jonobr1.com/stalactite/", "Stalactite", "", "", true), "0.1", "Jono Brandel", "JS", $licences[4]],
             [html_structures::a_link("https://github.com/syntaxhighlighter/syntaxhighlighter", "syntaxhighlighter", "", "", true), "3.0.83", "Alex Gorbatchev", "JS", $licences[0] . ', ' . $licences[1]],
             [html_structures::a_link("https://videojs.com/", "Videojs", "", "", true), "7.20.3", "Brightcove, Inc.", "JS", $licences[4]],

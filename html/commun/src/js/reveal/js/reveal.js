@@ -26,7 +26,7 @@ import {
 } from './utils/constants.js'
 
 // The reveal.js version
-export const VERSION = '4.3.1';
+export const VERSION = '4.4.0';
 
 /**
  * reveal.js
@@ -898,31 +898,12 @@ export default function( revealElement, options ) {
 					transformSlides( { layout: '' } );
 				}
 				else {
-					// Zoom Scaling
-					// Content remains crisp no matter how much we scale. Side
-					// effects are minor differences in text layout and iframe
-					// viewports changing size. A 200x200 iframe viewport in a
-					// 2x zoomed presentation ends up having a 400x400 viewport.
-					if( scale > 1 && Device.supportsZoom && window.devicePixelRatio < 2 ) {
-						dom.slides.style.zoom = scale;
-						dom.slides.style.left = '';
-						dom.slides.style.top = '';
-						dom.slides.style.bottom = '';
-						dom.slides.style.right = '';
-						transformSlides( { layout: '' } );
-					}
-					// Transform Scaling
-					// Content layout remains the exact same when scaled up.
-					// Side effect is content becoming blurred, especially with
-					// high scale values on ldpi screens.
-					else {
-						dom.slides.style.zoom = '';
-						dom.slides.style.left = '50%';
-						dom.slides.style.top = '50%';
-						dom.slides.style.bottom = 'auto';
-						dom.slides.style.right = 'auto';
-						transformSlides( { layout: 'translate(-50%, -50%) scale('+ scale +')' } );
-					}
+					dom.slides.style.zoom = '';
+					dom.slides.style.left = '50%';
+					dom.slides.style.top = '50%';
+					dom.slides.style.bottom = 'auto';
+					dom.slides.style.right = 'auto';
+					transformSlides( { layout: 'translate(-50%, -50%) scale('+ scale +')' } );
 				}
 
 				// Select all slides, vertical and horizontal
@@ -963,6 +944,8 @@ export default function( revealElement, options ) {
 					});
 				}
 			}
+
+			dom.viewport.style.setProperty( '--slide-scale', scale );
 
 			progress.update();
 			backgrounds.updateParallax();
@@ -1588,15 +1571,20 @@ export default function( revealElement, options ) {
 			slidesLength = slides.length;
 
 		let printMode = print.isPrintingPDF();
+		let loopedForwards = false;
+		let loopedBackwards = false;
 
 		if( slidesLength ) {
 
 			// Should the index loop?
 			if( config.loop ) {
+				if( index >= slidesLength ) loopedForwards = true;
+
 				index %= slidesLength;
 
 				if( index < 0 ) {
 					index = slidesLength + index;
+					loopedBackwards = true;
 				}
 			}
 
@@ -1634,10 +1622,7 @@ export default function( revealElement, options ) {
 
 					if( config.fragments ) {
 						// Show all fragments in prior slides
-						Util.queryAll( element, '.fragment' ).forEach( fragment => {
-							fragment.classList.add( 'visible' );
-							fragment.classList.remove( 'current-fragment' );
-						} );
+						showFragmentsIn( element );
 					}
 				}
 				else if( i > index ) {
@@ -1646,9 +1631,17 @@ export default function( revealElement, options ) {
 
 					if( config.fragments ) {
 						// Hide all fragments in future slides
-						Util.queryAll( element, '.fragment.visible' ).forEach( fragment => {
-							fragment.classList.remove( 'visible', 'current-fragment' );
-						} );
+						hideFragmentsIn( element );
+					}
+				}
+				// Update the visibility of fragments when a presentation loops
+				// in either direction
+				else if( i === index && config.fragments ) {
+					if( loopedForwards ) {
+						hideFragmentsIn( element );
+					}
+					else if( loopedBackwards ) {
+						showFragmentsIn( element );
 					}
 				}
 			}
@@ -1685,6 +1678,29 @@ export default function( revealElement, options ) {
 		}
 
 		return index;
+
+	}
+
+	/**
+	 * Shows all fragment elements within the given contaienr.
+	 */
+	function showFragmentsIn( container ) {
+
+		Util.queryAll( container, '.fragment' ).forEach( fragment => {
+			fragment.classList.add( 'visible' );
+			fragment.classList.remove( 'current-fragment' );
+		} );
+
+	}
+
+	/**
+	 * Hides all fragment elements within the given contaienr.
+	 */
+	function hideFragmentsIn( container ) {
+
+		Util.queryAll( container, '.fragment.visible' ).forEach( fragment => {
+			fragment.classList.remove( 'visible', 'current-fragment' );
+		} );
 
 	}
 

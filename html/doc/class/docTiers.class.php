@@ -24,7 +24,7 @@ class docTiers {
             [html_structures::a_link("https://ckeditor.com/ckeditor-4/", "Ckeditor", "", "", true), "4.19.1", "Frederico Knabben", "JS", $licences[1]],
             [html_structures::a_link("https://github.com/Cerdic/CSSTidy", "CSSTidy", "", "", true), "2.0.3", "Cedric Morin", "PHP", $licences[2]],
             [html_structures::a_link("https://js.cytoscape.org", "Cytoscape", "", "", true), "3.23.0", "The Cytoscape Consortium", "JS", $licences[10]],
-            [html_structures::a_link("https://www.datatables.net", "Datatable", "", "", true), "1.12.1", "SpryMedia Limited", "JS", $licences[10]],
+            [html_structures::a_link("https://www.datatables.net", "Datatable", "", "", true), "1.13.1", "SpryMedia Limited", "JS", $licences[10]],
             [html_structures::a_link("https://github.com/trentrichardson/jQuery-Timepicker-Addon", "Datetimepicker", "", "", true), "1.6.3", "Trent Richardson", "JS", $licences[0]],
             [html_structures::a_link("https://github.com/dompdf/dompdf", "Dompdf", "", "", true), "2.0.1", "Benj Carson", "PHP", $licences[2]],
             [html_structures::a_link("https://jdownloader.org/knowledge/wiki/linkprotection/container/dlcapi", "Dlcapi", "", "", true), "1.0.1", "JDTeam", "PHP", $licences[10]],

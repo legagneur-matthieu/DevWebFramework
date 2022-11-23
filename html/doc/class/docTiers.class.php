@@ -18,7 +18,7 @@ class docTiers {
             [html_structures::a_link("https://alertifyjs.com", "Alertify", "", "", true), "1.13.1", "Fabien Doiron", "JS", $licences[0]],
             [html_structures::a_link("https://animate.style", "Animate", "", "", true), "4.1.1", "Daniel Eden", "JS", $licences[0]],
             [html_structures::a_link("https://getbootstrap.com", "Bootsrap", "", "", true), "5.2.3", "Twitter, Inc.", "CSS, JS", $licences[0]],
-            [html_structures::a_link("https://icons.getbootstrap.com", "Bootsrap Icons", "", "", true), "1.9.1", "Twitter, Inc.", "CSS", $licences[0]],
+            [html_structures::a_link("https://icons.getbootstrap.com", "Bootsrap Icons", "", "", true), "1.10.2", "Twitter, Inc.", "CSS", $licences[0]],
             [html_structures::a_link("https://bootswatch.com", "Bootswatch", "", "", true), "5.2.1", "Thomas Park", "CSS", $licences[0]],
             [html_structures::a_link("https://github.com/Gregwar/Captcha", "Captcha", "", "", true), "1.1.9", "Gregwar", "PHP", $licences[0]],
             [html_structures::a_link("https://ckeditor.com/ckeditor-4/", "Ckeditor", "", "", true), "4.19.1", "Frederico Knabben", "JS", $licences[1]],

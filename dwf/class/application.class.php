@@ -164,4 +164,14 @@ class application {
         }
     }
 
+    /**
+     * Génère une valeur de hachage (empreinte numérique)
+     * en utilisant l'algorithme de config::$_hash_algo
+     * @param string $data Texte à hacher
+     * @return string Hash
+     */
+    public function hash($data) {
+        return hash(config::$_hash_algo, $data);
+    }
+
 }

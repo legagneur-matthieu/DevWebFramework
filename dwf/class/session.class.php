@@ -59,7 +59,7 @@ class session {
 
     /**
      * Récupere l'identifiant de l'utilisateur
-     * @deprecated since version 21.22.11 use get_user_id() or get_user_entity()
+     * @deprecated since version 21.22.12 use get_user_id() or get_user_entity()
      * @return int Identifiant de l'utilisateur
      */
     public static function get_user() {

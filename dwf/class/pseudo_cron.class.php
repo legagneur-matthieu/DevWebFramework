@@ -129,7 +129,7 @@ class pseudo_cron extends singleton {
      * @return array Données du pseudo cron
      */
     private function get_callable_data(Closure $callback) {
-        $hkey = hash(config::$_hash_algo, (new ReflectionFunction($callback))->export($callback, true));
+        $hkey = application::hash((new ReflectionFunction($callback))->export($callback, true));
         return ["hkey" => $hkey, "mt" => $this->get_mt_from_hkey($hkey)];
     }
 
@@ -139,7 +139,7 @@ class pseudo_cron extends singleton {
      * @return array Données du pseudo cron
      */
     private function get_file_data($file) {
-        $hkey = hash(config::$_hash_algo, $file);
+        $hkey = application::hash($file);
         return ["hkey" => $hkey, "mt" => $this->get_mt_from_hkey($hkey)];
     }
 

@@ -170,7 +170,7 @@ class application {
      * @param string $data Texte à hacher
      * @return string Hash
      */
-    public function hash($data) {
+    public static function hash($data) {
         return hash(config::$_hash_algo, $data);
     }
 

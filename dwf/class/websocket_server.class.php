@@ -202,7 +202,7 @@ class websocket_server {
             }
             $user = $col[0];
             $rand = rand();
-            $token = hash(config::$_hash_algo, uniqid("{$user->get_id()}{$rand}{$user->get_user()->get_id()}_"));
+            $token = application::hash(uniqid("{$user->get_id()}{$rand}{$user->get_user()->get_id()}_"));
             $user->set_token($token);
             return $token;
         }

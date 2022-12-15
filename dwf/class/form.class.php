@@ -305,7 +305,7 @@ class form {
      * @return string Token
      */
     public static function get_token() {
-        return hash(config::$_hash_algo, session::get_val("ip") . session::get_val("browser"));
+        return application::hash(session::get_val("ip") . session::get_val("browser"));
     }
 
     /**

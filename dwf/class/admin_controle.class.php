@@ -186,7 +186,7 @@ class admin_controle {
                 if (!$element[2]) {
                     $key .= " " . $element[0] . ",";
                     if ($element[0] == "psw" or $element[0] == "password") {
-                        $value .= " '" . application::$_bdd->protect_var(hash(config::$_hash_algo, $_POST[$element[0]])) . "',";
+                        $value .= " '" . application::$_bdd->protect_var(application::hash($_POST[$element[0]])) . "',";
                     } else {
                         $value .= " '" . application::$_bdd->protect_var($_POST[$element[0]]) . "',";
                     }
@@ -268,7 +268,7 @@ class admin_controle {
                     $seter = "set_" . $element[0];
                     if ($element[0] == "psw" or $element[0] == "password") {
                         if (!empty($_POST[$element[0]])) {
-                            $object->$seter(hash(config::$_hash_algo, $_POST[$element[0]]));
+                            $object->$seter(application::hash($_POST[$element[0]]));
                         }
                     } else {
                         $object->$seter($_POST[$element[0]]);

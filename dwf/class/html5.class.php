@@ -107,12 +107,12 @@ class html5 {
             "../commun/src/js/datetimepicker/i18n/jquery-ui-timepicker-addon-i18n.js",
             "../commun/src/js/alertify/alertify.min.js",
             "../commun/src/js/SimpleParallax.min.js",
+            "../commun/src/dist/js/bootstrap.bundle.min.js",
+            "../commun/src/dist/js/bootstrap.min.js",
                 ] as $s) {
                     $script .= html_structures::script($s);
                 }
                 foreach ([
-            "../commun/src/dist/js/bootstrap.bundle.min.js",
-            "../commun/src/dist/js/bootstrap.min.js",
             "../commun/src/js/jquery.cookie.js",
             "../commun/src/js/datetimepicker/jquery-ui-sliderAccess.js",
             "../commun/src/js/animate/animate.js",

@@ -290,25 +290,20 @@ class js {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-            $("#<?= $id; ?>").accordion(
+                $("#<?= $id; ?>").accordion(
         <?php
         if ($collapsible or $heightStyle) {
-            ?>
-                {
-            <?php
+            echo '{';
             if ($collapsible) {
                 echo 'collapsible:true,';
             }
             if ($heightStyle) {
                 echo 'heightStyle:"content",';
             }
-            ?>
-                classes:{"ui-accordion-header-active":"ui-accordion-header-active bg-info"},
-                }
-            <?php
+            echo 'classes:{"ui-accordion-header-active":"ui-accordion-header-active bg-info"}}';
         }
         ?>
-            );
+                );
             });</script>
         <?php
     }
@@ -334,30 +329,61 @@ class js {
      * format du tableau : array(array("img"=>"chamain/img.png","alt"=>"facultative","caption"=>"HTML facultative"));
      */
     public static function slider($id, $data) {
-        //Indicators
-        $ol = tags::ol(["class" => "carousel-indicators", "data-ride" => "carousel"]);
-        for ($i = 0; $i < count($data); $i++) {
-            $li = tags::li(["data-target" => "#" . $id, "data-slide-to" => $i], html_structures::a_link("#", tags::tag("span", ["class" => "visually-hidden"], "slide " . $i)));
-            if ($i == 0) {
-                $li->set_attr("class", "active");
+        $indicators = "";
+        foreach ($data as $key => $value) {
+            $attr = [
+                "data-bs-target" => "#{$id}",
+                "data-bs-slide-to" => $key,
+                "aria-label" => "Slide {$key}",
+            ];
+            if ($key == 0) {
+                $attr["class"] = "active";
+                $attr["aria-current"] = "true";
             }
-            $ol->append_content($li);
+            $indicators .= tags::tag("button", $attr, "&nbsp;");
         }
-        //Wrapper for slides
-        $inner = tags::div(["class" => "carousel-inner", "role" => "listbox"]);
-        $first = true;
-        foreach ($data as $d) {
-            $inner->append_content(tags::tag("div", ["class" => "carousel-item" . ($first ? " active" : "")],
-                            tags::tag("img", ["class" => "d-block w-100", "src" => $d["img"], "alt" => (isset($d["alt"]) ? $d["alt"] : "")]) .
-                            (isset($d["caption"]) ? tags::tag("div", ["class" => "carousel-caption"], $d["caption"]) : "")
-            ));
-            $first = false;
+        $indicators = tags::tag("div", ["class" => "carousel-indicators"], $indicators);
+        $inner = "";
+        foreach ($data as $key => $slide) {
+            $inner .= tags::tag("div", ["class" => "carousel-item" . ($key ? "" : " active")],
+                            tags::tag("img", ["src" => $slide["img"], "class" => "d-block w-100"]) .
+                            (isset($slide["caption"]) ?
+                            tags::tag("div", ["class" => "carousel-caption d-none d-md-block"], tags::tag("p", [], $slide["caption"])
+                            ) : "")
+            );
         }
-        //Controls
-        $controls = tags::tag("a", ["class" => "carousel-control-prev", "href" => "#" . $id, "role" => "button", "data-slide" => "prev"], html_structures::glyphicon("chevron-left", "Précédent")) .
-                tags::tag("a", ["class" => "carousel-control-next", "href" => "#" . $id, "role" => "button", "data-slide" => "next"], html_structures::glyphicon("chevron-right", "Suivant")) .
-                tags::tag("a", ["class" => "center carousel-pause", "href" => "#" . $id, "role" => "button", "data-slide" => "pause"], html_structures::glyphicon("pause", "Pause"));
-        echo tags::tag("div", ["id" => $id, "class" => "carousel slide", "data-ride" => "carousel"], $ol . $inner . $controls);
+        $inner = tags::tag("div", ["class" => "carousel-inner"], $inner);
+        $buttons = tags::tag("button", ["class" => "carousel-control-prev", "type" => "button", "data-bs-target" => $id, "data-bs-slide" => "prev"],
+                        tags::tag("span", ["class" => "carousel-control-prev-icon", "aria-hidden" => "true"],
+                                tags::tag("span", ["class" => "visually-hidden"], "Previous")
+                        )
+                ) .
+                tags::tag("a", ["href" => "#{$id}", "class" => "carousel-pause", "data-state" => "cycle", "data-bs-target" => "#{$id}"], html_structures::glyphicon("pause", "pause")) .
+                tags::tag("button", ["class" => "carousel-control-next", "type" => "button", "data-bs-target" => $id, "data-bs-slide" => "next"],
+                        tags::tag("span", ["class" => "carousel-control-next-icon", "aria-hidden" => "true"],
+                                tags::tag("span", ["class" => "visually-hidden"], "Next")
+                        )
+        );
+        echo tags::tag("div", ["id" => $id, "class" => "carousel slide"], $indicators . $inner . $buttons);
+        ?>
+        <script>
+            $(document).ready(function () {
+                    carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector("#<?= $id; ?>"));
+                    carousel.cycle();
+                    $(".carousel-pause").click(function () {
+                        if ($(this).attr("data-state") == "cycle") {
+                            carousel.pause();
+                            $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-play");
+                            $(this).attr("data-state", "pause");
+                        } else {
+                            carousel.cycle();
+                            $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-pause");
+                            $(this).attr("data-state", "cycle");
+                        }
+                    });
+            });
+        </script>
+        <?php
     }
 
 }

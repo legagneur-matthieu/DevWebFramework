@@ -31,6 +31,8 @@ class php_simple_formater {
         while ($code != ($new_code = strtr($code, [
     "  " => " ",
     "\t" => "",
+    "]" => "\n]",
+    "[" => "[\n",
     "}" => "\n}",
     "{" => "{\n",
     "\n " => "\n",

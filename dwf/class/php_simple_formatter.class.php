@@ -5,7 +5,7 @@
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class php_simple_formater {
+class php_simple_formatter {
 
     /**
      * Memento des indentations

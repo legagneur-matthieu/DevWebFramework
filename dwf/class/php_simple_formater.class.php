@@ -46,7 +46,6 @@ class php_simple_formater {
         ]))) {
             $code = $new_code;
         };
-        debug::print_r(htmlspecialchars($code));
         $indetedcode = "";
         $indent = 0;
         foreach (explode("\n", $code) as $line) {

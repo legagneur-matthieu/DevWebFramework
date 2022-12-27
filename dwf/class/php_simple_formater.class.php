@@ -87,7 +87,7 @@ class php_simple_formater {
         if (isset($this->_memento_indent[$nb])) {
             return $this->_memento_indent[$nb];
         }
-        $this->_memento_indent[$nb] = $indent = str_repeat(($this->_indent_spaces == 0 ? "/t" : str_repeat(" ", $this->_indent_spaces)), $nb);
+        $this->_memento_indent[$nb] = $indent = str_repeat(($this->_indent_spaces == 0 ? "\t" : str_repeat(" ", $this->_indent_spaces)), $nb);
         return $indent;
     }
 

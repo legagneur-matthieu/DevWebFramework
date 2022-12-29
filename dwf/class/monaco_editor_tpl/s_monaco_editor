@@ -1,0 +1,204 @@
+<?php
+
+/**
+ * Ce Service est exploité par le monaco_editor
+ *
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
+class s_monaco_editor {
+
+    /**
+     * Ce Service est exploité par le monaco_editor
+     */
+    public function __construct() {
+        (new php_header())->content_type("json");
+        if (session::get_val("monaco_editor")) {
+            if (isset($_GET["file"])) {
+                $file = base64_decode($_GET["file"]);
+                while ($file != ($file = strtr($file, [".." => "."])));
+                if ($this->is_allowed_file($file = "." . $file)) {
+                    switch ($_GET["action"]) {
+                        case "read":
+                            $this->read($file);
+                            break;
+                        case "write":
+                            $this->write($file, htmlspecialchars_decode(base64_decode($_GET["data"])));
+                            break;
+                        case "delete":
+                            $this->delete($file);
+                            break;
+                        case "rename":
+                            $this->rename($file, base64_decode($_GET["name"]));
+                            break;
+                    }
+                }
+            } else {
+                switch ($_GET["action"]) {
+                    case "adddir":
+                        $this->adddir(base64_decode($_GET["path"]), base64_decode($_GET["name"]));
+                        break;
+                    case "addfile":
+                        $this->addfile(base64_decode($_GET["path"]), base64_decode($_GET["name"]));
+                        break;
+                    case "format":
+                        $this->format(htmlspecialchars_decode(base64_decode($_GET["code"])));
+                        break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Verifie si le dossier ou fichier est accéssible
+     * @param string $file chemain du dossier ou fichier
+     * @return boolean autorisé ou non autorisé
+     */
+    private function is_allowed_file($file) {
+        return in_array($file, $this->crawler());
+    }
+
+    /**
+     * Crawl les dossiers du projet
+     * @param string $dir dossier a crawl
+     * @return array Liste des fichiers et dossier 
+     */
+    private function crawler($dir = "..") {
+        $files = [$dir];
+        foreach (glob($dir . "/*") as $file) {
+            if (!strpos($file, "src/compact") and!strpos($file, ".sqlite")) {
+                if (is_dir($file)) {
+                    $files = array_merge($files, $this->crawler($file));
+                } else {
+                    $files[] = $file;
+                }
+            }
+        }
+        return $files;
+    }
+
+    /**
+     * Retourne le contenu d'un fichier
+     * @param string $file Fichier
+     */
+    private function read($file) {
+        echo json_encode(["data" => file_get_contents($file)]);
+    }
+
+    /**
+     * Ecris dans un fichier
+     * @param string $file Fichier
+     * @param string $data Contenu
+     */
+    private function write($file, $data) {
+        echo json_encode((@file_put_contents($file, $data) !== false ? ["error" => false, "msg" => "Datas writed in $file"] : ["error" => true, "msg" => "Datas NOT Writed in $file"]));
+    }
+
+    /**
+     * Supprime un fichier, verifie si il n'est pas essentiel au projet
+     * @param string $file Dossier ou fichier
+     */
+    private function delete($file) {
+        if (!in_array($file, [
+                    "..",
+                    "../",
+                    "../index.php",
+                    "../class",
+                    "../class/",
+                    "../class/config.class.php",
+                    "../class/page.class.php",
+                    "../class/entity",
+                    "../class/entity/",
+                    "../class/entity/index.php",
+                    "../class/service",
+                    "../class/service/",
+                    "../class/service/index.php",
+                    "../class/websocket",
+                    "../class/websocket/",
+                    "../class/websocket/index.php",
+                ])) {
+            if (is_dir($file)) {
+                echo json_encode(($this->rmdir($file) ? ["error" => false, "msg" => "$file deleted !"] : ["error" => true, "msg" => "$file NOT deleted !"]));
+            } else {
+                echo json_encode((unlink($file) ? ["error" => false, "msg" => "$file deleted !"] : ["error" => true, "msg" => "$file NOT deleted !"]));
+            }
+        } else {
+            echo json_encode(["error" => true, "msg" => "$file is nessesary for the DWF Project !"]);
+        }
+    }
+
+    /**
+     * Vide et supprime un dossier
+     * @param string $dir Dossier à supprimer
+     * @return type
+     */
+    private function rmdir($dir) {
+        foreach (glob($dir . "/*") as $file) {
+            if (is_dir($file)) {
+                $this->rmdir($file);
+            } else {
+                @unlink($file);
+            }
+        }
+        return @rmdir($dir);
+    }
+
+    /**
+     * Renome un fichier
+     * @param string $file Fichier
+     * @param string $name Nouveau nom
+     */
+    private function rename($file, $name) {
+        $name = strtr($name, [".." => "", "/" => ""]);
+        if (rename($file, strtr($file, [basename($file) => $name]))) {
+            echo json_encode(["error" => false, "msg" => "File renamed"]);
+        } else {
+            echo json_encode(["error" => true, "msg" => "File was not renamed !"]);
+        }
+    }
+
+    /**
+     * Ajoute un dossier
+     * @param string $path Chemain de base
+     * @param string $name Nom du nouveau dossier
+     */
+    private function adddir($path, $name) {
+        $name = strtr($name, ["." => "", "/" => ""]);
+        if ($this->is_allowed_file($path = "." . $path)) {
+            if (mkdir("{$path}/{$name}")) {
+                echo json_encode(["error" => false, "msg" => "The directory {$path}/{$name} was created"]);
+            } else {
+                echo json_encode(["error" => true, "msg" => "The directory {$path}/{$name} can not be create"]);
+            }
+        } else {
+            echo json_encode(["error" => true, "msg" => "Path forbiden"]);
+        }
+    }
+
+    /**
+     * Ajoute un fichier
+     * @param string $path Chemain de base
+     * @param string $name Nom du nouveau fichier
+     */
+    private function addfile($path, $name) {
+        $name = strtr($name, ["/" => ""]);
+        if ($this->is_allowed_file($path = "." . $path)) {
+            if (file_put_contents("{$path}/{$name}", "") !== false) {
+                echo json_encode(["error" => false, "msg" => "The file {$name} was created"]);
+            } else {
+                echo json_encode(["error" => true, "msg" => "The file {$name} can not be create"]);
+            }
+        } else {
+            echo json_encode(["error" => true, "msg" => "Path forbiden"]);
+        }
+    }
+
+    /**
+     * Retourne le code PHP formaté
+     * @param string $code Code PHP (HTML / JS)
+     */
+    private function format($code) {
+        $code = (new php_simple_formatter())->format($code);
+        echo json_encode(["data" => $code]);
+    }
+
+}

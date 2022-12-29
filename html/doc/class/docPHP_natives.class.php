@@ -189,9 +189,9 @@ class docPHP_natives {
                 . "?>", $this->_brush);
         ?>Resultat : <br />
         <form class="" action="#" method="post" onsubmit="function (e) {
-                    e.preventDefault();
-                    return false;
-                }">
+                            e.preventDefault();
+                            return false;
+                        }">
             <div id="captcha_a783458949484d21d2516108ba2e47b34ead4bef">
                 <img src=
                      "data:image/jpeg;base64,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"
@@ -724,6 +724,32 @@ class docPHP_natives {
         new file_explorer("./files");
     }
 
+    private function fluent() {
+        ?>
+        <p>Cette classe permet de rendre une autre classe pseudo-fluent.</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "class exemple extends fluent{\n"
+                . "    public function metode_1($" . "param){\n"
+                . "        //do something;\n"
+                . "    }\n"
+                . "    public function metode_2(){\n"
+                . "        return true;\n"
+                . "    }\n"
+                . "}\n\n"
+                . "$" . "exemple = new exemple();\n"
+                . "//Exécute la méthode et retourne l'instance si la fonction ne retourne rien ou null\n"
+                . "$" . "exemple->fluentOnNull('methode_1', $" . "params)->fluentOnNull('methode_2');\n"
+                . "//Exécute la méthode et retourne l'instance uniquement \n"
+                . "//(tout éventuel retour de la méthode n'est pas récuperable)\n"
+                . "$" . "exemple->fluentStrict('methode_1', $" . "params)->fluentStrict('methode_2');\n"
+                . "//Exécute la méthode et retourne l'instance uniquement,\n"
+                . "//tout éventuel retour de la methode est mis dans un cache récuperable via getFluentBuffer()\n"
+                . "$" . "exemple->fluentBuffered('methode_1', $" . "params)->fluentBuffered('methode_2');\n"
+                . "$" . "result = $" . "exemple->getFluentBuffer();\n"
+                . "?>", $this->_brush);
+    }
+
     private function form() {
         ?>
         <p>La classe form permet de créer des formulaires en php stylisés par bootstrap, accessibles et respectant les normes W3C</p>
@@ -984,7 +1010,7 @@ class docPHP_natives {
         <?php
     }
 
-    private function google_auth() {
+    private function google_oauth() {
         ?>
         <p>Cette classe permet de gérer une autentification via Google <br />
             Requiert la création d'une application sur https://console.cloud.google.com/apis/credentials</p>
@@ -1371,6 +1397,16 @@ class docPHP_natives {
         echo (new modal())->link_open_modal("Cliquez ici pour ouvrir la modal", "demo_modal", "(pop-up)", "Démonstration", "<p class=\"text-center\">Bienvenue sur la démonstration de modal</p>", "");
     }
 
+    private function monaco_editor() {
+        ?>
+        <p>Cette classe génère un monaco_editor afin d'editer le code du projet courant</p>
+        <p class="alert alert-danger">/!\ cette classe est à placer précautionneusement dans une partie administration restreinte !</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "new monaco_editor();\n"
+                . "?>", $this->_brush);
+    }
+
     private function openweather() {
         ?>
         <p>Cette classe permet d'afficher la météo d'une ville en temps réel (utilise openweather et nécessite une clé API)</p>
@@ -1506,6 +1542,15 @@ class docPHP_natives {
                 . "(new php_header())->redir($" . "url, $" . "second=0);\n"
                 . "// Définit le statut code de la page, si le statut code est invalide, le code 200 est utilisé par défaut\n"
                 . "(new php_header())->status_code($" . "code);\n"
+                . "?>", $this->_brush);
+    }
+
+    private function php_siple_formatter() {
+        ?>
+        <p>Cette classe permet de formatter (réindenter) du code php/html/js</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "formated_code = (new php_simple_formatter())->format($" . "code)\n"
                 . "?>", $this->_brush);
     }
 
@@ -1654,7 +1699,7 @@ class docPHP_natives {
         debug::print_r(json_decode('[{"name":"header","attributes":{"class":"page-header bg-info"},"text":"\r\n        DocumentationDocumentation de DWF\r\n      \r\n    ","children":[{"name":"h1","attributes":[],"text":"\r\n        DocumentationDocumentation de DWF\r\n      ","children":[{"name":"br","attributes":[],"text":"","children":[]},{"name":"small","attributes":[],"text":"Documentation de DWF","children":[]}]}]}]'));
     }
 
-    private function services() {
+    private function service() {
         ?>
         <p>
             La classe service est une classe qui permet de communiquer avec des services web d'un tiers ou que vous aurez vous même créé.

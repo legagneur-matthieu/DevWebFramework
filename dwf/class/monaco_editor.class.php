@@ -9,6 +9,10 @@
  */
 class monaco_editor {
 
+    /**
+     * Permet de vérifier que la librairie monaco editor a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie monaco editor a bien été appelée qu'une fois.
+     */
     private static $_called = false;
 
     /**

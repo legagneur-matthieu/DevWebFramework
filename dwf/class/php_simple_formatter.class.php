@@ -35,6 +35,8 @@ class php_simple_formatter {
     "[" => "[\n",
     "}" => "\n}",
     "{" => "{\n",
+    "<" => "\n<",
+    ">" => ">\n",
     "\n " => "\n",
     " \n" => "\n",
     "\n\n" => "\n",
@@ -48,7 +50,10 @@ class php_simple_formatter {
         };
         $indetedcode = "";
         $indent = 0;
+        $retenu = 0;
         foreach (explode("\n", $code) as $line) {
+            $indent += $retenu;
+            $retenu = 0;
             if (!empty($line) && $line != "\n") {
                 if (
                         $indent > 0 && (
@@ -59,19 +64,25 @@ class php_simple_formatter {
                 ) {
                     $indent--;
                 }
-                $indetedcode .= $this->indent($indent) . strtr(trim($line), ["\n" => ""]) . "\n";
                 if (
-                        strpos($line, "{") !== false ||
-                        strpos($line, "[") !== false ||
-                        (
-                        strpos($line, ">") !== false &&
-                        strpos($line, "/>") === false &&
-                        strpos($line, "</") === false &&
-                        strpos($line, "?>") === false &&
-                        strpos($line, "@author") === false
-                        )
+                        strpos($line, "@author") !== false
                 ) {
-                    $indent++;
+                    $indetedcode .= $this->indent($indent) . strtr(trim($line), ["\n" => ""]) . " ";
+                    $retenu = -1;
+                } else {
+                    $indetedcode .= $this->indent($indent) . strtr(trim($line), ["\n" => ""]) . "\n";
+                    if (
+                            strpos($line, "{") !== false ||
+                            strpos($line, "[") !== false ||
+                            (
+                            strpos($line, ">") !== false &&
+                            strpos($line, "/>") === false &&
+                            strpos($line, "</") === false &&
+                            strpos($line, "?>") === false
+                            )
+                    ) {
+                        $indent++;
+                    }
                 }
             }
         }
@@ -84,6 +95,9 @@ class php_simple_formatter {
      * @return string Indentations de la ligne
      */
     private function indent($nb) {
+        if ($nb < 0) {
+            $nb = 0;
+        }
         if (isset($this->_memento_indent[$nb])) {
             return $this->_memento_indent[$nb];
         }

@@ -103,10 +103,10 @@ class websocket_client {
      * Definit le socket du client
      * @param Socket $_socket
      */
-    public function set_socket(Socket $_socket) {
+    public function set_socket(Socket $socket) {
         unset(self::$clients[$this->_id]);
         $this->_id = (is_resource($socket) ? (int) $socket : spl_object_id($socket));
-        $this->_socket = $_socket;
+        $this->_socket = $socket;
         self::$clients[$this->_id] = $this;
     }
 
@@ -213,7 +213,7 @@ class websocket_client {
 
     /**
      * Retourne la liste complete des sockets connecté
-     * @return type
+     * @return array Liste complete des sockets connecté
      */
     public static function get_sockets_list() {
         $array = [];

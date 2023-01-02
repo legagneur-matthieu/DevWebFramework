@@ -195,10 +195,10 @@ class websocket_server {
                     ["token", "string", false]
                 ]
             ]);
-            $col = ws_token::get_collection("user=" . session::get_user());
+            $col = ws_token::get_collection("user=" . session::get_user_id());
             if (count($col) == 0) {
-                ws_token::ajout(session::get_user(), "");
-                $col = ws_token::get_collection("user=" . session::get_user());
+                ws_token::ajout(session::get_user_id(), "");
+                $col = ws_token::get_collection("user=" . session::get_user_id());
             }
             $user = $col[0];
             $rand = rand();

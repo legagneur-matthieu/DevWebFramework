@@ -68,8 +68,7 @@ class selectorDOM {
      * @return array|DOMNodeList éléments du DOM indiqué par le selecteur
      */
     public static function select_elements($selector, $html, $as_array = true) {
-        $dom = new SelectorDOM($html);
-        return $dom->select($selector, $as_array);
+        return (new SelectorDOM($html))->select($selector, $as_array);
     }
 
     /**

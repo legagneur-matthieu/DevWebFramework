@@ -43,7 +43,7 @@ class scraperapi {
      * @return string HTML de l'URL cible
      */
     public static function getHTML($api_key, $url) {
-        return file_get_contents("http://api.scraperapi.com?api_key={$this->_api_key}&url={$url}");
+        return file_get_contents("http://api.scraperapi.com?api_key={$api_key}&url={$url}");
     }
 
 }

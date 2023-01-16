@@ -368,19 +368,22 @@ class js {
         ?>
         <script>
             $(document).ready(function () {
-                    carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector("#<?= $id; ?>"));
+                carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector("#<?= $id; ?>"));
+                carousel.cycle();
+                $(".carousel-pause").click(function () {
+                    if ($(this).attr("data-state") == "cycle") {
+                        carousel.pause();
+                        $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-play");
+                        $(this).attr("data-state", "pause");
+                    } else {
+                        carousel.cycle();
+                        $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-pause");
+                        $(this).attr("data-state", "cycle");
+                    }
+                });
+                $("#<?= $id ?>").mouseleave(function () {
                     carousel.cycle();
-                    $(".carousel-pause").click(function () {
-                        if ($(this).attr("data-state") == "cycle") {
-                            carousel.pause();
-                            $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-play");
-                            $(this).attr("data-state", "pause");
-                        } else {
-                            carousel.cycle();
-                            $(".carousel-pause > .glyphicon").attr("class", "glyphicon glyphicon-pause");
-                            $(this).attr("data-state", "cycle");
-                        }
-                    });
+                });
             });
         </script>
         <?php

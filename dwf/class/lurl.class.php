@@ -80,6 +80,7 @@ class lurl {
         if (!session::get_val("lurl")) {
             session::set_val("lurl", []);
         }
+        $url = "{$_SERVER["REQUEST_SCHEME"]}://{$_SERVER["HTTP_HOST"]}{$_SERVER["REQUEST_URI"]}";
         if ($lurl = $this->get_lurl($url)) {
             if (!in_array($lurl, session::get_val("lurl"))) {
                 if (isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER'] == $lurl) {
@@ -92,4 +93,3 @@ class lurl {
     }
 
 }
-

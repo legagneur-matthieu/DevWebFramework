@@ -24,9 +24,12 @@ class mail {
      */
     public function __construct() {
         if (!self::$_called) {
-            foreach (glob(__DIR__ . "/PHPMailer/src/*.php") as $phpmailer_class) {
-                include_once $phpmailer_class;
-            }
+            include_once __DIR__ . "/PHPMailer/src/Exception.php";
+            include_once __DIR__ . "/PHPMailer/src/OAuthTokenProvider.php";
+            include_once __DIR__ . "/PHPMailer/src/OAuth.php";
+            include_once __DIR__ . "/PHPMailer/src/SMTP.php";
+            include_once __DIR__ . "/PHPMailer/src/POP3.php";
+            include_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
             self::$_called = true;
         }
         $this->_phpmailer = new \PHPMailer\PHPMailer\PHPMailer(true);

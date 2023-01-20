@@ -754,7 +754,19 @@ class docPHP {
             elle possède aussi des méthodes statiques qui permettent de sélectionner d'autres utilisateurs connectés. <br />
             Gardez en tête qu'un utilisateur peut avoir des connexions multiples (s'il ouvre plusieurs onglets par exemple).
         </p>
+        <p>
+            La classe <strong>websocket_request</strong> permet de lancer des requetes au serveur websocket depuis PHP
+        </p>
         <?php
+        js::syntaxhighlighter("<?php\n"
+                . "$" . "wr = new websocket_request($" . "host = '127.0.0.1', $" . "port = 9000);\n"
+                . "//envoie un message sans attendre de réponse\n"
+                . "$" . "wr->send('message');\n"
+                . "//envoie un message en attendant une réponse\n"
+                . "$" . "reponse = $" . "wr->request('message');\n"
+                . "//Ferme la connexion\n"
+                . "$" . "wr->close();\n"
+                . "?>", $this->_brush);
     }
 
     private function mise_en_ligne() {

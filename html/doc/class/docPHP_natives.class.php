@@ -8,7 +8,7 @@ class docPHP_natives {
         ?>
         <p>
             Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (document technique) <br />
-            si une classe/fonction a mal été commentée ( ou pas du tout commentée) merci de nous le signaler. <br />
+            si une classe/fonction a mal été commentée ( ou pas du tout commentée), merci de nous le signaler. <br />
             (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?= count(glob("../../dwf/class/*.class.php")); ?> classes natives)
         </p>
         <div id="accordion_classes_natives">
@@ -137,7 +137,7 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//Affiche une interface (modal) permettant à l'utilisateur de choisir un thème\n"
                 . "echo bootstrap_theme::user_custom();\n\n"
-                . "//Permet à l'utilisateur de passer du thème par defaut à un autre prédéfinit et inversement.\n"
+                . "//Permet à l'utilisateur de passer du thème par defaut à un autre prédéfini et inversement.\n"
                 . "//(Généralement utilisé pour proposer un thème clair et un thème sombre)\n"
                 . "echo bootstrap_theme::switch_theme($" . "theme = 'darkly', $" . "labels = ['Thème clair', 'Thème sombre'])\n"
                 . "?>", $this->_brush);
@@ -168,14 +168,14 @@ class docPHP_natives {
         ?>
         <p>Cette classe génére un captcha, <br />
             Utilise la classe espeak pour l'accessibilité, <br />
-            requère donc espeak installé sur le serveur. <br />
-            cette classe peut être appelé depuis form->captcha()
+            requiert donc espeak installé sur le serveur. <br />
+            cette classe peut être appellée depuis form->captcha()
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "form=new form();\n"
                 . "$" . "form->captchat();\n\n"
-                . "//une instance de espeak peut être passé en paramètre pour perssonaliser la synthèse vocale\n"
+                . "//une instance de espeak peut être passée en paramètre pour personnaliser la synthèse vocale\n"
                 . "$" . "form->captchat((new espeak('espeak-ng'))->set_voice('french-mbrola-4'));\n"
                 . "$" . "form->submit('btn-primary'));\n"
                 . "echo $" . "form->render();\n"
@@ -221,7 +221,7 @@ class docPHP_natives {
         <p>Cette classe permet de gérer un paquet de 32, 52, 54 ou 78 cartes</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//Génère un paquet de 52 cartes (par defaut)\n"
+                . "//Génère un paquet de 52 cartes (par défaut)\n"
                 . "$" . "paquet = new cards();\n\n"
                 . "//Génère un paquet de 32 cartes\n"
                 . "$" . "paquet = new cards(32);\n\n"
@@ -250,8 +250,8 @@ class docPHP_natives {
 
     private function change_reload() {
         ?>
-        <p>Cette classe permet de recharger automatiquement la page courante lorsqu'une classe metier est modifié dans le dossier /class/ de votre projet <br />
-            (Cette classe est déconsillé en production)</p>
+        <p>Cette classe permet de recharger automatiquement la page courante lorsqu'une classe metier est modifiée dans le dossier /class/ de votre projet <br />
+            (Cette classe est déconsillée en production)</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "change_reload::get_instance();\n"
@@ -260,7 +260,7 @@ class docPHP_natives {
 
     private function check_password() {
         ?>
-        <p>Cette classe permet d'appliquer une politique de mots de passe</p>
+        <p>Cette classe permet d'appliquer une politique de mot de passe</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "if (isset($" . "_POST[\"psw\"])) {\n\n"
@@ -269,7 +269,7 @@ class docPHP_natives {
                 . "    // - Contenir au moins un nombre, une majuscule et une minuscule\n"
                 . "    // - L'utilisation de caractères spéciaux est ici facultatif\n"
                 . "    $" . "check = new check_password($" . "_POST[\"psw\"], $" . "minlen = 8, $" . "special = false, $" . "number = true, $" . "upper = true, $" . "lower = true);\n\n"
-                . "    // On vérifie si le mot de passe est conforme à la politique de mots de passe\n"
+                . "    // On vérifie si le mot de passe est conforme à la politique de mot de passe\n"
                 . "    if ($" . "check->is_valid()) {\n"
                 . "        //mot de passe ok \n"
                 . "    } else {\n\n"
@@ -293,7 +293,7 @@ class docPHP_natives {
                 . "$" . "check=new check_password('');\n"
                 . "//Modifie le message d'erreur lié à la longueur du mot de passe\n"
                 . "$" . "check->set_errormsg_minlen($" . "msg);\n\n"
-                . "//Modifie le message d'erreur lié au manque de caractère special dans le mot de passe\n"
+                . "//Modifie le message d'erreur lié au manque de caractère spécial dans le mot de passe\n"
                 . "$" . "check->set_errormsg_special($" . "msg);\n\n"
                 . "//Modifie le message d'erreur lié au manque de chiffre dans le mot de passe\n"
                 . "$" . "check->set_errormsg_number($" . "msg);\n\n"
@@ -363,7 +363,7 @@ class docPHP_natives {
 
     private function css() {
         ?>
-        <p>Cette classe permet de génerer des feuilles de style personalisée. <br />            
+        <p>Cette classe permet de génerer des feuilles de style personalisées. <br />            
             A utiliser avec <em>"compact_src::get_instance()->add_style()"</em></p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -465,9 +465,9 @@ class docPHP_natives {
         <p>Cette classe est une boîte à outils de débogage</p>
         <?php
         js::syntaxhighlighter("<?php\n"
-                . "//Affiche la structure d'une variable ( optimisé pour les arrays et objets )\n"
+                . "//Affiche la structure d'une variable ( optimisée pour les arrays et objets )\n"
                 . "debug::print_r($" . "var);\n\n"
-                . "//Affiche le contenu et le type d'une variable ( optimisé pour les type nombres, chaines de caractères et les booléans )\n"
+                . "//Affiche le contenu et le type d'une variable ( optimisée pour les type nombres, chaines de caractères et les booléans )\n"
                 . "debug::var_dump($" . "var);\n\n"
                 . "//Affiche la trace de l'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)\n"
                 . "debug::get_trace();\n\n"
@@ -524,7 +524,7 @@ class docPHP_natives {
     }
 
     private function downloader() {
-        ?><p>Cette classe permet a l'utilisateur de télécharger un fichier specifique sur le serveur</p><?php
+        ?><p>Cette classe permet à l'utilisateur de télécharger un fichier spécifique sur le serveur</p><?php
         js::syntaxhighlighter("<?php\n"
                 . "//Vide le cache des fichier téléchargeable\n"
                 . "downloader::clear();\n\n"
@@ -657,7 +657,7 @@ class docPHP_natives {
         ?>
         <p>
             Cette classe permet de créer des événements (listener et emiter) <br />
-            l'utilisation de cette classe différe des "méthodes événementielles" dans la mesure où ces dernières font appel à des methodes "static" d'autres classes.
+            l'utilisation de cette classe différe des "méthodes événementielles" dans la mesure où ces dernières font appel à des methodes "statiques" d'autres classes.
         </p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -770,7 +770,7 @@ class docPHP_natives {
                         . "$" . "form->datepicker(\"Un datepicker\", \"datepicker_1\");\n"
                         . "$" . "form->select(\"Un selecteur\", \"select_1\", [\n"
                         . "    [1, \"Abricots\"],\n"
-                        . "    [2, \"Poires\", true], //Poires est selectioné par défaut\n"
+                        . "    [2, \"Poires\", true], //Poires est selectionné par défaut\n"
                         . "    [3, \"Pommes\"],\n"
                         . "]);\n"
                         . "$" . "form->textarea(\"Un textarea\", \"ta_1\");\n"
@@ -847,7 +847,7 @@ class docPHP_natives {
                         . "form::datepicker(\"Un datepicker\", \"datepicker_1\");\n"
                         . "form::select(\"Un selecteur\", \"select_1\", array(\n"
                         . "    array(1, \"Abricots\"),\n"
-                        . "    array(2, \"Poires\", true), //Poires est selectioné par defaut\n"
+                        . "    array(2, \"Poires\", true), //Poires est selectionné par defaut\n"
                         . "    array(3, \"Pommes\"),\n"
                         . "));\n"
                         . "form::textarea(\"Un textarea\", \"ta_1\");\n"
@@ -1004,15 +1004,33 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
+    private function giphy() {
+        ?>
+        <p>
+            Cette classe permet de retourner des Gifs de l'API GIPHY
+        </p>
+        <p>
+            Afin d'etre utilisatble, la clé api doit etre renseigné dans <strong>config.class.php</strong> ainsi :
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "private static $_giphy_key= 'VOTRE CLE API';\n"
+                . "?>", $this->_brush);
+        echo'<p>Usage :</p>';
+        js::syntaxhighlighter("<?php\n"
+                . "new giphy();\n"
+                . "?>", $this->_brush);
+    }
+
     private function git() {
         ?>
-        <p>Utilisez git depuis PHP (requiert git sur le serveur) <a href="https://github.com/kbjr/Git.php">https://github.com/kbjr/Git.php</a></p>
+        <p>Utilisez GIT depuis PHP (requiert GIT sur le serveur) <a href="https://github.com/kbjr/Git.php">https://github.com/kbjr/Git.php</a></p>
         <?php
     }
 
     private function google_oauth() {
         ?>
-        <p>Cette classe permet de gérer une autentification via Google <br />
+        <p>Cette classe permet de gérer une authentification via Google <br />
             Requiert la création d'une application sur https://console.cloud.google.com/apis/credentials</p>
         <?php
         js::syntaxhighlighter("<?php\n"
@@ -1130,7 +1148,7 @@ class docPHP_natives {
         <p>
             Cette classe gère l'en-tête HTML5 et son pied de page. <br />
             Cette classe est utilisée automatiquement par le framework dans <em>application.class.php</em> <br />
-            Les balises : title, meta description et meta keywords peuvent être modifiées grâce aux fonction suivantes :
+            Les balises : title, meta description et meta keywords peuvent être modifiées grâce aux fonctions suivantes :
 
         </p>
         <?php
@@ -1155,7 +1173,7 @@ class docPHP_natives {
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "//affiche une liste de deux liens\n"
-                . "//le premier affiche le glyphicon 'home' et renvoie vers l'accueil\n"
+                . "//le premier affiche le glyphicon 'home' et renvoie vers l'acceuil\n"
                 . "//le second affiche le glyphicon 'search' et ouvre un onglet vers DuckDuckGo\n"
                 . "echo html_structures::ul(array(\n"
                 . "    html_structures::a_link('index.php', html_structures::glyphicon('home','') . ' Retour à l\'accueil'),\n"
@@ -1176,7 +1194,7 @@ class docPHP_natives {
         <?php
         echo html_structures::table(["Méthode", "Description"], [
             ["table", "Retourne un tableau à partir d'un array d'entête et d'un array à deux dimensions comprenant les données"],
-            ["ul, ol, dl", "Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des array)"],
+            ["ul, ol, dl", "Retourne une liste au format HTML à partir d'un array ( prend en compte l'imbrication des arrays)"],
             ["a_link", "Retourne un lien"],
             ["Ancre", "Retourne une ancre a"],
             ["img", "Retourne une image img"],
@@ -1199,10 +1217,10 @@ class docPHP_natives {
         <p>
             Cette classe permet de gérer le header LINK de http/2.0 <br />
             elle n'est active que si le protocole http/2 est actif <br />
-            si c'est le cas sont renseigné d'office :
+            si c'est le cas sont renseignés d'office :
         </p>
         <ul>
-            <li>Les liens du menu (prerender)</li>
+            <li>Les liens du menu (prérender)</li>
             <li>Les fichiers css et js appelés depuis html_structure (preload)</li>
         </ul>
         <?php
@@ -1319,6 +1337,19 @@ class docPHP_natives {
             ?>
         </p>
         <?php
+    }
+
+    private function lurl() {
+        ?>
+        <p>
+            Cette classe permet de générer des liens LURL ou un bouton LURL sponsorisé qui redirige vers la page courante
+            <a href="https://lurl.fr/ref/legagneur">LURL</a>
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "(new lurl($" . "api_key))->get_lurl($" . "url);\n"
+                . "(new lurl($" . "api_key))->selfpage_support_btn();\n"
+                . "?>", $this->_brush);
     }
 
     private function mail() {
@@ -1472,8 +1503,8 @@ class docPHP_natives {
                 . "switch ($" . "_GET['paypal_action']) {\n"
                 . "    case 'return':\n"
                 . "        $" . "payment = $" . "paypal->get_payment($" . "_GET['paymentId']);\n"
-                . "        //TODO: verifier les données du paiement\n"
-                . "        //Execute le paiement\n"
+                . "        //TODO: vérifier les données du paiement\n"
+                . "        //Exécute le paiement\n"
                 . "        $" . "paypal->execute_payment($" . "payment);\n"
                 . "        //TODO : envoyer une copie de la facture par mail\n"
                 . "        js::alertify_alert_redir('Paiement accepté! retour à l\'accueil', 'index.php');\n"
@@ -1547,7 +1578,7 @@ class docPHP_natives {
 
     private function php_siple_formatter() {
         ?>
-        <p>Cette classe permet de formatter (réindenter) du code php/html/js</p>
+        <p>Cette classe permet de formater (réindenter) du code php/html/js</p>
         <?php
         js::syntaxhighlighter("<?php\n"
                 . "$" . "formated_code = (new php_simple_formatter())->format($" . "code)\n"
@@ -1611,7 +1642,7 @@ class docPHP_natives {
                 . "}\n\n"
                 . "// Exécute un fichier (toujours dans les mêmes conditions)\n"
                 . "// le fichier est exécuté dans une console !\n"
-                . "$" . "pcron->file(86400,'mon_chemain/mon_script.php');\n"
+                . "$" . "pcron->file(86400,'mon_chemin/mon_script.php');\n"
                 . "?>", $this->_brush);
         ?>
         <p>L'intéret des cron étant de pouvoir lancer des opérations lourdes à un rythme régulier sans ralentir l'utilisateur <br />
@@ -1678,6 +1709,25 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . '//$data : lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)'
                 . "\nnew robotstxt($" . "data=\"\");\n"
+                . "?>", $this->_brush);
+    }
+
+    private function ScraperAPI($param) {
+        ?>
+        <p>Cette classe permet de faire appel à ScraperAPI <br />
+            <a href="https://scraperapi.com">https://scraperapi.com</a>      
+        </p>
+        <p class="alert alert-info">
+            Attention, le scraping est une pratique faisant l'objet de nombreux flous juridiques. <br />
+            L'utilisation de méthodes de scraping à des fins malveillantes peuvent constituer une infraction pénale. <br />
+            Les développeurs de DWF se dégagent de toutes responsabilités en cas d'utilisation frauduleuse de cette classe.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Par méthode instanciée\n"
+                . "$" . "html = (new scraperapi($" . "api_key))->get($" . "url);\n"
+                . "//Par méthode static\n"
+                . "$" . "html = scraperapi::getHTML($" . "api_key,$" . "url);\n"
                 . "?>", $this->_brush);
     }
 
@@ -1886,7 +1936,7 @@ class docPHP_natives {
             Cette classe permet de créer et manipuler des balises HTML avant de les afficher.
         </p>
         <p class="alert alert-info">
-            Note 21.18.08 : dès sa création cette classe est devenue centrale dans la génération de HTML dans les classes natives du framework. <br />
+            Note 21.18.08 : dès sa création, cette classe est devenue centrale dans la génération de HTML dans les classes natives du framework. <br />
             Utiliser cette classe permet d'obtenir un code 100% PHP plus lisible et plus facile à maintenir qu'un code PHP "entrecoupé" de codes HTML. <br />
             Les impacts négatifs de cette classe sur l'utilisation de la mémoire et le temps d'exécution de PHP sont très faibles. <br />
             Bien entendu l'utilisation de cette classe dans vos projets et classes métiers reste facultative 
@@ -1959,8 +2009,8 @@ class docPHP_natives {
     }
 
     private function template() {
-        ?><p>Cette classe permet d'utiliser des template en utilisant la librairie  
-            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
+        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
@@ -2000,6 +2050,24 @@ class docPHP_natives {
                 . "        'mail'=>'mon.mail@monfai.fr'\n"
                 . "        ]\n"
                 . "])\n"
+                . "?>", $this->_brush);
+    }
+
+    private function tenor() {
+        ?>
+        <p>
+            Cette classe permet de retourner des Gifs de l'API TENOR
+        </p>
+        <p>
+            Afin d'etre utilisable, la clé api doit etre renseignée dans <strong>config.class.php</strong> ainsi :
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "private static $_tenor_key= 'VOTRE CLE API';\n"
+                . "?>", $this->_brush);
+        echo'<p>Usage :</p>';
+        js::syntaxhighlighter("<?php\n"
+                . "new tenor();\n"
                 . "?>", $this->_brush);
     }
 
@@ -2074,7 +2142,7 @@ class docPHP_natives {
     private function update_dwf() {
         ?>
         <p>Cette classe permet de gérer les mises à jour de DWF (à placer dans une interface d'administration) <br />
-            ATTENTION ! Git doit être installé sur la machine hôte !
+            ATTENTION ! GIT doit être installé sur la machine hôte !
         </p>
         <?php
         js::syntaxhighlighter("<?php new update_dwf(); ?>", $this->_brush);
@@ -2133,7 +2201,7 @@ class docPHP_natives {
         js::syntaxhighlighter("<?php\n"
                 . "//créé un objet WLED\n"
                 . "$" . "wled = new wled('192.168.1.10');\n"
-                . "//change les couleur rouge, vert et bleu et envois la requête a WLED\n"
+                . "//change les couleur rouge, vert et bleu et envoie la requête a WLED\n"
                 . "$" . "wled->set_red(255)->set_green(255)->set_blue(255)->exec();\n"
                 . "//redémarre WLED\n"
                 . "$" . "wled->sreboot()->exec();\n"

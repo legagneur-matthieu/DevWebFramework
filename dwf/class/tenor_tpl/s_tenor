@@ -1,0 +1,44 @@
+<?php
+/**
+ * Ce template interagit avec la class GIPHY
+ * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
+ */
+class s_tenor
+{
+    public function __construct()
+    {
+        if (isset($_GET["action"])) {
+            switch ($_GET["action"]) {
+                case "search_html":
+                    $this->search_html($_GET["q"]);
+                    break;
+                case "search_json":
+                    $this->search_json($_GET["q"]);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Retourne un JSON
+     */
+    private function search_json($q)
+    {
+        $key=config::$_tenor_key;
+        $url = "https://tenor.googleapis.com/v2/search?key={$key}&q={$q}&media_filter=gif,tinygif";
+        return json_decode(file_get_contents($url), true);
+    }
+
+    /**
+     * Affiche les données de l'URL
+     */
+    private function search_html($q)
+    {
+        foreach ($this->search_json($q)["results"] as $gif) {
+            echo tags::tag("img", [
+                "src" => $gif["media_formats"]["tinygif"]["url"],
+                "data-gif" => $gif["media_formats"]["gif"]["url"],
+            ]);
+        }
+    }
+}

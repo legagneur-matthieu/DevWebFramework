@@ -1,0 +1,45 @@
+<?php
+/**
+ * Ce template interagit avec la class GIPHY
+ * @author BERNARD Rodolphe <mr.rodolphe.bernard@gmail.com>
+ */
+class s_giphy
+{
+    public function __construct()
+    {
+        if (isset($_GET["action"])) {
+            switch ($_GET["action"]) {
+                case "search_html":
+                    $this->search_html($_GET["q"]);
+                    break;
+                case "search_json":
+                    $this->search_json($_GET["q"]);
+                    break;
+            }
+        }
+    }
+    /**
+     * Retourne un JSON
+     */
+    private function search_json($q)
+    {
+        $key=config::$_giphy_key;
+        $url = "https://api.giphy.com/v1/gifs/search?key={$key}&q={$q}&limit=10";
+        return json_decode(file_get_contents($url), true);
+    }
+
+    /**
+     * Affiche les données de l'URL
+     */
+    private function search_html($q)
+    {
+        foreach ((array)$this->search_json($q)["data"] as $gif) {
+            echo tags::tag("img", [
+                "src" => $gif["images"]["preview_gif"]["url"],
+                "data-gif" => $gif["images"]["preview_gif"]["url"],
+            ]);
+            print_r($gif);
+        }
+    }
+} ?>
+

@@ -20,9 +20,14 @@ namespace Google\Service\CloudAsset\Resource;
 use Google\Service\CloudAsset\AnalyzeIamPolicyLongrunningRequest;
 use Google\Service\CloudAsset\AnalyzeIamPolicyResponse;
 use Google\Service\CloudAsset\AnalyzeMoveResponse;
+use Google\Service\CloudAsset\AnalyzeOrgPoliciesResponse;
+use Google\Service\CloudAsset\AnalyzeOrgPolicyGovernedAssetsResponse;
+use Google\Service\CloudAsset\AnalyzeOrgPolicyGovernedContainersResponse;
 use Google\Service\CloudAsset\BatchGetAssetsHistoryResponse;
 use Google\Service\CloudAsset\ExportAssetsRequest;
 use Google\Service\CloudAsset\Operation;
+use Google\Service\CloudAsset\QueryAssetsRequest;
+use Google\Service\CloudAsset\QueryAssetsResponse;
 use Google\Service\CloudAsset\SearchAllIamPoliciesResponse;
 use Google\Service\CloudAsset\SearchAllResourcesResponse;
 
@@ -217,6 +222,110 @@ class V1 extends \Google\Service\Resource
     return $this->call('analyzeMove', [$params], AnalyzeMoveResponse::class);
   }
   /**
+   * Analyzes organization policies under a scope. (v1.analyzeOrgPolicies)
+   *
+   * @param string $scope Required. The organization to scope the request. Only
+   * organization policies within the scope will be analyzed. *
+   * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string constraint Required. The name of the constraint to analyze
+   * organization policies for. The response only contains analyzed organization
+   * policies for the provided constraint.
+   * @opt_param string filter The expression to filter
+   * AnalyzeOrgPoliciesResponse.org_policy_results. The only supported field is
+   * `consolidated_policy.attached_resource`, and the only supported operator is
+   * `=`. Example: consolidated_policy.attached_resource="//cloudresourcemanager.g
+   * oogleapis.com/folders/001" will return the org policy results
+   * of"folders/001".
+   * @opt_param int pageSize The maximum number of items to return per page. If
+   * unspecified, AnalyzeOrgPoliciesResponse.org_policy_results will contain 20
+   * items with a maximum of 200.
+   * @opt_param string pageToken The pagination token to retrieve the next page.
+   * @return AnalyzeOrgPoliciesResponse
+   */
+  public function analyzeOrgPolicies($scope, $optParams = [])
+  {
+    $params = ['scope' => $scope];
+    $params = array_merge($params, $optParams);
+    return $this->call('analyzeOrgPolicies', [$params], AnalyzeOrgPoliciesResponse::class);
+  }
+  /**
+   * Analyzes organization policies governed assets (GCP resources or policies)
+   * under a scope. This RPC supports custom constraints and the following 10
+   * canned constraints: * storage.uniformBucketLevelAccess *
+   * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains *
+   * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck *
+   * gcp.resourceLocations * compute.trustedImageProjects *
+   * compute.skipDefaultNetworkCreation * compute.requireOsLogin *
+   * compute.disableNestedVirtualization This RPC only returns either resources of
+   * types supported by [searchable asset types](https://cloud.google.com/asset-
+   * inventory/docs/supported-asset-types#searchable_asset_types), or IAM
+   * policies. (v1.analyzeOrgPolicyGovernedAssets)
+   *
+   * @param string $scope Required. The organization to scope the request. Only
+   * organization policies within the scope will be analyzed. The output assets
+   * will also be limited to the ones governed by those in-scope organization
+   * policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+   * "organizations/123456")
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string constraint Required. The name of the constraint to analyze
+   * governed assets for. The analysis only contains analyzed organization
+   * policies for the provided constraint.
+   * @opt_param string filter The expression to filter the governed assets in
+   * result. The only supported fields for governed resources are
+   * `governed_resource.project` and `governed_resource.folders`. The only
+   * supported fields for governed iam policies are `governed_iam_policy.project`
+   * and `governed_iam_policy.folders`. The only supported operator is `=`.
+   * Example 1: governed_resource.project="projects/12345678" filter will return
+   * all governed resources under projects/12345678 including the project ifself,
+   * if applicable. Example 2: governed_iam_policy.folders="folders/12345678"
+   * filter will return all governed iam policies under folders/12345678, if
+   * applicable.
+   * @opt_param int pageSize The maximum number of items to return per page. If
+   * unspecified, AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets will
+   * contain 100 items with a maximum of 200.
+   * @opt_param string pageToken The pagination token to retrieve the next page.
+   * @return AnalyzeOrgPolicyGovernedAssetsResponse
+   */
+  public function analyzeOrgPolicyGovernedAssets($scope, $optParams = [])
+  {
+    $params = ['scope' => $scope];
+    $params = array_merge($params, $optParams);
+    return $this->call('analyzeOrgPolicyGovernedAssets', [$params], AnalyzeOrgPolicyGovernedAssetsResponse::class);
+  }
+  /**
+   * Analyzes organization policies governed containers (projects, folders or
+   * organization) under a scope. (v1.analyzeOrgPolicyGovernedContainers)
+   *
+   * @param string $scope Required. The organization to scope the request. Only
+   * organization policies within the scope will be analyzed. The output
+   * containers will also be limited to the ones governed by those in-scope
+   * organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+   * "organizations/123456")
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string constraint Required. The name of the constraint to analyze
+   * governed containers for. The analysis only contains organization policies for
+   * the provided constraint.
+   * @opt_param string filter The expression to filter the governed containers in
+   * result. The only supported field is `parent`, and the only supported operator
+   * is `=`. Example: parent="//cloudresourcemanager.googleapis.com/folders/001"
+   * will return all containers under "folders/001".
+   * @opt_param int pageSize The maximum number of items to return per page. If
+   * unspecified, AnalyzeOrgPolicyGovernedContainersResponse.governed_containers
+   * will contain 100 items with a maximum of 200.
+   * @opt_param string pageToken The pagination token to retrieve the next page.
+   * @return AnalyzeOrgPolicyGovernedContainersResponse
+   */
+  public function analyzeOrgPolicyGovernedContainers($scope, $optParams = [])
+  {
+    $params = ['scope' => $scope];
+    $params = array_merge($params, $optParams);
+    return $this->call('analyzeOrgPolicyGovernedContainers', [$params], AnalyzeOrgPolicyGovernedContainersResponse::class);
+  }
+  /**
    * Batch gets the update history of assets that overlap a time window. For
    * IAM_POLICY content, this API outputs history when the asset and its attached
    * IAM POLICY both exist. This can create gaps in the output history. Otherwise,
@@ -285,6 +394,33 @@ class V1 extends \Google\Service\Resource
     $params = ['parent' => $parent, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('exportAssets', [$params], Operation::class);
+  }
+  /**
+   * Issue a job that queries assets using a SQL statement compatible with
+   * [BigQuery Standard SQL](http://cloud/bigquery/docs/reference/standard-sql
+   * /enabling-standard-sql). If the query execution finishes within timeout and
+   * there's no pagination, the full query results will be returned in the
+   * `QueryAssetsResponse`. Otherwise, full query results can be obtained by
+   * issuing extra requests with the `job_reference` from the a previous
+   * `QueryAssets` call. Note, the query result has approximately 10 GB limitation
+   * enforced by BigQuery https://cloud.google.com/bigquery/docs/best-practices-
+   * performance-output, queries return larger results will result in errors.
+   * (v1.queryAssets)
+   *
+   * @param string $parent Required. The relative name of the root asset. This can
+   * only be an organization number (such as "organizations/123"), a project ID
+   * (such as "projects/my-project-id"), or a project number (such as
+   * "projects/12345"), or a folder number (such as "folders/123"). Only assets
+   * belonging to the `parent` will be returned.
+   * @param QueryAssetsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return QueryAssetsResponse
+   */
+  public function queryAssets($parent, QueryAssetsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('queryAssets', [$params], QueryAssetsResponse::class);
   }
   /**
    * Searches all IAM policies within the specified scope, such as a project,
@@ -404,10 +540,10 @@ class V1 extends \Google\Service\Resource
    * Add " DESC" after the field name to indicate descending order. Redundant
    * space characters are ignored. Example: "location DESC, name". Only singular
    * primitive fields in the response are sortable: * name * assetType * project *
-   * displayName * description * location * kmsKey * createTime * updateTime *
-   * state * parentFullResourceName * parentAssetType All the other fields such as
-   * repeated fields (e.g., `networkTags`), map fields (e.g., `labels`) and struct
-   * fields (e.g., `additionalAttributes`) are not supported.
+   * displayName * description * location * createTime * updateTime * state *
+   * parentFullResourceName * parentAssetType All the other fields such as
+   * repeated fields (e.g., `networkTags`, `kmsKeys`), map fields (e.g., `labels`)
+   * and struct fields (e.g., `additionalAttributes`) are not supported.
    * @opt_param int pageSize Optional. The page size for search result pagination.
    * Page size is capped at 500 even if a larger value is given. If set to zero,
    * server will pick an appropriate default. Returned results may be fewer than
@@ -431,19 +567,30 @@ class V1 extends \Google\Service\Resource
    * that have a label "env" and its value is "prod". * `labels.env:*` to find
    * Cloud resources that have a label "env". * `kmsKey:key` to find Cloud
    * resources encrypted with a customer-managed encryption key whose name
-   * contains the word "key". * `state:ACTIVE` to find Cloud resources whose state
-   * contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find Cloud resources
-   * whose state doesn't contain "ACTIVE" as a word. * `createTime<1609459200` to
-   * find Cloud resources that were created before "2021-01-01 00:00:00 UTC".
-   * 1609459200 is the epoch timestamp of "2021-01-01 00:00:00 UTC" in seconds. *
-   * `updateTime>1609459200` to find Cloud resources that were updated after
+   * contains "key" as a word. This field is deprecated. Please use the `kmsKeys`
+   * field to retrieve KMS key information. * `kmsKeys:key` to find Cloud
+   * resources encrypted with customer-managed encryption keys whose name contains
+   * the word "key". * `relationships:instance-group-1` to find Cloud resources
+   * that have relationships with "instance-group-1" in the related resource name.
+   * * `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances that
+   * have relationships of type "INSTANCE_TO_INSTANCEGROUP". *
+   * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find compute
+   * instances that have relationships with "instance-group-1" in the compute
+   * instance group resource name, for relationship type
+   * "INSTANCE_TO_INSTANCEGROUP". * `state:ACTIVE` to find Cloud resources whose
+   * state contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find Cloud
+   * resources whose state doesn't contain "ACTIVE" as a word. *
+   * `createTime<1609459200` to find Cloud resources that were created before
    * "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of "2021-01-01
-   * 00:00:00 UTC" in seconds. * `Important` to find Cloud resources that contain
-   * "Important" as a word in any of the searchable fields. * `Impor*` to find
-   * Cloud resources that contain "Impor" as a prefix of any word in any of the
-   * searchable fields. * `Important location:(us-west1 OR global)` to find Cloud
-   * resources that contain "Important" as a word in any of the searchable fields
-   * and are also located in the "us-west1" region or the "global" location.
+   * 00:00:00 UTC" in seconds. * `updateTime>1609459200` to find Cloud resources
+   * that were updated after "2021-01-01 00:00:00 UTC". 1609459200 is the epoch
+   * timestamp of "2021-01-01 00:00:00 UTC" in seconds. * `Important` to find
+   * Cloud resources that contain "Important" as a word in any of the searchable
+   * fields. * `Impor*` to find Cloud resources that contain "Impor" as a prefix
+   * of any word in any of the searchable fields. * `Important location:(us-west1
+   * OR global)` to find Cloud resources that contain "Important" as a word in any
+   * of the searchable fields and are also located in the "us-west1" region or the
+   * "global" location.
    * @opt_param string readMask Optional. A comma-separated list of fields
    * specifying which fields to be returned in ResourceSearchResult. Only '*' or
    * combination of top level fields can be specified. Field names of both
@@ -451,11 +598,13 @@ class V1 extends \Google\Service\Resource
    * `"name,versionedResources"`. The read_mask paths must be valid field paths
    * listed but not limited to (both snake_case and camelCase are supported): *
    * name * assetType * project * displayName * description * location * tagKeys *
-   * tagValues * tagValueIds * labels * networkTags * kmsKey * createTime *
-   * updateTime * state * additionalAttributes * versionedResources If read_mask
-   * is not specified, all fields except versionedResources will be returned. If
-   * only '*' is specified, all fields including versionedResources will be
-   * returned. Any invalid field path will trigger INVALID_ARGUMENT error.
+   * tagValues * tagValueIds * labels * networkTags * kmsKey (This field is
+   * deprecated. Please use the `kmsKeys` field to retrieve KMS key information.)
+   * * kmsKeys * createTime * updateTime * state * additionalAttributes *
+   * versionedResources If read_mask is not specified, all fields except
+   * versionedResources will be returned. If only '*' is specified, all fields
+   * including versionedResources will be returned. Any invalid field path will
+   * trigger INVALID_ARGUMENT error.
    * @return SearchAllResourcesResponse
    */
   public function searchAllResources($scope, $optParams = [])

@@ -32,6 +32,8 @@ class Job extends \Google\Collection
    * @var string
    */
   public $driverOutputResourceUri;
+  protected $driverSchedulingConfigType = DriverSchedulingConfig::class;
+  protected $driverSchedulingConfigDataType = '';
   protected $hadoopJobType = HadoopJob::class;
   protected $hadoopJobDataType = '';
   protected $hiveJobType = HiveJob::class;
@@ -66,6 +68,8 @@ class Job extends \Google\Collection
   protected $statusDataType = '';
   protected $statusHistoryType = JobStatus::class;
   protected $statusHistoryDataType = 'array';
+  protected $trinoJobType = TrinoJob::class;
+  protected $trinoJobDataType = '';
   protected $yarnApplicationsType = YarnApplication::class;
   protected $yarnApplicationsDataType = 'array';
 
@@ -110,6 +114,20 @@ class Job extends \Google\Collection
   public function getDriverOutputResourceUri()
   {
     return $this->driverOutputResourceUri;
+  }
+  /**
+   * @param DriverSchedulingConfig
+   */
+  public function setDriverSchedulingConfig(DriverSchedulingConfig $driverSchedulingConfig)
+  {
+    $this->driverSchedulingConfig = $driverSchedulingConfig;
+  }
+  /**
+   * @return DriverSchedulingConfig
+   */
+  public function getDriverSchedulingConfig()
+  {
+    return $this->driverSchedulingConfig;
   }
   /**
    * @param HadoopJob
@@ -320,6 +338,20 @@ class Job extends \Google\Collection
   public function getStatusHistory()
   {
     return $this->statusHistory;
+  }
+  /**
+   * @param TrinoJob
+   */
+  public function setTrinoJob(TrinoJob $trinoJob)
+  {
+    $this->trinoJob = $trinoJob;
+  }
+  /**
+   * @return TrinoJob
+   */
+  public function getTrinoJob()
+  {
+    return $this->trinoJob;
   }
   /**
    * @param YarnApplication[]

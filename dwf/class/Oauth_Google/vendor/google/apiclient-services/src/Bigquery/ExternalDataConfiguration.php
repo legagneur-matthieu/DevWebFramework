@@ -54,8 +54,20 @@ class ExternalDataConfiguration extends \Google\Collection
    * @var int
    */
   public $maxBadRecords;
+  /**
+   * @var string
+   */
+  public $metadataCacheMode;
+  /**
+   * @var string
+   */
+  public $objectMetadata;
   protected $parquetOptionsType = ParquetOptions::class;
   protected $parquetOptionsDataType = '';
+  /**
+   * @var string
+   */
+  public $referenceFileSchemaUri;
   protected $schemaType = TableSchema::class;
   protected $schemaDataType = '';
   /**
@@ -222,6 +234,34 @@ class ExternalDataConfiguration extends \Google\Collection
     return $this->maxBadRecords;
   }
   /**
+   * @param string
+   */
+  public function setMetadataCacheMode($metadataCacheMode)
+  {
+    $this->metadataCacheMode = $metadataCacheMode;
+  }
+  /**
+   * @return string
+   */
+  public function getMetadataCacheMode()
+  {
+    return $this->metadataCacheMode;
+  }
+  /**
+   * @param string
+   */
+  public function setObjectMetadata($objectMetadata)
+  {
+    $this->objectMetadata = $objectMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getObjectMetadata()
+  {
+    return $this->objectMetadata;
+  }
+  /**
    * @param ParquetOptions
    */
   public function setParquetOptions(ParquetOptions $parquetOptions)
@@ -234,6 +274,20 @@ class ExternalDataConfiguration extends \Google\Collection
   public function getParquetOptions()
   {
     return $this->parquetOptions;
+  }
+  /**
+   * @param string
+   */
+  public function setReferenceFileSchemaUri($referenceFileSchemaUri)
+  {
+    $this->referenceFileSchemaUri = $referenceFileSchemaUri;
+  }
+  /**
+   * @return string
+   */
+  public function getReferenceFileSchemaUri()
+  {
+    return $this->referenceFileSchemaUri;
   }
   /**
    * @param TableSchema

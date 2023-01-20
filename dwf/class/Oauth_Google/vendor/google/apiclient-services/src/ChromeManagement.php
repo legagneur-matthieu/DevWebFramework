@@ -52,6 +52,7 @@ class ChromeManagement extends \Google\Service
   public $customers_apps_web;
   public $customers_reports;
   public $customers_telemetry_devices;
+  public $customers_telemetry_events;
 
   /**
    * Constructs the internal representation of the ChromeManagement service.
@@ -171,7 +172,65 @@ class ChromeManagement extends \Google\Service
         'reports',
         [
           'methods' => [
-            'countChromeVersions' => [
+            'countChromeDevicesReachingAutoExpirationDate' => [
+              'path' => 'v1/{+customer}/reports:countChromeDevicesReachingAutoExpirationDate',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'maxAueDate' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'minAueDate' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countChromeDevicesThatNeedAttention' => [
+              'path' => 'v1/{+customer}/reports:countChromeDevicesThatNeedAttention',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'readMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countChromeHardwareFleetDevices' => [
+              'path' => 'v1/{+customer}/reports:countChromeHardwareFleetDevices',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'readMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countChromeVersions' => [
               'path' => 'v1/{+customer}/reports:countChromeVersions',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -284,9 +343,49 @@ class ChromeManagement extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'readMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'list' => [
               'path' => 'v1/{+parent}/telemetry/devices',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'readMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_telemetry_events = new ChromeManagement\Resource\CustomersTelemetryEvents(
+        $this,
+        $this->serviceName,
+        'events',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v1/{+parent}/telemetry/events',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [

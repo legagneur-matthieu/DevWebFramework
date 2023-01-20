@@ -34,6 +34,50 @@ use Google\Service\Firestore\GoogleLongrunningOperation;
 class ProjectsDatabases extends \Google\Service\Resource
 {
   /**
+   * Create a database. (databases.create)
+   *
+   * @param string $parent Required. A parent name of the form
+   * `projects/{project_id}`
+   * @param GoogleFirestoreAdminV1Database $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string databaseId Required. The ID to use for the database, which
+   * will become the final component of the database's resource name. This value
+   * should be 4-63 characters. Valid characters are /a-z-/ with first character a
+   * letter and the last a letter or a number. Must not be UUID-like
+   * /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id is also
+   * valid.
+   * @return GoogleLongrunningOperation
+   */
+  public function create($parent, GoogleFirestoreAdminV1Database $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('create', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
+   * Deletes a database. (databases.delete)
+   *
+   * @param string $name Required. A name of the form
+   * `projects/{project_id}/databases/{database_id}`
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param bool allowMissing If set to true and the Database is not found,
+   * the request will succeed but no action will be taken.
+   * @opt_param string etag The current etag of the Database. If an etag is
+   * provided and does not match the current etag of the database, deletion will
+   * be blocked and a FAILED_PRECONDITION error will be returned.
+   * @opt_param bool validateOnly If set, validate the request and preview the
+   * response, but do not actually delete the database.
+   * @return GoogleLongrunningOperation
+   */
+  public function delete($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('delete', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
    * Exports a copy of all or a subset of documents from Google Cloud Firestore to
    * another storage system, such as Google Cloud Storage. Recent updates to
    * documents may not be reflected in the export. The export occurs in the

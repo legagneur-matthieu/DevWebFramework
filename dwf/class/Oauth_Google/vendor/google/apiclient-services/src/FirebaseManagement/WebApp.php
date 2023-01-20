@@ -39,11 +39,19 @@ class WebApp extends \Google\Collection
   /**
    * @var string
    */
+  public $etag;
+  /**
+   * @var string
+   */
   public $name;
   /**
    * @var string
    */
   public $projectId;
+  /**
+   * @var string
+   */
+  public $state;
   /**
    * @var string
    */
@@ -108,6 +116,20 @@ class WebApp extends \Google\Collection
   /**
    * @param string
    */
+  public function setEtag($etag)
+  {
+    $this->etag = $etag;
+  }
+  /**
+   * @return string
+   */
+  public function getEtag()
+  {
+    return $this->etag;
+  }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
@@ -132,6 +154,20 @@ class WebApp extends \Google\Collection
   public function getProjectId()
   {
     return $this->projectId;
+  }
+  /**
+   * @param string
+   */
+  public function setState($state)
+  {
+    $this->state = $state;
+  }
+  /**
+   * @return string
+   */
+  public function getState()
+  {
+    return $this->state;
   }
   /**
    * @param string

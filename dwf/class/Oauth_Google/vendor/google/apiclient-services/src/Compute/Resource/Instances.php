@@ -228,7 +228,8 @@ class Instances extends \Google\Service\Resource
   }
   /**
    * Creates multiple instances. Count specifies the number of instances to
-   * create. (instances.bulkInsert)
+   * create. For more information, see About bulk creation of VMs.
+   * (instances.bulkInsert)
    *
    * @param string $project Project ID for this request.
    * @param string $zone The name of the zone for this request.
@@ -1165,6 +1166,8 @@ class Instances extends \Google\Service\Resource
    * @param string $instance Name of the instance resource to stop.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool discardLocalSsd If true, discard the contents of any attached
+   * localSSD partitions. Default value is false.
    * @opt_param string requestId An optional request ID to identify requests.
    * Specify a unique request ID so that if you must retry your request, the
    * server will know to ignore the request if it has already been completed. For
@@ -1197,6 +1200,8 @@ class Instances extends \Google\Service\Resource
    * @param string $instance Name of the instance resource to suspend.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool discardLocalSsd If true, discard the contents of any attached
+   * localSSD partitions. Default value is false.
    * @opt_param string requestId An optional request ID to identify requests.
    * Specify a unique request ID so that if you must retry your request, the
    * server will know to ignore the request if it has already been completed. For

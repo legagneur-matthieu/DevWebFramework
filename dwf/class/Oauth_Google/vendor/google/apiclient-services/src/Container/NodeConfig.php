@@ -38,6 +38,8 @@ class NodeConfig extends \Google\Collection
    * @var string
    */
   public $diskType;
+  protected $fastSocketType = FastSocket::class;
+  protected $fastSocketDataType = '';
   protected $gcfsConfigType = GcfsConfig::class;
   protected $gcfsConfigDataType = '';
   protected $gvnicType = VirtualNIC::class;
@@ -58,6 +60,8 @@ class NodeConfig extends \Google\Collection
    * @var int
    */
   public $localSsdCount;
+  protected $loggingConfigType = NodePoolLoggingConfig::class;
+  protected $loggingConfigDataType = '';
   /**
    * @var string
    */
@@ -84,6 +88,10 @@ class NodeConfig extends \Google\Collection
   public $preemptible;
   protected $reservationAffinityType = ReservationAffinity::class;
   protected $reservationAffinityDataType = '';
+  /**
+   * @var string[]
+   */
+  public $resourceLabels;
   protected $sandboxConfigType = SandboxConfig::class;
   protected $sandboxConfigDataType = '';
   /**
@@ -190,6 +198,20 @@ class NodeConfig extends \Google\Collection
     return $this->diskType;
   }
   /**
+   * @param FastSocket
+   */
+  public function setFastSocket(FastSocket $fastSocket)
+  {
+    $this->fastSocket = $fastSocket;
+  }
+  /**
+   * @return FastSocket
+   */
+  public function getFastSocket()
+  {
+    return $this->fastSocket;
+  }
+  /**
    * @param GcfsConfig
    */
   public function setGcfsConfig(GcfsConfig $gcfsConfig)
@@ -288,6 +310,20 @@ class NodeConfig extends \Google\Collection
     return $this->localSsdCount;
   }
   /**
+   * @param NodePoolLoggingConfig
+   */
+  public function setLoggingConfig(NodePoolLoggingConfig $loggingConfig)
+  {
+    $this->loggingConfig = $loggingConfig;
+  }
+  /**
+   * @return NodePoolLoggingConfig
+   */
+  public function getLoggingConfig()
+  {
+    return $this->loggingConfig;
+  }
+  /**
    * @param string
    */
   public function setMachineType($machineType)
@@ -384,6 +420,20 @@ class NodeConfig extends \Google\Collection
   public function getReservationAffinity()
   {
     return $this->reservationAffinity;
+  }
+  /**
+   * @param string[]
+   */
+  public function setResourceLabels($resourceLabels)
+  {
+    $this->resourceLabels = $resourceLabels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getResourceLabels()
+  {
+    return $this->resourceLabels;
   }
   /**
    * @param SandboxConfig

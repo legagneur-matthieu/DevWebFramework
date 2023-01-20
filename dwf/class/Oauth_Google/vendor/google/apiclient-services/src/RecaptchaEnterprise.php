@@ -23,7 +23,8 @@ use Google\Client;
  * Service definition for RecaptchaEnterprise (v1).
  *
  * <p>
-</p>
+ * Help protect your website from fraudulent activity, spam, and abuse without
+ * creating friction.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -176,6 +177,16 @@ class RecaptchaEnterprise extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'retrieveLegacySecretKey' => [
+              'path' => 'v1/{+key}:retrieveLegacySecretKey',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'key' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

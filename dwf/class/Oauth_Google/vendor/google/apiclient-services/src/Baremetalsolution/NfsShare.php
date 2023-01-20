@@ -23,6 +23,10 @@ class NfsShare extends \Google\Collection
   protected $allowedClientsType = AllowedClient::class;
   protected $allowedClientsDataType = 'array';
   /**
+   * @var string
+   */
+  public $id;
+  /**
    * @var string[]
    */
   public $labels;
@@ -37,7 +41,15 @@ class NfsShare extends \Google\Collection
   /**
    * @var string
    */
+  public $requestedSizeGib;
+  /**
+   * @var string
+   */
   public $state;
+  /**
+   * @var string
+   */
+  public $storageType;
   /**
    * @var string
    */
@@ -56,6 +68,20 @@ class NfsShare extends \Google\Collection
   public function getAllowedClients()
   {
     return $this->allowedClients;
+  }
+  /**
+   * @param string
+   */
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+  /**
+   * @return string
+   */
+  public function getId()
+  {
+    return $this->id;
   }
   /**
    * @param string[]
@@ -102,6 +128,20 @@ class NfsShare extends \Google\Collection
   /**
    * @param string
    */
+  public function setRequestedSizeGib($requestedSizeGib)
+  {
+    $this->requestedSizeGib = $requestedSizeGib;
+  }
+  /**
+   * @return string
+   */
+  public function getRequestedSizeGib()
+  {
+    return $this->requestedSizeGib;
+  }
+  /**
+   * @param string
+   */
   public function setState($state)
   {
     $this->state = $state;
@@ -112,6 +152,20 @@ class NfsShare extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param string
+   */
+  public function setStorageType($storageType)
+  {
+    $this->storageType = $storageType;
+  }
+  /**
+   * @return string
+   */
+  public function getStorageType()
+  {
+    return $this->storageType;
   }
   /**
    * @param string

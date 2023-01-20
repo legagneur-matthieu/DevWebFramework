@@ -101,7 +101,7 @@ class AdvertisersCreatives extends \Google\Service\Resource
    * fields: - `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO
    * (>=)` or `LESS THAN OR EQUAL TO (<=)` for the following fields: -
    * `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * For
-   * `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, `and `dynamic`,
+   * `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and `dynamic`,
    * there may be at most one restriction. * For `dimensions`, the value is in the
    * form of `"{width}x{height}"`. * For `exchangeReviewStatus`, the value is in
    * the form of `{exchange}-{reviewStatus}`. * For `minDuration` and
@@ -131,7 +131,7 @@ class AdvertisersCreatives extends \Google\Service\Resource
    * (sorts by width first, then by height) The default sorting order is
    * ascending. To specify descending order for a field, a suffix "desc" should be
    * added to the field name. Example: `createTime desc`.
-   * @opt_param int pageSize Requested page size. Must be between `1` and `100`.
+   * @opt_param int pageSize Requested page size. Must be between `1` and `200`.
    * If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT`
    * if an invalid value is specified.
    * @opt_param string pageToken A token identifying a page of results the server

@@ -45,6 +45,7 @@ class Spanner extends \Google\Service
   const SPANNER_DATA =
       "https://www.googleapis.com/auth/spanner.data";
 
+  public $projects_instanceConfigOperations;
   public $projects_instanceConfigs;
   public $projects_instanceConfigs_operations;
   public $projects_instances;
@@ -53,6 +54,7 @@ class Spanner extends \Google\Service
   public $projects_instances_backups_operations;
   public $projects_instances_databaseOperations;
   public $projects_instances_databases;
+  public $projects_instances_databases_databaseRoles;
   public $projects_instances_databases_operations;
   public $projects_instances_databases_sessions;
   public $projects_instances_operations;
@@ -74,13 +76,73 @@ class Spanner extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'spanner';
 
+    $this->projects_instanceConfigOperations = new Spanner\Resource\ProjectsInstanceConfigOperations(
+        $this,
+        $this->serviceName,
+        'instanceConfigOperations',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v1/{+parent}/instanceConfigOperations',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->projects_instanceConfigs = new Spanner\Resource\ProjectsInstanceConfigs(
         $this,
         $this->serviceName,
         'instanceConfigs',
         [
           'methods' => [
-            'get' => [
+            'create' => [
+              'path' => 'v1/{+parent}/instanceConfigs',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'etag' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],'get' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -106,6 +168,16 @@ class Spanner extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -669,6 +741,44 @@ class Spanner extends \Google\Service
               'httpMethod' => 'PATCH',
               'parameters' => [
                 'database' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_instances_databases_databaseRoles = new Spanner\Resource\ProjectsInstancesDatabasesDatabaseRoles(
+        $this,
+        $this->serviceName,
+        'databaseRoles',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v1/{+parent}/databaseRoles',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'v1/{+resource}:testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,

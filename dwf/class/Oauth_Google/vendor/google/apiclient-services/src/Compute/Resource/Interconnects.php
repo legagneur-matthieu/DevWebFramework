@@ -17,6 +17,7 @@
 
 namespace Google\Service\Compute\Resource;
 
+use Google\Service\Compute\GlobalSetLabelsRequest;
 use Google\Service\Compute\Interconnect;
 use Google\Service\Compute\InterconnectList;
 use Google\Service\Compute\InterconnectsGetDiagnosticsResponse;
@@ -33,7 +34,7 @@ use Google\Service\Compute\Operation;
 class Interconnects extends \Google\Service\Resource
 {
   /**
-   * Deletes the specified interconnect. (interconnects.delete)
+   * Deletes the specified Interconnect. (interconnects.delete)
    *
    * @param string $project Project ID for this request.
    * @param string $interconnect Name of the interconnect to delete.
@@ -58,7 +59,7 @@ class Interconnects extends \Google\Service\Resource
     return $this->call('delete', [$params], Operation::class);
   }
   /**
-   * Returns the specified interconnect. Get a list of available interconnects by
+   * Returns the specified Interconnect. Get a list of available Interconnects by
    * making a list() request. (interconnects.get)
    *
    * @param string $project Project ID for this request.
@@ -73,7 +74,7 @@ class Interconnects extends \Google\Service\Resource
     return $this->call('get', [$params], Interconnect::class);
   }
   /**
-   * Returns the interconnectDiagnostics for the specified interconnect.
+   * Returns the interconnectDiagnostics for the specified Interconnect.
    * (interconnects.getDiagnostics)
    *
    * @param string $project Project ID for this request.
@@ -88,7 +89,7 @@ class Interconnects extends \Google\Service\Resource
     return $this->call('getDiagnostics', [$params], InterconnectsGetDiagnosticsResponse::class);
   }
   /**
-   * Creates a Interconnect in the specified project using the data included in
+   * Creates an Interconnect in the specified project using the data included in
    * the request. (interconnects.insert)
    *
    * @param string $project Project ID for this request.
@@ -114,7 +115,7 @@ class Interconnects extends \Google\Service\Resource
     return $this->call('insert', [$params], Operation::class);
   }
   /**
-   * Retrieves the list of interconnect available to the specified project.
+   * Retrieves the list of Interconnects available to the specified project.
    * (interconnects.listInterconnects)
    *
    * @param string $project Project ID for this request.
@@ -179,7 +180,7 @@ class Interconnects extends \Google\Service\Resource
     return $this->call('list', [$params], InterconnectList::class);
   }
   /**
-   * Updates the specified interconnect with the data included in the request.
+   * Updates the specified Interconnect with the data included in the request.
    * This method supports PATCH semantics and uses the JSON merge patch format and
    * processing rules. (interconnects.patch)
    *
@@ -205,6 +206,22 @@ class Interconnects extends \Google\Service\Resource
     $params = ['project' => $project, 'interconnect' => $interconnect, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Operation::class);
+  }
+  /**
+   * Sets the labels on an Interconnect. To learn more about labels, read the
+   * Labeling Resources documentation. (interconnects.setLabels)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param GlobalSetLabelsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   */
+  public function setLabels($project, $resource, GlobalSetLabelsRequest $postBody, $optParams = [])
+  {
+    $params = ['project' => $project, 'resource' => $resource, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('setLabels', [$params], Operation::class);
   }
 }
 

@@ -19,6 +19,7 @@ namespace Google\Service\Baremetalsolution\Resource;
 
 use Google\Service\Baremetalsolution\ListVolumesResponse;
 use Google\Service\Baremetalsolution\Operation;
+use Google\Service\Baremetalsolution\ResizeVolumeRequest;
 use Google\Service\Baremetalsolution\Volume;
 
 /**
@@ -76,9 +77,7 @@ class ProjectsLocationsVolumes extends \Google\Service\Resource
    * @param array $optParams Optional parameters.
    *
    * @opt_param string updateMask The list of fields to update. The only currently
-   * supported fields are: `snapshot_auto_delete_behavior`
-   * `snapshot_schedule_policy_name` 'labels' 'requested_size_gib'
-   * 'snapshot_enabled' 'snapshot_reservation_detail.reserved_space_percent'
+   * supported fields are: 'labels'
    * @return Operation
    */
   public function patch($name, Volume $postBody, $optParams = [])
@@ -86,6 +85,20 @@ class ProjectsLocationsVolumes extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Operation::class);
+  }
+  /**
+   * Emergency Volume resize. (volumes.resize)
+   *
+   * @param string $volume Required. Volume to resize.
+   * @param ResizeVolumeRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   */
+  public function resize($volume, ResizeVolumeRequest $postBody, $optParams = [])
+  {
+    $params = ['volume' => $volume, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('resize', [$params], Operation::class);
   }
 }
 

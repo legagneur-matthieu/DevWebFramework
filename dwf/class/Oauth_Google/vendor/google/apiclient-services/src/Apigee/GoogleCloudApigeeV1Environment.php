@@ -42,11 +42,17 @@ class GoogleCloudApigeeV1Environment extends \Google\Model
   /**
    * @var string
    */
+  public $forwardProxyUri;
+  /**
+   * @var string
+   */
   public $lastModifiedAt;
   /**
    * @var string
    */
   public $name;
+  protected $nodeConfigType = GoogleCloudApigeeV1NodeConfig::class;
+  protected $nodeConfigDataType = '';
   protected $propertiesType = GoogleCloudApigeeV1Properties::class;
   protected $propertiesDataType = '';
   /**
@@ -127,6 +133,20 @@ class GoogleCloudApigeeV1Environment extends \Google\Model
   /**
    * @param string
    */
+  public function setForwardProxyUri($forwardProxyUri)
+  {
+    $this->forwardProxyUri = $forwardProxyUri;
+  }
+  /**
+   * @return string
+   */
+  public function getForwardProxyUri()
+  {
+    return $this->forwardProxyUri;
+  }
+  /**
+   * @param string
+   */
   public function setLastModifiedAt($lastModifiedAt)
   {
     $this->lastModifiedAt = $lastModifiedAt;
@@ -151,6 +171,20 @@ class GoogleCloudApigeeV1Environment extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param GoogleCloudApigeeV1NodeConfig
+   */
+  public function setNodeConfig(GoogleCloudApigeeV1NodeConfig $nodeConfig)
+  {
+    $this->nodeConfig = $nodeConfig;
+  }
+  /**
+   * @return GoogleCloudApigeeV1NodeConfig
+   */
+  public function getNodeConfig()
+  {
+    return $this->nodeConfig;
   }
   /**
    * @param GoogleCloudApigeeV1Properties

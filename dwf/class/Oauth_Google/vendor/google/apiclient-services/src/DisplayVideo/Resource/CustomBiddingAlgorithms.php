@@ -80,24 +80,19 @@ class CustomBiddingAlgorithms extends \Google\Service\Resource
    * `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or
    * `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field:
    * - `displayName` * The operator must be `EQUALS (=)` for the following field:
-   * - `customBiddingAlgorithmType` - `customBiddingAlgorithmState` * For
-   * `displayName`, the value is a string. We return all custom bidding algorithms
-   * whose display_name contains such string. * For `customBiddingAlgorithmType`,
-   * the value is a string. We return all algorithms whose
-   * custom_bidding_algorithm_type is equal to the given type. * For
-   * `customBiddingAlgorithmState`, the value is a string. We return all
-   * algorithms whose custom_bidding_algorithm_state is equal to the given type.
+   * - `customBiddingAlgorithmType` * For `displayName`, the value is a string. We
+   * return all custom bidding algorithms whose display_name contains such string.
+   * * For `customBiddingAlgorithmType`, the value is a string. We return all
+   * algorithms whose custom_bidding_algorithm_type is equal to the given type.
    * Examples: * All custom bidding algorithms for which the display name contains
    * "politics": `displayName:politics`. * All custom bidding algorithms for which
-   * the type is "SCRIPT_BASED": `customBiddingAlgorithmType=SCRIPT_BASED` * All
-   * custom bidding algorithms for which the state is "ENABLED":
-   * `customBiddingAlgorithmState=ENABLED` The length of this field should be no
-   * more than 500 characters.
+   * the type is "SCRIPT_BASED": `customBiddingAlgorithmType=SCRIPT_BASED` The
+   * length of this field should be no more than 500 characters.
    * @opt_param string orderBy Field by which to sort the list. Acceptable values
    * are: * `displayName` (default) The default sorting order is ascending. To
    * specify descending order for a field, a suffix "desc" should be added to the
    * field name. Example: `displayName desc`.
-   * @opt_param int pageSize Requested page size. Must be between `1` and `100`.
+   * @opt_param int pageSize Requested page size. Must be between `1` and `200`.
    * If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT`
    * if an invalid value is specified.
    * @opt_param string pageToken A token identifying a page of results the server

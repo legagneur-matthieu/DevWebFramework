@@ -25,6 +25,7 @@ class lurl {
      * @param string $api_key Clé API de LURL 
      */
     public function __construct($api_key) {
+        $this->_api_key = $api_key;
         entity_generator::generate([
             "lurl_links" => [
                 ["id", "int", true],
@@ -41,30 +42,26 @@ class lurl {
      * @return string|boolean LURL 
      */
     public function get_lurl($url) {
-        if (!in_array($_SERVER["HTTP_HOST"], ["localhost", "127.0.0.1"])) {
-            $lurl = lurl_links::get_collection("url='" . application::$_bdd->protect_var($url) . "'");
-            if (isset($lurl[0])) {
-                $result = [
-                    "status" => "success",
-                    "shortenedUrl" => $lurl[0]->get_lurl(),
-                ];
-            } else {
-                $result = @json_decode(file_get_contents("https://lurl.fr/api?api={$this->_api_key}&url={$url}&type=2"), TRUE);
-                if ($result["status"] === "success") {
-                    lurl_links::ajout($url, $result["shortenedUrl"]);
-                }
-            }
-            if ($result["status"] === 'error') {
-                $log = new log_file(true);
-                foreach ($result["message"] as $msg) {
-                    $log->warning("LURL $url : $msg");
-                }
-                return false;
-            } else {
-                return $result["shortenedUrl"];
-            }
+        $lurl = lurl_links::get_collection("url='" . application::$_bdd->protect_var($url) . "'");
+        if (isset($lurl[0])) {
+            $result = [
+                "status" => "success",
+                "shortenedUrl" => $lurl[0]->get_lurl(),
+            ];
         } else {
+            $result = @json_decode(file_get_contents("https://lurl.fr/api?api={$this->_api_key}&url={$url}&type=2"), TRUE);
+            if ($result["status"] === "success") {
+                lurl_links::ajout($url, $result["shortenedUrl"]);
+            }
+        }
+        if ($result["status"] === 'error') {
+            $log = new log_file(true);
+            foreach ($result["message"] as $msg) {
+                $log->warning("LURL $url : $msg");
+            }
             return false;
+        } else {
+            return $result["shortenedUrl"];
         }
     }
 
@@ -81,12 +78,15 @@ class lurl {
             session::set_val("lurl", []);
         }
         $url = "{$_SERVER["REQUEST_SCHEME"]}://{$_SERVER["HTTP_HOST"]}{$_SERVER["REQUEST_URI"]}";
-        if ($lurl = $this->get_lurl($url)) {
-            if (!in_array($lurl, session::get_val("lurl"))) {
-                if (isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER'] == $lurl) {
-                    session::set_val("lurl", array_merge(session::get_val("lurl"), [$lurl]));
-                } else {
-                    echo html_structures::a_link($lurl, html_structures::bi("heart") . " $text", "btn btn-outline-danger text-center", $title);
+        if (!in_array($_SERVER["HTTP_HOST"], ["localhost", "127.0.0.1"])) {
+            if ($lurl = $this->get_lurl($url)) {
+                echo $url;
+                if (!in_array($lurl, session::get_val("lurl"))) {
+                    if (isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER'] == $lurl) {
+                        session::set_val("lurl", array_merge(session::get_val("lurl"), [$lurl]));
+                    } else {
+                        echo html_structures::a_link($lurl, html_structures::bi("heart") . " $text", "btn btn-outline-danger text-center", $title);
+                    }
                 }
             }
         }

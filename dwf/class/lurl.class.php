@@ -79,9 +79,10 @@ class lurl {
         }
         $url = "{$_SERVER["REQUEST_SCHEME"]}://{$_SERVER["HTTP_HOST"]}{$_SERVER["REQUEST_URI"]}";
         if (!in_array($_SERVER["HTTP_HOST"], ["localhost", "127.0.0.1"])) {
-            if ($lurl = $this->get_lurl($url)) {
+            $get = (strpos($url, "?") ? "&lurl=1" : "?lurl=1");
+            if ($lurl = $this->get_lurl($url . $get)) {
                 if (!in_array($lurl, session::get_val("lurl"))) {
-                    if (isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER'] == $lurl) {
+                    if (isset($_GET['lurl'])) {
                         session::set_val("lurl", array_merge(session::get_val("lurl"), [$lurl]));
                     } else {
                         echo html_structures::a_link($lurl, html_structures::bi("heart") . " $text", "btn btn-outline-danger text-center", $title);

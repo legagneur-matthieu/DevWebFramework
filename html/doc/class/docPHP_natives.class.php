@@ -1712,7 +1712,7 @@ class docPHP_natives {
                 . "?>", $this->_brush);
     }
 
-    private function ScraperAPI($param) {
+    private function ScraperAPI() {
         ?>
         <p>Cette classe permet de faire appel à ScraperAPI <br />
             <a href="https://scraperapi.com">https://scraperapi.com</a>      

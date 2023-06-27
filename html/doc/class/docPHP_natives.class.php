@@ -2008,9 +2008,64 @@ class docPHP_natives {
         <?php
     }
 
+    private function task_manager() {
+        ?>
+        <p>
+            Cette classe permet de gérer les tâches planifiées. <br />
+            Contrairement à un pseudo cron qui dépend de l'activité des utilisateurs, <br />
+            les tâches planifiées sont lancées à une heure précise, mais cela nécessite l'exécution permanente d'un script en CLI.
+        </p>
+        <h5>Initialisation</h5>
+        <p>
+            La méthode statique suivante doit être appelée dans votre projet,<br />
+            cela initialisera une table et une entité "task" ainsi qu'un dossier "task_worker" dans votre projet.
+        </p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "task_manager::init();\n"
+                . "?>", $this->_brush);
+        ?>
+        <h5>Workers</h5>
+        <p>Un worker est une classe qui sera utilisée pour effectuer une tâche précise, <br />
+            Exemple : <br />
+        </p>
+        <ul>
+            <li>Envoyer des mails</li>
+            <li>Nettoyer/sauvegarder la base de données</li>
+            <li>Lancer des audits et créer des rapports</li>
+        </ul>
+        <p>Il doit être placé dans le dossier "task_worker" et se nommer "[nom_du_worker].worker.php"</p>
+        <h6>Exemple de worker (affiche un hello world dans la console)</h6>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "class hello {"
+                . "    public static function run($" . "param = []) {\n"
+                . "        cli::write('Hello world !');\n"
+                . "    }\n"
+                . "}\n"
+                . "?>", $this->_brush);
+        ?>
+        <p>A noter que les classes du framework sont accessibles depuis les workers, un worker peut donc faire appel au task_manager pour programmer une nouvelle tâche (en cas d'erreur par exemple). <br />
+            Exemple : votre worker doit envoyer un mail, l'envoi échoue car le SMTP est indisponible, vous pouvez capturer l'erreur pour programmer une nouvelle tentative d'envoi dans 1 heure.</p>
+        <h5>Utilisation (dans le projet)</h5>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//Programme une tâche utilisant le worker 'send_mail' dans 30 secondes,\n"
+                . "//on indique le mail dans le tableau de paramètres\n"
+                . "task_manager::add(time() + 30, 'send_mail', ['mail' => 'someone@host.com']);\n\n"
+                . "//Affiche les tâches en attente et terminées (à placer dans une administration\n"
+                . "task_manager::print_tasks();"
+                . "?>", $this->_brush);
+        ?>
+        <h5>Execution</h5>
+        <p>Pour lancer le script d'exécution des tâches, il faut ouvrir un terminal et exécuter la commande suivante :</p>
+        <?php
+        js::syntaxhighlighter("php [votre-projet]/task_worker/run.php", $this->_brush);
+    }
+
     private function template() {
         ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />

@@ -17,8 +17,9 @@
 
 namespace Google\Service\Contentwarehouse;
 
-class GoogleCloudContentwarehouseV1PropertyDefinition extends \Google\Model
+class GoogleCloudContentwarehouseV1PropertyDefinition extends \Google\Collection
 {
+  protected $collection_key = 'schemaSources';
   protected $dateTimeTypeOptionsType = GoogleCloudContentwarehouseV1DateTimeTypeOptions::class;
   protected $dateTimeTypeOptionsDataType = '';
   /**
@@ -59,6 +60,12 @@ class GoogleCloudContentwarehouseV1PropertyDefinition extends \Google\Model
   public $name;
   protected $propertyTypeOptionsType = GoogleCloudContentwarehouseV1PropertyTypeOptions::class;
   protected $propertyTypeOptionsDataType = '';
+  /**
+   * @var string
+   */
+  public $retrievalImportance;
+  protected $schemaSourcesType = GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource::class;
+  protected $schemaSourcesDataType = 'array';
   protected $textTypeOptionsType = GoogleCloudContentwarehouseV1TextTypeOptions::class;
   protected $textTypeOptionsDataType = '';
   protected $timestampTypeOptionsType = GoogleCloudContentwarehouseV1TimestampTypeOptions::class;
@@ -245,6 +252,34 @@ class GoogleCloudContentwarehouseV1PropertyDefinition extends \Google\Model
   public function getPropertyTypeOptions()
   {
     return $this->propertyTypeOptions;
+  }
+  /**
+   * @param string
+   */
+  public function setRetrievalImportance($retrievalImportance)
+  {
+    $this->retrievalImportance = $retrievalImportance;
+  }
+  /**
+   * @return string
+   */
+  public function getRetrievalImportance()
+  {
+    return $this->retrievalImportance;
+  }
+  /**
+   * @param GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource[]
+   */
+  public function setSchemaSources($schemaSources)
+  {
+    $this->schemaSources = $schemaSources;
+  }
+  /**
+   * @return GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource[]
+   */
+  public function getSchemaSources()
+  {
+    return $this->schemaSources;
   }
   /**
    * @param GoogleCloudContentwarehouseV1TextTypeOptions

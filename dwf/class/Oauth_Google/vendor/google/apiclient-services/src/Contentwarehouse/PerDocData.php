@@ -267,6 +267,8 @@ class PerDocData extends \Google\Collection
   protected $liveResultsDataDataType = '';
   protected $localizedClusterType = IndexingDupsLocalizedLocalizedCluster::class;
   protected $localizedClusterDataType = '';
+  protected $mediaOrPeopleEntitiesType = ImageQualitySensitiveMediaOrPeopleEntities::class;
+  protected $mediaOrPeopleEntitiesDataType = '';
   /**
    * @var int
    */
@@ -343,6 +345,8 @@ class PerDocData extends \Google\Collection
   public $rosettaLanguages;
   protected $rsApplicationType = RepositoryAnnotationsRdfaRdfaRichSnippetsApplication::class;
   protected $rsApplicationDataType = '';
+  protected $s3AudioLanguageType = S3AudioLanguageS3AudioLanguage::class;
+  protected $s3AudioLanguageDataType = '';
   /**
    * @var int[]
    */
@@ -1425,6 +1429,20 @@ class PerDocData extends \Google\Collection
     return $this->localizedCluster;
   }
   /**
+   * @param ImageQualitySensitiveMediaOrPeopleEntities
+   */
+  public function setMediaOrPeopleEntities(ImageQualitySensitiveMediaOrPeopleEntities $mediaOrPeopleEntities)
+  {
+    $this->mediaOrPeopleEntities = $mediaOrPeopleEntities;
+  }
+  /**
+   * @return ImageQualitySensitiveMediaOrPeopleEntities
+   */
+  public function getMediaOrPeopleEntities()
+  {
+    return $this->mediaOrPeopleEntities;
+  }
+  /**
    * @param int
    */
   public function setNoimageframeoverlayreason($noimageframeoverlayreason)
@@ -1731,6 +1749,20 @@ class PerDocData extends \Google\Collection
   public function getRsApplication()
   {
     return $this->rsApplication;
+  }
+  /**
+   * @param S3AudioLanguageS3AudioLanguage
+   */
+  public function setS3AudioLanguage(S3AudioLanguageS3AudioLanguage $s3AudioLanguage)
+  {
+    $this->s3AudioLanguage = $s3AudioLanguage;
+  }
+  /**
+   * @return S3AudioLanguageS3AudioLanguage
+   */
+  public function getS3AudioLanguage()
+  {
+    return $this->s3AudioLanguage;
   }
   /**
    * @param int[]

@@ -72,7 +72,7 @@ class Files extends \Google\Service\Resource
     return $this->call('copy', [$params], DriveFile::class);
   }
   /**
-   * Creates a new file. (files.create)
+   * Creates a file. (files.create)
    *
    * @param DriveFile $postBody
    * @param array $optParams Optional parameters.
@@ -130,10 +130,13 @@ class Files extends \Google\Service\Resource
     return $this->call('delete', [$params]);
   }
   /**
-   * Permanently deletes all of the user's trashed files. (files.emptyTrash)
+   * Permanently deletes all trashed files of a user or shared drive.
+   * (files.emptyTrash)
    *
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string driveId If set, empties the trash of the provided shared
+   * drive.
    * @opt_param bool enforceSingleParent Deprecated. If an item is not in a shared
    * drive and its last parent is deleted but the item itself is not, the item
    * will be placed under its owner's root.
@@ -244,7 +247,7 @@ class Files extends \Google\Service\Resource
    * @opt_param string q A query for filtering the file results. See the "Search
    * for Files" guide for supported syntax.
    * @opt_param string spaces A comma-separated list of spaces to query within the
-   * corpus. Supported values are 'drive' and 'appDataFolder'.
+   * corpora. Supported values are 'drive' and 'appDataFolder'.
    * @opt_param bool supportsAllDrives Whether the requesting application supports
    * both My Drives and shared drives.
    * @opt_param bool supportsTeamDrives Deprecated use supportsAllDrives instead.
@@ -329,9 +332,7 @@ class Files extends \Google\Service\Resource
     return $this->call('update', [$params], DriveFile::class);
   }
   /**
-   * Subscribes to changes to a file. While you can establish a channel for
-   * changes to a file on a shared drive, a change to a shared drive file won't
-   * create a notification. (files.watch)
+   * Subscribe to changes on a file. (files.watch)
    *
    * @param string $fileId The ID of the file.
    * @param Channel $postBody

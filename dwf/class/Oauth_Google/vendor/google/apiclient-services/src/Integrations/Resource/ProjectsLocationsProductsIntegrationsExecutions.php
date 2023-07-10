@@ -19,7 +19,6 @@ namespace Google\Service\Integrations\Resource;
 
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaCancelExecutionRequest;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaCancelExecutionResponse;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaDownloadExecutionResponse;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaExecution;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaListExecutionsResponse;
 
@@ -28,7 +27,7 @@ use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaListExecutionsResp
  * Typical usage is:
  *  <code>
  *   $integrationsService = new Google\Service\Integrations(...);
- *   $executions = $integrationsService->executions;
+ *   $executions = $integrationsService->projects_locations_products_integrations_executions;
  *  </code>
  */
 class ProjectsLocationsProductsIntegrationsExecutions extends \Google\Service\Resource
@@ -48,21 +47,6 @@ class ProjectsLocationsProductsIntegrationsExecutions extends \Google\Service\Re
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('cancel', [$params], GoogleCloudIntegrationsV1alphaCancelExecutionResponse::class);
-  }
-  /**
-   * Download the execution. (executions.download)
-   *
-   * @param string $name Required. The execution resource name. Format: projects/{
-   * gcp_project_id}/locations/{location}/products/{product}/integrations/{integra
-   * tion_id}/executions/{execution_id}
-   * @param array $optParams Optional parameters.
-   * @return GoogleCloudIntegrationsV1alphaDownloadExecutionResponse
-   */
-  public function download($name, $optParams = [])
-  {
-    $params = ['name' => $name];
-    $params = array_merge($params, $optParams);
-    return $this->call('download', [$params], GoogleCloudIntegrationsV1alphaDownloadExecutionResponse::class);
   }
   /**
    * Get an execution in the specified project. (executions.get)
@@ -90,12 +74,14 @@ class ProjectsLocationsProductsIntegrationsExecutions extends \Google\Service\Re
    * @param array $optParams Optional parameters.
    *
    * @opt_param string filter Optional. Standard filter field, we support
-   * filtering on all fields in EventExecutionParamIndexes table. All fields
-   * support for EQUALS, in additional: CreateTimestamp support for LESS_THAN,
-   * GREATER_THAN ParameterKey, ParameterValue, ParameterType support for HAS For
-   * example: "parameter_value" HAS \"parameter1\" Also supports operators like
-   * AND, OR, NOT For example, trigger_id=\"id1\" AND
-   * event_execution_state=\"FAILED\"
+   * filtering on following fields: workflow_name: the name of the integration.
+   * CreateTimestamp: the execution created time. event_execution_state: the state
+   * of the executions. execution_id: the id of the execution. trigger_id: the id
+   * of the trigger. parameter_type: the type of the parameters involved in the
+   * execution. All fields support for EQUALS, in additional: CreateTimestamp
+   * support for LESS_THAN, GREATER_THAN ParameterType support for HAS For
+   * example: "parameter_type" HAS \"string\" Also supports operators like AND,
+   * OR, NOT For example, trigger_id=\"id1\" AND workflow_name=\"testWorkflow\"
    * @opt_param string filterParams.customFilter Optional user-provided custom
    * filter.
    * @opt_param string filterParams.endTime End timestamp.

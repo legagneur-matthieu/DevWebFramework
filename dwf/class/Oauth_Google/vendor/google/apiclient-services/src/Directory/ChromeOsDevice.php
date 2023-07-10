@@ -46,6 +46,10 @@ class ChromeOsDevice extends \Google\Collection
   protected $cpuInfoDataType = 'array';
   protected $cpuStatusReportsType = ChromeOsDeviceCpuStatusReports::class;
   protected $cpuStatusReportsDataType = 'array';
+  /**
+   * @var string
+   */
+  public $deprovisionReason;
   protected $deviceFilesType = ChromeOsDeviceDeviceFiles::class;
   protected $deviceFilesDataType = 'array';
   /**
@@ -82,6 +86,10 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $kind;
+  /**
+   * @var string
+   */
+  public $lastDeprovisionTimestamp;
   /**
    * @var string
    */
@@ -276,6 +284,20 @@ class ChromeOsDevice extends \Google\Collection
     return $this->cpuStatusReports;
   }
   /**
+   * @param string
+   */
+  public function setDeprovisionReason($deprovisionReason)
+  {
+    $this->deprovisionReason = $deprovisionReason;
+  }
+  /**
+   * @return string
+   */
+  public function getDeprovisionReason()
+  {
+    return $this->deprovisionReason;
+  }
+  /**
    * @param ChromeOsDeviceDeviceFiles[]
    */
   public function setDeviceFiles($deviceFiles)
@@ -414,6 +436,20 @@ class ChromeOsDevice extends \Google\Collection
   public function getKind()
   {
     return $this->kind;
+  }
+  /**
+   * @param string
+   */
+  public function setLastDeprovisionTimestamp($lastDeprovisionTimestamp)
+  {
+    $this->lastDeprovisionTimestamp = $lastDeprovisionTimestamp;
+  }
+  /**
+   * @return string
+   */
+  public function getLastDeprovisionTimestamp()
+  {
+    return $this->lastDeprovisionTimestamp;
   }
   /**
    * @param string

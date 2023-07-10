@@ -33,6 +33,10 @@ class HttpCheck extends \Google\Collection
    */
   public $contentType;
   /**
+   * @var string
+   */
+  public $customContentType;
+  /**
    * @var string[]
    */
   public $headers;
@@ -118,6 +122,20 @@ class HttpCheck extends \Google\Collection
   public function getContentType()
   {
     return $this->contentType;
+  }
+  /**
+   * @param string
+   */
+  public function setCustomContentType($customContentType)
+  {
+    $this->customContentType = $customContentType;
+  }
+  /**
+   * @return string
+   */
+  public function getCustomContentType()
+  {
+    return $this->customContentType;
   }
   /**
    * @param string[]

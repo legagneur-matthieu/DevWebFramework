@@ -30,6 +30,8 @@ class Release extends \Google\Collection
   public $annotations;
   protected $buildArtifactsType = BuildArtifact::class;
   protected $buildArtifactsDataType = 'array';
+  protected $conditionType = ReleaseCondition::class;
+  protected $conditionDataType = '';
   /**
    * @var string
    */
@@ -128,6 +130,20 @@ class Release extends \Google\Collection
   public function getBuildArtifacts()
   {
     return $this->buildArtifacts;
+  }
+  /**
+   * @param ReleaseCondition
+   */
+  public function setCondition(ReleaseCondition $condition)
+  {
+    $this->condition = $condition;
+  }
+  /**
+   * @return ReleaseCondition
+   */
+  public function getCondition()
+  {
+    return $this->condition;
   }
   /**
    * @param string

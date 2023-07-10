@@ -22,6 +22,7 @@ class Instance extends \Google\Collection
   protected $collection_key = 'upgradeHistory';
   protected $acceleratorConfigType = AcceleratorConfig::class;
   protected $acceleratorConfigDataType = '';
+  public $acceleratorConfig;
   /**
    * @var string
    */
@@ -36,6 +37,7 @@ class Instance extends \Google\Collection
   public $canIpForward;
   protected $containerImageType = ContainerImage::class;
   protected $containerImageDataType = '';
+  public $containerImage;
   /**
    * @var string
    */
@@ -62,6 +64,7 @@ class Instance extends \Google\Collection
   public $diskEncryption;
   protected $disksType = Disk::class;
   protected $disksDataType = 'array';
+  public $disks = [];
   /**
    * @var bool
    */
@@ -69,7 +72,7 @@ class Instance extends \Google\Collection
   /**
    * @var string[]
    */
-  public $instanceOwners;
+  public $instanceOwners = [];
   /**
    * @var string
    */
@@ -77,7 +80,7 @@ class Instance extends \Google\Collection
   /**
    * @var string[]
    */
-  public $labels;
+  public $labels = [];
   /**
    * @var string
    */
@@ -85,7 +88,7 @@ class Instance extends \Google\Collection
   /**
    * @var string[]
    */
-  public $metadata;
+  public $metadata = [];
   /**
    * @var string
    */
@@ -120,6 +123,7 @@ class Instance extends \Google\Collection
   public $proxyUri;
   protected $reservationAffinityType = ReservationAffinity::class;
   protected $reservationAffinityDataType = '';
+  public $reservationAffinity;
   /**
    * @var string
    */
@@ -127,9 +131,10 @@ class Instance extends \Google\Collection
   /**
    * @var string[]
    */
-  public $serviceAccountScopes;
+  public $serviceAccountScopes = [];
   protected $shieldedInstanceConfigType = ShieldedInstanceConfig::class;
   protected $shieldedInstanceConfigDataType = '';
+  public $shieldedInstanceConfig;
   /**
    * @var string
    */
@@ -141,15 +146,17 @@ class Instance extends \Google\Collection
   /**
    * @var string[]
    */
-  public $tags;
+  public $tags = [];
   /**
    * @var string
    */
   public $updateTime;
   protected $upgradeHistoryType = UpgradeHistoryEntry::class;
   protected $upgradeHistoryDataType = 'array';
+  public $upgradeHistory = [];
   protected $vmImageType = VmImage::class;
   protected $vmImageDataType = '';
+  public $vmImage;
 
   /**
    * @param AcceleratorConfig

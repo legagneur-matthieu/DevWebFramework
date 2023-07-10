@@ -27,6 +27,10 @@ class GoogleCloudDialogflowCxV3QueryParameters extends \Google\Collection
   /**
    * @var string
    */
+  public $channel;
+  /**
+   * @var string
+   */
   public $currentPage;
   /**
    * @var bool
@@ -70,6 +74,20 @@ class GoogleCloudDialogflowCxV3QueryParameters extends \Google\Collection
   public function getAnalyzeQueryTextSentiment()
   {
     return $this->analyzeQueryTextSentiment;
+  }
+  /**
+   * @param string
+   */
+  public function setChannel($channel)
+  {
+    $this->channel = $channel;
+  }
+  /**
+   * @return string
+   */
+  public function getChannel()
+  {
+    return $this->channel;
   }
   /**
    * @param string

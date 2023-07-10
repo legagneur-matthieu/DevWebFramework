@@ -60,6 +60,10 @@ class AssistantApiSupportedFeatures extends \Google\Model
   /**
    * @var bool
    */
+  public $confirmationBeforeReadingMultipleMessagesSupported;
+  /**
+   * @var bool
+   */
   public $crossDeviceBroadcastSupported;
   /**
    * @var string
@@ -115,6 +119,10 @@ class AssistantApiSupportedFeatures extends \Google\Model
    * @var bool
    */
   public $isPairedPhoneNeededForComms;
+  /**
+   * @var bool
+   */
+  public $justInTimeSupported;
   /**
    * @var string
    */
@@ -391,6 +399,20 @@ class AssistantApiSupportedFeatures extends \Google\Model
   /**
    * @param bool
    */
+  public function setConfirmationBeforeReadingMultipleMessagesSupported($confirmationBeforeReadingMultipleMessagesSupported)
+  {
+    $this->confirmationBeforeReadingMultipleMessagesSupported = $confirmationBeforeReadingMultipleMessagesSupported;
+  }
+  /**
+   * @return bool
+   */
+  public function getConfirmationBeforeReadingMultipleMessagesSupported()
+  {
+    return $this->confirmationBeforeReadingMultipleMessagesSupported;
+  }
+  /**
+   * @param bool
+   */
   public function setCrossDeviceBroadcastSupported($crossDeviceBroadcastSupported)
   {
     $this->crossDeviceBroadcastSupported = $crossDeviceBroadcastSupported;
@@ -611,6 +633,20 @@ class AssistantApiSupportedFeatures extends \Google\Model
   public function getIsPairedPhoneNeededForComms()
   {
     return $this->isPairedPhoneNeededForComms;
+  }
+  /**
+   * @param bool
+   */
+  public function setJustInTimeSupported($justInTimeSupported)
+  {
+    $this->justInTimeSupported = $justInTimeSupported;
+  }
+  /**
+   * @return bool
+   */
+  public function getJustInTimeSupported()
+  {
+    return $this->justInTimeSupported;
   }
   /**
    * @param string

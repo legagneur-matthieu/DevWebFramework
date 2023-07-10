@@ -30,7 +30,7 @@ use Google\Service\Networkconnectivity\TestIamPermissionsResponse;
  * Typical usage is:
  *  <code>
  *   $networkconnectivityService = new Google\Service\Networkconnectivity(...);
- *   $spokes = $networkconnectivityService->spokes;
+ *   $spokes = $networkconnectivityService->projects_locations_spokes;
  *  </code>
  */
 class ProjectsLocationsSpokes extends \Google\Service\Resource
@@ -137,11 +137,9 @@ class ProjectsLocationsSpokes extends \Google\Service\Resource
    * @param string $parent Required. The parent resource.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string filter An expression that filters the results listed in the
-   * response.
+   * @opt_param string filter An expression that filters the list of results.
    * @opt_param string orderBy Sort the results by a certain order.
-   * @opt_param int pageSize The maximum number of results per page that should be
-   * returned.
+   * @opt_param int pageSize The maximum number of results to return per page.
    * @opt_param string pageToken The page token.
    * @return ListSpokesResponse
    */

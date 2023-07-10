@@ -90,8 +90,7 @@ class Images extends \Google\Service\Resource
     return $this->call('deprecate', [$params], Operation::class);
   }
   /**
-   * Returns the specified image. Gets a list of available images by making a
-   * list() request. (images.get)
+   * Returns the specified image. (images.get)
    *
    * @param string $project Project ID for this request.
    * @param string $image Name of the image resource to return.
@@ -106,9 +105,11 @@ class Images extends \Google\Service\Resource
   }
   /**
    * Returns the latest image that is part of an image family and is not
-   * deprecated. (images.getFromFamily)
+   * deprecated. For more information on image families, see Public image families
+   * documentation. (images.getFromFamily)
    *
-   * @param string $project Project ID for this request.
+   * @param string $project The image project that the image belongs to. For
+   * example, to get a CentOS image, specify centos-cloud as the image project.
    * @param string $family Name of the image family to search for.
    * @param array $optParams Optional parameters.
    * @return Image

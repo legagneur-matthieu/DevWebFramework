@@ -36,6 +36,10 @@ class Workstation extends \Google\Model
    */
   public $displayName;
   /**
+   * @var string[]
+   */
+  public $env;
+  /**
    * @var string
    */
   public $etag;
@@ -43,6 +47,10 @@ class Workstation extends \Google\Model
    * @var string
    */
   public $host;
+  /**
+   * @var string[]
+   */
+  public $labels;
   /**
    * @var string
    */
@@ -121,6 +129,20 @@ class Workstation extends \Google\Model
     return $this->displayName;
   }
   /**
+   * @param string[]
+   */
+  public function setEnv($env)
+  {
+    $this->env = $env;
+  }
+  /**
+   * @return string[]
+   */
+  public function getEnv()
+  {
+    return $this->env;
+  }
+  /**
    * @param string
    */
   public function setEtag($etag)
@@ -147,6 +169,20 @@ class Workstation extends \Google\Model
   public function getHost()
   {
     return $this->host;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * @param string

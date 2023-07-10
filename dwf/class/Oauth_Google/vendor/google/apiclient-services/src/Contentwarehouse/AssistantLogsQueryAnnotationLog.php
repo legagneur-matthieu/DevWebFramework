@@ -24,6 +24,8 @@ class AssistantLogsQueryAnnotationLog extends \Google\Collection
   protected $deviceAnnotationDataType = '';
   protected $deviceAnnotationsType = AssistantLogsDeviceAnnotationLog::class;
   protected $deviceAnnotationsDataType = 'array';
+  protected $providerAnnotationType = AssistantLogsProviderAnnotationLog::class;
+  protected $providerAnnotationDataType = '';
   protected $roomAnnotationType = AssistantLogsRoomAnnotationLog::class;
   protected $roomAnnotationDataType = '';
   protected $roomAnnotationsType = AssistantLogsRoomAnnotationLog::class;
@@ -58,6 +60,20 @@ class AssistantLogsQueryAnnotationLog extends \Google\Collection
   public function getDeviceAnnotations()
   {
     return $this->deviceAnnotations;
+  }
+  /**
+   * @param AssistantLogsProviderAnnotationLog
+   */
+  public function setProviderAnnotation(AssistantLogsProviderAnnotationLog $providerAnnotation)
+  {
+    $this->providerAnnotation = $providerAnnotation;
+  }
+  /**
+   * @return AssistantLogsProviderAnnotationLog
+   */
+  public function getProviderAnnotation()
+  {
+    return $this->providerAnnotation;
   }
   /**
    * @param AssistantLogsRoomAnnotationLog

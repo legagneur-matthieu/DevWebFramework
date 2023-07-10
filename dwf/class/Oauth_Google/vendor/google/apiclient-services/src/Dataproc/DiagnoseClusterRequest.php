@@ -17,8 +17,98 @@
 
 namespace Google\Service\Dataproc;
 
-class DiagnoseClusterRequest extends \Google\Model
+class DiagnoseClusterRequest extends \Google\Collection
 {
+  protected $collection_key = 'yarnApplicationIds';
+  protected $diagnosisIntervalType = Interval::class;
+  protected $diagnosisIntervalDataType = '';
+  /**
+   * @var string
+   */
+  public $job;
+  /**
+   * @var string[]
+   */
+  public $jobs;
+  /**
+   * @var string
+   */
+  public $yarnApplicationId;
+  /**
+   * @var string[]
+   */
+  public $yarnApplicationIds;
+
+  /**
+   * @param Interval
+   */
+  public function setDiagnosisInterval(Interval $diagnosisInterval)
+  {
+    $this->diagnosisInterval = $diagnosisInterval;
+  }
+  /**
+   * @return Interval
+   */
+  public function getDiagnosisInterval()
+  {
+    return $this->diagnosisInterval;
+  }
+  /**
+   * @param string
+   */
+  public function setJob($job)
+  {
+    $this->job = $job;
+  }
+  /**
+   * @return string
+   */
+  public function getJob()
+  {
+    return $this->job;
+  }
+  /**
+   * @param string[]
+   */
+  public function setJobs($jobs)
+  {
+    $this->jobs = $jobs;
+  }
+  /**
+   * @return string[]
+   */
+  public function getJobs()
+  {
+    return $this->jobs;
+  }
+  /**
+   * @param string
+   */
+  public function setYarnApplicationId($yarnApplicationId)
+  {
+    $this->yarnApplicationId = $yarnApplicationId;
+  }
+  /**
+   * @return string
+   */
+  public function getYarnApplicationId()
+  {
+    return $this->yarnApplicationId;
+  }
+  /**
+   * @param string[]
+   */
+  public function setYarnApplicationIds($yarnApplicationIds)
+  {
+    $this->yarnApplicationIds = $yarnApplicationIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getYarnApplicationIds()
+  {
+    return $this->yarnApplicationIds;
+  }
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.

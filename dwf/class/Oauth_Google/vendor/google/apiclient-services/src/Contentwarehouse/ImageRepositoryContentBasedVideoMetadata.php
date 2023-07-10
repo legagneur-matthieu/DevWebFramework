@@ -52,6 +52,8 @@ class ImageRepositoryContentBasedVideoMetadata extends \Google\Collection
   protected $mediaInfoDataType = '';
   protected $representativeFrameDataType = ImageData::class;
   protected $representativeFrameDataDataType = '';
+  protected $s3AsrType = ImageRepositoryAmarnaCloudSpeechSignals::class;
+  protected $s3AsrDataType = '';
   protected $s3LanguageIdentificationType = ImageRepositoryS3LangIdSignals::class;
   protected $s3LanguageIdentificationDataType = '';
   protected $safesearchVideoContentSignalsType = SafesearchVideoContentSignals::class;
@@ -287,6 +289,20 @@ class ImageRepositoryContentBasedVideoMetadata extends \Google\Collection
   public function getRepresentativeFrameData()
   {
     return $this->representativeFrameData;
+  }
+  /**
+   * @param ImageRepositoryAmarnaCloudSpeechSignals
+   */
+  public function setS3Asr(ImageRepositoryAmarnaCloudSpeechSignals $s3Asr)
+  {
+    $this->s3Asr = $s3Asr;
+  }
+  /**
+   * @return ImageRepositoryAmarnaCloudSpeechSignals
+   */
+  public function getS3Asr()
+  {
+    return $this->s3Asr;
   }
   /**
    * @param ImageRepositoryS3LangIdSignals

@@ -32,6 +32,8 @@ class GoogleChromePolicyVersionsV1PolicySchemaFieldDescription extends \Google\C
    * @var string
    */
   public $field;
+  protected $fieldConstraintsType = GoogleChromePolicyVersionsV1FieldConstraints::class;
+  protected $fieldConstraintsDataType = '';
   protected $fieldDependenciesType = GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies::class;
   protected $fieldDependenciesDataType = 'array';
   /**
@@ -94,6 +96,20 @@ class GoogleChromePolicyVersionsV1PolicySchemaFieldDescription extends \Google\C
   public function getField()
   {
     return $this->field;
+  }
+  /**
+   * @param GoogleChromePolicyVersionsV1FieldConstraints
+   */
+  public function setFieldConstraints(GoogleChromePolicyVersionsV1FieldConstraints $fieldConstraints)
+  {
+    $this->fieldConstraints = $fieldConstraints;
+  }
+  /**
+   * @return GoogleChromePolicyVersionsV1FieldConstraints
+   */
+  public function getFieldConstraints()
+  {
+    return $this->fieldConstraints;
   }
   /**
    * @param GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies[]

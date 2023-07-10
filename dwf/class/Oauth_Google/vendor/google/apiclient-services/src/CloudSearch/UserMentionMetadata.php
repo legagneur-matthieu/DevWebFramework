@@ -35,6 +35,10 @@ class UserMentionMetadata extends \Google\Model
    * @var string
    */
   public $type;
+  /**
+   * @var string
+   */
+  public $userMentionError;
 
   /**
    * @param string
@@ -105,6 +109,20 @@ class UserMentionMetadata extends \Google\Model
   public function getType()
   {
     return $this->type;
+  }
+  /**
+   * @param string
+   */
+  public function setUserMentionError($userMentionError)
+  {
+    $this->userMentionError = $userMentionError;
+  }
+  /**
+   * @return string
+   */
+  public function getUserMentionError()
+  {
+    return $this->userMentionError;
   }
 }
 

@@ -19,7 +19,7 @@ namespace Google\Service\Contentwarehouse;
 
 class StorageGraphBfgPolicyMetadata extends \Google\Collection
 {
-  protected $collection_key = 'legalRemovalRegions';
+  protected $collection_key = 'policyDataScopeKeys';
   /**
    * @var string
    */
@@ -34,6 +34,10 @@ class StorageGraphBfgPolicyMetadata extends \Google\Collection
   protected $legalRemovalRegionsDataType = 'array';
   protected $lmsPolicyMetadataType = StorageGraphBfgLmsPolicyMetadata::class;
   protected $lmsPolicyMetadataDataType = '';
+  /**
+   * @var int[]
+   */
+  public $policyDataScopeKeys;
   /**
    * @var string
    */
@@ -110,6 +114,20 @@ class StorageGraphBfgPolicyMetadata extends \Google\Collection
   public function getLmsPolicyMetadata()
   {
     return $this->lmsPolicyMetadata;
+  }
+  /**
+   * @param int[]
+   */
+  public function setPolicyDataScopeKeys($policyDataScopeKeys)
+  {
+    $this->policyDataScopeKeys = $policyDataScopeKeys;
+  }
+  /**
+   * @return int[]
+   */
+  public function getPolicyDataScopeKeys()
+  {
+    return $this->policyDataScopeKeys;
   }
   /**
    * @param string

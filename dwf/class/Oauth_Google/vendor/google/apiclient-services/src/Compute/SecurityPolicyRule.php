@@ -35,6 +35,8 @@ class SecurityPolicyRule extends \Google\Model
   public $kind;
   protected $matchType = SecurityPolicyRuleMatcher::class;
   protected $matchDataType = '';
+  protected $preconfiguredWafConfigType = SecurityPolicyRulePreconfiguredWafConfig::class;
+  protected $preconfiguredWafConfigDataType = '';
   /**
    * @var bool
    */
@@ -117,6 +119,20 @@ class SecurityPolicyRule extends \Google\Model
   public function getMatch()
   {
     return $this->match;
+  }
+  /**
+   * @param SecurityPolicyRulePreconfiguredWafConfig
+   */
+  public function setPreconfiguredWafConfig(SecurityPolicyRulePreconfiguredWafConfig $preconfiguredWafConfig)
+  {
+    $this->preconfiguredWafConfig = $preconfiguredWafConfig;
+  }
+  /**
+   * @return SecurityPolicyRulePreconfiguredWafConfig
+   */
+  public function getPreconfiguredWafConfig()
+  {
+    return $this->preconfiguredWafConfig;
   }
   /**
    * @param bool

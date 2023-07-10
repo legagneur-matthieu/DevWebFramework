@@ -40,10 +40,6 @@ class GeostorePolygonProto extends \Google\Collection
   protected $loopDataType = 'array';
   protected $metadataType = GeostoreFieldMetadataProto::class;
   protected $metadataDataType = '';
-  /**
-   * @var string
-   */
-  public $shapeId;
   protected $temporaryDataType = Proto2BridgeMessageSet::class;
   protected $temporaryDataDataType = '';
   /**
@@ -134,20 +130,6 @@ class GeostorePolygonProto extends \Google\Collection
   public function getMetadata()
   {
     return $this->metadata;
-  }
-  /**
-   * @param string
-   */
-  public function setShapeId($shapeId)
-  {
-    $this->shapeId = $shapeId;
-  }
-  /**
-   * @return string
-   */
-  public function getShapeId()
-  {
-    return $this->shapeId;
   }
   /**
    * @param Proto2BridgeMessageSet

@@ -31,13 +31,13 @@ use Google\Service\CloudWorkstations\WorkstationConfig;
  * Typical usage is:
  *  <code>
  *   $workstationsService = new Google\Service\CloudWorkstations(...);
- *   $workstationConfigs = $workstationsService->workstationConfigs;
+ *   $workstationConfigs = $workstationsService->projects_locations_workstationClusters_workstationConfigs;
  *  </code>
  */
 class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Service\Resource
 {
   /**
-   * Creates a new WorkstationConfig. (workstationConfigs.create)
+   * Creates a new workstation configuration. (workstationConfigs.create)
    *
    * @param string $parent Required. Parent resource name.
    * @param WorkstationConfig $postBody
@@ -45,7 +45,8 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
    *
    * @opt_param bool validateOnly If set, validate the request and preview the
    * review, but do not actually apply it.
-   * @opt_param string workstationConfigId Required. ID to use for the config.
+   * @opt_param string workstationConfigId Required. ID to use for the workstation
+   * configuration.
    * @return Operation
    */
   public function create($parent, WorkstationConfig $postBody, $optParams = [])
@@ -55,16 +56,17 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
     return $this->call('create', [$params], Operation::class);
   }
   /**
-   * Deletes the specified WorkstationConfig. (workstationConfigs.delete)
+   * Deletes the specified workstation configuration. (workstationConfigs.delete)
    *
-   * @param string $name Required. Name of the config to delete.
+   * @param string $name Required. Name of the workstation configuration to
+   * delete.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string etag If set, the request will be rejected if the latest
-   * version of the config on the server does not have this etag.
-   * @opt_param bool force If set, any Workstations in the config will also be
-   * deleted. Otherwise, the request will work only if the config has no
-   * workstations.
+   * @opt_param string etag If set, the request is rejected if the latest version
+   * of the workstation configuration on the server does not have this ETag.
+   * @opt_param bool force If set, any workstations in the workstation
+   * configuration are also deleted. Otherwise, the request works only if the
+   * workstation configuration has no workstations.
    * @opt_param bool validateOnly If set, validate the request and preview the
    * review, but do not actually apply it.
    * @return Operation
@@ -76,7 +78,7 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
     return $this->call('delete', [$params], Operation::class);
   }
   /**
-   * Returns the requested WorkstationConfig. (workstationConfigs.get)
+   * Returns the requested workstation configuration. (workstationConfigs.get)
    *
    * @param string $name Required. Name of the requested resource.
    * @param array $optParams Optional parameters.
@@ -120,8 +122,8 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
     return $this->call('getIamPolicy', [$params], Policy::class);
   }
   /**
-   * Returns all WorkstationConfigs in the specified cluster. (workstationConfigs.
-   * listProjectsLocationsWorkstationClustersWorkstationConfigs)
+   * Returns all workstation configurations in the specified cluster. (workstation
+   * Configs.listProjectsLocationsWorkstationClustersWorkstationConfigs)
    *
    * @param string $parent Required. Parent resource name.
    * @param array $optParams Optional parameters.
@@ -138,8 +140,8 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
     return $this->call('list', [$params], ListWorkstationConfigsResponse::class);
   }
   /**
-   * Returns all WorkstationConfigs in the specified cluster on which the caller
-   * has the "workstations.workstation.create" permission.
+   * Returns all workstation configurations in the specified cluster on which the
+   * caller has the "workstations.workstation.create" permission.
    * (workstationConfigs.listUsable)
    *
    * @param string $parent Required. Parent resource name.
@@ -157,16 +159,17 @@ class ProjectsLocationsWorkstationClustersWorkstationConfigs extends \Google\Ser
     return $this->call('listUsable', [$params], ListUsableWorkstationConfigsResponse::class);
   }
   /**
-   * Updates an existing WorkstationConfig. (workstationConfigs.patch)
+   * Updates an existing workstation configuration. (workstationConfigs.patch)
    *
    * @param string $name Full name of this resource.
    * @param WorkstationConfig $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param bool allowMissing If set, and the config is not found, a new
-   * config will be created. In this situation, update_mask is ignored.
+   * @opt_param bool allowMissing If set and the workstation configuration is not
+   * found, a new workstation configuration will be created. In this situation,
+   * update_mask is ignored.
    * @opt_param string updateMask Required. Mask specifying which fields in the
-   * config should be updated.
+   * workstation configuration should be updated.
    * @opt_param bool validateOnly If set, validate the request and preview the
    * review, but do not actually apply it.
    * @return Operation

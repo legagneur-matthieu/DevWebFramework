@@ -27,7 +27,7 @@ use Google\Service\Speech\SpeechEmpty;
  * Typical usage is:
  *  <code>
  *   $speechService = new Google\Service\Speech(...);
- *   $phraseSets = $speechService->phraseSets;
+ *   $phraseSets = $speechService->projects_locations_phraseSets;
  *  </code>
  */
 class ProjectsLocationsPhraseSets extends \Google\Service\Resource
@@ -38,10 +38,10 @@ class ProjectsLocationsPhraseSets extends \Google\Service\Resource
    * model when you send a call that includes the PhraseSet. (phraseSets.create)
    *
    * @param string $parent Required. The parent resource where this phrase set
-   * will be created. Format: `projects/{project}/locations/{location}/phraseSets`
-   * Speech-to-Text supports three locations: `global`, `us` (US North America),
-   * and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint,
-   * use the `global` location. To specify a region, use a [regional
+   * will be created. Format: `projects/{project}/locations/{location}` Speech-to-
+   * Text supports three locations: `global`, `us` (US North America), and `eu`
+   * (Europe). If you are calling the `speech.googleapis.com` endpoint, use the
+   * `global` location. To specify a region, use a [regional
    * endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with
    * matching `us` or `eu` location value.
    * @param CreatePhraseSetRequest $postBody

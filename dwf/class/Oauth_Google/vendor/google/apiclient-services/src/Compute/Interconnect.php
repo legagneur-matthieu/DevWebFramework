@@ -67,6 +67,14 @@ class Interconnect extends \Google\Collection
   /**
    * @var string
    */
+  public $labelFingerprint;
+  /**
+   * @var string[]
+   */
+  public $labels;
+  /**
+   * @var string
+   */
   public $linkType;
   /**
    * @var string
@@ -92,6 +100,10 @@ class Interconnect extends \Google\Collection
    * @var int
    */
   public $provisionedLinkCount;
+  /**
+   * @var string
+   */
+  public $remoteLocation;
   /**
    * @var int
    */
@@ -280,6 +292,34 @@ class Interconnect extends \Google\Collection
   /**
    * @param string
    */
+  public function setLabelFingerprint($labelFingerprint)
+  {
+    $this->labelFingerprint = $labelFingerprint;
+  }
+  /**
+   * @return string
+   */
+  public function getLabelFingerprint()
+  {
+    return $this->labelFingerprint;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
+  /**
+   * @param string
+   */
   public function setLinkType($linkType)
   {
     $this->linkType = $linkType;
@@ -374,6 +414,20 @@ class Interconnect extends \Google\Collection
   public function getProvisionedLinkCount()
   {
     return $this->provisionedLinkCount;
+  }
+  /**
+   * @param string
+   */
+  public function setRemoteLocation($remoteLocation)
+  {
+    $this->remoteLocation = $remoteLocation;
+  }
+  /**
+   * @return string
+   */
+  public function getRemoteLocation()
+  {
+    return $this->remoteLocation;
   }
   /**
    * @param int

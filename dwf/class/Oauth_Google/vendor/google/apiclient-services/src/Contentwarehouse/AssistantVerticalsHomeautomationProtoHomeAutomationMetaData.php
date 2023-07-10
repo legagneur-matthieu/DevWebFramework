@@ -49,6 +49,10 @@ class AssistantVerticalsHomeautomationProtoHomeAutomationMetaData extends \Googl
    */
   public $gcmExecutionAddress;
   /**
+   * @var string[]
+   */
+  public $groupIds;
+  /**
    * @var string
    */
   public $hashValue;
@@ -268,6 +272,20 @@ class AssistantVerticalsHomeautomationProtoHomeAutomationMetaData extends \Googl
   public function getGcmExecutionAddress()
   {
     return $this->gcmExecutionAddress;
+  }
+  /**
+   * @param string[]
+   */
+  public function setGroupIds($groupIds)
+  {
+    $this->groupIds = $groupIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getGroupIds()
+  {
+    return $this->groupIds;
   }
   /**
    * @param string

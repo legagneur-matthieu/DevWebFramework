@@ -19,6 +19,8 @@ namespace Google\Service\Contentwarehouse;
 
 class DrishtiFeatureSetDataFeatureSetElement extends \Google\Model
 {
+  protected $compressedType = DrishtiCompressedFeature::class;
+  protected $compressedDataType = '';
   protected $denseType = DrishtiDenseFeatureData::class;
   protected $denseDataType = '';
   protected $indexedType = DrishtiIndexedFeatureData::class;
@@ -29,9 +31,27 @@ class DrishtiFeatureSetDataFeatureSetElement extends \Google\Model
   public $name;
   protected $quantizedType = DrishtiQuantizedDenseFeatureData::class;
   protected $quantizedDataType = '';
+  protected $quantizedByteDenseType = DrishtiQuantizedByteDenseFeatureData::class;
+  protected $quantizedByteDenseDataType = '';
+  protected $quantizedByteIndexedType = DrishtiQuantizedByteIndexedFeatureData::class;
+  protected $quantizedByteIndexedDataType = '';
   protected $sparseType = DrishtiSparseFeatureData::class;
   protected $sparseDataType = '';
 
+  /**
+   * @param DrishtiCompressedFeature
+   */
+  public function setCompressed(DrishtiCompressedFeature $compressed)
+  {
+    $this->compressed = $compressed;
+  }
+  /**
+   * @return DrishtiCompressedFeature
+   */
+  public function getCompressed()
+  {
+    return $this->compressed;
+  }
   /**
    * @param DrishtiDenseFeatureData
    */
@@ -87,6 +107,34 @@ class DrishtiFeatureSetDataFeatureSetElement extends \Google\Model
   public function getQuantized()
   {
     return $this->quantized;
+  }
+  /**
+   * @param DrishtiQuantizedByteDenseFeatureData
+   */
+  public function setQuantizedByteDense(DrishtiQuantizedByteDenseFeatureData $quantizedByteDense)
+  {
+    $this->quantizedByteDense = $quantizedByteDense;
+  }
+  /**
+   * @return DrishtiQuantizedByteDenseFeatureData
+   */
+  public function getQuantizedByteDense()
+  {
+    return $this->quantizedByteDense;
+  }
+  /**
+   * @param DrishtiQuantizedByteIndexedFeatureData
+   */
+  public function setQuantizedByteIndexed(DrishtiQuantizedByteIndexedFeatureData $quantizedByteIndexed)
+  {
+    $this->quantizedByteIndexed = $quantizedByteIndexed;
+  }
+  /**
+   * @return DrishtiQuantizedByteIndexedFeatureData
+   */
+  public function getQuantizedByteIndexed()
+  {
+    return $this->quantizedByteIndexed;
   }
   /**
    * @param DrishtiSparseFeatureData

@@ -29,6 +29,10 @@ class GeostorePriceListSectionProto extends \Google\Collection
    * @var string[]
    */
   public $itemType;
+  /**
+   * @var string
+   */
+  public $language;
   protected $mediaType = GeostoreMediaItemProto::class;
   protected $mediaDataType = 'array';
   protected $nameInfoType = GeostorePriceListNameInfoProto::class;
@@ -89,6 +93,20 @@ class GeostorePriceListSectionProto extends \Google\Collection
   public function getItemType()
   {
     return $this->itemType;
+  }
+  /**
+   * @param string
+   */
+  public function setLanguage($language)
+  {
+    $this->language = $language;
+  }
+  /**
+   * @return string
+   */
+  public function getLanguage()
+  {
+    return $this->language;
   }
   /**
    * @param GeostoreMediaItemProto[]

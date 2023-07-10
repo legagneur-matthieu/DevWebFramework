@@ -21,6 +21,10 @@ class AssistantApiScreenCapabilities extends \Google\Collection
 {
   protected $collection_key = 'supportedScreenStates';
   /**
+   * @var float
+   */
+  public $fontScaleFactor;
+  /**
    * @var string[]
    */
   public $inputType;
@@ -51,6 +55,20 @@ class AssistantApiScreenCapabilities extends \Google\Collection
    */
   public $visionHelpEnabled;
 
+  /**
+   * @param float
+   */
+  public function setFontScaleFactor($fontScaleFactor)
+  {
+    $this->fontScaleFactor = $fontScaleFactor;
+  }
+  /**
+   * @return float
+   */
+  public function getFontScaleFactor()
+  {
+    return $this->fontScaleFactor;
+  }
   /**
    * @param string[]
    */

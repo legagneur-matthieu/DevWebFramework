@@ -31,7 +31,7 @@ use Google\Service\Drive\DriveList;
 class Drives extends \Google\Service\Resource
 {
   /**
-   * Creates a new shared drive. (drives.create)
+   * Creates a shared drive. (drives.create)
    *
    * @param string $requestId An ID, such as a random UUID, which uniquely
    * identifies this user's request for idempotent creation of a shared drive. A
@@ -131,15 +131,15 @@ class Drives extends \Google\Service\Resource
     return $this->call('unhide', [$params], Drive::class);
   }
   /**
-   * Updates the metadate for a shared drive. (drives.update)
+   * Updates the metadata for a shared drive. (drives.update)
    *
    * @param string $driveId The ID of the shared drive.
    * @param Drive $postBody
    * @param array $optParams Optional parameters.
    *
    * @opt_param bool useDomainAdminAccess Issue the request as a domain
-   * administrator; if set to true, then the requester will be granted access if
-   * they are an administrator of the domain to which the shared drive belongs.
+   * administrator. If set to true, then the requester is granted access if
+   * they're an administrator of the domain to which the shared drive belongs.
    * @return Drive
    */
   public function update($driveId, Drive $postBody, $optParams = [])

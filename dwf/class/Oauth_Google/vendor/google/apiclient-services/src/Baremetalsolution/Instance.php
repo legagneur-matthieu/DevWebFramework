@@ -25,6 +25,10 @@ class Instance extends \Google\Collection
    */
   public $createTime;
   /**
+   * @var string
+   */
+  public $firmwareVersion;
+  /**
    * @var bool
    */
   public $hyperthreadingEnabled;
@@ -98,6 +102,20 @@ class Instance extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param string
+   */
+  public function setFirmwareVersion($firmwareVersion)
+  {
+    $this->firmwareVersion = $firmwareVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getFirmwareVersion()
+  {
+    return $this->firmwareVersion;
   }
   /**
    * @param bool

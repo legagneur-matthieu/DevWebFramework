@@ -43,6 +43,8 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
    * @var string
    */
   public $kmsKeyVersionName;
+  protected $latestEvaluationType = GoogleCloudDocumentaiV1EvaluationReference::class;
+  protected $latestEvaluationDataType = '';
   /**
    * @var string
    */
@@ -149,6 +151,20 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
   public function getKmsKeyVersionName()
   {
     return $this->kmsKeyVersionName;
+  }
+  /**
+   * @param GoogleCloudDocumentaiV1EvaluationReference
+   */
+  public function setLatestEvaluation(GoogleCloudDocumentaiV1EvaluationReference $latestEvaluation)
+  {
+    $this->latestEvaluation = $latestEvaluation;
+  }
+  /**
+   * @return GoogleCloudDocumentaiV1EvaluationReference
+   */
+  public function getLatestEvaluation()
+  {
+    return $this->latestEvaluation;
   }
   /**
    * @param string

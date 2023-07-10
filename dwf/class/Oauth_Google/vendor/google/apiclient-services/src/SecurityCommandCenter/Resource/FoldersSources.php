@@ -24,7 +24,7 @@ use Google\Service\SecurityCommandCenter\ListSourcesResponse;
  * Typical usage is:
  *  <code>
  *   $securitycenterService = new Google\Service\SecurityCommandCenter(...);
- *   $sources = $securitycenterService->sources;
+ *   $sources = $securitycenterService->folders_sources;
  *  </code>
  */
 class FoldersSources extends \Google\Service\Resource
@@ -33,7 +33,7 @@ class FoldersSources extends \Google\Service\Resource
    * Lists all sources belonging to an organization. (sources.listFoldersSources)
    *
    * @param string $parent Required. Resource name of the parent of sources to
-   * list. Its format should be "organizations/[organization_id],
+   * list. Its format should be "organizations/[organization_id]",
    * "folders/[folder_id]", or "projects/[project_id]".
    * @param array $optParams Optional parameters.
    *

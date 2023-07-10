@@ -25,7 +25,7 @@ use Google\Service\AndroidPublisher\ProductPurchasesAcknowledgeRequest;
  * Typical usage is:
  *  <code>
  *   $androidpublisherService = new Google\Service\AndroidPublisher(...);
- *   $products = $androidpublisherService->products;
+ *   $products = $androidpublisherService->purchases_products;
  *  </code>
  */
 class PurchasesProducts extends \Google\Service\Resource
@@ -47,6 +47,23 @@ class PurchasesProducts extends \Google\Service\Resource
     $params = ['packageName' => $packageName, 'productId' => $productId, 'token' => $token, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('acknowledge', [$params]);
+  }
+  /**
+   * Consumes a purchase for an inapp item. (products.consume)
+   *
+   * @param string $packageName The package name of the application the inapp
+   * product was sold in (for example, 'com.some.thing').
+   * @param string $productId The inapp product SKU (for example,
+   * 'com.some.thing.inapp1').
+   * @param string $token The token provided to the user's device when the inapp
+   * product was purchased.
+   * @param array $optParams Optional parameters.
+   */
+  public function consume($packageName, $productId, $token, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'productId' => $productId, 'token' => $token];
+    $params = array_merge($params, $optParams);
+    return $this->call('consume', [$params]);
   }
   /**
    * Checks the purchase and consumption status of an inapp item. (products.get)

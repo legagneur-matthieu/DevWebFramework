@@ -69,6 +69,10 @@ class QualityActionsReminder extends \Google\Collection
   /**
    * @var string
    */
+  public $extraNotificationDeviceId;
+  /**
+   * @var string
+   */
   public $id;
   protected $locationType = QualityActionsReminderLocation::class;
   protected $locationDataType = '';
@@ -326,6 +330,20 @@ class QualityActionsReminder extends \Google\Collection
   public function getDynamiteGroupAssignmentSource()
   {
     return $this->dynamiteGroupAssignmentSource;
+  }
+  /**
+   * @param string
+   */
+  public function setExtraNotificationDeviceId($extraNotificationDeviceId)
+  {
+    $this->extraNotificationDeviceId = $extraNotificationDeviceId;
+  }
+  /**
+   * @return string
+   */
+  public function getExtraNotificationDeviceId()
+  {
+    return $this->extraNotificationDeviceId;
   }
   /**
    * @param string

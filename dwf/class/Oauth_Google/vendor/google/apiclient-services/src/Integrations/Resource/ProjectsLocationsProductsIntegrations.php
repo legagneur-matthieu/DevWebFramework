@@ -17,43 +17,35 @@
 
 namespace Google\Service\Integrations\Resource;
 
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaArchiveBundleRequest;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaArchiveBundleResponse;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaExecuteIntegrationsRequest;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaExecuteIntegrationsResponse;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaListIntegrationsResponse;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaMonitorExecutionStatsRequest;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaMonitorExecutionStatsResponse;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaScheduleIntegrationsRequest;
 use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaScheduleIntegrationsResponse;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaTestIntegrationsRequest;
-use Google\Service\Integrations\GoogleCloudIntegrationsV1alphaTestIntegrationsResponse;
+use Google\Service\Integrations\GoogleProtobufEmpty;
 
 /**
  * The "integrations" collection of methods.
  * Typical usage is:
  *  <code>
  *   $integrationsService = new Google\Service\Integrations(...);
- *   $integrations = $integrationsService->integrations;
+ *   $integrations = $integrationsService->projects_locations_products_integrations;
  *  </code>
  */
 class ProjectsLocationsProductsIntegrations extends \Google\Service\Resource
 {
   /**
-   * PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE MOVED TO A SEPARATE
-   * SERVICE. Soft-deletes the bundle. (integrations.archiveBundle)
+   * Delete the selected integration and all versions inside (integrations.delete)
    *
-   * @param string $name Required. The bundle to archive. Format:
-   * projects/{project}/locations/{location}/integrations/{integration}
-   * @param GoogleCloudIntegrationsV1alphaArchiveBundleRequest $postBody
+   * @param string $name Required. The location resource of the request.
    * @param array $optParams Optional parameters.
-   * @return GoogleCloudIntegrationsV1alphaArchiveBundleResponse
+   * @return GoogleProtobufEmpty
    */
-  public function archiveBundle($name, GoogleCloudIntegrationsV1alphaArchiveBundleRequest $postBody, $optParams = [])
+  public function delete($name, $optParams = [])
   {
-    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('archiveBundle', [$params], GoogleCloudIntegrationsV1alphaArchiveBundleResponse::class);
+    return $this->call('delete', [$params], GoogleProtobufEmpty::class);
   }
   /**
    * Executes integrations synchronously by passing the trigger id in the request
@@ -105,21 +97,6 @@ class ProjectsLocationsProductsIntegrations extends \Google\Service\Resource
     return $this->call('list', [$params], GoogleCloudIntegrationsV1alphaListIntegrationsResponse::class);
   }
   /**
-   * Get execution stats (integrations.monitorexecutionstats)
-   *
-   * @param string $parent Required. The parent resource name:
-   * {parent=projects/locations}.
-   * @param GoogleCloudIntegrationsV1alphaMonitorExecutionStatsRequest $postBody
-   * @param array $optParams Optional parameters.
-   * @return GoogleCloudIntegrationsV1alphaMonitorExecutionStatsResponse
-   */
-  public function monitorexecutionstats($parent, GoogleCloudIntegrationsV1alphaMonitorExecutionStatsRequest $postBody, $optParams = [])
-  {
-    $params = ['parent' => $parent, 'postBody' => $postBody];
-    $params = array_merge($params, $optParams);
-    return $this->call('monitorexecutionstats', [$params], GoogleCloudIntegrationsV1alphaMonitorExecutionStatsResponse::class);
-  }
-  /**
    * Schedules an integration for execution by passing the trigger id and the
    * scheduled time in the request body. (integrations.schedule)
    *
@@ -133,20 +110,6 @@ class ProjectsLocationsProductsIntegrations extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('schedule', [$params], GoogleCloudIntegrationsV1alphaScheduleIntegrationsResponse::class);
-  }
-  /**
-   * Execute the integration in draft state (integrations.test)
-   *
-   * @param string $name Output only. Auto-generated primary key.
-   * @param GoogleCloudIntegrationsV1alphaTestIntegrationsRequest $postBody
-   * @param array $optParams Optional parameters.
-   * @return GoogleCloudIntegrationsV1alphaTestIntegrationsResponse
-   */
-  public function test($name, GoogleCloudIntegrationsV1alphaTestIntegrationsRequest $postBody, $optParams = [])
-  {
-    $params = ['name' => $name, 'postBody' => $postBody];
-    $params = array_merge($params, $optParams);
-    return $this->call('test', [$params], GoogleCloudIntegrationsV1alphaTestIntegrationsResponse::class);
   }
 }
 

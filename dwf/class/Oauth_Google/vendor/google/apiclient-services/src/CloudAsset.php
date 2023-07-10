@@ -23,7 +23,8 @@ use Google\Client;
  * Service definition for CloudAsset (v1).
  *
  * <p>
- * The cloud asset API manages the history and inventory of cloud resources.</p>
+ * The Cloud Asset API manages the history and inventory of Google Cloud
+ * resources.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -338,6 +339,10 @@ class CloudAsset extends \Google\Service
                   'type' => 'boolean',
                 ],
                 'analysisQuery.options.expandRoles' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'analysisQuery.options.includeDenyPolicyAnalysis' => [
                   'location' => 'query',
                   'type' => 'boolean',
                 ],

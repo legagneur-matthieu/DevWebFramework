@@ -23,42 +23,24 @@ class IndexingDocjoinerDataVersion extends \Google\Model
   protected $acceleratedShoppingSignalDataType = '';
   protected $chromeCountsType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $chromeCountsDataType = '';
+  protected $creatorType = IndexingDocjoinerDataVersionVersionInfo::class;
+  protected $creatorDataType = '';
   protected $instantNavboostType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $instantNavboostDataType = '';
   protected $localypType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $localypDataType = '';
-  /**
-   * @var string
-   */
-  public $localypVersion;
   protected $modernFormatContentType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $modernFormatContentDataType = '';
-  /**
-   * @var string
-   */
-  public $modernFormatContentVersion;
   protected $navboostType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $navboostDataType = '';
-  /**
-   * @var string
-   */
-  public $navboostVersion;
   protected $rankembedType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $rankembedDataType = '';
   protected $universalFactsType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $universalFactsDataType = '';
   protected $videoScoringSignalType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $videoScoringSignalDataType = '';
-  /**
-   * @var string
-   */
-  public $videoScoringSignalVersion;
   protected $voltType = IndexingDocjoinerDataVersionVersionInfo::class;
   protected $voltDataType = '';
-  /**
-   * @var string
-   */
-  public $voltVersion;
 
   /**
    * @param IndexingDocjoinerDataVersionVersionInfo
@@ -91,6 +73,20 @@ class IndexingDocjoinerDataVersion extends \Google\Model
   /**
    * @param IndexingDocjoinerDataVersionVersionInfo
    */
+  public function setCreator(IndexingDocjoinerDataVersionVersionInfo $creator)
+  {
+    $this->creator = $creator;
+  }
+  /**
+   * @return IndexingDocjoinerDataVersionVersionInfo
+   */
+  public function getCreator()
+  {
+    return $this->creator;
+  }
+  /**
+   * @param IndexingDocjoinerDataVersionVersionInfo
+   */
   public function setInstantNavboost(IndexingDocjoinerDataVersionVersionInfo $instantNavboost)
   {
     $this->instantNavboost = $instantNavboost;
@@ -117,20 +113,6 @@ class IndexingDocjoinerDataVersion extends \Google\Model
     return $this->localyp;
   }
   /**
-   * @param string
-   */
-  public function setLocalypVersion($localypVersion)
-  {
-    $this->localypVersion = $localypVersion;
-  }
-  /**
-   * @return string
-   */
-  public function getLocalypVersion()
-  {
-    return $this->localypVersion;
-  }
-  /**
    * @param IndexingDocjoinerDataVersionVersionInfo
    */
   public function setModernFormatContent(IndexingDocjoinerDataVersionVersionInfo $modernFormatContent)
@@ -145,20 +127,6 @@ class IndexingDocjoinerDataVersion extends \Google\Model
     return $this->modernFormatContent;
   }
   /**
-   * @param string
-   */
-  public function setModernFormatContentVersion($modernFormatContentVersion)
-  {
-    $this->modernFormatContentVersion = $modernFormatContentVersion;
-  }
-  /**
-   * @return string
-   */
-  public function getModernFormatContentVersion()
-  {
-    return $this->modernFormatContentVersion;
-  }
-  /**
    * @param IndexingDocjoinerDataVersionVersionInfo
    */
   public function setNavboost(IndexingDocjoinerDataVersionVersionInfo $navboost)
@@ -171,20 +139,6 @@ class IndexingDocjoinerDataVersion extends \Google\Model
   public function getNavboost()
   {
     return $this->navboost;
-  }
-  /**
-   * @param string
-   */
-  public function setNavboostVersion($navboostVersion)
-  {
-    $this->navboostVersion = $navboostVersion;
-  }
-  /**
-   * @return string
-   */
-  public function getNavboostVersion()
-  {
-    return $this->navboostVersion;
   }
   /**
    * @param IndexingDocjoinerDataVersionVersionInfo
@@ -229,20 +183,6 @@ class IndexingDocjoinerDataVersion extends \Google\Model
     return $this->videoScoringSignal;
   }
   /**
-   * @param string
-   */
-  public function setVideoScoringSignalVersion($videoScoringSignalVersion)
-  {
-    $this->videoScoringSignalVersion = $videoScoringSignalVersion;
-  }
-  /**
-   * @return string
-   */
-  public function getVideoScoringSignalVersion()
-  {
-    return $this->videoScoringSignalVersion;
-  }
-  /**
    * @param IndexingDocjoinerDataVersionVersionInfo
    */
   public function setVolt(IndexingDocjoinerDataVersionVersionInfo $volt)
@@ -255,20 +195,6 @@ class IndexingDocjoinerDataVersion extends \Google\Model
   public function getVolt()
   {
     return $this->volt;
-  }
-  /**
-   * @param string
-   */
-  public function setVoltVersion($voltVersion)
-  {
-    $this->voltVersion = $voltVersion;
-  }
-  /**
-   * @return string
-   */
-  public function getVoltVersion()
-  {
-    return $this->voltVersion;
   }
 }
 

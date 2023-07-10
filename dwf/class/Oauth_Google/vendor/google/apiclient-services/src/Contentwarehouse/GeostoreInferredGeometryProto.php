@@ -19,13 +19,11 @@ namespace Google\Service\Contentwarehouse;
 
 class GeostoreInferredGeometryProto extends \Google\Collection
 {
-  protected $collection_key = 'includesGeometryOf';
+  protected $collection_key = 'definesGeometryFor';
   protected $definesGeometryForType = GeostoreFeatureIdProto::class;
   protected $definesGeometryForDataType = 'array';
-  protected $excludesGeometryOfType = GeostoreFeatureIdProto::class;
-  protected $excludesGeometryOfDataType = 'array';
-  protected $includesGeometryOfType = GeostoreFeatureIdProto::class;
-  protected $includesGeometryOfDataType = 'array';
+  protected $geometryCompositionType = GeostoreGeometryComposition::class;
+  protected $geometryCompositionDataType = '';
 
   /**
    * @param GeostoreFeatureIdProto[]
@@ -42,32 +40,18 @@ class GeostoreInferredGeometryProto extends \Google\Collection
     return $this->definesGeometryFor;
   }
   /**
-   * @param GeostoreFeatureIdProto[]
+   * @param GeostoreGeometryComposition
    */
-  public function setExcludesGeometryOf($excludesGeometryOf)
+  public function setGeometryComposition(GeostoreGeometryComposition $geometryComposition)
   {
-    $this->excludesGeometryOf = $excludesGeometryOf;
+    $this->geometryComposition = $geometryComposition;
   }
   /**
-   * @return GeostoreFeatureIdProto[]
+   * @return GeostoreGeometryComposition
    */
-  public function getExcludesGeometryOf()
+  public function getGeometryComposition()
   {
-    return $this->excludesGeometryOf;
-  }
-  /**
-   * @param GeostoreFeatureIdProto[]
-   */
-  public function setIncludesGeometryOf($includesGeometryOf)
-  {
-    $this->includesGeometryOf = $includesGeometryOf;
-  }
-  /**
-   * @return GeostoreFeatureIdProto[]
-   */
-  public function getIncludesGeometryOf()
-  {
-    return $this->includesGeometryOf;
+    return $this->geometryComposition;
   }
 }
 

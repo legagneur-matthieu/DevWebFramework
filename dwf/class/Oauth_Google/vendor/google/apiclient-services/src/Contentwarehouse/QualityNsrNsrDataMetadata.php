@@ -21,6 +21,10 @@ class QualityNsrNsrDataMetadata extends \Google\Collection
 {
   protected $collection_key = 'raffiaLookupKeys';
   /**
+   * @var string
+   */
+  public $encodedLookupInformation;
+  /**
    * @var int[]
    */
   public $goldmineLookupKeyPerField;
@@ -28,6 +32,20 @@ class QualityNsrNsrDataMetadata extends \Google\Collection
    * @var string[]
    */
   public $goldmineLookupKeys;
+  /**
+   * @var string
+   */
+  public $lastTimeProcessedGoldmineInSeconds;
+  /**
+   * @var string
+   */
+  public $lastTimeProcessedMduInSeconds;
+  /**
+   * @var string
+   */
+  public $lastTimeProcessedRaffiaInSeconds;
+  protected $nsrChunksWithSourceInfoType = QualityNsrNsrChunksWithSourceInfo::class;
+  protected $nsrChunksWithSourceInfoDataType = '';
   /**
    * @var string
    */
@@ -40,7 +58,25 @@ class QualityNsrNsrDataMetadata extends \Google\Collection
    * @var string[]
    */
   public $raffiaLookupKeys;
+  /**
+   * @var string
+   */
+  public $raffiaSignalMergerUrl;
 
+  /**
+   * @param string
+   */
+  public function setEncodedLookupInformation($encodedLookupInformation)
+  {
+    $this->encodedLookupInformation = $encodedLookupInformation;
+  }
+  /**
+   * @return string
+   */
+  public function getEncodedLookupInformation()
+  {
+    return $this->encodedLookupInformation;
+  }
   /**
    * @param int[]
    */
@@ -68,6 +104,62 @@ class QualityNsrNsrDataMetadata extends \Google\Collection
   public function getGoldmineLookupKeys()
   {
     return $this->goldmineLookupKeys;
+  }
+  /**
+   * @param string
+   */
+  public function setLastTimeProcessedGoldmineInSeconds($lastTimeProcessedGoldmineInSeconds)
+  {
+    $this->lastTimeProcessedGoldmineInSeconds = $lastTimeProcessedGoldmineInSeconds;
+  }
+  /**
+   * @return string
+   */
+  public function getLastTimeProcessedGoldmineInSeconds()
+  {
+    return $this->lastTimeProcessedGoldmineInSeconds;
+  }
+  /**
+   * @param string
+   */
+  public function setLastTimeProcessedMduInSeconds($lastTimeProcessedMduInSeconds)
+  {
+    $this->lastTimeProcessedMduInSeconds = $lastTimeProcessedMduInSeconds;
+  }
+  /**
+   * @return string
+   */
+  public function getLastTimeProcessedMduInSeconds()
+  {
+    return $this->lastTimeProcessedMduInSeconds;
+  }
+  /**
+   * @param string
+   */
+  public function setLastTimeProcessedRaffiaInSeconds($lastTimeProcessedRaffiaInSeconds)
+  {
+    $this->lastTimeProcessedRaffiaInSeconds = $lastTimeProcessedRaffiaInSeconds;
+  }
+  /**
+   * @return string
+   */
+  public function getLastTimeProcessedRaffiaInSeconds()
+  {
+    return $this->lastTimeProcessedRaffiaInSeconds;
+  }
+  /**
+   * @param QualityNsrNsrChunksWithSourceInfo
+   */
+  public function setNsrChunksWithSourceInfo(QualityNsrNsrChunksWithSourceInfo $nsrChunksWithSourceInfo)
+  {
+    $this->nsrChunksWithSourceInfo = $nsrChunksWithSourceInfo;
+  }
+  /**
+   * @return QualityNsrNsrChunksWithSourceInfo
+   */
+  public function getNsrChunksWithSourceInfo()
+  {
+    return $this->nsrChunksWithSourceInfo;
   }
   /**
    * @param string
@@ -110,6 +202,20 @@ class QualityNsrNsrDataMetadata extends \Google\Collection
   public function getRaffiaLookupKeys()
   {
     return $this->raffiaLookupKeys;
+  }
+  /**
+   * @param string
+   */
+  public function setRaffiaSignalMergerUrl($raffiaSignalMergerUrl)
+  {
+    $this->raffiaSignalMergerUrl = $raffiaSignalMergerUrl;
+  }
+  /**
+   * @return string
+   */
+  public function getRaffiaSignalMergerUrl()
+  {
+    return $this->raffiaSignalMergerUrl;
   }
 }
 

@@ -39,7 +39,6 @@ class DataprocMetastore extends \Google\Service
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
 
-  public $operations;
   public $projects_locations;
   public $projects_locations_federations;
   public $projects_locations_operations;
@@ -63,26 +62,6 @@ class DataprocMetastore extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'metastore';
 
-    $this->operations = new DataprocMetastore\Resource\Operations(
-        $this,
-        $this->serviceName,
-        'operations',
-        [
-          'methods' => [
-            'cancel' => [
-              'path' => 'v1/{+name}:cancel',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'name' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
-            ],
-          ]
-        ]
-    );
     $this->projects_locations = new DataprocMetastore\Resource\ProjectsLocations(
         $this,
         $this->serviceName,
@@ -261,7 +240,17 @@ class DataprocMetastore extends \Google\Service
         'operations',
         [
           'methods' => [
-            'delete' => [
+            'cancel' => [
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
@@ -313,7 +302,17 @@ class DataprocMetastore extends \Google\Service
         'services',
         [
           'methods' => [
-            'create' => [
+            'alterLocation' => [
+              'path' => 'v1/{+service}:alterLocation',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'service' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'create' => [
               'path' => 'v1/{+parent}/services',
               'httpMethod' => 'POST',
               'parameters' => [
@@ -405,6 +404,16 @@ class DataprocMetastore extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'moveTableToDatabase' => [
+              'path' => 'v1/{+service}:moveTableToDatabase',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'service' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'patch' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'PATCH',
@@ -421,6 +430,16 @@ class DataprocMetastore extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'queryMetadata' => [
+              'path' => 'v1/{+service}:queryMetadata',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'service' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'restore' => [

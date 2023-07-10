@@ -33,12 +33,12 @@ class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
    * @var string
    */
   public $name;
-  protected $networkConnectionStateChangeEventType = GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent::class;
-  protected $networkConnectionStateChangeEventDataType = '';
   /**
    * @var string
    */
   public $reportTime;
+  protected $usbPeripheralsEventType = GoogleChromeManagementV1TelemetryUsbPeripheralsEvent::class;
+  protected $usbPeripheralsEventDataType = '';
   protected $userType = GoogleChromeManagementV1TelemetryUserInfo::class;
   protected $userDataType = '';
 
@@ -113,20 +113,6 @@ class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
     return $this->name;
   }
   /**
-   * @param GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
-   */
-  public function setNetworkConnectionStateChangeEvent(GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent $networkConnectionStateChangeEvent)
-  {
-    $this->networkConnectionStateChangeEvent = $networkConnectionStateChangeEvent;
-  }
-  /**
-   * @return GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
-   */
-  public function getNetworkConnectionStateChangeEvent()
-  {
-    return $this->networkConnectionStateChangeEvent;
-  }
-  /**
    * @param string
    */
   public function setReportTime($reportTime)
@@ -139,6 +125,20 @@ class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
   public function getReportTime()
   {
     return $this->reportTime;
+  }
+  /**
+   * @param GoogleChromeManagementV1TelemetryUsbPeripheralsEvent
+   */
+  public function setUsbPeripheralsEvent(GoogleChromeManagementV1TelemetryUsbPeripheralsEvent $usbPeripheralsEvent)
+  {
+    $this->usbPeripheralsEvent = $usbPeripheralsEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryUsbPeripheralsEvent
+   */
+  public function getUsbPeripheralsEvent()
+  {
+    return $this->usbPeripheralsEvent;
   }
   /**
    * @param GoogleChromeManagementV1TelemetryUserInfo

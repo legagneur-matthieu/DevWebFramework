@@ -56,10 +56,6 @@ class Message extends \Google\Collection
    * @var bool
    */
   public $deletedByVault;
-  /**
-   * @var string
-   */
-  public $dlpScanOutcome;
   protected $dlpScanSummaryType = DlpScanSummary::class;
   protected $dlpScanSummaryDataType = '';
   /**
@@ -98,6 +94,10 @@ class Message extends \Google\Collection
    * @var string
    */
   public $messageOrigin;
+  protected $messageReferenceType = MessageReference::class;
+  protected $messageReferenceDataType = '';
+  protected $messageSearchInfoType = AppsDynamiteSharedMessageSearchInfo::class;
+  protected $messageSearchInfoDataType = '';
   /**
    * @var string
    */
@@ -326,20 +326,6 @@ class Message extends \Google\Collection
     return $this->deletedByVault;
   }
   /**
-   * @param string
-   */
-  public function setDlpScanOutcome($dlpScanOutcome)
-  {
-    $this->dlpScanOutcome = $dlpScanOutcome;
-  }
-  /**
-   * @return string
-   */
-  public function getDlpScanOutcome()
-  {
-    return $this->dlpScanOutcome;
-  }
-  /**
    * @param DlpScanSummary
    */
   public function setDlpScanSummary(DlpScanSummary $dlpScanSummary)
@@ -492,6 +478,34 @@ class Message extends \Google\Collection
   public function getMessageOrigin()
   {
     return $this->messageOrigin;
+  }
+  /**
+   * @param MessageReference
+   */
+  public function setMessageReference(MessageReference $messageReference)
+  {
+    $this->messageReference = $messageReference;
+  }
+  /**
+   * @return MessageReference
+   */
+  public function getMessageReference()
+  {
+    return $this->messageReference;
+  }
+  /**
+   * @param AppsDynamiteSharedMessageSearchInfo
+   */
+  public function setMessageSearchInfo(AppsDynamiteSharedMessageSearchInfo $messageSearchInfo)
+  {
+    $this->messageSearchInfo = $messageSearchInfo;
+  }
+  /**
+   * @return AppsDynamiteSharedMessageSearchInfo
+   */
+  public function getMessageSearchInfo()
+  {
+    return $this->messageSearchInfo;
   }
   /**
    * @param string

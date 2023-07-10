@@ -29,6 +29,10 @@ class WorkstationCluster extends \Google\Collection
   /**
    * @var string
    */
+  public $controlPlaneIp;
+  /**
+   * @var string
+   */
   public $createTime;
   /**
    * @var bool
@@ -46,6 +50,10 @@ class WorkstationCluster extends \Google\Collection
    * @var string
    */
   public $etag;
+  /**
+   * @var string[]
+   */
+  public $labels;
   /**
    * @var string
    */
@@ -100,6 +108,20 @@ class WorkstationCluster extends \Google\Collection
   public function getConditions()
   {
     return $this->conditions;
+  }
+  /**
+   * @param string
+   */
+  public function setControlPlaneIp($controlPlaneIp)
+  {
+    $this->controlPlaneIp = $controlPlaneIp;
+  }
+  /**
+   * @return string
+   */
+  public function getControlPlaneIp()
+  {
+    return $this->controlPlaneIp;
   }
   /**
    * @param string
@@ -170,6 +192,20 @@ class WorkstationCluster extends \Google\Collection
   public function getEtag()
   {
     return $this->etag;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * @param string

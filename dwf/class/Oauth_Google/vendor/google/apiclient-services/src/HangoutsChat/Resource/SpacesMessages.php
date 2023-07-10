@@ -25,7 +25,7 @@ use Google\Service\HangoutsChat\Message;
  * Typical usage is:
  *  <code>
  *   $chatService = new Google\Service\HangoutsChat(...);
- *   $messages = $chatService->messages;
+ *   $messages = $chatService->spaces_messages;
  *  </code>
  */
 class SpacesMessages extends \Google\Service\Resource
@@ -67,8 +67,8 @@ class SpacesMessages extends \Google\Service\Resource
    * @opt_param string threadKey Optional. Deprecated: Use thread.thread_key
    * instead. Opaque thread identifier. To start or add to a thread, create a
    * message and specify a `threadKey` or the thread.name. For example usage, see
-   * [Start or reply to a message
-   * thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+   * [Start or reply to a message thread](https://developers.google.com/chat/api/g
+   * uides/crudl/messages#start_or_reply_to_a_message_thread).
    * @return Message
    */
   public function create($parent, Message $postBody, $optParams = [])
@@ -135,8 +135,11 @@ class SpacesMessages extends \Google\Service\Resource
     return $this->call('get', [$params], Message::class);
   }
   /**
-   * Updates a message. For example usage, see [Update a message](https://develope
-   * rs.google.com/chat/api/guides/crudl/messages#update_a_message). Requires
+   * Updates a message. There's a difference between `patch` and `update` methods.
+   * The `patch` method uses a `patch` request while the `update` method uses a
+   * `put` request. We recommend using the `patch` method. For example usage, see
+   * [Update a message](https://developers.google.com/chat/api/guides/crudl/messag
+   * es#update_a_message). Requires
    * [authentication](https://developers.google.com/chat/api/guides/auth/). Fully
    * supports [service account
    * authentication](https://developers.google.com/chat/api/guides/auth/service-
@@ -170,8 +173,11 @@ class SpacesMessages extends \Google\Service\Resource
     return $this->call('patch', [$params], Message::class);
   }
   /**
-   * Updates a message. For example usage, see [Update a message](https://develope
-   * rs.google.com/chat/api/guides/crudl/messages#update_a_message). Requires
+   * Updates a message. There's a difference between `patch` and `update` methods.
+   * The `patch` method uses a `patch` request while the `update` method uses a
+   * `put` request. We recommend using the `patch` method. For example usage, see
+   * [Update a message](https://developers.google.com/chat/api/guides/crudl/messag
+   * es#update_a_message). Requires
    * [authentication](https://developers.google.com/chat/api/guides/auth/). Fully
    * supports [service account
    * authentication](https://developers.google.com/chat/api/guides/auth/service-

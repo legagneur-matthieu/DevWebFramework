@@ -41,6 +41,10 @@ class Dataset extends \Google\Collection
   /**
    * @var string
    */
+  public $defaultRoundingMode;
+  /**
+   * @var string
+   */
   public $defaultTableExpirationMs;
   /**
    * @var string
@@ -180,6 +184,20 @@ class Dataset extends \Google\Collection
   public function getDefaultPartitionExpirationMs()
   {
     return $this->defaultPartitionExpirationMs;
+  }
+  /**
+   * @param string
+   */
+  public function setDefaultRoundingMode($defaultRoundingMode)
+  {
+    $this->defaultRoundingMode = $defaultRoundingMode;
+  }
+  /**
+   * @return string
+   */
+  public function getDefaultRoundingMode()
+  {
+    return $this->defaultRoundingMode;
   }
   /**
    * @param string

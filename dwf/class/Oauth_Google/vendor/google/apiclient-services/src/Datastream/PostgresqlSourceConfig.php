@@ -24,6 +24,10 @@ class PostgresqlSourceConfig extends \Google\Model
   protected $includeObjectsType = PostgresqlRdbms::class;
   protected $includeObjectsDataType = '';
   /**
+   * @var int
+   */
+  public $maxConcurrentBackfillTasks;
+  /**
    * @var string
    */
   public $publication;
@@ -59,6 +63,20 @@ class PostgresqlSourceConfig extends \Google\Model
   public function getIncludeObjects()
   {
     return $this->includeObjects;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentBackfillTasks($maxConcurrentBackfillTasks)
+  {
+    $this->maxConcurrentBackfillTasks = $maxConcurrentBackfillTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentBackfillTasks()
+  {
+    return $this->maxConcurrentBackfillTasks;
   }
   /**
    * @param string

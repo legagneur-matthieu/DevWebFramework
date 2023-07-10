@@ -20,6 +20,8 @@ namespace Google\Service\Contentwarehouse;
 class SdrEmbedding extends \Google\Collection
 {
   protected $collection_key = 'values';
+  protected $compressedEmbeddingsType = QualityRankembedMustangMustangRankEmbedInfo::class;
+  protected $compressedEmbeddingsDataType = '';
   /**
    * @var float[]
    */
@@ -29,6 +31,20 @@ class SdrEmbedding extends \Google\Collection
    */
   public $version;
 
+  /**
+   * @param QualityRankembedMustangMustangRankEmbedInfo
+   */
+  public function setCompressedEmbeddings(QualityRankembedMustangMustangRankEmbedInfo $compressedEmbeddings)
+  {
+    $this->compressedEmbeddings = $compressedEmbeddings;
+  }
+  /**
+   * @return QualityRankembedMustangMustangRankEmbedInfo
+   */
+  public function getCompressedEmbeddings()
+  {
+    return $this->compressedEmbeddings;
+  }
   /**
    * @param float[]
    */

@@ -31,7 +31,7 @@ use Google\Service\CertificateAuthorityService\UndeleteCertificateAuthorityReque
  * Typical usage is:
  *  <code>
  *   $privatecaService = new Google\Service\CertificateAuthorityService(...);
- *   $certificateAuthorities = $privatecaService->certificateAuthorities;
+ *   $certificateAuthorities = $privatecaService->projects_locations_caPools_certificateAuthorities;
  *  </code>
  */
 class ProjectsLocationsCaPoolsCertificateAuthorities extends \Google\Service\Resource
@@ -69,7 +69,7 @@ class ProjectsLocationsCaPoolsCertificateAuthorities extends \Google\Service\Res
    * unique request ID so that if you must retry your request, the server will
    * know to ignore the request if it has already been completed. The server will
    * guarantee that for at least 60 minutes since the first request. For example,
-   * consider a situation where you make an initial request and t he request times
+   * consider a situation where you make an initial request and the request times
    * out. If you make the request again with the same request ID, the server can
    * check if original operation with the same request ID was received, and if so,
    * will ignore the second request. This prevents clients from accidentally
@@ -94,11 +94,15 @@ class ProjectsLocationsCaPoolsCertificateAuthorities extends \Google\Service\Res
    * @opt_param bool ignoreActiveCertificates Optional. This field allows the CA
    * to be deleted even if the CA has active certs. Active certs include both
    * unrevoked and unexpired certs.
+   * @opt_param bool ignoreDependentResources Optional. This field allows this ca
+   * to be deleted even if it's being depended on by another resource. However,
+   * doing so may result in unintended and unrecoverable effects on any dependent
+   * resource(s) since the CA will no longer be able to issue certificates.
    * @opt_param string requestId Optional. An ID to identify requests. Specify a
    * unique request ID so that if you must retry your request, the server will
    * know to ignore the request if it has already been completed. The server will
    * guarantee that for at least 60 minutes since the first request. For example,
-   * consider a situation where you make an initial request and t he request times
+   * consider a situation where you make an initial request and the request times
    * out. If you make the request again with the same request ID, the server can
    * check if original operation with the same request ID was received, and if so,
    * will ignore the second request. This prevents clients from accidentally
@@ -218,7 +222,7 @@ class ProjectsLocationsCaPoolsCertificateAuthorities extends \Google\Service\Res
    * unique request ID so that if you must retry your request, the server will
    * know to ignore the request if it has already been completed. The server will
    * guarantee that for at least 60 minutes since the first request. For example,
-   * consider a situation where you make an initial request and t he request times
+   * consider a situation where you make an initial request and the request times
    * out. If you make the request again with the same request ID, the server can
    * check if original operation with the same request ID was received, and if so,
    * will ignore the second request. This prevents clients from accidentally

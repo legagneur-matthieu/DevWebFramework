@@ -26,6 +26,8 @@ class AssistantApiDeviceCapabilities extends \Google\Collection
   protected $audioInputDataType = '';
   protected $audioOutputType = AssistantApiAudioOutput::class;
   protected $audioOutputDataType = '';
+  protected $bluetoothCapabilitiesType = AssistantApiBluetoothCapabilities::class;
+  protected $bluetoothCapabilitiesDataType = '';
   protected $callCapabilitiesType = AssistantApiCallCapabilities::class;
   protected $callCapabilitiesDataType = '';
   protected $cameraType = AssistantApiCameraCapabilities::class;
@@ -142,6 +144,20 @@ class AssistantApiDeviceCapabilities extends \Google\Collection
   public function getAudioOutput()
   {
     return $this->audioOutput;
+  }
+  /**
+   * @param AssistantApiBluetoothCapabilities
+   */
+  public function setBluetoothCapabilities(AssistantApiBluetoothCapabilities $bluetoothCapabilities)
+  {
+    $this->bluetoothCapabilities = $bluetoothCapabilities;
+  }
+  /**
+   * @return AssistantApiBluetoothCapabilities
+   */
+  public function getBluetoothCapabilities()
+  {
+    return $this->bluetoothCapabilities;
   }
   /**
    * @param AssistantApiCallCapabilities

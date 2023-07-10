@@ -21,6 +21,14 @@ class BatchTranslateDocumentRequest extends \Google\Collection
 {
   protected $collection_key = 'targetLanguageCodes';
   /**
+   * @var string
+   */
+  public $customizedAttribution;
+  /**
+   * @var bool
+   */
+  public $enableShadowRemovalNativePdf;
+  /**
    * @var string[]
    */
   public $formatConversions;
@@ -43,6 +51,34 @@ class BatchTranslateDocumentRequest extends \Google\Collection
    */
   public $targetLanguageCodes;
 
+  /**
+   * @param string
+   */
+  public function setCustomizedAttribution($customizedAttribution)
+  {
+    $this->customizedAttribution = $customizedAttribution;
+  }
+  /**
+   * @return string
+   */
+  public function getCustomizedAttribution()
+  {
+    return $this->customizedAttribution;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableShadowRemovalNativePdf($enableShadowRemovalNativePdf)
+  {
+    $this->enableShadowRemovalNativePdf = $enableShadowRemovalNativePdf;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableShadowRemovalNativePdf()
+  {
+    return $this->enableShadowRemovalNativePdf;
+  }
   /**
    * @param string[]
    */

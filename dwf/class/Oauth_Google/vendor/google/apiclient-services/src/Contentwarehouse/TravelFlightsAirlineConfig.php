@@ -21,10 +21,6 @@ class TravelFlightsAirlineConfig extends \Google\Collection
 {
   protected $collection_key = 'localizedContactInfo';
   /**
-   * @var int
-   */
-  public $adwordsCid;
-  /**
    * @var string
    */
   public $alliance;
@@ -85,20 +81,6 @@ class TravelFlightsAirlineConfig extends \Google\Collection
   protected $waiverSummaryUrlsType = TravelFlightsNameCatalogProto::class;
   protected $waiverSummaryUrlsDataType = '';
 
-  /**
-   * @param int
-   */
-  public function setAdwordsCid($adwordsCid)
-  {
-    $this->adwordsCid = $adwordsCid;
-  }
-  /**
-   * @return int
-   */
-  public function getAdwordsCid()
-  {
-    return $this->adwordsCid;
-  }
   /**
    * @param string
    */

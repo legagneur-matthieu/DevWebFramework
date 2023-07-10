@@ -56,6 +56,10 @@ class GoogleChromeManagementV1ChromeAppInfo extends \Google\Collection
    * @var bool
    */
   public $supportEnabled;
+  /**
+   * @var string
+   */
+  public $type;
 
   /**
    * @param bool
@@ -196,6 +200,20 @@ class GoogleChromeManagementV1ChromeAppInfo extends \Google\Collection
   public function getSupportEnabled()
   {
     return $this->supportEnabled;
+  }
+  /**
+   * @param string
+   */
+  public function setType($type)
+  {
+    $this->type = $type;
+  }
+  /**
+   * @return string
+   */
+  public function getType()
+  {
+    return $this->type;
   }
 }
 

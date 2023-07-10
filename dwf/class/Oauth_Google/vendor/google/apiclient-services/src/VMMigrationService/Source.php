@@ -19,6 +19,8 @@ namespace Google\Service\VMMigrationService;
 
 class Source extends \Google\Model
 {
+  protected $awsType = AwsSourceDetails::class;
+  protected $awsDataType = '';
   /**
    * @var string
    */
@@ -42,6 +44,20 @@ class Source extends \Google\Model
   protected $vmwareType = VmwareSourceDetails::class;
   protected $vmwareDataType = '';
 
+  /**
+   * @param AwsSourceDetails
+   */
+  public function setAws(AwsSourceDetails $aws)
+  {
+    $this->aws = $aws;
+  }
+  /**
+   * @return AwsSourceDetails
+   */
+  public function getAws()
+  {
+    return $this->aws;
+  }
   /**
    * @param string
    */

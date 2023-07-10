@@ -35,6 +35,9 @@ use Google\Client;
  */
 class HangoutsChat extends \Google\Service
 {
+  /** Private Service: https://www.googleapis.com/auth/chat.bot. */
+  const CHAT_BOT =
+      "https://www.googleapis.com/auth/chat.bot";
   /** View, add, and remove members from conversations in Google Chat. */
   const CHAT_MEMBERSHIPS =
       "https://www.googleapis.com/auth/chat.memberships";
@@ -57,11 +60,7 @@ class HangoutsChat extends \Google\Service
   const CHAT_SPACES_READONLY =
       "https://www.googleapis.com/auth/chat.spaces.readonly";
 
-  public $dms;
-  public $dms_conversations;
   public $media;
-  public $rooms;
-  public $rooms_conversations;
   public $spaces;
   public $spaces_members;
   public $spaces_messages;
@@ -83,104 +82,6 @@ class HangoutsChat extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'chat';
 
-    $this->dms = new HangoutsChat\Resource\Dms(
-        $this,
-        $this->serviceName,
-        'dms',
-        [
-          'methods' => [
-            'messages' => [
-              'path' => 'v1/{+parent}/messages',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],'webhooks' => [
-              'path' => 'v1/{+parent}/webhooks',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],
-          ]
-        ]
-    );
-    $this->dms_conversations = new HangoutsChat\Resource\DmsConversations(
-        $this,
-        $this->serviceName,
-        'conversations',
-        [
-          'methods' => [
-            'messages' => [
-              'path' => 'v1/{+parent}/messages',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],
-          ]
-        ]
-    );
     $this->media = new HangoutsChat\Resource\Media(
         $this,
         $this->serviceName,
@@ -195,104 +96,6 @@ class HangoutsChat extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
-                ],
-              ],
-            ],
-          ]
-        ]
-    );
-    $this->rooms = new HangoutsChat\Resource\Rooms(
-        $this,
-        $this->serviceName,
-        'rooms',
-        [
-          'methods' => [
-            'messages' => [
-              'path' => 'v1/{+parent}/messages',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],'webhooks' => [
-              'path' => 'v1/{+parent}/webhooks',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],
-          ]
-        ]
-    );
-    $this->rooms_conversations = new HangoutsChat\Resource\RoomsConversations(
-        $this,
-        $this->serviceName,
-        'conversations',
-        [
-          'methods' => [
-            'messages' => [
-              'path' => 'v1/{+parent}/messages',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
-                  'location' => 'query',
-                  'type' => 'string',
                 ],
               ],
             ],
@@ -324,32 +127,6 @@ class HangoutsChat extends \Google\Service
                   'type' => 'integer',
                 ],
                 'pageToken' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-              ],
-            ],'webhooks' => [
-              'path' => 'v1/{+parent}/webhooks',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'parent' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'messageId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'messageReplyOption' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'requestId' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'threadKey' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

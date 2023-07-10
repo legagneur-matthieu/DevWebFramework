@@ -46,6 +46,8 @@ class Target extends \Google\Collection
    * @var string[]
    */
   public $labels;
+  protected $multiTargetType = MultiTarget::class;
+  protected $multiTargetDataType = '';
   /**
    * @var string
    */
@@ -180,6 +182,20 @@ class Target extends \Google\Collection
   public function getLabels()
   {
     return $this->labels;
+  }
+  /**
+   * @param MultiTarget
+   */
+  public function setMultiTarget(MultiTarget $multiTarget)
+  {
+    $this->multiTarget = $multiTarget;
+  }
+  /**
+   * @return MultiTarget
+   */
+  public function getMultiTarget()
+  {
+    return $this->multiTarget;
   }
   /**
    * @param string

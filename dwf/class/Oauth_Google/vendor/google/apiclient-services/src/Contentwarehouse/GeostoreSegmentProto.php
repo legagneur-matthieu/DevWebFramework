@@ -154,6 +154,8 @@ class GeostoreSegmentProto extends \Google\Collection
   public $separatedRoadways;
   protected $siblingType = GeostoreFeatureIdProto::class;
   protected $siblingDataType = '';
+  protected $slopeType = GeostoreSlopeProto::class;
+  protected $slopeDataType = 'array';
   /**
    * @var string
    */
@@ -816,6 +818,20 @@ class GeostoreSegmentProto extends \Google\Collection
   public function getSibling()
   {
     return $this->sibling;
+  }
+  /**
+   * @param GeostoreSlopeProto[]
+   */
+  public function setSlope($slope)
+  {
+    $this->slope = $slope;
+  }
+  /**
+   * @return GeostoreSlopeProto[]
+   */
+  public function getSlope()
+  {
+    return $this->slope;
   }
   /**
    * @param string

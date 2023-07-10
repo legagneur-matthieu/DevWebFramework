@@ -25,6 +25,10 @@ class CloudsupportCase extends \Google\Collection
   /**
    * @var string
    */
+  public $contactEmail;
+  /**
+   * @var string
+   */
   public $createTime;
   protected $creatorType = Actor::class;
   protected $creatorDataType = '';
@@ -90,6 +94,20 @@ class CloudsupportCase extends \Google\Collection
   public function getClassification()
   {
     return $this->classification;
+  }
+  /**
+   * @param string
+   */
+  public function setContactEmail($contactEmail)
+  {
+    $this->contactEmail = $contactEmail;
+  }
+  /**
+   * @return string
+   */
+  public function getContactEmail()
+  {
+    return $this->contactEmail;
   }
   /**
    * @param string

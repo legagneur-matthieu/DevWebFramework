@@ -19,7 +19,7 @@ namespace Google\Service\Contentwarehouse;
 
 class AppsPeopleOzExternalMergedpeopleapiReadOnlyProfileInfo extends \Google\Collection
 {
-  protected $collection_key = 'ownerUserType';
+  protected $collection_key = 'unjoinedEmailCertificates';
   protected $accountEmailType = AppsPeopleOzExternalMergedpeopleapiAccountEmail::class;
   protected $accountEmailDataType = '';
   /**
@@ -58,6 +58,8 @@ class AppsPeopleOzExternalMergedpeopleapiReadOnlyProfileInfo extends \Google\Col
   public $plusPageType;
   protected $profileOwnerStatsType = AppsPeopleOzExternalMergedpeopleapiProfileOwnerStats::class;
   protected $profileOwnerStatsDataType = '';
+  protected $unjoinedEmailCertificatesType = AppsPeopleOzExternalMergedpeopleapiEmail::class;
+  protected $unjoinedEmailCertificatesDataType = 'array';
 
   /**
    * @param AppsPeopleOzExternalMergedpeopleapiAccountEmail
@@ -226,6 +228,20 @@ class AppsPeopleOzExternalMergedpeopleapiReadOnlyProfileInfo extends \Google\Col
   public function getProfileOwnerStats()
   {
     return $this->profileOwnerStats;
+  }
+  /**
+   * @param AppsPeopleOzExternalMergedpeopleapiEmail[]
+   */
+  public function setUnjoinedEmailCertificates($unjoinedEmailCertificates)
+  {
+    $this->unjoinedEmailCertificates = $unjoinedEmailCertificates;
+  }
+  /**
+   * @return AppsPeopleOzExternalMergedpeopleapiEmail[]
+   */
+  public function getUnjoinedEmailCertificates()
+  {
+    return $this->unjoinedEmailCertificates;
   }
 }
 

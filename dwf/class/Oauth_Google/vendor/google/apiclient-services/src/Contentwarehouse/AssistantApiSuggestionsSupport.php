@@ -27,14 +27,6 @@ class AssistantApiSuggestionsSupport extends \Google\Collection
   /**
    * @var bool
    */
-  public $coloredChipBackgroundBorderSupported;
-  /**
-   * @var bool
-   */
-  public $coloredChipTextSupported;
-  /**
-   * @var bool
-   */
   public $debugDataSupported;
   /**
    * @var bool
@@ -58,6 +50,10 @@ class AssistantApiSuggestionsSupport extends \Google\Collection
    * @var bool
    */
   public $featureSpecificAppActionsNotificationSupported;
+  /**
+   * @var bool
+   */
+  public $multiStepTrySayingSupported;
   /**
    * @var bool
    */
@@ -90,34 +86,6 @@ class AssistantApiSuggestionsSupport extends \Google\Collection
   public function getClickImpersonationSupported()
   {
     return $this->clickImpersonationSupported;
-  }
-  /**
-   * @param bool
-   */
-  public function setColoredChipBackgroundBorderSupported($coloredChipBackgroundBorderSupported)
-  {
-    $this->coloredChipBackgroundBorderSupported = $coloredChipBackgroundBorderSupported;
-  }
-  /**
-   * @return bool
-   */
-  public function getColoredChipBackgroundBorderSupported()
-  {
-    return $this->coloredChipBackgroundBorderSupported;
-  }
-  /**
-   * @param bool
-   */
-  public function setColoredChipTextSupported($coloredChipTextSupported)
-  {
-    $this->coloredChipTextSupported = $coloredChipTextSupported;
-  }
-  /**
-   * @return bool
-   */
-  public function getColoredChipTextSupported()
-  {
-    return $this->coloredChipTextSupported;
   }
   /**
    * @param bool
@@ -216,6 +184,20 @@ class AssistantApiSuggestionsSupport extends \Google\Collection
   public function getFeatureSpecificAppActionsNotificationSupported()
   {
     return $this->featureSpecificAppActionsNotificationSupported;
+  }
+  /**
+   * @param bool
+   */
+  public function setMultiStepTrySayingSupported($multiStepTrySayingSupported)
+  {
+    $this->multiStepTrySayingSupported = $multiStepTrySayingSupported;
+  }
+  /**
+   * @return bool
+   */
+  public function getMultiStepTrySayingSupported()
+  {
+    return $this->multiStepTrySayingSupported;
   }
   /**
    * @param bool

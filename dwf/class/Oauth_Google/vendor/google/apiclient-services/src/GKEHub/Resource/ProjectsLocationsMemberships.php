@@ -31,7 +31,7 @@ use Google\Service\GKEHub\TestIamPermissionsResponse;
  * Typical usage is:
  *  <code>
  *   $gkehubService = new Google\Service\GKEHub(...);
- *   $memberships = $gkehubService->memberships;
+ *   $memberships = $gkehubService->projects_locations_memberships;
  *  </code>
  */
 class ProjectsLocationsMemberships extends \Google\Service\Resource
@@ -82,6 +82,9 @@ class ProjectsLocationsMemberships extends \Google\Service\Resource
    * `projects/locations/memberships`.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool force Optional. If set to true, any subresource from this
+   * Membership will also be deleted. Otherwise, the request will only work if the
+   * Membership has no subresource.
    * @opt_param string requestId Optional. A request ID to identify requests.
    * Specify a unique request ID so that if you must retry your request, the
    * server will know to ignore the request if it has already been completed. The
@@ -186,6 +189,7 @@ class ProjectsLocationsMemberships extends \Google\Service\Resource
    *
    * @param string $parent Required. The parent (project and location) where the
    * Memberships will be listed. Specified in the format `projects/locations`.
+   * `projects/locations/-` list memberships in all the regions.
    * @param array $optParams Optional parameters.
    *
    * @opt_param string filter Optional. Lists Memberships that match the filter

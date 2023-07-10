@@ -19,7 +19,7 @@ namespace Google\Service\CloudWorkstations;
 
 class WorkstationConfig extends \Google\Collection
 {
-  protected $collection_key = 'persistentDirectories';
+  protected $collection_key = 'readinessChecks';
   /**
    * @var string[]
    */
@@ -45,6 +45,12 @@ class WorkstationConfig extends \Google\Collection
    */
   public $displayName;
   /**
+   * @var bool
+   */
+  public $enableAuditAgent;
+  protected $encryptionKeyType = CustomerEncryptionKey::class;
+  protected $encryptionKeyDataType = '';
+  /**
    * @var string
    */
   public $etag;
@@ -55,11 +61,17 @@ class WorkstationConfig extends \Google\Collection
    */
   public $idleTimeout;
   /**
+   * @var string[]
+   */
+  public $labels;
+  /**
    * @var string
    */
   public $name;
   protected $persistentDirectoriesType = PersistentDirectory::class;
   protected $persistentDirectoriesDataType = 'array';
+  protected $readinessChecksType = ReadinessCheck::class;
+  protected $readinessChecksDataType = 'array';
   /**
    * @var bool
    */
@@ -176,6 +188,34 @@ class WorkstationConfig extends \Google\Collection
     return $this->displayName;
   }
   /**
+   * @param bool
+   */
+  public function setEnableAuditAgent($enableAuditAgent)
+  {
+    $this->enableAuditAgent = $enableAuditAgent;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableAuditAgent()
+  {
+    return $this->enableAuditAgent;
+  }
+  /**
+   * @param CustomerEncryptionKey
+   */
+  public function setEncryptionKey(CustomerEncryptionKey $encryptionKey)
+  {
+    $this->encryptionKey = $encryptionKey;
+  }
+  /**
+   * @return CustomerEncryptionKey
+   */
+  public function getEncryptionKey()
+  {
+    return $this->encryptionKey;
+  }
+  /**
    * @param string
    */
   public function setEtag($etag)
@@ -218,6 +258,20 @@ class WorkstationConfig extends \Google\Collection
     return $this->idleTimeout;
   }
   /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
+  /**
    * @param string
    */
   public function setName($name)
@@ -244,6 +298,20 @@ class WorkstationConfig extends \Google\Collection
   public function getPersistentDirectories()
   {
     return $this->persistentDirectories;
+  }
+  /**
+   * @param ReadinessCheck[]
+   */
+  public function setReadinessChecks($readinessChecks)
+  {
+    $this->readinessChecks = $readinessChecks;
+  }
+  /**
+   * @return ReadinessCheck[]
+   */
+  public function getReadinessChecks()
+  {
+    return $this->readinessChecks;
   }
   /**
    * @param bool

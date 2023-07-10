@@ -25,14 +25,13 @@ use Google\Service\HangoutsChat\Membership;
  * Typical usage is:
  *  <code>
  *   $chatService = new Google\Service\HangoutsChat(...);
- *   $members = $chatService->members;
+ *   $members = $chatService->spaces_members;
  *  </code>
  */
 class SpacesMembers extends \Google\Service\Resource
 {
   /**
-   * [Developer Preview](https://developers.google.com/workspace/preview): Returns
-   * a membership. Requires
+   * Returns a membership. Requires
    * [authentication](https://developers.google.com/chat/api/guides/auth/). Fully
    * supports [service account
    * authentication](https://developers.google.com/chat/api/guides/auth/service-
@@ -57,8 +56,7 @@ class SpacesMembers extends \Google\Service\Resource
     return $this->call('get', [$params], Membership::class);
   }
   /**
-   * [Developer Preview](https://developers.google.com/workspace/preview): Lists
-   * memberships in a space. Requires
+   * Lists memberships in a space. Requires
    * [authentication](https://developers.google.com/chat/api/guides/auth/). Fully
    * supports [service account
    * authentication](https://developers.google.com/chat/api/guides/auth/service-
@@ -79,8 +77,8 @@ class SpacesMembers extends \Google\Service\Resource
    * service may return fewer than this value. If unspecified, at most 100
    * memberships are returned. The maximum value is 1000; values above 1000 are
    * coerced to 1000. Negative values return an INVALID_ARGUMENT error.
-   * @opt_param string pageToken A page token, received from a previous list
-   * memberships call. Provide this to retrieve the subsequent page. When
+   * @opt_param string pageToken A page token, received from a previous call to
+   * list memberships. Provide this to retrieve the subsequent page. When
    * paginating, all other parameters provided should match the call that provided
    * the page token. Passing different values to the other parameters may lead to
    * unexpected results.

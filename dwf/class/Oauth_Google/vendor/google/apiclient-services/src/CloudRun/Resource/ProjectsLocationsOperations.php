@@ -19,6 +19,7 @@ namespace Google\Service\CloudRun\Resource;
 
 use Google\Service\CloudRun\GoogleLongrunningListOperationsResponse;
 use Google\Service\CloudRun\GoogleLongrunningOperation;
+use Google\Service\CloudRun\GoogleLongrunningWaitOperationRequest;
 use Google\Service\CloudRun\GoogleProtobufEmpty;
 
 /**
@@ -26,7 +27,7 @@ use Google\Service\CloudRun\GoogleProtobufEmpty;
  * Typical usage is:
  *  <code>
  *   $runService = new Google\Service\CloudRun(...);
- *   $operations = $runService->operations;
+ *   $operations = $runService->projects_locations_operations;
  *  </code>
  */
 class ProjectsLocationsOperations extends \Google\Service\Resource
@@ -64,14 +65,8 @@ class ProjectsLocationsOperations extends \Google\Service\Resource
   }
   /**
    * Lists operations that match the specified filter in the request. If the
-   * server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the
-   * `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/operations`. To override the binding,
-   * API services can add a binding such as `"/v1/{name=users}/operations"` to
-   * their service configuration. For backwards compatibility, the default name
-   * includes the operations collection id, however overriding users must ensure
-   * the name binding is the parent resource, without the operations collection
-   * id. (operations.listProjectsLocationsOperations)
+   * server doesn't support this method, it returns `UNIMPLEMENTED`.
+   * (operations.listProjectsLocationsOperations)
    *
    * @param string $name Required. To query for all of the operations for a
    * project.
@@ -94,6 +89,28 @@ class ProjectsLocationsOperations extends \Google\Service\Resource
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], GoogleLongrunningListOperationsResponse::class);
+  }
+  /**
+   * Waits until the specified long-running operation is done or reaches at most a
+   * specified timeout, returning the latest state. If the operation is already
+   * done, the latest state is immediately returned. If the timeout specified is
+   * greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If
+   * the server does not support this method, it returns
+   * `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort
+   * basis. It may return the latest state before the specified timeout (including
+   * immediately), meaning even an immediate response is no guarantee that the
+   * operation is done. (operations.wait)
+   *
+   * @param string $name The name of the operation resource to wait on.
+   * @param GoogleLongrunningWaitOperationRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   */
+  public function wait($name, GoogleLongrunningWaitOperationRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('wait', [$params], GoogleLongrunningOperation::class);
   }
 }
 

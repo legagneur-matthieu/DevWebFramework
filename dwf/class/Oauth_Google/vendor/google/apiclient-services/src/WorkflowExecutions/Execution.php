@@ -38,6 +38,10 @@ class Execution extends \Google\Model
   protected $errorType = Error::class;
   protected $errorDataType = '';
   /**
+   * @var string[]
+   */
+  public $labels;
+  /**
    * @var string
    */
   public $name;
@@ -53,6 +57,8 @@ class Execution extends \Google\Model
    * @var string
    */
   public $state;
+  protected $stateErrorType = StateError::class;
+  protected $stateErrorDataType = '';
   protected $statusType = Status::class;
   protected $statusDataType = '';
   /**
@@ -131,6 +137,20 @@ class Execution extends \Google\Model
     return $this->error;
   }
   /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
+  /**
    * @param string
    */
   public function setName($name)
@@ -185,6 +205,20 @@ class Execution extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param StateError
+   */
+  public function setStateError(StateError $stateError)
+  {
+    $this->stateError = $stateError;
+  }
+  /**
+   * @return StateError
+   */
+  public function getStateError()
+  {
+    return $this->stateError;
   }
   /**
    * @param Status

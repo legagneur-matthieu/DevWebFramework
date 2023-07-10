@@ -21,8 +21,12 @@ class AssistantGroundingRankerGroundingProviderFeatures extends \Google\Model
 {
   protected $contactGroundingProviderFeaturesType = AssistantGroundingRankerContactGroundingProviderFeatures::class;
   protected $contactGroundingProviderFeaturesDataType = '';
+  protected $deviceGroundingProviderFeaturesType = AssistantGroundingRankerDeviceGroundingProviderFeatures::class;
+  protected $deviceGroundingProviderFeaturesDataType = '';
   protected $mediaGroundingProviderFeaturesType = AssistantGroundingRankerMediaGroundingProviderFeatures::class;
   protected $mediaGroundingProviderFeaturesDataType = '';
+  protected $podcastGroundingProviderFeaturesType = AssistantGroundingRankerPodcastGroundingProviderFeatures::class;
+  protected $podcastGroundingProviderFeaturesDataType = '';
   protected $providerGroundingProviderFeaturesType = AssistantGroundingRankerProviderGroundingProviderFeatures::class;
   protected $providerGroundingProviderFeaturesDataType = '';
 
@@ -41,6 +45,20 @@ class AssistantGroundingRankerGroundingProviderFeatures extends \Google\Model
     return $this->contactGroundingProviderFeatures;
   }
   /**
+   * @param AssistantGroundingRankerDeviceGroundingProviderFeatures
+   */
+  public function setDeviceGroundingProviderFeatures(AssistantGroundingRankerDeviceGroundingProviderFeatures $deviceGroundingProviderFeatures)
+  {
+    $this->deviceGroundingProviderFeatures = $deviceGroundingProviderFeatures;
+  }
+  /**
+   * @return AssistantGroundingRankerDeviceGroundingProviderFeatures
+   */
+  public function getDeviceGroundingProviderFeatures()
+  {
+    return $this->deviceGroundingProviderFeatures;
+  }
+  /**
    * @param AssistantGroundingRankerMediaGroundingProviderFeatures
    */
   public function setMediaGroundingProviderFeatures(AssistantGroundingRankerMediaGroundingProviderFeatures $mediaGroundingProviderFeatures)
@@ -53,6 +71,20 @@ class AssistantGroundingRankerGroundingProviderFeatures extends \Google\Model
   public function getMediaGroundingProviderFeatures()
   {
     return $this->mediaGroundingProviderFeatures;
+  }
+  /**
+   * @param AssistantGroundingRankerPodcastGroundingProviderFeatures
+   */
+  public function setPodcastGroundingProviderFeatures(AssistantGroundingRankerPodcastGroundingProviderFeatures $podcastGroundingProviderFeatures)
+  {
+    $this->podcastGroundingProviderFeatures = $podcastGroundingProviderFeatures;
+  }
+  /**
+   * @return AssistantGroundingRankerPodcastGroundingProviderFeatures
+   */
+  public function getPodcastGroundingProviderFeatures()
+  {
+    return $this->podcastGroundingProviderFeatures;
   }
   /**
    * @param AssistantGroundingRankerProviderGroundingProviderFeatures

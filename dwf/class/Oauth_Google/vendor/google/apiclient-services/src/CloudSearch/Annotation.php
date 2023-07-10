@@ -27,6 +27,8 @@ class Annotation extends \Google\Model
    * @var string
    */
   public $chipRenderType;
+  protected $componentSearchInfoType = AppsDynamiteSharedMessageComponentSearchInfo::class;
+  protected $componentSearchInfoDataType = '';
   protected $consentedAppUnfurlMetadataType = ConsentedAppUnfurlMetadata::class;
   protected $consentedAppUnfurlMetadataDataType = '';
   protected $customEmojiMetadataType = CustomEmojiMetadata::class;
@@ -43,8 +45,14 @@ class Annotation extends \Google\Model
   protected $gsuiteIntegrationMetadataDataType = '';
   protected $incomingWebhookChangedMetadataType = IncomingWebhookChangedMetadata::class;
   protected $incomingWebhookChangedMetadataDataType = '';
+  /**
+   * @var string
+   */
+  public $inlineRenderFormat;
   protected $integrationConfigUpdatedType = IntegrationConfigUpdatedMetadata::class;
   protected $integrationConfigUpdatedDataType = '';
+  protected $interactionDataType = InteractionData::class;
+  protected $interactionDataDataType = '';
   /**
    * @var int
    */
@@ -131,6 +139,20 @@ class Annotation extends \Google\Model
   public function getChipRenderType()
   {
     return $this->chipRenderType;
+  }
+  /**
+   * @param AppsDynamiteSharedMessageComponentSearchInfo
+   */
+  public function setComponentSearchInfo(AppsDynamiteSharedMessageComponentSearchInfo $componentSearchInfo)
+  {
+    $this->componentSearchInfo = $componentSearchInfo;
+  }
+  /**
+   * @return AppsDynamiteSharedMessageComponentSearchInfo
+   */
+  public function getComponentSearchInfo()
+  {
+    return $this->componentSearchInfo;
   }
   /**
    * @param ConsentedAppUnfurlMetadata
@@ -245,6 +267,20 @@ class Annotation extends \Google\Model
     return $this->incomingWebhookChangedMetadata;
   }
   /**
+   * @param string
+   */
+  public function setInlineRenderFormat($inlineRenderFormat)
+  {
+    $this->inlineRenderFormat = $inlineRenderFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getInlineRenderFormat()
+  {
+    return $this->inlineRenderFormat;
+  }
+  /**
    * @param IntegrationConfigUpdatedMetadata
    */
   public function setIntegrationConfigUpdated(IntegrationConfigUpdatedMetadata $integrationConfigUpdated)
@@ -257,6 +293,20 @@ class Annotation extends \Google\Model
   public function getIntegrationConfigUpdated()
   {
     return $this->integrationConfigUpdated;
+  }
+  /**
+   * @param InteractionData
+   */
+  public function setInteractionData(InteractionData $interactionData)
+  {
+    $this->interactionData = $interactionData;
+  }
+  /**
+   * @return InteractionData
+   */
+  public function getInteractionData()
+  {
+    return $this->interactionData;
   }
   /**
    * @param int

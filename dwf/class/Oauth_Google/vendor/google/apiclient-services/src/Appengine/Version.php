@@ -70,6 +70,8 @@ class Version extends \Google\Collection
   public $envVariables;
   protected $errorHandlersType = ErrorHandler::class;
   protected $errorHandlersDataType = 'array';
+  protected $flexibleRuntimeSettingsType = FlexibleRuntimeSettings::class;
+  protected $flexibleRuntimeSettingsDataType = '';
   protected $handlersType = UrlMap::class;
   protected $handlersDataType = 'array';
   protected $healthCheckType = HealthCheck::class;
@@ -372,6 +374,20 @@ class Version extends \Google\Collection
   public function getErrorHandlers()
   {
     return $this->errorHandlers;
+  }
+  /**
+   * @param FlexibleRuntimeSettings
+   */
+  public function setFlexibleRuntimeSettings(FlexibleRuntimeSettings $flexibleRuntimeSettings)
+  {
+    $this->flexibleRuntimeSettings = $flexibleRuntimeSettings;
+  }
+  /**
+   * @return FlexibleRuntimeSettings
+   */
+  public function getFlexibleRuntimeSettings()
+  {
+    return $this->flexibleRuntimeSettings;
   }
   /**
    * @param UrlMap[]

@@ -61,6 +61,14 @@ class FetchAuthTokenCache implements
     }
 
     /**
+     * @return FetchAuthTokenInterface
+     */
+    public function getFetcher()
+    {
+        return $this->fetcher;
+    }
+
+    /**
      * Implements FetchAuthTokenInterface#fetchAuthToken.
      *
      * Checks the cache for a valid auth token and fetches the auth tokens
@@ -141,7 +149,7 @@ class FetchAuthTokenCache implements
         // This saves a call to the metadata server when a cached token exists.
         if ($this->fetcher instanceof Credentials\GCECredentials) {
             $cached = $this->fetchAuthTokenFromCache();
-            $accessToken = isset($cached['access_token']) ? $cached['access_token'] : null;
+            $accessToken = $cached['access_token'] ?? null;
             return $this->fetcher->signBlob($stringToSign, $forceOpenSsl, $accessToken);
         }
 

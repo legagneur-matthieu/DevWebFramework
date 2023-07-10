@@ -18,16 +18,16 @@
 namespace Google\Service\CloudWorkstations\Resource;
 
 use Google\Service\CloudWorkstations\CancelOperationRequest;
+use Google\Service\CloudWorkstations\GoogleProtobufEmpty;
 use Google\Service\CloudWorkstations\ListOperationsResponse;
 use Google\Service\CloudWorkstations\Operation;
-use Google\Service\CloudWorkstations\WorkstationsEmpty;
 
 /**
  * The "operations" collection of methods.
  * Typical usage is:
  *  <code>
  *   $workstationsService = new Google\Service\CloudWorkstations(...);
- *   $operations = $workstationsService->operations;
+ *   $operations = $workstationsService->projects_locations_operations;
  *  </code>
  */
 class ProjectsLocationsOperations extends \Google\Service\Resource
@@ -46,13 +46,13 @@ class ProjectsLocationsOperations extends \Google\Service\Resource
    * @param string $name The name of the operation resource to be cancelled.
    * @param CancelOperationRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return WorkstationsEmpty
+   * @return GoogleProtobufEmpty
    */
   public function cancel($name, CancelOperationRequest $postBody, $optParams = [])
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('cancel', [$params], WorkstationsEmpty::class);
+    return $this->call('cancel', [$params], GoogleProtobufEmpty::class);
   }
   /**
    * Deletes a long-running operation. This method indicates that the client is no
@@ -62,13 +62,13 @@ class ProjectsLocationsOperations extends \Google\Service\Resource
    *
    * @param string $name The name of the operation resource to be deleted.
    * @param array $optParams Optional parameters.
-   * @return WorkstationsEmpty
+   * @return GoogleProtobufEmpty
    */
   public function delete($name, $optParams = [])
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('delete', [$params], WorkstationsEmpty::class);
+    return $this->call('delete', [$params], GoogleProtobufEmpty::class);
   }
   /**
    * Gets the latest state of a long-running operation. Clients can use this
@@ -87,14 +87,8 @@ class ProjectsLocationsOperations extends \Google\Service\Resource
   }
   /**
    * Lists operations that match the specified filter in the request. If the
-   * server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the
-   * `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/operations`. To override the binding,
-   * API services can add a binding such as `"/v1/{name=users}/operations"` to
-   * their service configuration. For backwards compatibility, the default name
-   * includes the operations collection id, however overriding users must ensure
-   * the name binding is the parent resource, without the operations collection
-   * id. (operations.listProjectsLocationsOperations)
+   * server doesn't support this method, it returns `UNIMPLEMENTED`.
+   * (operations.listProjectsLocationsOperations)
    *
    * @param string $name The name of the operation's parent resource.
    * @param array $optParams Optional parameters.

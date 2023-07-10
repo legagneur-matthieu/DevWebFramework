@@ -62,6 +62,10 @@ class ResearchScamGenericFeatureVector extends \Google\Collection
   protected $fixedPointMetadataType = ResearchScamGenericFeatureVectorFixedPointMetadata::class;
   protected $fixedPointMetadataDataType = '';
   /**
+   * @var bool
+   */
+  public $internalOnlyIsSecondaryPartition;
+  /**
    * @var string
    */
   public $normType;
@@ -243,6 +247,20 @@ class ResearchScamGenericFeatureVector extends \Google\Collection
   public function getFixedPointMetadata()
   {
     return $this->fixedPointMetadata;
+  }
+  /**
+   * @param bool
+   */
+  public function setInternalOnlyIsSecondaryPartition($internalOnlyIsSecondaryPartition)
+  {
+    $this->internalOnlyIsSecondaryPartition = $internalOnlyIsSecondaryPartition;
+  }
+  /**
+   * @return bool
+   */
+  public function getInternalOnlyIsSecondaryPartition()
+  {
+    return $this->internalOnlyIsSecondaryPartition;
   }
   /**
    * @param string

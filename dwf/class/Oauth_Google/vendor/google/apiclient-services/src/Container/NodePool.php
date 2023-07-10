@@ -27,6 +27,10 @@ class NodePool extends \Google\Collection
   protected $configType = NodeConfig::class;
   protected $configDataType = '';
   /**
+   * @var string
+   */
+  public $etag;
+  /**
    * @var int
    */
   public $initialNodeCount;
@@ -116,6 +120,20 @@ class NodePool extends \Google\Collection
   public function getConfig()
   {
     return $this->config;
+  }
+  /**
+   * @param string
+   */
+  public function setEtag($etag)
+  {
+    $this->etag = $etag;
+  }
+  /**
+   * @return string
+   */
+  public function getEtag()
+  {
+    return $this->etag;
   }
   /**
    * @param int

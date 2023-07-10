@@ -32,7 +32,7 @@ use Google\Service\PaymentsResellerSubscription\GoogleCloudPaymentsResellerSubsc
  * Typical usage is:
  *  <code>
  *   $paymentsresellersubscriptionService = new Google\Service\PaymentsResellerSubscription(...);
- *   $subscriptions = $paymentsresellersubscriptionService->subscriptions;
+ *   $subscriptions = $paymentsresellersubscriptionService->partners_subscriptions;
  *  </code>
  */
 class PartnersSubscriptions extends \Google\Service\Resource
@@ -99,7 +99,7 @@ class PartnersSubscriptions extends \Google\Service\Resource
     return $this->call('entitle', [$params], GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse::class);
   }
   /**
-   * [Deprecated] New partners should be on auto-extend by default. Used by
+   * [Opt-in only] Most partners should be on auto-extend by default. Used by
    * partners to extend a subscription service for their customers on an ongoing
    * basis for the subscription to remain active and renewable. It should be
    * called directly by the partner using service accounts. (subscriptions.extend)

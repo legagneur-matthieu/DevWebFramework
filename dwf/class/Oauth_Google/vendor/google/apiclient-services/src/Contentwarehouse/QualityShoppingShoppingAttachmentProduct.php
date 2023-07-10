@@ -55,6 +55,10 @@ class QualityShoppingShoppingAttachmentProduct extends \Google\Collection
   protected $pblockType = QualityShoppingShoppingAttachmentPBlock::class;
   protected $pblockDataType = '';
   /**
+   * @var int[]
+   */
+  public $productBrowseonomyIds;
+  /**
    * @var string
    */
   public $productClusterMid;
@@ -219,6 +223,20 @@ class QualityShoppingShoppingAttachmentProduct extends \Google\Collection
   public function getPblock()
   {
     return $this->pblock;
+  }
+  /**
+   * @param int[]
+   */
+  public function setProductBrowseonomyIds($productBrowseonomyIds)
+  {
+    $this->productBrowseonomyIds = $productBrowseonomyIds;
+  }
+  /**
+   * @return int[]
+   */
+  public function getProductBrowseonomyIds()
+  {
+    return $this->productBrowseonomyIds;
   }
   /**
    * @param string

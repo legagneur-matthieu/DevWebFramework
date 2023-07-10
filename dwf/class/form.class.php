@@ -530,13 +530,18 @@ class form {
         $captcha = (new captcha())->get($espeak);
         $tag = tags::tag("div", ["id" => "captcha_{$captcha["hash"]}"],
                         html_structures::img($captcha["img"], "Captcha") .
-                        tags::tag("a", ["class" => "btn btn-light"], html_structures::bi("volume-up-fill", "Lire le captcha")) .
+                        tags::tag("a", ["href" => "#captcha_{$captcha["hash"]}","class" => "btn btn-light"], html_structures::bi("volume-up-fill", "Lire le captcha")) .
                         tags::tag("audio", ["src" => $captcha["audio"]]) .
                         " <script type=\"text/javascript\">"
                         . "$(document).ready(function(){"
                         . "$('#captcha_{$captcha["hash"]} a').click(function(){"
                         . "document.querySelector('#captcha_{$captcha["hash"]} audio').play();"
-                        . "})"
+                        . "});"
+                        . "$('#captcha_a783458949484d21d2516108ba2e47b34ead4bef a').keypress(function (e) {"
+                        . "if (e.which == 13 || e.which == 32) {"
+                        . "document.querySelector('#captcha_a783458949484d21d2516108ba2e47b34ead4bef audio').play();"
+                        . "}"
+                        . "});"
                         . "});"
                         . "</script> "
         );

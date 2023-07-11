@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "TwemojiCountryFlags";
+  src: url("../../../commun/src/css/Twemoji/TwemojiCountryFlags.woff2") format('woff2');
+}
+.TwemojiCountryFlags{
+    font-family: "TwemojiCountryFlags";
+}

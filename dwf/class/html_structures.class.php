@@ -222,6 +222,10 @@ class html_structures {
         return $str;
     }
 
+    public static function get_flag($code) {
+        return twemojiFlags::get($code);
+    }
+
     /**
      * Retourne un glyphicon (avec un texte alternative)
      * 

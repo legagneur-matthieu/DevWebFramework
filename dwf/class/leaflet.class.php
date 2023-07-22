@@ -208,12 +208,21 @@ class leaflet {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
+                let leaflet_default_marker = L.icon({
+                    iconUrl: '/commun/src/js/leaflet/images/marker-icon.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 31],
+                    popupAnchor: [-12, -30],
+                    shadowUrl: '/commun/src/js/leaflet/images/marker-shadow.png',
+                    shadowSize: [41, 41],
+                    shadowAnchor: [12, 30]
+                });
                 map<?= $this->_id; ?> = L.map('<?= $this->_id; ?>').setView([<?= $this->_view_init["x"]; ?>, <?= $this->_view_init["y"]; ?>], <?= $this->_view_init["zoom"]; ?>);
                 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map<?= $this->_id; ?>);
         <?php
         foreach ($this->_markers as $value) {
             ?>
-                    L.marker([<?= $value["x"]; ?>,<?= $value["y"]; ?>]).bindPopup("<?= $value["desc"]; ?>").addTo(map<?= $this->_id; ?>);
+                    L.marker([<?= $value["x"]; ?>,<?= $value["y"]; ?>],{icon: leaflet_default_marker}).bindPopup("<?= $value["desc"]; ?>").addTo(map<?= $this->_id; ?>);
             <?php
         }
         foreach ($this->_circles as $value) {

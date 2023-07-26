@@ -18,9 +18,14 @@ class html_structures {
      * @param boolean $head_scope l'entête du tableau doit être accessible ? (true/false, true par defaut)
      */
     public static function table($head, $data, $summary = '', $id = '', $class = "table", $head_scope = true) {
-        $thead = tags::tr();
-        foreach ($head as $h) {
-            $thead->append_content(tags::tag("th", ($head_scope ? ["scope" => "col"] : []), $h));
+        if (count($head)) {
+            $thead = tags::tr();
+            foreach ($head as $h) {
+                $thead->append_content(tags::tag("th", ($head_scope ? ["scope" => "col"] : []), $h));
+            }
+            $thead = tags::tag("thead", [], $thead);
+        } else {
+            $thead = "";
         }
         $tbody = tags::tbody();
         if (count($data) !== 0) {
@@ -38,7 +43,7 @@ class html_structures {
             }
             $tbody->append_content(tags::tag("tr", [], $td));
         }
-        $table = tags::table(tags::tag("thead", [], $thead) . $tbody);
+        $table = tags::table($thead . $tbody);
         if (!empty($summary)) {
             $table->set_attr("summary", $summary);
         }

@@ -1,13 +1,7 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Twemoji
+ * Cette classe permet d'obtenir un émoji drapeau correspondant au code pays renseigné
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -19,6 +13,11 @@ class twemojiFlags {
      */
     private static $_called = false;
 
+    /**
+     * Retourne un émoji drapeau correspondant au code pays renseigné
+     * @param string $code code pays ("FR", "EN", "ES", ...)
+     * @return string Emoji drapeau corespondant
+     */
     public static function get($code) {
         if (!self::$_called) {
             compact_css::get_instance()->add_css_file("../commun/src/css/Twemoji/Twemoji.css");
@@ -33,5 +32,4 @@ class twemojiFlags {
                         )
         );
     }
-
 }

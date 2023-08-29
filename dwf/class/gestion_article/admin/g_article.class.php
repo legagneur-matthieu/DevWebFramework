@@ -27,7 +27,7 @@ class g_article {
      * Gère la modification d'articles
      */
     private function g_article_modif() {
-        if (article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
+        if (article::get_count("id='" . bdd::p($_GET["id"]) . "'") != 0) {
             $article = article::get_from_id($_GET["id"]);
             $categories = cat_article::get_table_ordored_array();
             $option = [];
@@ -101,7 +101,7 @@ class g_article {
      * Gère la suppresion d'articles
      */
     private function g_article_supp() {
-        application::$_bdd->query("delete from article where id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
+        application::$_bdd->query("delete from article where id='" . bdd::p($_GET["id"]) . "';");
         js::alert("L'article a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"] . "&admin=g_article");
     }

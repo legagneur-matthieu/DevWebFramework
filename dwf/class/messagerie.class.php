@@ -69,7 +69,7 @@ class messagerie {
         }
         $user = $this->_table_user;
         
-        $users = $user::get_table_array("id!='" . application::$_bdd->protect_var(session::get_user()) . "'");
+        $users = $user::get_table_array("id!='" . bdd::p(session::get_user()) . "'");
         $option = [];
         foreach ($users as $value) {
             $option[] = [$value["id"], $value[$this->_tuple_user], ($value["id"] == $_GET["dest"])];
@@ -89,13 +89,13 @@ class messagerie {
      */
     public function get() {
         if (isset($_GET["action"]) and isset($_GET["id"]) and $_GET["action"] == "supp") {
-            if (message::get_count("dest='" . application::$_bdd->protect_var(session::get_user()) . "' and id='" . application::$_bdd->protect_var(((int) $_GET["id"])) . "'") != 0) {
+            if (message::get_count("dest='" . bdd::p(session::get_user()) . "' and id='" . bdd::p(((int) $_GET["id"])) . "'") != 0) {
                 $msg = message::get_from_id(((int) $_GET["id"]));
                 $msg->set_supp(1);
             }
             js::redir("index.php?page={$_GET["page"]}&action=get");
         } else {
-            $msg = message::get_collection("dest='" . application::$_bdd->protect_var(session::get_user()) . "' and supp=0");
+            $msg = message::get_collection("dest='" . bdd::p(session::get_user()) . "' and supp=0");
             $data = [];
             if ($msg) {
                 foreach ($msg as $value) {
@@ -122,7 +122,7 @@ class messagerie {
      * Vue de la boite d'envoi
      */
     public function send() {
-        $msg = message::get_collection("emet='" . application::$_bdd->protect_var(session::get_user()) . "';");
+        $msg = message::get_collection("emet='" . bdd::p(session::get_user()) . "';");
         $data =[];
         if ($msg) {
             foreach ($msg as $value) {
@@ -141,7 +141,7 @@ class messagerie {
      */
     public static function purge_msg($table_msg, $years = 2) {
         $today_years = (date("Y") - $years) . "-" . date("m-d H:i:s");
-        application::$_bdd->query("delete from " . application::$_bdd->protect_var($table_msg) . " where heur<='" . $today_years . "';");
+        application::$_bdd->query("delete from " . bdd::p($table_msg) . " where heur<='" . $today_years . "';");
     }
 
 }

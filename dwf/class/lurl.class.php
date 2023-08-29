@@ -42,7 +42,7 @@ class lurl {
      * @return string|boolean LURL 
      */
     public function get_lurl($url) {
-        $lurl = lurl_links::get_collection("url='" . application::$_bdd->protect_var($url) . "'");
+        $lurl = lurl_links::get_collection("url='" . bdd::p($url) . "'");
         if (isset($lurl[0])) {
             $result = [
                 "status" => "success",

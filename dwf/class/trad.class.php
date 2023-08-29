@@ -33,7 +33,7 @@ class trad extends singleton {
         switch ($this->_type) {
             case "sql":
                 new entity_generator(array(array("id", "int", true), array("keyword", "string", false), array("lang", "string", false), array("texte", "string", false)), "lang_sub", true, true);
-                $lang = lang_sub::get_table_array("lang='" . application::$_bdd->protect_var(session::get_lang()) . "'");
+                $lang = lang_sub::get_table_array("lang='" . bdd::p(session::get_lang()) . "'");
                 foreach ($lang as $value) {
                     $this->_lang[$value["keyword"]] = $value["texte"];
                 }

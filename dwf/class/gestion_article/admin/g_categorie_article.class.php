@@ -28,7 +28,7 @@ class g_categorie_article {
      */
     private function g_categorie_modif() {
         if ($_GET["id"] != 1 and $_GET["id"] != 2 and math::is_int($_GET["id"])) {
-            if (cat_article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
+            if (cat_article::get_count("id='" . bdd::p($_GET["id"]) . "'") != 0) {
                 $cat = cat_article::get_from_id($_GET["id"]);
                 $form = new form();
                 $form->open_fieldset("Modifer une categorie");
@@ -56,9 +56,9 @@ class g_categorie_article {
      */
     private function g_categorie_supp() {
         if ($_GET["id"] != 1 and $_GET["id"] != 2 and math::is_int($_GET["id"])) {
-            if (cat_article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
-                $cat = cat_article::get_table_array("id='" . application::$_bdd->protect_var($_GET["id"]) . "'");
-                $articles = article::get_collection("categorie='" . application::$_bdd->protect_var($cat[0]["id"]) . "'");
+            if (cat_article::get_count("id='" . bdd::p($_GET["id"]) . "'") != 0) {
+                $cat = cat_article::get_table_array("id='" . bdd::p($_GET["id"]) . "'");
+                $articles = article::get_collection("categorie='" . bdd::p($cat[0]["id"]) . "'");
                 if ($articles) {
                     foreach ($articles as $a) {
                         $a->set_categorie("1");
@@ -73,7 +73,7 @@ class g_categorie_article {
                         }
                     }
                 }
-                application::$_bdd->query("delete from cat_article where id='" . application::$_bdd->protect_var($cat[0]["id"]) . "';");
+                application::$_bdd->query("delete from cat_article where id='" . bdd::p($cat[0]["id"]) . "';");
                 js::alert("La catégorie \"" . $cat[0]["nom"] . "\" a bien été supprimé");
             } else {
                 js::alert("ERREUR : Cette catégorie n'existe pas !");
@@ -105,7 +105,7 @@ class g_categorie_article {
         $form->close_fieldset();
         echo $form->render();
         if (isset($_POST["cat_nom"])) {
-            if (cat_article::get_count("nom='" . application::$_bdd->protect_var($_POST["cat_nom"]) . "'") == 0) {
+            if (cat_article::get_count("nom='" . bdd::p($_POST["cat_nom"]) . "'") == 0) {
                 cat_article::ajout($_POST["cat_nom"]);
                 js::alert("Votre catégorie a bien été ajouté");
                 js::redir("");

@@ -159,7 +159,7 @@ class admin_controle {
                         break;
                     default:
                         $elem = $element[1];
-                        $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
+                        $elem = $elem::get_table_array("1=1 order by " . bdd::p($this->_relations[$element[0]]));
                         $option = [];
                         foreach ($elem as $e) {
                             $option[] = [$e["id"], $e[$this->_relations[$element[0]]]];
@@ -179,16 +179,16 @@ class admin_controle {
      */
     private function ajout_exec() {
         if (isset($_POST["admin_form_ajout"])) {
-            $req = "INSERT INTO " . application::$_bdd->protect_var($this->_entity) . " (";
+            $req = "INSERT INTO " . bdd::p($this->_entity) . " (";
             $key = "";
             $value = "";
             foreach ($this->_structure as $element) {
                 if (!$element[2]) {
                     $key .= " " . $element[0] . ",";
                     if ($element[0] == "psw" or $element[0] == "password") {
-                        $value .= " '" . application::$_bdd->protect_var(application::hash($_POST[$element[0]])) . "',";
+                        $value .= " '" . bdd::p(application::hash($_POST[$element[0]])) . "',";
                     } else {
-                        $value .= " '" . application::$_bdd->protect_var($_POST[$element[0]]) . "',";
+                        $value .= " '" . bdd::p($_POST[$element[0]]) . "',";
                     }
                 }
             }
@@ -236,7 +236,7 @@ class admin_controle {
                         break;
                     default:
                         $elem = $element[1];
-                        $elem = $elem::get_table_array("1=1 order by " . application::$_bdd->protect_var($this->_relations[$element[0]]));
+                        $elem = $elem::get_table_array("1=1 order by " . bdd::p($this->_relations[$element[0]]));
                         $option = [];
                         foreach ($elem as $e) {
                             $selected = false;
@@ -286,7 +286,7 @@ class admin_controle {
         $url = application::get_url(["action", "id"]);
         $this->supp_exec($url);
         $entity = $this->_entity;
-        $data = $entity::get_table_array("id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
+        $data = $entity::get_table_array("id='" . bdd::p($_GET["id"]) . "';");
         foreach ($data as $key => $value) {
             foreach ($this->_relations as $k => $v) {
                 $data[$key][$k] = $this->_data[$key][$k];

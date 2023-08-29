@@ -68,11 +68,36 @@ class bdd extends singleton {
      * contre les attaques SQL et JavaScript.
      * Cette fonction est systématiquement utilisée dans les méthodes "query" et "fetch" de la class bdd
      * 
+     * @deprecated since version 21.23.08 remplacé par la méthode static bdd:p()
      * @param string $var variable à protégée
      * @return string variable protégé
      */
     public function protect_var($var) {
+        return self::p($var);
+    }
+
+    /**
+     * Cette fonction sert à sécuriser une variable destinée à être enregistrée en base de données 
+     * contre les attaques SQL et JavaScript.
+     * Cette fonction est systématiquement utilisée dans les méthodes "query" et "fetch" de la class bdd
+     * 
+     * @param string $var variable à protégée
+     * @return string variable protégé
+     */
+    public static function p($var) {
         return addslashes(htmlspecialchars(htmlspecialchars_decode($var), ENT_NOQUOTES));
+    }
+
+    /**
+     * Cette fonction supprime les protections de la fonction protect_var() afin que la variable puisse être 
+     * reexploitée sans problème.
+     * 
+     * @deprecated since version 21.23.08 remplacé par la méthode static bdd:up()
+     * @param string $var variable à afficher
+     * @return string variable affichée
+     */
+    public function unprotect_var($var) {
+        return stripcslashes($var);
     }
 
     /**
@@ -82,7 +107,7 @@ class bdd extends singleton {
      * @param string $var variable à afficher
      * @return string variable affichée
      */
-    public function unprotect_var($var) {
+    public static function up($var) {
         return stripcslashes($var);
     }
 
@@ -117,7 +142,7 @@ class bdd extends singleton {
      * @param string|statement $statement requête SQL
      */
     public function query($statement) {
-        self::$_debug["nb_req"] ++;
+        self::$_debug["nb_req"]++;
         self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace", 700))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
@@ -134,7 +159,7 @@ class bdd extends singleton {
      * @return array tableau à deux dimensions contenant les données 
      */
     public function fetch($statement) {
-        self::$_debug["nb_req"] ++;
+        self::$_debug["nb_req"]++;
         self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace"))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
@@ -166,5 +191,4 @@ class bdd extends singleton {
         ]);
         return $statement;
     }
-
 }

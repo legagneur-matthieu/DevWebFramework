@@ -215,7 +215,7 @@ class websocket_server {
      * @param string $token
      */
     private function authentificate($client, $token) {
-        $ws_token = ws_token::get_collection("token='" . application::$_bdd->protect_var($token) . "'");
+        $ws_token = ws_token::get_collection("token='" . bdd::p($token) . "'");
         $count = count($ws_token);
         if ($count == 0) {
             self::log($client, "Auth fail : Invalid token");

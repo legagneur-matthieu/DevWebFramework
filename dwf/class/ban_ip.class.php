@@ -25,8 +25,8 @@ class ban_ip {
             ["ban", "int", false],
         ];
         new entity_generator($data, "banip", false, true);
-        application::$_bdd->query("delete from banip where mt<'" . application::$_bdd->protect_var(microtime(true) - $ban_time) . "';");
-        $where = "ip='" . application::$_bdd->protect_var($_SERVER["REMOTE_ADDR"]) . "'";
+        application::$_bdd->query("delete from banip where mt<'" . bdd::p(microtime(true) - $ban_time) . "';");
+        $where = "ip='" . bdd::p($_SERVER["REMOTE_ADDR"]) . "'";
         if (banip::get_count($where) > 0) {
             $ip = banip::get_table_array($where);
             $ip = banip::get_from_id($ip[0]["id"]);

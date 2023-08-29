@@ -100,7 +100,7 @@ class auth {
      */
     private function exec_auth() {
         $table = $this->_table;
-        if ($req = $table::get_table_array($this->_tuple_login . "='" . application::$_bdd->protect_var($_POST['auth_login']) . "' and " .
+        if ($req = $table::get_table_array($this->_tuple_login . "='" . bdd::p($_POST['auth_login']) . "' and " .
                         $this->_tuple_psw . "='" . application::hash($_POST['auth_psw']) . "';")) {
             session::set_auth(true);
             session::set_user($req[0]['id']);
@@ -117,5 +117,4 @@ class auth {
     public static function unauth() {
         session_destroy();
     }
-
 }

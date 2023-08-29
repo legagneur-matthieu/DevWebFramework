@@ -247,7 +247,7 @@ class statistiques {
             $date_debut = $date[0] . "-" . $date[1];
             $date_fin = $date_debut . "-31";
             $date_debut .= "-01";
-            $where = "date between '" . application::$_bdd->protect_var($date_debut) . "' and '" . application::$_bdd->protect_var($date_fin) . "'";
+            $where = "date between '" . bdd::p($date_debut) . "' and '" . bdd::p($date_fin) . "'";
             $req = application::$_bdd->fetch("select distinct visitor from stat_pages where " . $where);
             if (count($req) != 0) {
                 $in = "id in(";

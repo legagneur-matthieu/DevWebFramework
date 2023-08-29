@@ -27,7 +27,7 @@ class g_module_article {
      * Gère la modification de catégories
      */
     private function g_module_modif() {
-        if (module_article::get_count("id='" . application::$_bdd->protect_var($_GET["id"]) . "'") != 0) {
+        if (module_article::get_count("id='" . bdd::p($_GET["id"]) . "'") != 0) {
             $module = module_article::get_from_id($_GET["id"]);
             $cat = cat_article::get_table_ordored_array();
             $cat_mod = (array) json_decode($module->get_categories());
@@ -59,7 +59,7 @@ class g_module_article {
      * Gère la suppresion de catégories
      */
     private function g_module_supp() {
-        application::$_bdd->query("delete from module_article where id='" . application::$_bdd->protect_var($_GET["id"]) . "';");
+        application::$_bdd->query("delete from module_article where id='" . bdd::p($_GET["id"]) . "';");
         js::alert("Le module a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"] . "&admin=g_module");
     }
@@ -103,7 +103,7 @@ class g_module_article {
         $form->close_fieldset();
         echo $form->render();
         if (isset($_POST["mod_nom"])) {
-            if (module_article::get_count("name='" . application::$_bdd->protect_var($_POST["mod_nom"]) . "'") == 0) {
+            if (module_article::get_count("name='" . bdd::p($_POST["mod_nom"]) . "'") == 0) {
                 $mod_cat = [];
                 foreach ($_POST["mod_cat"] as $value) {
                     $mod_cat[] = (int) $value;

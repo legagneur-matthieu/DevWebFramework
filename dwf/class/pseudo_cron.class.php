@@ -117,7 +117,7 @@ class pseudo_cron extends singleton {
                 break;
             case "sql":
             default:
-                application::$_bdd->query("UPDATE `pcron` SET mt='" . application::$_bdd->protect_var(microtime(true)) . "' WHERE hkey='" . application::$_bdd->protect_var($hkey) . "';");
+                application::$_bdd->query("UPDATE `pcron` SET mt='" . bdd::p(microtime(true)) . "' WHERE hkey='" . bdd::p($hkey) . "';");
                 $this->_pcron = pcron::get_table_array();
                 break;
         }
@@ -199,7 +199,7 @@ class pseudo_cron extends singleton {
                         break;
                     case "sql":
                     default:
-                        $hkeys[] = "'" . application::$_bdd->protect_var($pcron["hkey"]) . "'";
+                        $hkeys[] = "'" . bdd::p($pcron["hkey"]) . "'";
                         break;
                 }
             }

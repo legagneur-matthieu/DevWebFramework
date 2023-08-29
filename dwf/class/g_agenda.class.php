@@ -45,7 +45,7 @@ class g_agenda {
      * @param int $lim nombre limite d'évènements à afficher (10 par défaut)
      */
     private function agenda_liste($lim) {
-        $events = agenda::get_table_array("date_fin>='" . date("Y-m-d") . " 23:59' order by date_debut limit 0," . application::$_bdd->protect_var((int) $lim));
+        $events = agenda::get_table_array("date_fin>='" . date("Y-m-d") . " 23:59' order by date_debut limit 0," . bdd::p((int) $lim));
         foreach ($events as $event) {
             $date_debut = explode(" ", $event["date_debut"]);
             $date_fin = explode(" ", $event["date_fin"]);
@@ -103,7 +103,7 @@ class g_agenda {
         $form->submit("btn-primary");
         echo $form->render();
         if (isset($_POST["agenda_my"])) {
-            $events = agenda::get_table_array("date_debut>='01-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . application::$_bdd->protect_var($_POST["agenda_my"]) . " 00:00';");
+            $events = agenda::get_table_array("date_debut>='01-" . bdd::p($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . bdd::p($_POST["agenda_my"]) . " 00:00';");
             echo html_structures::hr();
             foreach ($events as $event) {
                 $date_debut = explode(" ", $event["date_debut"]);
@@ -172,7 +172,7 @@ class g_agenda {
      * Suppresion d'un évènement dans l'administration
      */
     private function agenda_admin_supp() {
-        application::$_bdd->query("delete from agenda where id='" . application::$_bdd->protect_var($_GET["agenda_supp"]) . "';");
+        application::$_bdd->query("delete from agenda where id='" . bdd::p($_GET["agenda_supp"]) . "';");
         js::alert("L'événement a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"]);
     }

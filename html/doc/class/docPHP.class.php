@@ -456,12 +456,16 @@ class docPHP {
                 . "//query permet d'executer des requêtes de type insert into, update et delete, ne retourne rien !\n"
                 . "application::$" . "_bdd->query($" . "statement);\n\n"
                 . "//protect_var permet d'échapper les caractères dangereux pour votre base de données et votre application\n"
-                . "$" . "var = application::$" . "_bdd->protect_var($" . "var);\n\n"
+                . "$" . "var = application::$" . "_bdd->protect_var($" . "var);\n"
+                . "//Depuis la version 21.23.08 cette méthode a été remplacé par \n"
+                . "bdd:p($" . "var)\n\n"
                 . "//verif_email retourne true si la chaine rentrée en paramètres respecte le format email, false si non\n"
                 . "$" . "is_email=application::$" . "_bdd->verif_email($" . "email);\n\n"
                 . "//unprotect_var est déprécié si vous utilisez une version de php superieur à 5.4\n"
                 . "//servait à annuler l'échappement de caractères pour les variables destinés à être affichés\n"
                 . "$" . "var = application::$" . "_bdd->unprotect_var($" . "var);\n"
+                . "//Depuis la version 21.23.08 cette méthode a été remplacé par \n"
+                . "bdd:up($" . "var)\n\n"
                 . "?>", $this->_brush);
     }
 

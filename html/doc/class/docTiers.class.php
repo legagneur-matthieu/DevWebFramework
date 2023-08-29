@@ -12,7 +12,7 @@ class docTiers {
             5 => "CeCILL",
             10 => "AUTRES (Copyleft, copyright particuliers, ...)"
         ];
-        js::datatable("datatable", ["pageLength" => 50]);
+        js::datatable("datatable", ["lengthChange" => "false", "paging" => "false", "pageLength" => -1]);
         echo tags::tag("p", [], "Vous trouverez ici la liste de toutes les librairies tierces utilisées par le framework.") .
         html_structures::table(["Librairie", "Version", "Auteur", "Langage", "Licence"], [
             [html_structures::a_link("https://alertifyjs.com", "Alertify", "", "", true), "1.13.1", "Fabien Doiron", "JS", $licences[0]],

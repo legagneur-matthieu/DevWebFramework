@@ -85,6 +85,7 @@ class compact_css extends singleton {
             foreach ($this->_files as $file) {
                 $content .= file_get_contents($file) . PHP_EOL;
             }
+            $content= strtr($content, ["content:▲/"=>"","content:▼/"=>""]);
             $content = self::css_minify($content);
             file_put_contents($filename, $content);
             dwf_exception::check_file_writed($filename);

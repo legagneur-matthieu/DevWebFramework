@@ -10,35 +10,21 @@ class bootstrap_theme {
      * Thèmes de bootswath
      * @var array Thèmes de bootswath
      */
-    private static $_theme = [
-        "cerulean",
-        "cosmo",
-        "cyborg",
-        "darkly",
-        "flatly",
-        "journal",
-        "litera",
-        "lumen",
-        "lux",
-        "materia",
-        "minty",
-        "pulse",
-        "sandstone",
-        "simplex",
-        "sketchy",
-        "slate",
-        "solar",
-        "spacelab",
-        "superhero",
-        "united",
-        "yeti"
-    ];
+    private static $_theme = [];
 
     /**
      * Retourne la liste des thèmes disponible
      * @return array La liste des thèmes disponible
      */
     public static function get_bootstrap_themes() {
+        if (!count(self::$_theme)) {
+            $glob = glob("../../commun/src/dist/bootswatch/*");
+            foreach ($glob as $theme) {
+                if (is_dir($theme)) {
+                    self::$_theme = basename($theme);
+                }
+            }
+        }
         return self::$_theme;
     }
 
@@ -66,7 +52,7 @@ class bootstrap_theme {
         html_structures::link("../commun/src/dist/css/bootstrap-glyphicon.min.css") .
         html_structures::link("../commun/src/dist/bootstrap-icons/bootstrap-icons.css") .
         html_structures::link("../commun/src/dist/css/bootstrap-grid.min.css");
-        if (in_array($theme = self::get_theme(), self::$_theme)) {
+        if (in_array($theme = self::get_theme(), self::get_bootstrap_themes())) {
             echo html_structures::link("../commun/src/dist/bootswatch/{$theme}/bootstrap.min.css");
         } else {
             echo html_structures::link("../commun/src/dist/css/bootstrap.min.css");
@@ -79,7 +65,7 @@ class bootstrap_theme {
      */
     public static function user_custom() {
         if (isset($_POST["dwf_bootstrap_theme"])) {
-            if (in_array($_POST["dwf_bootstrap_theme"], self::$_theme)) {
+            if (in_array($_POST["dwf_bootstrap_theme"], self::get_bootstrap_themes())) {
                 session::set_val("theme", $_POST["dwf_bootstrap_theme"]);
             } else {
                 session::set_val("theme", "default");
@@ -91,7 +77,7 @@ class bootstrap_theme {
         $option = [
             ["default", "Default", false]
         ];
-        foreach (self::$_theme as $t) {
+        foreach (self::get_bootstrap_themes() as $t) {
             $option[] = [$t, ucfirst($t), ($t == self::get_theme())];
         }
         $form->select("Thème", "dwf_bootstrap_theme", $option);
@@ -118,5 +104,4 @@ class bootstrap_theme {
         $form->submit("btn-primary", $labels[$value]);
         return $form->render();
     }
-
 }

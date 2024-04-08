@@ -15,6 +15,9 @@ class schoolbreak {
     public static function fr($academie = "Amiens") {
         $y = (int) date('Y');
         if (!file_exists($filename = "./src/schoolbreak/{$y}.json")) {
+            if(!file_exists("./src/schoolbreak")){
+                mkdir("./src/schoolbreak");
+            }
             $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&rows=20&&exclude.population=Enseignants&refine.location={$academie}&refine.annee_scolaire=";
             $scoolbreak = [];
             foreach ([

@@ -13,10 +13,12 @@ class docPHP_natives {
         </p>
         <div id="accordion_classes_natives">
             <?php
-            foreach (get_class_methods(__CLASS__) as $m) {
+            $functions=get_class_methods(__CLASS__);
+            sort($functions);
+            foreach ($functions as $m) {
                 if ($m != __FUNCTION__) {
                     ?>
-                    <h4><?= strtr($m, array("__" => ", ")); ?></h4>
+                    <h4><?= ucfirst(strtr($m, array("__" => ", "))); ?></h4>
                     <div><?php $this->$m(); ?></div>
                     <?php
                 }
@@ -1716,8 +1718,19 @@ class docPHP_natives {
                 . "\nnew robotstxt($" . "data=\"\");\n"
                 . "?>", $this->_brush);
     }
+    
+    private function schoolbreak() {
+        ?>
+        <p>Affiche un tableau des vacances scolaires</p>
+        <?php
+        js::syntaxhighlighter("<?php\n"
+                . "//exemple avec l'academie de Amiens\n"
+                . "schoolbreak::fr('Amiens');\n"
+                . "?>", $this->_brush);
+        schoolbreak::fr();
+    }
 
-    private function ScraperAPI() {
+    private function scraperAPI() {
         ?>
         <p>Cette classe permet de faire appel à ScraperAPI <br />
             <a href="https://scraperapi.com">https://scraperapi.com</a>      
@@ -2291,5 +2304,4 @@ class docPHP_natives {
                 . "writer::get_instance()->write_zip($" . "zipname);\n"
                 . "?>", $this->_brush);
     }
-
 }

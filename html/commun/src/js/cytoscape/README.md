@@ -1,19 +1,19 @@
-<img style="width: 200px; height: 200px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/cytoscape-logo.png" width="200" height="200"></img>
+<img style="width: 200px; height: 200px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/cytoscape-logo.png" width="200" height="200">
 
 [![GitHub repo](https://img.shields.io/badge/Repo-GitHub-yellow.svg)](https://github.com/cytoscape/cytoscape.js)
-[![Twitter updates](https://img.shields.io/badge/Updates-Twitter-yellow.svg)](https://twitter.com/cytoscapejs)
+[![Ask a question with Phind](https://img.shields.io/badge/Get%20help-Phind-yellow.svg)](https://www.phind.com/search?c=I%27m%20using%20the%20Cytoscape.js%20graph%20theory%20JS%20library.&q=How%20do%20I%20create%20a%20graph%20in%20my%20HTML%20page)
 [![News and tutorials](https://img.shields.io/badge/News%20%26%20tutorials-Blog-yellow.svg)](https://blog.js.cytoscape.org)
-[![Questions at StackOverflow](https://img.shields.io/badge/Questions-StackOverflow-yellow.svg)](https://stackoverflow.com/questions/tagged/cytoscape.js)
-[![Ask a question at StackOverflow](https://img.shields.io/badge/Ask%20a%20question-StackOverflow-yellow.svg)](https://stackoverflow.com/questions/ask?tags=cytoscape.js,javascript)
-[![Community discussions](https://img.shields.io/badge/Community%20discussions-GitHub-yellow.svg)](https://github.com/cytoscape/cytoscape.js/discussions)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/cytoscape/cytoscape.js/master/LICENSE)
-[![DOI](https://zenodo.org/badge/2255947.svg)](https://zenodo.org/badge/latestdoi/2255947)
-[![Cite](https://img.shields.io/badge/Cite-Oxford%20Bioinformatics%20Article-blue.svg)](https://js.cytoscape.org/#introduction/citation)
 [![npm](https://img.shields.io/npm/v/cytoscape.svg)](https://www.npmjs.com/package/cytoscape)
-[![Download](https://img.shields.io/npm/v/cytoscape.svg?label=Download)](https://github.com/cytoscape/cytoscape.js/tree/master/dist)
-[![Extensions](https://img.shields.io/badge/Extensions-67-blue.svg)](https://js.cytoscape.org/#extensions)
+[![DOI](https://zenodo.org/badge/2255947.svg)](https://zenodo.org/badge/latestdoi/2255947)
 [![npm installs](https://img.shields.io/npm/dm/cytoscape.svg?label=npm%20installs)](https://www.npmjs.com/package/cytoscape)
 [![Automated tests](https://github.com/cytoscape/cytoscape.js/actions/workflows/tests.yml/badge.svg)](https://github.com/cytoscape/cytoscape.js/actions/workflows/tests.yml)
+[![Extensions](https://img.shields.io/badge/Extensions-68-brightgreen.svg)](https://js.cytoscape.org/#extensions)
+[![Cloudflare](https://img.shields.io/badge/Powered%20by-Cloudflare-orange.svg)](https://cloudflare.com)
+
+
+Created at the [University of Toronto](https://utoronto.ca) and published in [Oxford Bioinformatics](https://js.cytoscape.org/#introduction/citation) ([2016](https://academic.oup.com/bioinformatics/article/32/2/309/1744007), [2023](https://academic.oup.com/bioinformatics/article/39/1/btad031/6988031)). <br />
+Authored by: [Max Franz](https://github.com/maxkfranz), [Christian Lopes](https://github.com/chrtannus), [Dylan Fong](https://github.com/d2fong), [Mike Kucera](https://github.com/mikekucera), ..., [Gary Bader](https://baderlab.org)
 
 # Cytoscape.js
 
@@ -38,9 +38,9 @@ Learn more about the features of Cytoscape.js by reading [its documentation](htt
 
 The Tokyo railway stations network can be visualised with Cytoscape:
 
-<img style="width: 300px; height: 126px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/tokyo-big.png" width="300" height="126"></img>
+<img style="width: 300px; height: 126px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/tokyo-big.png" width="300" height="126">
 
-<img style="width: 300px; height: 126px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/tokyo-big-zoomed-in.png" width="300" height="126"></img>
+<img style="width: 300px; height: 126px;" src="https://raw.githubusercontent.com/cytoscape/cytoscape.js/unstable/documentation/img/tokyo-big-zoomed-in.png" width="300" height="126">
 
 A [live demo](https://js.cytoscape.org/demos/tokyo-railways/) and [source code](https://github.com/cytoscape/cytoscape.js/tree/master/documentation/demos/tokyo-railways) are available for the Tokyo railway stations graph.  More demos are available in the [documentation](https://js.cytoscape.org/#demos).
 
@@ -62,7 +62,7 @@ Future versions of Cytoscape.js are planned in the [milestones of the Github iss
 
 Would you like to become a Cytoscape.js contributor?  You can contribute in technical roles (e.g. features, testing) or non-technical roles (e.g. documentation, outreach), depending on your interests.  [Get in touch with us by posting a GitHub discussion](https://github.com/cytoscape/cytoscape.js/discussions).
 
-For the mechanics of contributing a pull request, refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+For the mechanics of contributing a pull request, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Feature releases are made monthly, while patch releases are made weekly.  This allows for rapid releases of first- and third-party contributions.
 
@@ -76,9 +76,11 @@ To cite Cytoscape.js in a paper, please cite the Oxford Bioinformatics issue:
 
 Franz M, Lopes CT, Huck G, Dong Y, Sumer O, Bader GD
 
-[Bioinformatics (2016) 32 (2): 309-311 first published online September 28, 2015 doi:10.1093/bioinformatics/btv557 (PDF)](https://bioinformatics.oxfordjournals.org/content/32/2/309)
+[Bioinformatics (2016) 32 (2): 309-311 first published online September 28, 2015 doi:10.1093/bioinformatics/btv557](https://bioinformatics.oxfordjournals.org/content/32/2/309) [(PDF)](http://bioinformatics.oxfordjournals.org/content/32/2/309.full.pdf)
 
-[PubMed Abstract](https://www.ncbi.nlm.nih.gov/pubmed/26415722)
+- [PubMed abstract for the original 2016 article](http://www.ncbi.nlm.nih.gov/pubmed/26415722)
+- [PubMed abstract for the 2023 update article](https://pubmed.ncbi.nlm.nih.gov/36645249)
+
 
 
 
@@ -134,39 +136,14 @@ The default test scripts run directly against the source code.  Tests can altern
 
 ## Release instructions
 
- 1. Ensure the docs are updated with the list of releases you would like to make in `documentation/md/intro.md` (on both `master` and `unstable` branches).  Push the changes.
- 1. Ensure that [milestones](https://github.com/cytoscape/cytoscape.js/milestones) exist for the releases that you would like to make.  Each milestone should contain its corresponding issues and pull requests.
- 1. For patch releases, do the back-port patch release before the corresponding current  release.  This ensures that npm lists the current version as the latest one.
-     1. `git checkout 1.1.x`, e.g. if the previous feature release is 1.1
-     1. Follow the remaining ordinary release steps (step 5 and onward).
- 1. Current releases are based on the `master` branch: `git checkout master`
-     1. If you are making a patch release, you can just release `master` with its new patches.
-     1. If you are making a feature release, you need to merge `unstable` onto `master`.  Since there can be conflicts, it's easiest to use the 'ours' strategy which will allow you to use the state of `unstable` as-is (i.e. no conflict resolution necessary):
-         1. Make sure your local `master` is up-to-date: `git checkout master && git pull`
-         1. Make sure your local `unstable` is up-to-date: `git checkout unstable && git pull`
-         1. Create a merge commit that selects the state of `unstable` and push it: `git merge -s ours master && git push`
-         1. Fast-forward `master` to the merge commit: `git checkout master && git merge unstable && git push`
-         1. Update the version number in `package.json` and `package-lock.json` on `unstable` to some provisional new version number, and push it.
- 1. Update the `VERSION` environment variable for the release number you want to make, e.g. `export VERSION=1.2.3`
- 1. Confirm all the tests are passing: 
-     1. `npm run test`
-     1. See also `test/index.html` for browser testing (optional)
- 1. Confirm all the tests are passing in IE9 (for feature releases):
-     1. `npm run watch:umd`
-     1. Open an [IE9 VM](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
-     1. Open `http://yourip:8081/test/ie.html` in IE
- 1. Prepare a release: `npm run release`
- 1. Review the files that were just built in the previous step.
-     1. There should be a series of updated files in the `dist` directory and the `documentation` directory, identified with `git status`.  
-     1. Try out the newly-built docs and demos in your browser.
- 1. Add the the release to git: `git add . && git commit -m "Build $VERSION"`
- 1. Update the package version and tag the release: `npm version $VERSION`
- 1. Push the release changes: `git push && git push --tags`
- 1. Publish the release to npm: `npm publish`
- 1. [Create a release](https://github.com/cytoscape/cytoscape.js/releases/new) for Zenodo from the latest tag.  Make sure you wait at least 5 minutes since the last time that you made a release in order for Zenodo to work properly.
- 1. For feature releases:  Create a release announcement on the [blog](https://github.com/cytoscape/cytoscape.js-blog).  Share the announcement on mailing lists and social media.
+- [Manual Release](.github/workflows/md/Manual_Release.md)
+- [Feature Release](.github/workflows/md/Feature_Release.md)
+- [Backport/Patch Release](.github/workflows/md/Patch_Backport_Release.md)
 
+**IMP: The releases should be made atleast 5 min apart for the zenodo to pick the new release.**
+**IMP: Amend Github Action in all branches for consistent results across branches**
 
+- Repository Setup for Github Actions: [Repository Setup](.github/workflows/md/repo-setup.md)
 
 ## Tests
 

@@ -34,10 +34,10 @@ declare class Component {
      * @param {string} name
      *        The Name of the component to get.
      *
-     * @return {Component}
+     * @return {typeof Component}
      *         The `Component` that got registered under the given name.
      */
-    static getComponent(name: string): Component;
+    static getComponent(name: string): typeof Component;
     /**
      * A callback that is called when a component is ready. Does not have any
      * parameters and any callback value will be ignored.
@@ -109,10 +109,10 @@ declare class Component {
      * @param {string|string[]} type
      *        An event name or an array of event names.
      *
-     * @param {Function} fn
-     *        The function to remove.
+     * @param {Function} [fn]
+     *        The function to remove. If not specified, all listeners managed by Video.js will be removed.
      */
-    off(type: string | string[], fn: Function): void;
+    off(type: string | string[], fn?: Function): void;
     /**
      * This function will add an `event listener` that gets triggered only once. After the
      * first trigger it will get removed. This is like adding an `event listener`
@@ -153,8 +153,11 @@ declare class Component {
      * @param {string|Event|Object} event
      *        The name of the event, an `Event`, or an object with a key of type set to
      *        an event name.
+     *
+     * @param {Object} [hash]
+     *        Optionally extra argument to pass through to an event listener
      */
-    trigger(event: string | Event | any): void;
+    trigger(event: string | Event | any, hash?: any): void;
     /**
      * Dispose of the `Component` and all child components.
      *
@@ -320,8 +323,21 @@ declare class Component {
      */
     getDescendant(...names: any[]): Component | undefined;
     /**
-     * Add a child `Component` inside the current `Component`.
+     * Adds an SVG icon element to another element or component.
      *
+     * @param {string} iconName
+     *        The name of icon. A list of all the icon names can be found at 'sandbox/svg-icons.html'
+     *
+     * @param {Element} [el=this.el()]
+     *        Element to set the title on. Defaults to the current Component's element.
+     *
+     * @return {Element}
+     *        The newly created icon element.
+     */
+    setIcon(iconName: string, el?: Element): Element;
+    iconIsSet_: boolean;
+    /**
+     * Add a child `Component` inside the current `Component`.
      *
      * @param {string|Component} child
      *        The name or instance of a child to add.
@@ -332,6 +348,7 @@ declare class Component {
      *
      * @param {number} [index=this.children_.length]
      *        The index to attempt to add a child into.
+     *
      *
      * @return {Component}
      *         The `Component` that gets added as a child. When using a string the
@@ -525,11 +542,10 @@ declare class Component {
      * @param {boolean} [skipListeners]
      *        Skip the componentresize event trigger
      *
-     * @return {number|string}
-     *         The width when getting, zero if there is no width. Can be a string
-     *           postpixed with '%' or 'px'.
+     * @return {number|undefined}
+     *         The width when getting, zero if there is no width
      */
-    width(num?: number | string, skipListeners?: boolean): number | string;
+    width(num?: number | string, skipListeners?: boolean): number | undefined;
     /**
      * Get or set the height of the component based upon the CSS styles.
      * See {@link Component#dimension} for more detailed information.
@@ -540,11 +556,10 @@ declare class Component {
      * @param {boolean} [skipListeners]
      *        Skip the componentresize event trigger
      *
-     * @return {number|string}
-     *         The width when getting, zero if there is no width. Can be a string
-     *         postpixed with '%' or 'px'.
+     * @return {number|undefined}
+     *         The height when getting, zero if there is no height
      */
-    height(num?: number | string, skipListeners?: boolean): number | string;
+    height(num?: number | string, skipListeners?: boolean): number | undefined;
     /**
      * Set both the width and height of the `Component` element at the same time.
      *
@@ -580,10 +595,10 @@ declare class Component {
      * @param  {boolean} [skipListeners]
      *         Skip componentresize event trigger
      *
-     * @return {number}
+     * @return {number|undefined}
      *         The dimension when getting or 0 if unset
      */
-    dimension(widthOrHeight: string, num?: number | string, skipListeners?: boolean): number;
+    dimension(widthOrHeight: string, num?: number | string, skipListeners?: boolean): number | undefined;
     /**
      * Get the computed width or the height of the component's element.
      *
@@ -659,16 +674,16 @@ declare class Component {
      * delegates to `handleKeyDown`. This means anyone calling `handleKeyPress`
      * will not see their method calls stop working.
      *
-     * @param {Event} event
+     * @param {KeyboardEvent} event
      *        The event that caused this function to be called.
      */
-    handleKeyPress(event: Event): void;
+    handleKeyPress(event: KeyboardEvent): void;
     /**
      * Emit a 'tap' events when touch event support gets detected. This gets used to
      * support toggling the controls through a tap on the video. They get enabled
      * because every sub-component would have extra overhead otherwise.
      *
-     * @private
+     * @protected
      * @fires Component#tap
      * @listens Component#touchstart
      * @listens Component#touchmove
@@ -677,7 +692,7 @@ declare class Component {
      * @listens Component#touchend
   
      */
-    private emitTapEvents;
+    protected emitTapEvents(): void;
     /**
      * This function reports user activity whenever touch events happen. This can get
      * turned off by any sub-components that wants touch events to act another way.

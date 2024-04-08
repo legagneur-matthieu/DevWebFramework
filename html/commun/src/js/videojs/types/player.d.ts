@@ -5,8 +5,8 @@ export default Player;
  *
  * After an instance has been created it can be accessed globally in three ways:
  * 1. By calling `videojs.getPlayer('example_video_1');`
- * 2. By calling `videojs('example_video_1');` (not recomended)
- * 2. By using it directly via  `videojs.players.example_video_1;`
+ * 2. By calling `videojs('example_video_1');` (not recommended)
+ * 2. By using it directly via `videojs.players.example_video_1;`
  *
  * @extends Component
  * @global
@@ -64,7 +64,9 @@ declare class Player extends Component {
     tag: Element;
     tagAttributes: any;
     languages_: {};
-    poster_: any;
+    /** @type string */
+    poster_: string;
+    /** @type {boolean} */
     controls_: boolean;
     changingSrc_: boolean;
     playCallbacks_: any[];
@@ -112,24 +114,26 @@ declare class Player extends Component {
      * A getter/setter for the `Player`'s width. Returns the player's configured value.
      * To get the current width use `currentWidth()`.
      *
-     * @param {number} [value]
-     *        The value to set the `Player`'s width to.
+     * @param {number|string} [value]
+     *        CSS value to set the `Player`'s width to.
      *
-     * @return {number}
-     *         The current width of the `Player` when getting.
+     * @return {number|undefined}
+     *         - The current width of the `Player` when getting.
+     *         - Nothing when setting
      */
-    width(value?: number): number;
+    width(value?: number | string): number | undefined;
     /**
      * A getter/setter for the `Player`'s height. Returns the player's configured value.
      * To get the current height use `currentheight()`.
      *
-     * @param {number} [value]
-     *        The value to set the `Player`'s height to.
+     * @param {number|string} [value]
+     *        CSS value to set the `Player`'s height to.
      *
-     * @return {number}
-     *         The current height of the `Player` when getting.
+     * @return {number|undefined}
+     *         - The current height of the `Player` when getting.
+     *         - Nothing when setting
      */
-    height(value?: number): number;
+    height(value?: number | string): number | undefined;
     /**
      * A getter/setter for the `Player`'s width & height.
      *
@@ -138,13 +142,13 @@ declare class Player extends Component {
      *        - 'width'
      *        - 'height'
      *
-     * @param {number} [value]
+     * @param {number|string} [value]
      *        Value for dimension specified in the first argument.
      *
      * @return {number}
      *         The dimension arguments value when getting (width/height).
      */
-    dimension(dimension: string, value?: number): number;
+    dimension(dimension: string, value?: number | string): number;
     /**
      * A getter/setter/toggler for the vjs-fluid `className` on the `Player`.
      *
@@ -237,6 +241,25 @@ declare class Player extends Component {
      *         The Tech
      */
     tech(safety?: any): Tech;
+    /**
+     * An object that contains Video.js version.
+     *
+     * @typedef {Object} PlayerVersion
+     *
+     * @property {string} 'video.js' - Video.js version
+     */
+    /**
+     * Returns an object with Video.js version.
+     *
+     * @return {PlayerVersion}
+     *          An object with Video.js version.
+     */
+    version(): {
+        /**
+         * 'video.js' - Video.js version
+         */
+        "": string;
+    };
     /**
      * Set up click and touch listeners for the playback element
      *
@@ -582,7 +605,7 @@ declare class Player extends Component {
         inactivityTimeout: number;
         duration: number;
         lastVolume: number;
-        lastPlaybackRate: number | Player;
+        lastPlaybackRate: number;
         media: any;
         src: string;
         source: {};
@@ -596,7 +619,7 @@ declare class Player extends Component {
      * @param {string} [method]
      *        the method to call
      *
-     * @param {Object} arg
+     * @param {Object} [arg]
      *        the argument to pass
      *
      * @private
@@ -656,11 +679,8 @@ declare class Player extends Component {
     runPlayCallbacks_(val: undefined | Promise<any>): void;
     /**
      * Pause the video playback
-     *
-     * @return {Player}
-     *         A reference to the player object this function was called on
      */
-    pause(): Player;
+    pause(): void;
     /**
      * Check if the player is paused or has yet to play
      *
@@ -679,27 +699,29 @@ declare class Player extends Component {
      */
     played(): import('./utils/time').TimeRange;
     /**
-     * Returns whether or not the user is "scrubbing". Scrubbing is
+     * Sets or returns whether or not the user is "scrubbing". Scrubbing is
      * when the user has clicked the progress bar handle and is
      * dragging it along the progress bar.
      *
      * @param {boolean} [isScrubbing]
      *        whether the user is or is not scrubbing
      *
-     * @return {boolean}
-     *         The value of scrubbing when getting
+     * @return {boolean|undefined}
+     *         - The value of scrubbing when getting
+     *         - Nothing when setting
      */
-    scrubbing(isScrubbing?: boolean): boolean;
+    scrubbing(isScrubbing?: boolean): boolean | undefined;
     /**
      * Get or set the current time (in seconds)
      *
      * @param {number|string} [seconds]
      *        The time to seek to in seconds
      *
-     * @return {number}
+     * @return {number|undefined}
      *         - the current time in seconds when getting
+     *         - Nothing when setting
      */
-    currentTime(seconds?: number | string): number;
+    currentTime(seconds?: number | string): number | undefined;
     /**
      * Apply the value of initTime stored in cache as currentTime.
      *
@@ -719,10 +741,11 @@ declare class Player extends Component {
      * @param {number} [seconds]
      *        The duration of the video to set in seconds
      *
-     * @return {number}
+     * @return {number|undefined}
      *         - The duration of the video in seconds when getting
+     *         - Nothing when setting
      */
-    duration(seconds?: number): number;
+    duration(seconds?: number): number | undefined;
     /**
      * Calculates how much time is left in the video. Not part
      * of the native video API.
@@ -751,6 +774,71 @@ declare class Player extends Component {
      */
     buffered(): import('./utils/time').TimeRange;
     /**
+     * Get the TimeRanges of the media that are currently available
+     * for seeking to.
+     *
+     * @see [Seekable Spec]{@link https://html.spec.whatwg.org/multipage/media.html#dom-media-seekable}
+     *
+     * @return { import('./utils/time').TimeRange }
+     *         A mock {@link TimeRanges} object (following HTML spec)
+     */
+    seekable(): import('./utils/time').TimeRange;
+    /**
+     * Returns whether the player is in the "seeking" state.
+     *
+     * @return {boolean} True if the player is in the seeking state, false if not.
+     */
+    seeking(): boolean;
+    /**
+     * Returns whether the player is in the "ended" state.
+     *
+     * @return {boolean} True if the player is in the ended state, false if not.
+     */
+    ended(): boolean;
+    /**
+     * Returns the current state of network activity for the element, from
+     * the codes in the list below.
+     * - NETWORK_EMPTY (numeric value 0)
+     *   The element has not yet been initialised. All attributes are in
+     *   their initial states.
+     * - NETWORK_IDLE (numeric value 1)
+     *   The element's resource selection algorithm is active and has
+     *   selected a resource, but it is not actually using the network at
+     *   this time.
+     * - NETWORK_LOADING (numeric value 2)
+     *   The user agent is actively trying to download data.
+     * - NETWORK_NO_SOURCE (numeric value 3)
+     *   The element's resource selection algorithm is active, but it has
+     *   not yet found a resource to use.
+     *
+     * @see https://html.spec.whatwg.org/multipage/embedded-content.html#network-states
+     * @return {number} the current network activity state
+     */
+    networkState(): number;
+    /**
+     * Returns a value that expresses the current state of the element
+     * with respect to rendering the current playback position, from the
+     * codes in the list below.
+     * - HAVE_NOTHING (numeric value 0)
+     *   No information regarding the media resource is available.
+     * - HAVE_METADATA (numeric value 1)
+     *   Enough of the resource has been obtained that the duration of the
+     *   resource is available.
+     * - HAVE_CURRENT_DATA (numeric value 2)
+     *   Data for the immediate current playback position is available.
+     * - HAVE_FUTURE_DATA (numeric value 3)
+     *   Data for the immediate current playback position is available, as
+     *   well as enough data for the user agent to advance the current
+     *   playback position in the direction of playback.
+     * - HAVE_ENOUGH_DATA (numeric value 4)
+     *   The user agent estimates that enough data is available for
+     *   playback to proceed uninterrupted.
+     *
+     * @see https://html.spec.whatwg.org/multipage/embedded-content.html#dom-media-readystate
+     * @return {number} the current playback rendering state
+     */
+    readyState(): number;
+    /**
      * Get the percent (as a decimal) of the video that's been downloaded.
      * This method is not a part of the native HTML video API.
      *
@@ -776,10 +864,10 @@ declare class Player extends Component {
      *         - 1.0 is 100%/full
      *         - 0.5 is half volume or 50%
      *
-     * @return {number}
+     * @return {number|undefined}
      *         The current volume as a percent when getting
      */
-    volume(percentAsDecimal?: number): number;
+    volume(percentAsDecimal?: number): number | undefined;
     /**
      * Get the current muted state, or turn mute on or off
      *
@@ -787,11 +875,12 @@ declare class Player extends Component {
      *        - true to mute
      *        - false to unmute
      *
-     * @return {boolean}
+     * @return {boolean|undefined}
      *         - true if mute is on and getting
      *         - false if mute is off and getting
+     *         - nothing if setting
      */
-    muted(muted?: boolean): boolean;
+    muted(muted?: boolean): boolean | undefined;
     /**
      * Get the current defaultMuted state, or turn defaultMuted on or off. defaultMuted
      * indicates the state of muted on initial playback.
@@ -813,12 +902,12 @@ declare class Player extends Component {
      *        - true to mute
      *        - false to unmute
      *
-     * @return {boolean|Player}
+     * @return {boolean|undefined}
      *         - true if defaultMuted is on and getting
      *         - false if defaultMuted is off and getting
-     *         - A reference to the current player when setting
+     *         - Nothing when setting
      */
-    defaultMuted(defaultMuted?: boolean): boolean | Player;
+    defaultMuted(defaultMuted?: boolean): boolean | undefined;
     /**
      * Get the last volume, or set it
      *
@@ -828,8 +917,9 @@ declare class Player extends Component {
      *         - 1.0 is 100%/full
      *         - 0.5 is half volume or 50%
      *
-     * @return {number}
-     *         the current value of lastVolume as a percent when getting
+     * @return {number|undefined}
+     *         - The current value of lastVolume as a percent when getting
+     *         - Nothing when setting
      *
      * @private
      */
@@ -853,11 +943,12 @@ declare class Player extends Component {
      * @param  {boolean} [isFS]
      *         Set the players current fullscreen state
      *
-     * @return {boolean}
+     * @return {boolean|undefined}
      *         - true if fullscreen is on and getting
      *         - false if fullscreen is off and getting
+     *         - Nothing when setting
      */
-    isFullscreen(isFS?: boolean): boolean;
+    isFullscreen(isFS?: boolean): boolean | undefined;
     /**
      * Increase the size of the video to full screen
      * In some browsers, full screen is not supported natively, so it enters
@@ -905,13 +996,13 @@ declare class Player extends Component {
      */
     exitFullWindow(): void;
     /**
-     * Disable Picture-in-Picture mode.
+     * Get or set disable Picture-in-Picture mode.
      *
-     * @param {boolean} value
+     * @param {boolean} [value]
      *                  - true will disable Picture-in-Picture mode
      *                  - false will enable Picture-in-Picture mode
      */
-    disablePictureInPicture(value: boolean): any;
+    disablePictureInPicture(value?: boolean): any;
     /**
      * Check if the player is in Picture-in-Picture mode or tell the player that it
      * is or is not in Picture-in-Picture mode.
@@ -919,11 +1010,12 @@ declare class Player extends Component {
      * @param  {boolean} [isPiP]
      *         Set the players current Picture-in-Picture state
      *
-     * @return {boolean}
+     * @return {boolean|undefined}
      *         - true if Picture-in-Picture is on and getting
      *         - false if Picture-in-Picture is off and getting
+     *         - nothing if setting
      */
-    isInPictureInPicture(isPiP?: boolean): boolean;
+    isInPictureInPicture(isPiP?: boolean): boolean | undefined;
     isInPictureInPicture_: boolean;
     /**
      * Create a floating video window always on top of other windows so that users may
@@ -956,18 +1048,6 @@ declare class Player extends Component {
      *         A promise.
      */
     exitPictureInPicture(): Promise<any>;
-    /**
-     * Called when this Player has focus and a key gets pressed down, or when
-     * any Component of this player receives a key press that it doesn't handle.
-     * This allows player-wide hotkeys (either as defined below, or optionally
-     * by an external function).
-     *
-     * @param {Event} event
-     *        The `keydown` event that caused this function to be called.
-     *
-     * @listens keydown
-     */
-    handleKeyDown(event: Event): void;
     /**
      * Called when this Player receives a hotkey keydown event.
      * Supported player-wide hotkeys are:
@@ -1014,14 +1094,14 @@ declare class Player extends Component {
      *        algorithms can take the `type` into account.
      *
      *        If not provided, this method acts as a getter.
-     * @param {boolean} isRetry
+     * @param {boolean} [isRetry]
      *        Indicates whether this is being called internally as a result of a retry
      *
      * @return {string|undefined}
      *         If the `source` argument is missing, returns the current source
      *         URL. Otherwise, returns nothing/undefined.
      */
-    handleSrc_(source: any, isRetry: boolean): string | undefined;
+    handleSrc_(source: any, isRetry?: boolean): string | undefined;
     resetRetryOnError_: () => void;
     /**
      * Get or set the video source.
@@ -1115,20 +1195,20 @@ declare class Player extends Component {
     /**
      * Get or set the preload attribute
      *
-     * @param {boolean} [value]
-     *        - true means that we should preload
-     *        - false means that we should not preload
+     * @param {'none'|'auto'|'metadata'} [value]
+     *        Preload mode to pass to tech
      *
-     * @return {string}
-     *         The preload attribute value when getting
+     * @return {string|undefined}
+     *         - The preload attribute value when getting
+     *         - Nothing when setting
      */
-    preload(value?: boolean): string;
+    preload(value?: 'none' | 'auto' | 'metadata'): string | undefined;
     /**
      * Get or set the autoplay option. When this is a boolean it will
      * modify the attribute on the tech. When this is a string the attribute on
      * the tech will be removed and `Player` will handle autoplay on loadstarts.
      *
-     * @param {boolean|string} [value]
+     * @param {boolean|'play'|'muted'|'any'} [value]
      *        - true: autoplay using the browser behavior
      *        - false: do not autoplay
      *        - 'play': call play() on every loadstart
@@ -1136,10 +1216,11 @@ declare class Player extends Component {
      *        - 'any': call play() on every loadstart. if that fails call muted() then play().
      *        - *: values other than those listed here will be set `autoplay` to true
      *
-     * @return {boolean|string}
-     *         The current value of autoplay when getting
+     * @return {boolean|string|undefined}
+     *         - The current value of autoplay when getting
+     *         - Nothing when setting
      */
-    autoplay(value?: boolean | string): boolean | string;
+    autoplay(value?: boolean | 'play' | 'muted' | 'any'): boolean | string | undefined;
     /**
      * Set or unset the playsinline attribute.
      * Playsinline tells the browser that non-fullscreen playback is preferred.
@@ -1150,13 +1231,13 @@ declare class Player extends Component {
      *          which in most cases is inline. iOS Safari is a notable exception
      *          and plays fullscreen by default.
      *
-     * @return {string|Player}
+     * @return {string|undefined}
      *         - the current value of playsinline
-     *         - the player when setting
+     *         - Nothing when setting
      *
      * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
      */
-    playsinline(value?: boolean): string | Player;
+    playsinline(value?: boolean): string | undefined;
     /**
      * Get or set the loop attribute on the video element.
      *
@@ -1164,10 +1245,11 @@ declare class Player extends Component {
      *        - true means that we should loop the video
      *        - false means that we should not loop the video
      *
-     * @return {boolean}
-     *         The current value of loop when getting
+     * @return {boolean|undefined}
+     *         - The current value of loop when getting
+     *         - Nothing when setting
      */
-    loop(value?: boolean): boolean;
+    loop(value?: boolean): boolean | undefined;
     /**
      * Get or set the poster image source url
      *
@@ -1176,10 +1258,11 @@ declare class Player extends Component {
      * @param {string} [src]
      *        Poster image source URL
      *
-     * @return {string}
-     *         The current value of poster when getting
+     * @return {string|undefined}
+     *         - The current value of poster when getting
+     *         - Nothing when setting
      */
-    poster(src?: string): string;
+    poster(src?: string): string | undefined;
     /**
      * Some techs (e.g. YouTube) can provide a poster source in an
      * asynchronous way. We want the poster component to use this
@@ -1202,10 +1285,11 @@ declare class Player extends Component {
      *        - true to turn controls on
      *        - false to turn controls off
      *
-     * @return {boolean}
-     *         The current value of controls when getting
+     * @return {boolean|undefined}
+     *         - The current value of controls when getting
+     *         - Nothing when setting
      */
-    controls(bool?: boolean): boolean;
+    controls(bool?: boolean): boolean | undefined;
     /**
      * Toggle native controls on/off. Native controls are the controls built into
      * devices (e.g. default iPhone controls) or other techs
@@ -1220,10 +1304,11 @@ declare class Player extends Component {
      *        - true to turn native controls on
      *        - false to turn native controls off
      *
-     * @return {boolean}
-     *         The current value of native controls when getting
+     * @return {boolean|undefined}
+     *         - The current value of native controls when getting
+     *         - Nothing when setting
      */
-    usingNativeControls(bool?: boolean): boolean;
+    usingNativeControls(bool?: boolean): boolean | undefined;
     usingNativeControls_: any;
     /**
      * Set or get the current MediaError
@@ -1234,11 +1319,12 @@ declare class Player extends Component {
      *         A MediaError or a string/number to be turned
      *         into a MediaError
      *
-     * @return {MediaError|null}
-     *         The current MediaError when getting (or null)
+     * @return {MediaError|null|undefined}
+     *         - The current MediaError when getting (or null)
+     *         - Nothing when setting
      */
-    error(err?: MediaError | string | number): MediaError | null;
-    error_: string | number | MediaError;
+    error(err?: MediaError | string | number): MediaError | null | undefined;
+    error_: MediaError;
     /**
      * Report user activity
      *
@@ -1257,10 +1343,11 @@ declare class Player extends Component {
      *        - true if the user is active
      *        - false if the user is inactive
      *
-     * @return {boolean}
-     *         The current value of userActive when getting
+     * @return {boolean|undefined}
+     *         - The current value of userActive when getting
+     *         - Nothing when setting
      */
-    userActive(bool?: boolean): boolean;
+    userActive(bool?: boolean): boolean | undefined;
     /**
      * Listen for user activity based on timeout value
      *
@@ -1277,10 +1364,11 @@ declare class Player extends Component {
      * @param {number} [rate]
      *       New playback rate to set.
      *
-     * @return {number}
-     *         The current playback rate when getting or 1.0
+     * @return {number|undefined}
+     *         - The current playback rate when getting or 1.0
+     *         - Nothing when setting
      */
-    playbackRate(rate?: number): number;
+    playbackRate(rate?: number): number | undefined;
     /**
      * Gets or sets the current default playback rate. A default playback rate of
      * 1.0 represents normal speed and 0.5 would indicate half-speed playback, for instance.
@@ -1292,22 +1380,23 @@ declare class Player extends Component {
      * @param {number} [rate]
      *       New default playback rate to set.
      *
-     * @return {number|Player}
+     * @return {number|undefined}
      *         - The default playback rate when getting or 1.0
-     *         - the player when setting
+     *         - Nothing when setting
      */
-    defaultPlaybackRate(rate?: number): number | Player;
+    defaultPlaybackRate(rate?: number): number | undefined;
     /**
      * Gets or sets the audio flag
      *
-     * @param {boolean} bool
+     * @param {boolean} [bool]
      *        - true signals that this is an audio player
      *        - false signals that this is not an audio player
      *
-     * @return {boolean}
-     *         The current value of isAudio when getting
+     * @return {boolean|undefined}
+     *         - The current value of isAudio when getting
+     *         - Nothing when setting
      */
-    isAudio(bool: boolean): boolean;
+    isAudio(bool?: boolean): boolean | undefined;
     isAudio_: boolean;
     enableAudioOnlyUI_(): void;
     disableAudioOnlyUI_(): void;
@@ -1415,7 +1504,7 @@ declare class Player extends Component {
      */
     videoHeight(): number;
     /**
-     * The player's language code.
+     * Set or get the player's language code.
      *
      * Changing the language will trigger
      * [languagechange]{@link Player#event:languagechange}
@@ -1428,10 +1517,11 @@ declare class Player extends Component {
      * @param {string} [code]
      *        the language code to set the player to
      *
-     * @return {string}
-     *         The current language code when getting
+     * @return {string|undefined}
+     *         - The current language code when getting
+     *         - Nothing when setting
      */
-    language(code?: string): string;
+    language(code?: string): string | undefined;
     language_: string;
     /**
      * Get the player's language dictionary
@@ -1522,15 +1612,16 @@ declare class Player extends Component {
      * Get or set a flag indicating whether or not this player should adjust
      * its UI based on its dimensions.
      *
-     * @param  {boolean} value
+     * @param  {boolean} [value]
      *         Should be `true` if the player should adjust its UI based on its
      *         dimensions; otherwise, should be `false`.
      *
-     * @return {boolean}
+     * @return {boolean|undefined}
      *         Will be `true` if this player should adjust its UI based on its
      *         dimensions; otherwise, will be `false`.
+     *         Nothing if setting
      */
-    responsive(value: boolean): boolean;
+    responsive(value?: boolean): boolean | undefined;
     responsive_: any;
     /**
      * Get current breakpoint name, if any.
@@ -1618,8 +1709,9 @@ declare class Player extends Component {
      * @param {boolean} enabled
      * @fires Player#debugon
      * @fires Player#debugoff
+     * @return {boolean|undefined}
      */
-    debug(enabled: boolean): boolean;
+    debug(enabled: boolean): boolean | undefined;
     previousLogLevel_: any;
     /**
      * Set or get current playback rates.
@@ -1671,6 +1763,7 @@ declare class Player extends Component {
         responsive: boolean;
         audioOnlyMode: boolean;
         audioPosterMode: boolean;
+        enableSmoothSeeking: boolean;
     };
 }
 declare namespace Player {

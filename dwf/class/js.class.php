@@ -231,9 +231,15 @@ class js {
      *     [ "small"=>"minature2.png", "big"=>"video.webm", "caption"=>"description HTML facultative" ],
      *     [ "small"=>"minature3.jpg", "big"=>"url youtube ou autre"]
      * ]
+     * @param int $col Affichage en collones bootstrapDescription
+     * "col-$col" 
+     * exemple : 6 pour .col-6 et donc affichage sur 2 collones,
+     * 4 pour 3 collones,
+     * 3 pour 4 colonnes, ...
      */
-    public static function fancybox($id, $data) {
-        new fancybox($id, $data);
+    public static function fancybox($id, $data, $col = false) {
+        $fancybox = new fancybox($id, $data);
+        ($col ? $fancybox->in_cols($col) : $fancybox->simple());
     }
 
     /**
@@ -388,5 +394,4 @@ class js {
         </script>
         <?php
     }
-
 }

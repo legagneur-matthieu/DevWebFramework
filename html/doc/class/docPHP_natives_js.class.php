@@ -194,10 +194,6 @@ class docPHP_natives_js {
                 . "?>", $this->_brush);
         ?>
         <style type='text/css'>
-            #doc_fancybox {
-                margin: 0 auto;
-                width: 650px;
-            }
             #doc_fancybox img {
                 width : 300px;
                 margin: 0 auto;
@@ -207,7 +203,7 @@ class docPHP_natives_js {
         js::fancybox('doc_fancybox', [
             ['small' => 'img/php.png', 'big' => 'img/php.png', 'caption' => '<p>Logo PHP</p>'],
             ['small' => 'img/cordova.png', 'big' => 'img/cordova.png', 'caption' => '<p>Logo Cordova</p>']
-        ]);
+        ],6);
     }
 
     public function freetile() {

@@ -13,7 +13,7 @@ Follow [@thefancyapps](//twitter.com/thefancyapps) for updates.
 1\.  Add latest jQuery and fancyBox files
 
 ```html
-<script src="//code.jquery.com/jquery-3.5.7.min.js"></script>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <link  href="/path/to/jquery.fancybox.min.css" rel="stylesheet">
 <script src="/path/to/jquery.fancybox.min.js"></script>
@@ -41,7 +41,7 @@ Follow [@thefancyapps](//twitter.com/thefancyapps) for updates.
 fancyBox is licensed under the [GPLv3](http://choosealicense.com/licenses/gpl-3.0) license for all open source applications.
 A commercial license is required for all commercial applications (including sites, themes and apps you plan to sell).
 
-[Read more about fancyBox license](http://fancyapps.com/fancybox/#license).
+[Read more about fancyBox license](http://fancyapps.com/fancybox/3/#license).
 
 ## Bugs and feature requests
 

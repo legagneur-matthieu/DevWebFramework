@@ -92,7 +92,7 @@ class monaco_editor {
     private function files($path = '.') {
         $li = [];
         foreach (glob($path . '/*') as $file) {
-            if (!strpos($file, 'src/compact') and!strpos($file, '.sqlite')) {
+            if (!strpos($file, 'src/compact') and !strpos($file, '.sqlite')) {
                 if (is_dir($file)) {
                     $li[] = tags::tag(
                                     'a',
@@ -138,5 +138,4 @@ class monaco_editor {
         }
         return html_structures::ul($li, 'list-unstyled');
     }
-
 }

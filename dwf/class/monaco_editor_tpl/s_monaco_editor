@@ -13,35 +13,35 @@ class s_monaco_editor {
     public function __construct() {
         (new php_header())->content_type("json");
         if (session::get_val("monaco_editor")) {
-            if (isset($_GET["file"])) {
-                $file = base64_decode($_GET["file"]);
+            if (isset($_POST["file"])) {
+                $file = base64_decode($_POST["file"]);
                 while ($file != ($file = strtr($file, [".." => "."])));
                 if ($this->is_allowed_file($file = "." . $file)) {
-                    switch ($_GET["action"]) {
+                    switch ($_POST["action"]) {
                         case "read":
                             $this->read($file);
                             break;
                         case "write":
-                            $this->write($file, htmlspecialchars_decode(base64_decode($_GET["data"])));
+                            $this->write($file, htmlspecialchars_decode(base64_decode($_POST["data"])));
                             break;
                         case "delete":
                             $this->delete($file);
                             break;
                         case "rename":
-                            $this->rename($file, base64_decode($_GET["name"]));
+                            $this->rename($file, base64_decode($_POST["name"]));
                             break;
                     }
                 }
             } else {
-                switch ($_GET["action"]) {
+                switch ($_POST["action"]) {
                     case "adddir":
-                        $this->adddir(base64_decode($_GET["path"]), base64_decode($_GET["name"]));
+                        $this->adddir(base64_decode($_POST["path"]), base64_decode($_POST["name"]));
                         break;
                     case "addfile":
-                        $this->addfile(base64_decode($_GET["path"]), base64_decode($_GET["name"]));
+                        $this->addfile(base64_decode($_POST["path"]), base64_decode($_POST["name"]));
                         break;
                     case "format":
-                        $this->format(htmlspecialchars_decode(base64_decode($_GET["code"])));
+                        $this->format(htmlspecialchars_decode(base64_decode($_POST["code"])));
                         break;
                 }
             }

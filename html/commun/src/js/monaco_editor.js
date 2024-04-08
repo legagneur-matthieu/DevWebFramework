@@ -38,8 +38,11 @@ $(document).ready(function () {
             }
         }
         function monaco_save_request() {
-            $.get("./services/index.php?service=s_monaco_editor&action=write&file=" + btoa(file.fullpath) +
-                    "&data=" + base64_encode(htmlspecialchars(editor.getValue())), function (data) {
+            $.post("./services/index.php", {
+                "service": "s_monaco_editor",
+                "action": "write",
+                "file": btoa(file.fullpath),
+                "data": base64_encode(htmlspecialchars(editor.getValue()))}, function (data) {
                 (data.error ? alertify.error(data.msg) : alertify.success(data.msg));
             }, "json");
         }
@@ -71,7 +74,11 @@ $(document).ready(function () {
                     fullpath: $(this).attr("data-monaco-fullpath"),
                     ext: $(this).attr("data-monaco-ext")
                 };
-                $.get("./services/index.php?service=s_monaco_editor&action=read&file=" + btoa(file.fullpath), function (data) {
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "read",
+                    "file": btoa(file.fullpath)
+                }, function (data) {
                     create_editor(data.data, ext2language(file.ext));
                 }, "json");
             }
@@ -81,7 +88,12 @@ $(document).ready(function () {
             let filename = prompt("nom du fichier ?");
             if (filename != null) {
                 if (contexted_object.ext == "DIR") {
-                    $.get("./services/index.php?service=s_monaco_editor&action=addfile&path=" + btoa(contexted_object.fullpath) + "&name=" + btoa(filename), function (data) {
+                    $.post("./services/index.php", {
+                        "service": "s_monaco_editor",
+                        "action": "addfile",
+                        "path": btoa(contexted_object.fullpath),
+                        "name": btoa(filename)
+                    }, function (data) {
                         (data.error ? alertify.error(data.msg) : alertify.success(data.msg));
                         if (!data.error) {
                             let ext = explode(".", filename).at(-1);
@@ -91,7 +103,12 @@ $(document).ready(function () {
                         }
                     }, "json");
                 } else {
-                    $.get("./services/index.php?service=s_monaco_editor&action=addfile&path=" + btoa(contexted_object.path) + "&name=" + btoa(filename), function (data) {
+                    $.post("./services/index.php", {
+                        "service": "s_monaco_editor",
+                        "action": "addfile",
+                        "path": btoa(contexted_object.path),
+                        "name": btoa(filename)
+                    }, function (data) {
                         (data.error ? alertify.error(data.msg) : alertify.success(data.msg));
                         if (!data.error) {
                             let ext = explode(".", filename).at(-1);
@@ -110,8 +127,11 @@ $(document).ready(function () {
         //button format
         $("#monaco_editor_format").click(function () {
             if (editor_type == "php") {
-                $.get("./services/index.php?service=s_monaco_editor&action=format&code=" +
-                        base64_encode(htmlspecialchars(editor.getValue())), function (data) {
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "format",
+                    "code": base64_encode(htmlspecialchars(editor.getValue()))
+                }, function (data) {
                     if (data.data) {
                         editor.setValue(data.data);
                     }
@@ -141,7 +161,6 @@ $(document).ready(function () {
                 contexted_object.file = $(this).attr("data-monaco-file");
             }
             $(".monaco_files_contextmenu").css("top", (e.pageY - window.scrollY) + "px").css("left", (e.pageX - window.scrollX) + "px").show();
-
         }
         function get_fullpath_list() {
             let test = [];
@@ -186,40 +205,53 @@ $(document).ready(function () {
         $("#monaco_files .monaco_files_adddir").click(function (e) {
             let name = prompt("Entrer le nom du dossier")
             if (contexted_object.ext != "DIR") {
-                $.get("./services/index.php?service=s_monaco_editor&action=adddir&path=" + btoa(contexted_object.path) + "&name=" + btoa(name),
-                        function (data) {
-                            if (!data.error) {
-                                let html = "<li class='monaco_file_dir'><a href='#/' data-monaco-id=" + sha1(contexted_object.path + '/' + name) + " data-monaco-file=" + contexted_object.path + "/" + name + " data-monaco-ext='DIR' data-monaco-path=" + contexted_object.path + " data-monaco-fullpath=" + contexted_object.path + "/" + name + "><span class='bi bi-folder'><span class='visually-hidden'>&nbsp;</span></span> <span class='monaco_editor_files_name'>" + name + "</span></a></li><li style='display: none;'><ul class='list-unstyled'></ul></li>";
-                                add_node(html);
-                                $("a[data-monaco-id='" + sha1(contexted_object.path + '/' + name) + "']").bind("contextmenu", contextmenu).click(function () {
-                                    $(this).parent().next().toggle();
-                                });
-                                $(" a[data-monaco-id='" + contexted_object.id + "']").parent().unbind().click(function () {
-                                    $(this).parent().next().toggle();
-                                });
-                            }
-                        }, "json");
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "adddir",
+                    "path": btoa(contexted_object.path),
+                    "name": btoa(name)
+                }, function (data) {
+                    if (!data.error) {
+                        let html = "<li class='monaco_file_dir'><a href='#/' data-monaco-id=" + sha1(contexted_object.path + '/' + name) + " data-monaco-file=" + contexted_object.path + "/" + name + " data-monaco-ext='DIR' data-monaco-path=" + contexted_object.path + " data-monaco-fullpath=" + contexted_object.path + "/" + name + "><span class='bi bi-folder'><span class='visually-hidden'>&nbsp;</span></span> <span class='monaco_editor_files_name'>" + name + "</span></a></li><li style='display: none;'><ul class='list-unstyled'></ul></li>";
+                        add_node(html);
+                        $("a[data-monaco-id='" + sha1(contexted_object.path + '/' + name) + "']").bind("contextmenu", contextmenu).click(function () {
+                            $(this).parent().next().toggle();
+                        });
+                        $(" a[data-monaco-id='" + contexted_object.id + "']").parent().unbind().click(function () {
+                            $(this).parent().next().toggle();
+                        });
+                    }
+                }, "json");
             } else {
-                $.get("./services/index.php?service=s_monaco_editor&action=adddir&path=" + btoa(contexted_object.fullpath) + "&name=" + btoa(name),
-                        function (data) {
-                            if (!data.error) {
-                                let html = "<li class='monaco_file_dir'><a href='#/' data-monaco-id=" + sha1(contexted_object.fullpath + '/' + name) + " data-monaco-file=" + contexted_object.fullpath + "/" + name + " data-monaco-ext='DIR' data-monaco-path=" + contexted_object.fullpath + " data-monaco-fullpath=" + contexted_object.fullpath + "/" + name + "><span class='bi bi-folder'><span class='visually-hidden'>&nbsp;</span></span> <span class='monaco_editor_files_name'>" + name + "</span></a></li><li style='display: none;'><ul class='list-unstyled'></ul></li>";
-                                add_node(html);
-                                $("a[data-monaco-id='" + sha1(contexted_object.fullpath + '/' + name) + "']").bind("contextmenu", contextmenu).click(function () {
-                                    $(this).parent().next().toggle();
-                                });
-                                $(" a[data-monaco-id='" + contexted_object.id + "']").parent().unbind().click(function () {
-                                    $(this).next("li").toggle();
-                                });
-                            }
-                        }, "json");
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "adddir",
+                    "path": btoa(contexted_object.fullpath),
+                    "name": btoa(name)
+                }, function (data) {
+                    if (!data.error) {
+                        let html = "<li class='monaco_file_dir'><a href='#/' data-monaco-id=" + sha1(contexted_object.fullpath + '/' + name) + " data-monaco-file=" + contexted_object.fullpath + "/" + name + " data-monaco-ext='DIR' data-monaco-path=" + contexted_object.fullpath + " data-monaco-fullpath=" + contexted_object.fullpath + "/" + name + "><span class='bi bi-folder'><span class='visually-hidden'>&nbsp;</span></span> <span class='monaco_editor_files_name'>" + name + "</span></a></li><li style='display: none;'><ul class='list-unstyled'></ul></li>";
+                        add_node(html);
+                        $("a[data-monaco-id='" + sha1(contexted_object.fullpath + '/' + name) + "']").bind("contextmenu", contextmenu).click(function () {
+                            $(this).parent().next().toggle();
+                        });
+                        $(" a[data-monaco-id='" + contexted_object.id + "']").parent().unbind().click(function () {
+                            $(this).next("li").toggle();
+                        });
+                    }
+                }, "json");
             }
         });
         $("#monaco_files .monaco_files_rename").click(function () {
             let new_name = null;
             new_name = prompt("Renomer :", basename(contexted_object.ext != "DIR" ? contexted_object.file : contexted_object.fullpath));
             if (new_name != null) {
-                $.get("./services/index.php?service=s_monaco_editor&action=rename&file=" + btoa(contexted_object.fullpath) + "&name=" + btoa(new_name), function (data) {
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "rename",
+                    "file": btoa(contexted_object.fullpath),
+                    "name": btoa(new_name)
+                }, function (data) {
                     (data.error ? alertify.error(data.msg) : alertify.success(data.msg));
                     if (!data.error) {
                         $("a[data-monaco-id='" + contexted_object.id + "'] .monaco_editor_files_name").text(new_name);
@@ -234,7 +266,11 @@ $(document).ready(function () {
         });
         $("#monaco_files .monaco_files_delete").click(function () {
             if (confirm("Êtes vous sur de vouloir supprimer " + contexted_object.fullpath)) {
-                $.get("./services/index.php?service=s_monaco_editor&action=delete&file=" + btoa(contexted_object.fullpath), function (data) {
+                $.post("./services/index.php", {
+                    "service": "s_monaco_editor",
+                    "action": "delete",
+                    "file": btoa(contexted_object.fullpath)
+                }, function (data) {
                     (data.error ? alertify.error(data.msg) : alertify.success(data.msg));
                     if (!data.error) {
                         $("a[data-monaco-id='" + contexted_object.id + "']").parent("li").next().empty();
@@ -247,5 +283,6 @@ $(document).ready(function () {
         $("html").click(function () {
             $(".monaco_files_contextmenu").hide();
         });
-    });
+    }
+    );
 });

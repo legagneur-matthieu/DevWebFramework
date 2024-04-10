@@ -29,6 +29,35 @@ class docPHP {
             }
 
         </style>
+        <!--resout les conflits avec monaco editor-->
+        <table class="table" id="datatable_loading">
+            <thead>
+                <tr>
+                    <th>Chargement ...</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="display: none;">
+                            <?php new video("./files/videos/nuagesMusicman921.webm", "videojs_loading"); ?>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <?php
+        js::datatable("datatable_loading");
+        ?>
+        <script>
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $("#datatable_loading").DataTable().destroy();
+                    $("#datatable_loading").remove();
+                }, 200);
+            })
+        </script>
+        <!--fin de la resolution de conflit-->
         <h2>Framework PHP</h2>
         <div id="accordion">
             <?php
@@ -223,21 +252,22 @@ class docPHP {
             Une route se définit ainsi :
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "self::$" . "_route_unauth = array(\n"
-                . "    array(\n"
-                . "        \"page\" => \"index\",                         //la clé 'page' correspond à la variable $" . "_GET['page'],\n"
-                . "                                                   //la valeur index correspond au nom d'une fonction dans 'page.class.php'\n"
-                . "                                                   //une route et une fonction 'index' doivent toujours être présentes dans les routes !\n\n"
-                . "        \"title\" => \"Page d 'accueil\",              //Title de la page, chaque page doit avoir un title different pour des raisons\n"
-                . "                                                   //d'accessiblilité et de référencement\n\n"
-                . "        \"text\" => \"Accueil\",                       //FACULTATIF : texte affiché dans le menu principal\n"
-                . "                                                   // (si la route n'est pas destinée à être affichée dans le menu, ne pas renseigner de clé 'text')\n\n"
-                . "        \"description\" => \"Index de Documentation\", //FACULTATIF : meta description de la page pour le réferencement\n"
-                . "        \"keyword\" => \"Index, Documentation\"        //FACULTATIF : meta keywords de la page pour le réferencement\n"
-                . "    ),\n"
-                . ");\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'self::$_route_unauth = array(\n'
+                . '    array(\n'
+                . '        "page" => "index",                         //la clé "page" correspond à la variable $_GET["page"],\n'
+                . '                                                   //la valeur index correspond au nom d\'une fonction dans "page.class.php"\n'
+                . '                                                   //une route et une fonction "index" doivent toujours être présentes dans les routes !\n\n'
+                . '        "title" => "Page d \'accueil",              //Title de la page, chaque page doit avoir un title different pour des raisons\n'
+                . '                                                   //d\'accessiblilité et de référencement\n\n'
+                . '        "text" => "Accueil",                       //FACULTATIF : texte affiché dans le menu principal\n'
+                . '                                                   // (si la route n\'est pas destinée à être affichée dans le menu, ne pas renseigner de clé "text")\n\n'
+                . '        "description" => "Index de Documentation", //FACULTATIF : meta description de la page pour le réferencement\n'
+                . '        "keyword" => "Index, Documentation"        //FACULTATIF : meta keywords de la page pour le réferencement\n'
+                . '    ),\n'
+                . ');\n'
+                . '?>'
+        );
     }
 
     private function pages() {
@@ -280,24 +310,25 @@ class docPHP {
             Les méthodes événementielles sont des méthodes qui seront appelées lors d'un événement précis du framework, utilisation :            
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "class ma_classe_metier{\n\n"
-                . "    public static onload(){\n"
-                . "        //Supprimé depuis la version 21.17.12\n"
-                . "    }\n\n"
-                . "    public static onhtml_head(){\n"
-                . "        //Supprimé depuis la version 21.17.12\n"
-                . "    }\n\n"
-                . "    public static onhtml_body_end(){\n"
-                . "        //cette méthode sera executée automatiquement par le framework \n"
-                . "        // juste avant les balises <p id=\"real_title\" class=\"hidden\">...</p></body>\n"
-                . "        // cette méthode peut se substituer à la methode __destruct() si elle doit générer du HTML\n"
-                . "    }\n\n"
-                . "    public static onbdd_connected(){\n"
-                . "        //cette méthode sera executée automatiquement par le framework \n"
-                . "        // dès que la connexion à la base de données est établie\n"
-                . "    }\n\n"
-                . "}\n?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'class ma_classe_metier{\n\n'
+                . '    public static onload(){\n'
+                . '        //Supprimé depuis la version 21.17.12\n'
+                . '    }\n\n'
+                . '    public static onhtml_head(){\n'
+                . '        //Supprimé depuis la version 21.17.12\n'
+                . '    }\n\n'
+                . '    public static onhtml_body_end(){\n'
+                . '        //cette méthode sera executée automatiquement par le framework \n'
+                . '        // juste avant les balises <p id="real_title" class="hidden">...</p></body>\n'
+                . '        // cette méthode peut se substituer à la methode __destruct() si elle doit générer du HTML\n'
+                . '    }\n\n'
+                . '    public static onbdd_connected(){\n'
+                . '        //cette méthode sera executée automatiquement par le framework \n'
+                . '        // dès que la connexion à la base de données est établie\n'
+                . '    }\n\n'
+                . '}\n?>'
+        );
         ?>
         <p>
             Comme indiqué, ces methodes doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités.<br />
@@ -312,9 +343,9 @@ class docPHP {
             Il est possible de créer vos propres déclencheurs d'événements grâce à la méthode.
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "application::event('mon_evenement');\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'application::event("mon_evenement");\n'
+                . '?>');
         ?>
         <p>
             Losque cette instruction sera appelée, toutes les méthodes <em>public static mon_evenement()</em> présentes dans les classes seront executées.
@@ -336,93 +367,95 @@ class docPHP {
             soit dans le constructeur de la classe métier qui exploitera cette entité. Voici le code (consultez la documentation technique pour plus d'informations)
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "$" . "data=array(                         //$" . "data est un tableau à deux dimensions qui definit\n"
-                . "                                     //la structure de l'entité et de sa table dans la base de données\n\n"
-                . "    array('id','int',true),          //créé un champ/attribut nommé 'id' de type entier,\n"
-                . "                                     //le 'true' indique une clé primaire, le setter de 'id' sera en privé\n"
-                . "                                     //Depuis la version 21.22.10 cette clé primaire est automatiquement renseigné,\n"
-                . "                                     //il n'est donc plus nessaicaire de la déclarer dans le code.\n"
-                . "    array('login','string',false),\n"
-                . "    array('psw','string',false),\n"
-                . ");\n"
-                . "$" . "table='user';                       //nom de la table et de l'entité\n\n"
-                . "new entity_generator($" . "data, $" . "table); //Créé l'entité et sa table si elle n'existe pas\n"
-                . "                                     //Attention : si la structure de l'entité est modifié \n"
-                . "                                     //il faudra supprimer la classe et la table de l'entité\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '$data=array(                         //$data est un tableau à deux dimensions qui definit\n'
+                . '                                     //la structure de l\'entité et de sa table dans la base de données\n\n'
+                . '    array("id","int",true),          //créé un champ/attribut nommé "id" de type entier,\n'
+                . '                                     //le "true" indique une clé primaire, le setter de "id" sera en privé\n'
+                . '                                     //Depuis la version 21.22.10 cette clé primaire est automatiquement renseigné,\n'
+                . '                                     //il n\'est donc plus nessaicaire de la déclarer dans le code.\n'
+                . '    array("login","string",false),\n'
+                . '    array("psw","string",false),\n'
+                . ');\n'
+                . '$table="user";                       //nom de la table et de l\'entité\n\n'
+                . 'new entity_generator($data, $table); //Créé l\'entité et sa table si elle n\'existe pas\n'
+                . '                                     //Attention : si la structure de l\'entité est modifié \n'
+                . '                                     //il faudra supprimer la classe et la table de l\'entité\n'
+                . '?>');
         ?>
         <p>
             Créer des relations entres les entités et astuces pour créer plusieurs entités facilement
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "$" . "datas=array(\n"
-                . "    'rang'=>array( //on créé une entité rang\n"
-                . "        array('id','int',true),\n"
-                . "        array('nom','string',false),\n"
-                . "    ),\n"
-                . "    'user'=>array( //on créé une entité user\n"
-                . "        array('id','int',true),\n"
-                . "        array('login','string',false),\n"
-                . "        array('psw','string',false),\n"
-                . "        array('rang','rang',false), //on met en relation le fait qu'un user a un rang (de type 'rang')\n"
-                . "    ),\n"
-                . ");\n"
-                . "foreach($" . "datas as $" . "table => $" . "data){\n"
-                . "    new entity_generator($" . "data, $" . "table);\n"
-                . "}\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '$datas=array(\n'
+                . '    "rang"=>array( //on créé une entité rang\n'
+                . '        array("id","int",true),\n'
+                . '        array("nom","string",false),\n'
+                . '    ),\n'
+                . '    "user"=>array( //on créé une entité user\n'
+                . '        array("id","int",true),\n'
+                . '        array("login","string",false),\n'
+                . '        array("psw","string",false),\n'
+                . '        array("rang","rang",false), //on met en relation le fait qu\'un user a un rang (de type "rang")\n'
+                . '    ),\n'
+                . ');\n'
+                . 'foreach($datas as $table => $data){\n'
+                . '    new entity_generator($data, $table);\n'
+                . '}\n'
+                . '?>'
+        );
         ?>
         <h4>MAJ 21.18.02</h4>
         <p>Depuis la version 21.18.02, il est possible de créer l'ensemble de vos entités ainsi :</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "entity_generator::generate([\n"
-                . "    'rang'=>[ //on créé une entité rang\n"
-                . "        ['id','int',true],\n"
-                . "        ['nom','string',false],\n"
-                . "    ],\n"
-                . "    'user'=>[ //on créé une entité user\n"
-                . "        ['id','int',true],\n"
-                . "        ['login','string',false],\n"
-                . "        ['psw','string',false],\n"
-                . "        ['rang','rang',false], //on met en relation le fait qu'un user a un rang (de type 'rang')\n"
-                . "    ],\n"
-                . "]);\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'entity_generator::generate([\n'
+                . '    "rang"=>[ //on créé une entité rang\n'
+                . '        ["id","int",true],\n'
+                . '        ["nom","string",false],\n'
+                . '    ],\n'
+                . '    "user"=>[ //on créé une entité user\n'
+                . '        ["id","int",true],\n'
+                . '        ["login","string",false],\n'
+                . '        ["psw","string",false],\n'
+                . '        ["rang","rang",false], //on met en relation le fait qu\'un user a un rang (de type \'rang\')\n'
+                . '    ],\n'
+                . ']);\n'
+                . '?>'
+        );
         ?>
         <h4>Utilisation des entités</h4>
         <p>Une fois les entités créées, elles peuvent être utilisées (nous utiliserons l'exemple des 'user' et 'rang')</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//ajoute un utilisateur\n"
-                . "user::ajout($" . "login, hash(config::$" . "_hash_algo, $" . "psw));\n\n"
-                . "//récuperer tout les utilisateurs sous forme de tableaux de données\n"
-                . "$" . "users = user::get_table_array();\n"
-                . "echo $" . "users[0]['login']; //affiche le login du premier utilisateur de la table\n\n"
-                . "//récuperer tout les utilisateurs du rang 1\n"
-                . "$" . "users = user::get_table_array('rang=1');\n\n"
-                . "//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n"
-                . "$" . "users = user::get_table_array('1=1 order by login');\n\n"
-                . "//récuperer tout les rang sous forme de table ordonnée par leur ID (les id sont les clés du tableau)\n"
-                . "$" . "rangs = rang::get_table_ordored_array();\n"
-                . "echo $" . "rangs[1]['nom']; //affiche le nom du rang ayant l'identifiant 1\n\n"
-                . "//récuperer les utilisateurs sous forme de collection (tableau d'objets)\n"
-                . "//DECONSEILLÉ ! potentiellement lourd !\n"
-                . "$" . "users = user::get_collection();\n"
-                . "echo $" . "users[0]->get_rang()->get_nom(); //affiche le nom du rang du premier utilisateur de la table\n\n"
-                . "//récupere l'objet d'un utilisateur à partir de son id\n"
-                . "$" . "user = user::get_from_id(1);\n"
-                . "echo $" . "user->get_login(); //affiche le login de l'utilisateur 1\n"
-                . "$" . "user->set_login($" . "nouveau_login); //redéfinit le login de l'utilisateur 1,\n"
-                . "                                  //la modification dans la base de données sera prise en compte à la fin du script\n\n"
-                . "//supprimer un utilisateur : 2 solutions\n"
-                . "//1 : supprimer un utilisateur non instancié depuis son id\n"
-                . "user::delete_by_id($" . "id);\n"
-                . "//2 : supprimer un utilisateur instancié\n"
-                . "$" . "user->delete();"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '//ajoute un utilisateur\n'
+                . 'user::ajout($login, hash(config::$$_hash_algo, $psw));\n\n'
+                . '//récuperer tout les utilisateurs sous forme de tableaux de données\n'
+                . '$users = user::get_table_array();\n'
+                . 'echo $users[0]["login"]; //affiche le login du premier utilisateur de la table\n\n'
+                . '//récuperer tout les utilisateurs du rang 1\n'
+                . '$users = user::get_table_array("rang=1");\n\n'
+                . '//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n'
+                . '$users = user::get_table_array("1=1 order by login");\n\n'
+                . '//récuperer tout les rang sous forme de table ordonnée par leur ID (les id sont les clés du tableau)\n'
+                . '$rangs = rang::get_table_ordored_array();\n'
+                . 'echo $rangs[1]["nom"]; //affiche le nom du rang ayant l\'identifiant 1\n\n'
+                . '//récuperer les utilisateurs sous forme de collection (tableau d\'objets)\n'
+                . '//DECONSEILLÉ ! potentiellement lourd !\n'
+                . '$users = user::get_collection();\n'
+                . 'echo $users[0]->get_rang()->get_nom(); //affiche le nom du rang du premier utilisateur de la table\n\n'
+                . '//récupere l\'objet d\'un utilisateur à partir de son id\n'
+                . '$user = user::get_from_id(1);\n'
+                . 'echo $user->get_login(); //affiche le login de l\'utilisateur 1\n'
+                . '$user->set_login($nouveau_login); //redéfinit le login de l\'utilisateur 1,\n'
+                . '                                  //la modification dans la base de données sera prise en compte à la fin du script\n\n'
+                . '//supprimer un utilisateur : 2 solutions\n'
+                . '//1 : supprimer un utilisateur non instancié depuis son id\n'
+                . 'user::delete_by_id($id);\n'
+                . '//2 : supprimer un utilisateur instancié\n'
+                . '$user->delete();'
+                . '?>');
         ?>
         <p class="alert alert-danger">
             ATTENTION : si vous utilisez des variables dans les paramètres $where : utilisez <em>application::$_bdd->protect_var()</em> pour vous protéger : <br />
@@ -450,23 +483,24 @@ class docPHP {
             Vos entités et de nombreuses classes native de DWF exploitent cette objet.
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//fetch permet d'éxecuter une requête de type select et d'en récuperer le résultat sous forme d'un tableau\n"
-                . "$" . "req=application::$" . "_bdd->fetch($" . "statement);\n\n"
-                . "//query permet d'executer des requêtes de type insert into, update et delete, ne retourne rien !\n"
-                . "application::$" . "_bdd->query($" . "statement);\n\n"
-                . "//protect_var permet d'échapper les caractères dangereux pour votre base de données et votre application\n"
-                . "$" . "var = application::$" . "_bdd->protect_var($" . "var);\n"
-                . "//Depuis la version 21.23.08 cette méthode a été remplacé par \n"
-                . "bdd:p($" . "var)\n\n"
-                . "//verif_email retourne true si la chaine rentrée en paramètres respecte le format email, false si non\n"
-                . "$" . "is_email=application::$" . "_bdd->verif_email($" . "email);\n\n"
-                . "//unprotect_var est déprécié si vous utilisez une version de php superieur à 5.4\n"
-                . "//servait à annuler l'échappement de caractères pour les variables destinés à être affichés\n"
-                . "$" . "var = application::$" . "_bdd->unprotect_var($" . "var);\n"
-                . "//Depuis la version 21.23.08 cette méthode a été remplacé par \n"
-                . "bdd:up($" . "var)\n\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '//fetch permet d\'éxecuter une requête de type select et d\'en récuperer le résultat sous forme d\'un tableau\n'
+                . '$req=application::$bdd->fetch($statement);\n\n'
+                . '//query permet d\'executer des requêtes de type insert into, update et delete, ne retourne rien !\n'
+                . 'application::$bdd->query($statement);\n\n'
+                . '//protect_var permet d\'échapper les caractères dangereux pour votre base de données et votre application\n'
+                . '$var = application::$bdd->protect_var($var);\n'
+                . '//Depuis la version 21.23.08 cette méthode a été remplacé par \n'
+                . 'bdd:p($var)\n\n'
+                . '//verif_email retourne true si la chaine rentrée en paramètres respecte le format email, false si non\n'
+                . '$is_email=application::$bdd->verif_email($email);\n\n'
+                . '//unprotect_var est déprécié si vous utilisez une version de php superieur à 5.4\n'
+                . '//servait à annuler l\'échappement de caractères pour les variables destinés à être affichés\n'
+                . '$var = application::$bdd->unprotect_var($var);\n'
+                . '//Depuis la version 21.23.08 cette méthode a été remplacé par \n'
+                . 'bdd:up($var)\n\n'
+                . '?>'
+        );
     }
 
     private function classes_natives() {
@@ -512,58 +546,58 @@ class docPHP {
         </ul>
         <p>Et le service <em>/html/commun/service/mon_service.service.php</em> qui retourne les données de l'utilisateur selon l'id</p>
         <?php
-        js::syntaxhighlighter("<?php\n\n"
-                . "class mon_service {\n\n"
-                . "    public function __construct() {\n"
-                . "        if (isset($" . "_REQUEST[\"id\"])) {\n"
-                . "            //on charge le fichier de config\n"
-                . "            include '../../mon_projet/class/config.class.php';\n\n"
-                . "            //on charge les entités (cf. méthode plus bas )\n"
-                . "            $" . "this->entityloader();\n\n"
-                . "            //on lance la connexion de la base de données dans application::$" . "_bdd\n"
-                . "            application::$" . "_bdd = new bdd();\n\n"
-                . "            //on utilise l'entité\n"
-                . "            $" . "user = user::get_table_ordored_array(\"id='\".application::$" . "_bdd->protect_var($" . "_REQUEST[\"id\"]).\"'\");\n\n"
-                . "            //on enlève le mot de passe des données à retourner\n"
-                . "            unset($" . "user[$" . "_REQUEST[\"id\"]][\"psw\"]);\n\n"
-                . "            //on affiche le résultat en JSON\n"
-                . "            echo json_encode($" . "user);\n"
-                . "        }\n"
-                . "    }\n\n"
-                . "    private function entityloader() {\n"
-                . "        foreach (glob(\"../../mon_projet/class/entity/*.class.php\") as $" . "entity) {\n"
-                . "            include $" . "entity;\n"
-                . "        }\n"
-                . "    }\n"
-                . "}\n\n"
-                . "?>", "php; html-script: true");
+        js::monaco_highlighter('<?php\n\n'
+                . 'class mon_service {\n\n'
+                . '    public function __construct() {\n'
+                . '        if (isset($_REQUEST["id"])) {\n'
+                . '            //on charge le fichier de config\n'
+                . '            include "../../mon_projet/class/config.class.php";\n\n'
+                . '            //on charge les entités (cf. méthode plus bas )\n'
+                . '            $this->entityloader();\n\n'
+                . '            //on lance la connexion de la base de données dans application::$_bdd\n'
+                . '            application::$_bdd = new bdd();\n\n'
+                . '            //on utilise l\'entité\n'
+                . '            $user = user::get_table_ordored_array("id=\'".application::$_bdd->protect_var($_REQUEST["id"])."\'");\n\n'
+                . '            //on enlève le mot de passe des données à retourner\n'
+                . '            unset($user[$_REQUEST["id"]]["psw"]);\n\n'
+                . '            //on affiche le résultat en JSON\n'
+                . '            echo json_encode($user);\n'
+                . '        }\n'
+                . '    }\n\n'
+                . '    private function entityloader() {\n'
+                . '        foreach (glob("../../mon_projet/class/entity/*.class.php") as $entity) {\n'
+                . '            include $entity;\n'
+                . '        }\n'
+                . '    }\n'
+                . '}\n'
+                . '?>');
         ?><p>appeler le service :</p>
         <p>En PHP / DWF</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//en get\n"
-                . "echo service::HTTP_GET(\"http://localhost/commun/service/index.php?service=mon_service&id=1\");\n\n"
-                . "//en post\n"
-                . "echo service::HTTP_POST_REQUEST(\"http://localhost/commun/service/index.php\", \n"
-                . "        array(\n"
-                . "            \"service\"=>\"mon_service\", \n"
-                . "            \"id\"=>\"1\"\n"
-                . "        )\n"
-                . ");\n"
-                . "?>", "php; html-script: true")
+        js::monaco_highlighter('<?php\n'
+                . '//en get\n'
+                . 'echo service::HTTP_GET("http://localhost/commun/service/index.php?service=mon_service&id=1");\n\n'
+                . '//en post\n'
+                . 'echo service::HTTP_POST_REQUEST("http://localhost/commun/service/index.php", \n'
+                . '        array(\n'
+                . '            "service"=>"mon_service", \n'
+                . '            "id"=>"1"\n'
+                . '        )\n'
+                . ');'
+                . '?>'
+        )
         ?>
         <p>En Ajax / JQuery</p>
         <?php
-        js::syntaxhighlighter("<script type=\"text/javascript\">\n"
-                . "    //en get\n"
-                . "    $.get(\"http://localhost/commun/service/index.php\", {service: mon_service, id: 1}, function (data) {\n"
-                . "        //instructions \n"
-                . "    },'json');\n\n"
-                . "    //en post\n"
-                . "    $.post(\"http://localhost/commun/service/index.php\", {service: mon_service, id: 1}, function (data) {\n"
-                . "        //instructions \n"
-                . "    },'json');\n"
-                . "</script>", "js; html-script: true");
+        js::monaco_highlighter(
+                '    //en get\n'
+                . '    $.get("http://localhost/commun/service/index.php", {service: "mon_service", id: 1}, function (data) {\n'
+                . '        //instructions \n'
+                . '    },"json");\n\n'
+                . '    //en post\n'
+                . '    $.post("http://localhost/commun/service/index.php", {service: "mon_service", id: 1}, function (data) {\n'
+                . '        //instructions \n'
+                . '    },"json");\n', "javascript");
     }
 
     private function services_interne() {
@@ -593,20 +627,20 @@ class docPHP {
             <li>Les scripts ne doivent pas utiliser de boucles infinies</li>
             <li>Les fichiers peuvent contenir un script procédural n'utilisant pas de classes (pas de POO), mais il est recommandé d'en utiliser comme ceci :
                 <?php
-                js::syntaxhighlighter("<?php\n"
-                        . "class mon_cli {\n"
-                        . "    public function __construct() {\n"
-                        . "        //instructions\n"
-                        . "    }\n"
-                        . "}\n"
-                        . "new mon_cli();\n"
-                        . "?>", $this->_brush);
+                js::monaco_highlighter('<?php\n'
+                        . 'class mon_cli {\n'
+                        . '    public function __construct() {\n'
+                        . '        //instructions\n'
+                        . '    }\n'
+                        . '}\n'
+                        . 'new mon_cli();\n'
+                        . '?>');
                 ?>
             </li>
         </ol>
         <p>Une fois que tout vos CLI sont créés, vous pouvez les lancer via la commande :</p>
         <?php
-        js::syntaxhighlighter("php [chemain]/dwf/cli/start.php");
+        js::monaco_highlighter("php [chemain]/dwf/cli/start.php");
         ?>
         <p>start.php va charger les classes du framework, puis lancer les CLI un par un dans l'ordre alphabétique</p>
         <h4>Les CLI métiers</h4>   
@@ -617,42 +651,42 @@ class docPHP {
         </p>
         <p>il est recommandé de charger et utiliser la classe "cli" dans vos CLI métiers, comme ceci :</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "class mon_cli {\n"
-                . "    public function __construct() {\n"
-                . "        include '../../../dwf/class/cli.class.php';\n"
-                . "        cli::classloader();\n"
-                . "        //instructions\n"
-                . "    }\n"
-                . "}\n"
-                . "new mon_cli();\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'class mon_cli {\n'
+                . '    public function __construct() {\n'
+                . '        include "../../../dwf/class/cli.class.php";\n'
+                . '        cli::classloader();\n'
+                . '        //instructions\n'
+                . '    }\n'
+                . '}\n'
+                . 'new mon_cli();\n'
+                . '?>');
         ?>
         <p>La classe "cli" contient quelques fonctions utiles pour créer une application PHP en mode console,<br />
             cli::classloader() permet de charger les classes du framework et de pouvoir les utiliser. <br />
             Voici un petit script d'exemple avec la classe "cli"            
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "//demande une saisie de l'utilisateur et enregistre la saisie dans $" . "nom\n"
-                . "$" . "nom = cli::read('saisissez votre nom :');\n\n"
-                . "//Affiche un message\n"
-                . "cli::write('Bonjour '.$" . "nom);\n\n"
-                . "//exemple de \"progression\"\n"
-                . "cli::write('progression : 0 %');\n"
-                . "for ($" . "i = 0; $" . "i <= 100; $" . "i++) {\n"
-                . "    //rewite permet de réécrire la dernière ligne de la console\n"
-                . "    cli::rewrite('progression : '.$" . "i.' %');\n"
-                . "    //marque une pause de 1 seconde\n"
-                . "    cli::wait(1);\n"
-                . "}\n\n"
-                . "//marque une pose de 120 secondes en affichant un minuteur (qui décompte)\n"
-                . "cli::wait(120, true);\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '//demande une saisie de l\'utilisateur et enregistre la saisie dans $nom\n'
+                . '$' . 'nom = cli::read("saisissez votre nom :");\n\n'
+                . '//Affiche un message\n'
+                . 'cli::write("Bonjour $nom");\n\n'
+                . '//exemple de \'progression\'\n'
+                . 'cli::write("progression : 0 %");\n'
+                . 'for ($i = 0; $i <= 100; $i++) {\n'
+                . '    //rewite permet de réécrire la dernière ligne de la console\n'
+                . '    cli::rewrite("progression : $i %");\n'
+                . '    //marque une pause de 1 seconde\n'
+                . '    cli::wait(1);\n'
+                . '}\n\n'
+                . '//marque une pose de 120 secondes en affichant un minuteur (qui décompte)\n'
+                . 'cli::wait(120, true);\n'
+                . '?>');
         ?>
         <p>Une fois que tout votre CLI métier est créé, vous pouvez le lancer via la commande :</p>
         <?php
-        js::syntaxhighlighter("php [chemin]/html/[votre-projet]/class/votre_cli.cli.php");
+        js::monaco_highlighter('php [chemin]/html/[votre-projet]/class/votre_cli.cli.php');
     }
 
     private function WebSocket() {
@@ -668,49 +702,48 @@ class docPHP {
             il est possible de lancer le serveur en mode console (CLI), notamment pour débugger :
         </p>
         <?php
-        js::syntaxhighlighter("php [chemin]/html/[votre-projet]/websocket/index.php");
+        js::monaco_highlighter('php [chemin]/html/[votre-projet]/websocket/index.php');
         ?>
         <p>En production, il est possible de laisser l'application lancer elle même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "service::HTTP_POST(\"http://localhost/[votre-projet]/websocket/index.php\");\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'service::HTTP_POST("http://localhost/[votre-projet]/websocket/index.php");\n'
+                . '?>');
         ?>
         <p>L'application ne lancera le serveur qu'une seule fois.</p>
         <p>Coté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
         <?php
-        js::syntaxhighlighter("<script type=\"text/javascript\">\n"
-                . "    var socket = null;\n"
-                . "    (function start_websocket() {\n"
-                . "        socket = new WebSocket(\"ws://localhost:9000/\");\n"
-                . "        socket.addEventListener(\"open\", function (e) {\n"
-                . "            //cette ligne permet d'authentifier un utilisateur qui serait authentifié sur l'aplication\n"
-                . "            socket.send('{\"action\": \"auth\", \"token\": \"<?= websocket_server::auth() ?>\"}');\n"
-                . "        });\n"
-                . "        socket.addEventListener(\"close\", function (e) {\n"
-                . "            //retente une connexion toutes les 10 secondes en cas de coupure\n"
-                . "            socket = null;\n"
-                . "            let si_ws_reco = setInterval(function () {\n"
-                . "                if (socket) {\n"
-                . "                    start_websocket();\n"
-                . "                    clearInterval(si_ws_reco);\n"
-                . "                }\n"
-                . "            }, 10000);\n"
-                . "        });\n"
-                . "        socket.addEventListener(\"message\", function (e) {\n"
-                . "            data = JSON.parse(e.data);\n"
-                . "            //verifie si l'utilisateur est authentifié\n"
-                . "            if (undefined != data.auth) {\n"
-                . "                if (data.auth) {\n"
-                . "                    //l'utilisateur est authentifié\n"
-                . "                } else {\n"
-                . "                    //l'utilisateur n'est pas authentifié, affiche l'erreur\n"
-                . "                    alert(data.message);\n"
-                . "                }\n"
-                . "            }\n"
-                . "        });\n"
-                . "    })();\n"
-                . "</script>", $this->_brush);
+        js::monaco_highlighter(''
+                . '    var socket = null;\n'
+                . '    (function start_websocket() {\n'
+                . '        socket = new WebSocket("ws://localhost:9000/");\n'
+                . '        socket.addEventListener("open", function (e) {\n'
+                . '            //cette ligne permet d\'authentifier un utilisateur qui serait authentifié sur l\'aplication\n'
+                . '            socket.send(\'{"action": "auth", "token": "<?= websocket_server::auth() ?>"}\');\n'
+                . '        });\n'
+                . '        socket.addEventListener("close", function (e) {\n'
+                . '            //retente une connexion toutes les 10 secondes en cas de coupure\n'
+                . '            socket = null;\n'
+                . '            let si_ws_reco = setInterval(function () {\n'
+                . '                if (socket) {\n'
+                . '                    start_websocket();\n'
+                . '                    clearInterval(si_ws_reco);\n'
+                . '                }\n'
+                . '            }, 10000);\n'
+                . '        });\n'
+                . '        socket.addEventListener("message", function (e) {\n'
+                . '            data = JSON.parse(e.data);\n'
+                . '            //verifie si l\'utilisateur est authentifié\n'
+                . '            if (undefined != data.auth) {\n'
+                . '                if (data.auth) {\n'
+                . '                    //l\'utilisateur est authentifié\n'
+                . '                } else {\n'
+                . '                    //l\'utilisateur n\'est pas authentifié, affiche l\'erreur\n'
+                . '                    alert(data.message);\n'
+                . '                }\n'
+                . '            }\n'
+                . '        });\n'
+                . '    })();\n');
         ?>
         <p>
             ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffreement (SSL/TLS), <br />
@@ -723,13 +756,13 @@ class docPHP {
             la seule action définie par défaut et l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
         </p>
         <?php
-        js::syntaxhighlighter('{"action":"auth","token":""}');
+        js::monaco_highlighter('{"action":"auth","token":""}');
         ?>
         <p>Le retour est une des ses possibilité :</p>
         <?php
-        js::syntaxhighlighter('{"auth":false,"message":"Token empty"}' . PHP_EOL .
-                '{"auth":false,"message":"Invalid token"}' . PHP_EOL .
-                '{"auth":false,"message":"Token conflict"}' . PHP_EOL .
+        js::monaco_highlighter('{"auth":false,"message":"Token empty"}\n' .
+                '{"auth":false,"message":"Invalid token"}\n' .
+                '{"auth":false,"message":"Token conflict"}\n' .
                 '{"auth":true,"message":"OK"}');
         ?>
         <p>Pour rajouter une action, il suffit de rajouter une classe dans le dossier "websocket" du projet qui sera nommé : <br />
@@ -737,22 +770,23 @@ class docPHP {
             et qui doit avoir la forme suivante :
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "class nomDeLAction {\n"
-                . "\n"
-                . "    /**\n"
-                . "     * \n"
-                . "     * @param websocket_client $" . "client le client qui a emit la requête\n"
-                . "     * @param array $" . "message La chaine JSON déja convertie en tableau\n"
-                . "     */\n"
-                . "    public function __construct(&$" . "client, &$" . "message) {\n"
-                . "        //traitement à faire\n"
-                . "        //Les classes de DWF et les Entity du projet sont utilisables\n\n"
-                . "        //envoi une réponse à l'émetteur\n"
-                . "        $" . "client->write(\"réponse\");\n"
-                . "    }\n"
-                . "}\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . 'class nomDeLAction {\n'
+                . '\n'
+                . '    /**\n'
+                . '     * \n'
+                . '     * @param websocket_client $client le client qui a emit la requête\n'
+                . '     * @param array $message La chaine JSON déja convertie en tableau\n'
+                . '     */\n'
+                . '    public function __construct(&$client, &$message) {\n'
+                . '        //traitement à faire\n'
+                . '        //Les classes de DWF et les Entity du projet sont utilisables\n'
+                . '\n'
+                . '        //envoi une réponse à l\'émetteur\n'
+                . '        $client->write("réponse");\n'
+                . '    }\n'
+                . '}\n'
+                . '?>\n');
         ?>
         <p>La classe <strong>websocket_client</strong> permet de gérer les utilisateurs connectés, <br />
             elle possède aussi des méthodes statiques qui permettent de sélectionner d'autres utilisateurs connectés. <br />
@@ -762,15 +796,15 @@ class docPHP {
             La classe <strong>websocket_request</strong> permet de lancer des requetes au serveur websocket depuis PHP
         </p>
         <?php
-        js::syntaxhighlighter("<?php\n"
-                . "$" . "wr = new websocket_request($" . "host = '127.0.0.1', $" . "port = 9000);\n"
-                . "//envoie un message sans attendre de réponse\n"
-                . "$" . "wr->send('message');\n"
-                . "//envoie un message en attendant une réponse\n"
-                . "$" . "reponse = $" . "wr->request('message');\n"
-                . "//Ferme la connexion\n"
-                . "$" . "wr->close();\n"
-                . "?>", $this->_brush);
+        js::monaco_highlighter('<?php\n'
+                . '$wr = new websocket_request($host = "127.0.0.1", $port = 9000);\n'
+                . '//envoie un message sans attendre de réponse\n'
+                . '$wr->send("message");\n'
+                . '//envoie un message en attendant une réponse\n'
+                . '$reponse = $wr->request("message");\n'
+                . '//Ferme la connexion\n'
+                . '$wr->close();\n'
+                . '?>\n');
     }
 
     private function mise_en_ligne() {
@@ -779,7 +813,6 @@ class docPHP {
             rendez-vous dans le fichier <em>html/commun/config/default.json</em> et modifiez la ligne suivante à votre convenance.
         </p>
         <?php
-        js::syntaxhighlighter("{\"project\":\"[Votre-projet-par-défaut]\"}", "js");
+        js::monaco_highlighter('{"project":"[Votre-projet-par-défaut]"}');
     }
-
 }

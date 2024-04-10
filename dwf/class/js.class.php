@@ -210,6 +210,8 @@ class js {
     }
 
     /**
+     * @deprecated since version 21.24.04
+     * 
      * Afficher du code formaté et stylisé par la librairie SyntaxHightlighter http://alexgorbatchev.com/SyntaxHighlighter/
      *
      * @param strig $code Le code à afficher
@@ -219,7 +221,16 @@ class js {
      * @param string $theme Le theme de SyntaxHightlighter à utiliser http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/
      */
     public static function syntaxhighlighter($code, $brush = "js", $theme = "Default") {
-        new syntaxhighlighter($code, $brush, $theme);
+        self::monaco_highlighter($code, $brush);
+    }
+
+    /**
+     * 
+     * @param type $code
+     * @param type $language
+     */
+    public static function monaco_highlighter($code, $language = "php") {
+        new monaco_highlighter($code, $language);
     }
 
     /**

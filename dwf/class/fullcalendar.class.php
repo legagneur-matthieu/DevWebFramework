@@ -47,9 +47,8 @@ class fullcalendar {
                     ["url", "string", false]
                 ]
             ]);
-            echo html_structures::script("../commun/src/js/fullcalendar/lib/main.js");
-            echo html_structures::script("../commun/src/js/fullcalendar/lib/locales-all.js");
-            echo html_structures::link_in_body("../commun/src/js/fullcalendar/lib/main.css");
+            echo html_structures::script("../commun/src/js/fullcalendar/index.global.min.js");
+            echo html_structures::script("../commun/src/js/fullcalendar/locales-all.global.js");
         }
         ?>
         <script type="text/javascript">

@@ -110,6 +110,7 @@ class auth {
             js::redir("");
         } else {
             $_POST["auth_psw"] = "********";
+            $_REQUEST["auth_psw"] = "********";
             js::alertify_alert_redir("Votre login ou mot de passe est invalide !", "");
         }
     }

@@ -100,7 +100,7 @@ class auth {
      */
     private function exec_auth() {
         $table = $this->_table;
-        $req = $table::get_table_array("{$this->_tuple_login}=:{$this->_tuple_login} and {$this->_tuple_psw}=:{$this->_tuple_psw}", $params = [
+        $req = $table::get_table_array("{$this->_tuple_login}=:{$this->_tuple_login} and {$this->_tuple_psw}=:{$this->_tuple_psw}", [
                     ":{$this->_tuple_login}" => $_POST['auth_login'],
                     ":{$this->_tuple_psw}" => application::hash($_POST['auth_psw'])
         ]);

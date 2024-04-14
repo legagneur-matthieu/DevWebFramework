@@ -27,7 +27,7 @@ class g_article {
      * Gère la modification d'articles
      */
     private function g_article_modif() {
-        if (article::get_count("id='" . bdd::p($_GET["id"]) . "'") != 0) {
+        if (article::get_count("id=:id", [":id" => (int) $_GET["id"]]) != 0) {
             $article = article::get_from_id($_GET["id"]);
             $categories = cat_article::get_table_ordored_array();
             $option = [];
@@ -35,7 +35,7 @@ class g_article {
                 $option[] = [$key, $value["nom"], ($key == $article->get_categorie()->get_id())];
             }
             $cke = js::ckeditor("contenu");
-            $form=new form();
+            $form = new form();
             $form->open_fieldset("Modifier un article");
             $form->input("Titre de l'article", "titre", "text", $article->get_titre());
             $form->datetimepicker("Différer la publication ( laissez vide pour ne pas différer )", "date");
@@ -201,5 +201,4 @@ class g_article {
             js::redir("");
         }
     }
-
 }

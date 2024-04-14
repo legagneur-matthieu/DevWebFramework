@@ -140,15 +140,18 @@ class bdd extends singleton {
      * Pour plus de securité: voir la méthode protect_var.
      *
      * @param string|statement $statement requête SQL
+     * @param array $params paramètres à associer dans la requête préparé exemple : ":id"=>$id
      */
-    public function query($statement) {
+    public function query($statement, $params = []) {
         self::$_debug["nb_req"]++;
         self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace", 700))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
         }
-        (strstr($statement, "select") ? dwf_exception::throw_exception(603, ["__m__" => "fetch", "__statement__" => $statement]) : true);
-        ($this->_pdo->query($statement) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
+        list($statement, $params) = $this->params_filter($statement, $params);
+        (!strstr($statement, "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
+        ($query = $this->_pdo->prepare($statement))->execute($params) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]);
+        self::$_debug["memory"] += ((memory_get_usage() - self::$_debug["memory"]));
     }
 
     /**
@@ -156,19 +159,44 @@ class bdd extends singleton {
      * Pour plus de securité: voir la méthode protect_var.
      * 
      * @param string|statement $statement requête SQL
+     * @param array $params paramètres à associer dans la requête préparé exemple : ":id"=>$id
      * @return array tableau à deux dimensions contenant les données 
      */
-    public function fetch($statement) {
+    public function fetch($statement, $params = []) {
         self::$_debug["nb_req"]++;
         self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace"))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
         }
-        $memory = memory_get_usage();
-        $data = $this->_pdo->query($statement);
-        self::$_debug["memory"] += (memory_get_usage() - $memory);
+        list($statement, $params) = $this->params_filter($statement, $params);
         (strstr($statement, "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
-        return ($data ? $data->fetchAll(PDO::FETCH_ASSOC) : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
+        (($query = $this->_pdo->prepare($statement))->execute($params) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
+        self::$_debug["memory"] += ((memory_get_usage() - self::$_debug["memory"]));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Filtre les paramètres à utiliser dans une requête préparée
+     *
+     * @param string $statement La requête avec des marqueurs de paramètres
+     * @param array $params Les paramètres à filtrer
+     * @return array la requete et les paramètres filtrés
+     */
+    private function params_filter($statement, $params) {
+        preg_match_all("/:([a-zA-Z0-9_]+)/", $statement, $matches);
+        $params = array_intersect_key($params, array_flip($matches[0]));
+        foreach ($params as $marqueur => $param) {
+            if (is_array($param)) {
+                unset($params[$marqueur]);
+                $marqueurs = [];
+                foreach ($param as $i => $value) {
+                    $marqueurs[] = $m = "{$marqueur}_{$i}";
+                    $params[$m] = $value;
+                }
+                $statement = strtr($statement, [$marqueur => implode(",", $marqueurs)]);
+            }
+        }
+        return [$statement, $params];
     }
 
     /**

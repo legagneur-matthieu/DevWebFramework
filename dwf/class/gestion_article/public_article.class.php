@@ -30,10 +30,10 @@ class public_article {
         $cat_article = [];
         foreach ($categories as $id => $row) {
             if ($id == 2) {
-                $articles = article::get_table_array("categorie != '1' order by date desc limit 0," . bdd::p($module->get_nb()));
+                $articles = article::get_table_array("categorie!='1' order by date desc limit 0,:lim", [":lim" => $module->get_nb()]);
                 $row["nom"] = "Tous les articles";
             } else {
-                $articles = article::get_table_array("categorie='" . bdd::p($id) . "' order by date desc limit 0," . bdd::p($module->get_nb()));
+                $articles = article::get_table_array("categorie=:id order by date desc limit 0,:lim", [":id" => (int) $id, ":lim" => $module->get_nb()]);
             }
             foreach ($articles as $art) {
                 $cat_article[$row["nom"]][] = $art;
@@ -88,7 +88,7 @@ class public_article {
      * Affiche un article
      */
     private function _article() {
-        if (isset($_GET["id"]) and math::is_int($_GET["id"]) and article::get_count("id='" . bdd::p($_GET["id"]) . "'") > 0) {
+        if (isset($_GET["id"]) and math::is_int($_GET["id"]) and article::get_count("id=:id", [":id" => $_GET["id"]]) > 0) {
             $article = article::get_from_id($_GET["id"]);
             ?>
             <article>
@@ -163,13 +163,13 @@ class public_article {
      * Affiche une catégorie d'articles
      */
     private function categorie() {
-        if (isset($_GET["id"]) and math::is_int($_GET["id"]) and cat_article::get_count("id='" . bdd::p($_GET["id"]) . "'") > 0) {
+        if (isset($_GET["id"]) and math::is_int($_GET["id"]) and cat_article::get_count("id=:id", [":id" => $_GET["id"]]) > 0) {
             if ($_GET["id"] == 2) {
-                $p = pagination::get_limits("p", 20, article::get_count("categorie != '1'"));
-                $articles = article::get_table_array("categorie != '1' order by date desc limit " . $p[0] . "," . $p[1]);
+                $p = pagination::get_limits("p", 20, article::get_count("categorie!='1'"));
+                $articles = article::get_table_array("categorie!='1' order by date desc limit :lim0,:lim1", [":lim0" => $p[0], ":lim1" => $p[1]]);
             } else {
-                $p = pagination::get_limits("p", 20, article::get_count("categorie = '" . bdd::p($_GET["id"]) . "'"));
-                $articles = article::get_table_array("categorie = '" . bdd::p($_GET["id"]) . "' order by date desc limit " . $p[0] . "," . $p[1]);
+                $p = pagination::get_limits("p", 20, article::get_count("categorie=:id", [":id" => $_GET["id"]]));
+                $articles = article::get_table_array("categorie=:id order by date desc limit :lim0,:lim1", [":id" => (int) $_GET["id"], ":lim0" => $p[0], ":lim1" => $p[1]]);
             }
             $cat = cat_article::get_from_id($_GET["id"]);
             ?>
@@ -226,7 +226,7 @@ class public_article {
                 ?>
                 <div class="media-body">
                     <h4 class="media-heading"><a href="<?= application::get_url(array("view", "id")); ?>view=article&amp;id=<?= $art["id"] ?>"><?= $art["titre"]; ?></a></h4>
-                        <?= $art["contenu"]; ?>
+                    <?= $art["contenu"]; ?>
                 </div>
                 <hr />
                 <?php
@@ -235,5 +235,4 @@ class public_article {
         </div>
         <?php
     }
-
 }

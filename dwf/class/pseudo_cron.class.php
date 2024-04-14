@@ -25,6 +25,7 @@ class pseudo_cron extends singleton {
      * @var string Chemin d'accès réel/absolu au fichier pcron.js
      */
     private $_rp;
+
     /**
      * Durée de vie maximale d'un pseudo cron inactif (en secondes)
      * @var int Durée de vie maximale d'un pseudo cron inactif (en secondes)
@@ -49,7 +50,7 @@ class pseudo_cron extends singleton {
                 if (!file_exists($file = "./class/pcron/pcron.json")) {
                     file_put_contents($file, "[]");
                 }
-                $this->_rp= realpath($file);
+                $this->_rp = realpath($file);
                 dwf_exception::check_file_writed($file);
                 $this->_pcron = json_decode(file_get_contents($file), true);
                 break;
@@ -117,7 +118,7 @@ class pseudo_cron extends singleton {
                 break;
             case "sql":
             default:
-                application::$_bdd->query("UPDATE `pcron` SET mt='" . bdd::p(microtime(true)) . "' WHERE hkey='" . bdd::p($hkey) . "';");
+                application::$_bdd->query("UPDATE `pcron` SET mt=:mt WHERE hkey=:hkey", [":mt" => microtime(true), ":hkey" => $hkey]);
                 $this->_pcron = pcron::get_table_array();
                 break;
         }
@@ -217,10 +218,11 @@ class pseudo_cron extends singleton {
             case "sql":
             default:
                 if (count($hkeys) > 0) {
-                    application::$_bdd->query("DELETE FROM `pcron` WHERE hkey in(" . implode(",", $hkeys) . ");");
+                    foreach ($hkeys as $hkey) {
+                        application::$_bdd->query("DELETE FROM `pcron` WHERE hkey=:hkey", [":hkey" => $hkey]);
+                    }
                 }
                 break;
         }
     }
-
 }

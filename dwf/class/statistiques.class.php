@@ -40,11 +40,11 @@ class statistiques {
                 session::set_val("stat_uid", uniqid());
             }
             $imat = hash("gost", session::get_val("stat_uid") . "@" . $_SERVER["REMOTE_ADDR"]);
-            if (stat_visitor::get_count("imat='" . $imat . "'") == 0) {
+            if (stat_visitor::get_count("imat=:imat", [":imat" => $imat]) == 0) {
                 stat_visitor::ajout($imat, (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Inconnu"));
                 (new log_file())->info(json_encode($_SERVER));
             }
-            $visitor = stat_visitor::get_table_array("imat='" . $imat . "'");
+            $visitor = stat_visitor::get_table_array("imat=:imat", [":imat" => $imat]);
             stat_pages::ajout($visitor[0]["id"], $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], date("Y-m-d H:i:s"));
         }
     }
@@ -106,7 +106,7 @@ class statistiques {
             [10, "Novembre"],
             [11, "Dècembre"]
         ];
-        (new graphique("stat_graph_visiteur_unique",["width"=>"100%","height"=>"300px"]))->line($data, $tricks, "stat_plot");
+        (new graphique("stat_graph_visiteur_unique", ["width" => "100%", "height" => "300px"]))->line($data, $tricks, "stat_plot");
         $li = [];
         foreach ($data[0]["data"] as $d) {
             $mois = "";
@@ -135,7 +135,7 @@ class statistiques {
             $date_fin = $date_debut . "-31";
             $date_debut .= "-01";
 
-            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between '" . $date_debut . "' and '" . $date_fin . "';");
+            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin;", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
             $data[$i] = [$i, count($req)];
         }
         return $data;
@@ -179,7 +179,7 @@ class statistiques {
             [23, "23h - 24h"]
         ];
 
-        (new graphique("stat_graph_activity_per_hours",["width"=>"100%","height"=>"300px"]))->line($data, $tricks, "stat_plot_activity_per_hours");
+        (new graphique("stat_graph_activity_per_hours", ["width" => "100%", "height" => "300px"]))->line($data, $tricks, "stat_plot_activity_per_hours");
 
         $li = [];
         for ($i = 0; $i < 24; $i++) {
@@ -194,7 +194,7 @@ class statistiques {
      * @return array Donnèes du graphique de $this->get_activity_per_hours();
      */
     private function get_plot_activity_per_hours($default) {
-        $pages = stat_pages::get_table_array("date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
+        $pages = stat_pages::get_table_array("date between :date_debut and :date_fin", [":date_debut" => $default["an"] . "-01-01", ":date_fin" => $default["an"] . "-12-31"]);
         $heures = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         foreach ($pages as $page) {
             $heure = explode(" ", $page["date"]);
@@ -218,11 +218,11 @@ class statistiques {
      * @param array $default $this->check_form()
      */
     private function get_browser($default) {
-        $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between '" . $default["an"] . "-01-01' and '" . $default["an"] . "-12-31'");
+        $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin", [":date_debut" => $default["an"] . "-01-01", ":date_fin" => $default["an"] . "-12-31"]);
         if (($total = count($req)) != 0) {
             $in = "id in(";
             foreach ($req as $v) {
-                $in .= $v["visitor"] . ",";
+                $in .= ((int)$v["visitor"]) . ",";
             }
             $in .= "__)";
             $in = strtr($in, [",__" => ""]);
@@ -247,18 +247,17 @@ class statistiques {
             $date_debut = $date[0] . "-" . $date[1];
             $date_fin = $date_debut . "-31";
             $date_debut .= "-01";
-            $where = "date between '" . bdd::p($date_debut) . "' and '" . bdd::p($date_fin) . "'";
-            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where " . $where);
+            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
             if (count($req) != 0) {
                 $in = "id in(";
                 foreach ($req as $v) {
-                    $in .= $v["visitor"] . ",";
+                    $in .= ((int)$v["visitor"]) . ",";
                 }
                 $in .= "__);";
                 $in = strtr($in, [",__" => ""]);
                 $visitors = stat_visitor::get_table_ordored_array($in); //application::$_bdd->fetch("select imat from stat_visitor " . $in);
-                $nav = stat_pages::get_table_array("date between '" . $date_debut . "' and '" . $date_fin . "';");
-                $req = application::$_bdd->fetch("select page, count(*) as count from stat_pages where " . $where . " group by page");
+                $nav = stat_pages::get_table_array("date between :date_debut and :date_fin", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
+                $req = application::$_bdd->fetch("select page, count(*) as count from stat_pages where date between :date_debut and :date_fin group by page", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
                 $data = [];
                 $titles = [];
                 foreach ($req as $page) {
@@ -293,7 +292,7 @@ class statistiques {
      * @param array $default $this->check_form()
      */
     private function form($default) {
-        $form=new form();
+        $form = new form();
         $y = date("Y");
         $option = [];
         for ($i = 5; $i >= 0; $i--) {
@@ -332,5 +331,4 @@ class statistiques {
         libxml_clear_errors();
         return $title;
     }
-
 }

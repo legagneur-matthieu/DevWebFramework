@@ -100,8 +100,11 @@ class auth {
      */
     private function exec_auth() {
         $table = $this->_table;
-        if ($req = $table::get_table_array($this->_tuple_login . "='" . bdd::p($_POST['auth_login']) . "' and " .
-                        $this->_tuple_psw . "='" . application::hash($_POST['auth_psw']) . "';")) {
+        $req = $table::get_table_array("{$this->_tuple_login}=:{$this->_tuple_login} and {$this->_tuple_psw}=:{$this->_tuple_psw};", [
+                    "{$this->_tuple_login}" => $_POST['auth_login'],
+                    "{$this->_tuple_psw}" => application::hash($_POST['auth_psw'])
+        ]);
+        if (isset($req[0]['id'])) {
             session::set_auth(true);
             session::set_user($req[0]['id']);
             js::redir("");

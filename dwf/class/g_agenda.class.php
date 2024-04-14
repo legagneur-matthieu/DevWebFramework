@@ -45,18 +45,18 @@ class g_agenda {
      * @param int $lim nombre limite d'évènements à afficher (10 par défaut)
      */
     private function agenda_liste($lim) {
-        $events = agenda::get_table_array("date_fin>='" . date("Y-m-d") . " 23:59' order by date_debut limit 0," . bdd::p((int) $lim));
+        $events = agenda::get_table_array("date_fin>=:date_fin order by date_debut limit 0,:lim", [":date_fin" => date("Y-m-d") . " 23:59", ":lim" => (int) $lim]);
         foreach ($events as $event) {
             $date_debut = explode(" ", $event["date_debut"]);
             $date_fin = explode(" ", $event["date_fin"]);
             echo tags::tag("div", ["class" => "row agenda"], tags::tag(
                             "div", ["class" => "col-sm-3"], tags::tag(
-                                    "p", [], "Du : <strong>" . html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
-                                    "Au : <strong>" . html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
+                                    "p", [], "Du : <strong>" . html_structures::time($event["date_debut"], time::date_us_to_fr($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
+                                    "Au : <strong>" . html_structures::time($event["date_fin"], time::date_us_to_fr($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
                     ) .
                     tags::tag("div", ["class" => "col-sm-9"], tags::tag(
                                     "p", [], tags::tag("a", ["href" => "index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"]], $event["titre"])
-                    ))
+                            ))
             ) . tags::tag("hr");
         }
     }
@@ -72,8 +72,8 @@ class g_agenda {
         echo tags::tag("a", ["href" => "index.php?page=" . $_GET["page"]], html_structures::glyphicon("arrow-left", "Retour a la liste des evennements") . " Retour") .
         tags::tag("div", ["class" => "row agenda"], tags::tag(
                         "div", ["class" => "col-sm-3"], tags::tag(
-                                "p", [], "Du : <strong>" . html_structures::time($event->get_date_debut(), time::convert_date($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
-                                "Au : <strong>" . html_structures::time($event->get_date_fin(), time::convert_date($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
+                                "p", [], "Du : <strong>" . html_structures::time($event->get_date_debut(), time::date_us_to_fr($date_debut[0]) . " " . $date_debut[1]) . "</strong><br />" .
+                                "Au : <strong>" . html_structures::time($event->get_date_fin(), time::date_us_to_fr($date_fin[0]) . " " . $date_fin[1]) . "</strong>")
                 ) .
                 tags::tag("div", ["class" => "col-sm-9"], tags::tag("p", [], tags::tag("strong", [], $event->get_titre())) .
                         tags::tag("hr") . tags::tag("article", [], htmlspecialchars_decode($event->get_texte()))
@@ -98,12 +98,13 @@ class g_agenda {
             }
             $option[] = [$m . "-" . $y, time::convert_mois($m) . " " . $y];
         }
-        $form=new form();
+        $form = new form();
         $form->select("Mois", "agenda_my", $option);
         $form->submit("btn-primary");
         echo $form->render();
         if (isset($_POST["agenda_my"])) {
-            $events = agenda::get_table_array("date_debut>='01-" . bdd::p($_POST["agenda_my"]) . " 00:00' and date_debut<='32-" . bdd::p($_POST["agenda_my"]) . " 00:00';");
+            $events = agenda::get_table_array("date_debut>=:date_debut1 and date_debut<=:date_debut2;", ["date_debut1" => "01-{$_POST["agenda_my"]} 00:00", "date_debut2" => "32-{$_POST["agenda_my"]} 00:00"]);
+            debug::print_r($events);
             echo html_structures::hr();
             foreach ($events as $event) {
                 $date_debut = explode(" ", $event["date_debut"]);
@@ -111,9 +112,9 @@ class g_agenda {
                 echo tags::tag("div", ["class" => "row agenda"], tags::tag(
                                 "div", ["class" => "col-sm-3"], tags::tag(
                                         "p", [], "Du : " .
-                                        tags::tag("strong", [], html_structures::time($event["date_debut"], time::convert_date($date_debut[0]) . " " . $date_debut[1])) .
+                                        tags::tag("strong", [], html_structures::time($event["date_debut"], time::date_us_to_fr($date_debut[0]) . " " . $date_debut[1])) .
                                         tags::tag("br") . " Au : " .
-                                        tags::tag("strong", [], html_structures::time($event["date_fin"], time::convert_date($date_fin[0]) . " " . $date_fin[1]))
+                                        tags::tag("strong", [], html_structures::time($event["date_fin"], time::date_us_to_fr($date_fin[0]) . " " . $date_fin[1]))
                                 )
                         ) .
                         tags::tag("div", ["class" => "col-sm-9"], html_structures::a_link("index.php?page=" . $_GET["page"] . "&agenda=" . $event["id"], $event["titre"]) .
@@ -123,7 +124,7 @@ class g_agenda {
             }
             echo html_structures::hr();
             $cke = js::ckeditor("texte");
-            $form=new form();
+            $form = new form();
             $form->hidden("agenda_my", $_POST["agenda_my"]);
             $form->datetimepicker("Date de début", "date_debut", date("d/m/Y H:i"));
             $form->datetimepicker("Date de fin", "date_fin", date("d/m/Y H:i"));
@@ -151,11 +152,11 @@ class g_agenda {
         $fin[0] = explode("-", $fin[0]);
         $fin = $fin[0][2] . "/" . $fin[0][1] . "/" . $fin[0][0] . " " . $fin[1];
         $cke = js::ckeditor("texte");
-        $form=new form();
+        $form = new form();
         $form->datetimepicker("Date de début", "date_debut", $debut);
         $form->datetimepicker("Date de fin", "date_fin", $fin);
         $form->input("Titre", "titre", "text", $event->get_titre());
-        $form->textarea("Texte", "texte", htmlspecialchars_decode($event->get_texte()));
+        $form->textarea("Texte", "texte", htmlspecialchars($event->get_texte()));
         $form->submit("btn-primary");
         echo $form->render();
         if (isset($_POST["titre"])) {
@@ -172,9 +173,8 @@ class g_agenda {
      * Suppresion d'un évènement dans l'administration
      */
     private function agenda_admin_supp() {
-        application::$_bdd->query("delete from agenda where id='" . bdd::p($_GET["agenda_supp"]) . "';");
+        agenda::delete_by_id($_GET["agenda_supp"]);
         js::alert("L'événement a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"]);
     }
-
 }

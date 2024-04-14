@@ -116,14 +116,14 @@ class admin_controle {
      * Affiche le tableau listant les entités
      */
     private function table() {
-        js::datatable();
+        js::datatable("datatable_{$this->_entity}");
         $url = "index.php?";
         foreach ($_GET as $key => $value) {
             $url .= $key . "=" . $value . "&amp;";
         }
         $head = $this->_head;
         $head[] = "Modifier / Supprimer";
-        echo html_structures::table($head, $this->_data, "Tableau d'administration de l'entité : " . $this->_entity, "datatable") . "<hr />";
+        echo html_structures::table($head, $this->_data, "Tableau d'administration de l'entité : {$this->_entity}", "datatable_{$this->_entity}") . "<hr />";
         $this->ajout_form();
     }
 
@@ -182,19 +182,21 @@ class admin_controle {
             $req = "INSERT INTO " . bdd::p($this->_entity) . " (";
             $key = "";
             $value = "";
+            $params = [];
             foreach ($this->_structure as $element) {
                 if (!$element[2]) {
-                    $key .= " " . $element[0] . ",";
+                    $key .= " {$element[0]},";
+                    $value .= " :{$element[0]},";
                     if ($element[0] == "psw" or $element[0] == "password") {
-                        $value .= " '" . bdd::p(application::hash($_POST[$element[0]])) . "',";
+                        $params[":{$element[0]}"] = application::hash($_POST[$element[0]]);
                     } else {
-                        $value .= " '" . bdd::p($_POST[$element[0]]) . "',";
+                        $params[":{$element[0]}"] = $_POST[$element[0]];
                     }
                 }
             }
             $req .= "{$key}__) VALUES ({$value}__);";
-            $req = strtr($req, $from = [",__)" => ")"]);
-            application::$_bdd->query($req);
+            $req = strtr($req, [",__)" => ")"]);
+            application::$_bdd->query($req, $params);
             js::redir("");
         }
     }
@@ -286,7 +288,7 @@ class admin_controle {
         $url = application::get_url(["action", "id"]);
         $this->supp_exec($url);
         $entity = $this->_entity;
-        $data = $entity::get_table_array("id='" . bdd::p($_GET["id"]) . "';");
+        $data = $entity::get_table_array("id=:id;", [":id" => (int) $_GET["id"]]);
         foreach ($data as $key => $value) {
             foreach ($this->_relations as $k => $v) {
                 $data[$key][$k] = $this->_data[$key][$k];
@@ -328,5 +330,4 @@ class admin_controle {
             js::redir(strtr($url, ["&amp;" => "&"]));
         }
     }
-
 }

@@ -54,7 +54,7 @@ class task_manager {
      */
     public static function cleanup($expire_time = 2592000) {
         if (math::is_int($expire_time) && $expire_time >= 84600) {
-            task::get_table_array("status=1 and t_exec < " . (time() - $expire_time));
+            task::get_table_array("status=1 and t_exec < :texec", [":texec" => (time() - $expire_time)]);
         } else {
             dwf_exception::warning_exception(600, ["msg" => "task_manager::cleanup(), expire_time invalid !"]);
         }
@@ -101,7 +101,7 @@ class task_manager {
         cli::write(self::get_waiting_tasks_lenght());
         while (true) {
             $sleep = true;
-            foreach (task::get_collection("status=0 and t_exec<=" . time()) as $task) {
+            foreach (task::get_collection("status=0 and t_exec<=:texec", [":texec" => time()]) as $task) {
                 $sleep = false;
                 $worker = $task->get_worker();
                 if (file_exists("./$worker.worker.php") && class_exists($worker)) {
@@ -127,5 +127,4 @@ class task_manager {
     private static function get_waiting_tasks_lenght() {
         return date("Y-m-d H:i:s") . " " . task::get_count("status=0") . " Taches planifie";
     }
-
 }

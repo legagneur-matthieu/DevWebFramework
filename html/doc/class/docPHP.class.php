@@ -355,6 +355,11 @@ class docPHP {
 
     private function entity() {
         ?>
+        <p class="alert alert-danger">
+            Note de version 21.24.04 : <br>
+            Comme expliqué plus en détail dans la section BDD la gestion des requetes a changé,<br>
+            il est recomandé de regénérer vos entity si elles ont été généré avant cette verssion !
+        </p>
         <p>
             Les entités font office d'ORM dans votre projet,<br />
             une classe entité vous permet de lire, ajouter, modifier ou supprimer des entrées de votre base de données sans avoir à saisir une requête SQL <br />
@@ -430,12 +435,12 @@ class docPHP {
         <?php
         js::monaco_highlighter('<?php\n'
                 . '//ajoute un utilisateur\n'
-                . 'user::ajout($login, hash(config::$$_hash_algo, $psw));\n\n'
+                . 'user::ajout($login, application::hash($psw));\n\n'
                 . '//récuperer tout les utilisateurs sous forme de tableaux de données\n'
                 . '$users = user::get_table_array();\n'
                 . 'echo $users[0]["login"]; //affiche le login du premier utilisateur de la table\n\n'
-                . '//récuperer tout les utilisateurs du rang 1\n'
-                . '$users = user::get_table_array("rang=1");\n\n'
+                . '//récuperer tout les utilisateurs du rang 1 (utilisation d\'une requete préparé cf. bdd)\n'
+                . '$users = user::get_table_array("rang=:rang",[":rang"=>1]);\n\n'
                 . '//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n'
                 . '$users = user::get_table_array("1=1 order by login");\n\n'
                 . '//récuperer tout les rang sous forme de table ordonnée par leur ID (les id sont les clés du tableau)\n'
@@ -458,10 +463,9 @@ class docPHP {
                 . '?>');
         ?>
         <p class="alert alert-danger">
-            ATTENTION : si vous utilisez des variables dans les paramètres $where : utilisez <em>application::$_bdd->protect_var()</em> pour vous protéger : <br />
-            - des injections SQL <br />
-            - des injections XSS <br />
-            pensez également à la fonction <a href="https://secure.php.net/manual/fr/function.strip-tags.php" target="_blank">strip_tags</a> en cas de besoin.
+            ATTENTION : si vous utilisez des variables dans les paramètres $where : <br>
+            utilisez le tableau $params afin d'utiliser les requêtes préparé et vous protéger des injections SQL <br />
+            pensez également à la fonction <a href="https://secure.php.net/manual/fr/function.strip-tags.php" target="_blank">strip_tags</a> pour vous protéger des failles XSS.
         </p>
         <h4>Les types de champ/attribut</h4>
         <?php
@@ -477,28 +481,36 @@ class docPHP {
 
     private function bdd() {
         ?>
+        <p class="alert alert-danger">
+            Avant le verssion 21.24.04, une fonction dans BDD (bdd::p()) permetait de securiser les variables contre des injections SQL . <br>
+            Une évaluation de cette protection a révélé certaines faiblaises. <br>
+            Depuis la version 21.24.04 les requetes sont protégé par le système de prépararation et execution, plus robuste.
+        </p>
         <p>
-            L'objet bdd est l'objet qui permet de gérer la connexion à la base de données et sécuriser les variables destinées à être utilisées dans des requêtes SQL. <br />
+            L'objet bdd est l'objet qui permet de gérer la connexion à la base de données et sécuriser les requêtes SQL. <br />
             Cet objet utilise les informations PDO qui sont renseignées dans le fichier de configuration. <br />
             Vos entités et de nombreuses classes native de DWF exploitent cette objet.
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . '//fetch permet d\'éxecuter une requête de type select et d\'en récuperer le résultat sous forme d\'un tableau\n'
-                . '$req=application::$bdd->fetch($statement);\n\n'
+                . '$req=application::$bdd->fetch($statement, $params=[]);\n'
+                . '//exemple :\n'
+                . '$req = application::$bdd->fetch("select * from user where id=:id", $params=[":id"=>1]);\n\n'
                 . '//query permet d\'executer des requêtes de type insert into, update et delete, ne retourne rien !\n'
-                . 'application::$bdd->query($statement);\n\n'
-                . '//protect_var permet d\'échapper les caractères dangereux pour votre base de données et votre application\n'
-                . '$var = application::$bdd->protect_var($var);\n'
-                . '//Depuis la version 21.23.08 cette méthode a été remplacé par \n'
-                . 'bdd:p($var)\n\n'
+                . 'application::$bdd->query($statement, $params=[]);\n\n'
+                . '//exemple :\n'
+                . '$req = application::$bdd->query("insert into rang(nom) values (:nom)", $params=[":nom"=>"invité"]);\n\n'
                 . '//verif_email retourne true si la chaine rentrée en paramètres respecte le format email, false si non\n'
                 . '$is_email=application::$bdd->verif_email($email);\n\n'
-                . '//unprotect_var est déprécié si vous utilisez une version de php superieur à 5.4\n'
-                . '//servait à annuler l\'échappement de caractères pour les variables destinés à être affichés\n'
-                . '$var = application::$bdd->unprotect_var($var);\n'
-                . '//Depuis la version 21.23.08 cette méthode a été remplacé par \n'
-                . 'bdd:up($var)\n\n'
+                . '//astuce pour les requetes "IN", vous pouvez directement renseigner un tableau de valeurs :\n'
+                . '$req=application::$bdd->fetch("select * from user where id in (:ids)", $params=[":ids"=>[3, 5, 9]]);\n\n'
+                . '//si vous renseignez un paramettre inutilisé,\n'
+                . '//il sera ignoré sans générer d\'erreur, exemple ici avec :login inutilisé\n'
+                . '$req = application::$bdd->fetch("select * from user where id=:id", $params=[":id"=>1, ":login"=>"admin"]);\n\n'
+                . '//cela peux vous servir dans certain cas specifique où\n'
+                . '// des champs demandé sont conditioné par des ternaires.\n\n'
+                . '//ATTENTION ! l\'objet BDD ne tolère pas le marqueur "?" seul les marqueurs précédé de ":" sont admis'
                 . '?>'
         );
     }

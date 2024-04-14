@@ -1709,10 +1709,10 @@ class docPHP_natives {
                 . '<?php\n'
                 . '$reveal->close_reveal();\n'
                 . '?>');
-    }
+            }
 
-    private function reversoLib() {
-        ?>
+            private function reversoLib() {
+                ?>
         <p>Cette classe utilise l'API de Reverso pour corriger un texte et 
             vous affiche les corrections à appliquer au texte grâce à la librairie finediff.</p>
         <?php

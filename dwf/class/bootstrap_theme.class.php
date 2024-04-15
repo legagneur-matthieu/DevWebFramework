@@ -18,10 +18,10 @@ class bootstrap_theme {
      */
     public static function get_bootstrap_themes() {
         if (!count(self::$_theme)) {
-            $glob = glob("../../commun/src/dist/bootswatch/*");
+            $glob = glob("../commun/src/dist/bootswatch/*");
             foreach ($glob as $theme) {
                 if (is_dir($theme)) {
-                    self::$_theme = basename($theme);
+                    self::$_theme[] = basename($theme);
                 }
             }
         }

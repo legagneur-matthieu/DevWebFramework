@@ -218,7 +218,7 @@ class leaflet {
                     shadowAnchor: [12, 30]
                 });
                 map<?= $this->_id; ?> = L.map('<?= $this->_id; ?>').setView([<?= $this->_view_init["x"]; ?>, <?= $this->_view_init["y"]; ?>], <?= $this->_view_init["zoom"]; ?>);
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map<?= $this->_id; ?>);
+                L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map<?= $this->_id; ?>);
         <?php
         foreach ($this->_markers as $value) {
             ?>

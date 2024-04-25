@@ -6,6 +6,7 @@ class parcour_sites {
     private $_project = [];
 
     public function __construct() {
+        ini_set("display_errors", 1);
         $this->init();
         ob_start();
         ?>
@@ -22,6 +23,8 @@ class parcour_sites {
                     } elseif (isset($_GET["phpini"])) {
                         echo html_structures::a_link("index.php", html_structures::glyphicon("arrow-left", "") . " Retour au parcours", "btn btn-primary");
                         phpini::admin();
+                    } elseif (isset($_GET["export"])) {
+                        new export_dwf($_GET["export"]);
                     } else {
                         $this->main($this->init_main());
                     }
@@ -94,11 +97,14 @@ class parcour_sites {
     }
 
     private function init_main() {
-        $sites = "";
+        $sites = [];
         $option = [];
         foreach (glob("*") as $site) {
             if (is_dir($site) and $site != "commun") {
-                $sites .= html_structures::a_link($site . "/", html_structures::glyphicon("folder-open") . " &nbsp;" . $site) . tags::tag("br");
+                $sites[] = [
+                    html_structures::a_link("{$site}/", html_structures::glyphicon("folder-open") . " &nbsp; {$site}"),
+                    (file_exists("../dwf/class/export_dwf/{$site}.json") ? html_structures::a_link("index.php?export={$site}", html_structures::glyphicon("download-alt", "Export {$site}"), "btn btn-outline-primary btn-sm", "Export {$site}", true) : "")
+                ];
                 $option[] = [$site, $site, $site === $this->_project["project"]];
             }
         }
@@ -112,7 +118,7 @@ class parcour_sites {
         ?>
         <div class="row">
             <div class="col-sm-4 col-sm-6">
-                <?= tags::tag("h2", [], "Vos projets") . tags::tag("p", [], $s["sites"]); ?>
+                <?= tags::tag("h2", [], "Vos projets") . html_structures::table(["Projet", "Export"], $s["sites"]); ?>
             </div>
             <div class="col-sm-4 col-sm-6">
                 <?php
@@ -135,12 +141,12 @@ class parcour_sites {
     private function dwf_statut() {
         $DWFStatus = true;
         $conf = "./commun/conf/default.json";
-        if (!is_writable($conf) or!is_readable($conf)) {
+        if (!is_writable($conf) or !is_readable($conf)) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
         $conf = "../dwf/log";
-        if (!is_writable($conf) or!is_readable($conf)) {
+        if (!is_writable($conf) or !is_readable($conf)) {
             $DWFStatus = false;
             echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
@@ -172,7 +178,6 @@ class parcour_sites {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));
         }
     }
-
 }
 
 new parcour_sites();

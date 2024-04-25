@@ -43,30 +43,32 @@ class export_dwf {
                 mkdir(__DIR__ . "/export_dwf", 0777, true);
             }
             $projet = strtr($_SERVER["SCRIPT_NAME"], ["/index.php" => "", "/" => ""]);
-            if (!file_exists($json = __DIR__ . "/export_dwf/{$projet}.json")) {
-                file_put_contents($json, "[]");
-            }
-            if (!self::$_files) {
-                self::$_files = json_decode(file_get_contents($json), true);
-            }
-            $change = false;
-            foreach (self::$_files as $key => $file) {
-                if (!file_exists($file)) {
-                    unset(self::$_files[$key]);
+            if (!empty($projet)) {
+                if (!file_exists($json = __DIR__ . "/export_dwf/{$projet}.json")) {
+                    file_put_contents($json, "[]");
                 }
-            }
-            if (!is_array($files)) {
-                $files = [$files];
-            }
-            foreach ($files as $file) {
-                if (!in_array($file, self::$_files) and file_exists($file)) {
-                    self::$_files[] = $file;
-                    $change = true;
+                if (!self::$_files) {
+                    self::$_files = json_decode(file_get_contents($json), true);
                 }
-            }
-            sort(self::$_files);
-            if ($change) {
-                file_put_contents($json, json_encode(self::$_files));
+                $change = false;
+                foreach (self::$_files as $key => $file) {
+                    if (!file_exists($file)) {
+                        unset(self::$_files[$key]);
+                    }
+                }
+                if (!is_array($files)) {
+                    $files = [$files];
+                }
+                foreach ($files as $file) {
+                    if (!in_array($file, self::$_files) and file_exists($file)) {
+                        self::$_files[] = $file;
+                        $change = true;
+                    }
+                }
+                sort(self::$_files);
+                if ($change) {
+                    file_put_contents($json, json_encode(self::$_files));
+                }
             }
         }
     }
@@ -80,10 +82,15 @@ class export_dwf {
     public function __construct($project) {
         $this->_base = realpath(dirname(__DIR__, 2));
         $this->_zip = new ZipArchive();
-        $dir = "../../html/commun/export_dwf"; //a modifier
+        $dir = "./commun/export_dwf"; //a modifier
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
+        debug::print_r([
+            "projet" => $project,
+            "base" => $this->_base,
+            "dir" => $dir,
+        ]);
         $zip_file = "{$dir}/{$project}.zip";
         if (file_exists($zip_file)) {
             unlink($zip_file);
@@ -96,21 +103,24 @@ class export_dwf {
             realpath("{$this->_base}/dwf/.htaccess"),
             realpath("{$this->_base}/dwf/index.php"),
             realpath("{$this->_base}/dwf/class/index.php"),
+            realpath("{$this->_base}/dwf/class/phpini"),
             realpath("{$this->_base}/dwf/log/.htaccess"),
             realpath("{$this->_base}/dwf/log/index.php"),
             realpath("{$this->_base}/dwf/cli/.htaccess"),
             realpath("{$this->_base}/dwf/cli/start.php"),
-            realpath("{$this->_base}/dwf/phpini"),
-            realpath(__DIR__ . "/index.php"),
         ]);
         foreach ($files as $file) {
+            debug::print_r("add {$file}");
             if (is_dir($file)) {
                 $this->add_dir($file);
             } else {
                 $this->_zip->addFile($file, strtr($file, ["{$this->_base}" => ""]));
             }
         }
+        $this->_zip->addFromString("html/index.php", "<?php header(\"Location: ./{$project}/index.php\"); ?>\n<script>window.location=\"./{$project}/index.php\"</script>");
         $this->_zip->close();
+        header("Location: {$zip_file}");
+        js::redir($zip_file);
     }
 
     /**

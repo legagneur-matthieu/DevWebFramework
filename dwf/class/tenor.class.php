@@ -10,6 +10,7 @@ class tenor {
      * Cette classe permet de retourner des Gifs de l'API TENOR
      */
     public function __construct() {
+        export_dwf::add_files([realpath(__DIR__ . "/tenor_tpl")]);
         if (file_exists('./services/index.php')) {
             if (isset(config::$_tenor_key)) {
                 if (!file_exists('./services/s_tenor.service.php')) {

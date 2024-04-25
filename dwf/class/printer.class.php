@@ -17,6 +17,11 @@ class printer {
         $content = '<html><head><meta charset="UTF-8"><title>' . $filename . '</title></head><body>' . $content . '</body></html>';
         $key = "PDF_" . sha1($content);
         $_SESSION[$key] = $content;
+        export_dwf::add_files([
+            realpath(__DIR__ . "/printer.php"),
+            realpath(__DIR__ . "/dompdf"),
+            realpath(__DIR__ . "/printer"),
+        ]);
         $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("filename", $filename);
         $form->hidden("content", $key);
@@ -34,6 +39,10 @@ class printer {
         $content = json_encode($content);
         $key = "CSV_" . sha1($content);
         $_SESSION[$key] = $content;
+        export_dwf::add_files([
+            realpath(__DIR__ . "/printer.php"),
+            realpath(__DIR__ . "/printer"),
+        ]);
         $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("filename", $filename);
         $form->hidden("content", $key);
@@ -52,6 +61,11 @@ class printer {
     public static function QRCODE($content, $get_png_b64 = false) {
         $key = "QRCODE_" . sha1($content);
         $_SESSION[$key] = $content;
+        export_dwf::add_files([
+            realpath(__DIR__ . "/printer.php"),
+            realpath(__DIR__ . "/printer"),
+            realpath(__DIR__ . "/phpqrcode"),
+        ]);
         if ($get_png_b64) {
             return "data:image/png;base64," . base64_encode(service::HTTP_POST_REQUEST($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . strtr($_SERVER["SCRIPT_NAME"], ["index.php" => ""]) . "../commun/printer.php", [
                                 "type" => "QRCODE",
@@ -64,5 +78,4 @@ class printer {
             return $form->render();
         }
     }
-
 }

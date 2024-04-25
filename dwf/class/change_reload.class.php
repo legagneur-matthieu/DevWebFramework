@@ -28,6 +28,7 @@ class change_reload extends singleton {
                 file_put_contents("./change.php", file_get_contents(__DIR__ . "/change_reload/change"));
             }
             echo html_structures::script("../commun/src/js/change_reload.js");
+            export_dwf::add_files([realpath(__DIR__ . "/change_reload")]);
             self::$_called = true;
         }
     }

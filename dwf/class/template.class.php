@@ -30,6 +30,7 @@ class template {
     public function __construct($tplname, $data) {
         if (!self::$_called) {
             include_once __DIR__ . '/smarty/libs/Autoloader.php';
+            export_dwf::add_files([realpath(__DIR__ . "/smarty")]);
             Smarty_Autoloader::register();
             if (!file_exists($this->_dir)) {
                 mkdir($this->_dir);

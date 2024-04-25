@@ -279,6 +279,7 @@ class html_structures {
      * @return string script d'injection
      */
     public static function link_in_body($href) {
+        export_dwf::add_files([realpath($href)]);
         return '<script type="text/javascript">$("head").append(\'<link rel="stylesheet" href="' . $href . '" />\');</script>';
     }
 
@@ -290,6 +291,7 @@ class html_structures {
      */
     public static function script_in_body($src) {
         return tags::tag("script", ["type" => "text/javascript"], "add_script(\"$src\")");
+        export_dwf::add_files([realpath($src)]);
     }
 
     /**
@@ -299,6 +301,7 @@ class html_structures {
      */
     public static function script($src) {
         http2::get_instance()->preload($src);
+        export_dwf::add_files([realpath($src)]);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src], "");
     }
 
@@ -309,6 +312,7 @@ class html_structures {
      */
     public static function script_async($src) {
         http2::get_instance()->preload($src);
+        export_dwf::add_files([realpath($src)]);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src, "async" => "true"], "");
     }
 
@@ -319,6 +323,7 @@ class html_structures {
      */
     public static function script_defer($src) {
         http2::get_instance()->preload($src);
+        export_dwf::add_files([realpath($src)]);
         return tags::tag("script", ["type" => "text/javascript", "src" => $src, "defer" => "true"], "");
     }
 
@@ -329,6 +334,7 @@ class html_structures {
      */
     public static function link($href) {
         http2::get_instance()->preload($href);
+        export_dwf::add_files([realpath($href)]);
         return tags::tag("link", ["rel" => "stylesheet", "href" => $href]);
     }
 
@@ -363,5 +369,4 @@ class html_structures {
         }
         return tags::div($attr, $content);
     }
-
 }

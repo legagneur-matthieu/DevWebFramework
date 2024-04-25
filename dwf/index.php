@@ -33,6 +33,7 @@ class index {
         if (file_exists($file)) {
             require_once $file;
             website::$_class[$file] = $class;
+            export_dwf::add_files([realpath($file)]);
         }
     }
 
@@ -47,5 +48,4 @@ class index {
             unlink($trill);
         }
     }
-
 }

@@ -21,6 +21,7 @@ class lorem_ipsum {
      * @return string Lorem ipsum
      */
     public static function generate($nb_words, $first = false, $full = false) {
+        export_dwf::add_files([realpath(__DIR__ . "/lorem_ipsum")]);
         $words = json_decode(file_get_contents(__DIR__ . "/lorem_ipsum/lorem_ipsum" . ($full ? "_full" : "") . ".json"), true);
         $cwords = count($words);
         $lorem = "";

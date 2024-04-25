@@ -91,6 +91,18 @@ class export_dwf {
         $this->_zip->open($zip_file, ZipArchive::CREATE);
         $json = __DIR__ . "/export_dwf/{$project}.json";
         $files = json_decode(file_get_contents($json));
+        $files = array_merge($files, [
+            realpath("{$this->_base}/html/{$project}"),
+            realpath("{$this->_base}/dwf/.htaccess"),
+            realpath("{$this->_base}/dwf/index.php"),
+            realpath("{$this->_base}/dwf/class/index.php"),
+            realpath("{$this->_base}/dwf/log/.htaccess"),
+            realpath("{$this->_base}/dwf/log/index.php"),
+            realpath("{$this->_base}/dwf/cli/.htaccess"),
+            realpath("{$this->_base}/dwf/cli/start.php"),
+            realpath("{$this->_base}/dwf/phpini"),
+            realpath(__DIR__ . "/index.php"),
+        ]);
         foreach ($files as $file) {
             if (is_dir($file)) {
                 $this->add_dir($file);

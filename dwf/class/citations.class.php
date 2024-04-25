@@ -12,6 +12,7 @@ class citations {
      * @param string $css css de la citation
      */
     public function __construct($css = "cite-block") {
+        export_dwf::add_files([realpath(__DIR__ . "/citations/citations.json")]);
         $citatation = json_decode(file_get_contents(__DIR__ . "/citations/citations.json"), true);
         $citatation = $citatation[rand(0, count($citatation) - 1)];
         echo tags::tag(
@@ -23,5 +24,4 @@ class citations {
                 )
         );
     }
-
 }

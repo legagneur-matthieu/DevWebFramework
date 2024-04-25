@@ -27,7 +27,8 @@ class fb {
      */
     public function __construct($app_id, $app_secret, $default_graph_version = "v2.11") {
         if (!self::$_called) {
-            include __DIR__ . '/php-graph-sdk-5.x/src/Facebook/autoload.php';
+            include __DIR__ . "/php-graph-sdk-5.x/src/Facebook/autoload.php";
+            export_dwf::add_files([realpath(__DIR__ . "/php-graph-sdk-5.x")]);
             self::$_called = true;
         }
         $this->_fb = new Facebook\Facebook(
@@ -88,5 +89,4 @@ class fb {
     public function getGraphUser() {
         return $this->request()->getGraphUser();
     }
-
 }

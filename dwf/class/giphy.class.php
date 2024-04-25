@@ -10,6 +10,7 @@ class giphy {
      * Cette classe permet de retourner des Gifs de l'API GIPHY
      */
     public function __construct() {
+        export_dwf::add_files(__DIR__."/gyphy_tpl");
         if (file_exists('./services/index.php')) {
             if (isset(config::$_giphy_key)) {
                 if (!file_exists('./services/s_giphy.service.php')) {

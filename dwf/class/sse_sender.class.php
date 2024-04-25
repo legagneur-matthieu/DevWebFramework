@@ -22,6 +22,7 @@ class sse_sender extends singleton {
                 ["user", "int", false],
             ]
         ]);
+        export_dwf::add_files([realpath(__DIR__ . "/sse_tpl")]);
         if (!file_exists($sfile = "./services/sse.service.php")) {
             file_put_contents($sfile, file_get_contents(__DIR__ . "/sse_tpl/sse"));
         }
@@ -36,5 +37,4 @@ class sse_sender extends singleton {
     public function send($event, $data, $user = 0) {
         sse_event::ajout(microtime(true), $event, (is_array($data) ? json_encode($data) : $data), $user);
     }
-
 }

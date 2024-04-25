@@ -35,6 +35,7 @@ class google_oauth {
     ) {
         if (!self::$_called) {
             include __DIR__ . '/Oauth_Google/vendor/autoload.php';
+            export_dwf::add_files(__DIR__."/Oauth_Google");
         }
         $this->_gclient = new Google\Client();
         $this->_gclient->setClientId($clientId);

@@ -41,6 +41,7 @@ class compact_css extends singleton {
      */
     public function add_css_file($href) {
         $this->_files[] = $href;
+        export_dwf::add_files([realpath($href)]);
         return $this;
     }
 

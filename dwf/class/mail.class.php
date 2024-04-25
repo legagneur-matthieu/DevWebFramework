@@ -30,6 +30,7 @@ class mail {
             include_once __DIR__ . "/PHPMailer/src/SMTP.php";
             include_once __DIR__ . "/PHPMailer/src/POP3.php";
             include_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
+            export_dwf::add_files([realpath(__DIR__ . "/PHPMailer")]);
             self::$_called = true;
         }
         $this->_phpmailer = new \PHPMailer\PHPMailer\PHPMailer(true);

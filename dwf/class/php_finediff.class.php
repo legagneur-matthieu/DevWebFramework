@@ -22,6 +22,7 @@ class php_finediff {
     public static function DiffToHTML($from_text, $to_text) {
         if (!self::$_called) {
             include __DIR__ . '/finediff/finediff.php';
+            export_dwf::add_files([realpath(__DIR__ . "/finediff")]);
             self::$_called = true;
         }
         return FineDiff::renderDiffToHTMLFromOpcodes($from_text, FineDiff::getDiffOpcodes($from_text, $to_text, FineDiff::$wordGranularity));

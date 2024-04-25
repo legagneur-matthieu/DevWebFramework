@@ -12,6 +12,7 @@ class task_manager {
      * A utiliser dans l'application web
      */
     public static function init() {
+        export_dwf::add_files([realpath(__DIR__ . "/task_tpl")]);
         if (!class_exists("cli")) {
             include __DIR__ . '/cli.class.php';
             cli::classloader();

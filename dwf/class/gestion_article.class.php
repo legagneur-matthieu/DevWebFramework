@@ -12,6 +12,7 @@ class gestion_article {
      */
     public function __construct() {
         include __DIR__ . "/gestion_article/public_article.class.php";
+        export_dwf::add_files([realpath(__DIR__."/gestion_article")]);
         $datas = [
             "cat_article" => [
                 ["id", "int", true],

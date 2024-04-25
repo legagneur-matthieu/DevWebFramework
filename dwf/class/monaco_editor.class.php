@@ -28,6 +28,7 @@ class monaco_editor {
             echo html_structures::script('../commun/src/js/monaco/min/vs/loader.js') .
             html_structures::script("../commun/src/js/monaco_editor.js");
             compact_css::get_instance()->add_css_file("../commun/src/css/monaco_editor.css");
+            export_dwf::add_files([realpath(__DIR__ . "/monaco_editor_tpl")]);
             self::$_called = true;
         }
         ?>

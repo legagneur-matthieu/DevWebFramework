@@ -21,6 +21,7 @@ class g_elFinder {
     public function __construct($conector_url = "connector.php") {
         echo html_structures::link_in_body("../commun/src/js/elFinder/css/elfinder.min.css") .
         html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
+        export_dwf::add_files([realpath(__DIR__."/elFinder")]);
         ?>
         <script type="text/javascript">
             $(document).ready(function () {

@@ -25,6 +25,7 @@ class captcha {
             include_once __DIR__ . "/Gregwar/Captcha/PhraseBuilder.php";
             include_once __DIR__ . "/Gregwar/Captcha/CaptchaBuilderInterface.php";
             include_once __DIR__ . "/Gregwar/Captcha/CaptchaBuilder.php";
+            export_dwf::add_files([realpath(__DIR__ . "/Gregwar")]);
             self::$_called = true;
         }
         $this->_captcha = new \Gregwar\Captcha\CaptchaBuilder();
@@ -69,5 +70,4 @@ class captcha {
     public static function check($hash, $phrase) {
         return $hash == sha1($phrase);
     }
-
 }

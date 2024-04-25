@@ -41,6 +41,7 @@ class paypal {
     public function __construct($clientId, $clientSecret, $currency = "EUR", $payment_method = "paypal") {
         if (!self::$_called) {
             include __DIR__ . "/PayPal-PHP-SDK/autoload.php";
+            export_dwf::add_files([realpath(__DIR__ . "/PayPal-PHP-SDK")]);
             self::$_called = true;
         }
         $this->_api_context = new PayPal\Rest\ApiContext(new \PayPal\Auth\OAuthTokenCredential($clientId, $clientSecret));

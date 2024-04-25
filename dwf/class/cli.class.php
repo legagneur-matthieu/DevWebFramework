@@ -21,7 +21,9 @@ class cli {
             $file = __DIR__ . "/" . $class . ".class.php";
             if (file_exists($file)) {
                 require_once $file;
+                export_dwf::add_files([realpath($file)]);
             }
+            export_dwf::add_files([realpath(__FILE__)]);
         });
     }
 
@@ -40,6 +42,7 @@ class cli {
      * @param string $str
      */
     public static function write($str) {
+        export_dwf::add_files([realpath(__FILE__)]);
         echo "\n" . self::accents($str);
         self::$_len = strlen($str);
     }
@@ -49,6 +52,7 @@ class cli {
      * @param string $str
      */
     public static function rewrite($str) {
+        export_dwf::add_files([realpath(__FILE__)]);
         echo "\r" . self::accents($str);
         for ($i = 0; $i < (self::$_len - strlen($str)); $i++) {
             echo " ";
@@ -70,6 +74,7 @@ class cli {
             }
             self::rewrite("");
         } else {
+            export_dwf::add_files([realpath(__FILE__)]);
             time_sleep_until($mt);
         }
     }
@@ -95,5 +100,4 @@ class cli {
             'É' => "\x90"]
         );
     }
-
 }

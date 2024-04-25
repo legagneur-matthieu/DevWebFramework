@@ -26,6 +26,7 @@ class php_header {
     public function __construct() {
         $this->_status_codes = json_decode(file_get_contents(__DIR__ . "/php_header/status.json"), true);
         $this->_mimes = json_decode(file_get_contents(__DIR__ . "/php_header/mimes.json"), true);
+        export_dwf::add_files([realpath(__DIR__ . "/php_header")]);
     }
 
     /**

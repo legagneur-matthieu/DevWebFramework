@@ -60,8 +60,7 @@ class phpini {
             "max_execution_time" => "30",
             "memory_limit" => "128M",
             "post_max_size" => "8M",
-            "session__gc_maxlifetime" => "1440",
-            "session.cookie_samesite" => "Lax",
+            "session__gc_maxlifetime" => "1440"
         ],
         "dev" => [
             "display_errors" => "On",
@@ -81,8 +80,7 @@ class phpini {
             "max_execution_time" => "30",
             "memory_limit" => "128M",
             "post_max_size" => "8M",
-            "session__gc_maxlifetime" => "1440",
-            "session.cookie_samesite" => "Lax",
+            "session__gc_maxlifetime" => "1440"
         ],
         "prod" => [
             "display_errors" => "Off",
@@ -102,8 +100,7 @@ class phpini {
             "max_execution_time" => "30",
             "memory_limit" => "128M",
             "post_max_size" => "8M",
-            "session__gc_maxlifetime" => "1440",
-            "session.cookie_samesite" => "Lax",
+            "session__gc_maxlifetime" => "1440"
         ],
         "dwf_dev" => [
             "display_errors" => "On",
@@ -123,8 +120,7 @@ class phpini {
             "max_execution_time" => "60",
             "memory_limit" => "256M",
             "post_max_size" => "100M",
-            "session__gc_maxlifetime" => "3600",
-            "session.cookie_samesite" => "Lax",
+            "session__gc_maxlifetime" => "3600"
         ],
         "dwf_prod" => [
             "display_errors" => "Off",
@@ -144,8 +140,7 @@ class phpini {
             "max_execution_time" => "60",
             "memory_limit" => "256M",
             "post_max_size" => "100M",
-            "session__gc_maxlifetime" => "3600",
-            "session.cookie_samesite" => "Lax",
+            "session__gc_maxlifetime" => "3600"
         ],
         "custom" => [],
     ];
@@ -232,8 +227,7 @@ class phpini {
             "max_execution_time" => $_POST["max_execution_time"],
             "memory_limit" => $_POST["memory_limit_qnt"] . $_POST["memory_limit_unit"],
             "post_max_size" => $_POST["post_max_size_qnt"] . $_POST["post_max_size_unit"],
-            "session__gc_maxlifetime" => $_POST["session__gc_maxlifetime"],
-            "session__gc_maxlifetime" => "Lax"
+            "session__gc_maxlifetime" => $_POST["session__gc_maxlifetime"]
         ];
         file_put_contents(__DIR__ . "/phpini/custom.json", json_encode(self::$_ini[self::MODE_CUSTOM]));
         js::alertify_alert_redir("Le profil PHPini " . $_POST["profil_name"] . " a bien été créé / modifié", application::get_url(["new_profile"]));

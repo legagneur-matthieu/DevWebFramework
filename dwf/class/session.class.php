@@ -13,6 +13,8 @@ class session {
      * @param boolean $regenerate_id l'id de la session doit-il étre régénérée : à mettre à false si utilisé dans un service !
      */
     public static function start($regenerate_id = true) {
+        ini_set("session.cookie_secure", "On");
+        ini_set("session.cookie_samesite", "Lax");
         session_start();
         ($regenerate_id ? session_regenerate_id(true) : null);
         $_SERVER["HTTP_USER_AGENT"] = (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Unknown");

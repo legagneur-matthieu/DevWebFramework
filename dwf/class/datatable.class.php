@@ -14,7 +14,7 @@ class datatable {
     private static $_called = false;
 
     /**
-     * Paramètres par défaut du flexslider
+     * Paramètres par défaut du datatable
      * 
      * @var array
      */
@@ -24,7 +24,7 @@ class datatable {
      * Applique les fonctionnalités de la librairie datatable à un tableau HTML
      * 
      * @param string $id id du tableau HTML
-     * @param array $params surcharge les paramètres à appliquer au flexslider ( laissez par défaut ou voir la documentation )
+     * @param array $params surcharge les paramètres à appliquer au datatable ( laissez par défaut ou voir la documentation )
      */
     public function __construct($id = "datatable", $params = []) {
         if (!self::$_called) {
@@ -33,7 +33,7 @@ class datatable {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script>
             $(document).ready(function () {
             $("#<?= $id; ?>").addClass("display");
                     $('#<?= $id; ?>').DataTable(<?php

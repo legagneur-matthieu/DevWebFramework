@@ -57,6 +57,7 @@ class bootstrap_theme {
         } else {
             echo html_structures::link("../commun/src/dist/css/bootstrap.min.css");
         }
+        export_dwf::add_files([realpath("../commun/src/dist")]);
     }
 
     /**

@@ -123,6 +123,7 @@ class html5 {
                     $script .= html_structures::script_async($s);
                 }
                 echo $script;
+                export_dwf::add_files([realpath("../commun/src/js/php")]);
             }
 
             /**

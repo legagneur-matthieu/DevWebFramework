@@ -29,6 +29,7 @@ class ckeditor {
     public function __construct($id, $params = []) {
         if (!self::$_called) {
             echo html_structures::script("../commun/src/js/ckeditor/ckeditor.js");
+            export_dwf::add_files([realpath("../commun/src/js/ckeditor")]);
             self::$_called = true;
         }
         ?>

@@ -64,6 +64,7 @@ class leaflet {
             compact_css::get_instance()->add_css_file("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.css");
             echo html_structures::script("../commun/src/js/leaflet/leaflet.js") .
             html_structures::script("../commun/src/js/leaflet/leaflet-routing/leaflet-routing-machine.js");
+            export_dwf::add_files([realpath("../commun/src/js/leaflet")]);
             self::$_called = true;
         }
     }

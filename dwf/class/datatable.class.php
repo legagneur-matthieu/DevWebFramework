@@ -30,6 +30,7 @@ class datatable {
         if (!self::$_called) {
             echo html_structures::script("../commun/src/js/DataTables/datatables.min.js");
             compact_css::get_instance()->add_css_file("../commun/src/js/DataTables/datatables.min.css");
+            export_dwf::add_files([realpath("../commun/src/js/DataTables")]);
             self::$_called = true;
         }
         ?>

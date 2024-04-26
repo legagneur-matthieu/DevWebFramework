@@ -126,6 +126,7 @@ class html5 {
                 export_dwf::add_files([
                     realpath("../commun/src/js/php"),
                     realpath("../commun/src/js/animate"),
+                    realpath("../commun/src/js/CheckAutoplayPermission"),
                     realpath("../commun/src/js/html5.js"),
                     realpath("../commun/src/js/respond/respond.js"),
                 ]);

@@ -9,6 +9,18 @@
 class export_dwf {
 
     /**
+     * Classe annonyme pour l'ecriture du fichier Json
+     * @var bool|object
+     */
+    private static $_writer = false;
+    
+    /**
+     * Etat de la liste si modifié ou non
+     * @var boolean Etat de la liste si modifié ou non
+     */
+    private static $_change = false;
+
+    /**
      * @var string Chemin absolu vers le répertoire racine du framework.
      */
     private $_base;
@@ -24,10 +36,20 @@ class export_dwf {
      */
     private static $_files = false;
 
-    public static function test() {
-        $dir = "../../html/commun/export_dwf/";
-        debug::print_r($dir);
-        debug::print_r(realpath($dir));
+    /**
+     * Retourne la liste des fichiers nécessaires du projet
+     * @return array Retourne la liste des fichiers nécessaires du projet
+     */
+    public static function get_files() {
+        return self::$_files;
+    }
+
+    /**
+     * Retourne si la liste des fichier a changé.
+     * @return boolean Retourne si la liste des fichier a changé.
+     */
+    public static function is_changed() {
+        return self::$_change;
     }
 
     /**
@@ -49,26 +71,37 @@ class export_dwf {
                 }
                 if (!self::$_files) {
                     self::$_files = json_decode(file_get_contents($json), true);
+                    self::$_writer = new class($json) {
+
+                        private $_json;
+
+                        public function __construct($json) {
+                            $this->_json = $json;
+                        }
+
+                        public function __destruct() {
+                            if (export_dwf::is_changed()) {
+                                file_put_contents($this->_json, json_encode(export_dwf::get_files()));
+                            }
+                        }
+                    };
                 }
-                $change = false;
                 foreach (self::$_files as $key => $file) {
                     if (!file_exists($file)) {
                         unset(self::$_files[$key]);
+                        self::$_change = true;
                     }
                 }
                 if (!is_array($files)) {
                     $files = [$files];
                 }
                 foreach ($files as $file) {
-                    if (!in_array($file, self::$_files) and file_exists($file)) {
+                    if (!in_array($file, self::$_files) and file_exists($file) and stripos($file, "/html/{$projet}/") === false) {
                         self::$_files[] = $file;
-                        $change = true;
+                        self::$_change = true;
                     }
                 }
                 sort(self::$_files);
-                if ($change) {
-                    file_put_contents($json, json_encode(self::$_files));
-                }
             }
         }
     }
@@ -82,7 +115,7 @@ class export_dwf {
     public function __construct($project) {
         $this->_base = realpath(dirname(__DIR__, 2));
         $this->_zip = new ZipArchive();
-        $dir = "./commun/export_dwf"; //a modifier
+        $dir = "./commun/export_dwf";
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -118,6 +151,8 @@ class export_dwf {
             }
         }
         $this->_zip->addFromString("html/index.php", "<?php header(\"Location: ./{$project}/index.php\"); ?>\n<script>window.location=\"./{$project}/index.php\"</script>");
+        $this->_zip->addFromString("dwf/export_dwf/.export_disabled", "This file is just use for disable export_dwf in already exported projects");
+        $this->_zip->addEmptyDir("html/{$project}/src/compact/");
         $this->_zip->close();
         header("Location: {$zip_file}");
         js::redir($zip_file);
@@ -132,11 +167,13 @@ class export_dwf {
     private function add_dir($path) {
         $glob = glob($path . "/*");
         foreach ($glob as $file) {
-            $file = strtr($file, [".//" => ""]);
-            if (is_dir($file)) {
-                $this->add_dir($file);
-            } else {
-                $this->_zip->addFile($file, strtr($file, ["{$this->_base}" => ""]));
+            if (stripos($file, ".git") === false and stripos($file, "src/compact/") === false) {
+                $file = strtr($file, [".//" => ""]);
+                if (is_dir($file)) {
+                    $this->add_dir($file);
+                } else {
+                    $this->_zip->addFile($file, strtr($file, ["{$this->_base}" => ""]));
+                }
             }
         }
     }

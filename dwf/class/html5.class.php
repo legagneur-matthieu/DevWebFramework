@@ -61,7 +61,7 @@ class html5 {
                         tags::tag("meta", ["name" => "Revisit-after", "content" => "14 days"]) .
                         tags::tag("meta", ["name" => "description", "content" => ""]) .
                         tags::tag("meta", ["name" => "keywords", "content" => ""]);
-                if (isset(config::$_favicon)and config::$_favicon != "") {
+                if (isset(config::$_favicon) and config::$_favicon != "") {
                     $meta .= tags::tag("link", ["rel" => "icon", "href" => config::$_favicon]);
                 }
                 echo $meta;
@@ -123,7 +123,12 @@ class html5 {
                     $script .= html_structures::script_async($s);
                 }
                 echo $script;
-                export_dwf::add_files([realpath("../commun/src/js/php")]);
+                export_dwf::add_files([
+                    realpath("../commun/src/js/php"),
+                    realpath("../commun/src/js/animate"),
+                    realpath("../commun/src/js/html5.js"),
+                    realpath("../commun/src/js/respond/respond.js"),
+                ]);
             }
 
             /**
@@ -346,5 +351,4 @@ class html5 {
             "ellipse"
         ];
     }
-
 }

@@ -11,6 +11,7 @@ class easteregg {
      * Cette classe permet d'afficher des "oeufs de Pâques" qui s'affichent à certaines dates de l'année    * 
      */
     public function __construct() {
+        export_dwf::add_files([realpath("../commun/src/js/eastereggs")]);
         $date = date("dm");
         if (session::get_val("eggday")) {
             $date = session::get_val("eggday");
@@ -106,7 +107,7 @@ class easteregg {
             ["2511", "Sainte Catherine"],
             ["2212", "Hiver"]
         ];
-        $form=new form();
+        $form = new form();
         $form->select("Evenement à activer", "eggday", $events);
         $form->submit("btn-primary", "Activer");
         (new modal())->link_open_modal("", "modal_eggday", '', "Evenements", $form->render(), "");
@@ -289,4 +290,8 @@ class easteregg {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
     }
 
+    public static function sarraltroff($id) {
+        html_structures::script_async("../commun/src/js/eastereggs/sarraltroff/sarraltroff.js");
+        export_dwf::add_files([realpath("../commun/src/js/eastereggs")]);
+    }
 }

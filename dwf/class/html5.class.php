@@ -116,7 +116,6 @@ class html5 {
             "../commun/src/js/jquery.cookie.js",
             "../commun/src/js/datetimepicker/jquery-ui-sliderAccess.js",
             "../commun/src/js/animate/animate.js",
-            "../commun/src/js/sarraltroff/sarraltroff.js",
             "../commun/src/js/phpjs/phpjs.min.js",
             "../commun/src/js/php/phpvm.js",
             "../commun/src/js/js.js"

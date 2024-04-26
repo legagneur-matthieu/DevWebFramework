@@ -22,6 +22,7 @@ class video {
         if (!self::$_called) {
             compact_css::get_instance()->add_css_file("../commun/src/js/videojs/video-js.min.css");
             echo html_structures::script("../commun/src/js/videojs/video.min.js");
+            export_dwf::add_files([realpath("../commun/src/js/videojs")]);
             self::$_called = true;
         }
         ?>
@@ -33,5 +34,4 @@ class video {
         <?php
         echo tags::tag("video", ["id" => $id, "class" => "video-js vjs-default-skin vjs-big-play-centered", "controls" => "true", "preload" => "auto", "width" => "600", "data-setup" => "{'language':'fr'}"], tags::tag("source", ["src" => $src, "type" => mime_content_type($src)]));
     }
-
 }

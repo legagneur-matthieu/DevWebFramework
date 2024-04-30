@@ -40,7 +40,7 @@ class application {
         self::event("onbdd_connected");
         $this->_pages = new pages();
         $this->routes();
-        new sitemap();
+        sitemap::get_instance();
         $this->contenu();
     }
 
@@ -151,6 +151,14 @@ class application {
     }
 
     /**
+     * Retourne l'URL complette de la page courrante.
+     * @return string Retourne l'URL complette de la page courrante.
+     */
+    public static function get_loc() {
+        return ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    }
+
+    /**
      * Déclenche les méthodes évènementielles dont le nom est passé en paramètre
      * @param string $event_name nom de l'evenement
      */
@@ -173,5 +181,4 @@ class application {
     public static function hash($data) {
         return hash(config::$_hash_algo, $data);
     }
-
 }

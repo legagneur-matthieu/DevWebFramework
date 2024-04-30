@@ -48,7 +48,7 @@ class html5 {
             $lang = "fr";
         }
         ob_clean();
-        ob_start();
+        ob_start();        
         $meta = "";
         ?><!DOCTYPE HTML>
         <html lang="<?= $lang; ?>">
@@ -160,6 +160,7 @@ class html5 {
     }
 
     public static function render($document) {
+        sitemap::get_instance()->add_url(application::get_loc(), self::$_real_title);
         http2::get_instance()->make_link();
         if (class_exists("tidy")) {
             $tidy = new tidy();

@@ -1,127 +1,132 @@
 <?php
 
 /**
- * Cette classe gère les "sitemap" du site <br />
- * Pour les routes qui dépendent d'une variable, renseignez dans la route (par exemple): <br />
- * "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login")
+ * Cette classe gère les sitemaps de vos projets.
+ * Elle permet d'ajouter, de supprimer et de générer des sitemaps au format XML.
+ * Elle offre également des fonctionnalités pour afficher les URLs dans une liste HTML
+ * et pour gérer les URLs via une interface d'administration.
  * 
- * L'utilisateur www-data doit avoir les droits d'ecritures.
- * lancez $ php dwf/cli/start.php 
- * ou $ php dwf/cli/sitemap_index.cli.php 
- * pour generer le sitemap index de vos projets
- *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.fr>
  */
-class sitemap {
+class sitemap extends singleton {
 
     /**
-     * Liste des sitemap
-     * @var array|stdClass Liste des sitemap
+     * Tableau contenant les URLs du sitemap.
+     * Chaque élément du tableau est un tableau associatif avec les clés "loc" et "title".
+     * La clé "loc" correspond à l'URL de la page et la clé "title" correspond au titre de la page.
+     * @var array
      */
-    private $_sitemap;
+    private $_urls = [];
 
     /**
-     * Chemin relatif du sitemap JSON
-     * @var string Chemin relatif du sitemap JSON
+     * Indique si le sitemap a été modifié depuis sa dernière écriture dans le fichier XML.
+     * @var bool
      */
-    private static $_file_json = "./sitemap.json";
+    private $_changed = false;
 
     /**
-     * Chemin relatif du sitemap XML
-     * @var string Chemin relatif du sitemap XML
+     * Chemin complet vers le fichier sitemap.xml.
+     * @var string
      */
-    private static $_file_xml = "./sitemap.xml";
+    private $_file;
 
     /**
-     * Cette classe gère les "sitemap" du site
-     * @param string $host Domaine du site (ex : "https://dwf.sytes.net" )
+     * Cette classe gère les sitemaps de vos projets.
+     * Elle permet d'ajouter, de supprimer et de générer des sitemaps au format XML.
+     * Elle offre également des fonctionnalités pour afficher les URLs dans une liste HTML
+     * et pour gérer les URLs via une interface d'administration.
      */
-    public function __construct($host = "") {
-        if (config::$_sitemap) {
-            if (empty($host)) {
-                if (!isset($_SERVER["REQUEST_SCHEME"])) {
-                    $schame = explode("://", $_SERVER["HTTP_REFERER"]);
-                    $_SERVER["REQUEST_SCHEME"] = $schame[0];
+    protected function __construct() {
+        $this->_file = $_SERVER["DOCUMENT_ROOT"] . "/sitemap.xml";
+
+        if (file_exists($this->_file)) {
+            ($dom = new DOMDocument())->load($this->_file);
+            foreach ($dom->getElementsByTagName("url") as $url) {
+                $title = $url->getElementsByTagName("title")->item(0);
+                $this->_urls[] = [
+                    "loc" => $url->getElementsByTagName("loc")->item(0)->nodeValue,
+                    "title" => ($title ? $title->nodeValue : "")
+                ];
+            }
+        }
+    }
+
+    /**
+     * Ajoute une nouvelle URL au sitemap avec éventuellement un titre personnalisé.
+     * @param string $url L'URL de la page à ajouter au sitemap.
+     * @param string $title (optionnel) Le titre personnalisé de la page.
+     */
+    public function add_url($url, $title = "") {
+        if (class_exists("config") && config::$_sitemap && !session::get_auth() && stripos($url, "http://localhost/") === false && !in_array($url, array_column($this->_urls, "loc"))) {
+            $this->_urls[] = ["loc" => $url, "title" => $title];
+            $this->_changed = true;
+        }
+    }
+
+    /**
+     * Supprime une URL du sitemap en fonction de son attribut "loc".
+     * @param string $loc L'URL de la page à supprimer du sitemap.
+     */
+    public function remove_url($loc) {
+        foreach ($this->_urls as $key => $url) {
+            if ($url["loc"] === $loc) {
+                unset($this->_urls[$key]);
+                $this->_changed = true;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Génère une liste HTML des URLs du sitemap.
+     */
+    public function HTML() {
+        $li = [];
+        foreach ($this->_urls as $url) {
+            $li[] = html_structures::a_link($url["loc"], $url["title"]);
+        }
+        echo html_structures::ul($li);
+    }
+
+    /**
+     * Affiche une interface d'administration pour gérer les URLs du sitemap.
+     * Cette interface permet de supprimer des URLs individuelles.
+     */
+    public function admin() {
+        if (isset($_GET["loc"])) {
+            $this->remove_url($_GET["loc"]);
+            js::redir(application::get_url(["loc"]));
+        }
+        $data = [];
+        foreach ($this->_urls as $url) {
+            $data[] = [
+                $url["loc"],
+                $url["title"],
+                html_structures::a_link(application::get_url() . "loc={$url["loc"]}", "Supprimer", "btn- btn-danger")
+            ];
+        }
+        js::datatable();
+        html_structures::table(["Loc", "Title", "Supprimer"], $data, "", "datatable");
+    }
+
+    /**
+     * Destructeur de la classe.
+     * Écrit les modifications apportées au sitemap dans le fichier XML s'il y a eu des changements.
+     */
+    public function __destruct() {
+        if ($this->_changed) {
+            sort($this->_urls);
+            $sitemapContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+            $sitemapContent .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+            foreach ($this->_urls as $url) {
+                $sitemapContent .= "\t<url>\n\t\t<loc>{$url["loc"]}</loc>\n";
+                if (!empty($url["title"])) {
+                    $sitemapContent .= "\t\t<title>{$url["title"]}</title>\n";
                 }
-                $host = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"];
+                $sitemapContent .= "\t</url>\n";
             }
-            $host .= $_SERVER["SCRIPT_NAME"];
-            foreach (config::$_route_unauth as $route) {
-                if (isset($route["sitemap"]["var"]) and isset($route["sitemap"]["entity"]) and isset($route["sitemap"]["tuple"])) {
-                    $node = $route["sitemap"]["entity"];
-                    $node = $node::get_table_array();
-                    foreach ($node as $value) {
-                        $this->_sitemap[] = ["loc" => $host . "?page=" . $route["page"] . "&amp;" . $route["sitemap"]["var"] . "=" . $value["id"], "text" => $value[$route["sitemap"]["tuple"]], "cat" => $route["title"]];
-                    }
-                } else {
-                    if (isset($route["text"])) {
-                        $this->_sitemap[] = ["loc" => $host . "?page=" . $route["page"], "text" => $route["title"]];
-                    }
-                }
-            }
-            $this->json();
+            $sitemapContent .= "</urlset>";
+            file_put_contents($this->_file, $sitemapContent);
         }
     }
-
-    /**
-     * Génére le fichier JSON pour le XML et la vue HTML
-     */
-    private function json() {
-        $json = (is_file(self::$_file_json) ? json_decode(file_get_contents(self::$_file_json)) : []);
-        $this->_sitemap["last_update"] = date("Ymd");
-        if (!isset($json->last_update) or $json->last_update < $this->_sitemap["last_update"]) {
-            file_put_contents(self::$_file_json, json_encode($this->_sitemap));
-            dwf_exception::check_file_writed(self::$_file_json);
-            $this->XML();
-        }
-    }
-
-    /**
-     * Génére le fichier XML
-     */
-    private function XML() {
-        $xml_file = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-        foreach ($this->_sitemap as $value) {
-            if (isset($value["loc"])) {
-                $xml_file .= '<url><loc>' . $value["loc"] . '</loc></url>';
-            }
-        }
-        $xml_file .= "</urlset>";
-        file_put_contents(self::$_file_xml, $xml_file);
-        dwf_exception::check_file_writed(self::$_file_xml);
-    }
-
-    /**
-     * Vue HTML
-     * @param boolean $show_xml Lien vers le sitemap XML
-     * @param boolean $show_json Lien vers le sitemap JSON
-     */
-    public static function html($show_xml = true, $show_json = false) {
-        if (is_file(self::$_file_json)) {
-            $json = json_decode(file_get_contents(self::$_file_json));
-            $ul = tags::ul();
-            foreach ($json as $value) {
-                if (isset($value->loc)) {
-                    $ul->append_content(
-                            tags::tag("li", [], (isset($value->cat) ? html_structures::a_link($value->loc, $value->cat . " - " . $value->text) : html_structures::a_link($value->loc, $value->text))
-                            )
-                    );
-                }
-            }
-            echo $ul;
-            if ($show_json or $show_xml) {
-                echo tags::tag("p", [], tags::tag("small", [], ($show_xml ? html_structures::a_link("sitemap.xml", "Sitemap XML", "", "(nouvel onglet)", true) : "") .
-                                ($show_json ? html_structures::a_link("sitemap.json", "Sitemap JSON", "", "(nouvel onglet)", true) : "")
-                ));
-            }
-        } else {
-            if (config::$_sitemap) {
-                new sitemap();
-                self::html();
-            } else {
-                new Exception("Sitemap non configuré !", 200);
-            }
-        }
-    }
-
 }

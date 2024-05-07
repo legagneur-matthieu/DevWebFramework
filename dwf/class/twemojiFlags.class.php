@@ -21,6 +21,7 @@ class twemojiFlags {
     public static function get($code) {
         if (!self::$_called) {
             compact_css::get_instance()->add_css_file("../commun/src/css/Twemoji/Twemoji.css");
+            export_dwf::add_files([realpath("../commun/src/css/Twemoji")]);
             self::$_called = true;
         }
         return tags::tag("span", ["class" => "TwemojiCountryFlags", "title" => "$code"],

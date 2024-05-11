@@ -155,6 +155,9 @@ class application {
      * @return string Retourne l'URL complette de la page courrante.
      */
     public static function get_loc() {
+        if (substr($_SERVER['REQUEST_URI'], -1) === '&') {
+            $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 0, -1);
+        }
         return ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 

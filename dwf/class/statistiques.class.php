@@ -1,334 +1,483 @@
 <?php
 
 /**
- * Cette classe permet de recueillir et d'afficher des statistiques liès à l'activitè des utilisateurs
+ * Cette classe permet de recueillir et d'afficher des statistiques liées à l'activité des utilisateurs
+ * (limité a 5 ans d'enregistrement)
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class statistiques {
+class statistiques extends singleton {
 
     /**
-     * Cette classe permet de recueillir et d'afficher des statistiques liès à l'activitè des utilisateurs
+     * Indique si la page courante doit être enregistrée ou non
+     * @var boolean Indique si la page courante doit être enregistrée ou non
+     */
+    static private $_enable = false;
+
+    /**
+     * Cette classe permet de recueillir et d'afficher des statistiques liées à l'activité des utilisateurs
+     * (limité a 5 ans d'enregistrement) 
      */
     public function __construct() {
-        if (config::$_statistiques) {
-            $datas = [
-                "stat_visitor" => [
+        if (class_exists("config") and isset(config::$_statistiques) and config::$_statistiques) {
+            self::$_enable = true;
+        }
+        if (self::$_enable) {
+            entity_generator::generate([
+                "stat_country" => [
                     ["id", "int", true],
-                    ["imat", "string", false],
-                    ["user_agent", "string", false],
+                    ["code", "string", false],
+                    ["name", "string", false],
                 ],
-                "stat_pages" => [
+                "stat_browser" => [
                     ["id", "int", true],
-                    ["visitor", "visitor", false],
-                    ["page", "string", false],
-                    ["date", "string", false],
+                    ["agent", "string", false],
+                ],
+                "stat_user" => [
+                    ["id", "int", true],
+                    ["ip", "string", false],
+                    ["country", "stat_country", false],
+                    ["browser", "stat_browser", false],
+                ],
+                "stat_page" => [
+                    ["id", "int", true],
+                    ["url", "string", false],
+                    ["title", "string", false],
+                ],
+                "stat_visite" => [
+                    ["id", "int", true],
+                    ["timestamp", "int", false],
+                    ["user", "stat_user", false],
+                    ["page", "stat_page", false],
                 ]
-            ];
-            foreach ($datas as $table => $data) {
-                new entity_generator($data, $table, true, true);
+            ]);
+            if (stat_country::get_count() == 0) {
+                stat_country::ajout("5N", "Local");
+                stat_country::ajout("UN", "Unknow");
             }
+            bdd::get_instance()->query("delete from stat_visite where timestamp<:t", [":t" => (time() - 157680000)]);
         }
     }
 
     /**
-     * Cette fonction permet d'enregistrer l'activitè des utilisateurs sur la page actuelle
+     * Enregistre la visite de l'utilisateur si config::_statistiques=true;
+     * Cette fonction est automatiquement appelé dans html5::before_render_task() 
+     * Inutile de l'appeler davantage.
+     * Si vous désirez desactiver l'enregistrement de statistiques sur une page 
+     * (comme l'interface d'administration par exemple)
+     * utilisez :
+     * statistiques::get_instance()->disable();
+     * dans les pages concerné
      */
-    public function add_stat() {
-        if (!in_array($_SERVER["REMOTE_ADDR"], ["localhost", "127.0.0.1", "::1"]) and config::$_statistiques) {
-            if (session::get_val("stat_uid") == false) {
-                session::set_val("stat_uid", uniqid());
+    public function add_visit() {
+        if (self::$_enable) {
+            $browser = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "Unknow");
+            if (stat_browser::get_count("agent=:agent", [":agent" => $browser]) == 0) {
+                stat_browser::ajout($browser);
             }
-            $imat = hash("gost", session::get_val("stat_uid") . "@" . $_SERVER["REMOTE_ADDR"]);
-            if (stat_visitor::get_count("imat=:imat", [":imat" => $imat]) == 0) {
-                stat_visitor::ajout($imat, (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Inconnu"));
-                (new log_file())->info(json_encode($_SERVER));
+            $browser = stat_browser::get_collection("agent=:agent", [":agent" => $browser])[0];
+            if (stat_page::get_count("url=:url", [":url" => $url = application::get_loc()]) == 0) {
+                stat_page::ajout($url, html5::$_real_title);
             }
-            $visitor = stat_visitor::get_table_array("imat=:imat", [":imat" => $imat]);
-            stat_pages::ajout($visitor[0]["id"], $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], date("Y-m-d H:i:s"));
-        }
-    }
-
-    /**
-     * Cette fonction permet d'afficher les statistiques ( il est conseillè de ne pas appeler cette fonction sur une page "publique" )
-     */
-    public function get_stat() {
-        //compact_css::get_instance()->add_css_file("../commun/src/css/statistiques.css");
-        compact_css::get_instance()->add_style((new css())
-                        ->add_rule(".plot", ["width" => "800px", "min-height" => "400px", "margin" => "0 auto"])
-                        ->add_rule(".stat_ring", ["margin" => "0 auto", "width" => "600px", "height" => "400px", "margin-bottom" => "-100px"])
-                        ->add_rule(".graph-legend", ["font-size" => "10px"])
-        );
-        $key = "stat";
-        $route = [
-            [$key => "get_stat_an", "title" => "Statistiques annuelles", "text" => "Statistiques annuelles"],
-            [$key => "consult", "title" => ""]
-        ];
-        (new sub_menu($this, $route, $key, "get_stat_an"));
-    }
-
-    /**
-     * Fonction appelèe par $this->get_stat(), à ne pas utiliser !
-     */
-    public function get_stat_an() {
-        $default = $this->check_form();
-        $this->form($default);
-        echo html_structures::hr() .
-        tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Nombre de visiteurs unique " . tags::tag("sup", ["title" => "Un visiteur unique est défini par son cookie de session et son ip"], "*")));
-        $this->get_uniques_visitors($default);
-        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Indicateur d'activité par heure"));
-        $this->get_activity_per_hours($default);
-        echo html_structures::hr() . tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Navigateurs"));
-        $this->get_browser($default);
-    }
-
-    /**
-     * Affiche les statistiques sur les visiteurs uniques
-     * @param array $default $this->check_form()
-     */
-    private function get_uniques_visitors($default) {
-        $data = [
-            ["label" => "Visiteurs",
-                "data" => $this->get_plot_uniques_visitors($default)
-            ]
-        ];
-        $tricks = [
-            [0, "Janvier"],
-            [1, "Fevrier"],
-            [2, "Mars"],
-            [3, "Avril"],
-            [4, "Mai"],
-            [5, "Juin"],
-            [6, "Juillet"],
-            [7, "Aout"],
-            [8, "Septembre"],
-            [9, "Octobre"],
-            [10, "Novembre"],
-            [11, "Dècembre"]
-        ];
-        (new graphique("stat_graph_visiteur_unique", ["width" => "100%", "height" => "300px"]))->line($data, $tricks, "stat_plot");
-        $li = [];
-        foreach ($data[0]["data"] as $d) {
-            $mois = "";
-            if ($d[0] + 1 < 10) {
-                $mois .= "0";
+            $page = stat_page::get_collection("url=:url", [":url" => application::get_loc()])[0];
+            $ip = $_SERVER["REMOTE_ADDR"];
+            if (stat_user::get_count("ip=:ip", [":ip" => $ip]) == 0) {
+                if ($this->is_private_IP($ip)) {
+                    $country = stat_country::get_collection("code='5N'")[0];
+                    stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                } else {
+                    $country = ip_api::get_instance()->json($ip);
+                    if ($country and $country["status"] == "success") {
+                        if (stat_country::get_count("code=:code", [":code" => $country["countryCode"]]) == 0) {
+                            stat_country::ajout($country["countryCode"], $country["country"]);
+                        }
+                        $country = stat_country::get_collection("code=:code", [":code" => $country["countryCode"]])[0];
+                        stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                    } else {
+                        $country = stat_country::get_collection("code='UN'")[0];
+                        stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                    }
+                }
             }
-            $mois .= ($d[0] + 1);
-            $li[] = time::convert_mois($mois) . " : " . ($d[1] != 0 ? html_structures::a_link("index.php?page=" . $_GET["page"] . "&stat=consult&date=" . $default["an"] . "_" . $mois, $d[1] . " Visiteurs") : "Vous n'avez eu aucun visiteur.");
-        }
-        echo html_structures::ul($li);
-    }
-
-    /**
-     * Retourne les statistiques sur un visiteur unique
-     * @param array $default $this->check_form()
-     * @return array Data du graphique de $this->get_uniques_visitors();
-     */
-    private function get_plot_uniques_visitors($default) {
-        $data = [];
-        for ($i = 0; $i < 12; $i++) {
-            $date_debut = $default["an"] . "-";
-            if ($i + 1 < 10) {
-                $date_debut .= "0";
-            }
-            $date_debut .= $i + 1;
-            $date_fin = $date_debut . "-31";
-            $date_debut .= "-01";
-
-            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin;", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
-            $data[$i] = [$i, count($req)];
-        }
-        return $data;
-    }
-
-    /**
-     * Affiche les statistiques d'activitès par heure
-     * @param array $default $this->check_form()
-     */
-    private function get_activity_per_hours($default) {
-        $data = [
-            [
-                "label" => "Pages visitées",
-                "data" => $this->get_plot_activity_per_hours($default)
-            ]
-        ];
-        $tricks = [
-            [0, "00h - 01h"],
-            [1, "01h - 02h"],
-            [2, "02h - 03h"],
-            [3, "03h - 04h"],
-            [4, "04h - 05h"],
-            [5, "05h - 06h"],
-            [6, "06h - 07h"],
-            [7, "07h - 08h"],
-            [8, "08h - 09h"],
-            [9, "09h - 10h"],
-            [10, "10h - 11h"],
-            [11, "11h - 12h"],
-            [12, "12h - 13h"],
-            [13, "13h - 14h"],
-            [14, "14h - 15h"],
-            [15, "15h - 16h"],
-            [16, "16h - 17h"],
-            [17, "17h - 18h"],
-            [18, "18h - 19h"],
-            [19, "19h - 20h"],
-            [20, "20h - 21h"],
-            [21, "21h - 22h"],
-            [22, "22h - 23h"],
-            [23, "23h - 24h"]
-        ];
-
-        (new graphique("stat_graph_activity_per_hours", ["width" => "100%", "height" => "300px"]))->line($data, $tricks, "stat_plot_activity_per_hours");
-
-        $li = [];
-        for ($i = 0; $i < 24; $i++) {
-            $li[] = $tricks[$i][1] . " : " . $data[0]["data"][$i][1] . " pages visitèes";
-        }
-        echo html_structures::ul($li);
-    }
-
-    /**
-     * Retourne les donnèes du graphique de $this->get_activity_per_hours();
-     * @param array $default $this->check_form()
-     * @return array Donnèes du graphique de $this->get_activity_per_hours();
-     */
-    private function get_plot_activity_per_hours($default) {
-        $pages = stat_pages::get_table_array("date between :date_debut and :date_fin", [":date_debut" => $default["an"] . "-01-01", ":date_fin" => $default["an"] . "-12-31"]);
-        $heures = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        foreach ($pages as $page) {
-            $heure = explode(" ", $page["date"]);
-            $heure = ((int) strtr($heure[1], [":" => ""]));
-            for ($i = 0; $i < 24; $i++) {
-                if ($heure < (($i + 1) * 10000)) {
-                    $heures[$i] = $heures[$i] + 1;
+            $users = stat_user::get_collection("ip=:ip", [":ip" => $ip]);
+            $find = false;
+            foreach ($users as $user) {
+                if ($user->get_browser()->get_id() == $browser->get_id()) {
+                    $find = true;
                     break;
                 }
             }
-        }
-        $data = [];
-        foreach ($heures as $key => $value) {
-            $data[] = [$key, $value];
-        }
-        return $data;
-    }
-
-    /**
-     * Affiche les statistiques sur les navigateurs des visiteurs
-     * @param array $default $this->check_form()
-     */
-    private function get_browser($default) {
-        $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin", [":date_debut" => $default["an"] . "-01-01", ":date_fin" => $default["an"] . "-12-31"]);
-        if (($total = count($req)) != 0) {
-            $in = "id in(";
-            foreach ($req as $v) {
-                $in .= ((int)$v["visitor"]) . ",";
+            if (!$find) {
+                stat_user::ajout($ip, $user->get_country()->get_id(), $browser->get_id());
+                $user = stat_user::get_collection("ip=:ip and browser=:browser", [":ip" => $ip, ":browser" => $browser->get_id()])[0];
             }
-            $in .= "__)";
-            $in = strtr($in, [",__" => ""]);
-            $data = [];
-            foreach (application::$_bdd->fetch("select user_agent, count(*) as count from `stat_visitor`where " . $in . " group by user_agent;") as $key => $value) {
-                $data[] = [$value["user_agent"], $value["count"], $value["count"] / $total * 100];
+            $last_visite = stat_visite::get_collection("user=:user order by timestamp desc limit 0, 1", [":user" => $user->get_id()]);
+            if ($last_visite) {
+                $last_visite = $last_visite[0];
+                if ($last_visite->get_page()->get_id() != $page->get_id()) {
+                    stat_visite::ajout(time(), $user->get_id(), $page->get_id());
+                }
+            } else {
+                stat_visite::ajout(time(), $user->get_id(), $page->get_id());
             }
-            js::datatable();
-            echo html_structures::table(["Navigateur", "Nombre d'utilisateur", "Pourcentage (%)"], $data, '', "datatable");
         }
     }
 
     /**
-     * Fonction appelèe par $this->get_stat(), à ne pas utiliser ! <br />
-     * Affiche les statistiques détaillées d'un mois
+     * Désactive l'enregistrement de statistiques pour la page courante 
      */
-    public function consult() {
-        if (isset($_GET["date"])) {
-            $date = explode("_", $_GET["date"]);
-            sub_menu::add_active_tab("stat", $stat = time::convert_mois($date[1]) . " " . $date[0]);
-            html5::before_title("Statistiques " . $stat . " -");
-            $date_debut = $date[0] . "-" . $date[1];
-            $date_fin = $date_debut . "-31";
-            $date_debut .= "-01";
-            $req = application::$_bdd->fetch("select distinct visitor from stat_pages where date between :date_debut and :date_fin", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
-            if (count($req) != 0) {
-                $in = "id in(";
-                foreach ($req as $v) {
-                    $in .= ((int)$v["visitor"]) . ",";
-                }
-                $in .= "__);";
-                $in = strtr($in, [",__" => ""]);
-                $visitors = stat_visitor::get_table_ordored_array($in); //application::$_bdd->fetch("select imat from stat_visitor " . $in);
-                $nav = stat_pages::get_table_array("date between :date_debut and :date_fin", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
-                $req = application::$_bdd->fetch("select page, count(*) as count from stat_pages where date between :date_debut and :date_fin group by page", [":date_debut" => $date_debut, ":date_fin" => $date_fin]);
-                $data = [];
-                $titles = [];
-                foreach ($req as $page) {
-                    $titles[$page["page"]] = ["title" => $this->get_real_title_from_url($page["page"]), "count" => $page["count"]];
-                    $data[] = [$titles[$page["page"]]["title"], $page["page"], $page["count"]];
-                }
-                js::datatable();
-                echo tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Pages visitèes")) .
-                html_structures::table(["Page", "URL", "Visites"], $data, '', "datatable") . html_structures::hr() .
-                tags::tag("h2", ["class" => "text-center"], tags::tag("small", [], "Historique des visiteurs"));
-                foreach ($nav as $link) {
-                    $visitors[$link["visitor"]]["nav"][] = ["date" => $link["date"], "page" => strtr($link["page"], [$_SERVER["HTTP_HOST"] => "localhost"]), "title" => $titles[$link["page"]]["title"]];
-                }
-                js::accordion();
-                $accordion = "";
-                foreach ($visitors as $visitor) {
-                    $a = "";
-                    foreach ($visitor["nav"] as $nav) {
-                        $date = explode(" ", $nav["date"]);
-                        $date = time::convert_date($date[0]) . " " . $date[1];
-                        $a .= html_structures::a_link($nav["page"], $date . " - " . $nav["title"], "", $nav["page"]) . tags::tag("br");
+    public function disable() {
+        if (self::$_enable) {
+            self::$_enable = false;
+        }
+    }
+
+    /**
+     * Affiche l'interface pour consulter les statistiques
+     * Requiert que config::$_statistiques soit défini à true
+     * La page affichant les statistiques n'est pas enregistrée dans les statistiques !
+     */
+    public function html() {
+        if (self::$_enable) {
+            $this->disable();
+            ?>
+            <div class="row">
+                <div class="col-2">
+                    <?php
+                    $ul = [];
+                    $year = (int) date("Y");
+                    if (!isset($_GET["y"])) {
+                        $_GET["y"] = $year;
                     }
-                    $accordion .= tags::tag("h3", [], $visitor["imat"]) . tags::tag("div", [], tags::tag("p", [], $a));
-                }
-                echo tags::tag("div", ["id" => "accordion"], $accordion);
+                    for ($i = 0;
+                            $i < 5;
+                            $i++) {
+                        $y = $year - $i;
+                        $ul[] = html_structures::a_link(application::get_url(["y", "m", "d"]) . "y={$y}", $y);
+                        if ($_GET["y"] == $y) {
+                            $ul_months = [];
+                            foreach (time::get_mois() as $km => $m) {
+                                $ul_months[] = html_structures::a_link(application::get_url(["y", "m", "d"]) . "y={$y}&m={$km}", $m);
+                                if (isset($_GET["m"]) and $_GET["m"] == $km) {
+                                    $ul_days = [];
+                                    foreach (range(1, time::get_nb_jour($km, $y)) as $d) {
+                                        $ul_days[] = html_structures::a_link(application::get_url(["y", "m", "d"]) . "y={$y}&m={$km}&d={$d}", $d);
+                                    }
+                                    $ul_months[] = $ul_days;
+                                }
+                            }
+                            $ul[] = $ul_months;
+                        }
+                    }
+                    echo html_structures::ul($ul, "list-group stat_date");
+                    ?>
+                    <script>
+                        $(document).ready(function () {
+                            $(".list-group ul").addClass("list-group");
+                            $(".list-group li").addClass("list-group-item");
+                            let urlParams = new URLSearchParams(window.location.search);
+                            let y = urlParams.get('y');
+                            let m = urlParams.get('m');
+                            let d = urlParams.get('d');
+                            let mois = [
+                                "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                                "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+                            ];
+                            y = y ? y : new Date().getFullYear();
+                            $(".stat_date>li.list-group-item:contains('" + y + "')").addClass("active");
+                            if (m) {
+                                $(".stat_date>li>ul.list-group>li.list-group-item:contains('" + mois[parseInt(m) - 1] + "')").addClass("active");
+                            }
+                            if (d) {
+                                $(".stat_date>li>ul.list-group>li>ul.list-group>li.list-group-item:contains('" + d + "')").addClass("active");
+                            }
+                            $(".stat_date .active a").addClass("link-light");
+                        })
+                    </script>
+                </div>
+                <div class="col-10">
+                    <?php
+                    list($start, $end) = $this->get_period();
+                    if (isset($_GET["view"])) {
+                        switch ($_GET["view"]) {
+                            case "user":
+                                $this->view_user($start, $end, $_GET["user"]);
+                                break;
+                            case "general":
+                            default:
+                                $this->view_general($start, $end);
+                                break;
+                        }
+                    } else {
+                        $this->view_general($start, $end);
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        }
+    }
+
+    /**
+     * Retourne si une IP est privé
+     * @param string $ip Ip v4 ou v6 a évaluer
+     * @return boolean true si l'ip est privé, false si publique
+     */
+    private function is_private_IP($ip) {
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return $this->is_private_IPv4($ip);
+        }
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return $this->is_private_IPv6($ip);
+        }
+    }
+
+    /**
+     * Retourne si une IPv4 est privé
+     * @param string $ip Ip v4
+     * @return boolean true si l'ip est privé, false si publique
+     */
+    private function is_private_IPv4($ip) {
+        $ipBinary = inet_pton($ip);
+        $privateRanges = [
+            ['start' => inet_pton('10.0.0.0'), 'end' => inet_pton('10.255.255.255')],
+            ['start' => inet_pton('127.0.0.0'), 'end' => inet_pton('127.255.255.255')],
+            ['start' => inet_pton('172.16.0.0'), 'end' => inet_pton('172.31.255.255')],
+            ['start' => inet_pton('192.168.0.0'), 'end' => inet_pton('192.168.255.255')]
+        ];
+        foreach ($privateRanges as $range) {
+            if ($ipBinary >= $range['start'] && $ipBinary <= $range['end']) {
+                return true;
             }
         }
+        return false;
     }
 
     /**
-     * Affiche le formulaire de sélection d'années
-     * @param array $default $this->check_form()
+     * Retourne si une IPv6 est privé
+     * @param string $ip Ip v6
+     * @return boolean true si l'ip est privé, false si publique
      */
-    private function form($default) {
-        $form = new form();
-        $y = date("Y");
-        $option = [];
-        for ($i = 5; $i >= 0; $i--) {
-            $k = $y - $i;
-            $option[] = [$k, $k, ($k == $default["an"])];
+    private function is_private_IPv6($ip) {
+        if ($ip == "::1") {
+            return true;
         }
-        $form->select("Annèe", "stat_an", $option);
-        $form->submit("btn-primary", "Voir");
-        echo $form->render();
+        $ipBinary = inet_pton($ip);
+        $privateRange = ['start' => inet_pton('fc00::'), 'end' => inet_pton('fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')];
+        if (memcmp($ipBinary, $privateRange['start'], strlen($privateRange['start'])) >= 0 &&
+                memcmp($ipBinary, $privateRange['end'], strlen($privateRange['end'])) <= 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Retourne la valeur par défault à utiliser dans les statistiques
-     * @return array retourne $default["an"]
+     * Retourne le debut et la fin de la periode définis par les variables GET y m et d
+     * @return array Debut et la fin de la periode
      */
-    private function check_form() {
-        $y = date("Y");
-        if (isset($_POST["stat_an"]) and math::is_int($_POST["stat_an"]) and ( $_POST["stat_an"] >= $y - 5 and $_POST["stat_an"] <= $y)) {
-            $default["an"] = $_POST["stat_an"];
+    private function get_period() {
+        if (isset($_GET['y'])) {
+            $year = intval($_GET['y']);
         } else {
-            $default["an"] = $y;
+            $year = date("Y");
         }
-        return $default;
+        if (isset($_GET['m']) && isset($_GET['d'])) {
+            $month = intval($_GET['m']);
+            $day = intval($_GET['d']);
+            $start = mktime(0, 0, 0, $month, $day, $year);
+            $end = mktime(0, 0, 0, $month, $day + 1, $year);
+        } elseif (isset($_GET['m'])) {
+            $month = intval($_GET['m']);
+            $start = mktime(0, 0, 0, $month, 1, $year);
+            $end = mktime(0, 0, 0, $month + 1, 1, $year);
+        } else {
+            if ($year == date("Y")) {
+                $end = time();
+            } else {
+                $end = mktime(0, 0, 0, 1, 1, $year + 1);
+            }
+            $start = mktime(0, 0, 0, 1, 1, $year);
+        }
+        return[$start, $end];
     }
 
     /**
-     * Récupére le title de l'url passè en paramètre 
-     * @param string $url URL
-     * @return string Title de l'url
+     * Retourne les paramètres GET de l'URL
+     * @param string $url URL complete
+     * @return string Paramètres GET de l'URL
      */
-    private function get_real_title_from_url($url) {
-        libxml_use_internal_errors(true);
-        $dom = new DOMDocument();
-        $dom->loadHTMLFile($url);
-        $title = $dom->getElementsByTagName("title")->item(0)->textContent;
-        libxml_clear_errors();
-        return $title;
+    private function get_params($url) {
+        return ($url = parse_url($url, PHP_URL_QUERY) ? explode("?", $url)[1] : "");
+    }
+
+    /**
+     * Vue général des statistiques pour une periode donné
+     * @param int $start Timestamp de début de periode
+     * @param int $end Timestamp de fin de periode
+     */
+    private function view_general($start, $end) {
+        $visites = stat_visite::get_collection("timestamp between :start and :end", [":start" => $start, ":end" => $end]);
+        $stat = [
+            "pv" => count($visites), //pages vue
+            "vu" => bdd::get_instance()->fetch("select COUNT(DISTINCT user) as count FROM stat_visite where timestamp between :start and :end", [":start" => $start, ":end" => $end])[0]["count"], //visiteur unique
+            "pays" => [], //visites par pays
+            "browser" => [], //visites par browsers
+            "page" => [], //visites par pages
+            "user" => [], //visites des utilisateurs
+        ];
+        foreach ($visites as $visite) {
+            if (!isset($stat["pays"][$visite->get_user()->get_country()->get_id()])) {
+                $stat["pays"][$visite->get_user()->get_country()->get_id()] = 0;
+            }
+            $stat["pays"][$visite->get_user()->get_country()->get_id()]++;
+
+            if (!isset($stat["browser"][$visite->get_user()->get_browser()->get_id()])) {
+                $stat["browser"][$visite->get_user()->get_browser()->get_id()] = 0;
+            }
+            $stat["browser"][$visite->get_user()->get_browser()->get_id()]++;
+
+            if (!isset($stat["page"][$visite->get_page()->get_id()])) {
+                $stat["page"][$visite->get_page()->get_id()] = 0;
+            }
+            $stat["page"][$visite->get_page()->get_id()]++;
+            $stat["user"][] = [
+                date("Y-m-d H:i:s", $visite->get_timestamp()),
+                html_structures::a_link(application::get_url() . "view=user&user={$visite->get_user()->get_id()}",
+                        twemojiFlags::get($visite->get_user()->get_country()->get_code()) .
+                        " {$visite->get_user()->get_ip()} ({$visite->get_user()->get_browser()->get_agent()})"
+                ),
+                html_structures::a_link($visite->get_page()->get_url(), $visite->get_page()->get_title(), "", "", true)
+            ];
+        }
+        foreach (["pays", "browser", "page"] as $key) {
+            arsort($stat[$key]);
+        }
+        ?>
+        <div>
+            <h2 class="text-center">
+                Statistiques Général <br> 
+                <small>Du <?= date("d/m/Y H:i", $start) ?> au <?= date("d/m/Y H:i", $end - 1) ?></small>
+            </h2>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-4">
+                <p>
+                    <strong>Vititeurs uniques : </strong><?= $stat["vu"] ?>
+                    <br>
+                    <strong>Pages vues : </strong><?= $stat["pv"] ?>
+                </p>
+            </div>
+            <div class="col-8">
+                <?php
+                $data = [];
+                $sum = array_sum($stat["page"]);
+                $i = 1;
+                foreach ($stat["page"] as $id => $nb) {
+                    $page = stat_page::get_from_id($id);
+                    $data[] = [
+                        $i++,
+                        html_structures::a_link($page->get_url(), $page->get_title(), "", $this->get_params($page->get_url()), true),
+                        $nb,
+                        number_format($nb / $sum * 100, 2)
+                    ];
+                }
+                echo html_structures::table(["#", "Page", "Vues", "%"], $data);
+                ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-4">
+                <?php
+                $data = [];
+                $sum = array_sum($stat["pays"]);
+                $i = 1;
+                foreach ($stat["pays"] as $id => $nb) {
+                    $pays = stat_country::get_from_id($id);
+                    $data[] = [
+                        $i++,
+                        twemojiFlags::get($pays->get_code()) . " {$pays->get_name()}",
+                        $nb,
+                        number_format($nb / $sum * 100, 2)
+                    ];
+                }
+                echo html_structures::table(["#", "Pays", "Vues", "%"], $data);
+                ?>
+            </div>
+            <div class="col-8">
+                <?php
+                $data = [];
+                $sum = array_sum($stat["browser"]);
+                $i = 1;
+                foreach ($stat["browser"] as $id => $nb) {
+                    $browser = stat_browser::get_from_id($id);
+                    $data[] = [
+                        $i++,
+                        $browser->get_agent(),
+                        $nb,
+                        number_format($nb / $sum * 100, 2)
+                    ];
+                }
+                echo html_structures::table(["#", "Agent", "Vues", "%"], $data);
+                ?>
+            </div>
+            <hr>
+            <div class="w-75 mx-auto my-3">
+                <?= html_structures::table(["date", "User", "Page"], $stat["user"]) ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Vue utilisateur des statistiques pour une periode et un utilisateur donné 
+     * @param int $start Timestamp de début de periode
+     * @param int $end Timestamp de fin de periode
+     * @param int $user Id de l'utilisateur (stat_user)
+     */
+    private function view_user($start, $end, $user) {
+        $user = stat_user::get_from_id($user);
+        if ($user) {
+            echo tags::tag("div", [], html_structures::a_link(application::get_url(["view", "user"]), html_structures::glyphicon("arrow-left") . "Retour aux statistiques général", "btn btn-outline-primary"));
+            $visites = stat_visite::get_collection("user=:user and timestamp between :start and :end order by timestamp desc", [":user" => $user->get_id(), ":start" => $start, ":end" => $end]);
+            ?>
+            <hr>
+            <div>
+                <h2 class="text-center">
+                    Statistiques Utilisateur <br>
+                    <small>Du <?= date("d/m/Y H:i", $start) ?> au <?= date("d/m/Y H:i", $end - 1) ?></small>
+                </h2>
+                <hr>
+                <div class="w-50 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            Utilisateur
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>IP : </strong><?= $user->get_ip() ?></li>
+                                <li><strong>Pays : </strong><?= twemojiFlags::get($user->get_country()->get_code()) . " " . $user->get_country()->get_name() ?></li>
+                                <li><strong>Agent : </strong><?= $user->get_browser()->get_agent() ?></li>
+                                <li><strong>Pages vues <small>(pour la periode indiquée)</small> : </strong><?= count($visites) ?></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <?php
+            $data = [];
+            foreach ($visites as $visite) {
+                $data[] = [
+                    date("Y-m-d H:i:s", $visite->get_timestamp()),
+                    html_structures::a_link($visite->get_page()->get_url(), $visite->get_page()->get_title(), "", "", true),
+                    $this->get_params($visite->get_page()->get_url()),
+                ];
+            }
+            echo html_structures::table(["Date", "Page", "GET"], $data);
+        } else {
+            js::redir(application::get_url(["view", "user"]));
+        }
     }
 }

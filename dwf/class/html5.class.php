@@ -48,7 +48,7 @@ class html5 {
             $lang = "fr";
         }
         ob_clean();
-        ob_start();        
+        ob_start();
         $meta = "";
         ?><!DOCTYPE HTML>
         <html lang="<?= $lang; ?>">
@@ -159,9 +159,14 @@ class html5 {
         self::render(ob_get_clean());
     }
 
-    public static function render($document) {
+    private static function before_render_tasks() {
         sitemap::get_instance()->add_url(application::get_loc(), self::$_real_title);
+        statistiques::get_instance()->add_visit();
         http2::get_instance()->make_link();
+    }
+
+    public static function render($document) {
+        self::before_render_tasks();
         if (class_exists("tidy")) {
             $tidy = new tidy();
             $tidy->parseString($document, [

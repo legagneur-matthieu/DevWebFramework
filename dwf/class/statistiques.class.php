@@ -33,9 +33,14 @@ class statistiques extends singleton {
                     ["id", "int", true],
                     ["agent", "string", false],
                 ],
+                "stat_isp" => [
+                    ["id", "int", true],
+                    ["name", "string", false],
+                ],
                 "stat_user" => [
                     ["id", "int", true],
                     ["ip", "string", false],
+                    ["isp", "stat_isp", false],
                     ["country", "stat_country", false],
                     ["browser", "stat_browser", false],
                 ],
@@ -54,6 +59,8 @@ class statistiques extends singleton {
             if (stat_country::get_count() == 0) {
                 stat_country::ajout("5N", "Local");
                 stat_country::ajout("UN", "Unknow");
+                stat_isp::ajout("Local");
+                stat_isp::ajout("Unknow");
             }
             bdd::get_instance()->query("delete from stat_visite where timestamp<:t", [":t" => (time() - 157680000)]);
         }
@@ -83,19 +90,25 @@ class statistiques extends singleton {
             $ip = $_SERVER["REMOTE_ADDR"];
             if (stat_user::get_count("ip=:ip", [":ip" => $ip]) == 0) {
                 if ($this->is_private_IP($ip)) {
+                    $isp = stat_country::get_collection("name='Local'")[0];
                     $country = stat_country::get_collection("code='5N'")[0];
-                    stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                    stat_user::ajout($ip, $isp->get_id(), $country->get_id(), $browser->get_id());
                 } else {
-                    $country = ip_api::get_instance()->json($ip);
-                    if ($country and $country["status"] == "success") {
-                        if (stat_country::get_count("code=:code", [":code" => $country["countryCode"]]) == 0) {
-                            stat_country::ajout($country["countryCode"], $country["country"]);
+                    $ip_api = ip_api::get_instance()->json($ip);
+                    if ($ip_api and $ip_api["status"] == "success") {
+                        if (stat_isp::get_count("name=:name", [":name" => $ip_api["isp"]]) == 0) {
+                            stat_isp::ajout($ip_api["isp"]);
                         }
-                        $country = stat_country::get_collection("code=:code", [":code" => $country["countryCode"]])[0];
-                        stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                        if (stat_country::get_count("code=:code", [":code" => $ip_api["countryCode"]]) == 0) {
+                            stat_country::ajout($ip_api["countryCode"], $ip_api["country"]);
+                        }
+                        $isp = stat_isp::get_collection("name=:name", [":name" => $ip_api["isp"]])[0];
+                        $country = stat_country::get_collection("code=:code", [":code" => $ip_api["countryCode"]])[0];
+                        stat_user::ajout($ip, $isp->get_id(), $country->get_id(), $browser->get_id());
                     } else {
+                        $isp = stat_isp::get_collection("name='Unknow'")[0];
                         $country = stat_country::get_collection("code='UN'")[0];
-                        stat_user::ajout($ip, $country->get_id(), $browser->get_id());
+                        stat_user::ajout($ip, $isp->get_id(), $country->get_id(), $browser->get_id());
                     }
                 }
             }
@@ -320,17 +333,21 @@ class statistiques extends singleton {
         $stat = [
             "pv" => count($visites), //pages vue
             "vu" => bdd::get_instance()->fetch("select COUNT(DISTINCT user) as count FROM stat_visite where timestamp between :start and :end", [":start" => $start, ":end" => $end])[0]["count"], //visiteur unique
+            "isp" => [], //visites par isp (operateur)
             "pays" => [], //visites par pays
             "browser" => [], //visites par browsers
             "page" => [], //visites par pages
             "user" => [], //visites des utilisateurs
         ];
         foreach ($visites as $visite) {
+            if (!isset($stat["isp"][$visite->get_user()->get_isp()->get_id()])) {
+                $stat["isp"][$visite->get_user()->get_isp()->get_id()] = 0;
+            }
+            $stat["isp"][$visite->get_user()->get_country()->get_id()]++;
             if (!isset($stat["pays"][$visite->get_user()->get_country()->get_id()])) {
                 $stat["pays"][$visite->get_user()->get_country()->get_id()] = 0;
             }
             $stat["pays"][$visite->get_user()->get_country()->get_id()]++;
-
             if (!isset($stat["browser"][$visite->get_user()->get_browser()->get_id()])) {
                 $stat["browser"][$visite->get_user()->get_browser()->get_id()] = 0;
             }
@@ -344,12 +361,13 @@ class statistiques extends singleton {
                 date("Y-m-d H:i:s", $visite->get_timestamp()),
                 html_structures::a_link(application::get_url() . "view=user&user={$visite->get_user()->get_id()}",
                         twemojiFlags::get($visite->get_user()->get_country()->get_code()) .
-                        " {$visite->get_user()->get_ip()} ({$visite->get_user()->get_browser()->get_agent()})"
+                        tags::tag("span", ["title" => "ISP : {$visite->get_user()->get_isp()->get_name()}"], $visite->get_user()->get_ip()) .
+                        " ({$visite->get_user()->get_browser()->get_agent()})"
                 ),
                 html_structures::a_link($visite->get_page()->get_url(), $visite->get_page()->get_title(), "", "", true)
             ];
         }
-        foreach (["pays", "browser", "page"] as $key) {
+        foreach (["isp", "pays", "browser", "page"] as $key) {
             arsort($stat[$key]);
         }
         ?>
@@ -360,72 +378,95 @@ class statistiques extends singleton {
             </h2>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-4">
-                <p>
-                    <strong>Vititeurs uniques : </strong><?= $stat["vu"] ?>
-                    <br>
-                    <strong>Pages vues : </strong><?= $stat["pv"] ?>
-                </p>
-            </div>
-            <div class="col-8">
-                <?php
-                $data = [];
-                $sum = array_sum($stat["page"]);
-                $i = 1;
-                foreach ($stat["page"] as $id => $nb) {
-                    $page = stat_page::get_from_id($id);
-                    $data[] = [
-                        $i++,
-                        html_structures::a_link($page->get_url(), $page->get_title(), "", $this->get_params($page->get_url()), true),
-                        $nb,
-                        number_format($nb / $sum * 100, 2)
-                    ];
-                }
-                echo html_structures::table(["#", "Page", "Vues", "%"], $data);
-                ?>
-            </div>
+        <div class="w-75 mx-auto my-3">
+            <p class="text-center">
+                <strong>Vititeurs uniques : </strong><?= $stat["vu"] ?>
+                <br>
+                <strong>Pages vues : </strong><?= $stat["pv"] ?>
+            </p>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-4">
-                <?php
-                $data = [];
-                $sum = array_sum($stat["pays"]);
-                $i = 1;
-                foreach ($stat["pays"] as $id => $nb) {
-                    $pays = stat_country::get_from_id($id);
-                    $data[] = [
-                        $i++,
-                        twemojiFlags::get($pays->get_code()) . " {$pays->get_name()}",
-                        $nb,
-                        number_format($nb / $sum * 100, 2)
-                    ];
-                }
-                echo html_structures::table(["#", "Pays", "Vues", "%"], $data);
-                ?>
-            </div>
-            <div class="col-8">
-                <?php
-                $data = [];
-                $sum = array_sum($stat["browser"]);
-                $i = 1;
-                foreach ($stat["browser"] as $id => $nb) {
-                    $browser = stat_browser::get_from_id($id);
-                    $data[] = [
-                        $i++,
-                        $browser->get_agent(),
-                        $nb,
-                        number_format($nb / $sum * 100, 2)
-                    ];
-                }
-                echo html_structures::table(["#", "Agent", "Vues", "%"], $data);
-                ?>
-            </div>
-            <hr>
-            <div class="w-75 mx-auto my-3">
-                <?= html_structures::table(["date", "User", "Page"], $stat["user"]) ?>
-            </div>
+        <div class="w-75 mx-auto my-3">
+            <h3 class="text-center">Pages</h3>
+            <?php
+            $data = [];
+            $sum = array_sum($stat["page"]);
+            $i = 1;
+            foreach ($stat["page"] as $id => $nb) {
+                $page = stat_page::get_from_id($id);
+                $data[] = [
+                    $i++,
+                    html_structures::a_link($page->get_url(), $page->get_title(), "", $this->get_params($page->get_url()), true),
+                    $nb,
+                    number_format($nb / $sum * 100, 2)
+                ];
+            }
+            echo html_structures::table(["#", "Page", "Vues", "%"], $data);
+            ?>
+        </div>
+        <hr>
+        <div class="w-75 mx-auto my-3">
+            <h3 class="text-center">Pays</h3>
+            <?php
+            $data = [];
+            $sum = array_sum($stat["pays"]);
+            $i = 1;
+            foreach ($stat["pays"] as $id => $nb) {
+                $pays = stat_country::get_from_id($id);
+                $data[] = [
+                    $i++,
+                    twemojiFlags::get($pays->get_code()) . " {$pays->get_name()}",
+                    $nb,
+                    number_format($nb / $sum * 100, 2)
+                ];
+            }
+            echo html_structures::table(["#", "Pays", "Vues", "%"], $data);
+            ?>
+        </div>
+        <hr>
+        <div class="w-75 mx-auto my-3">
+            <h3 class="text-center">Agents <br>
+                <small>(Navigateurs)</small></h3>
+            <?php
+            $data = [];
+            $sum = array_sum($stat["browser"]);
+            $i = 1;
+            foreach ($stat["browser"] as $id => $nb) {
+                $browser = stat_browser::get_from_id($id);
+                $data[] = [
+                    $i++,
+                    $browser->get_agent(),
+                    $nb,
+                    number_format($nb / $sum * 100, 2)
+                ];
+            }
+            echo html_structures::table(["#", "Agent", "Vues", "%"], $data);
+            ?>
+        </div>
+        <hr>
+        <div class="w-75 mx-auto my-3">
+            <h3 class="text-center">ISP <br>
+                <small>(Operateur)</small></h3>
+            <?php
+            $data = [];
+            $sum = array_sum($stat["isp"]);
+            $i = 1;
+            foreach ($stat["isp"] as $id => $nb) {
+                $isp = stat_isp::get_from_id($id);
+                $data[] = [
+                    $i++,
+                    $isp->get_name(),
+                    $nb,
+                    number_format($nb / $sum * 100, 2)
+                ];
+            }
+            echo html_structures::table(["#", "ISP", "Vues", "%"], $data);
+            ?>
+        </div>
+        <hr>
+        <div class="w-75 mx-auto my-3">
+            <h3 class="text-center">Utilisateurs</h3>
+            <?= html_structures::table(["date", "Utilisateur", "Page"], $stat["user"]) ?>
         </div>
         <?php
     }
@@ -458,6 +499,7 @@ class statistiques extends singleton {
                             <ul>
                                 <li><strong>IP : </strong><?= $user->get_ip() ?></li>
                                 <li><strong>Pays : </strong><?= twemojiFlags::get($user->get_country()->get_code()) . " " . $user->get_country()->get_name() ?></li>
+                                <li><strong>ISP : </strong><?= $user->get_isp()->get_name() ?></li>
                                 <li><strong>Agent : </strong><?= $user->get_browser()->get_agent() ?></li>
                                 <li><strong>Pages vues <small>(pour la periode indiquée)</small> : </strong><?= count($visites) ?></li>
                             </ul>

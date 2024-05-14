@@ -109,6 +109,32 @@ class statistiques extends singleton {
                         $isp = stat_isp::get_collection("name='Unknow'")[0];
                         $country = stat_country::get_collection("code='UN'")[0];
                         stat_user::ajout($ip, $isp->get_id(), $country->get_id(), $browser->get_id());
+                        if (stat_user::get_count("country=:id", [":id" => $country->get_id()]) > 90) {
+                            $ips_assoc = [];
+                            foreach ($users = stat_user::get_collection("country=:id order by id desc limit 99", [":id" => $country->get_id()]) as $user) {
+                                $ips_assoc[$user->get_ip()] = false;
+                            }
+                            foreach (ip_api::get_instance()->batch(array_keys($ips_assoc)) as $ip_api) {
+                                if ($ip_api["status"] = "success") {
+                                    $ips_assoc[$ip_api["query"]] = ["isp" => $ip_api["isp"], "country" => $ip_api["countryCode"], "country" => $ip_api["countryCode"]];
+                                }
+                            }
+                            foreach ($users as $user) {
+                                if ($ips_assoc[$user->get_ip()]) {
+                                    $ip_api = $ips_assoc[$user->get_ip()];
+                                    if (stat_isp::get_count("name=:name", [":name" => $ip_api["isp"]]) == 0) {
+                                        stat_isp::ajout($ip_api["isp"]);
+                                    }
+                                    if (stat_country::get_count("code=:code", [":code" => $ip_api["countryCode"]]) == 0) {
+                                        stat_country::ajout($ip_api["countryCode"], $ip_api["country"]);
+                                    }
+                                    $isp = stat_isp::get_collection("name=:name", [":name" => $ip_api["isp"]])[0];
+                                    $country = stat_country::get_collection("code=:code", [":code" => $ip_api["countryCode"]])[0];
+                                    $user->set_isp($isp->get_id());
+                                    $user->set_country($country->get_id());
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -116,6 +116,27 @@ export let IS_IPAD: boolean;
  */
 export let IS_IPHONE: boolean;
 /**
+ * Whether or not this is a Tizen device.
+ *
+ * @static
+ * @type {Boolean}
+ */
+export let IS_TIZEN: boolean;
+/**
+ * Whether or not this is a WebOS device.
+ *
+ * @static
+ * @type {Boolean}
+ */
+export let IS_WEBOS: boolean;
+/**
+ * Whether or not this is a Smart TV (Tizen or WebOS) device.
+ *
+ * @static
+ * @type {Boolean}
+ */
+export let IS_SMART_TV: boolean;
+/**
  * Whether or not this device is touch-enabled.
  *
  * @static

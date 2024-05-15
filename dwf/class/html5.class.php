@@ -83,6 +83,7 @@ class html5 {
             "../commun/src/dist/jquery-ui/jquery-ui.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.structure.min.css",
             "../commun/src/dist/jquery-ui/jquery-ui.theme.min.css",
+            "../commun/src/dist/jquery-ui/icons/jquery-ui.icon-font.css",
             "../commun/src/js/datetimepicker/jquery-ui-timepicker-addon.min.css",
             "../commun/src/js/alertify/css/alertify.min.css",
             "../commun/src/js/alertify/css/themes/bootstrap.min.css",

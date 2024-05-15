@@ -162,6 +162,7 @@ class html5 {
 
     private static function before_render_tasks() {
         sitemap::get_instance()->add_url(application::get_loc(), self::$_real_title);
+        new robotstxt();
         statistiques::get_instance()->add_visit();
         http2::get_instance()->make_link();
     }

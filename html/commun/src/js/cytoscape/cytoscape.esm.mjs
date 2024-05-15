@@ -20,8 +20,6 @@
  * SOFTWARE.
  */
 
-'use strict';
-
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -31304,4 +31302,4 @@ cytoscape.version = version;
 // expose public apis (mostly for extensions)
 cytoscape.stylesheet = cytoscape.Stylesheet = Stylesheet;
 
-module.exports = cytoscape;
+export { cytoscape as default };

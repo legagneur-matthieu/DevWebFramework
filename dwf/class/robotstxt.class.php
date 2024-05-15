@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cette classe permet de générer le robot.txt
+ * Cette classe génére le robot.txt
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com> 
  */
 class robotstxt {
 
     /**
-     * Cette classe permet de générer le robot.txt
+     * Cette classe génére le robot.txt
      */
     public function __construct() {
         if (!file_exists($robots = $_SERVER["DOCUMENT_ROOT"] . "/robots.txt")) {

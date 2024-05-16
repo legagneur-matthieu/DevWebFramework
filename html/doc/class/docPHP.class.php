@@ -826,5 +826,19 @@ class docPHP {
         </p>
         <?php
         js::monaco_highlighter('{"project":"[Votre-projet-par-défaut]"}');
+        ?>
+        <p>
+            Depuis la version 21.24.05, il est possible d'exporter un projet DWF depuis l'interface "parcours de sites" (accessible uniquement en local). <br>
+            L'export inclura tous les fichiers contenus dans votre dossier projet (à l'exception des CSS dans src/compact). <br>
+            L'export inclura les fonctionnalités et fichiers nécessaires dont dépend votre projet, à condition que <em>export_dwf.class.php</em> ait correctement référencé les dépendances. <br>
+            Il est conseillé de tester toutes les fonctionnalités de votre projet avant l'export, puis de tester les fonctionnalités de l'export elle-même.
+        </p>
+        <p>
+            Cf export_dwf pour plus de détails.
+            Le fichier JSON d'export est consultable dans <em>dwf/class/export_dwf/</em>.
+        </p>
+
+
+        <?php
     }
 }

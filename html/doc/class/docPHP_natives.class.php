@@ -696,6 +696,35 @@ class docPHP_natives {
         );
     }
 
+    private function export_dwf() {
+        ?>
+        <p>
+            Cette classe permet de générer une archive ZIP contenant les fichiers nécessaires à un projet DWF,<br>
+            en fonction des dépendances enregistrées dans un fichier JSON spécifique à chaque projet. <br>
+            Ce fichier JSON est consultable dans <em>dwf/class/export_dwf/</em>. <br>
+            export_dwf est normalement autonome et ajoute vos dépendances tout au long de votre développement. <br>
+            L'export inclura tous les fichiers contenus dans votre dossier projet (à l'exception des CSS dans src/compact). <br>
+            Cependant, si vous désirez inclure un fichier ou un dossier spécifique à votre projet lors de l'export :
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '//ajoute des fichier\n'
+                . 'export_dwf::add_files([\n'
+                . '    realpath("./un_ficher.php"),\n'
+                . '    realpath("./un_ficher.js"),\n'
+                . '    realpath("./un_ficher.css")\n'
+                . ']);\n\n'
+                . '//ajoute un dossier (recursif)\n'
+                . 'export_dwf::add_files([realpath("./le_dossier")]);\n'
+                . '?>');
+        ?>
+        <p>
+            Il est déconseillé d'instancier export_dwf car son instanciation est réservée à l'export depuis html/index.php. <br>
+            De même, les autres fonctions statiques sont utilisées en interne de la classe.
+        </p>
+        <?php
+    }
+
     private function fancybox() {
         ?>
         <p>(cf js)</p>
@@ -1253,6 +1282,37 @@ class docPHP_natives {
                 . '?>');
     }
 
+    private function ip_api() {
+        ?>
+        <p>
+            Cette classe permet de récupérer des informations sur une adresse IP (géolocalisation, opérateur...). <br>
+            Attention, json() est limité à 45 requêtes par minute, <br>
+            batch() est limité à 15 requêtes par minute et 100 IP max par requête.
+            (Cf <a href="https://ip-api.com">https://ip-api.com</a>)
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '//Le serveur envois une requête a ip-api pour une IP\n'
+                . '$ip_infos=ip_api::get_instance()->json($ip);\n\n'
+                . '//Le serveur envois une requête a ip-api pour une liste IP (100 max)\n'
+                . '$ip_infos=ip_api::get_instance()->batch($ips);\n\n'
+                . '//Le client envois une requête a ip-api pour une liste IP (100 max)\n'
+                . '$ip_infos=ip_api::get_instance()->json_browser($ip, function($ip_data){\n'
+                . '    return $ip_data;\n'
+                . '});\n\n'
+                . '//Le client envois une requête a ip-api pour une liste IP (100 max)\n'
+                . '$ip_infos=ip_api::get_instance()->batch_browser($ip, function($ip_data){\n'
+                . '    return $ip_data;\n'
+                . '});\n'
+                . '?>');
+        ?>
+        <p>
+            Attention pour json_browser() et batch_browser() : les informations transiteront par le navigateur du client ! <br>
+            Les informations peuvent être altérées !
+        </p>
+        <?php
+    }
+
     private function js() {
         new docPHP_natives_js();
     }
@@ -1709,10 +1769,10 @@ class docPHP_natives {
                 . '<?php\n'
                 . '$reveal->close_reveal();\n'
                 . '?>');
-            }
+    }
 
-            private function reversoLib() {
-                ?>
+    private function reversoLib() {
+        ?>
         <p>Cette classe utilise l'API de Reverso pour corriger un texte et 
             vous affiche les corrections à appliquer au texte grâce à la librairie finediff.</p>
         <?php
@@ -1725,12 +1785,12 @@ class docPHP_natives {
 
     private function robotstxt() {
         ?>
-        <p>Cette classe permet de générer le robot.txt d'un site.</p>
+        <p>
+            Cette classe génére le robot.txt <br>
+            elle est appelé par <em>html5.class.php</em> <br>
+            inutile de l'instancier d'avantage.
+        </p>
         <?php
-        js::monaco_highlighter('<?php\n'
-                . '//$data : lignes à ajouter au robot.txt (commencer par \n et séparer chaque ligne par \n)'
-                . '\nnew robotstxt($data="");\n'
-                . '?>');
     }
 
     private function schoolbreak() {
@@ -1847,19 +1907,27 @@ class docPHP_natives {
 
     private function sitemap() {
         ?>
-        <p>Cette classe gère les "sitemap" du site <br />
-            Pour les routes qui dépendent d'une variable, renseignez dans la route (par exemple): <br />
-            "sitemap" => array("var" => "id", "entity" => "user", "tuple" => "login") <br />
-            Le sitemap est généré automatiquement par <em>application.class.php</em> si <em>config::$_sitemap=true</em>
-            L'utilisateur www-data doit avoir les droits d'écriture. <br /> <br />
-            Lancez 
+        <p>
+            Cette classe (singleton) gère les sitemaps de vos projets.<br>
+            Elle permet d'ajouter, de supprimer et de générer des sitemaps au format XML.<br>
+            Elle offre également des fonctionnalités pour afficher les URLs dans une liste HTML.<br>
+            Les URLs peuvent étre supprimé via une interface d'administration.
         </p>
         <?php
-        js::monaco_highlighter('$ php dwf/cli/start.php\n-- ou\n$ php dwf/cli/sitemap_index.cli.php', 'shell');
+        sitemap::get_instance()->add_url();
+        js::monaco_highlighter('<?php\n'
+                . '//affiche le format HTML du sitemap\n'
+                . 'sitemap::get_instance()->html();\n\n'
+                . '//Afiche l\'interface d\'administration\n'
+                . 'sitemap::get_instance()->admin();\n'
+                . '?>');
         ?>
         <p>
-            pour générer le sitemap index de vos projets
+            sitemap::get_instance()->add_url() est automatiquement appelé dans <em>html5.class.php</em>, inutile de l'utiliser. <br>
+            Seules les URL "publiques" de votre projet sont référencées dans le sitemap, les pages nécessitant une authentification ne le seront pas. <br>
+            <em>config::$_sitemap</em> doit être défini à true pour que la classe référence les liens publics.
         </p>
+
         <?php
     }
 
@@ -1926,14 +1994,18 @@ class docPHP_natives {
 
     private function statistiques() {
         ?>
-        <p>Cette classe permet de recueillir et d'afficher des statistiques liées à l'activité des utilisateurs</p>
+        <p>
+            Cette classe permet de recueillir et d'afficher des statistiques liées à l'activité des utilisateurs. <br>
+            Les statistiques sont stoqué pour 5 ans maximum <br>
+            la classe utilise <em>ip_api</em> pour déterminer le pays et l'operateur de l'utilisateur
+            <em>config::$_statistiques</em> doit être définis a true pour que les statistiques soit enregistré
+        </p>
         <?php
         js::monaco_highlighter('<?php\n' .
-                '$stat=new statistiques();\n' .
-                '//Cette fonction permet d\'enregistrer l\'activité des utilisateurs sur la page actuelle\n' .
-                '$stat->add_stat();\n' .
-                '//Cette fonction permet d\'afficher les statistiques ( il est conseillé de ne pas appeler cette fonction sur une page "publique" )\n' .
-                '$stat->get_stat();\n' .
+                '//Désactive l\'enregistrement de statistiques pour la page courante \n' .
+                'statistiques::get_instance()->disable();\n\n' .
+                '//Affiche l\'interface pour consulter les statistiques (a placer dans l\'administration)\n' .
+                'statistiques::get_instance()->html();\n' .
                 '?>'
         );
     }

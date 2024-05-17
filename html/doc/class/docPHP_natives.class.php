@@ -1914,7 +1914,6 @@ class docPHP_natives {
             Les URLs peuvent étre supprimé via une interface d'administration.
         </p>
         <?php
-        sitemap::get_instance()->add_url();
         js::monaco_highlighter('<?php\n'
                 . '//affiche le format HTML du sitemap\n'
                 . 'sitemap::get_instance()->html();\n\n'

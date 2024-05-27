@@ -85,11 +85,11 @@ class parcour_sites {
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap-grid.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/dist/css/bootstrap.min.css"]) .
                         tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/css/style.css"]) .
-                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.core.css"]) .
-                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/themes/alertify.bootstrap.css"]) .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/css/alertify.min.css"]) .
+                        tags::tag("link", ["rel" => "stylesheet", "href" => "commun/src/js/alertify/css/themes/bootstrap.min.css"]) .
                         html_structures::script("commun/src/dist/jquery-ui/external/jquery/jquery.js") .
                         html_structures::script("commun/src/dist/jquery-ui/jquery-ui.min.js") .
-                        html_structures::script("commun/src/js/alertify/lib/alertify.min.js")
+                        html_structures::script("commun/src/js/alertify/alertify.min.js")
         );
     }
 

@@ -12,7 +12,7 @@ class config {
      */
     public static $_title = "Nouvelle Application";
     public static $_prefix = "new_app";
-
+    public static $_sitemap = false;
 }
 
 /**
@@ -109,7 +109,8 @@ class new_app {
                 ?>
             </div>
             <div class="col-sm-6">
-                <?= $form->open_fieldset("Base de données (PDO)") .
+                <?=
+                $form->open_fieldset("Base de données (PDO)") .
                 $form->select("type", "pdo_type", [
                     ["mysql", "MySQL", true],
                     ["sqlite", "SQLite"],
@@ -126,7 +127,8 @@ class new_app {
         <hr />
         <div class="row">
             <div class="col-sm-6 border_right">
-                <?= $form->open_fieldset("Websocket") .
+                <?=
+                $form->open_fieldset("Websocket") .
                 $form->checkbox("Créer le serveur de websocket dans le projet", "ws", "ws") .
                 $form->input("Host", "ws_host", "text", "0.0.0.0", false) .
                 $form->input("Port", "ws_port", "number", "9000", false) .
@@ -135,7 +137,8 @@ class new_app {
                 ?>
             </div>
             <div class="col-sm-6">
-                <?= $form->open_fieldset("SMTP") .
+                <?=
+                $form->open_fieldset("SMTP") .
                 $form->input("Host", "smtp_host", "text", "localhost") .
                 $form->select("Auth", "smtp_auth", [["1", "true", true], ["0", "false"]]) .
                 $form->input("Login", "smtp_login", "text", "", false) .
@@ -148,7 +151,7 @@ class new_app {
         <div class="row">
             <div class="col-sm-5"></div>
             <div class="col-sm-7">
-                <?= $form->submit("btn-primary", "Créer le projet"); ?>
+        <?= $form->submit("btn-primary", "Créer le projet"); ?>
             </div>
         </div>
         <hr />
@@ -203,8 +206,7 @@ class new_app {
             }
             $this->create_dir();
             $this->create_database();
-            js::alert($_POST["title"] . " a été créé avec succès !");
-            js::redir("../" . $_POST["dirname"] . "/index.php");
+            js::alertify_alert_redir($_POST["title"] . " a été créé avec succès !", "../" . $_POST["dirname"] . "/index.php");
         }
     }
 
@@ -333,7 +335,6 @@ class new_app {
             }
         });
     }
-
 }
 
 new new_app();

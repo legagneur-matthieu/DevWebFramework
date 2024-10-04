@@ -52,7 +52,11 @@ class ckeditor {
         ?>
             );
             $("#<?= $id; ?>").parents("form").css("width", "100%");
-            });
+            setTimeout(function(){
+            $(".cke_notification_warning").hide();
+            }, 1000);
+            }
+            );
         </script>
         <?php
     }
@@ -73,5 +77,4 @@ class ckeditor {
         }
         return $_str;
     }
-
 }

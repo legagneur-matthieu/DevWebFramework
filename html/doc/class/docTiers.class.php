@@ -56,6 +56,7 @@ class docTiers {
             [html_structures::a_link("https://github.com/christopherwk210/SimpleParallax", "SimpleParallax", "", "", true), "0.1", "Chris Anselmo (christopherwk210)", "JS", $licences[0]],
             [html_structures::a_link("https://www.smarty.net", "Smarty", "", "", true), "4.3.2", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
             [html_structures::a_link("https://jonobr1.com/stalactite/", "Stalactite", "", "", true), "0.1", "Jono Brandel", "JS", $licences[4]],
+            [html_structures::a_link("https://www.tiny.cloud/", "TinyMCE", "", "", true), "7.3.0", "TinyMCE", "JS", $licences[1]],
             [html_structures::a_link("https://videojs.com/", "Videojs", "", "", true), "8.12.0", "Brightcove, Inc.", "JS", $licences[4]],
             [html_structures::a_link("http://richhollis.github.io/vticker/", "Vticker", "", "", true), "1.21", "Richard Hollis", "JS", $licences[0] . ", " . $licences[3]],
             [html_structures::a_link("https://github.com/Machy8/xhtml-formatter", "Xhtml-formatter", "", "", true), "1.0", "Vladimír Macháček", "PHP", $licences[3]],

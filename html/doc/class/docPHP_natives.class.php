@@ -334,6 +334,9 @@ class docPHP_natives {
     private function ckeditor() {
         ?>
         <p>Cette classe est exploitée par la classe form (cf. form)</p>
+        <p class="alert alert-warning">
+            Deprecié depuis la verssion 21.24.10, usilisez plutot TinyMCE
+        </p>
         <?php
     }
 
@@ -796,126 +799,80 @@ class docPHP_natives {
     private function form() {
         ?>
         <p>La classe form permet de créer des formulaires en php stylisés par bootstrap, accessibles et respectant les normes W3C</p>
+        <p>Première méthode : création et rendu</p>
         <?php
-        js::accordion("accordion_classes_natives_form", true, true);
+        js::monaco_highlighter('<?php\n' .
+                '//création du formulaire\n' .
+                '$form = new form();\n' .
+                '$form->input("Input de type text", "input_1");\n' .
+                '$form->input("Input de type password", "input_2", "password");\n' .
+                '$form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");\n' .
+                '$form->datepicker("Un datepicker", "datepicker_1");\n' .
+                '$form->select("Un selecteur", "select_1", [\n' .
+                '    [1, "Abricots"],\n' .
+                '    [2, "Poires", true], //Poires est sélectionné par défaut\n' .
+                '    [3, "Pommes"],\n' .
+                ']);\n' .
+                '$form->textarea("Un textarea", "ta_1");\n' .
+                '//création d\'un TinyMCE\n' .
+                '$form->textarea("Un TinyMCE", "ta_2");\n' .
+                '$tmce = js::tinymce("ta_2");\n' .
+                '//bouton de soumission\n' .
+                '$form->submit("btn-primary");\n' .
+                '//Rendu du formulaire\n' .
+                'echo $form->render();\n' .
+                '//Exécution du formulaire\n' .
+                'if (isset($_POST["input_1"])) {\n' .
+                '    //Récupère la date du datepicker au format US\n' .
+                '    $date = form::get_datepicker_us("datepicker_1");\n' .
+                '    //Filtre les balises utilisées dans TinyMCE, protection XSS\n' .
+                '    $ta_2 = $tmce->parse();\n' .
+                '    //Message de succès ou erreur\n' .
+                '    js::alert("le formulaire a bien été soumis");\n' .
+                '    //Redirection vers la page courante = rafraîchissement de la page\n' .
+                '    js::redir("");\n' .
+                '}\n' .
+                '?>'
+        );
         ?>
-        <div id="accordion_classes_natives_form">
-            <h5>Depuis la version 21.19.03</h5>
-            <div>
-                <p>Première méthode : création et rendu</p>
-                <?php
-                js::monaco_highlighter('<?php\n' .
-                        '//création du formulaire\n' .
-                        '$form = new form();\n' .
-                        '$form->input("Input de type text", "input_1");\n' .
-                        '$form->input("Input de type password", "input_2", "password");\n' .
-                        '$form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");\n' .
-                        '$form->datepicker("Un datepicker", "datepicker_1");\n' .
-                        '$form->select("Un selecteur", "select_1", [\n' .
-                        '    [1, "Abricots"],\n' .
-                        '    [2, "Poires", true], //Poires est sélectionné par défaut\n' .
-                        '    [3, "Pommes"],\n' .
-                        ']);\n' .
-                        '$form->textarea("Un textarea", "ta_1");\n' .
-                        '//création d\'un CKEditor\n' .
-                        '$form->textarea("Un ckeditor", "ta_2");\n' .
-                        '$cke = js::ckeditor("ta_2");\n' .
-                        '//bouton de soumission\n' .
-                        '$form->submit("btn-primary");\n' .
-                        '//Rendu du formulaire\n' .
-                        'echo $form->render();\n' .
-                        '//Exécution du formulaire\n' .
-                        'if (isset($_POST["input_1"])) {\n' .
-                        '    //Récupère la date du datepicker au format US\n' .
-                        '    $date = form::get_datepicker_us("datepicker_1");\n' .
-                        '    //Filtre les balises utilisées dans CKEditor, protection XSS\n' .
-                        '    $ta_2 = $cke->parse($_POST["ta_2"]);\n' .
-                        '    //Message de succès ou erreur\n' .
-                        '    js::alert("le formulaire a bien été soumis");\n' .
-                        '    //Redirection vers la page courante = rafraîchissement de la page\n' .
-                        '    js::redir("");\n' .
-                        '}\n' .
-                        '?>'
-                );
-                ?>
-                <p>Seconde méthode : affichage direct</p>
-                <?php
-                js::monaco_highlighter('<?php\n' .
-                        '//création du formulaire\n' .
-                        '$form = new form();\n' .
-                        '//affichage de la balise d\'ouverture\n' .
-                        'echo $form->get_open_form();\n' .
-                        'echo $form->input("Input de type text", "input_1");\n' .
-                        'echo $form->input("Input de type password", "input_2", "password");\n' .
-                        'echo $form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");\n' .
-                        'echo $form->datepicker("Un datepicker", "datepicker_1");\n' .
-                        'echo $form->select("Un selecteur", "select_1", [\n' .
-                        '    [1, "Abricots"],\n' .
-                        '    [2, "Poires", true], //Poires est sélectionné par défaut\n' .
-                        '    [3, "Pommes"],\n' .
-                        ']);\n' .
-                        'echo $form->textarea("Un textarea", "ta_1");\n' .
-                        '//création d\'un CKEditor\n' .
-                        'echo $form->textarea("Un ckeditor", "ta_2");\n' .
-                        '$cke = js::ckeditor("ta_2");\n' .
-                        '//bouton de soumission\n' .
-                        'echo $form->submit("btn-primary");\n' .
-                        '//affichage de la balise de fermeture\n' .
-                        'echo $form->get_close_form();\n' .
-                        '//execution du formulaire\n' .
-                        'if (isset($_POST["input_1"])) {\n' .
-                        '    //récupère la date du datepicker au format US\n' .
-                        '    $date = form::get_datepicker_us("datepicker_1");\n' .
-                        '    //filtre les balises utilisées dans CKEditor, protection XSS\n' .
-                        '    $ta_2 = $cke->parse($_POST["ta_2"]);\n' .
-                        '    //message de succès ou erreur\n' .
-                        '    js::alert("le formulaire a bien été soumis");\n' .
-                        '    //redirection vers la page courante = rafraîchissement de la page\n' .
-                        '    js::redir("");\n' .
-                        '}\n' .
-                        '?>'
-                );
-                ?>
-
-            </div>
-            <h5>Avant la version 21.19.03</h5>
-            <div>
-                <?php
-                js::monaco_highlighter('<?php\n' .
-                        '//création du formulaire\n' .
-                        'form::new_form();\n' .
-                        'form::input("Input de type text", "input_1");\n' .
-                        'form::input("Input de type password", "input_2", "password");\n' .
-                        'form::input("Input avec valeur initiale", "input_3", "text", "valeur initiale");\n' .
-                        'form::datepicker("Un datepicker", "datepicker_1");\n' .
-                        'form::select("Un selecteur", "select_1", array(\n' .
-                        '    array(1, "Abricots"),\n' .
-                        '    array(2, "Poires", true), //Poires est sélectionné par défaut\n' .
-                        '    array(3, "Pommes"),\n' .
-                        '));\n' .
-                        'form::textarea("Un textarea", "ta_1");\n' .
-                        '//création d"un CKEditor\n' .
-                        'form::textarea("Un ckeditor", "ta_2");\n' .
-                        '$cke = js::ckeditor("ta_2");\n\n' .
-                        '//bouton de soumission\n' .
-                        'form::submit("btn-primary");\n' .
-                        '//fermeture du formulaire\n' .
-                        'form::close_form();\n\n' .
-                        '//exécution du formulaire\n' .
-                        'if (isset($_POST["input_1"])) {\n\n' .
-                        '    //récupère la date du datepicker au format US\n' .
-                        '    $date = form::get_datepicker_us("datepicker_1");\n' .
-                        '    //filtre les balises utilisées dans CKEditor, protection XSS\n' .
-                        '    $ta_2 = $cke->parse($_POST["ta_2"]);\n\n' .
-                        '    //message de succès ou erreur\n' .
-                        '    js::alert("le formulaire a bien été soumis");\n' .
-                        '    //redirection vers la page courante = rafraîchissement de la page\n' .
-                        '    js::redir("");\n' .
-                        '}\n' .
-                        '?>');
-                ?>
-            </div>
-        </div>
+        <p>Seconde méthode : affichage direct</p>
+        <?php
+        js::monaco_highlighter('<?php\n' .
+                '//création du formulaire\n' .
+                '$form = new form();\n' .
+                '//affichage de la balise d\'ouverture\n' .
+                'echo $form->get_open_form();\n' .
+                'echo $form->input("Input de type text", "input_1");\n' .
+                'echo $form->input("Input de type password", "input_2", "password");\n' .
+                'echo $form->input("Input avec valeur initiale", "input_3", "text", "valeur initiale");\n' .
+                'echo $form->datepicker("Un datepicker", "datepicker_1");\n' .
+                'echo $form->select("Un selecteur", "select_1", [\n' .
+                '    [1, "Abricots"],\n' .
+                '    [2, "Poires", true], //Poires est sélectionné par défaut\n' .
+                '    [3, "Pommes"],\n' .
+                ']);\n' .
+                'echo $form->textarea("Un textarea", "ta_1");\n' .
+                '//création d\'un TinyMCE\n' .
+                'echo $form->textarea("Un TinyMCE", "ta_2");\n' .
+                '$tmce = js::tinymce("ta_2");\n' .
+                '//bouton de soumission\n' .
+                'echo $form->submit("btn-primary");\n' .
+                '//affichage de la balise de fermeture\n' .
+                'echo $form->get_close_form();\n' .
+                '//execution du formulaire\n' .
+                'if (isset($_POST["input_1"])) {\n' .
+                '    //récupère la date du datepicker au format US\n' .
+                '    $date = form::get_datepicker_us("datepicker_1");\n' .
+                '    //filtre les balises utilisées dans TinyMCE, protection XSS\n' .
+                '    $ta_2 = $tmce->parse();\n' .
+                '    //message de succès ou erreur\n' .
+                '    js::alert("le formulaire a bien été soumis");\n' .
+                '    //redirection vers la page courante = rafraîchissement de la page\n' .
+                '    js::redir("");\n' .
+                '}\n' .
+                '?>'
+        );
+        ?>
         <p>Résultat (visuel uniquement, exécution désactivée):</p>
         <div class="row" style="border: 1px solid #ccc; border-radius: 4px;">
             <div class="col-sm-3">
@@ -942,8 +899,8 @@ class docPHP_natives {
                     [3, "Pommes"],
                 ]);
                 $form->textarea("Un textarea", "ta_1");
-                $form->textarea("Un ckeditor", "ta_2");
-                $cke = js::ckeditor("ta_2");
+                $form->textarea("Un TinyMCE", "ta_2");
+                $tmce = js::tinymce("ta_2");
                 $form->submit("btn-primary");
                 echo $form->render();
                 ?>
@@ -2277,6 +2234,12 @@ class docPHP_natives {
                 . '?>');
     }
 
+    private function tinymce() {
+        ?>
+        <p>Cette classe est exploitée par la classe form (cf. form)</p>
+        <?php
+    }
+    
     private function tor() {
         ?>
         <p>Cette classe permet de recupérer une ressource en passant par tor</p>

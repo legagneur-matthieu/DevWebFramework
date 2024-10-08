@@ -166,12 +166,23 @@ class js {
 
     /**
      * Applique un éditeur CKEditor (WYSIWYG) à un textarea
+     * @deprecated since version 21.24.10 Remplacé par TinyMCE
      * @param array $id Id du textarea
      * @param array $params Surcharge les paramètres à appliquer au CKEditor ( laissez par défaut ou voir la doc)
      * @return \ckeditor Cette classe permet d'appliquer l'éditeur CKEditor (WYSIWYG) à un textarea 
      */
     public static function ckeditor($id, $params = []) {
         return new ckeditor($id, $params);
+    }
+
+    /**
+     * Applique un éditeur TinyMCE (WYSIWYG) à un textarea
+     * 
+     * @param array $id Id du textarea
+     * @return \tinymce Cette classe permet d'appliquer l'éditeur TinyMCE (WYSIWYG) à un textarea 
+     */
+    public static function tinymce($id) {
+        return new tinymce($id);
     }
 
     /**
@@ -214,7 +225,7 @@ class js {
      * 
      * Afficher du code formaté et stylisé par la librairie SyntaxHightlighter http://alexgorbatchev.com/SyntaxHighlighter/
      *
-     * @param strig $code Le code à afficher
+     * @param string $code Le code à afficher
      * @param string $brush Le brush est lié au langage à utiliser (js par deafaut)<br />
      * Astuce script html/php : "php; html-script: true" <br />
      *  http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
@@ -225,9 +236,10 @@ class js {
     }
 
     /**
+     * Afficher du code formaté et stylisé par la librairie Monaco Editor en lecture seul
      * 
-     * @param type $code
-     * @param type $language
+     * @param string $code Le code à afficher
+     * @param string $language Language de programation, PHP par defaut
      */
     public static function monaco_highlighter($code, $language = "php") {
         new monaco_highlighter($code, $language);

@@ -68,7 +68,6 @@ class tinymce {
     /**
      * Filtre de sécurité à utiliser lors de l'exécution d'un formulaire pour filter les balises utilisées dans TinyMCE ( protection XSS )
      * 
-     * @param string $str Retour du TinyMCE
      * @param string $more_tags Ajouter des balises à witelister
      */
     public function parse($more_tags = "") {

@@ -8,91 +8,20 @@ declare class TextTrackSettings extends ModalDialog {
     /**
      * Creates an instance of this class.
      *
-     * @param { import('../player').default } player
+     * @param {Player} player
      *         The `Player` that this class should be attached to.
      *
      * @param {Object} [options]
      *         The key/value store of player options.
      */
-    constructor(player: import('../player').default, options?: any);
+    constructor(player: Player, options?: any);
     /**
      * Update display of text track settings
      */
     updateDisplay(): void;
     endDialog: Element;
-    /**
-     * Create a <select> element with configured options.
-     *
-     * @param {string} key
-     *        Configuration key to use during creation.
-     *
-     * @param {string} [legendId]
-     *        Id of associated <legend>.
-     *
-     * @param {string} [type=label]
-     *        Type of labelling element, `label` or `legend`
-     *
-     * @return {string}
-     *         An HTML string.
-     *
-     * @private
-     */
-    private createElSelect_;
-    /**
-     * Create foreground color element for the component
-     *
-     * @return {string}
-     *         An HTML string.
-     *
-     * @private
-     */
-    private createElFgColor_;
-    /**
-     * Create background color element for the component
-     *
-     * @return {string}
-     *         An HTML string.
-     *
-     * @private
-     */
-    private createElBgColor_;
-    /**
-     * Create window color element for the component
-     *
-     * @return {string}
-     *         An HTML string.
-     *
-     * @private
-     */
-    private createElWinColor_;
-    /**
-     * Create color elements for the component
-     *
-     * @return {Element}
-     *         The element that was created
-     *
-     * @private
-     */
-    private createElColors_;
-    /**
-     * Create font elements for the component
-     *
-     * @return {Element}
-     *         The element that was created.
-     *
-     * @private
-     */
-    private createElFont_;
-    /**
-     * Create controls for the component
-     *
-     * @return {Element}
-     *         The element that was created.
-     *
-     * @private
-     */
-    private createElControls_;
-    content(): Element[];
+    renderModalComponents(player: any): void;
+    bindFunctionsToSelectsAndButtons(): void;
     /**
      * Gets an object of text track settings (or null).
      *
@@ -120,5 +49,6 @@ declare class TextTrackSettings extends ModalDialog {
      */
     saveSettings(): void;
 }
-import ModalDialog from "../modal-dialog";
+import ModalDialog from '../modal-dialog';
+import type Player from '../player';
 //# sourceMappingURL=text-track-settings.d.ts.map

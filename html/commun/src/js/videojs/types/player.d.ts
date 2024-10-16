@@ -1,4 +1,5 @@
 export default Player;
+export type PlayerReadyCallback = (this: Player) => void;
 /**
  * An instance of the `Player` class is created when any of the Video.js setup methods
  * are used to initialize a video.
@@ -32,10 +33,10 @@ declare class Player extends Component {
      * @param {Object} [options]
      *        Object of option names and values.
      *
-     * @param {Function} [ready]
+     * @param {PlayerReadyCallback} [ready]
      *        Ready callback function.
      */
-    constructor(tag: Element, options?: any, ready?: Function);
+    constructor(tag: Element, options?: any, ready?: PlayerReadyCallback);
     boundDocumentFullscreenChange_: (e: any) => void;
     boundFullWindowOnEscKey_: (e: any) => void;
     boundUpdateStyleEl_: (e: any) => void;
@@ -47,6 +48,7 @@ declare class Player extends Component {
     boundHandleTechTouchMove_: (e: any) => void;
     boundHandleTechTouchEnd_: (e: any) => void;
     boundHandleTechTap_: (e: any) => void;
+    boundUpdatePlayerHeightOnAudioOnlyMode_: (e: any) => void;
     isFullscreen_: boolean;
     log: any;
     fsApi_: any;
@@ -58,6 +60,7 @@ declare class Player extends Component {
     audioOnlyMode_: boolean;
     audioPosterMode_: boolean;
     audioOnlyCache_: {
+        controlBarHeight: any;
         playerHeight: any;
         hiddenChildren: any[];
     };
@@ -74,6 +77,7 @@ declare class Player extends Component {
     scrubbing_: boolean;
     el_: Element;
     middleware_: any[];
+    spatialNavigation: SpatialNavigation;
     /**
      * Destroys the video player and does any necessary cleanup.
      *
@@ -693,11 +697,11 @@ declare class Player extends Component {
      * Get a TimeRange object representing the current ranges of time that the user
      * has played.
      *
-     * @return { import('./utils/time').TimeRange }
+     * @return {TimeRange}
      *         A time range object that represents all the increments of time that have
      *         been played.
      */
-    played(): import('./utils/time').TimeRange;
+    played(): TimeRange;
     /**
      * Sets or returns whether or not the user is "scrubbing". Scrubbing is
      * when the user has clicked the progress bar handle and is
@@ -769,20 +773,20 @@ declare class Player extends Component {
      *
      * @see [Buffered Spec]{@link http://dev.w3.org/html5/spec/video.html#dom-media-buffered}
      *
-     * @return { import('./utils/time').TimeRange }
+     * @return {TimeRange}
      *         A mock {@link TimeRanges} object (following HTML spec)
      */
-    buffered(): import('./utils/time').TimeRange;
+    buffered(): TimeRange;
     /**
      * Get the TimeRanges of the media that are currently available
      * for seeking to.
      *
      * @see [Seekable Spec]{@link https://html.spec.whatwg.org/multipage/media.html#dom-media-seekable}
      *
-     * @return { import('./utils/time').TimeRange }
+     * @return {TimeRange}
      *         A mock {@link TimeRanges} object (following HTML spec)
      */
-    seekable(): import('./utils/time').TimeRange;
+    seekable(): TimeRange;
     /**
      * Returns whether the player is in the "seeking" state.
      *
@@ -1202,7 +1206,7 @@ declare class Player extends Component {
      *         - The preload attribute value when getting
      *         - Nothing when setting
      */
-    preload(value?: 'none' | 'auto' | 'metadata'): string | undefined;
+    preload(value?: "none" | "auto" | "metadata"): string | undefined;
     /**
      * Get or set the autoplay option. When this is a boolean it will
      * modify the attribute on the tech. When this is a string the attribute on
@@ -1220,7 +1224,7 @@ declare class Player extends Component {
      *         - The current value of autoplay when getting
      *         - Nothing when setting
      */
-    autoplay(value?: boolean | 'play' | 'muted' | 'any'): boolean | string | undefined;
+    autoplay(value?: boolean | "play" | "muted" | "any"): boolean | string | undefined;
     /**
      * Set or unset the playsinline attribute.
      * Playsinline tells the browser that non-fullscreen playback is preferred.
@@ -1398,6 +1402,7 @@ declare class Player extends Component {
      */
     isAudio(bool?: boolean): boolean | undefined;
     isAudio_: boolean;
+    updatePlayerHeightOnAudioOnlyMode_(): void;
     enableAudioOnlyUI_(): void;
     disableAudioOnlyUI_(): void;
     /**
@@ -1460,13 +1465,13 @@ declare class Player extends Component {
      *                                        from the TextTrackList and HtmlTrackElementList
      *                                        after a source change
      *
-     * @return { import('./tracks/html-track-element').default }
+     * @return {HtmlTrackElement}
      *         the HTMLTrackElement that was created and added
      *         to the HtmlTrackElementList and the remote
      *         TextTrackList
      *
      */
-    addRemoteTextTrack(options: any, manualCleanup?: boolean): import('./tracks/html-track-element').default;
+    addRemoteTextTrack(options: any, manualCleanup?: boolean): HtmlTrackElement;
     /**
      * Remove a remote {@link TextTrack} from the respective
      * {@link TextTrackList} and {@link HtmlTrackElementList}.
@@ -1727,6 +1732,34 @@ declare class Player extends Component {
      */
     playbackRates(newRates?: number[]): number[];
     /**
+     * Reports whether or not a player has a plugin available.
+     *
+     * This does not report whether or not the plugin has ever been initialized
+     * on this player. For that, [usingPlugin]{@link Player#usingPlugin}.
+     *
+     * @method hasPlugin
+     * @param  {string}  name
+     *         The name of a plugin.
+     *
+     * @return {boolean}
+     *         Whether or not this player has the requested plugin available.
+     */
+    hasPlugin(name: string): boolean;
+    /**
+     * Reports whether or not a player is using a plugin by name.
+     *
+     * For basic plugins, this only reports whether the plugin has _ever_ been
+     * initialized on this player.
+     *
+     * @method Player#usingPlugin
+     * @param  {string} name
+     *         The name of a plugin.
+     *
+     * @return {boolean}
+     *         Whether or not this player is using the requested plugin.
+     */
+    usingPlugin(name: string): boolean;
+    /**
      * Get or set the `Player`'s crossorigin option. For the HTML5 player, this
      * sets the `crossOrigin` property on the `<video>` tag to control the CORS
      * behavior.
@@ -1763,14 +1796,21 @@ declare class Player extends Component {
         responsive: boolean;
         audioOnlyMode: boolean;
         audioPosterMode: boolean;
+        spatialNavigation: {
+            enabled: boolean;
+            horizontalSeek: boolean;
+        };
         enableSmoothSeeking: boolean;
     };
 }
 declare namespace Player {
-    const players: any;
+    let players: any;
 }
-import Component from "./component.js";
-import Tech from "./tech/tech.js";
-import MediaError from "./media-error.js";
-import ModalDialog from "./modal-dialog";
+import Component from './component.js';
+import SpatialNavigation from './spatial-navigation.js';
+import Tech from './tech/tech.js';
+import type { TimeRange } from './utils/time';
+import MediaError from './media-error.js';
+import type HtmlTrackElement from './tracks/html-track-element';
+import ModalDialog from './modal-dialog';
 //# sourceMappingURL=player.d.ts.map

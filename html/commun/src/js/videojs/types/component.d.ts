@@ -1,5 +1,18 @@
 export default Component;
 /**
+ * A callback to be called if and when the component is ready.
+ * `this` will be the Component instance.
+ */
+export type ReadyCallback = () => void;
+/** @import Player from './player' */
+/**
+ * A callback to be called if and when the component is ready.
+ * `this` will be the Component instance.
+ *
+ * @callback ReadyCallback
+ * @returns  {void}
+ */
+/**
  * Base class for all UI Components.
  * Components are UI objects which represent both a javascript object and an element
  * in the DOM. They can be children of other components, and can have
@@ -39,16 +52,9 @@ declare class Component {
      */
     static getComponent(name: string): typeof Component;
     /**
-     * A callback that is called when a component is ready. Does not have any
-     * parameters and any callback value will be ignored.
-     *
-     * @callback ReadyCallback
-     * @this Component
-     */
-    /**
      * Creates an instance of this class.
      *
-     * @param { import('./player').default } player
+     * @param {Player} player
      *        The `Player` that this class should be attached to.
      *
      * @param {Object} [options]
@@ -65,10 +71,10 @@ declare class Component {
      * @param {ReadyCallback} [ready]
      *        Function that gets called when the `Component` is ready.
      */
-    constructor(player: import('./player').default, options?: {
+    constructor(player: Player, options?: {
         children?: any[];
         className?: string;
-    }, ready?: () => any);
+    }, ready?: ReadyCallback);
     player_: any;
     isDisposed_: boolean;
     parentComponent_: any;
@@ -179,10 +185,10 @@ declare class Component {
     /**
      * Return the {@link Player} that the `Component` has attached to.
      *
-     * @return { import('./player').default }
+     * @return {Player}
      *         The player that this `Component` has attached to.
      */
-    player(): import('./player').default;
+    player(): Player;
     /**
      * Deep merge of options objects with new options.
      * > Note: When both `obj` and `options` contain properties whose values are objects.
@@ -383,11 +389,8 @@ declare class Component {
      *
      * @param {ReadyCallback} fn
      *        Function that gets called when the `Component` is ready.
-     *
-     * @return {Component}
-     *         Returns itself; method can be chained.
      */
-    ready(fn: () => any, sync?: boolean): Component;
+    ready(fn: ReadyCallback, sync?: boolean): void;
     readyQueue_: any;
     /**
      * Trigger all the ready listeners for this `Component`.
@@ -465,12 +468,12 @@ declare class Component {
      * - `classToToggle` gets removed when {@link Component#hasClass} would return true.
      *
      * @param  {string} classToToggle
-     *         The class to add or remove based on (@link Component#hasClass}
+     *         The class to add or remove. Passed to DOMTokenList's toggle()
      *
-     * @param  {boolean|Dom~predicate} [predicate]
-     *         An {@link Dom~predicate} function or a boolean
+     * @param  {boolean|Dom.PredicateCallback} [predicate]
+     *         A boolean or function that returns a boolean. Passed to DOMTokenList's toggle().
      */
-    toggleClass(classToToggle: string, predicate: any): void;
+    toggleClass(classToToggle: string, predicate?: boolean | Dom.PredicateCallback): void;
     /**
      * Show the `Component`s element if it is hidden by removing the
      * 'vjs-hidden' class name from it.
@@ -652,6 +655,17 @@ declare class Component {
      *         The computed height of the component's element.
      */
     currentHeight(): number;
+    /**
+     * Retrieves the position and size information of the component's element.
+     *
+     * @return {Object} An object with `boundingClientRect` and `center` properties.
+     *         - `boundingClientRect`: An object with properties `x`, `y`, `width`,
+     *           `height`, `top`, `right`, `bottom`, and `left`, representing
+     *           the bounding rectangle of the element.
+     *         - `center`: An object with properties `x` and `y`, representing
+     *           the center point of the element. `width` and `height` are set to 0.
+     */
+    getPositions(): any;
     /**
      * Set the focus to this component
      */
@@ -877,5 +891,42 @@ declare class Component {
      * @private
      */
     private clearTimersOnDispose_;
+    /**
+      * Decide whether an element is actually disabled or not.
+      *
+      * @function isActuallyDisabled
+      * @param element {Node}
+      * @return {boolean}
+      *
+      * @see {@link https://html.spec.whatwg.org/multipage/semantics-other.html#concept-element-disabled}
+      */
+    getIsDisabled(): boolean;
+    /**
+      * Decide whether the element is expressly inert or not.
+      *
+      * @see {@link https://html.spec.whatwg.org/multipage/interaction.html#expressly-inert}
+      * @function isExpresslyInert
+      * @param element {Node}
+      * @return {boolean}
+      */
+    getIsExpresslyInert(): boolean;
+    /**
+     * Determine whether or not this component can be considered as focusable component.
+     *
+     * @param {HTMLElement} el - The HTML element representing the component.
+     * @return {boolean}
+     *         If the component can be focused, will be `true`. Otherwise, `false`.
+     */
+    getIsFocusable(el: HTMLElement): boolean;
+    /**
+     * Determine whether or not this component is currently visible/enabled/etc...
+     *
+     * @param {HTMLElement} el - The HTML element representing the component.
+     * @return {boolean}
+     *         If the component can is currently visible & enabled, will be `true`. Otherwise, `false`.
+     */
+    getIsAvailableToBeFocused(el: HTMLElement): boolean;
 }
+import type Player from './player';
+import * as Dom from './utils/dom.js';
 //# sourceMappingURL=component.d.ts.map

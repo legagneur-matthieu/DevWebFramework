@@ -78,13 +78,13 @@ class application {
         }
         echo tags::tag("nav", ["class" => "navbar navbar-expand-md navbar-light bg-light pt-0 pb-0"],
                 tags::tag("div", ["class" => "container-fluid"],
-                        tags::tag("button", ["class" => "navbar-toggler", "data-bs-toggle" => "collapse", "data-bs-target" => ".navbar-collapse", "type" => "button", "aria-controls" => "navbar-collapse", "aria-expanded" => "false", "aria-label" => "Afficher ou masquer Navigation"],
+                        tags::tag("button", ["class" => "navbar-toggler", "type" => "button", "data-bs-toggle" => "collapse", "data-bs-target" => "#navbar_main", "aria-controls" => "navbar_main", "aria-expanded" => "false", "aria-label" => "Afficher ou masquer Navigation"],
                                 tags::tag("span", ["class" => "navbar-toggler-icon"],
                                         tags::tag("span", ["class" => "visually-hidden"], "Dérouler le menu")
                                 )
                         ) .
                         tags::tag(
-                                "div", ["class" => "collapse navbar-collapse"], tags::tag(
+                                "div", ["class" => "collapse navbar-collapse", "id" => "navbar_main"], tags::tag(
                                         "ul", ["class" => "navbar-nav me-auto mb-2 mb-lg-0"], $lis)
                         )
                 )
@@ -179,9 +179,10 @@ class application {
      * Génère une valeur de hachage (empreinte numérique)
      * en utilisant l'algorithme de config::$_hash_algo
      * @param string $data Texte à hacher
+     * @param string $salt aplique un sel au hachage (basé sur config::$_prefix)
      * @return string Hash
      */
-    public static function hash($data) {
-        return hash(config::$_hash_algo, $data);
+    public static function hash($data, $salt = false) {
+        return hash(config::$_hash_algo, ($salt ? hash(config::$_hash_algo, config::$_prefix) : "") . $data);
     }
 }

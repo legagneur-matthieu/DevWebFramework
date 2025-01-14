@@ -50,18 +50,23 @@ class lurl {
             ];
         } else {
             $result = @json_decode(file_get_contents("https://lurl.fr/api?api={$this->_api_key}&url={$url}&type=2"), TRUE);
-            if ($result["status"] === "success") {
+            if (isset($result["status"]) and $result["status"] === "success") {
                 lurl_links::ajout($url, $result["shortenedUrl"]);
             }
         }
-        if ($result["status"] === 'error') {
+        if (isset($result["status"]) and $result["status"] === 'error') {
             $log = new log_file(true);
             foreach ($result["message"] as $msg) {
                 $log->warning("LURL $url : $msg");
             }
             return false;
         } else {
-            return $result["shortenedUrl"];
+            if (isset($result["shortenedUrl"])) {
+                return $result["shortenedUrl"];
+            } else {
+                $log = new log_file(true);
+                $log->warning("LURL $url : LURL injoignable (ou probleme API_KEY");
+            }
         }
     }
 
@@ -91,5 +96,4 @@ class lurl {
             }
         }
     }
-
 }

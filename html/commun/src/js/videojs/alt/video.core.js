@@ -1,6 +1,6 @@
 /**
  * @license
- * Video.js 8.18.1 <http://videojs.com/>
+ * Video.js 8.20.0 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>
@@ -16,7 +16,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojs = factory());
 })(this, (function () { 'use strict';
 
-  var version = "8.18.1";
+  var version = "8.20.0";
 
   /**
    * An Object that contains lifecycle hooks as keys which point to an array
@@ -18268,7 +18268,7 @@
      */
     handleKeyDown(event) {
       // Escape or Tab unpress the 'button'
-      if (event.key === 'Esc' || event.key === 'Tab') {
+      if (event.key === 'Escape' || event.key === 'Tab') {
         if (this.buttonPressed_) {
           this.unpressButton();
         }
@@ -18299,7 +18299,7 @@
      */
     handleMenuKeyUp(event) {
       // Escape hides popup menu
-      if (event.key === 'Esc' || event.key === 'Tab') {
+      if (event.key === 'Escape' || event.key === 'Tab') {
         this.removeClass('vjs-hover');
       }
     }
@@ -18327,7 +18327,7 @@
      */
     handleSubmenuKeyDown(event) {
       // Escape or Tab unpress the 'button'
-      if (event.key === 'Esc' || event.key === 'Tab') {
+      if (event.key === 'Escape' || event.key === 'Tab') {
         if (this.buttonPressed_) {
           this.unpressButton();
         }
@@ -20215,7 +20215,7 @@
         const option = createEl('option', {
           id: optionId,
           value: this.localize(optionText[0]),
-          textContent: optionText[1]
+          textContent: this.localize(optionText[1])
         });
         option.setAttribute('aria-labelledby', `${this.selectLabelledbyIds} ${optionId}`);
         return option;
@@ -20305,7 +20305,7 @@
           const label = createEl('label', {
             id,
             className: 'vjs-label',
-            textContent: selectConfig.label
+            textContent: this.localize(selectConfig.label)
           });
           label.setAttribute('for', guid);
           span.appendChild(label);
@@ -22600,6 +22600,59 @@
 
       // Setting src through `src` instead of `setSrc` will be deprecated
       this.setSrc(src);
+    }
+
+    /**
+     * Add a <source> element to the <video> element.
+     *
+     * @param {string} srcUrl
+     *        The URL of the video source.
+     *
+     * @param {string} [mimeType]
+     *        The MIME type of the video source. Optional but recommended.
+     *
+     * @return {boolean}
+     *         Returns true if the source element was successfully added, false otherwise.
+     */
+    addSourceElement(srcUrl, mimeType) {
+      if (!srcUrl) {
+        log.error('Invalid source URL.');
+        return false;
+      }
+      const sourceAttributes = {
+        src: srcUrl
+      };
+      if (mimeType) {
+        sourceAttributes.type = mimeType;
+      }
+      const sourceElement = createEl('source', {}, sourceAttributes);
+      this.el_.appendChild(sourceElement);
+      return true;
+    }
+
+    /**
+     * Remove a <source> element from the <video> element by its URL.
+     *
+     * @param {string} srcUrl
+     *        The URL of the source to remove.
+     *
+     * @return {boolean}
+     *         Returns true if the source element was successfully removed, false otherwise.
+     */
+    removeSourceElement(srcUrl) {
+      if (!srcUrl) {
+        log.error('Source URL is required to remove the source element.');
+        return false;
+      }
+      const sourceElements = this.el_.querySelectorAll('source');
+      for (const sourceElement of sourceElements) {
+        if (sourceElement.src === srcUrl) {
+          this.el_.removeChild(sourceElement);
+          return true;
+        }
+      }
+      log.warn(`No matching source element found with src: ${srcUrl}`);
+      return false;
     }
 
     /**
@@ -25626,7 +25679,8 @@
     }
 
     /**
-     * Handle a double-click on the media element to enter/exit fullscreen
+     * Handle a double-click on the media element to enter/exit fullscreen,
+     * or exit documentPictureInPicture mode
      *
      * @param {Event} event
      *        the event that caused this function to trigger
@@ -25653,6 +25707,12 @@
         if (this.options_ === undefined || this.options_.userActions === undefined || this.options_.userActions.doubleClick === undefined || this.options_.userActions.doubleClick !== false) {
           if (this.options_ !== undefined && this.options_.userActions !== undefined && typeof this.options_.userActions.doubleClick === 'function') {
             this.options_.userActions.doubleClick.call(this, event);
+          } else if (this.isInPictureInPicture() && !document.pictureInPictureElement) {
+            // Checking the presence of `window.documentPictureInPicture.window` complicates
+            // tests, checking `document.pictureInPictureElement` also works. It wouldn't
+            // be null in regular picture in picture.
+            // Exit picture in picture mode. This gesture can't trigger pip on the main window.
+            this.exitPictureInPicture();
           } else if (this.isFullscreen()) {
             this.exitFullscreen();
           } else {
@@ -27223,6 +27283,41 @@
         this.changingSrc_ = false;
       }, true);
       return false;
+    }
+
+    /**
+     * Add a <source> element to the <video> element.
+     *
+     * @param {string} srcUrl
+     *        The URL of the video source.
+     *
+     * @param {string} [mimeType]
+     *        The MIME type of the video source. Optional but recommended.
+     *
+     * @return {boolean}
+     *         Returns true if the source element was successfully added, false otherwise.
+     */
+    addSourceElement(srcUrl, mimeType) {
+      if (!this.tech_) {
+        return false;
+      }
+      return this.tech_.addSourceElement(srcUrl, mimeType);
+    }
+
+    /**
+     * Remove a <source> element from the <video> element by its URL.
+     *
+     * @param {string} srcUrl
+     *        The URL of the source to remove.
+     *
+     * @return {boolean}
+     *         Returns true if the source element was successfully removed, false otherwise.
+     */
+    removeSourceElement(srcUrl) {
+      if (!this.tech_) {
+        return false;
+      }
+      return this.tech_.removeSourceElement(srcUrl);
     }
 
     /**

@@ -5,7 +5,7 @@ class docPHP {
     private $_brush = "php; html-script: true";
 
     public function __construct() {
-        $doc = array(
+        $doc = [
             "introduction",
             "nouveau_projet",
             "configuration",
@@ -20,57 +20,71 @@ class docPHP {
             "CLI",
             "WebSocket",
             "mise_en_ligne",
-        );
+        ];
         ?>
-        <style type="text/css">
-            h4{
-                text-decoration: grey underline;
-                font-weight: bold;
-            }
-
-        </style>
-        <!--resout les conflits avec monaco editor-->
-        <table class="table" id="datatable_loading">
-            <thead>
-                <tr>
-                    <th>Chargement ...</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div style="display: none;">
-                            <?php new video("./files/videos/nuagesMusicman921.webm", "videojs_loading"); ?>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <?php
-        js::datatable("datatable_loading");
-        ?>
-        <script>
-            $(document).ready(function () {
-                setTimeout(function () {
-                    $("#datatable_loading").DataTable().destroy();
-                    $("#datatable_loading").remove();
-                }, 200);
-            })
-        </script>
-        <!--fin de la resolution de conflit-->
-        <h2>Framework PHP</h2>
-        <div id="accordion">
-            <?php
-            foreach ($doc as $d) {
-                ?>
-                <h3><?php echo strtr(ucfirst($d), array("_" => " ")); ?></h3>
-                <div><?php $this->$d(); ?></div>
+        <div class="row">
+            <div class="col-3">
+                <div class="list-group">
+                    <?php
+                    foreach ($doc as $d) {
+                        echo html_structures::a_link("index.php?page=web&doc=$d", strtr(ucfirst($d), array("_" => " ")) . ($d == "classes_natives" ? " " . html_structures::bi("caret-down-fill") : ""), "list-group-item list-group-item-action " . ((isset($_GET["doc"]) and $_GET["doc"] == $d) ? "active" : ""));
+                        if ($d == "classes_natives" and isset($_GET["doc"]) and $_GET["doc"] == $d) {
+                            ?>
+                            <div class="list-group mx-2">
+                                <?php
+                                foreach (docPHP_natives::get_methods() as $n) {
+                                    if (!in_array($n, ["get_methods", "__construct"])) {
+                                        echo html_structures::a_link("index.php?page=web&doc=$d&native=$n", strtr(ucfirst($n), array("_" => " ")) . ($n == "js" ? " " . html_structures::bi("caret-down-fill") : ""), "list-group-item list-group-item-action " . ((isset($_GET["native"]) and $_GET["native"] == $n) ? "active" : ""));
+                                        if ($n == "js" and isset($_GET["native"]) and $_GET["native"] == $n) {
+                                            ?>
+                                            <div class="list-group mx-2">
+                                                <?php
+                                                foreach (docPHP_natives_js::get_methods() as $js) {
+                                                    if (!in_array($js, ["get_methods", "__construct"])) {
+                                                        echo html_structures::a_link("index.php?page=web&doc=$d&native=$n&js=$js", strtr(ucfirst($js), array("_" => " ")), "list-group-item list-group-item-action " . ((isset($_GET["js"]) and $_GET["js"] == $js) ? "active" : ""));
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="col-9">
                 <?php
-            }
-            ?>
+                if (isset($_GET["doc"]) and in_array($_GET["doc"], $doc)) {
+                    $d = $_GET["doc"];
+                } else {
+                    $d = $doc[0];
+                }
+                ?>
+                <h2 class="text-center"><?= strtr(ucfirst($d), array("_" => " ")); ?></h2>
+                <?php
+                if (isset($_GET["native"]) and in_array($_GET["native"], docPHP_natives::get_methods())) {
+                    $h2 = "";
+                    if ((isset($_GET["js"]) and in_array($_GET["js"], docPHP_natives_js::get_methods()))) {
+                        $h2 = " - " . strtr(ucfirst($_GET["js"]), array("_" => " "));
+                    }
+                    ?>
+                    <h2 class="text-center"><?= strtr(ucfirst($_GET["native"]), array("_" => " ")) . $h2 ?></h2>
+                    <?php
+                }
+                ?>
+                <hr>
+                <?php
+                $this->$d();
+                ?>
+            </div>
         </div>
         <?php
-        js::accordion("accordion", true, true);
     }
 
     private function introduction() {
@@ -516,7 +530,12 @@ class docPHP {
     }
 
     private function classes_natives() {
-        new docPHP_natives();
+        if (isset($_GET["native"]) and in_array($_GET["native"], docPHP_natives::get_methods()) and !in_array($_GET["native"], ["get_methods", "__construct"])) {
+            $n = $_GET["native"];
+            docPHP_natives::$n();
+        } else {
+            new docPHP_natives();
+        }
     }
 
     private function services_general() {

@@ -2,28 +2,26 @@
 
 class docPHP_natives_js {
 
-    private $_brush = "php; html-script: true";
-
+    public static function get_methods() {
+        return get_class_methods(__CLASS__);
+    }
+    
     public function __construct() {
         ?>
         <p>La classe js permet d'exploiter un grand nombre de librairies javascript intégrées à DWF notamment pour les appliquer à des éléments html de la page.</p>
-        <div id="accordion_classes_natives_js">
-            <?php
-            foreach (get_class_methods(__CLASS__) as $m) {
-                if ($m != __FUNCTION__) {
-                    ?>
-                    <h5>js::<?php echo strtr($m, array("__" => ", ")); ?></h5>
-                    <div><?php $this->$m(); ?></div>
-                    <?php
+        <?php
+            $functions = get_class_methods(__CLASS__);
+            sort($functions);
+            $ul=[];
+            foreach ($functions as $js) {
+                if (!in_array($js, ["get_methods", "__construct"])) {
+                    $ul[]= html_structures::a_link("index.php?page=web&doc=classes_natives&native=js&js=$js", strtr(ucfirst($js), array("_" => " ")));
                 }
             }
-            ?>
-        </div>
-        <?php
-        js::accordion("accordion_classes_natives_js", true, true);
+            echo html_structures::ul($ul);
     }
 
-    public function before_title() {
+    public static function before_title() {
         ?> 
         <p>
             Ajoute un préfixe au titre (balise title) de la page en cours.
@@ -32,56 +30,56 @@ class docPHP_natives_js {
         js::monaco_highlighter('<?php js::before_title($text); ?>');
     }
 
-    public function alert() {
+    public static function alert() {
         ?> 
         <p>Affiche un message à l'écran de l'utilisateur</p>
         <?php
         js::monaco_highlighter('<?php js::alert($msg);?>');
     }
 
-    public function alertify_alert() {
+    public static function alertify_alert() {
         ?> 
         <p>Affiche un message à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::alertify_alert($msg); ?>');
     }
 
-    public function alertify_alert_redir() {
+    public static function alertify_alert_redir() {
         ?> 
         <p>Affiche un message à l'écran de l'utilisateur avant redirection (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::alertify_alert_redir($msg, $url); ?>');
     }
 
-    public function log_std() {
+    public static function log_std() {
         ?> 
         <p>Affiche un message de log (standard) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_std($msg); ?>');
     }
 
-    public function log_success() {
+    public static function log_success() {
         ?> 
         <p>Affiche un message de log (de succès) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_success($msg); ?>');
     }
 
-    public function log_error() {
+    public static function log_error() {
         ?> 
         <p>Affiche un message de log (erreur) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_error($msg); ?>');
     }
 
-    public function redir() {
+    public static function redir() {
         ?> 
         <p>Redirige l'utilisateur vers l'url renseignée en paramètre (peut être un chemin relatif)</p>
         <?php
         js::monaco_highlighter('<?php js::redir($url); ?>');
     }
 
-    public function timer() {
+    public static function timer() {
         ?> 
         <p>Affiche un timer avant redirection</p>
         <?php
@@ -96,13 +94,13 @@ class docPHP_natives_js {
         <?php
     }
 
-    public function ckeditor() {
+    public static function ckeditor() {
         ?> 
         <p>(cf form)</p>
         <?php
     }
 
-    public function jsqr() {
+    public static function jsqr() {
         ?> 
         <p>Cette classe permet de lire un QRCode depuis une caméra et afficher le résultat dans un élément HTML.<br />
             Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input.<br />
@@ -115,14 +113,14 @@ class docPHP_natives_js {
                 . 'js::jsqr("mon_input");\n?>');
     }
 
-    public function vTicker() {
+    public static function vTicker() {
         ?> 
         <p>Créé un vTicker (suite de phrases qui défilent)</p>
         <?php
         js::monaco_highlighter('<?php js::vTicker(array("Lorem Ipsum","..."), $id="vticker"); ?>');
     }
 
-    public function datatable() {
+    public static function datatable() {
         ?> 
         <p>Transforme un tableau HTML en Datatable</p>
         <?php
@@ -146,7 +144,7 @@ class docPHP_natives_js {
                 ), '', 'datatable');
     }
 
-    public function monaco_highlighter() {
+    public static function monaco_highlighter() {
         ?> 
         <p>Afficher du code formaté et stylisé par la librairie <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHightlighter</a> <br />
             code :
@@ -170,7 +168,7 @@ class docPHP_natives_js {
         ?><p>(Vous l'aurez compris, cette documentation utilise beaucoup de monaco_highlighter)</p><?php
     }
 
-    public function fancybox() {
+    public static function fancybox() {
         ?>
         <p>Cette classe permet l'affichage de galeries photos et vidéos via la librairie Fancybox <br />
             la clé "caption" dans le tableau $data est facultative.
@@ -206,13 +204,13 @@ class docPHP_natives_js {
                 ], 6);
     }
 
-    public function freetile() {
+    public static function freetile() {
         ?> 
         <p>(cf freetile)</p>
         <?php
     }
 
-    public function stalactite() {
+    public static function stalactite() {
         ?> 
         <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery <a href="http://jonobr1.com/stalactite/">"stalactite"</a></p>
         <?php
@@ -220,7 +218,7 @@ class docPHP_natives_js {
                 . '<div id="stalactite"></div>');
     }
 
-    public function shuffle_letters() {
+    public static function shuffle_letters() {
         ?> 
         <p>Applique l'effet <a href="https://tutorialzine.com/2011/09/shuffle-letters-effect-jquery">"shuffleLetters"</a> à un élément au chargement de la page</p>
         <?php
@@ -228,14 +226,14 @@ class docPHP_natives_js {
                 . '<p id="shuffleLetters"></p>');
     }
 
-    public function dialog() {
+    public static function dialog() {
         ?> 
         <p>Affiche la boite de dialogue de jquery-ui</p>
         <?php
         js::monaco_highlighter('<?php js::dialog("js_dialog", "Boite de dialogue", "<p>Ceci est une boite de dialogue JQuery</p>"); ?>');
     }
 
-    public function accordion() {
+    public static function accordion() {
         ?> 
         <p>Applique un effet accordéon à une structure</p>
         <?php
@@ -285,7 +283,7 @@ class docPHP_natives_js {
         <p>(Vous l'aurez compris, cette documentation utilise beaucoup d'accordéons)</p><?php
     }
 
-    public function menu() {
+    public static function menu() {
         ?> 
         <p>Transforme une liste ul>li en menu</p>
         <?php
@@ -310,7 +308,7 @@ class docPHP_natives_js {
         <?php
     }
 
-    public function slider() {
+    public static function slider() {
         ?> 
         <p>Affiche le carousel/slide de bootstrap</p>
         <?php

@@ -74,9 +74,9 @@ class admin_controle {
                     $this->_data[$key][$value[0]] = ($this->_data[$key][$value[0]] ? "Oui" : "Non");
                 }
             }
-            if (!$value[2] and $value[1] != "array") {
+            if (!$value[2] and !in_array($value[1], ["array", "psw", "password"])) {
                 $this->_head[] = ucfirst($value[0]);
-            } elseif ($value[1] == "array") {
+            } elseif (in_array($value[1], ["array", "psw", "password"])) {
                 foreach ($this->_data as $key => $row) {
                     unset($this->_data[$key][$value[0]]);
                 }
@@ -147,12 +147,12 @@ class admin_controle {
                     case "mail":
                         $form->input(ucfirst($element[0]), $element[0], "email");
                         break;
+                    case "psw":
+                    case "password":
+                        $form->input(ucfirst($element[0]), $element[0], "password");
+                        break;
                     case "string":
-                        if ($element[0] == "psw" or $element[0] == "password") {
-                            $form->input(ucfirst($element[0]), $element[0], "password");
-                        } else {
-                            $form->input(ucfirst($element[0]), $element[0]);
-                        }
+                        $form->input(ucfirst($element[0]), $element[0]);
                         break;
                     case "array":
                         $form->hidden($element[0], "[]");
@@ -187,8 +187,8 @@ class admin_controle {
                 if (!$element[2]) {
                     $key .= " {$element[0]},";
                     $value .= " :{$element[0]},";
-                    if ($element[0] == "psw" or $element[0] == "password") {
-                        $params[":{$element[0]}"] = application::hash($_POST[$element[0]]);
+                    if ($element[1] == "psw" or $element[1] == "password") {
+                        $params[":{$element[0]}"] = application::hash($_POST[$element[0]],true);
                     } else {
                         $params[":{$element[0]}"] = $_POST[$element[0]];
                     }
@@ -226,12 +226,12 @@ class admin_controle {
                     case "mail":
                         $form->input(ucfirst($element[0]), $element[0], "email", $object->$geter());
                         break;
+                    case "psw":
+                    case "password":
+                        $form->input(ucfirst($element[0]), $element[0], "password");
+                        break;
                     case "string":
-                        if ($element[0] == "psw" or $element[0] == "password") {
-                            $form->input(ucfirst($element[0]), $element[0], "password");
-                        } else {
-                            $form->input(ucfirst($element[0]), $element[0], "text", $object->$geter());
-                        }
+                        $form->input(ucfirst($element[0]), $element[0], "text", $object->$geter());
                         break;
                     case "array":
                         $form->hidden($element[0], json_encode($object->$geter()));
@@ -268,13 +268,7 @@ class admin_controle {
             foreach ($this->_structure as $element) {
                 if (!$element[2]) {
                     $seter = "set_" . $element[0];
-                    if ($element[0] == "psw" or $element[0] == "password") {
-                        if (!empty($_POST[$element[0]])) {
-                            $object->$seter(application::hash($_POST[$element[0]]));
-                        }
-                    } else {
-                        $object->$seter($_POST[$element[0]]);
-                    }
+                    $object->$seter($_POST[$element[0]]);
                 }
             }
             js::redir(strtr($url, ["&amp;" => "&"]));
@@ -301,7 +295,7 @@ class admin_controle {
                     $data[$key][$value[0]] = ($data[$key][$value[0]] ? "Oui" : "Non");
                 }
             }
-            if ($value[1] == "array") {
+            if (in_array($value[1], ["array", "psw", "password"])) {
                 foreach ($data as $key => $row) {
                     unset($data[$key][$value[0]]);
                 }

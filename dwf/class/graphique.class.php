@@ -244,7 +244,7 @@ class graphique {
      * @param string $id ID CSS
      * @param array $data Données du graphe exemple : array("A"=>array("B","C"), "B"=>array("C"), "C"=>array("A"));
      */
-    public function cytoscape($id, $data) {
+    public static function cytoscape($id, $data) {      
         new cytoscape($id, $data);
     }
 

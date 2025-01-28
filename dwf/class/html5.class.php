@@ -39,7 +39,7 @@ class html5 {
      * @param string $description Description de la page
      * @param string $keyword Mots clés de la page
      */
-    public function __construct() {
+    public function __construct($base="") {
         self::$_called = true;
         if (!isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
             $_SERVER["HTTP_ACCEPT_LANGUAGE"] = "fr";
@@ -54,6 +54,9 @@ class html5 {
         <html lang="<?= $lang; ?>">
             <head>
                 <?php
+                if(!empty($base)){
+                    echo tags::tag("base",["href"=>$base]);
+                }
                 $meta .= tags::tag("title", [], "") .
                         tags::tag("meta", ["charset" => "UTF-8"]) .
                         tags::tag("meta", ["name" => "viewport", "content" => "width=device-width, initial-scale=1.0"]) .

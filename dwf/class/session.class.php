@@ -13,7 +13,12 @@ class session {
      * @param boolean $regenerate_id l'id de la session doit-il étre régénérée : à mettre à false si utilisé dans un service !
      */
     public static function start($regenerate_id = true) {
-        ini_set("session.cookie_secure", "On");
+        $host = explode(':', $_SERVER['HTTP_HOST'])[0];
+        if (filter_var($host, FILTER_VALIDATE_IP) and !filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
+            ini_set("session.cookie_secure", "0");
+        } else {
+            ini_set("session.cookie_secure", "1");
+        }
         ini_set("session.cookie_samesite", "Lax");
         session_start();
         ($regenerate_id ? session_regenerate_id(true) : null);
@@ -118,5 +123,4 @@ class session {
     public static function get_val($key) {
         return (isset($_SESSION[config::$_prefix . "_" . $key]) ? $_SESSION[config::$_prefix . "_" . $key] : false);
     }
-
 }

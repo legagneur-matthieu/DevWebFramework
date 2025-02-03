@@ -1,12 +1,21 @@
 <?php
 
-/**
- * Description of vpage
+/** 
+ * Affiche une page virtuelle (iframe) à partir du contenu fourni.
+ * /!\ les services sont requis pour utiliser cette classe
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class vpage {
 
+    /**
+     * Affiche une page virtuelle (iframe)  à partir du contenu fourni.
+     * /!\ les services sont requis pour utiliser cette classe
+     *
+     * @param string $content Le contenu HTML de la page virtuelle.
+     * @param string $title   Le titre de la page virtuelle (défaut : "vpage").
+     * @param int    $ttl     Le temps de vie de la page en secondes (défaut : 86400).
+     */
     public function __construct($content, $title = "vpage", $ttl = 86400) {
         if (!file_exists("./services/index.php")) {
             dwf_exception::warning_exception("625", ["__c__" => __CLASS__]);

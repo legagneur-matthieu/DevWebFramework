@@ -100,13 +100,18 @@ class auth {
      */
     private function exec_auth() {
         $table = $this->_table;
-        $req = $table::get_table_array("{$this->_tuple_login}=:{$this->_tuple_login} and {$this->_tuple_psw}=:{$this->_tuple_psw}", [
+        $req = $table::get_table_array("{$this->_tuple_login}=:{$this->_tuple_login} and ({$this->_tuple_psw}=:{$this->_tuple_psw} or {$this->_tuple_psw}=:{$this->_tuple_psw}_salt)", [
                     ":{$this->_tuple_login}" => $_POST['auth_login'],
-                    ":{$this->_tuple_psw}" => application::hash($_POST['auth_psw'])
+                    ":{$this->_tuple_psw}" => application::hash($_POST['auth_psw']),
+                    ":{$this->_tuple_psw}_salt" => application::hash($_POST['auth_psw'],true)
         ]);
         if (isset($req[0]["id"])) {
             session::set_auth(true);
             session::set_user($req[0]["id"]);
+            if($req[0][$this->_tuple_psw]==application::hash($_POST['auth_psw'])){
+                $set_tuple_psw="set_{$this->_tuple_psw}";
+                $table::get_from_id($req[0]["id"])->$set_tuple_psw(application::hash($_POST['auth_psw'],true)); // a test
+            }
             js::redir("");
         } else {
             $_POST["auth_psw"] = "********";

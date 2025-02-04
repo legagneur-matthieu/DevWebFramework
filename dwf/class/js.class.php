@@ -178,11 +178,22 @@ class js {
     /**
      * Applique un éditeur TinyMCE (WYSIWYG) à un textarea
      * 
+     * @deprecated since version 21.25.02 Remplacé par Summernote
      * @param array $id Id du textarea
      * @return \tinymce Cette classe permet d'appliquer l'éditeur TinyMCE (WYSIWYG) à un textarea 
      */
     public static function tinymce($id) {
         return new tinymce($id);
+    }
+    
+    /**
+     * Applique un éditeur Summernote (WYSIWYG) à un textarea
+     * 
+     * @param array $id Id du textarea
+     * @return \tinymce Cette classe permet d'appliquer l'éditeur Summernote (WYSIWYG) à un textarea 
+     */
+    public static function summernote($id) {
+        return new summernote($id);
     }
 
     /**

@@ -190,7 +190,7 @@ class js {
      * Applique un éditeur Summernote (WYSIWYG) à un textarea
      * 
      * @param array $id Id du textarea
-     * @return \tinymce Cette classe permet d'appliquer l'éditeur Summernote (WYSIWYG) à un textarea 
+     * @return \summernote Cette classe permet d'appliquer l'éditeur Summernote (WYSIWYG) à un textarea 
      */
     public static function summernote($id) {
         return new summernote($id);

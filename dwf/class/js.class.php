@@ -65,24 +65,24 @@ class js {
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log standard à l'écran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log standard à afficher
      */
     public static function log_std($msg) {
         ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                alertify.log("<?= $msg; ?>");
+                alertify.message("<?= $msg; ?>");
             });
         </script>
         <?php
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log success à l'écran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log success à afficher
      */
     public static function log_success($msg) {
         ?>
@@ -95,9 +95,24 @@ class js {
     }
 
     /**
-     * Affiche un message de log à l'écran de l'utilisateur
+     * Affiche un message de log d'avertissement à l'écran de l'utilisateur
      * 
-     * @param string $msg Log à afficher
+     * @param string $msg Log d'avertissement à afficher
+     */
+    public static function log_warning($msg) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                alertify.warning("<?= $msg; ?>");
+            });
+        </script>
+        <?php
+    }
+    
+    /**
+     * Affiche un message de log d'erreur à l'écran de l'utilisateur
+     * 
+     * @param string $msg Log d'erreur à afficher
      */
     public static function log_error($msg) {
         ?>

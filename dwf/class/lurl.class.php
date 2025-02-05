@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * /!\ Lurl.fr a fermé en Juillet 2024 
+ * cette classe reste a titre historique pour le moment
+ * et serra supprimer dans une prochaine version
+ * 
+ * 
  * Cette classe permet de generer des liens LURL
  * Ou un boutton LURL sponsorisé qui redirige vers la page courante
  * 
@@ -26,6 +31,7 @@ class lurl {
      */
     public function __construct($api_key) {
         $this->_api_key = $api_key;
+        /*
         entity_generator::generate([
             "lurl_links" => [
                 ["id", "int", true],
@@ -33,6 +39,7 @@ class lurl {
                 ["lurl", "string", false],
             ]
         ]);
+        */
     }
 
     /**
@@ -42,6 +49,8 @@ class lurl {
      * @return string|boolean LURL 
      */
     public function get_lurl($url) {
+        return false;
+        /*
         $lurl = lurl_links::get_collection("url='" . bdd::p($url) . "'");
         if (isset($lurl[0])) {
             $result = [
@@ -68,6 +77,7 @@ class lurl {
                 $log->warning("LURL $url : LURL injoignable (ou probleme API_KEY");
             }
         }
+        */
     }
 
     /**
@@ -79,6 +89,8 @@ class lurl {
      * @param string $title Title du boutton 
      */
     public function selfpage_support_btn($text = "Soutenez nous <br />(Publicité)", $title = "Soutenez nous en cliquant sur ce lien publicitaire") {
+        return "";
+        /*
         if (!session::get_val("lurl")) {
             session::set_val("lurl", []);
         }
@@ -95,5 +107,6 @@ class lurl {
                 }
             }
         }
+        */
     }
 }

@@ -58,6 +58,8 @@ class docPHP_natives {
         <ul>
             <li>Instancie la connexion à la base de données par un objet bdd accessible via application::$_bdd (cf bdd)</li>
             <li>Permet d'utiliser des méthodes évènementielles à partir de application::event() (cf : méthodes évènementielles)</li>
+            <li>application::get_url() permet de recuperer l'url courrante</li>
+            <li>application::get_url(["var_get"]) permet de recuperer l'url courrante en supprimant les verrables GET renseigné</li>
         </ul>
         <?php
     }
@@ -238,12 +240,12 @@ class docPHP_natives {
                 . '?>'
         );
         ?> <p>Contenu d'un paquet de 52 cartes :</p><p><?php
-        $deck = (new cards())->get_deck();
-        sort($deck);
-        foreach ($deck as $cards) {
-            echo $cards . " ";
-        }
-        ?></p><p>Contenu d'un paquet de 78 cartes :</p><p><?php
+            $deck = (new cards())->get_deck();
+            sort($deck);
+            foreach ($deck as $cards) {
+                echo $cards . " ";
+            }
+            ?></p><p>Contenu d'un paquet de 78 cartes :</p><p><?php
             $deck = (new cards(78))->get_deck();
             sort($deck);
             foreach ($deck as $cards) {
@@ -329,17 +331,25 @@ class docPHP_natives {
 
     public static function ckeditor() {
         ?>
-        <p>Cette classe est exploitée par la classe form (cf. form)</p>
         <p class="alert alert-warning">
-            Deprecié depuis la verssion 21.24.10, usilisez plutot TinyMCE
+            <span><del>Deprecié depuis la verssion 21.24.10, utilisez plutot TinyMCE</del></span><br>
+            <span>Deprecié depuis la verssion 21.25.02, utilisez plutot Summernote</span>
         </p>
+        <hr>
+        <h3 class="text-center">js::summernote</h3>
+        <hr>
         <?php
+        docPHP_natives_js::summernote();
     }
 
     public static function cli() {
         ?>
         <p>Cette classe est utile pour les CLI (cf. CLI)</p>
+        <hr>
+        <h3 class="text-center">CLI</h3>
+        <hr>
         <?php
+        docPHP::CLI();
     }
 
     public static function compact_css() {
@@ -416,12 +426,27 @@ class docPHP_natives {
                 '    }\n' .
                 '</style>\n' .
                 '<?php\n' .
-                '(new graphique())->cytoscape("cytoscape",array(\n' .
+                'graphique::cytoscape("cytoscape",array(\n' .
                 '    \'A\'=>array(\'B\',\'C\'),\n' .
                 '    \'B\'=>array(\'C\'),\n' .
                 '    \'C\'=>array(\'A\')\n' .
                 '));\n' .
                 '?>');
+        ob_start();
+        ?>
+        <style type="text/css">
+            #cytoscape{
+                width: 300px;
+                height: 300px;
+            }
+        </style>
+        <?php
+        graphique::cytoscape("cytoscape", array(
+            'A' => array('B', 'C'),
+            'B' => array('C'),
+            'C' => array('A')
+        ));
+        new vpage(ob_get_clean());
     }
 
     public static function datatable() {
@@ -429,7 +454,11 @@ class docPHP_natives {
         <p>Cette classe permet de convertir un tableau HTML en datatable (jquery) <br />
             il est préférable de l'appeler via <em>js::datatable()</em> (cf js)
         </p>
+        <hr>
+        <h3 class="text-center">js::datatable</h3>
+        <hr>
         <?php
+        docPHP_natives_js::datatable();
     }
 
     public static function ddg__ddg_api() {
@@ -612,11 +641,136 @@ class docPHP_natives {
         <p>Astuce : une interface pour activer les eastereggs peut être affichée en tapant le "Konami code" : ↑ ↑ ↓ ↓ ← → ← → B A</p>
         <p>Pour activer les eastereggs sur toutes les pages, placez cette ligne dans <em>pages->header()</em></p>
         <?php
+        new easteregg();
         js::monaco_highlighter("<?php new easteregg(); ?>");
     }
 
     public static function entity_generator() {
-        ?><p>(cf Entity)</p><?php
+        ?>
+        <p class="alert alert-danger">
+            Note de version 21.24.04 : <br>
+            Comme expliqué plus en détail dans la section BDD la gestion des requetes a changé,<br>
+            il est recomandé de regénérer vos entity si elles ont été généré avant cette verssion !
+        </p>
+        <p>
+            Les entités font office d'ORM dans votre projet,<br />
+            une classe entité vous permet de lire, ajouter, modifier ou supprimer des entrées de votre base de données sans avoir à saisir une requête SQL <br />
+            (ormis une eventuelle condition "where" ). Les entités exploitent un objet bdd accessible via <em>application::$_bdd</em> <br />
+            les entités seront capable de recréer la structure de leur base de données si celle-ci est perdue (mais ne permettent pas de sauvegarder les données ).
+        </p>
+        <h4>Créer des entités</h4>
+        <p>
+            La création d'une entité est simple, il est conseillé de mettre la création d'entité soit dans le constructeur de pages.class.php <br />
+            soit dans le constructeur de la classe métier qui exploitera cette entité. Voici le code (consultez la documentation technique pour plus d'informations)
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '$data=array(                         //$data est un tableau à deux dimensions qui definit\n'
+                . '                                     //la structure de l\'entité et de sa table dans la base de données\n\n'
+                . '    array("id","int",true),          //créé un champ/attribut nommé "id" de type entier,\n'
+                . '                                     //le "true" indique une clé primaire, le setter de "id" sera en privé\n'
+                . '                                     //Depuis la version 21.22.10 cette clé primaire est automatiquement renseigné,\n'
+                . '                                     //il n\'est donc plus nessaicaire de la déclarer dans le code.\n'
+                . '    array("login","string",false),\n'
+                . '    array("psw","string",false),\n'
+                . ');\n'
+                . '$table="user";                       //nom de la table et de l\'entité\n\n'
+                . 'new entity_generator($data, $table); //Créé l\'entité et sa table si elle n\'existe pas\n'
+                . '                                     //Attention : si la structure de l\'entité est modifié \n'
+                . '                                     //il faudra supprimer la classe et la table de l\'entité\n'
+                . '?>');
+        ?>
+        <p>
+            Créer des relations entres les entités et astuces pour créer plusieurs entités facilement
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '$datas=array(\n'
+                . '    "rang"=>array( //on créé une entité rang\n'
+                . '        array("id","int",true),\n'
+                . '        array("nom","string",false),\n'
+                . '    ),\n'
+                . '    "user"=>array( //on créé une entité user\n'
+                . '        array("id","int",true),\n'
+                . '        array("login","string",false),\n'
+                . '        array("psw","string",false),\n'
+                . '        array("rang","rang",false), //on met en relation le fait qu\'un user a un rang (de type "rang")\n'
+                . '    ),\n'
+                . ');\n'
+                . 'foreach($datas as $table => $data){\n'
+                . '    new entity_generator($data, $table);\n'
+                . '}\n'
+                . '?>'
+        );
+        ?>
+        <h4>MAJ 21.18.02</h4>
+        <p>Depuis la version 21.18.02, il est possible de créer l'ensemble de vos entités ainsi :</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'entity_generator::generate([\n'
+                . '    "rang"=>[ //on créé une entité rang\n'
+                . '        ["id","int",true],\n'
+                . '        ["nom","string",false],\n'
+                . '    ],\n'
+                . '    "user"=>[ //on créé une entité user\n'
+                . '        ["id","int",true],\n'
+                . '        ["login","string",false],\n'
+                . '        ["psw","psw",false], //password géré automatiquement depuis 21.25.02\n'
+                . '        ["rang","rang",false], //on met en relation le fait qu\'un user a un rang (de type \'rang\')\n'
+                . '    ],\n'
+                . ']);\n'
+                . '?>'
+        );
+        ?>
+        <h4>Utilisation des entités</h4>
+        <p>Une fois les entités créées, elles peuvent être utilisées (nous utiliserons l'exemple des 'user' et 'rang')</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '//ajoute un utilisateur\n'
+                . 'user::ajout($login, application::hash($psw)); //avant la 21.25.02\n\n'
+                . 'user::ajout($login, $psw) //depuis a 21.25.02;\n\n'
+                . '//récuperer tout les utilisateurs sous forme de tableaux de données\n'
+                . '$users = user::get_table_array();\n'
+                . 'echo $users[0]["login"]; //affiche le login du premier utilisateur de la table\n\n'
+                . '//récuperer tout les utilisateurs du rang 1 (utilisation d\'une requete préparé cf. bdd)\n'
+                . '$users = user::get_table_array("rang=:rang",[":rang"=>1]);\n\n'
+                . '//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n'
+                . '$users = user::get_table_array("1=1 order by login");\n\n'
+                . '//récuperer tout les rang sous forme de table ordonnée par leur ID (les id sont les clés du tableau)\n'
+                . '$rangs = rang::get_table_ordored_array();\n'
+                . 'echo $rangs[1]["nom"]; //affiche le nom du rang ayant l\'identifiant 1\n\n'
+                . '//récuperer les utilisateurs sous forme de collection (tableau d\'objets)\n'
+                . '//DECONSEILLÉ ! potentiellement lourd !\n'
+                . '$users = user::get_collection();\n'
+                . 'echo $users[0]->get_rang()->get_nom(); //affiche le nom du rang du premier utilisateur de la table\n\n'
+                . '//récupere l\'objet d\'un utilisateur à partir de son id\n'
+                . '$user = user::get_from_id(1);\n'
+                . 'echo $user->get_login(); //affiche le login de l\'utilisateur 1\n'
+                . '$user->set_login($nouveau_login); //redéfinit le login de l\'utilisateur 1,\n'
+                . '                                  //la modification dans la base de données sera prise en compte à la fin du script\n\n'
+                . '//supprimer un utilisateur : 2 solutions\n'
+                . '//1 : supprimer un utilisateur non instancié depuis son id\n'
+                . 'user::delete_by_id($id);\n'
+                . '//2 : supprimer un utilisateur instancié\n'
+                . '$user->delete();'
+                . '?>');
+        ?>
+        <p class="alert alert-danger">
+            ATTENTION : si vous utilisez des variables dans les paramètres $where : <br>
+            utilisez le tableau $params afin d'utiliser les requêtes préparé et vous protéger des injections SQL <br />
+            pensez également à la fonction <a href="https://secure.php.net/manual/fr/function.strip-tags.php" target="_blank">strip_tags</a> pour vous protéger des failles XSS.
+        </p>
+        <h4>Les types de champ/attribut</h4>
+        <?php
+        echo html_structures::table(["Type (code PHP)", "Type (SQL)", "Description"], [
+            ["int, integer", "int(11)", "un champ de nombre entiers"],
+            ["bool, boolean", "int(1)", "0 ou 1"],
+            ["string", "text", "un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
+            ["mail", "text", "un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de données"],
+            ["array", "text", "(depuis la version 21.18.03) un champ de texte JSON, les conversions de array (coté PHP) en JSON (coté SQL) et inversement sont gérées en PHP par l'entité. <br />"
+                . "Inutile donc d'utiliser json_encode() et json_decode()"],
+            ["psw (ou password)", "text", "(depuis la version 21.25.02) un champ de texte pour les mot de passe, le hash se fait automatiquement lors de l'appel de set_psw()"],
+        ]);
     }
 
     public static function entity_model() {
@@ -726,8 +880,10 @@ class docPHP_natives {
 
     public static function fancybox() {
         ?>
-        <p>(cf js)</p>
+        <h3 class="text-center">js::fancybox</h3>
+        <hr>
         <?php
+        docPHP_natives_js::fancybox();
     }
 
     public static function fb() {
@@ -797,6 +953,7 @@ class docPHP_natives {
         <p>La classe form permet de créer des formulaires en php stylisés par bootstrap, accessibles et respectant les normes W3C</p>
         <p>Première méthode : création et rendu</p>
         <?php
+        $tmce = js::summernote("ta_2");
         js::monaco_highlighter('<?php\n' .
                 '//création du formulaire\n' .
                 '$form = new form();\n' .
@@ -810,8 +967,8 @@ class docPHP_natives {
                 '    [3, "Pommes"],\n' .
                 ']);\n' .
                 '$form->textarea("Un textarea", "ta_1");\n' .
-                '//création d\'un TinyMCE\n' .
-                '$form->textarea("Un TinyMCE", "ta_2");\n' .
+                '//création d\'un Summernote\n' .
+                '$form->textarea("Un Summernote", "ta_2");\n' .
                 '$tmce = js::tinymce("ta_2");\n' .
                 '//bouton de soumission\n' .
                 '$form->submit("btn-primary");\n' .
@@ -821,7 +978,7 @@ class docPHP_natives {
                 'if (isset($_POST["input_1"])) {\n' .
                 '    //Récupère la date du datepicker au format US\n' .
                 '    $date = form::get_datepicker_us("datepicker_1");\n' .
-                '    //Filtre les balises utilisées dans TinyMCE, protection XSS\n' .
+                '    //Filtre les balises utilisées dans Summernote, protection XSS\n' .
                 '    $ta_2 = $tmce->parse();\n' .
                 '    //Message de succès ou erreur\n' .
                 '    js::alert("le formulaire a bien été soumis");\n' .
@@ -848,8 +1005,8 @@ class docPHP_natives {
                 '    [3, "Pommes"],\n' .
                 ']);\n' .
                 'echo $form->textarea("Un textarea", "ta_1");\n' .
-                '//création d\'un TinyMCE\n' .
-                'echo $form->textarea("Un TinyMCE", "ta_2");\n' .
+                '//création d\'un Summernote\n' .
+                'echo $form->textarea("Un Summernote", "ta_2");\n' .
                 '$tmce = js::tinymce("ta_2");\n' .
                 '//bouton de soumission\n' .
                 'echo $form->submit("btn-primary");\n' .
@@ -859,7 +1016,7 @@ class docPHP_natives {
                 'if (isset($_POST["input_1"])) {\n' .
                 '    //récupère la date du datepicker au format US\n' .
                 '    $date = form::get_datepicker_us("datepicker_1");\n' .
-                '    //filtre les balises utilisées dans TinyMCE, protection XSS\n' .
+                '    //filtre les balises utilisées dans Summernote, protection XSS\n' .
                 '    $ta_2 = $tmce->parse();\n' .
                 '    //message de succès ou erreur\n' .
                 '    js::alert("le formulaire a bien été soumis");\n' .
@@ -895,8 +1052,7 @@ class docPHP_natives {
                     [3, "Pommes"],
                 ]);
                 $form->textarea("Un textarea", "ta_1");
-                $form->textarea("Un TinyMCE", "ta_2");
-                $tmce = js::tinymce("ta_2");
+                $form->textarea("Un Summernote", "ta_2");
                 $form->submit("btn-primary");
                 echo $form->render();
                 ?>
@@ -908,13 +1064,10 @@ class docPHP_natives {
 
     public static function freetile() {
         ?>
-        <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile". <br />
-            Il est préferable d'appeler cette librairie via <em>js::freetile()</em> <br />
-            Les sous éléments peuvent être des images ou des DIV de différentes tailles.
-        </p>
+        <h3 class="text-center">js::freetile</h3>
+        <hr>
         <?php
-        js::monaco_highlighter('<?php js::freetile("freetile"); ?>\n'
-                . '<div id="freetile"></div>');
+        docPHP_natives_js::freetile();
     }
 
     public static function ftp_explorer() {
@@ -1074,7 +1227,7 @@ class docPHP_natives {
                 '    ]\n' .
                 '];' .
                 '//Affiche un graphique en "camembert"\n' .
-                '(new graphique("graph3"))->pie($data);\n' .
+                '(new graphique("graph4"))->pie($data);\n' .
                 '//Affiche un graphique en anneau\n' .
                 '(new graphique("graph5"))->ring($data);\n' .
                 '?>'
@@ -1126,7 +1279,7 @@ class docPHP_natives {
             <p>PIB 2016</p>
             <div class="col-sm-5">
                 <?php
-                (new graphique("graph3", $size))->pie($data2);
+                (new graphique("graph4", $size))->pie($data2);
                 ?>
             </div>
             <div class="col-sm-5">
@@ -1279,6 +1432,18 @@ class docPHP_natives {
         ?>
         <p>Cette classe permet d'afficher une carte exploitant OSM (OpenStreetMap)</p>
         <?php
+        $leaflet = new leaflet(array("x" => 48.85341, "y" => 2.3488, "zoom" => 13));
+        $leaflet->add_marker(48.85341, 2.3488, 'Paris');
+        $leaflet->add_marker(51.50853, -0.12574, 'Londres');
+        $leaflet->add_marker(50.85045, 4.34878, 'Bruxelles');
+        $leaflet->add_circle(50.85045, 4.34878, 100000, 'Belgique');
+        $leaflet->add_polygon(array(
+            array("x" => "50.9519", "y" => "1.8689"),
+            array("x" => "48.582325", "y" => "7.750871"),
+            array("x" => "43.774483", "y" => "7.497540"),
+            array("x" => " 43,3885129", "y" => "-1,6596374"),
+            array("x" => "48,3905283", "y" => "-4,4860088"),
+                ), 'Hexagone');
         js::monaco_highlighter('<?php\n' .
                 '//Initialise le Leaflet\n' .
                 '$leaflet=new leaflet(array("x" => 48.85341, "y" => 2.3488, "zoom" => 13));\n' .
@@ -1303,6 +1468,8 @@ class docPHP_natives {
                 '//Trace l\'itinéraire en ajoutant la position de l\'utilisateur par géolocalisation (droits demandés par le navigateur)\n' .
                 '$leaflet->tracer_itineraire(true);\n' .
                 '?>');
+        echo html_structures::hr();
+        $leaflet->print_map();
     }
 
     public static function log_file() {
@@ -1365,15 +1532,18 @@ class docPHP_natives {
         ?>
         <p>Resultat (<em>lorem_ipsum::generate(100, true)</em>) : </p>
         <p>
-        <?php
-        echo lorem_ipsum::generate(100, true);
-        ?>
-        </p>
             <?php
-        }
-
-        public static function lurl() {
+            echo lorem_ipsum::generate(100, true);
             ?>
+        </p>
+        <?php
+    }
+
+    public static function lurl() {
+        ?>
+        <p class="alert alert-danger">
+            Lurl.fr a férmé définitivement en juillet 2024
+        </p>
         <p>
             Cette classe permet de générer des liens LURL ou un bouton LURL sponsorisé qui redirige vers la page courante
             <a href="https://lurl.fr/ref/legagneur">LURL</a>
@@ -1406,13 +1576,13 @@ class docPHP_natives {
         <p>Cette classe permet de formater l'affichage d'un nombre dans un INPUT de type text</p>
         <?php
         js::monaco_highlighter('<?php\n' .
-                '$maskNumber::set("masknumber");\n' .
+                'maskNumber::set("masknumber");\n' .
                 '$form=new form();\n' .
                 '$form->input("Nombre", "masknumber");\n' .
                 '$form->submit("btn-primary");\n' .
                 'echo $form->render();\n' .
                 'if(isset($_POST["masknumber"])){\n' .
-                '    $maskNumber::get("masknumber"); //convertit les saisies dans $_POST\n' .
+                '    maskNumber::get("masknumber"); //convertit les saisies dans $_POST\n' .
                 '}\n' .
                 '?>'
         );
@@ -1501,13 +1671,14 @@ class docPHP_natives {
         <p>Cette classe gère la pagination dans une page</p>
         <?php
         js::monaco_highlighter('<?php\n'
-                . '$get = "p";\n'
+                . '$get = "p"; //correspond a $_GEY["p"]\n'
                 . '$per_page = 100;\n'
                 . '$count_all = mon_entite::get_count();\n'
                 . '$pagination = pagination::get_limits($get, $per_page, $count_all);\n'
-                . 'foreach (mon_entite::get_table_array("1=1 limit {$pagination[0]}, {$pagination[1]};") as $value) {\n'
+                . 'foreach (mon_entite::get_table_array("1=1 limit :l1,:l2;",[":l1"=>$pagination[0], ":l2"=>$pagination[1]]) as $value) {\n'
                 . '    //affichage des informations\n'
                 . '}\n'
+                . '//affiche le menu de pagination\n'
                 . 'pagination::print_pagination($get, $pagination[3]);\n'
                 . '?>');
     }
@@ -1592,7 +1763,7 @@ class docPHP_natives {
 
     public static function php_finediff() {
         ?>
-        <p>Permet d\'afficher les différences entre deux chaines de caractères</p>
+        <p>Permet d'afficher les différences entre deux chaines de caractères</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . 'echo php_finediff::DiffToHTML("Texte de départ", "Texte final");'
@@ -1615,7 +1786,7 @@ class docPHP_natives {
                 . '?>');
     }
 
-    public static function php_siple_formatter() {
+    public static function php_simple_formatter() {
         ?>
         <p>Cette classe permet de formater (réindenter) du code php/html/js</p>
         <?php
@@ -1714,6 +1885,7 @@ class docPHP_natives {
             Il n'est pas recommandé d'avoir plusieurs diaporamas sur la même page.
         </p>
         <?php
+        $reveal = new reveal($width = "100%", $height = "300px", $theme = "white");
         js::monaco_highlighter('<?php\n'
                 . '$reveal = new reveal($width = "100%", $height = "300px", $theme = "white");\n'
                 . '$reveal->start_reveal();\n'
@@ -1727,6 +1899,21 @@ class docPHP_natives {
                 . '<?php\n'
                 . '$reveal->close_reveal();\n'
                 . '?>');
+        echo html_structures::hr();
+        $reveal->start_reveal();
+        ?>
+        <section><p style="font-size: 48px;">Ceci est un Reveal</p></section>
+        <section>
+            <section><p style="font-size: 48px;">Reveal est une librairie JS qui permet de faire des présentations en HTML</p></section>
+            <section><p style="font-size: 48px;">Le PowerPoint est mort, vive le Reveal !</p></section>
+        </section>
+        <section>
+            <p style="font-size: 48px;">Site officiel de Reveal : <br />
+                <a href="http://lab.hakim.se/reveal-js/">http://lab.hakim.se/reveal-js/</a>
+            </p>
+        </section>
+        <?php
+        $reveal->close_reveal();
     }
 
     public static function reversoLib() {
@@ -1908,6 +2095,7 @@ class docPHP_natives {
 
     public static function sql_backup() {
         ?>
+        <p class="alert alert-warning">Une refonte de cette classe est prévu</p>
         <p>
             La classe sql_backup permet de créer des backup quotidiens de la base de données <br />
             les backup peuvent être stockés sur un disque dur (différent du disque de l'application) ou sur un (s)ftp distant <br />
@@ -1945,8 +2133,10 @@ class docPHP_natives {
 
     public static function stalactite() {
         ?>
-        <p>(cf js)</p>
+        <h3 class="text-center">js::stalactite</h3>
+        <hr>
         <?php
+        docPHP_natives_js::stalactite();
     }
 
     public static function statistiques() {
@@ -1980,7 +2170,7 @@ class docPHP_natives {
                 ');\n' .
                 '$route_default = "sous_route_1"; //route par défaut\n' .
                 'new sub_menu($this, $route, $key, $route_default);\n' .
-                '//$this est l\'ascenseur de la classe courante,\n' .
+                '//$this est l\'acceseur de la classe courante,\n' .
                 '//cette classe devra par la suite disposer de méthodes publiques ayant pour nom les valeurs des routes\n' .
                 '//ici notre classe devra contenir les méthodes publiques : \n' .
                 '//sous_route_1(), sous_route_2() et sous_route_masque()\n' .
@@ -1990,8 +2180,10 @@ class docPHP_natives {
 
     public static function monaco_highlighter() {
         ?>
-        <p>(cf js)</p>
+        <h3 class="text-center">js::monaco_highlighter</h3>
+        <hr>
         <?php
+        docPHP_natives_js::monaco_highlighter();
     }
 
     public static function tags() {
@@ -2039,36 +2231,36 @@ class docPHP_natives {
         <div class="row">
             <div class="col-sm-6">
                 <p>Code :</p>
-        <?php
-        js::monaco_highlighter('<?php\n' .
-                '$ul = tags::ul();\n' .
-                'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
-                '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
-                '}\n' .
-                'echo tags::tag("div", [], tags::tag(\n' .
-                '     "p", [], "Ma liste de " . tags::tag(\n' .
-                '         "strong", [], "fruit")\n' .
-                '     ) . $ul\n' .
-                ');\n\n' .
-                '// ou plus simplement avec html_structures\n' .
-                'echo tags::tag("div", [], tags::tag(\n' .
-                '     "p", [], "Ma liste de " . tags::tag(\n' .
-                '         "strong", [], "fruit")\n' .
-                '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
-                ');\n' .
-                '?>'
-        );
-        ?>
+                <?php
+                js::monaco_highlighter('<?php\n' .
+                        '$ul = tags::ul();\n' .
+                        'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
+                        '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
+                        '}\n' .
+                        'echo tags::tag("div", [], tags::tag(\n' .
+                        '     "p", [], "Ma liste de " . tags::tag(\n' .
+                        '         "strong", [], "fruit")\n' .
+                        '     ) . $ul\n' .
+                        ');\n\n' .
+                        '// ou plus simplement avec html_structures\n' .
+                        'echo tags::tag("div", [], tags::tag(\n' .
+                        '     "p", [], "Ma liste de " . tags::tag(\n' .
+                        '         "strong", [], "fruit")\n' .
+                        '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
+                        ');\n' .
+                        '?>'
+                );
+                ?>
             </div>
             <div class="col-sm-6">
                 <p>Résultat :</p>
-        <?php
-        echo tags::tag('div', [], tags::tag(
-                        'p', [], 'Ma liste de ' . tags::tag(
-                                'strong', [], 'fruit')
-                ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
-        );
-        ?>
+                <?php
+                echo tags::tag('div', [], tags::tag(
+                                'p', [], 'Ma liste de ' . tags::tag(
+                                        'strong', [], 'fruit')
+                        ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
+                );
+                ?>
             </div>
         </div>
         <?php
@@ -2132,7 +2324,7 @@ class docPHP_natives {
 
     public static function template() {
         ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
@@ -2237,8 +2429,14 @@ class docPHP_natives {
 
     public static function tinymce() {
         ?>
-        <p>Cette classe est exploitée par la classe form (cf. form)</p>
+        <p class="alert alert-warning">
+            <span>Deprecié depuis la verssion 21.25.02, utilisez plutot Summernote</span>
+        </p>
+        <hr>
+        <h3 class="text-center">js::summernote</h3>
+        <hr>
         <?php
+        docPHP_natives_js::summernote();
     }
 
     public static function tor() {
@@ -2276,9 +2474,9 @@ class docPHP_natives {
         </p>
         <?php
         js::monaco_highlighter('<?php new update_dwf(); ?>');
-        $vers = "21.18.08";
-        $versm1 = "21.18.07";
-        $vgit = "2.18.0";
+        $vers = "21.25.02";
+        $versm1 = "21.24.10";
+        $vgit = "2.34.1";
         echo html_structures::table(["Version GIT courante", "Version DWF courante", "Dernière version DWF disponible", "Statut / Mise à jour"], [
             ["git version " . $vgit, $vers, $vers, "Already up-to-date."],
             ["OU", "", "", ""],
@@ -2291,17 +2489,35 @@ class docPHP_natives {
         <p>Cette classe permet d'afficher une vidéo avec un player accessible</p>
         <?php
         js::monaco_highlighter('<?php new video("./files/videos/nuagesMusicman921.webm",$id="video-js"); ?>');
-        new video('./files/videos/nuagesMusicman921.webm');
-        ?><p>Credit : <br />
+        ?>
+        <div style='width:600px' class="mx-auto">
+            <?php
+            new video('./files/videos/nuagesMusicman921.webm');
+            ?>
+        </div>
+        <p>Credit : <br />
             Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />
             Musique  : Dread (v2) - musicman921 <a href="https://musicman921.newgrounds.com/">https://musicman921.newgrounds.com/</a>
         </p><?php
     }
 
+    public static function vpage() {
+        ?>
+        <p>Affiche une page virtuelle (iframe) à partir du contenu fourni</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'ob_start();\n'
+                . '//contenu'
+                . 'new vpage(ob_get_clean(),$title="vpage",$ttl = 86400);\n'
+                . '?>');
+    }
+
     public static function vticker() {
         ?>
-        <p>(cf js)</p>
+        <h3 class="text-center">js::vTicker</h3>
+        <hr>
         <?php
+        docPHP_natives_js::vTicker();
     }
 
     public static function w3c_validate() {
@@ -2320,8 +2536,120 @@ class docPHP_natives {
 
     public static function websocket() {
         ?>
-        <p>(cf. WebSocket)</p>
+        <p> 
+            Les WebSocket permettent de faire de la communication en temps réel (Real Time Connexion, RTC). <br />
+            L'utilisation première des WebSocket est pour les tchats entre utilisateurs 
+            mais ils peuvent aussi être utilisé pour notifier un utilisateur <br />
+            ou afficher une donnée très variable dans le temps en temps réel (exemple : un stock dans une application de gestion)
+        </p>
+        <p>
+            Un serveur de WebSocket tourne indépendament du serveur web et écoute son propre port (9000 par défaut dans DWF, parametrable dans la config du projet). <br />
+            il est possible de lancer le serveur en mode console (CLI), notamment pour débugger :
+        </p>
         <?php
+        js::monaco_highlighter('php [chemin]/html/[votre-projet]/websocket/index.php');
+        ?>
+        <p>En production, il est possible de laisser l'application lancer elle même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'service::HTTP_POST("http://localhost/[votre-projet]/websocket/index.php");\n'
+                . '?>');
+        ?>
+        <p>L'application ne lancera le serveur qu'une seule fois.</p>
+        <p>Coté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
+        <?php
+        js::monaco_highlighter(''
+                . '    var socket = null;\n'
+                . '    (function start_websocket() {\n'
+                . '        socket = new WebSocket("ws://localhost:9000/");\n'
+                . '        socket.addEventListener("open", function (e) {\n'
+                . '            //cette ligne permet d\'authentifier un utilisateur qui serait authentifié sur l\'aplication\n'
+                . '            socket.send(\'{"action": "auth", "token": "<?= websocket_server::auth() ?>"}\');\n'
+                . '        });\n'
+                . '        socket.addEventListener("close", function (e) {\n'
+                . '            //retente une connexion toutes les 10 secondes en cas de coupure\n'
+                . '            socket = null;\n'
+                . '            let si_ws_reco = setInterval(function () {\n'
+                . '                if (socket) {\n'
+                . '                    start_websocket();\n'
+                . '                    clearInterval(si_ws_reco);\n'
+                . '                }\n'
+                . '            }, 10000);\n'
+                . '        });\n'
+                . '        socket.addEventListener("message", function (e) {\n'
+                . '            data = JSON.parse(e.data);\n'
+                . '            //verifie si l\'utilisateur est authentifié\n'
+                . '            if (undefined != data.auth) {\n'
+                . '                if (data.auth) {\n'
+                . '                    //l\'utilisateur est authentifié\n'
+                . '                } else {\n'
+                . '                    //l\'utilisateur n\'est pas authentifié, affiche l\'erreur\n'
+                . '                    alert(data.message);\n'
+                . '                }\n'
+                . '            }\n'
+                . '        });\n'
+                . '    })();\n');
+        ?>
+        <p>
+            ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffreement (SSL/TLS), <br />
+            c'est à vous de le mettre en place via le système de proxy de votre serveur web.
+        </p>
+        <p>
+            Les websockets de DWF fonctionnent avec l'envoi et la reception de chaines JSON. <br />
+            dans les chaines d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
+            le reste des clés sont libre. <br />
+            la seule action définie par défaut et l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
+        </p>
+        <?php
+        js::monaco_highlighter('{"action":"auth","token":""}');
+        ?>
+        <p>Le retour est une des ses possibilité :</p>
+        <?php
+        js::monaco_highlighter('{"auth":false,"message":"Token empty"}\n' .
+                '{"auth":false,"message":"Invalid token"}\n' .
+                '{"auth":false,"message":"Token conflict"}\n' .
+                '{"auth":true,"message":"OK"}');
+        ?>
+        <p>Pour rajouter une action, il suffit de rajouter une classe dans le dossier "websocket" du projet qui sera nommé : <br />
+            <strong>[nomDeLAction].ws.php</strong> <br />
+            et qui doit avoir la forme suivante :
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'class nomDeLAction {\n'
+                . '\n'
+                . '    /**\n'
+                . '     * \n'
+                . '     * @param websocket_client $client le client qui a emit la requête\n'
+                . '     * @param array $message La chaine JSON déja convertie en tableau\n'
+                . '     */\n'
+                . '    public function __construct(&$client, &$message) {\n'
+                . '        //traitement à faire\n'
+                . '        //Les classes de DWF et les Entity du projet sont utilisables\n'
+                . '\n'
+                . '        //envoi une réponse à l\'émetteur\n'
+                . '        $client->write("réponse");\n'
+                . '    }\n'
+                . '}\n'
+                . '?>\n');
+        ?>
+        <p>La classe <strong>websocket_client</strong> permet de gérer les utilisateurs connectés, <br />
+            elle possède aussi des méthodes statiques qui permettent de sélectionner d'autres utilisateurs connectés. <br />
+            Gardez en tête qu'un utilisateur peut avoir des connexions multiples (s'il ouvre plusieurs onglets par exemple).
+        </p>
+        <p>
+            La classe <strong>websocket_request</strong> permet de lancer des requetes au serveur websocket depuis PHP
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '$wr = new websocket_request($host = "127.0.0.1", $port = 9000);\n'
+                . '//envoie un message sans attendre de réponse\n'
+                . '$wr->send("message");\n'
+                . '//envoie un message en attendant une réponse\n'
+                . '$reponse = $wr->request("message");\n'
+                . '//Ferme la connexion\n'
+                . '$wr->close();\n'
+                . '?>\n');
     }
 
     public static function wled() {

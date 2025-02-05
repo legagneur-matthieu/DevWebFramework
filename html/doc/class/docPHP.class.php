@@ -69,13 +69,12 @@ class docPHP {
                 <h2 class="text-center"><?= strtr(ucfirst($d), array("_" => " ")); ?></h2>
                 <?php
                 if (isset($_GET["native"]) and in_array($_GET["native"], docPHP_natives::get_methods())) {
-                    $h2 = "";
+                    $h3 = "";
                     if ((isset($_GET["js"]) and in_array($_GET["js"], docPHP_natives_js::get_methods()))) {
-                        $h2 = " - " . strtr(ucfirst($_GET["js"]), array("_" => " "));
+                        $h3 = " - " . strtr(ucfirst($_GET["js"]), array("_" => " "));
                     }
-                    ?>
-                    <h2 class="text-center"><?= strtr(ucfirst($_GET["native"]), array("_" => " ")) . $h2 ?></h2>
-                    <?php
+                    $h3 = strtr(ucfirst($_GET["native"]), array("_" => " ")) . $h3;
+                    echo tags::tag("h3", ["class" => "text-center"], $h3);
                 }
                 ?>
                 <hr>
@@ -116,66 +115,71 @@ class docPHP {
                 color: gray;
             }
         </style>
-        <ul class="no-puces">
-            <li><?= $dir_glyph; ?> html
-                <ul>
-                    <li><?= $arrow_glyph; ?> <em>Contient vos projets</em></li>
-                    <li><?= $dir_glyph; ?> commun
+        <div class="card">
+            <div class="card-body">
+
+                <ul class="no-puces">
+                    <li><?= $dir_glyph; ?> html
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets.</em></li>
-                            <li><?= $dir_glyph; ?> src
+                            <li><?= $arrow_glyph; ?> <em>Contient vos projets</em></li>
+                            <li><?= $dir_glyph; ?> commun
                                 <ul>
-                                    <li><?= $arrow_glyph; ?> <em>Contient tous les fichiers CSS et JS communs à tous les projets (et accessibles aux utilisateurs).</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets.</em></li>
+                                    <li><?= $dir_glyph; ?> src
+                                        <ul>
+                                            <li><?= $arrow_glyph; ?> <em>Contient tous les fichiers CSS et JS communs à tous les projets (et accessibles aux utilisateurs).</em></li>
+                                        </ul>
+                                    </li>
+                                    <li><?= $dir_glyph; ?> service
+                                        <ul>
+                                            <li><?= $arrow_glyph; ?> <em>Contient vos services / API</em></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
-                            <li><?= $dir_glyph; ?> service
+                            <li><?= $dir_glyph; ?> [votre-projet]
                                 <ul>
-                                    <li><?= $arrow_glyph; ?> <em>Contient vos services / API</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier ).</em></li>
+                                    <li><?= $dir_glyph; ?> class
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos classes spécifiques au projet ainsi que le fichier de configuration.</em>
+                                        <ul>
+                                            <li><?= $dir_glyph; ?> entity</li>
+                                            <li><?= $arrow_glyph; ?> <em>Contient les entités de votre projet.</em></li>
+                                        </ul>
+                                    </li>
+                                    <li><?= $dir_glyph; ?> src
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS, JS, et médias.</em>
+                                        <ul>
+                                            <li><?= $dir_glyph; ?> compact</li>
+                                            <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS et JS minifiés par le framework.</em></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li><?= $dir_glyph; ?> [votre-projet]
+                    <li><?= $dir_glyph; ?> dwf
                         <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient votre index.php ( à ne pas modifier ).</em></li>
                             <li><?= $dir_glyph; ?> class
-                            <li><?= $arrow_glyph; ?> <em>Contient vos classes spécifiques au projet ainsi que le fichier de configuration.</em>
                                 <ul>
-                                    <li><?= $dir_glyph; ?> entity</li>
-                                    <li><?= $arrow_glyph; ?> <em>Contient les entités de votre projet.</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient les classes natives de DWF.</em></li>
                                 </ul>
                             </li>
-                            <li><?= $dir_glyph; ?> src
-                            <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS, JS, et médias.</em>
+                            <li><?= $dir_glyph; ?> cron
                                 <ul>
-                                    <li><?= $dir_glyph; ?> compact</li>
-                                    <li><?= $arrow_glyph; ?> <em>Contient vos fichiers CSS et JS minifiés par le framework.</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient vos éventuels cron à faire tourner dans vos consoles.</em></li>
+                                </ul>
+                            </li>
+                            <li><?= $dir_glyph; ?> log
+                                <ul>
+                                    <li><?= $arrow_glyph; ?> <em>Contient les logs de vos projets.</em></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
                 </ul>
-            </li>
-            <li><?= $dir_glyph; ?> dwf
-                <ul>
-                    <li><?= $dir_glyph; ?> class
-                        <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient les classes natives de DWF.</em></li>
-                        </ul>
-                    </li>
-                    <li><?= $dir_glyph; ?> cron
-                        <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient vos éventuels cron à faire tourner dans vos consoles.</em></li>
-                        </ul>
-                    </li>
-                    <li><?= $dir_glyph; ?> log
-                        <ul>
-                            <li><?= $arrow_glyph; ?> <em>Contient les logs de vos projets.</em></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
 
         <?php
     }
@@ -187,39 +191,44 @@ class docPHP {
             Ce fichier ne peut se lancer que depuis votre localhost. Il n'est pas possible de s'en servir à distance sans en modifier le code.<br/>
             Une fois l'interface de création de projet ouvert, remplissez les champs correctement. Ces paramètres seront modifiable dans <em>config.class.php</em>
         </p>
-        <ul>
-            <li>Application
+        <div class="card">
+            <div class="card-body">
+
                 <ul>
-                    <li>Nom du dossier (apparait dans l'url) : nom du dossier du projet, il est conseillé de l'écrire en minuscule.</li>
-                    <li>Titre de l'application (apparait dans le "title" des pages) : nom réel de votre projet.</li>
-                    <li>Préfixe (technique, utilisé pour les sessions, log ...) : le préfixe doit être unique à chaque projet, <br /> il sert à différencier les sessions et les logs utilisés dans les projets.</li>
-                    <li>
-                        Hash (hash à utiliser pour chiffrer les mots de passe) : c'est ici que vous choisirez quel algorithme de chiffrement, vous utiliserez pour chiffrer vos mots de passe ou autres clés<br />
-                        l'algorithme est accessible dans le code via <em>config::$_hash_algo</em>
+                    <li>Application
+                        <ul>
+                            <li>Nom du dossier (apparait dans l'url) : nom du dossier du projet, il est conseillé de l'écrire en minuscule.</li>
+                            <li>Titre de l'application (apparait dans le "title" des pages) : nom réel de votre projet.</li>
+                            <li>Préfixe (technique, utilisé pour les sessions, log ...) : le préfixe doit être unique à chaque projet, <br /> il sert à différencier les sessions et les logs utilisés dans les projets.</li>
+                            <li>
+                                Hash (hash à utiliser pour chiffrer les mots de passe) : c'est ici que vous choisirez quel algorithme de chiffrement, vous utiliserez pour chiffrer vos mots de passe ou autres clés<br />
+                                l'algorithme est accessible dans le code via <em>config::$_hash_algo</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li> PDO
+                        <ul>
+                            <li>Type : type du serveur MySQL ou SQLite</li>
+                            <li>Host : host du serveur SQL</li>
+                            <li>Login : nom d'utilisateur</li>
+                            <li>Password : mot de passe</li>
+                            <li>Database : nom de la base de données</li>
+                            <li>Créer la base de données (si elle n'existe pas) : si la case est cochée et que la base de données n'existe pas, alors le framework pourra la créer.</li>
+                            <li>Service internes (un dossier de service sera créé dans le projet) : votre projet aura t-il besoin de services "internes" (spécifique) ?</li>
+                        </ul>
+                    </li>
+                    <li> SMTP
+                        <ul>
+                            <li>Host : host du serveur SMTP</li>
+                            <li>Auth : True si une authentification est requise ( c'est presque toujours le cas )</li>
+                            <li>Login : si Auth = true, nom d'utilisateur SMTP</li>
+                            <li>Password : si Auth = true, mot de passe SMTP</li>
+                            <li><em>Astuce : si vous n'utilisez pas de SMTP, mettez HOST : localhost et Auth : false</em></li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-            <li> PDO
-                <ul>
-                    <li>Type : type du serveur MySQL ou SQLite</li>
-                    <li>Host : host du serveur SQL</li>
-                    <li>Login : nom d'utilisateur</li>
-                    <li>Password : mot de passe</li>
-                    <li>Database : nom de la base de données</li>
-                    <li>Créer la base de données (si elle n'existe pas) : si la case est cochée et que la base de données n'existe pas, alors le framework pourra la créer.</li>
-                    <li>Service internes (un dossier de service sera créé dans le projet) : votre projet aura t-il besoin de services "internes" (spécifique) ?</li>
-                </ul>
-            </li>
-            <li> SMTP
-                <ul>
-                    <li>Host : host du serveur SMTP</li>
-                    <li>Auth : True si une authentification est requise ( c'est presque toujours le cas )</li>
-                    <li>Login : si Auth = true, nom d'utilisateur SMTP</li>
-                    <li>Password : si Auth = true, mot de passe SMTP</li>
-                    <li><em>Astuce : si vous n'utilisez pas de SMTP, mettez HOST : localhost et Auth : false</em></li>
-                </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
         <p>Une fois le formulaire rempli et validé, une notification vous informe du succès de la création et vous redirige vers l'index de votre projet. <br />
             Si vous rencontrez des difficultés, verifiez que votre serveur web a bien les droits d'écriture dans le dossier HTML et que le dossier que vous essayez de créér n'existe pas déjà.
         </p>
@@ -368,129 +377,7 @@ class docPHP {
     }
 
     private function entity() {
-        ?>
-        <p class="alert alert-danger">
-            Note de version 21.24.04 : <br>
-            Comme expliqué plus en détail dans la section BDD la gestion des requetes a changé,<br>
-            il est recomandé de regénérer vos entity si elles ont été généré avant cette verssion !
-        </p>
-        <p>
-            Les entités font office d'ORM dans votre projet,<br />
-            une classe entité vous permet de lire, ajouter, modifier ou supprimer des entrées de votre base de données sans avoir à saisir une requête SQL <br />
-            (ormis une eventuelle condition "where" ). Les entités exploitent un objet bdd accessible via <em>application::$_bdd</em> <br />
-            les entités seront capable de recréer la structure de leur base de données si celle-ci est perdue (mais ne permettent pas de sauvegarder les données ).
-        </p>
-        <h4>Créer des entités</h4>
-        <p>
-            La création d'une entité est simple, il est conseillé de mettre la création d'entité soit dans le constructeur de pages.class.php <br />
-            soit dans le constructeur de la classe métier qui exploitera cette entité. Voici le code (consultez la documentation technique pour plus d'informations)
-        </p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . '$data=array(                         //$data est un tableau à deux dimensions qui definit\n'
-                . '                                     //la structure de l\'entité et de sa table dans la base de données\n\n'
-                . '    array("id","int",true),          //créé un champ/attribut nommé "id" de type entier,\n'
-                . '                                     //le "true" indique une clé primaire, le setter de "id" sera en privé\n'
-                . '                                     //Depuis la version 21.22.10 cette clé primaire est automatiquement renseigné,\n'
-                . '                                     //il n\'est donc plus nessaicaire de la déclarer dans le code.\n'
-                . '    array("login","string",false),\n'
-                . '    array("psw","string",false),\n'
-                . ');\n'
-                . '$table="user";                       //nom de la table et de l\'entité\n\n'
-                . 'new entity_generator($data, $table); //Créé l\'entité et sa table si elle n\'existe pas\n'
-                . '                                     //Attention : si la structure de l\'entité est modifié \n'
-                . '                                     //il faudra supprimer la classe et la table de l\'entité\n'
-                . '?>');
-        ?>
-        <p>
-            Créer des relations entres les entités et astuces pour créer plusieurs entités facilement
-        </p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . '$datas=array(\n'
-                . '    "rang"=>array( //on créé une entité rang\n'
-                . '        array("id","int",true),\n'
-                . '        array("nom","string",false),\n'
-                . '    ),\n'
-                . '    "user"=>array( //on créé une entité user\n'
-                . '        array("id","int",true),\n'
-                . '        array("login","string",false),\n'
-                . '        array("psw","string",false),\n'
-                . '        array("rang","rang",false), //on met en relation le fait qu\'un user a un rang (de type "rang")\n'
-                . '    ),\n'
-                . ');\n'
-                . 'foreach($datas as $table => $data){\n'
-                . '    new entity_generator($data, $table);\n'
-                . '}\n'
-                . '?>'
-        );
-        ?>
-        <h4>MAJ 21.18.02</h4>
-        <p>Depuis la version 21.18.02, il est possible de créer l'ensemble de vos entités ainsi :</p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . 'entity_generator::generate([\n'
-                . '    "rang"=>[ //on créé une entité rang\n'
-                . '        ["id","int",true],\n'
-                . '        ["nom","string",false],\n'
-                . '    ],\n'
-                . '    "user"=>[ //on créé une entité user\n'
-                . '        ["id","int",true],\n'
-                . '        ["login","string",false],\n'
-                . '        ["psw","string",false],\n'
-                . '        ["rang","rang",false], //on met en relation le fait qu\'un user a un rang (de type \'rang\')\n'
-                . '    ],\n'
-                . ']);\n'
-                . '?>'
-        );
-        ?>
-        <h4>Utilisation des entités</h4>
-        <p>Une fois les entités créées, elles peuvent être utilisées (nous utiliserons l'exemple des 'user' et 'rang')</p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . '//ajoute un utilisateur\n'
-                . 'user::ajout($login, application::hash($psw));\n\n'
-                . '//récuperer tout les utilisateurs sous forme de tableaux de données\n'
-                . '$users = user::get_table_array();\n'
-                . 'echo $users[0]["login"]; //affiche le login du premier utilisateur de la table\n\n'
-                . '//récuperer tout les utilisateurs du rang 1 (utilisation d\'une requete préparé cf. bdd)\n'
-                . '$users = user::get_table_array("rang=:rang",[":rang"=>1]);\n\n'
-                . '//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n'
-                . '$users = user::get_table_array("1=1 order by login");\n\n'
-                . '//récuperer tout les rang sous forme de table ordonnée par leur ID (les id sont les clés du tableau)\n'
-                . '$rangs = rang::get_table_ordored_array();\n'
-                . 'echo $rangs[1]["nom"]; //affiche le nom du rang ayant l\'identifiant 1\n\n'
-                . '//récuperer les utilisateurs sous forme de collection (tableau d\'objets)\n'
-                . '//DECONSEILLÉ ! potentiellement lourd !\n'
-                . '$users = user::get_collection();\n'
-                . 'echo $users[0]->get_rang()->get_nom(); //affiche le nom du rang du premier utilisateur de la table\n\n'
-                . '//récupere l\'objet d\'un utilisateur à partir de son id\n'
-                . '$user = user::get_from_id(1);\n'
-                . 'echo $user->get_login(); //affiche le login de l\'utilisateur 1\n'
-                . '$user->set_login($nouveau_login); //redéfinit le login de l\'utilisateur 1,\n'
-                . '                                  //la modification dans la base de données sera prise en compte à la fin du script\n\n'
-                . '//supprimer un utilisateur : 2 solutions\n'
-                . '//1 : supprimer un utilisateur non instancié depuis son id\n'
-                . 'user::delete_by_id($id);\n'
-                . '//2 : supprimer un utilisateur instancié\n'
-                . '$user->delete();'
-                . '?>');
-        ?>
-        <p class="alert alert-danger">
-            ATTENTION : si vous utilisez des variables dans les paramètres $where : <br>
-            utilisez le tableau $params afin d'utiliser les requêtes préparé et vous protéger des injections SQL <br />
-            pensez également à la fonction <a href="https://secure.php.net/manual/fr/function.strip-tags.php" target="_blank">strip_tags</a> pour vous protéger des failles XSS.
-        </p>
-        <h4>Les types de champ/attribut</h4>
-        <?php
-        echo html_structures::table(["Type (code PHP)", "Type (SQL)", "Description"], [
-            ["int, integer", "int(11)", "un champ de nombre entiers"],
-            ["bool, boolean", "int(1)", "0 ou 1"],
-            ["string", "text", "un champ de texte, peut contenir aussi du HTML, des dates, ou des nombres"],
-            ["mail", "text", "un champ de texte pour les mail, une verification est faite en PHP par l'entité avant l'enregistrement en base de données"],
-            ["array", "text", "(depuis la version 21.18.03) un champ de texte JSON, les conversions de array (coté PHP) en JSON (coté SQL) et inversement sont gérées en PHP par l'entité. <br />"
-                . "Inutile donc d'utiliser json_encode() et json_decode()"],
-        ]);
+        docPHP_natives::entity_generator();
     }
 
     private function bdd() {
@@ -555,26 +442,31 @@ class docPHP {
             En procédant ainsi, votre service pourra exploiter le framework, les classes métiers et les entités.
         </p>
         <p>Exemple pratique, soit le projet avec l'arboressance suivante :</p>
-        <ul class="no-puces">
-            <li><?php echo $dir_glyph; ?> mon_projet
-                <ul>
-                    <li><?php echo $dir_glyph; ?> class
+        <div class="card">
+            <div class="card-body">
+
+                <ul class="no-puces">
+                    <li><?php echo $dir_glyph; ?> mon_projet
                         <ul>
-                            <li><?php echo $dir_glyph; ?> entity
+                            <li><?php echo $dir_glyph; ?> class
                                 <ul>
-                                    <li><?php echo $file_glyph; ?> index.php</li>
-                                    <li><?php echo $file_glyph; ?> user.class.php</li>
+                                    <li><?php echo $dir_glyph; ?> entity
+                                        <ul>
+                                            <li><?php echo $file_glyph; ?> index.php</li>
+                                            <li><?php echo $file_glyph; ?> user.class.php</li>
+                                        </ul>
+                                    </li>
+                                    <li><?php echo $file_glyph; ?> config.class.php</li>
+                                    <li><?php echo $file_glyph; ?> page.class.php</li>
+                                    <li><?php echo $file_glyph; ?> une_classe_metier.class.php</li>
                                 </ul>
                             </li>
-                            <li><?php echo $file_glyph; ?> config.class.php</li>
-                            <li><?php echo $file_glyph; ?> page.class.php</li>
-                            <li><?php echo $file_glyph; ?> une_classe_metier.class.php</li>
+                            <li><?php echo $file_glyph; ?> index.php</li>
                         </ul>
                     </li>
-                    <li><?php echo $file_glyph; ?> index.php</li>
                 </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
         <p>Et le service <em>/html/commun/service/mon_service.service.php</em> qui retourne les données de l'utilisateur selon l'id</p>
         <?php
         js::monaco_highlighter('<?php\n\n'
@@ -645,7 +537,7 @@ class docPHP {
         <?php
     }
 
-    private function CLI() {
+    public static function CLI() {
         ?>
         <p>Les CLI sont des script PHP destiné à tourner en mode console, <br /> 
             très utile pour effectuer des opérations longues telles que des sauvegardes de grandes bases de données par exemple <br />
@@ -721,121 +613,7 @@ class docPHP {
     }
 
     private function WebSocket() {
-        ?>
-        <p> 
-            Les WebSocket permettent de faire de la communication en temps réel (Real Time Connexion, RTC). <br />
-            L'utilisation première des WebSocket est pour les tchats entre utilisateurs 
-            mais ils peuvent aussi être utilisé pour notifier un utilisateur <br />
-            ou afficher une donnée très variable dans le temps en temps réel (exemple : un stock dans une application de gestion)
-        </p>
-        <p>
-            Un serveur de WebSocket tourne indépendament du serveur web et écoute son propre port (9000 par défaut dans DWF, parametrable dans la config du projet). <br />
-            il est possible de lancer le serveur en mode console (CLI), notamment pour débugger :
-        </p>
-        <?php
-        js::monaco_highlighter('php [chemin]/html/[votre-projet]/websocket/index.php');
-        ?>
-        <p>En production, il est possible de laisser l'application lancer elle même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . 'service::HTTP_POST("http://localhost/[votre-projet]/websocket/index.php");\n'
-                . '?>');
-        ?>
-        <p>L'application ne lancera le serveur qu'une seule fois.</p>
-        <p>Coté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
-        <?php
-        js::monaco_highlighter(''
-                . '    var socket = null;\n'
-                . '    (function start_websocket() {\n'
-                . '        socket = new WebSocket("ws://localhost:9000/");\n'
-                . '        socket.addEventListener("open", function (e) {\n'
-                . '            //cette ligne permet d\'authentifier un utilisateur qui serait authentifié sur l\'aplication\n'
-                . '            socket.send(\'{"action": "auth", "token": "<?= websocket_server::auth() ?>"}\');\n'
-                . '        });\n'
-                . '        socket.addEventListener("close", function (e) {\n'
-                . '            //retente une connexion toutes les 10 secondes en cas de coupure\n'
-                . '            socket = null;\n'
-                . '            let si_ws_reco = setInterval(function () {\n'
-                . '                if (socket) {\n'
-                . '                    start_websocket();\n'
-                . '                    clearInterval(si_ws_reco);\n'
-                . '                }\n'
-                . '            }, 10000);\n'
-                . '        });\n'
-                . '        socket.addEventListener("message", function (e) {\n'
-                . '            data = JSON.parse(e.data);\n'
-                . '            //verifie si l\'utilisateur est authentifié\n'
-                . '            if (undefined != data.auth) {\n'
-                . '                if (data.auth) {\n'
-                . '                    //l\'utilisateur est authentifié\n'
-                . '                } else {\n'
-                . '                    //l\'utilisateur n\'est pas authentifié, affiche l\'erreur\n'
-                . '                    alert(data.message);\n'
-                . '                }\n'
-                . '            }\n'
-                . '        });\n'
-                . '    })();\n');
-        ?>
-        <p>
-            ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffreement (SSL/TLS), <br />
-            c'est à vous de le mettre en place via le système de proxy de votre serveur web.
-        </p>
-        <p>
-            Les websockets de DWF fonctionnent avec l'envoi et la reception de chaines JSON. <br />
-            dans les chaines d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
-            le reste des clés sont libre. <br />
-            la seule action définie par défaut et l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
-        </p>
-        <?php
-        js::monaco_highlighter('{"action":"auth","token":""}');
-        ?>
-        <p>Le retour est une des ses possibilité :</p>
-        <?php
-        js::monaco_highlighter('{"auth":false,"message":"Token empty"}\n' .
-                '{"auth":false,"message":"Invalid token"}\n' .
-                '{"auth":false,"message":"Token conflict"}\n' .
-                '{"auth":true,"message":"OK"}');
-        ?>
-        <p>Pour rajouter une action, il suffit de rajouter une classe dans le dossier "websocket" du projet qui sera nommé : <br />
-            <strong>[nomDeLAction].ws.php</strong> <br />
-            et qui doit avoir la forme suivante :
-        </p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . 'class nomDeLAction {\n'
-                . '\n'
-                . '    /**\n'
-                . '     * \n'
-                . '     * @param websocket_client $client le client qui a emit la requête\n'
-                . '     * @param array $message La chaine JSON déja convertie en tableau\n'
-                . '     */\n'
-                . '    public function __construct(&$client, &$message) {\n'
-                . '        //traitement à faire\n'
-                . '        //Les classes de DWF et les Entity du projet sont utilisables\n'
-                . '\n'
-                . '        //envoi une réponse à l\'émetteur\n'
-                . '        $client->write("réponse");\n'
-                . '    }\n'
-                . '}\n'
-                . '?>\n');
-        ?>
-        <p>La classe <strong>websocket_client</strong> permet de gérer les utilisateurs connectés, <br />
-            elle possède aussi des méthodes statiques qui permettent de sélectionner d'autres utilisateurs connectés. <br />
-            Gardez en tête qu'un utilisateur peut avoir des connexions multiples (s'il ouvre plusieurs onglets par exemple).
-        </p>
-        <p>
-            La classe <strong>websocket_request</strong> permet de lancer des requetes au serveur websocket depuis PHP
-        </p>
-        <?php
-        js::monaco_highlighter('<?php\n'
-                . '$wr = new websocket_request($host = "127.0.0.1", $port = 9000);\n'
-                . '//envoie un message sans attendre de réponse\n'
-                . '$wr->send("message");\n'
-                . '//envoie un message en attendant une réponse\n'
-                . '$reponse = $wr->request("message");\n'
-                . '//Ferme la connexion\n'
-                . '$wr->close();\n'
-                . '?>\n');
+        docPHP_natives::websocket();
     }
 
     private function mise_en_ligne() {
@@ -854,9 +632,8 @@ class docPHP {
         </p>
         <p>
             Cf export_dwf pour plus de détails.
-            Le fichier JSON d'export est consultable dans <em>dwf/class/export_dwf/</em>.
+            Le fichier JSON d'export est consultable dans <em>dwf/class/export_dwf/</em>.    
         </p>
-
 
         <?php
     }

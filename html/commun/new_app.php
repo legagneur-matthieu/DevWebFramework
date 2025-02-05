@@ -64,7 +64,7 @@ class new_app {
                 echo $form->open_fieldset("Application") .
                 $form->input("Nom du dossier (apparait dans l'url)", "dirname") .
                 $form->input("Titre de l'application (apparait dans le \"title\" des page)", "title") .
-                $form->input("Préfixe (technique, utilisé pour les sessions, log ...)", "prefix");
+                $form->input("Préfixe ( <strong class='text-danger' title='Depuis la verssion 21.25.02, le prefixe est utilisé pour le salt des mots de passe !'>A garder secret !</strong> technique, utilisé pour les sessions, log, salt, ...)", "prefix");
                 $option = [];
                 foreach (hash_algos() as $ha) {
                     switch (strlen(hash($ha, "test"))) {

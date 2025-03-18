@@ -11,9 +11,10 @@ class printer {
      * Retourne un formulaire pour exporter un contenu HTML en PDF
      * @param string $content HTML, corps du PDF
      * @param string $filename Nom du fichier
+     * @param int $landscape 0 pour orientation Portrait, 1 pour Paysage
      * @return \form Formulaire d'export
      */
-    public static function PDF($content, $filename) {
+    public static function PDF($content, $filename, $landscape = 0) {
         $content = '<html><head><meta charset="UTF-8"><title>' . $filename . '</title></head><body>' . $content . '</body></html>';
         $key = "PDF_" . sha1($content);
         $_SESSION[$key] = $content;
@@ -25,6 +26,7 @@ class printer {
         $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("filename", $filename);
         $form->hidden("content", $key);
+        $form->hidden("landscape", $landscape);
         $form->submit("btn btn-secondary", "Export PDF");
         return $form->render();
     }

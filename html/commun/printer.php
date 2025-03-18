@@ -17,7 +17,7 @@ class printer {
             switch ($type) {
                 case "PDF":
                     include_once __DIR__ . "/printer/printer_pdf.class.php";
-                    new printer_pdf($content, $_POST["filename"]);
+                    new printer_pdf($content, $_POST["filename"], $_POST["landscape"]);
                     break;
                 case "CSV":
                     include_once __DIR__ . "/printer/printer_csv.class.php";
@@ -30,7 +30,6 @@ class printer {
             }
         }
     }
-
 }
 
 new printer();

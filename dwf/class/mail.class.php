@@ -101,4 +101,12 @@ class mail {
         $this->_phpmailer->addCC($address, $name);
     }
 
+    /**
+     * Ajoute un destinataire en copie caché
+     * @param string $address Adresse mail du destinataire en copie
+     * @param string $name Nom du destinataire en copie
+     */
+    public function add_cci($address, $name = "") {
+        $this->_phpmailer->addBCC($address, $name);
+    }
 }

@@ -149,9 +149,10 @@ class bdd extends singleton {
             $statement = $this->mysql_to_sqlite($statement);
         }
         list($statement, $params) = $this->params_filter($statement, $params);
-        (!strstr($statement, "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
+        (!strstr(strtolower($statement), "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
         ($query = $this->_pdo->prepare($statement))->execute($params) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]);
         self::$_debug["memory"] += ((memory_get_usage() - self::$_debug["memory"]));
+        return (strstr(strtolower($statement), "insert")) ? $this->_pdo->lastInsertId() : false;
     }
 
     /**
@@ -169,7 +170,7 @@ class bdd extends singleton {
             $statement = $this->mysql_to_sqlite($statement);
         }
         list($statement, $params) = $this->params_filter($statement, $params);
-        (strstr($statement, "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
+        (strstr(strtolower($statement), "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
         (($query = $this->_pdo->prepare($statement))->execute($params) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]));
         self::$_debug["memory"] += ((memory_get_usage() - self::$_debug["memory"]));
         return $query->fetchAll(PDO::FETCH_ASSOC);

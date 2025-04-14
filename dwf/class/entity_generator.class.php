@@ -192,7 +192,7 @@ class entity_generator {
                 . ' public static function ajout(';
         $class .= strtr($p, ['1__,' => '']) . ') { ' . PHP_EOL;
         $class .= $tuple_ajout;
-        $class .= 'application::$_bdd->query("INSERT INTO ' . self::$_table . '(';
+        $class .= 'return self::get_from_id(application::$_bdd->query("INSERT INTO ' . self::$_table . '(';
         $i = 0;
         while (isset(self::$_data[$i][0])) {
             if (!self::$_data[$i][2]) {
@@ -252,7 +252,7 @@ class entity_generator {
             $i++;
         }
 
-        $class .= ']); } ' . PHP_EOL;
+        $class .= '])); } ' . PHP_EOL;
 
         //génére la fonction statique ( static ) get_structure
         $class .= "/** Retourne la structure de l'entity au format json */" . PHP_EOL

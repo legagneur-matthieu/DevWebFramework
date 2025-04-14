@@ -1059,7 +1059,20 @@ class docPHP_natives {
             </div>
             <div class="col-sm-3"></div>
         </div>
+        <hr>
+        <h4 class="text-center">Formulaire d'upload</h4>
         <?php
+        js::monaco_highlighter('<?php\n' .
+                '$form=new form();\n' .
+                '$form->hidden("upload", 1);//pour avoir une valeur a tester\n' .
+                '$form->file("Votre fichier (.jpg)", "fichier");\n' .
+                '$form->submit("btn-primary");\n' .
+                'echo $form->render();\n' .
+                'if(isset($_POST["upload"])){\n' .
+                '    form::get_upload($name="fichier", $path="./files/uploads", $type=["image/jpeg"], $fname="nouveau nom.jpg");\n' .
+                '}\n' .
+                '?>'
+        );
     }
 
     public static function freetile() {
@@ -1260,19 +1273,19 @@ class docPHP_natives {
         <p>Résultats :</p>
         <div class="row">
             <div class="col-sm-4">
-                <?php
-                (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
-                ?>
+        <?php
+        (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
+        ?>
             </div>
             <div class="col-sm-4">
-                <?php
-                (new graphique("graph2", $size))->points($data);
-                ?>
+        <?php
+        (new graphique("graph2", $size))->points($data);
+        ?>
             </div>
             <div class="col-sm-4">
-                <?php
-                (new graphique("graph3", $size))->bars($data);
-                ?>
+        <?php
+        (new graphique("graph3", $size))->bars($data);
+        ?>
             </div>
         </div>
         <div class="row">
@@ -1283,9 +1296,9 @@ class docPHP_natives {
                 ?>
             </div>
             <div class="col-sm-5">
-                <?php
-                (new graphique("graph5", $size))->ring($data2);
-                ?>
+        <?php
+        (new graphique("graph5", $size))->ring($data2);
+        ?>
             </div>
         </div>
         <?php
@@ -1532,9 +1545,9 @@ class docPHP_natives {
         ?>
         <p>Resultat (<em>lorem_ipsum::generate(100, true)</em>) : </p>
         <p>
-            <?php
-            echo lorem_ipsum::generate(100, true);
-            ?>
+        <?php
+        echo lorem_ipsum::generate(100, true);
+        ?>
         </p>
         <?php
     }
@@ -2231,26 +2244,26 @@ class docPHP_natives {
         <div class="row">
             <div class="col-sm-6">
                 <p>Code :</p>
-                <?php
-                js::monaco_highlighter('<?php\n' .
-                        '$ul = tags::ul();\n' .
-                        'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
-                        '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
-                        '}\n' .
-                        'echo tags::tag("div", [], tags::tag(\n' .
-                        '     "p", [], "Ma liste de " . tags::tag(\n' .
-                        '         "strong", [], "fruit")\n' .
-                        '     ) . $ul\n' .
-                        ');\n\n' .
-                        '// ou plus simplement avec html_structures\n' .
-                        'echo tags::tag("div", [], tags::tag(\n' .
-                        '     "p", [], "Ma liste de " . tags::tag(\n' .
-                        '         "strong", [], "fruit")\n' .
-                        '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
-                        ');\n' .
-                        '?>'
-                );
-                ?>
+        <?php
+        js::monaco_highlighter('<?php\n' .
+                '$ul = tags::ul();\n' .
+                'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
+                '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
+                '}\n' .
+                'echo tags::tag("div", [], tags::tag(\n' .
+                '     "p", [], "Ma liste de " . tags::tag(\n' .
+                '         "strong", [], "fruit")\n' .
+                '     ) . $ul\n' .
+                ');\n\n' .
+                '// ou plus simplement avec html_structures\n' .
+                'echo tags::tag("div", [], tags::tag(\n' .
+                '     "p", [], "Ma liste de " . tags::tag(\n' .
+                '         "strong", [], "fruit")\n' .
+                '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
+                ');\n' .
+                '?>'
+        );
+        ?>
             </div>
             <div class="col-sm-6">
                 <p>Résultat :</p>
@@ -2263,11 +2276,11 @@ class docPHP_natives {
                 ?>
             </div>
         </div>
-        <?php
-    }
+                <?php
+            }
 
-    public static function task_manager() {
-        ?>
+            public static function task_manager() {
+                ?>
         <p>
             Cette classe permet de gérer les tâches planifiées. <br />
             Contrairement à un pseudo cron qui dépend de l'activité des utilisateurs, <br />
@@ -2324,34 +2337,34 @@ class docPHP_natives {
 
     public static function template() {
         ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
-            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
             les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donnés au service web
         </p>
         <p>exemple, ficher <em>mon_template.tpl</em></p>
-        <?php
-        js::monaco_highlighter(''
-                . '<p>Bienvenue { $name}</p>\n'
-                . '<div class="row">\n'
-                . '    <div class="col-sm-6">\n'
-                . '        <ul>\n'
-                . '            {foreach from=$list item=value}\n'
-                . '                <li>{ $value}</li>\n'
-                . '            {/foreach}\n'
-                . '        </ul>\n'
-                . '    </div>\n'
-                . '    <div class="col-sm-6">\n'
-                . '        <dl class="dl-horizontal">\n'
-                . '            {foreach from=$list_asso key=key item=value}\n'
-                . '                <dt>{ $key}</dt> <dd>{ $value}</dd>\n'
-                . '            {/foreach}\n'
-                . '        </dl>\n'
-                . '    </div>\n'
-                . '</div>'
-                . '');
-        ?>
+            <?php
+            js::monaco_highlighter(''
+                    . '<p>Bienvenue { $name}</p>\n'
+                    . '<div class="row">\n'
+                    . '    <div class="col-sm-6">\n'
+                    . '        <ul>\n'
+                    . '            {foreach from=$list item=value}\n'
+                    . '                <li>{ $value}</li>\n'
+                    . '            {/foreach}\n'
+                    . '        </ul>\n'
+                    . '    </div>\n'
+                    . '    <div class="col-sm-6">\n'
+                    . '        <dl class="dl-horizontal">\n'
+                    . '            {foreach from=$list_asso key=key item=value}\n'
+                    . '                <dt>{ $key}</dt> <dd>{ $value}</dd>\n'
+                    . '            {/foreach}\n'
+                    . '        </dl>\n'
+                    . '    </div>\n'
+                    . '</div>'
+                    . '');
+            ?>
         <p>Appel du template dans le code php (pages.class.php par exemple)</p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -2491,18 +2504,18 @@ class docPHP_natives {
         js::monaco_highlighter('<?php new video("./files/videos/nuagesMusicman921.webm",$id="video-js"); ?>');
         ?>
         <div style='width:600px' class="mx-auto">
-            <?php
-            new video('./files/videos/nuagesMusicman921.webm');
-            ?>
+        <?php
+        new video('./files/videos/nuagesMusicman921.webm');
+        ?>
         </div>
         <p>Credit : <br />
             Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />
             Musique  : Dread (v2) - musicman921 <a href="https://musicman921.newgrounds.com/">https://musicman921.newgrounds.com/</a>
         </p><?php
-    }
+        }
 
-    public static function vpage() {
-        ?>
+        public static function vpage() {
+            ?>
         <p>Affiche une page virtuelle (iframe) à partir du contenu fourni</p>
         <?php
         js::monaco_highlighter('<?php\n'

@@ -12,6 +12,7 @@ class form {
      * @var tags Formulaire
      */
     private $_form;
+    private $_memento = [];
 
     /**
      * Créé un nouveau formulaire
@@ -336,11 +337,20 @@ class form {
      * @return string La checkbox
      */
     public function checkbox($label, $name, $value, $class = "", $checked = false) {
-        $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "checkbox", "value" => $value];
+        $id = $name;
+        if (strstr($name, "[]")) {
+            $mid = strtr($name, ["[]" => ""]);
+            if (!isset($this->_memento[$mid])) {
+                $this->_memento[$mid] = -1;
+            }
+            $this->_memento[$mid]++;
+            $id = strtr($name, ["[]" => "_{$this->_memento[$mid]}"]);
+        }
+        $attr = ["id" => $id, "name" => $name, "type" => "checkbox", "value" => $value];
         if ($checked) {
             $attr["checked"] = "checked";
         }
-        return $this->append(tags::tag("div", ["class" => "form-group checkbox {$class}"], tags::tag("label", ["for" => $name], tags::tag("input", $attr, false) . $label)));
+        return $this->append(tags::tag("div", ["class" => "form-group checkbox {$class}"], tags::tag("label", ["for" => $id], tags::tag("input", $attr, false) . $label)));
     }
 
     /**
@@ -529,21 +539,21 @@ class form {
     public function captcha($espeak = false) {
         $captcha = (new captcha())->get($espeak);
         $tag = tags::tag("div", ["id" => "captcha_{$captcha["hash"]}"],
-                        html_structures::img($captcha["img"], "Captcha") .
-                        tags::tag("a", ["href" => "#captcha_{$captcha["hash"]}","class" => "btn btn-light"], html_structures::bi("volume-up-fill", "Lire le captcha")) .
-                        tags::tag("audio", ["src" => $captcha["audio"]]) .
-                        " <script type=\"text/javascript\">"
-                        . "$(document).ready(function(){"
-                        . "$('#captcha_{$captcha["hash"]} a').click(function(){"
-                        . "document.querySelector('#captcha_{$captcha["hash"]} audio').play();"
-                        . "});"
-                        . "$('#captcha_a783458949484d21d2516108ba2e47b34ead4bef a').keypress(function (e) {"
-                        . "if (e.which == 13 || e.which == 32) {"
-                        . "document.querySelector('#captcha_a783458949484d21d2516108ba2e47b34ead4bef audio').play();"
-                        . "}"
-                        . "});"
-                        . "});"
-                        . "</script> "
+                html_structures::img($captcha["img"], "Captcha") .
+                tags::tag("a", ["href" => "#captcha_{$captcha["hash"]}", "class" => "btn btn-light"], html_structures::bi("volume-up-fill", "Lire le captcha")) .
+                tags::tag("audio", ["src" => $captcha["audio"]]) .
+                " <script type=\"text/javascript\">"
+                . "$(document).ready(function(){"
+                . "$('#captcha_{$captcha["hash"]} a').click(function(){"
+                . "document.querySelector('#captcha_{$captcha["hash"]} audio').play();"
+                . "});"
+                . "$('#captcha_a783458949484d21d2516108ba2e47b34ead4bef a').keypress(function (e) {"
+                . "if (e.which == 13 || e.which == 32) {"
+                . "document.querySelector('#captcha_a783458949484d21d2516108ba2e47b34ead4bef audio').play();"
+                . "}"
+                . "});"
+                . "});"
+                . "</script> "
         );
         return $this->append($tag) . $this->input("Captcha", $captcha["hash"]) . $this->hidden("captcha", $captcha["hash"]);
     }
@@ -564,5 +574,4 @@ class form {
     public function __toString() {
         return $this->render();
     }
-
 }

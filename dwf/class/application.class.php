@@ -72,7 +72,7 @@ class application {
             if (isset($page["text"]) and $page["text"] != "") {
                 $active = ($_GET["page"] == $page["page"]);
                 $lis .= tags::tag("li", ["class" => "nav-item"], tags::tag(
-                                        "a", ["href" => "index.php?page={$page["page"]}", "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " active" : "")], $page["text"]));
+                                "a", ["href" => "index.php?page={$page["page"]}", "title" => $page["title"], "class" => "p-3 nav-link" . ( $active ? " active" : "")], $page["text"]));
                 http2::get_instance()->prerender("./index.php?page={$page["page"]}");
             }
         }
@@ -140,11 +140,11 @@ class application {
      * @param array $skip_gets tableau des variable $_GET à exclure
      * @return string Les variables $_GET courante sous forme d'URL 
      */
-    public static function get_url($skip_gets = []) {
+    public static function get_url($skip_gets = [], $html_chars = true) {
         $url = "index.php?";
         foreach ($_GET as $key => $value) {
             if (!in_array($key, $skip_gets)) {
-                $url .= $key . "=" . $value . "&amp;";
+                $url .= "{$key}={$value}" . ($html_chars ? "&amp;" : "&");
             }
         }
         return $url;

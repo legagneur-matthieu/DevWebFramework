@@ -1273,19 +1273,19 @@ class docPHP_natives {
         <p>Résultats :</p>
         <div class="row">
             <div class="col-sm-4">
-        <?php
-        (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
-        ?>
+                <?php
+                (new graphique("graph1", $size = ["width" => "100%", "height" => "300px"]))->line($data);
+                ?>
             </div>
             <div class="col-sm-4">
-        <?php
-        (new graphique("graph2", $size))->points($data);
-        ?>
+                <?php
+                (new graphique("graph2", $size))->points($data);
+                ?>
             </div>
             <div class="col-sm-4">
-        <?php
-        (new graphique("graph3", $size))->bars($data);
-        ?>
+                <?php
+                (new graphique("graph3", $size))->bars($data);
+                ?>
             </div>
         </div>
         <div class="row">
@@ -1296,9 +1296,9 @@ class docPHP_natives {
                 ?>
             </div>
             <div class="col-sm-5">
-        <?php
-        (new graphique("graph5", $size))->ring($data2);
-        ?>
+                <?php
+                (new graphique("graph5", $size))->ring($data2);
+                ?>
             </div>
         </div>
         <?php
@@ -1545,9 +1545,9 @@ class docPHP_natives {
         ?>
         <p>Resultat (<em>lorem_ipsum::generate(100, true)</em>) : </p>
         <p>
-        <?php
-        echo lorem_ipsum::generate(100, true);
-        ?>
+            <?php
+            echo lorem_ipsum::generate(100, true);
+            ?>
         </p>
         <?php
     }
@@ -1698,6 +1698,10 @@ class docPHP_natives {
 
     public static function paypal() {
         ?>
+        <p class="alert alert-warning">
+            Le SDK PHP de Paypal est obselette, bien que fonctionant toujours, il sera supprimé a therme.
+            Previlégiez d'utiliser ou migrer sur Stripe.
+        </p>
         <p>Cette classe permet de créer, vérifier et exécuter des paiements via l'API REST de PayPal</p>
         <p>Exemple d'utilisation :</p>
         <?php
@@ -1750,7 +1754,9 @@ class docPHP_natives {
         );
         ?>
         <p>Plus de renseignements dans la documentation technique et sur <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a></p>
+        <hr>
         <?php
+        self::stripe();
     }
 
     public static function printer() {
@@ -2170,6 +2176,49 @@ class docPHP_natives {
         );
     }
 
+    public static function stripe() {
+        ?>
+        <p>Cette classe permet de metre en place un système de payement par stripe</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '$item_list = [\n'
+                . '    [\n'
+                . '        "Name" => "votre produit ou service",\n'
+                . '        "Price" => "10.00", //prix HT\n'
+                . '        "Quantity" => 1\n'
+                . '    ]\n'
+                . '];\n'
+                . '$stripe = new stripe("API_KEY");\n'
+                . '$base_url = "https://votre-site.fr/" . application::get_url(["stripe_action"], false);\n'
+                . '$success = $base_url . "stripe_action=return";\n'
+                . '$cancel = $base_url . "stripe_action=cancel";\n'
+                . 'if (!isset($_GET["stripe_action"])) {\n'
+                . '    $_GET["stripe_action"] = "";\n'
+                . '}\n'
+                . 'switch ($_GET["stripe_action"]) {\n'
+                . '    case "return":\n'
+                . '        $session = $stripe->get_session($_GET["stripe_id"], $price);\n'
+                . '        if ($session) {\n'
+                . '            //Succes du payement, ajouter vos actions ici (maj de base de donnée, facture, envoi de mail...)\n'
+                . '            js::alertify_alert_redir("Payement accepté !", application::get_url(["stripe_action", "stripe_id"]), "Félicitations !");\n'
+                . '    } else {\n'
+                . '        js::alertify_alert_redir("Erreur lors de la transaction", "index.php");\n'
+                . '    }\n'
+                . '    break;\n'
+                . '    case "cancel":\n'
+                . '        js::alertify_alert_redir("Vous avez annulé le paiement, retour à l\'accueil", "index.php");\n'
+                . '    break;\n'
+                . '    default:\n'
+                . '        if ($url = $stripe->create_checkout_session($item_list, $success, $cancel, $tva = 20)) {\n'
+                . '            //Bouton de payement a perssonaliser\n'
+                . '            echo html_structures::a_link($url, "Payer", "btn btn-primary");\n'
+                . '        } else {\n'
+                . '            echo tags::tag("p", ["class" => "alert alert-warning"], "Notre système de paiement est momentanément indisponible.<br>Nous vous invitons à réessayer ultérieurement. Veuillez nous excuser pour la gêne occasionnée.");\n'
+                . '        }\n'
+                . '    break;\n'
+                . '}\n?>');
+    }
+
     public static function sub_menu() {
         ?>
         <p>La classe sub_menu vous permet de créer un sous-menu en utilisant un système de "sous-routes"</p>
@@ -2267,20 +2316,20 @@ class docPHP_natives {
             </div>
             <div class="col-sm-6">
                 <p>Résultat :</p>
-                <?php
-                echo tags::tag('div', [], tags::tag(
-                                'p', [], 'Ma liste de ' . tags::tag(
-                                        'strong', [], 'fruit')
-                        ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
-                );
-                ?>
+        <?php
+        echo tags::tag('div', [], tags::tag(
+                        'p', [], 'Ma liste de ' . tags::tag(
+                                'strong', [], 'fruit')
+                ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
+        );
+        ?>
             </div>
         </div>
-                <?php
-            }
+        <?php
+    }
 
-            public static function task_manager() {
-                ?>
+    public static function task_manager() {
+        ?>
         <p>
             Cette classe permet de gérer les tâches planifiées. <br />
             Contrairement à un pseudo cron qui dépend de l'activité des utilisateurs, <br />
@@ -2344,27 +2393,27 @@ class docPHP_natives {
             les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donnés au service web
         </p>
         <p>exemple, ficher <em>mon_template.tpl</em></p>
-            <?php
-            js::monaco_highlighter(''
-                    . '<p>Bienvenue { $name}</p>\n'
-                    . '<div class="row">\n'
-                    . '    <div class="col-sm-6">\n'
-                    . '        <ul>\n'
-                    . '            {foreach from=$list item=value}\n'
-                    . '                <li>{ $value}</li>\n'
-                    . '            {/foreach}\n'
-                    . '        </ul>\n'
-                    . '    </div>\n'
-                    . '    <div class="col-sm-6">\n'
-                    . '        <dl class="dl-horizontal">\n'
-                    . '            {foreach from=$list_asso key=key item=value}\n'
-                    . '                <dt>{ $key}</dt> <dd>{ $value}</dd>\n'
-                    . '            {/foreach}\n'
-                    . '        </dl>\n'
-                    . '    </div>\n'
-                    . '</div>'
-                    . '');
-            ?>
+        <?php
+        js::monaco_highlighter(''
+                . '<p>Bienvenue { $name}</p>\n'
+                . '<div class="row">\n'
+                . '    <div class="col-sm-6">\n'
+                . '        <ul>\n'
+                . '            {foreach from=$list item=value}\n'
+                . '                <li>{ $value}</li>\n'
+                . '            {/foreach}\n'
+                . '        </ul>\n'
+                . '    </div>\n'
+                . '    <div class="col-sm-6">\n'
+                . '        <dl class="dl-horizontal">\n'
+                . '            {foreach from=$list_asso key=key item=value}\n'
+                . '                <dt>{ $key}</dt> <dd>{ $value}</dd>\n'
+                . '            {/foreach}\n'
+                . '        </dl>\n'
+                . '    </div>\n'
+                . '</div>'
+                . '');
+        ?>
         <p>Appel du template dans le code php (pages.class.php par exemple)</p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -2512,10 +2561,10 @@ class docPHP_natives {
             Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />
             Musique  : Dread (v2) - musicman921 <a href="https://musicman921.newgrounds.com/">https://musicman921.newgrounds.com/</a>
         </p><?php
-        }
+    }
 
-        public static function vpage() {
-            ?>
+    public static function vpage() {
+        ?>
         <p>Affiche une page virtuelle (iframe) à partir du contenu fourni</p>
         <?php
         js::monaco_highlighter('<?php\n'

@@ -55,6 +55,7 @@ class docTiers {
             [html_structures::a_link("https://tutorialzine.com/2011/09/shuffle-letters-effect-jquery", "Shuffleletters", "", "", true), "1.0", "Martin Angelov", "JS", $licences[0]],
             [html_structures::a_link("https://github.com/christopherwk210/SimpleParallax", "SimpleParallax", "", "", true), "0.1", "Chris Anselmo (christopherwk210)", "JS", $licences[0]],
             [html_structures::a_link("https://www.smarty.net", "Smarty", "", "", true), "4.5.3", "Uwe Tews, Rodney Rehm", "PHP", $licences[2]],
+            [html_structures::a_link("https://github.com/stripe/stripe-php", "Stripe", "", "", true), "17.1.1", "Stripe, Inc", "PHP", $licences[0]],
             [html_structures::a_link("https://jonobr1.com/stalactite/", "Stalactite", "", "", true), "0.1", "Jono Brandel", "JS", $licences[4]],
             [html_structures::a_link("https://www.tiny.cloud/", "TinyMCE", "", "", true), "7.6.0", "TinyMCE", "JS", $licences[1]],
             [html_structures::a_link("https://videojs.com/", "Videojs", "", "", true), "8.20.0", "Brightcove, Inc.", "JS", $licences[4]],

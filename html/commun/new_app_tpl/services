@@ -9,9 +9,9 @@ class index_service {
     public function __construct() {
         try {
             $this->classloader();
-            include "../class/config.class.php";
             if (isset($_REQUEST["service"])) {
                 date_default_timezone_set("Europe/Paris");
+                $this->projectloader();
                 $this->entityloader();
                 application::$_bdd = new bdd();
                 session::start(false);
@@ -37,6 +37,18 @@ class index_service {
     private function classloader() {
         spl_autoload_register(function ($class) {
             $file = __DIR__ . "/../../../dwf/class/" . $class . ".class.php";
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
+    }
+
+    /**
+     * Inclut les class du projet 
+     */
+    private function projectloader() {
+        spl_autoload_register(function ($class) {
+            $file = __DIR__ . "/../class/" . $class . ".class.php";
             if (file_exists($file)) {
                 require_once $file;
             }
@@ -77,7 +89,6 @@ class index_service {
             unlink($trill);
         }
     }
-
 }
 
 new index_service();

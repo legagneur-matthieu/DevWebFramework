@@ -2,7 +2,6 @@
 
 /**
  * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
- * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A bdd::p();
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -24,7 +23,6 @@ class entity_generator {
 
     /**
      * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
-     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A bdd::p();
      * 
      * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
@@ -44,7 +42,6 @@ class entity_generator {
 
     /**
      * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
-     * ATTENTION A L'UTILISATION DU PARAMETRE $WHERE DANS LA METHODE STATIC ::GET_COLLECTION() DES ENTITES, PENSEZ A bdd::p();
      * 
      * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
@@ -81,7 +78,6 @@ class entity_generator {
         $p = '1__';
         $tuple_ajout = '';
         $tuple_etter = '';
-        $tuple_update = '';
         //check PK int id 
         if (
                 self::$_data[0][0] != "id" and
@@ -151,25 +147,6 @@ class entity_generator {
                     break;
             }
             $tuple_etter .= ' $this->_this_was_modified = true; }' . PHP_EOL;
-            //génère le contenu de l'update 
-            switch ($tuple[1]) {
-                case 'int':
-                case 'integer':
-                case 'bool':
-                case 'boolen':
-                case 'string':
-                case 'mail':
-                case 'psw':
-                case 'password':
-                    $tuple_update .= ' $' . $tuple[0] . ' = bdd::p($this->get_' . $tuple[0] . '());' . PHP_EOL;
-                    break;
-                case 'array':
-                    $tuple_update .= ' $' . $tuple[0] . ' = bdd::p(json_encode($this->get_' . $tuple[0] . '()));' . PHP_EOL;
-                    break;
-                default:
-                    $tuple_update .= ' $' . $tuple[0] . ' = bdd::p($this->get_' . $tuple[0] . '()->get_id());' . PHP_EOL;
-                    break;
-            }
         }
         $class .= "/** Indique si l'objet a été modifié ou non " . PHP_EOL
                 . "* @var boolean Indique si l'objet a été modifié ou non */" . PHP_EOL
@@ -261,8 +238,7 @@ class entity_generator {
                 . '}' . PHP_EOL;
 
         //génére la fonction statique ( static ) get_collection
-        $class .= "/** Retourne le contenu de la table sous forme d'une collection " . PHP_EOL
-                . '*ATTENTION, PENSEZ A UTILISER bdd::p(); */' . PHP_EOL
+        $class .= "/** Retourne le contenu de la table sous forme d'une collection */" . PHP_EOL
                 . 'public static function get_collection($where = "", $params = []) {' . PHP_EOL
                 . '    $col=[];' . PHP_EOL
                 . '    foreach (' . self::$_table . '::get_table_array($where, $params) as $entity) {' . PHP_EOL
@@ -278,8 +254,7 @@ class entity_generator {
                 . '}' . PHP_EOL;
 
         //génére la fonction statique ( static ) get_table_array()
-        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions " . PHP_EOL
-                . '* ATTENTION, PENSEZ A UTILISER bdd::p(); */' . PHP_EOL
+        $class .= "/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions */" . PHP_EOL
                 . 'public static function get_table_array($where = "", $params = []) {' . PHP_EOL
                 . '    $data = application::$_bdd->fetch("select * from ' . self::$_table . '" . (!empty($where) ? " where " . $where : "") . ";", $params);' . PHP_EOL
                 . '    $tuples_array = [];' . PHP_EOL
@@ -351,7 +326,6 @@ class entity_generator {
         $class .= "/** Met a jour l'entité dans la base de donnée*/" . PHP_EOL
                 . 'public function update() { ' . PHP_EOL
                 . 'if ($this->_this_was_modified and !$this->_this_was_delete) { ' . PHP_EOL
-                . $tuple_update
                 . ' application::$_bdd->query("update ' . self::$_table . ' set ';
         $i = 0;
         while (isset(self::$_data[$i][0])) {
@@ -447,13 +421,13 @@ class entity_generator {
      * créé la table de l'entité dans la base de données
      */
     private static function create_sql_table() {
-        $query = "CREATE TABLE IF NOT EXISTS " . bdd::p(self::$_table) . " (id int(11) NOT NULL AUTO_INCREMENT, ";
+        $query = "CREATE TABLE IF NOT EXISTS " . self::$_table . " (id int(11) NOT NULL AUTO_INCREMENT, ";
         foreach (self::$_data as $tuple) {
             if ($tuple[0] != "id") {
-                if (in_array($tuple[1], ["string", "mail", "array"])) {
-                    $query .= "" . bdd::p($tuple[0]) . " text NOT NULL, ";
+                if (in_array($tuple[1], ["string", "mail", "array", "password", "psw"])) {
+                    $query .= "" . $tuple[0] . " text NOT NULL, ";
                 } else {
-                    $query .= "" . bdd::p($tuple[0]) . " int(11) NOT NULL, ";
+                    $query .= "" . $tuple[0] . " int(11) NOT NULL, ";
                 }
             }
         }

@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Service d'exécution de thread simulé.
+ * Cette classe est appelée par le manager via une requête HTTP POST pour exécuter
+ * une fonction statique avec des paramètres donnés dans un contexte isolé.
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
+class thread {
+
+    /**
+     * Service d'exécution de thread simulé.
+     * Cette classe est appelée par le manager via une requête HTTP POST pour exécuter
+     * une fonction statique avec des paramètres donnés dans un contexte isolé.
+     */
+    public function __construct() {
+        if (isset($_REQUEST["id"])) {
+            $thread = dwf_thread::get_from_id($_REQUEST["id"]);
+            if ($thread->get_statut() == 0) {
+                set_time_limit(3600);
+                try {
+                    if (is_callable($thread->get_f())) {
+                        $output = call_user_func_array($thread->get_f(), $thread->get_params());
+                    } else {
+                        throw new \Exception("Callback non valide : " . print_r($thread->get_f(), true));
+                    }
+                } catch (\Throwable $e) {
+                    $output = "Thread Error: " . $e->getMessage();
+                }
+                $thread->set_output($output);
+                $thread->set_statut(1);
+            }
+        }
+    }
+}

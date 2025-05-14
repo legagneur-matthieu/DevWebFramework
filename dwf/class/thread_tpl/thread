@@ -23,10 +23,11 @@ class thread {
                     if (is_callable($thread->get_f())) {
                         $output = call_user_func_array($thread->get_f(), $thread->get_params());
                     } else {
-                        throw new \Exception("Callback non valide : " . print_r($thread->get_f(), true));
+                        dwf_exception::throw_exception(626, ["__te__" => "Callback non valide : " . print_r($thread->get_f(), true)]);
                     }
-                } catch (\Throwable $e) {
-                    $output = "Thread Error: " . $e->getMessage();
+                } catch (\Exception $e) {
+                    (new log_file(true))->severe("Thread Error : {$e->getMessage()} {$e->getTrace()}");
+                    dwf_exception::throw_exception(626, ["__te__",$e->getMessage().$e->getTrace()]);
                 }
                 $thread->set_output($output);
                 $thread->set_statut(1);

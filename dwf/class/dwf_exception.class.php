@@ -26,6 +26,7 @@ class dwf_exception extends Exception {
         623 => "Action du service _s_ non renseigné",
         624 => "Action _a_ du service _s_ introuvable",
         625 => "Les services sont requis pour utiliser la classe __c__",
+        626 => "Thread Error: __te__",
 
         // 63X FS / système
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",

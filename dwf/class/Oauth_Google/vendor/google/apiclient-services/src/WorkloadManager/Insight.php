@@ -19,6 +19,10 @@ namespace Google\Service\WorkloadManager;
 
 class Insight extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $instanceId;
   protected $sapDiscoveryType = SapDiscovery::class;
   protected $sapDiscoveryDataType = '';
   protected $sapValidationType = SapValidation::class;
@@ -29,7 +33,23 @@ class Insight extends \Google\Model
   public $sentTime;
   protected $sqlserverValidationType = SqlserverValidation::class;
   protected $sqlserverValidationDataType = '';
+  protected $torsoValidationType = TorsoValidation::class;
+  protected $torsoValidationDataType = '';
 
+  /**
+   * @param string
+   */
+  public function setInstanceId($instanceId)
+  {
+    $this->instanceId = $instanceId;
+  }
+  /**
+   * @return string
+   */
+  public function getInstanceId()
+  {
+    return $this->instanceId;
+  }
   /**
    * @param SapDiscovery
    */
@@ -85,6 +105,20 @@ class Insight extends \Google\Model
   public function getSqlserverValidation()
   {
     return $this->sqlserverValidation;
+  }
+  /**
+   * @param TorsoValidation
+   */
+  public function setTorsoValidation(TorsoValidation $torsoValidation)
+  {
+    $this->torsoValidation = $torsoValidation;
+  }
+  /**
+   * @return TorsoValidation
+   */
+  public function getTorsoValidation()
+  {
+    return $this->torsoValidation;
   }
 }
 

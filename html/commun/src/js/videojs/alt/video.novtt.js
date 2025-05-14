@@ -1,6 +1,6 @@
 /**
  * @license
- * Video.js 8.20.0 <http://videojs.com/>
+ * Video.js 8.21.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>
@@ -16,7 +16,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojs = factory());
 })(this, (function () { 'use strict';
 
-  var version$5 = "8.20.0";
+  var version$5 = "8.21.1";
 
   /**
    * An Object that contains lifecycle hooks as keys which point to an array
@@ -2576,7 +2576,7 @@
    * @return   {Function}
    *           A debounced function.
    */
-  const debounce = function (func, wait, immediate, context = window) {
+  const debounce$1 = function (func, wait, immediate, context = window) {
     let timeout;
     const cancel = () => {
       context.clearTimeout(timeout);
@@ -2611,7 +2611,7 @@
     UPDATE_REFRESH_INTERVAL: UPDATE_REFRESH_INTERVAL,
     bind_: bind_,
     throttle: throttle,
-    debounce: debounce
+    debounce: debounce$1
   });
 
   /**
@@ -14111,7 +14111,19 @@
      *        The key/value store of player options.
      */
     constructor(player, options) {
+      options = merge$2(SeekBar.prototype.options_, options);
+
+      // Avoid mutating the prototype's `children` array by creating a copy
+      options.children = [...options.children];
+      const shouldDisableSeekWhileScrubbingOnMobile = player.options_.disableSeekWhileScrubbingOnMobile && (IS_IOS || IS_ANDROID);
+
+      // Add the TimeTooltip as a child if we are on desktop, or on mobile with `disableSeekWhileScrubbingOnMobile: true`
+      if (!IS_IOS && !IS_ANDROID || shouldDisableSeekWhileScrubbingOnMobile) {
+        options.children.splice(1, 0, 'mouseTimeDisplay');
+      }
       super(player, options);
+      this.shouldDisableSeekWhileScrubbingOnMobile_ = shouldDisableSeekWhileScrubbingOnMobile;
+      this.pendingSeekTime_ = null;
       this.setEventHandlers_();
     }
 
@@ -14267,6 +14279,11 @@
      *         The percentage of media played so far (0 to 1).
      */
     getPercent() {
+      // If we have a pending seek time, we are scrubbing on mobile and should set the slider percent
+      // to reflect the current scrub location.
+      if (this.pendingSeekTime_) {
+        return this.pendingSeekTime_ / this.player_.duration();
+      }
       const currentTime = this.getCurrentTime_();
       let percent;
       const liveTracker = this.player_.liveTracker;
@@ -14299,7 +14316,12 @@
       // Stop event propagation to prevent double fire in progress-control.js
       event.stopPropagation();
       this.videoWasPlaying = !this.player_.paused();
-      this.player_.pause();
+
+      // Don't pause if we are on mobile and `disableSeekWhileScrubbingOnMobile: true`.
+      // In that case, playback should continue while the player scrubs to a new location.
+      if (!this.shouldDisableSeekWhileScrubbingOnMobile_) {
+        this.player_.pause();
+      }
       super.handleMouseDown(event);
     }
 
@@ -14357,8 +14379,12 @@
         }
       }
 
-      // Set new time (tell player to seek to new time)
-      this.userSeek_(newTime);
+      // if on mobile and `disableSeekWhileScrubbingOnMobile: true`, keep track of the desired seek point but we won't initiate the seek until 'touchend'
+      if (this.shouldDisableSeekWhileScrubbingOnMobile_) {
+        this.pendingSeekTime_ = newTime;
+      } else {
+        this.userSeek_(newTime);
+      }
       if (this.player_.options_.enableSmoothSeeking) {
         this.update();
       }
@@ -14396,6 +14422,12 @@
         event.stopPropagation();
       }
       this.player_.scrubbing(false);
+
+      // If we have a pending seek time, then we have finished scrubbing on mobile and should initiate a seek.
+      if (this.pendingSeekTime_) {
+        this.userSeek_(this.pendingSeekTime_);
+        this.pendingSeekTime_ = null;
+      }
 
       /**
        * Trigger timeupdate because we're done seeking and the time has changed.
@@ -14533,11 +14565,6 @@
     children: ['loadProgressBar', 'playProgressBar'],
     barName: 'playProgressBar'
   };
-
-  // MouseTimeDisplay tooltips should not be added to a player on mobile devices
-  if (!IS_IOS && !IS_ANDROID) {
-    SeekBar.prototype.options_.children.splice(1, 0, 'mouseTimeDisplay');
-  }
   Component$1.registerComponent('SeekBar', SeekBar);
 
   /**
@@ -14662,7 +14689,7 @@
         return;
       }
       this.off(['mousedown', 'touchstart'], this.handleMouseDownHandler_);
-      this.off(this.el_, 'mousemove', this.handleMouseMove);
+      this.off(this.el_, ['mousemove', 'touchmove'], this.handleMouseMove);
       this.removeListenersAddedOnMousedownAndTouchstart();
       this.addClass('disabled');
       this.enabled_ = false;
@@ -14686,7 +14713,7 @@
         return;
       }
       this.on(['mousedown', 'touchstart'], this.handleMouseDownHandler_);
-      this.on(this.el_, 'mousemove', this.handleMouseMove);
+      this.on(this.el_, ['mousemove', 'touchmove'], this.handleMouseMove);
       this.removeClass('disabled');
       this.enabled_ = true;
     }
@@ -19255,7 +19282,7 @@
       this.ResizeObserver = options.ResizeObserver || window.ResizeObserver;
       this.loadListener_ = null;
       this.resizeObserver_ = null;
-      this.debouncedHandler_ = debounce(() => {
+      this.debouncedHandler_ = debounce$1(() => {
         this.resizeHandler();
       }, 100, false, this);
       if (RESIZE_OBSERVER_AVAILABLE) {
@@ -27293,7 +27320,8 @@
       horizontalSeek: false
     },
     // Default smooth seeking to false
-    enableSmoothSeeking: false
+    enableSmoothSeeking: false,
+    disableSeekWhileScrubbingOnMobile: false
   };
   TECH_EVENTS_RETRIGGER.forEach(function (event) {
     Player.prototype[`handleTech${toTitleCase$1(event)}_`] = function () {
@@ -39193,7 +39221,7 @@
   };
   var clock_1 = clock.ONE_SECOND_IN_TS;
 
-  /*! @name @videojs/http-streaming @version 3.16.0 @license Apache-2.0 */
+  /*! @name @videojs/http-streaming @version 3.16.2 @license Apache-2.0 */
 
   /**
    * @file resolve-url.js - Handling how URLs are resolved and manipulated
@@ -42751,6 +42779,7 @@
     // (since there aren't external URLs to media playlists with DASH)
     constructor(srcUrlOrPlaylist, vhs, options = {}, mainPlaylistLoader) {
       super();
+      this.isPaused_ = true;
       this.mainPlaylistLoader_ = mainPlaylistLoader || this;
       if (!mainPlaylistLoader) {
         this.isMain_ = true;
@@ -42785,6 +42814,9 @@
       } else {
         this.childPlaylist_ = srcUrlOrPlaylist;
       }
+    }
+    get isPaused() {
+      return this.isPaused_;
     }
     requestErrored_(err, request, startingState) {
       // disposed
@@ -42821,6 +42853,7 @@
 
       if (!playlist.sidx || !sidxKey || this.mainPlaylistLoader_.sidxMapping_[sidxKey]) {
         // keep this function async
+        window.clearTimeout(this.mediaRequest_);
         this.mediaRequest_ = window.setTimeout(() => cb(false), 0);
         return;
       } // resolve the segment URL relative to the playlist
@@ -42898,6 +42931,7 @@
       }, REQUEST_TYPE);
     }
     dispose() {
+      this.isPaused_ = true;
       this.trigger('dispose');
       this.stopRequest();
       this.loadedPlaylists_ = {};
@@ -42975,6 +43009,7 @@
     }) {
       this.state = 'HAVE_METADATA';
       this.loadedPlaylists_[playlist.id] = playlist;
+      window.clearTimeout(this.mediaRequest_);
       this.mediaRequest_ = null; // This will trigger loadedplaylist
 
       this.refreshMedia_(playlist.id); // fire loadedmetadata the first time a media playlist is loaded
@@ -42988,6 +43023,7 @@
       }
     }
     pause() {
+      this.isPaused_ = true;
       if (this.mainPlaylistLoader_.createMupOnMedia_) {
         this.off('loadedmetadata', this.mainPlaylistLoader_.createMupOnMedia_);
         this.mainPlaylistLoader_.createMupOnMedia_ = null;
@@ -43006,6 +43042,7 @@
       }
     }
     load(isFinalRendition) {
+      this.isPaused_ = false;
       window.clearTimeout(this.mediaUpdateTimeout);
       this.mediaUpdateTimeout = null;
       const media = this.media();
@@ -43040,6 +43077,7 @@
       // Call this asynchronously to match the xhr request behavior below
 
       if (!this.isMain_) {
+        window.clearTimeout(this.mediaRequest_);
         this.mediaRequest_ = window.setTimeout(() => this.haveMain_(), 0);
         return;
       }
@@ -43178,6 +43216,7 @@
     }
     handleMain_() {
       // clear media request
+      window.clearTimeout(this.mediaRequest_);
       this.mediaRequest_ = null;
       const oldMain = this.mainPlaylistLoader_.main;
       const metadata = {
@@ -55775,20 +55814,6 @@
     return false;
   };
   /**
-   * Fixes certain bad timeline scenarios by resetting the loader.
-   *
-   * @param {SegmentLoader} segmentLoader
-   */
-
-  const fixBadTimelineChange = segmentLoader => {
-    if (!segmentLoader) {
-      return;
-    }
-    segmentLoader.pause();
-    segmentLoader.resetEverything();
-    segmentLoader.load();
-  };
-  /**
    * Check if the pending audio timeline change is behind the
    * pending main timeline change.
    *
@@ -55830,7 +55855,7 @@
         segmentLoader.timelineChangeController_.trigger('audioTimelineBehind');
         return;
       }
-      fixBadTimelineChange(segmentLoader);
+      segmentLoader.timelineChangeController_.trigger('fixBadTimelineChange');
     }
   };
   const mediaDuration = timingInfos => {
@@ -56194,6 +56219,7 @@
         if (this.pendingSegment_) {
           this.pendingSegment_ = null;
         }
+        this.timelineChangeController_.clearPendingTimelineChange(this.loaderType_);
         return;
       }
       this.abort_(); // We aborted the requests we were waiting on, so reset the loader's state to READY
@@ -56412,6 +56438,10 @@
 
     playlist(newPlaylist, options = {}) {
       if (!newPlaylist) {
+        return;
+      }
+      if (this.playlist_ && this.playlist_.endList && newPlaylist.endList && this.playlist_.uri === newPlaylist.uri) {
+        // skip update if both prev and new are vod and have the same URI
         return;
       }
       const oldPlaylist = this.playlist_;
@@ -62688,6 +62718,15 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
       return this.availablePathways_;
     }
   }
+  const debounce = (callback, wait) => {
+    let timeoutId = null;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        callback.apply(null, args);
+      }, wait);
+    };
+  };
   const ABORT_EARLY_EXCLUSION_SECONDS = 10;
   let Vhs$1; // SegmentLoader stats that need to have each loader's
   // values summed to calculate the final value
@@ -62782,7 +62821,11 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
 
   class PlaylistController extends videojs.EventTarget {
     constructor(options) {
-      super();
+      super(); // Adding a slight debounce to avoid duplicate calls during rapid quality changes, for example:
+      // When selecting quality from the quality list,
+      // where we may have multiple bandwidth profiles for the same vertical resolution.
+
+      this.fastQualityChange_ = debounce(this.fastQualityChange_.bind(this), 100);
       const {
         src,
         withCredentials,
@@ -62820,6 +62863,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
       this.playlistExclusionDuration = playlistExclusionDuration;
       this.maxPlaylistRetries = maxPlaylistRetries;
       this.enableLowInitialPlaylist = enableLowInitialPlaylist;
+      this.usingManagedMediaSource_ = false;
       if (this.useCueTags_) {
         this.cueTagsTrack_ = this.tech_.addTextTrack('metadata', 'ad-cues');
         this.cueTagsTrack_.inBandMetadataTrackDispatchType = '';
@@ -62835,6 +62879,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
         // Airplay source not yet implemented. Remote playback must be disabled.
         this.tech_.el_.disableRemotePlayback = true;
         this.mediaSource = new window.ManagedMediaSource();
+        this.usingManagedMediaSource_ = true;
         videojs.log('Using ManagedMediaSource');
       } else if (window.MediaSource) {
         this.mediaSource = new window.MediaSource();
@@ -63256,7 +63301,15 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
         }
         if (this.sourceType_ === 'dash') {
           // we don't want to re-request the same hls playlist right after it was changed
-          this.mainPlaylistLoader_.load();
+          // Initially it was implemented as workaround to restart playlist loader for live
+          // when playlist loader is paused because of playlist exclusions:
+          // see: https://github.com/videojs/http-streaming/pull/1339
+          // but this introduces duplicate "loadedplaylist" event.
+          // Ideally we want to re-think playlist loader life-cycle events,
+          // but simply checking "paused" state should help a lot
+          if (this.mainPlaylistLoader_.isPaused) {
+            this.mainPlaylistLoader_.load();
+          }
         } // TODO: Create a new event on the PlaylistLoader that signals
         // that the segments have changed in some way and use that to
         // update the SegmentLoader instead of doing it twice here and
@@ -63496,6 +63549,22 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
         const newTime = segmentInfo.segment.syncInfo.end + 0.01;
         this.tech_.setCurrentTime(newTime);
       });
+      this.timelineChangeController_.on('fixBadTimelineChange', () => {
+        // pause, reset-everything and load for all segment-loaders
+        this.logger_('Fix bad timeline change. Restarting al segment loaders...');
+        this.mainSegmentLoader_.pause();
+        this.mainSegmentLoader_.resetEverything();
+        if (this.mediaTypes_.AUDIO.activePlaylistLoader) {
+          this.audioSegmentLoader_.pause();
+          this.audioSegmentLoader_.resetEverything();
+        }
+        if (this.mediaTypes_.SUBTITLES.activePlaylistLoader) {
+          this.subtitleSegmentLoader_.pause();
+          this.subtitleSegmentLoader_.resetEverything();
+        } // start segment loader loading in case they are paused
+
+        this.load();
+      });
       this.mainSegmentLoader_.on('earlyabort', event => {
         // never try to early abort with the new ABR algorithm
         if (this.bufferBasedABR) {
@@ -63606,12 +63675,19 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
       this.waitingForFastQualityPlaylistReceived_ = true;
     }
     runFastQualitySwitch_() {
-      this.waitingForFastQualityPlaylistReceived_ = false; // Delete all buffered data to allow an immediate quality switch.
-
+      this.waitingForFastQualityPlaylistReceived_ = false;
       this.mainSegmentLoader_.pause();
-      this.mainSegmentLoader_.resetEverything(() => {
-        this.mainSegmentLoader_.load();
-      }); // don't need to reset audio as it is reset when media changes
+      this.mainSegmentLoader_.resetEverything();
+      if (this.mediaTypes_.AUDIO.activePlaylistLoader) {
+        this.audioSegmentLoader_.pause();
+        this.audioSegmentLoader_.resetEverything();
+      }
+      if (this.mediaTypes_.SUBTITLES.activePlaylistLoader) {
+        this.subtitleSegmentLoader_.pause();
+        this.subtitleSegmentLoader_.resetEverything();
+      } // start segment loader loading in case they are paused
+
+      this.load();
     }
     /**
      * Begin playback.
@@ -64311,7 +64387,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
         return;
       } // fmp4 relies on browser support, while ts relies on muxer support
 
-      const supportFunction = (isFmp4, codec) => isFmp4 ? browserSupportsCodec(codec) : muxerSupportsCodec(codec);
+      const supportFunction = (isFmp4, codec) => isFmp4 ? browserSupportsCodec(codec, this.usingManagedMediaSource_) : muxerSupportsCodec(codec);
       const unsupportedCodecs = {};
       let unsupportedAudio;
       ['video', 'audio'].forEach(function (type) {
@@ -64421,10 +64497,10 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
         ids.push(variant.id);
         const codecs = codecsForPlaylist(this.main, variant);
         const unsupported = [];
-        if (codecs.audio && !muxerSupportsCodec(codecs.audio) && !browserSupportsCodec(codecs.audio)) {
+        if (codecs.audio && !muxerSupportsCodec(codecs.audio) && !browserSupportsCodec(codecs.audio, this.usingManagedMediaSource_)) {
           unsupported.push(`audio codec ${codecs.audio}`);
         }
-        if (codecs.video && !muxerSupportsCodec(codecs.video) && !browserSupportsCodec(codecs.video)) {
+        if (codecs.video && !muxerSupportsCodec(codecs.video) && !browserSupportsCodec(codecs.video, this.usingManagedMediaSource_)) {
           unsupported.push(`video codec ${codecs.video}`);
         }
         if (codecs.text && codecs.text === 'stpp.ttml.im1t') {
@@ -64912,8 +64988,9 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
     };
     if (enable !== currentlyEnabled && !incompatible) {
       // Ensure the outside world knows about our changes
-      changePlaylistFn(playlist);
       if (enable) {
+        // call fast quality change only when the playlist is enabled
+        changePlaylistFn(playlist);
         loader.trigger({
           type: 'renditionenabled',
           metadata
@@ -65664,7 +65741,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
   const reloadSourceOnError = function (options) {
     initPlugin(this, options);
   };
-  var version$4 = "3.16.0";
+  var version$4 = "3.16.2";
   var version$3 = "7.1.0";
   var version$2 = "1.3.1";
   var version$1 = "7.2.0";

@@ -2293,36 +2293,36 @@ class docPHP_natives {
         <div class="row">
             <div class="col-sm-6">
                 <p>Code :</p>
-        <?php
-        js::monaco_highlighter('<?php\n' .
-                '$ul = tags::ul();\n' .
-                'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
-                '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
-                '}\n' .
-                'echo tags::tag("div", [], tags::tag(\n' .
-                '     "p", [], "Ma liste de " . tags::tag(\n' .
-                '         "strong", [], "fruit")\n' .
-                '     ) . $ul\n' .
-                ');\n\n' .
-                '// ou plus simplement avec html_structures\n' .
-                'echo tags::tag("div", [], tags::tag(\n' .
-                '     "p", [], "Ma liste de " . tags::tag(\n' .
-                '         "strong", [], "fruit")\n' .
-                '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
-                ');\n' .
-                '?>'
-        );
-        ?>
+                <?php
+                js::monaco_highlighter('<?php\n' .
+                        '$ul = tags::ul();\n' .
+                        'foreach (["Pomme", "Pêche", "Poire", "Abricot"] as $fruit) {\n' .
+                        '    $ul->append_content(tags::tag("li", [], $fruit));\n' .
+                        '}\n' .
+                        'echo tags::tag("div", [], tags::tag(\n' .
+                        '     "p", [], "Ma liste de " . tags::tag(\n' .
+                        '         "strong", [], "fruit")\n' .
+                        '     ) . $ul\n' .
+                        ');\n\n' .
+                        '// ou plus simplement avec html_structures\n' .
+                        'echo tags::tag("div", [], tags::tag(\n' .
+                        '     "p", [], "Ma liste de " . tags::tag(\n' .
+                        '         "strong", [], "fruit")\n' .
+                        '     ) . html_structures::ul(["Pomme", "Pêche", "Poire", "Abricot"])\n' .
+                        ');\n' .
+                        '?>'
+                );
+                ?>
             </div>
             <div class="col-sm-6">
                 <p>Résultat :</p>
-        <?php
-        echo tags::tag('div', [], tags::tag(
-                        'p', [], 'Ma liste de ' . tags::tag(
-                                'strong', [], 'fruit')
-                ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
-        );
-        ?>
+                <?php
+                echo tags::tag('div', [], tags::tag(
+                                'p', [], 'Ma liste de ' . tags::tag(
+                                        'strong', [], 'fruit')
+                        ) . html_structures::ul(['Pomme', 'Pêche', 'Poire', 'Abricot'])
+                );
+                ?>
             </div>
         </div>
         <?php
@@ -2386,7 +2386,7 @@ class docPHP_natives {
 
     public static function template() {
         ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
-        <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
+            <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
         <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
             le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
@@ -2446,6 +2446,44 @@ class docPHP_natives {
         js::monaco_highlighter('<?php\n'
                 . 'new tenor();\n'
                 . '?>');
+    }
+
+    public static function thread_manager() {
+        ?>
+        <p>Cette classe permet de multi-thread une fonction static avec un tableau de données</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'maclass{\n'
+                . '    public static function ma_fonction_static($param1,$param2){\n'
+                . '        usleep(500000); //simule un temps d\'execution de 0.5s\n'
+                . '        return "something";\n'
+                . '    }\n'
+                . '}\n\n'
+                . '$data=[\n'
+                . '    ["param1","param2",...],\n'
+                . '    ["param1","param2",...],\n'
+                . '    ["param1","param2",...],\n'
+                . '    ["param1","param2",...],\n'
+                . '    ["param1","param2",...],\n'
+                . '    ["param1","param2",...],\n'
+                . '    ...\n'
+                . '];\n'
+                . '$static_function="maclass::ma_fonction_static";\n'
+                . '$maxthread=4;\n'
+                . '$manager = new thread_manager($data, $static_function, $maxthead);\n'
+                . '$results = $manager->get_results();\n'
+                . '//temps d\'execution théorique (pour 20 lignes dans $data):\n'
+                . '?>');
+        ?>
+        <p>Notes sur les temps théoriques et rééls d'execution :</p>
+        <ul>
+            <li>Temps téhorique et réél monothread classique : 10s</li>
+            <li>Temps téhorique multi-thread (4) : 2.5s</li>
+            <li>temps réel multi-thread (4) : 3.5s</li>
+        </ul>
+        <p>L'ecart entre le temps réel et théorique est du aux requetes SQL et HTTP au service de threads mais reste avantageux face au monothread</p>
+        <p>Si vous utilisez cette classe gardez en tête que PHP n'est pas conçu pour le multi-threading et que cette classe est juste un outil pour paralleliser des traitements de données</p>
+            <?php
     }
 
     public static function time() {
@@ -2553,9 +2591,9 @@ class docPHP_natives {
         js::monaco_highlighter('<?php new video("./files/videos/nuagesMusicman921.webm",$id="video-js"); ?>');
         ?>
         <div style='width:600px' class="mx-auto">
-        <?php
-        new video('./files/videos/nuagesMusicman921.webm');
-        ?>
+            <?php
+            new video('./files/videos/nuagesMusicman921.webm');
+            ?>
         </div>
         <p>Credit : <br />
             Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />

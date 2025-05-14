@@ -1842,6 +1842,20 @@ class docPHP_natives {
                 . '?>');
     }
 
+    public static function pollinanitons() {
+        ?>
+        <p>Cette classe permet d'utiliser des outils d'IA en passant par les endpoint de pollinations </p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '//Affiche une immage généré par IA\n'
+                . 'echo html_structures::img(pollinations::image_src("perfect realistic landscape of forest"));\n'
+                . '//Affiche un texte généré par IA\n'
+                . 'echo pollinations::text("ecris un commentaire positif sur un stylo 4 couleur");\n'
+                . '//Génére un audio généré par IA\n'
+                . 'echo tags::tag("audio", ["controls" => "true", "src" => pollinations::audio_src("Raconte moi une histoire pour enfant")]);\n'
+                . '?>');
+    }
+
     public static function pseudo_cron() {
         ?>
         <p>Cette classe permet de lancer des "pseudo cron", <br />
@@ -2483,7 +2497,7 @@ class docPHP_natives {
         </ul>
         <p>L'ecart entre le temps réel et théorique est du aux requetes SQL et HTTP au service de threads mais reste avantageux face au monothread</p>
         <p>Si vous utilisez cette classe gardez en tête que PHP n'est pas conçu pour le multi-threading et que cette classe est juste un outil pour paralleliser des traitements de données</p>
-            <?php
+        <?php
     }
 
     public static function time() {

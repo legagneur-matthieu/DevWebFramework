@@ -65,7 +65,7 @@ class pollinations {
      * @param string $voice Voix : alloy, echo, fable, onyx, nova, shimmer, coral, verse, ballad, ash, sage, amuch, dan
      * @return string Url de l'audio généré
      */
-    public function audio_src($prompt,$voice="alloy") {
+    public static function audio_src($prompt,$voice="alloy") {
         $prompt = urlencode($prompt);
         return "https://text.pollinations.ai/{$prompt}?model=openai-audio&voice={$voice}";
     }

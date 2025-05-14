@@ -56,7 +56,7 @@ class pollinations {
         $system = urlencode($system);
         $json = ($json ? "true" : "false");
         $seed = ($seed ? $seed : time());
-        return"https://text.pollinations.ai/{$prompt}?system={$system}&json={$json}&seed={$seed}&model={$model}&private=true";
+        return file_get_contents("https://text.pollinations.ai/{$prompt}?system={$system}&json={$json}&seed={$seed}&model={$model}&private=true");
     }
     
     /**

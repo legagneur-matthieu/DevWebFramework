@@ -1,12 +1,12 @@
 /*!
  * 
- * Super simple WYSIWYG editor v0.9.0
+ * Super simple WYSIWYG editor v0.9.1
  * https://summernote.org
  *
  * Copyright 2013~ Hackerwins and contributors
  * Summernote may be freely distributed under the MIT license.
  *
- * Date: 2024-09-30T14:42Z
+ * Date: 2024-10-09T10:22Z
  *
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -8378,7 +8378,7 @@ var HelpDialog = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       var $container = this.options.dialogsInBody ? this.$body : this.options.container;
-      var body = ['<p class="text-center">', '<a href="http://summernote.org/" target="_blank" rel="noopener noreferrer">Summernote 0.9.0</a> · ', '<a href="https://github.com/summernote/summernote" target="_blank" rel="noopener noreferrer">Project</a> · ', '<a href="https://github.com/summernote/summernote/issues" target="_blank" rel="noopener noreferrer">Issues</a>', '</p>'].join('');
+      var body = ['<p class="text-center">', '<a href="http://summernote.org/" target="_blank" rel="noopener noreferrer">Summernote 0.9.1</a> · ', '<a href="https://github.com/summernote/summernote" target="_blank" rel="noopener noreferrer">Project</a> · ', '<a href="https://github.com/summernote/summernote/issues" target="_blank" rel="noopener noreferrer">Issues</a>', '</p>'].join('');
       this.$dialog = this.ui.dialog({
         title: this.lang.options.help,
         fade: this.options.dialogsFade,
@@ -8886,7 +8886,7 @@ var HintPopover = /*#__PURE__*/function () {
 
 
 (external_root_jQuery_commonjs_jquery_commonjs2_jquery_amd_jquery_default()).summernote = external_root_jQuery_commonjs_jquery_commonjs2_jquery_amd_jquery_default().extend((external_root_jQuery_commonjs_jquery_commonjs2_jquery_amd_jquery_default()).summernote, {
-  version: '0.9.0',
+  version: '0.9.1',
   plugins: {},
   dom: dom,
   range: range,

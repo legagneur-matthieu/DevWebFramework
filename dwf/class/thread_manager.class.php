@@ -21,16 +21,23 @@ class thread_manager {
     /** @var float[] Durée d'exécution des derniers threads terminés */
     private $thread_times = [];
 
+    /** @var string URL d'acces au services */
+    private $services_url = "";
+
     /**
      * Cette classe permet de milti-thread une fonction static avec un tableau de données
      *
      * @param array $data Données à traiter (chaque élément est un tableau de paramètres)
      * @param string $static_function Nom de la méthode statique à appeler (exemple : maclass::mafonction )
      * @param int $maxthread Nombre maximal de threads simultanés (défaut = nb de cœurs CPU)
+     * @param string $services_url URL d'acces au services (défaut = service du projet. si non doit ce finir par "services/index.php")
      */
-    public function __construct($data, $static_function, $maxthread = 0) {
+    public function __construct($data, $static_function, $maxthread = 0, $services_url = "") {
         if (!$maxthread) {
             $maxthread = $this->get_nbcore();
+        }
+        if (!empty($services_url)) {
+            $this->services_url = $services_url;
         }
         $this->maxthread = $maxthread;
         entity_generator::generate([
@@ -161,6 +168,9 @@ class thread_manager {
      * @return string URL complète du service
      */
     private function get_service_url() {
+        if (!empty($this->services_url)) {
+            return $this->services_url;
+        }
         $loc = application::get_loc();
         if (strpos($loc, 'index.php') !== false) {
             $loc = substr($loc, 0, strpos($loc, 'index.php'));

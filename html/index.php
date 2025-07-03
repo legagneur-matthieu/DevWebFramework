@@ -29,6 +29,7 @@ class parcour_sites {
                         $files = glob("../dwf/class/export_dwf/*.json");
                         if (in_array($file = "../dwf/class/export_dwf/{$_GET["del_export"]}.json", $files)) {
                             unlink($file);
+                            js::redir("index.php");
                         }
                     } else {
                         $this->main($this->init_main());
@@ -90,7 +91,7 @@ class parcour_sites {
                         html_structures::script("commun/src/dist/jquery-ui/external/jquery/jquery.js") .
                         html_structures::script("commun/src/dist/jquery-ui/jquery-ui.min.js") .
                         html_structures::script("commun/src/js/alertify/alertify.min.js")
-        );
+                );
     }
 
     private function header() {
@@ -98,7 +99,7 @@ class parcour_sites {
                                 "h1", [], "Parcours des projets " . tags::tag("br") .
                                 tags::tag("small", [], "Liste des projets présent dans DWF")
                         )
-        );
+                );
     }
 
     private function init_main() {
@@ -154,12 +155,16 @@ class parcour_sites {
         $conf = "./commun/conf/default.json";
         if (!is_writable($conf) or !is_readable($conf)) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le fichier " . $conf . " n'est pas accessible en lecture/ecriture"));
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "Le fichier " . $conf . " n'est pas accessible en lecture/ecriture"));
         }
         $conf = "../dwf/log";
         if (!is_writable($conf) or !is_readable($conf)) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "Le dossier " . $conf . " n'est pas accessible en lecture/ecriture"));
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "Le dossier " . $conf . " n'est pas accessible en lecture/ecriture"));
+        }
+        if (!extension_loaded("pdo") || !in_array("sqlite", PDO::getAvailableDrivers())) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-danger"], tags::tag("p", [], "L'extention PHP SQLite3 est fortement recommandé."));
         }
         if (!class_exists("tidy")) {
             $DWFStatus = false;

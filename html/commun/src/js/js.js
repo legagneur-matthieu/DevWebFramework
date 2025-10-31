@@ -3,6 +3,7 @@ $(document).ready(function () {
     $(".has-error input, .has-error select").attr("aria-invalid", "true").attr("aria-errormessage", "Erreur");
     $(".has-warning input, .has-warning select").attr("aria-invalid", "true").attr("aria-errormessage", "Attention");
     $('[data-toggle="tooltip"]').tooltip();
+    $("ul.list-group>li").addClass("list-group-item");
     //parallax
     (function () {
         var elements = [];
@@ -18,7 +19,6 @@ $(document).ready(function () {
                 elem.style.backgroundImage = "url('" + elem.getAttribute("data-src") + "')";
             }
         });
-        console.log(elements);
         new SimpleParallax(elements);
     })();
 });

@@ -1629,6 +1629,31 @@ class docPHP_natives {
         );
     }
 
+    public static function mocodo() {
+        ?>
+        <p>Cette classe permet de générer une representation graphique d'une base de donnée.</p>
+        <?php
+        js::monaco_highlighter('<?php\n' .
+                '$db = [\n' .
+                '    "rang" => [\n' .
+                '    ["id", "int", true],\n' .
+                '    ["nom", "string", false],\n' .
+                '],\n' .
+                '"user" => [\n' .
+                '["id", "int", true],\n' .
+                '        ["login", "string", false],\n' .
+                '        ["psw", "psw", false],\n' .
+                '        ["rang", "rang", false],\n' .
+                '    ],\n' .
+                '];\n' .
+                '$mocodo = new mocodo($db);\n' .
+                'echo $mocodo->get_text() . "<hr>"; // Affiche le texte généré\n' .
+                'echo $mocodo->get_svg() . "<hr>"; // Affiche le SVG\n' .
+                'echo $mocodo->get_zip(); // Affiche le lien ZIP\n' .
+                '?>'
+        );
+    }
+
     public static function modal() {
         ?>
         <p>"Modal" est une classe permettant d'afficher des modals (appelées aussi layout ou pop-in). Une "modal" s'ouvre lors d'un clic sur un lien lui correspondant</p>

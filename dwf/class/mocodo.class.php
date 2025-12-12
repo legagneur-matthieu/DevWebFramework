@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Cette classe permet de généré une representation graphique d'une base de donnée
+ * Cette classe permet de générer une representation graphique d'une base de donnée
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -252,7 +252,7 @@ class mocodo {
     private $_arrangement;
 
     /**
-     * Cette classe permet de généré une representation graphique d'une base de donnée
+     * Cette classe permet de générer une representation graphique d'une base de donnée
      *
      * @param array $db Le tableau représentant la structure de la base de données.
      * @param string $arrangement Les arrangement du MCD (par défaut 'arrange:balanced=0').

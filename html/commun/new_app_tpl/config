@@ -22,8 +22,8 @@ class config {
     /* hash */
     public static $_hash_algo = "{{HASH_ALGO}}";
     /* routes */
-    public static $_route_auth = array();
-    public static $_route_unauth = array();
+    public static $_route_auth = [];
+    public static $_route_unauth = [];
     /* SMTP */
     public static $_SMTP_host = "{{SMTP_HOST}}";
     public static $_SMTP_auth = "{{SMTP_AUTH}}";
@@ -43,14 +43,13 @@ class config {
     public static $_statistiques = false;
 
     public static function onbdd_connected() {
-        self::$_route_auth = array(
-            array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),
-            array("page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION")
-        );
-        self::$_route_unauth = array(
-            array("page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"),
-            array("page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keywords" => "login, devwebframework, DWF")
-        );
+        self::$_route_auth = [
+            ["page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"],
+            ["page" => "deco", "title" => "Deconnexion", "text" => "DECONNEXION"]
+        ];
+        self::$_route_unauth = [
+            ["page" => "index", "title" => "Page d'accueil", "text" => "ACCUEIL", "description" => "Index de devwebframework", "keywords" => "Index, devwebframework, DWF"],
+            ["page" => "login", "title" => "Login", "text" => "LOGIN", "description" => "Connexion a devwebframework", "keywords" => "login, devwebframework, DWF"]
+        ];
     }
-
 }

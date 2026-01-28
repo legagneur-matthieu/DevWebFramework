@@ -21,7 +21,7 @@ namespace Stripe;
  * @property null|string $description An optional description of what the webhook is used for.
  * @property string[] $enabled_events The list of events to enable for this endpoint. <code>['*']</code> indicates that all events are enabled, except those that require explicit selection.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
- * @property StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property StripeObject $metadata Set of <a href="https://docs.stripe.com/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $secret The endpoint's secret, used to generate <a href="https://docs.stripe.com/webhooks/signatures">webhook signatures</a>. Only returned at creation.
  * @property string $status The status of the webhook. It can be <code>enabled</code> or <code>disabled</code>.
  * @property string $url The URL of the webhook endpoint.
@@ -43,7 +43,7 @@ class WebhookEndpoint extends ApiResource
      * href="https://dashboard.stripe.com/account/webhooks">webhooks settings</a>
      * section of the Dashboard.
      *
-     * @param null|array{api_version?: string, connect?: bool, description?: null|string, enabled_events: string[], expand?: string[], metadata?: null|StripeObject, url: string} $params
+     * @param null|array{api_version?: string, connect?: bool, description?: null|string, enabled_events: string[], expand?: string[], metadata?: null|array<string, string>, url: string} $params
      * @param null|array|string $options
      *
      * @return WebhookEndpoint the created resource
@@ -126,7 +126,7 @@ class WebhookEndpoint extends ApiResource
      * <code>enabled_events</code>, and the status of your endpoint.
      *
      * @param string $id the ID of the resource to update
-     * @param null|array{description?: null|string, disabled?: bool, enabled_events?: string[], expand?: string[], metadata?: null|StripeObject, url?: string} $params
+     * @param null|array{description?: null|string, disabled?: bool, enabled_events?: string[], expand?: string[], metadata?: null|array<string, string>, url?: string} $params
      * @param null|array|string $opts
      *
      * @return WebhookEndpoint the updated resource

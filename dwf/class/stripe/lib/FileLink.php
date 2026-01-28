@@ -16,7 +16,7 @@ namespace Stripe;
  * @property null|int $expires_at Time that the link expires.
  * @property File|string $file The file object this link points to.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
- * @property StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property StripeObject $metadata Set of <a href="https://docs.stripe.com/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $url The publicly accessible URL to download the file.
  */
 class FileLink extends ApiResource
@@ -28,7 +28,7 @@ class FileLink extends ApiResource
     /**
      * Creates a new file link object.
      *
-     * @param null|array{expand?: string[], expires_at?: int, file: string, metadata?: null|StripeObject} $params
+     * @param null|array{expand?: string[], expires_at?: int, file: string, metadata?: null|array<string, string>} $params
      * @param null|array|string $options
      *
      * @return FileLink the created resource
@@ -87,7 +87,7 @@ class FileLink extends ApiResource
      * Updates an existing file link object. Expired links can no longer be updated.
      *
      * @param string $id the ID of the resource to update
-     * @param null|array{expand?: string[], expires_at?: null|array|int|string, metadata?: null|StripeObject} $params
+     * @param null|array{expand?: string[], expires_at?: null|array|int|string, metadata?: null|array<string, string>} $params
      * @param null|array|string $opts
      *
      * @return FileLink the updated resource

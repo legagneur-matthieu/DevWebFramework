@@ -7,10 +7,10 @@
 class paypal {
 
     /**
-     * ApiContext
-     * @var PayPal\Rest\ApiContext ApiContext
+     * PayPalClient
+     * @var PaypalServerSdkLib\PaypalServerSdkClient PayPalClient
      */
-    private $_api_context;
+    private $_client;
 
     /**
      * Devise utilisée ("EUR" par defaut)
@@ -40,11 +40,28 @@ class paypal {
      */
     public function __construct($clientId, $clientSecret, $currency = "EUR", $payment_method = "paypal") {
         if (!self::$_called) {
-            include __DIR__ . "/PayPal-PHP-SDK/autoload.php";
-            export_dwf::add_files([realpath(__DIR__ . "/PayPal-PHP-SDK")]);
+            spl_autoload_register(function ($class) {
+                $prefix = 'PaypalServerSdkLib\\';
+                if (strpos($class, $prefix) === 0) {
+                    $relativeClass = substr($class, strlen($prefix));
+                    $file = __DIR__ . '/PayPal-PHP-Server-SDK/src/' . str_replace('\\', '/', $relativeClass) . '.php';
+                    if (file_exists($file)) {
+                        require $file;
+                    }
+                }
+            });
+            export_dwf::add_files([realpath(__DIR__ . "/PayPal-PHP-Server-SDK")]);
             self::$_called = true;
         }
-        $this->_api_context = new PayPal\Rest\ApiContext(new \PayPal\Auth\OAuthTokenCredential($clientId, $clientSecret));
+        $this->_client = PaypalServerSdkLib\PaypalServerSdkClientBuilder::init()
+            ->clientCredentialsAuthCredentials(
+                PaypalServerSdkLib\Authentication\ClientCredentialsAuthCredentialsBuilder::init(
+                    $clientId,
+                    $clientSecret
+                )
+            )
+            ->environment(PaypalServerSdkLib\Environment::SANDBOX) // Change to ::PRODUCTION for live
+            ->build();
         $this->_currency = $currency;
         $this->_payment_method = $payment_method;
     }
@@ -72,72 +89,117 @@ class paypal {
             $amt += ($item["Price"] * $item["Quantity"]);
         }
         $amt_vat = floatval(number_format(math::pourcentage($amt, $vat), 2));
-        $payment = (new \PayPal\Api\Payment())
-                ->setIntent($intent)
-                ->setRedirectUrls((new \PayPal\Api\RedirectUrls())->setReturnUrl($returnurl)->setCancelUrl($cancelurl))
-                ->addTransaction((new \PayPal\Api\Transaction())
-                        ->setItemList($this->itemlist_from_array($item_list))
-                        ->setDescription($description)
-                        ->setAmount((new \PayPal\Api\Amount())
-                                ->setTotal($amt + $amt_vat)
-                                ->setCurrency($this->_currency)
-                                ->setDetails((new \PayPal\Api\Details())->setTax($amt_vat)->setSubtotal($amt)->setShipping($shipping))
-                        )
-                        ->setCustom($custom))
-                ->setPayer((new \PayPal\Api\Payer())->setPaymentMethod($this->_payment_method));
+        $total = $amt + $amt_vat + $shipping;
+
+        $body = [
+            "intent" => strtoupper($intent) === "SALE" ? "CAPTURE" : "AUTHORIZE",
+            "application_context" => [
+                "return_url" => $returnurl,
+                "cancel_url" => $cancelurl,
+            ],
+            "purchase_units" => [
+                [
+                    "description" => $description,
+                    "custom_id" => $custom,
+                    "amount" => [
+                        "currency_code" => $this->_currency,
+                        "value" => number_format($total, 2, '.', ''),
+                        "breakdown" => [
+                            "item_total" => [
+                                "currency_code" => $this->_currency,
+                                "value" => number_format($amt, 2, '.', ''),
+                            ],
+                            "shipping" => [
+                                "currency_code" => $this->_currency,
+                                "value" => number_format($shipping, 2, '.', ''),
+                            ],
+                            "tax_total" => [
+                                "currency_code" => $this->_currency,
+                                "value" => number_format($amt_vat, 2, '.', ''),
+                            ],
+                        ]
+                    ],
+                    "items" => $this->itemlist_from_array($item_list),
+                ]
+            ]
+        ];
+
+        $request = new PaypalServerSdkLib\Orders\OrdersCreateRequest();
+        $request->body = $body;
+
         try {
-            $payment->create($this->_api_context);
-            return $payment->getApprovalLink();
-        } catch (\PayPal\Exception\PayPalConnectionException $e) {
-            dwf_exception::print_exception($e, "PayPal : " . $e->getData());
-            return FALSE;
+            $response = $this->_client->execute($request);
+            if ($response->statusCode === 201) {
+                foreach ($response->result->links as $link) {
+                    if ($link->rel === "approve") {
+                        return $link->href;
+                    }
+                }
+            }
+            return false;
+        } catch (Exception $e) {
+            dwf_exception::print_exception($e, "PayPal: " . $e->getMessage());
+            return false;
         }
     }
 
     /**
      * Retourne le paiement retourné par PayPal
-     * @param string $paymentId $_GET["paymentId"]
-     * @return \PayPal\Api\Payment Paiement retourné par PayPal
+     * @param string $paymentId $_GET["token"]
+     * @return object Paiement retourné par PayPal (order result)
      */
     public function get_payment($paymentId) {
-        return \PayPal\Api\Payment::get($paymentId, $this->_api_context);
+        $request = new PaypalServerSdkLib\Orders\OrdersGetRequest($paymentId);
+        try {
+            $response = $this->_client->execute($request);
+            return $response->result;
+        } catch (Exception $e) {
+            dwf_exception::print_exception($e, "PayPal: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
      * Execute un paiement
-     * @param PayPal\Api\Payment $payment le paieent retourné par PayPal
+     * @param object $payment le paieent retourné par PayPal
      * @return boolean false en cas d'erreur ( true = OK )
      */
-    public function execute_payment(PayPal\Api\Payment $payment) {
+    public function execute_payment($payment) {
+        $orderId = $payment->id;
+        if ($payment->intent === 'CAPTURE') {
+            $request = new PaypalServerSdkLib\Orders\OrdersCaptureRequest($orderId);
+        } else {
+            $request = new PaypalServerSdkLib\Orders\OrdersAuthorizeRequest($orderId);
+        }
+        $request->body = [];
+
         try {
-            $payment->execute((new \PayPal\Api\PaymentExecution())
-                            ->setPayerId($payment->getPayer()->getPayerInfo()->getPayerId())
-                            ->setTransactions($payment->getTransactions())
-                    , $this->_api_context);
-            return true;
-        } catch (\PayPal\Exception\PayPalConnectionException $e) {
-            dwf_exception::print_exception($e, "PayPal : " . $e->getData());
-            return FALSE;
+            $response = $this->_client->execute($request);
+            return $response->statusCode === 201;
+        } catch (Exception $e) {
+            dwf_exception::print_exception($e, "PayPal: " . $e->getMessage());
+            return false;
         }
     }
 
     /**
-     * Convertit une liste d'articles "array" en \PayPal\Api\ItemList()
+     * Convertit une liste d'articles "array" en array pour purchase_units items
      * @param array $item_list Liste d'articles
-     * @return \PayPal\Api\ItemList Objet ItemList 
+     * @return array Array of items 
      */
     private function itemlist_from_array($item_list) {
-        $itemlist = new \PayPal\Api\ItemList();
+        $items = [];
         foreach ($item_list as $item) {
-            $item_obj = new PayPal\Api\Item();
-            foreach ($item as $key => $value) {
-                $set = "set" . $key;
-                $item_obj->$set($value);
-            }
-            $item_obj->setCurrency($this->_currency);
-            $itemlist->addItem($item_obj);
+            $items[] = [
+                "name" => $item["Name"],
+                "quantity" => (string)$item["Quantity"],
+                "unit_amount" => [
+                    "currency_code" => $this->_currency,
+                    "value" => number_format($item["Price"], 2, '.', '')
+                ]
+            ];
         }
-        return $itemlist;
+        return $items;
     }
 
 }

@@ -19,11 +19,13 @@ namespace Google\Service\DiscoveryEngine\Resource;
 
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1AnswerQueryRequest;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1AnswerQueryResponse;
+use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1ListServingConfigsResponse;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1RecommendRequest;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1RecommendResponse;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1SearchRequest;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1SearchResponse;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1ServingConfig;
+use Google\Service\DiscoveryEngine\GoogleProtobufEmpty;
 
 /**
  * The "servingConfigs" collection of methods.
@@ -54,6 +56,87 @@ class ProjectsLocationsCollectionsDataStoresServingConfigs extends \Google\Servi
     $params = ['servingConfig' => $servingConfig, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('answer', [$params], GoogleCloudDiscoveryengineV1AnswerQueryResponse::class);
+  }
+  /**
+   * Creates a ServingConfig. Note: The Google Cloud console works only with the
+   * default serving config. Additional ServingConfigs can be created and managed
+   * only via the API. A maximum of 100 ServingConfigs are allowed in an Engine,
+   * otherwise a RESOURCE_EXHAUSTED error is returned. (servingConfigs.create)
+   *
+   * @param string $parent Required. Full resource name of parent. Format: `projec
+   * ts/{project}/locations/{location}/collections/{collection}/engines/{engine}`
+   * @param GoogleCloudDiscoveryengineV1ServingConfig $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string servingConfigId Required. The ID to use for the
+   * ServingConfig, which will become the final component of the ServingConfig's
+   * resource name. This value should be 4-63 characters, and valid characters are
+   * /a-zA-Z0-9+/.
+   * @return GoogleCloudDiscoveryengineV1ServingConfig
+   * @throws \Google\Service\Exception
+   */
+  public function create($parent, GoogleCloudDiscoveryengineV1ServingConfig $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('create', [$params], GoogleCloudDiscoveryengineV1ServingConfig::class);
+  }
+  /**
+   * Deletes a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does
+   * not exist. (servingConfigs.delete)
+   *
+   * @param string $name Required. The resource name of the ServingConfig to
+   * delete. Format: `projects/{project}/locations/{location}/collections/{collect
+   * ion}/engines/{engine}/servingConfigs/{serving_config_id}`
+   * @param array $optParams Optional parameters.
+   * @return GoogleProtobufEmpty
+   * @throws \Google\Service\Exception
+   */
+  public function delete($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('delete', [$params], GoogleProtobufEmpty::class);
+  }
+  /**
+   * Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not
+   * exist. (servingConfigs.get)
+   *
+   * @param string $name Required. The resource name of the ServingConfig to get.
+   * Format: `projects/{project}/locations/{location}/collections/{collection}/eng
+   * ines/{engine}/servingConfigs/{serving_config_id}`
+   * @param array $optParams Optional parameters.
+   * @return GoogleCloudDiscoveryengineV1ServingConfig
+   * @throws \Google\Service\Exception
+   */
+  public function get($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('get', [$params], GoogleCloudDiscoveryengineV1ServingConfig::class);
+  }
+  /**
+   * Lists all ServingConfigs linked to this dataStore.
+   * (servingConfigs.listProjectsLocationsCollectionsDataStoresServingConfigs)
+   *
+   * @param string $parent Required. Full resource name of the parent resource.
+   * Format: `projects/{project}/locations/{location}/collections/{collection}/eng
+   * ines/{engine}`
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param int pageSize Optional. Maximum number of results to return. If
+   * unspecified, defaults to 100. If a value greater than 100 is provided, at
+   * most 100 results are returned.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * `ListServingConfigs` call. Provide this to retrieve the subsequent page.
+   * @return GoogleCloudDiscoveryengineV1ListServingConfigsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function listProjectsLocationsCollectionsDataStoresServingConfigs($parent, $optParams = [])
+  {
+    $params = ['parent' => $parent];
+    $params = array_merge($params, $optParams);
+    return $this->call('list', [$params], GoogleCloudDiscoveryengineV1ListServingConfigsResponse::class);
   }
   /**
    * Updates a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does

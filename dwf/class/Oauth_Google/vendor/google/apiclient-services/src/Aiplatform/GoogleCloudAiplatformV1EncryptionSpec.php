@@ -20,12 +20,22 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1EncryptionSpec extends \Google\Model
 {
   /**
+   * Required. Resource name of the Cloud KMS key used to protect the resource.
+   * The Cloud KMS key must be in the same region as the resource. It must have
+   * the format `projects/{project}/locations/{location}/keyRings/{key_ring}/cry
+   * ptoKeys/{crypto_key}`.
+   *
    * @var string
    */
   public $kmsKeyName;
 
   /**
-   * @param string
+   * Required. Resource name of the Cloud KMS key used to protect the resource.
+   * The Cloud KMS key must be in the same region as the resource. It must have
+   * the format `projects/{project}/locations/{location}/keyRings/{key_ring}/cry
+   * ptoKeys/{crypto_key}`.
+   *
+   * @param string $kmsKeyName
    */
   public function setKmsKeyName($kmsKeyName)
   {

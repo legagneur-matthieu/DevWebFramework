@@ -19,86 +19,227 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1Schema extends \Google\Collection
 {
+  /**
+   * Not specified, should not be used.
+   */
+  public const TYPE_TYPE_UNSPECIFIED = 'TYPE_UNSPECIFIED';
+  /**
+   * OpenAPI string type
+   */
+  public const TYPE_STRING = 'STRING';
+  /**
+   * OpenAPI number type
+   */
+  public const TYPE_NUMBER = 'NUMBER';
+  /**
+   * OpenAPI integer type
+   */
+  public const TYPE_INTEGER = 'INTEGER';
+  /**
+   * OpenAPI boolean type
+   */
+  public const TYPE_BOOLEAN = 'BOOLEAN';
+  /**
+   * OpenAPI array type
+   */
+  public const TYPE_ARRAY = 'ARRAY';
+  /**
+   * OpenAPI object type
+   */
+  public const TYPE_OBJECT = 'OBJECT';
+  /**
+   * Null type
+   */
+  public const TYPE_NULL = 'NULL';
   protected $collection_key = 'required';
+  /**
+   * Optional. If `type` is `OBJECT`, specifies how to handle properties not
+   * defined in `properties`. If it is a boolean `false`, no additional
+   * properties are allowed. If it is a schema, additional properties are
+   * allowed if they conform to the schema.
+   *
+   * @var array
+   */
+  public $additionalProperties;
   protected $anyOfType = GoogleCloudAiplatformV1Schema::class;
   protected $anyOfDataType = 'array';
   /**
+   * Optional. Default value to use if the field is not specified.
+   *
    * @var array
    */
   public $default;
+  protected $defsType = GoogleCloudAiplatformV1Schema::class;
+  protected $defsDataType = 'map';
   /**
+   * Optional. Description of the schema.
+   *
    * @var string
    */
   public $description;
   /**
+   * Optional. Possible values of the field. This field can be used to restrict
+   * a value to a fixed set of values. To mark a field as an enum, set `format`
+   * to `enum` and provide the list of possible values in `enum`. For example:
+   * 1. To define directions: `{type:STRING, format:enum, enum:["EAST", "NORTH",
+   * "SOUTH", "WEST"]}` 2. To define apartment numbers: `{type:INTEGER,
+   * format:enum, enum:["101", "201", "301"]}`
+   *
    * @var string[]
    */
   public $enum;
   /**
+   * Optional. Example of an instance of this schema.
+   *
    * @var array
    */
   public $example;
   /**
+   * Optional. The format of the data. For `NUMBER` type, format can be `float`
+   * or `double`. For `INTEGER` type, format can be `int32` or `int64`. For
+   * `STRING` type, format can be `email`, `byte`, `date`, `date-time`,
+   * `password`, and other formats to further refine the data type.
+   *
    * @var string
    */
   public $format;
   protected $itemsType = GoogleCloudAiplatformV1Schema::class;
   protected $itemsDataType = '';
   /**
+   * Optional. If type is `ARRAY`, `max_items` specifies the maximum number of
+   * items in an array.
+   *
    * @var string
    */
   public $maxItems;
   /**
+   * Optional. If type is `STRING`, `max_length` specifies the maximum length of
+   * the string.
+   *
    * @var string
    */
   public $maxLength;
   /**
+   * Optional. If type is `OBJECT`, `max_properties` specifies the maximum
+   * number of properties that can be provided.
+   *
    * @var string
    */
   public $maxProperties;
+  /**
+   * Optional. If type is `INTEGER` or `NUMBER`, `maximum` specifies the maximum
+   * allowed value.
+   *
+   * @var 
+   */
   public $maximum;
   /**
+   * Optional. If type is `ARRAY`, `min_items` specifies the minimum number of
+   * items in an array.
+   *
    * @var string
    */
   public $minItems;
   /**
+   * Optional. If type is `STRING`, `min_length` specifies the minimum length of
+   * the string.
+   *
    * @var string
    */
   public $minLength;
   /**
+   * Optional. If type is `OBJECT`, `min_properties` specifies the minimum
+   * number of properties that can be provided.
+   *
    * @var string
    */
   public $minProperties;
+  /**
+   * Optional. If type is `INTEGER` or `NUMBER`, `minimum` specifies the minimum
+   * allowed value.
+   *
+   * @var 
+   */
   public $minimum;
   /**
+   * Optional. Indicates if the value of this field can be null.
+   *
    * @var bool
    */
   public $nullable;
   /**
+   * Optional. If type is `STRING`, `pattern` specifies a regular expression
+   * that the string must match.
+   *
    * @var string
    */
   public $pattern;
   protected $propertiesType = GoogleCloudAiplatformV1Schema::class;
   protected $propertiesDataType = 'map';
   /**
+   * Optional. Order of properties displayed or used where order matters. This
+   * is not a standard field in OpenAPI specification, but can be used to
+   * control the order of properties.
+   *
    * @var string[]
    */
   public $propertyOrdering;
   /**
+   * Optional. Allows referencing another schema definition to use in place of
+   * this schema. The value must be a valid reference to a schema in `defs`. For
+   * example, the following schema defines a reference to a schema node named
+   * "Pet": type: object properties: pet: ref: #/defs/Pet defs: Pet: type:
+   * object properties: name: type: string The value of the "pet" property is a
+   * reference to the schema node named "Pet". See details in https://json-
+   * schema.org/understanding-json-schema/structuring
+   *
+   * @var string
+   */
+  public $ref;
+  /**
+   * Optional. If type is `OBJECT`, `required` lists the names of properties
+   * that must be present.
+   *
    * @var string[]
    */
   public $required;
   /**
+   * Optional. Title for the schema.
+   *
    * @var string
    */
   public $title;
   /**
+   * Optional. Data type of the schema field.
+   *
    * @var string
    */
   public $type;
 
   /**
-   * @param GoogleCloudAiplatformV1Schema[]
+   * Optional. If `type` is `OBJECT`, specifies how to handle properties not
+   * defined in `properties`. If it is a boolean `false`, no additional
+   * properties are allowed. If it is a schema, additional properties are
+   * allowed if they conform to the schema.
+   *
+   * @param array $additionalProperties
+   */
+  public function setAdditionalProperties($additionalProperties)
+  {
+    $this->additionalProperties = $additionalProperties;
+  }
+  /**
+   * @return array
+   */
+  public function getAdditionalProperties()
+  {
+    return $this->additionalProperties;
+  }
+  /**
+   * Optional. The instance must be valid against any (one or more) of the
+   * subschemas listed in `any_of`.
+   *
+   * @param GoogleCloudAiplatformV1Schema[] $anyOf
    */
   public function setAnyOf($anyOf)
   {
@@ -112,7 +253,9 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->anyOf;
   }
   /**
-   * @param array
+   * Optional. Default value to use if the field is not specified.
+   *
+   * @param array $default
    */
   public function setDefault($default)
   {
@@ -126,7 +269,26 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->default;
   }
   /**
-   * @param string
+   * Optional. `defs` provides a map of schema definitions that can be reused by
+   * `ref` elsewhere in the schema. Only allowed at root level of the schema.
+   *
+   * @param GoogleCloudAiplatformV1Schema[] $defs
+   */
+  public function setDefs($defs)
+  {
+    $this->defs = $defs;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1Schema[]
+   */
+  public function getDefs()
+  {
+    return $this->defs;
+  }
+  /**
+   * Optional. Description of the schema.
+   *
+   * @param string $description
    */
   public function setDescription($description)
   {
@@ -140,7 +302,14 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->description;
   }
   /**
-   * @param string[]
+   * Optional. Possible values of the field. This field can be used to restrict
+   * a value to a fixed set of values. To mark a field as an enum, set `format`
+   * to `enum` and provide the list of possible values in `enum`. For example:
+   * 1. To define directions: `{type:STRING, format:enum, enum:["EAST", "NORTH",
+   * "SOUTH", "WEST"]}` 2. To define apartment numbers: `{type:INTEGER,
+   * format:enum, enum:["101", "201", "301"]}`
+   *
+   * @param string[] $enum
    */
   public function setEnum($enum)
   {
@@ -154,7 +323,9 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->enum;
   }
   /**
-   * @param array
+   * Optional. Example of an instance of this schema.
+   *
+   * @param array $example
    */
   public function setExample($example)
   {
@@ -168,7 +339,12 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->example;
   }
   /**
-   * @param string
+   * Optional. The format of the data. For `NUMBER` type, format can be `float`
+   * or `double`. For `INTEGER` type, format can be `int32` or `int64`. For
+   * `STRING` type, format can be `email`, `byte`, `date`, `date-time`,
+   * `password`, and other formats to further refine the data type.
+   *
+   * @param string $format
    */
   public function setFormat($format)
   {
@@ -182,7 +358,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->format;
   }
   /**
-   * @param GoogleCloudAiplatformV1Schema
+   * Optional. If type is `ARRAY`, `items` specifies the schema of elements in
+   * the array.
+   *
+   * @param GoogleCloudAiplatformV1Schema $items
    */
   public function setItems(GoogleCloudAiplatformV1Schema $items)
   {
@@ -196,7 +375,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->items;
   }
   /**
-   * @param string
+   * Optional. If type is `ARRAY`, `max_items` specifies the maximum number of
+   * items in an array.
+   *
+   * @param string $maxItems
    */
   public function setMaxItems($maxItems)
   {
@@ -210,7 +392,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->maxItems;
   }
   /**
-   * @param string
+   * Optional. If type is `STRING`, `max_length` specifies the maximum length of
+   * the string.
+   *
+   * @param string $maxLength
    */
   public function setMaxLength($maxLength)
   {
@@ -224,7 +409,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->maxLength;
   }
   /**
-   * @param string
+   * Optional. If type is `OBJECT`, `max_properties` specifies the maximum
+   * number of properties that can be provided.
+   *
+   * @param string $maxProperties
    */
   public function setMaxProperties($maxProperties)
   {
@@ -246,7 +434,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->maximum;
   }
   /**
-   * @param string
+   * Optional. If type is `ARRAY`, `min_items` specifies the minimum number of
+   * items in an array.
+   *
+   * @param string $minItems
    */
   public function setMinItems($minItems)
   {
@@ -260,7 +451,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->minItems;
   }
   /**
-   * @param string
+   * Optional. If type is `STRING`, `min_length` specifies the minimum length of
+   * the string.
+   *
+   * @param string $minLength
    */
   public function setMinLength($minLength)
   {
@@ -274,7 +468,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->minLength;
   }
   /**
-   * @param string
+   * Optional. If type is `OBJECT`, `min_properties` specifies the minimum
+   * number of properties that can be provided.
+   *
+   * @param string $minProperties
    */
   public function setMinProperties($minProperties)
   {
@@ -296,7 +493,9 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->minimum;
   }
   /**
-   * @param bool
+   * Optional. Indicates if the value of this field can be null.
+   *
+   * @param bool $nullable
    */
   public function setNullable($nullable)
   {
@@ -310,7 +509,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->nullable;
   }
   /**
-   * @param string
+   * Optional. If type is `STRING`, `pattern` specifies a regular expression
+   * that the string must match.
+   *
+   * @param string $pattern
    */
   public function setPattern($pattern)
   {
@@ -324,7 +526,10 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->pattern;
   }
   /**
-   * @param GoogleCloudAiplatformV1Schema[]
+   * Optional. If type is `OBJECT`, `properties` is a map of property names to
+   * schema definitions for each property of the object.
+   *
+   * @param GoogleCloudAiplatformV1Schema[] $properties
    */
   public function setProperties($properties)
   {
@@ -338,7 +543,11 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->properties;
   }
   /**
-   * @param string[]
+   * Optional. Order of properties displayed or used where order matters. This
+   * is not a standard field in OpenAPI specification, but can be used to
+   * control the order of properties.
+   *
+   * @param string[] $propertyOrdering
    */
   public function setPropertyOrdering($propertyOrdering)
   {
@@ -352,7 +561,32 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->propertyOrdering;
   }
   /**
-   * @param string[]
+   * Optional. Allows referencing another schema definition to use in place of
+   * this schema. The value must be a valid reference to a schema in `defs`. For
+   * example, the following schema defines a reference to a schema node named
+   * "Pet": type: object properties: pet: ref: #/defs/Pet defs: Pet: type:
+   * object properties: name: type: string The value of the "pet" property is a
+   * reference to the schema node named "Pet". See details in https://json-
+   * schema.org/understanding-json-schema/structuring
+   *
+   * @param string $ref
+   */
+  public function setRef($ref)
+  {
+    $this->ref = $ref;
+  }
+  /**
+   * @return string
+   */
+  public function getRef()
+  {
+    return $this->ref;
+  }
+  /**
+   * Optional. If type is `OBJECT`, `required` lists the names of properties
+   * that must be present.
+   *
+   * @param string[] $required
    */
   public function setRequired($required)
   {
@@ -366,7 +600,9 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->required;
   }
   /**
-   * @param string
+   * Optional. Title for the schema.
+   *
+   * @param string $title
    */
   public function setTitle($title)
   {
@@ -380,14 +616,19 @@ class GoogleCloudAiplatformV1Schema extends \Google\Collection
     return $this->title;
   }
   /**
-   * @param string
+   * Optional. Data type of the schema field.
+   *
+   * Accepted values: TYPE_UNSPECIFIED, STRING, NUMBER, INTEGER, BOOLEAN, ARRAY,
+   * OBJECT, NULL
+   *
+   * @param self::TYPE_* $type
    */
   public function setType($type)
   {
     $this->type = $type;
   }
   /**
-   * @return string
+   * @return self::TYPE_*
    */
   public function getType()
   {

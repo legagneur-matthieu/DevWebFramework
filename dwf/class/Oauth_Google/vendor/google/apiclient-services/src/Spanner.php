@@ -41,7 +41,7 @@ class Spanner extends \Google\Service
   /** Administer your Spanner databases. */
   const SPANNER_ADMIN =
       "https://www.googleapis.com/auth/spanner.admin";
-  /** View and manage the contents of your Spanner databases. */
+  /** See, edit, configure, and delete your Google Cloud Spanner data and see the email address for your Google Account. */
   const SPANNER_DATA =
       "https://www.googleapis.com/auth/spanner.data";
 
@@ -248,6 +248,10 @@ class Spanner extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],
           ]
@@ -309,6 +313,10 @@ class Spanner extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -656,6 +664,10 @@ class Spanner extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -1069,6 +1081,10 @@ class Spanner extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],
           ]
@@ -1080,7 +1096,27 @@ class Spanner extends \Google\Service
         'sessions',
         [
           'methods' => [
-            'batchCreate' => [
+            'adaptMessage' => [
+              'path' => 'v1/{+name}:adaptMessage',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'adapter' => [
+              'path' => 'v1/{+parent}/sessions:adapter',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'batchCreate' => [
               'path' => 'v1/{+database}/sessions:batchCreate',
               'httpMethod' => 'POST',
               'parameters' => [
@@ -1425,6 +1461,10 @@ class Spanner extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],
           ]
@@ -1486,6 +1526,10 @@ class Spanner extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
               ],
             ],

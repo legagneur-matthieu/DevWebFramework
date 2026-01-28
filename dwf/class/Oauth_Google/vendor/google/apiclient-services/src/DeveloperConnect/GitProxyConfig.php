@@ -20,12 +20,27 @@ namespace Google\Service\DeveloperConnect;
 class GitProxyConfig extends \Google\Model
 {
   /**
+   * Optional. Setting this to true allows the git proxy to be used for
+   * performing git operations on the repositories linked in the connection.
+   *
    * @var bool
    */
   public $enabled;
+  /**
+   * Output only. The base URI for the HTTP proxy endpoint. Has the format
+   * `https://{generatedID}-c-h-{shortRegion}.developerconnect.dev` Populated
+   * only when enabled is set to true. This endpoint is used by other Google
+   * services that integrate with Developer Connect.
+   *
+   * @var string
+   */
+  public $httpProxyBaseUri;
 
   /**
-   * @param bool
+   * Optional. Setting this to true allows the git proxy to be used for
+   * performing git operations on the repositories linked in the connection.
+   *
+   * @param bool $enabled
    */
   public function setEnabled($enabled)
   {
@@ -37,6 +52,25 @@ class GitProxyConfig extends \Google\Model
   public function getEnabled()
   {
     return $this->enabled;
+  }
+  /**
+   * Output only. The base URI for the HTTP proxy endpoint. Has the format
+   * `https://{generatedID}-c-h-{shortRegion}.developerconnect.dev` Populated
+   * only when enabled is set to true. This endpoint is used by other Google
+   * services that integrate with Developer Connect.
+   *
+   * @param string $httpProxyBaseUri
+   */
+  public function setHttpProxyBaseUri($httpProxyBaseUri)
+  {
+    $this->httpProxyBaseUri = $httpProxyBaseUri;
+  }
+  /**
+   * @return string
+   */
+  public function getHttpProxyBaseUri()
+  {
+    return $this->httpProxyBaseUri;
   }
 }
 

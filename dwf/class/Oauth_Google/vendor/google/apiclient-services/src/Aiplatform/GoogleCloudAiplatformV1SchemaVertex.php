@@ -19,7 +19,17 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1SchemaVertex extends \Google\Model
 {
+  /**
+   * X coordinate of the vertex, normalized to [0.0, 1.0].
+   *
+   * @var 
+   */
   public $x;
+  /**
+   * Y coordinate of the vertex, normalized to [0.0, 1.0].
+   *
+   * @var 
+   */
   public $y;
 
   public function setX($x)

@@ -40,7 +40,10 @@ class Safebrowsing extends \Google\Service
 {
 
 
+  public $hashList;
+  public $hashLists;
   public $hashes;
+  public $urls;
   public $rootUrlTemplate;
 
   /**
@@ -60,6 +63,84 @@ class Safebrowsing extends \Google\Service
     $this->version = 'v5';
     $this->serviceName = 'safebrowsing';
 
+    $this->hashList = new Safebrowsing\Resource\HashList(
+        $this,
+        $this->serviceName,
+        'hashList',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'v5/hashList/{name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'sizeConstraints.maxDatabaseEntries' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'sizeConstraints.maxUpdateEntries' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'version' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->hashLists = new Safebrowsing\Resource\HashLists(
+        $this,
+        $this->serviceName,
+        'hashLists',
+        [
+          'methods' => [
+            'batchGet' => [
+              'path' => 'v5/hashLists:batchGet',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'names' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+                'sizeConstraints.maxDatabaseEntries' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'sizeConstraints.maxUpdateEntries' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'version' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v5/hashLists',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->hashes = new Safebrowsing\Resource\Hashes(
         $this,
         $this->serviceName,
@@ -71,6 +152,26 @@ class Safebrowsing extends \Google\Service
               'httpMethod' => 'GET',
               'parameters' => [
                 'hashPrefixes' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->urls = new Safebrowsing\Resource\Urls(
+        $this,
+        $this->serviceName,
+        'urls',
+        [
+          'methods' => [
+            'search' => [
+              'path' => 'v5/urls:search',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'urls' => [
                   'location' => 'query',
                   'type' => 'string',
                   'repeated' => true,

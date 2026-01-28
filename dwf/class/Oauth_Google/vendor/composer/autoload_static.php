@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4
+class ComposerStaticInitc1ba3d113640ecbb1bd5645a9bacb037
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -16,11 +16,11 @@ class ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4
     );
 
     public static $prefixLengthsPsr4 = array (
-        'p' => 
+        'p' =>
         array (
             'phpseclib3\\' => 11,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
@@ -28,11 +28,11 @@ class ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4
             'Psr\\Cache\\' => 10,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
-        'M' => 
+        'M' =>
         array (
             'Monolog\\' => 8,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
@@ -41,67 +41,67 @@ class ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4
             'Google\\Auth\\' => 12,
             'Google\\' => 7,
         ),
-        'F' => 
+        'F' =>
         array (
             'Firebase\\JWT\\' => 13,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'phpseclib3\\' => 
+        'phpseclib3\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Psr\\Cache\\' => 
+        'Psr\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
-        'ParagonIE\\ConstantTime\\' => 
+        'ParagonIE\\ConstantTime\\' =>
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
-        'Monolog\\' => 
+        'Monolog\\' =>
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Promise\\' => 
+        'GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'Google\\Service\\' => 
+        'Google\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/google/apiclient-services/src',
         ),
-        'Google\\Auth\\' => 
+        'Google\\Auth\\' =>
         array (
             0 => __DIR__ . '/..' . '/google/auth/src',
         ),
-        'Google\\' => 
+        'Google\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'Firebase\\JWT\\' => 
+        'Firebase\\JWT\\' =>
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
@@ -134,9 +134,9 @@ class ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbd131085cfdbf47b26d7ae00fe412ae4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc1ba3d113640ecbb1bd5645a9bacb037::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc1ba3d113640ecbb1bd5645a9bacb037::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc1ba3d113640ecbb1bd5645a9bacb037::$classMap;
 
         }, null, ClassLoader::class);
     }

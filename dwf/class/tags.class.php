@@ -152,4 +152,38 @@ class tags {
         return new tags($name, $attr, $content);
     }
 
+    /**
+     * Construit une structure HTML à partir d'un tableau associatif récursif.
+     * Le tableau doit avoir la forme : ["tag" => "nom", "attr" => [...], "content" => string | false | array de sous-structures]
+     * 
+     * @param array $structure La structure sous forme de tableau associatif
+     * @return string La chaîne HTML générée
+     */
+    public static function build(array $structure): string {
+        if (!isset($structure['tag'])) {
+            return '';
+        }
+
+        $tag = $structure['tag'];
+        $attr = isset($structure['attr']) && is_array($structure['attr']) ? $structure['attr'] : [];
+        $content = isset($structure['content']) ? $structure['content'] : false;
+
+        if ($content === false) {
+            return self::tag($tag, $attr, false);
+        } elseif (is_string($content)) {
+            return self::tag($tag, $attr, $content);
+        } elseif (is_array($content)) {
+            $innerHtml = '';
+            foreach ($content as $subStructure) {
+                if (is_array($subStructure)) {
+                    $innerHtml .= self::build($subStructure);
+                } elseif (is_string($subStructure)) {
+                    $innerHtml .= $subStructure;
+                }
+            }
+            return self::tag($tag, $attr, $innerHtml);
+        }
+
+        return '';
+    }
 }

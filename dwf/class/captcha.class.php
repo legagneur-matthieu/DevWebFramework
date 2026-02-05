@@ -36,11 +36,11 @@ class captcha {
      * @param espeak $espeak
      * @return array données du captcha
      */
-    public function get($espeak = false) {
+    public function get() {
         $audio = "";
         foreach (str_split($this->_captcha->getPhrase()) as $leter) {
             if (ord($leter) <= 57) {
-                $audio .= "$leter. ";
+                $audio .= "$leter ... ";
             } elseif (ord($leter) <= 90) {
                 if ($leter == "Y") {
                     $leter = "I Grec";
@@ -57,7 +57,7 @@ class captcha {
             "phrase" => $this->_captcha->getPhrase(),
             "hash" => (sha1($this->_captcha->getPhrase())),
             "img" => ($this->_captcha->build()->inline()),
-            "audio" => ($espeak ? $espeak->TTS($audio) : (new espeak())->TTS($audio))
+            "audio" => MSEdgeTTS_JS::TTS($audio)
         ];
     }
 

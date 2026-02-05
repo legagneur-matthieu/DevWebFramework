@@ -11,11 +11,11 @@ class docPHP_natives {
         <p>
             Voici quelques classes natives de DWF et quelques exemples d'utilisation, pour plus d'informations, chaque classe et fonction sont commentées (document technique) <br />
             si une classe/fonction a mal été commentée ( ou pas du tout commentée), merci de nous le signaler. <br />
-            (il s'agit de quelques unes des classes les plus utiles du framework, le framework compte plus de <?= count(glob("../../dwf/class/*.class.php")); ?> classes natives)
+            (il s'agit de quelques-unes des classes les plus utiles du framework, le framework compte plus de <?= count(glob("../../dwf/class/*.class.php")); ?> classes natives)
         </p>
         <?php
         $functions = get_class_methods(__CLASS__);
-        sort($functions);
+        natcasesort($functions);
         $ul = [];
         foreach ($functions as $n) {
             if (!in_array($n, ["get_methods", "__construct"])) {
@@ -43,9 +43,9 @@ class docPHP_natives {
                 . '?>');
         ?>
         <p>
-            Si l'entité contient un champ "array", ce champ n’apparaitra pas dans les datatables. <br />
-            Dans les formulaires, les données de ce champ seront accessible en JSON dans un input de type hidden. <br />
-            Vous devrez créer une interface en JavaScript pour administrer ce champ à votre convenance (en manipulant la chaine JSON). 
+            Si l'entité contient un champ "array", ce champ n’apparaîtra pas dans les datatables. <br />
+            Dans les formulaires, les données de ce champ seront accessibles en JSON dans un input de type hidden. <br />
+            Vous devrez créer une interface en JavaScript pour administrer ce champ à votre convenance (en manipulant la chaîne JSON). 
         </p>
         <?php
     }
@@ -58,8 +58,8 @@ class docPHP_natives {
         <ul>
             <li>Instancie la connexion à la base de données par un objet bdd accessible via application::$_bdd (cf bdd)</li>
             <li>Permet d'utiliser des méthodes évènementielles à partir de application::event() (cf : méthodes évènementielles)</li>
-            <li>application::get_url() permet de recuperer l'url courrante</li>
-            <li>application::get_url(["var_get"]) permet de recuperer l'url courrante en supprimant les verrables GET renseigné</li>
+            <li>application::get_url() permet de récupérer l'url courante</li>
+            <li>application::get_url(["var_get"]) permet de récupérer l'url courante en supprimant les variables GET renseignées</li>
         </ul>
         <?php
     }
@@ -131,7 +131,7 @@ class docPHP_natives {
 
     public static function bootstrap_theme() {
         ?>
-        <p>Cette classe permet de gèrer les thèmes de bootswatch,<br />
+        <p>Cette classe permet de gérer les thèmes de bootswatch,<br />
             le thème par défaut peut être défini dans <em>config.class.php</em></p>        
         <?php
         js::monaco_highlighter('<?php\n'
@@ -189,7 +189,7 @@ class docPHP_natives {
                 . '}\n'
                 . '?>'
         );
-        ?>Resultat : <br />
+        ?>Résultat : <br />
         <form class="" action="#" method="post" onsubmit="function (e) {
                             e.preventDefault();
                             return false;
@@ -332,8 +332,8 @@ class docPHP_natives {
     public static function ckeditor() {
         ?>
         <p class="alert alert-warning">
-            <span><del>Deprecié depuis la verssion 21.24.10, utilisez plutot TinyMCE</del></span><br>
-            <span>Deprecié depuis la verssion 21.25.02, utilisez plutot Summernote</span>
+            <span><del>Déprécié depuis la version 21.24.10, utilisez plutôt TinyMCE</del></span><br>
+            <span>Déprécié depuis la version 21.25.02, utilisez plutôt Summernote</span>
         </p>
         <hr>
         <h3 class="text-center">js::summernote</h3>
@@ -507,7 +507,7 @@ class docPHP_natives {
         js::monaco_highlighter('<?php\n' .
                 '//Affiche la structure d\'une variable ( optimisée pour les arrays et objets )\n' .
                 'debug::print_r($var);\n\n' .
-                '//Affiche le contenu et le type d\'une variable ( optimisée pour les type nombres, chaines de caractères et les booléans )\n' .
+                '//Affiche le contenu et le type d\'une variable ( optimisée pour les type nombres, chaînes de caractères et les booléans )\n' .
                 'debug::var_dump($var);\n\n' .
                 '//Affiche la trace de l\'application pour arriver au point de débug ( trace des fichiers et méthodes qui ont été appelés)\n' .
                 'debug::get_trace();\n\n' .
@@ -566,7 +566,7 @@ class docPHP_natives {
     public static function downloader() {
         ?><p>Cette classe permet à l'utilisateur de télécharger un fichier spécifique sur le serveur</p><?php
         js::monaco_highlighter('<?php\n' .
-                '//Vide le cache des fichier téléchargeable\n' .
+                '//Vide le cache des fichiers téléchargeable\n' .
                 'downloader::clear();\n\n' .
                 '//rend un fichier du serveur téléchargeable \n' .
                 '//et affiche un bouton de téléchargement\n' .
@@ -649,8 +649,8 @@ class docPHP_natives {
         ?>
         <p class="alert alert-danger">
             Note de version 21.24.04 : <br>
-            Comme expliqué plus en détail dans la section BDD la gestion des requetes a changé,<br>
-            il est recomandé de regénérer vos entity si elles ont été généré avant cette verssion !
+            Comme expliqué plus en détail dans la section BDD la gestion des requêtes a changé,<br>
+            il est recomandé de regénérer vos entity si elles ont été généré avant cette version !
         </p>
         <p>
             Les entités font office d'ORM dans votre projet,<br />
@@ -732,7 +732,7 @@ class docPHP_natives {
                 . '//récuperer tout les utilisateurs sous forme de tableaux de données\n'
                 . '$users = user::get_table_array();\n'
                 . 'echo $users[0]["login"]; //affiche le login du premier utilisateur de la table\n\n'
-                . '//récuperer tout les utilisateurs du rang 1 (utilisation d\'une requete préparé cf. bdd)\n'
+                . '//récuperer tout les utilisateurs du rang 1 (utilisation d\'une requête préparé cf. bdd)\n'
                 . '$users = user::get_table_array("rang=:rang",[":rang"=>1]);\n\n'
                 . '//astuce pour récuperer tout les utilisateurs par ordre alphabétique de login\n'
                 . '$users = user::get_table_array("1=1 order by login");\n\n'
@@ -906,7 +906,7 @@ class docPHP_natives {
                 '    echo html_structures::a_link($fb->getLogoutUrl("http://mon-site/index.php?fb=logout"), "logout");\n\n' .
                 '    //Données de l\'utilisateur FB\n' .
                 '    debug::print_r($fb->getGraphUser());\n\n' .
-                '    //TODO : utilisez session::set_auth(true) et requetes SQL\n' .
+                '    //TODO : utilisez session::set_auth(true) et requêtes SQL\n' .
                 '} else {\n' .
                 '    //Bouton login\n' .
                 '    echo html_structures::a_link($fb->getLoginUrl("http://mon-site/index.php"), "login");\n' .
@@ -1012,7 +1012,7 @@ class docPHP_natives {
                 'echo $form->submit("btn-primary");\n' .
                 '//affichage de la balise de fermeture\n' .
                 'echo $form->get_close_form();\n' .
-                '//execution du formulaire\n' .
+                '//éxécution du formulaire\n' .
                 'if (isset($_POST["input_1"])) {\n' .
                 '    //récupère la date du datepicker au format US\n' .
                 '    $date = form::get_datepicker_us("datepicker_1");\n' .
@@ -1196,7 +1196,7 @@ class docPHP_natives {
                 '$gOauth = new google_oauth($clientId, $clientSecret, $redirectUri);\n' .
                 'if ($gOauth->getAccessToken_session()) {\n' .
                 '    $userinfo = $gOauth->get_OpenId();\n' .
-                '    //TODO : utilisez $userinfo, session::set_auth(true) et requetes SQL\n' .
+                '    //TODO : utilisez $userinfo, session::set_auth(true) et requêtes SQL\n' .
                 '} else {\n' .
                 '    echo html_structures::a_link($gOauth->getLoginUrl(), "Google Oauth");\n' .
                 '}\n' .
@@ -1655,11 +1655,11 @@ class docPHP_natives {
         ?>
         <h2 class="text-center">Résultat</h2>
         <pre>
-            :
-            USER:id,login,psw,#rang&gt;RANG&gt;id
-            :
-            RANG:id,nom
-            :
+                            :
+                            USER:id,login,psw,#rang&gt;RANG&gt;id
+                            :
+                            RANG:id,nom
+                            :
         </pre>
         <hr>
         <!-- Generated by Mocodo 4.3.2 -->
@@ -1715,7 +1715,7 @@ class docPHP_natives {
         <a class="btn btn-primary"><span class="bi bi-file-earmark-zip-fill"><span class="visually-hidden">&nbsp;</span></span> test.zip</a>
         <p>(Note : Ce bouton de démonstration est désactivé)</p>
         <hr>
-        les arrangements, couleurs et polices sont parametrable via des parametres facultatif du constructeur et des constantes de classe (exemple : mocodo::ARRANGE_ballanced_1)
+        les arrangements, couleurs et polices sont paramétrable via des parametres facultatif du constructeur et des constantes de classe (exemple : mocodo::ARRANGE_ballanced_1)
         <?php
     }
 
@@ -1872,7 +1872,7 @@ class docPHP_natives {
 
     public static function php_finediff() {
         ?>
-        <p>Permet d'afficher les différences entre deux chaines de caractères</p>
+        <p>Permet d'afficher les différences entre deux chaînes de caractères</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . 'echo php_finediff::DiffToHTML("Texte de départ", "Texte final");'
@@ -2179,7 +2179,7 @@ class docPHP_natives {
             Cette classe (singleton) gère les sitemaps de vos projets.<br>
             Elle permet d'ajouter, de supprimer et de générer des sitemaps au format XML.<br>
             Elle offre également des fonctionnalités pour afficher les URLs dans une liste HTML.<br>
-            Les URLs peuvent étre supprimé via une interface d'administration.
+            Les URLs peuvent être supprimé via une interface d'administration.
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -2352,6 +2352,39 @@ class docPHP_natives {
         docPHP_natives_js::monaco_highlighter();
     }
 
+    public static function MSEdgeTTS() {
+        ?>
+        <p>Cette classe permer d'utiliser le service TTS de Micrisoft Edge. <br>
+            Passe par le miroir tts.webextools.com <br>
+            En passant par cette classe c'est le serveur qui effectue le requête au service TTS <br>
+            Si vous desirez que le client effectue la requête passez par <a href="index.php?page=web&doc=classes_natives&native=MSEdgeTTS_JS">js::MSEdgeTTS()</a>
+        </p>
+        <p class="alert alert-warning">
+            Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
+        </p>
+        <?php
+        js::monaco_highlighter('<?php\n' .
+                'echo tags::tag("audio", [\n'
+                . '    "controls" => "true",\n'
+                . '    "src" => "data:audio/mpeg;base64," . MSEdgeTTS::TTS("Ceci est une phrase de test.")\n'
+                . ']);\n' .
+                '?>'
+        );
+        ?>
+        <p>Note : il est possible de changer la voix, le pitch et son timbre avec dans le parametres de la methode TTS</p>
+        <p>Resultat :</p>
+        <audio controls="true" src="data:audio/mpeg;base64,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RTMuMTAwqqqqqqqqqqqqqqqqqqoKCiSdKx+amRyhEsiH0CosrkqQ/LJKLxmWCMIohDyJw9lcoCUXTAojqCQKjWOg/GKZeaiUOInmCCWSUhnhaJKVYrdXQuHxilSL1CoUkS6jBMFRojMGmaiiVUbMkxCNFDZKRHUB8lERxGeRIUmzJEWXYeyiTg9pCcRniYhLHVzwqKoD5lEVLnhUIShOOgkAoHig2ZRKpTjGGxlNyIhKoD5KRHUBoUlShGOCYMhYQgcMD4lERdAfDIiDxOZJiEobJQGBYbICcwaQrJzPExCRHTh0PB5GeaVSnkpJpTg+K5K3F8zPWZZgvS/W//OkxOg+/DnJTmJZmPdOUJeoVHpKHEVEAnoB8coR+WSVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//OkxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"></audio>
+        <?php
+    }
+
+    public static function MSEdgeTTS_JS() {
+        ?>
+        <h3 class="text-center">js::MSEdgeTTS</h3>
+        <hr>
+        <?php
+        docPHP_natives_js::MSEdgeTTS();
+    }
+
     public static function tags() {
         ?>
         <p>
@@ -2491,12 +2524,12 @@ class docPHP_natives {
     public static function template() {
         ?><p>Cette classe permet d'utiliser des templates en utilisant la librairie  
             <?= html_structures::a_link("https://www.smarty.net/docsv2/fr/index.tpl", "Smarty") ?></p>
-        <p>Les templates doivent étre créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
+        <p>Les templates doivent être créés dans le dossier <em>html/[votre-projet]/class/tpl</em> <br /> 
             ce dossier peut être créé par la classe template si vous ne le créez pas au préalable <br />
-            le ficher de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
+            le fichier de template doit être un fichier .tpl ( exemple <em>mon_template.tpl</em>) <br />
             les droits en écriture sur le dossier <em>html/[votre-projet]/class/tpl.compile</em> doivent être donnés au service web
         </p>
-        <p>exemple, ficher <em>mon_template.tpl</em></p>
+        <p>exemple, fichier <em>mon_template.tpl</em></p>
         <?php
         js::monaco_highlighter(''
                 . '<p>Bienvenue { $name}</p>\n'
@@ -2559,7 +2592,7 @@ class docPHP_natives {
         js::monaco_highlighter('<?php\n'
                 . 'maclass{\n'
                 . '    public static function ma_fonction_static($param1,$param2){\n'
-                . '        usleep(500000); //simule un temps d\'execution de 0.5s\n'
+                . '        usleep(500000); //simule un temps d\'éxécution de 0.5s\n'
                 . '        return "something";\n'
                 . '    }\n'
                 . '}\n\n'
@@ -2576,16 +2609,16 @@ class docPHP_natives {
                 . '$maxthread=4;\n'
                 . '$manager = new thread_manager($data, $static_function, $maxthead);\n'
                 . '$results = $manager->get_results();\n'
-                . '//temps d\'execution théorique (pour 20 lignes dans $data):\n'
+                . '//temps d\'éxécution théorique (pour 20 lignes dans $data):\n'
                 . '?>');
         ?>
-        <p>Notes sur les temps théoriques et rééls d'execution :</p>
+        <p>Notes sur les temps théoriques et réels d'éxécution :</p>
         <ul>
-            <li>Temps téhorique et réél monothread classique : 10s</li>
-            <li>Temps téhorique multi-thread (4) : 2.5s</li>
+            <li>Temps théorique et réél monothread classique : 10s</li>
+            <li>Temps théorique multi-thread (4) : 2.5s</li>
             <li>temps réel multi-thread (4) : 3.5s</li>
         </ul>
-        <p>L'ecart entre le temps réel et théorique est du aux requetes SQL et HTTP au service de threads mais reste avantageux face au monothread</p>
+        <p>L'écart entre le temps réel et théorique est dû aux requêtes SQL et HTTP au service de threads mais reste avantageux face au monothread</p>
         <p>Si vous utilisez cette classe gardez en tête que PHP n'est pas conçu pour le multi-threading et que cette classe est juste un outil pour paralleliser des traitements de données</p>
         <?php
     }
@@ -2634,7 +2667,7 @@ class docPHP_natives {
     public static function tinymce() {
         ?>
         <p class="alert alert-warning">
-            <span>Deprecié depuis la verssion 21.25.02, utilisez plutot Summernote</span>
+            <span>Déprécié depuis la version 21.25.02, utilisez plutôt Summernote</span>
         </p>
         <hr>
         <h3 class="text-center">js::summernote</h3>
@@ -2645,7 +2678,7 @@ class docPHP_natives {
 
     public static function tor() {
         ?>
-        <p>Cette classe permet de recupérer une ressource en passant par tor</p>
+        <p>Cette classe permet de récupérer une ressource en passant par tor</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . '$data = (new tor())->wget($url);\n'
@@ -2657,7 +2690,7 @@ class docPHP_natives {
         <p>Cette classe permet de créer des traductions à partir de clés, <br />
             l'administration de clés=>traductions se fait par une interface à placer dans la partie administration de l'application. <br />
             le langage de l'utilisateur est défini dans session::get_lang() (peut être modifié par session::set_lang()) <br />
-            Les traductions peuvent être gérées en base de données (par défaut) ou par des fichier JSON (CF : paramètres du constructeur)
+            Les traductions peuvent être gérées en base de données (par défaut) ou par des fichiers JSON (CF : paramètres du constructeur)
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -2699,7 +2732,7 @@ class docPHP_natives {
             new video('./files/videos/nuagesMusicman921.webm');
             ?>
         </div>
-        <p>Credit : <br />
+        <p>Crédit : <br />
             Vidéo : Nuages - Libre de Droits <a href="https://www.youtube.com/watch?v=NqIw5wHvGYQ">https://www.youtube.com/watch?v=NqIw5wHvGYQ</a> <br />
             Musique  : Dread (v2) - musicman921 <a href="https://musicman921.newgrounds.com/">https://musicman921.newgrounds.com/</a>
         </p><?php
@@ -2747,7 +2780,7 @@ class docPHP_natives {
             ou afficher une donnée très variable dans le temps en temps réel (exemple : un stock dans une application de gestion)
         </p>
         <p>
-            Un serveur de WebSocket tourne indépendament du serveur web et écoute son propre port (9000 par défaut dans DWF, parametrable dans la config du projet). <br />
+            Un serveur de WebSocket tourne indépendamment du serveur web et écoute son propre port (9000 par défaut dans DWF, paramétrable dans la config du projet). <br />
             il est possible de lancer le serveur en mode console (CLI), notamment pour débugger :
         </p>
         <?php
@@ -2760,7 +2793,7 @@ class docPHP_natives {
                 . '?>');
         ?>
         <p>L'application ne lancera le serveur qu'une seule fois.</p>
-        <p>Coté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
+        <p>Côté client, la connexion peut être géré avec l'objet <?= html_structures::a_link("https://javascript.info/websocket", "JS natif WebSocket", "", "", true) ?> </p>
         <?php
         js::monaco_highlighter(''
                 . '    var socket = null;\n'
@@ -2799,15 +2832,15 @@ class docPHP_natives {
             c'est à vous de le mettre en place via le système de proxy de votre serveur web.
         </p>
         <p>
-            Les websockets de DWF fonctionnent avec l'envoi et la reception de chaines JSON. <br />
-            dans les chaines d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
-            le reste des clés sont libre. <br />
-            la seule action définie par défaut et l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
+            Les websockets de DWF fonctionnent avec l'envoi et la rêception de chaînes JSON. <br />
+            dans les chaînes d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
+            le reste des clés sont libres. <br />
+            la seule action définie par défaut est l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
         </p>
         <?php
         js::monaco_highlighter('{"action":"auth","token":""}');
         ?>
-        <p>Le retour est une des ses possibilité :</p>
+        <p>Le retour est une des ces possibilités :</p>
         <?php
         js::monaco_highlighter('{"auth":false,"message":"Token empty"}\n' .
                 '{"auth":false,"message":"Invalid token"}\n' .
@@ -2825,7 +2858,7 @@ class docPHP_natives {
                 . '    /**\n'
                 . '     * \n'
                 . '     * @param websocket_client $client le client qui a emit la requête\n'
-                . '     * @param array $message La chaine JSON déja convertie en tableau\n'
+                . '     * @param array $message La chaine JSON déjà convertie en tableau\n'
                 . '     */\n'
                 . '    public function __construct(&$client, &$message) {\n'
                 . '        //traitement à faire\n'
@@ -2842,7 +2875,7 @@ class docPHP_natives {
             Gardez en tête qu'un utilisateur peut avoir des connexions multiples (s'il ouvre plusieurs onglets par exemple).
         </p>
         <p>
-            La classe <strong>websocket_request</strong> permet de lancer des requetes au serveur websocket depuis PHP
+            La classe <strong>websocket_request</strong> permet de lancer des requêtes au serveur websocket depuis PHP
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -2877,7 +2910,7 @@ class docPHP_natives {
         js::monaco_highlighter('<?php\n'
                 . '//Ajoute un fichier au buffer\n'
                 . 'writer::get_instance()->add($file, $content);' . '\n\n'
-                . '//Vérifie si un ficher est dans le buffer\n'
+                . '//Vérifie si un fichier est dans le buffer\n'
                 . 'writer::get_instance()->exist($file);' . '\n\n'
                 . '//Retourne le contenu d\'un fichier du buffer (chaine vide si non)\n'
                 . 'writer::get_instance()->content($file);' . '\n\n'

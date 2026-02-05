@@ -8,10 +8,10 @@ class docPHP_natives_js {
 
     public function __construct() {
         ?>
-        <p>La classe js permet d'exploiter un grand nombre de librairies javascript intégrées à DWF notamment pour les appliquer à des éléments html de la page.</p>
+        <p>La classe js permet d'exploiter un grand nombre de librairies JavaScript intégrées à DWF notamment pour les appliquer à des éléments HTML de la page.</p>
         <?php
         $functions = get_class_methods(__CLASS__);
-        sort($functions);
+        natcasesort($functions);
         $ul = [];
         foreach ($functions as $js) {
             if (!in_array($js, ["get_methods", "__construct"])) {
@@ -46,7 +46,7 @@ class docPHP_natives_js {
 
     public static function alertify_alert() {
         ?> 
-        <p>Affiche un message à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::alertify_alert($msg); ?>');
         $form = new form();
@@ -60,7 +60,7 @@ class docPHP_natives_js {
 
     public static function alertify_alert_redir() {
         ?> 
-        <p>Affiche un message à l'écran de l'utilisateur avant redirection (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message à l'écran de l'utilisateur avant redirection (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::alertify_alert_redir($msg, $url); ?>');
         $form = new form();
@@ -74,7 +74,7 @@ class docPHP_natives_js {
 
     public static function log_std() {
         ?> 
-        <p>Affiche un message de log (standard) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message de log (standard) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_std($msg); ?>');
         $form = new form();
@@ -88,7 +88,7 @@ class docPHP_natives_js {
 
     public static function log_success() {
         ?> 
-        <p>Affiche un message de log (de succès) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message de log (de succès) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_success($msg); ?>');
         $form = new form();
@@ -102,7 +102,7 @@ class docPHP_natives_js {
 
     public static function log_warning() {
         ?> 
-        <p>Affiche un message de log (avertissement) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message de log (avertissement) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_warning($msg); ?>');
         $form = new form();
@@ -113,10 +113,10 @@ class docPHP_natives_js {
             js::log_warning("Log de démonstation");
         }
     }
-    
+
     public static function log_error() {
         ?> 
-        <p>Affiche un message de log (erreur) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertyfy</a>)</p>
+        <p>Affiche un message de log (erreur) à l'écran de l'utilisateur (utilise la librairie <a href="http://www.alertifyjs.com/">alertify</a>)</p>
         <?php
         js::monaco_highlighter('<?php js::log_error($msg); ?>');
         $form = new form();
@@ -130,7 +130,7 @@ class docPHP_natives_js {
 
     public static function redir() {
         ?> 
-        <p>Redirige l'utilisateur vers l'url renseignée en paramètre (peut être un chemin relatif)</p>
+        <p>Redirige l'utilisateur vers l'URL renseignée en paramètre (peut être un chemin relatif)</p>
         <?php
         js::monaco_highlighter('<?php js::redir($url); ?>');
     }
@@ -173,7 +173,7 @@ class docPHP_natives_js {
 
     public static function vTicker() {
         ?> 
-        <p>Créé un vTicker (suite de phrases qui défilent)</p>
+        <p>Crée un vTicker (suite de phrases qui défilent)</p>
         <?php
         js::monaco_highlighter('<?php js::vTicker(array("Lorem Ipsum","..."), $id="vticker"); ?>');
         echo html_structures::hr();
@@ -212,7 +212,7 @@ class docPHP_natives_js {
 
     public static function monaco_highlighter() {
         ?> 
-        <p>Afficher du code formaté et stylisé par la librairie <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHightlighter</a> <br />
+        <p>Afficher du code formaté et stylisé par la librairie <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a> <br />
             code :
         </p>
         <?php
@@ -234,12 +234,33 @@ class docPHP_natives_js {
         ?>
         <p>(Vous l'aurez compris, cette documentation utilise beaucoup de monaco_highlighter)</p>
         <p class="alert alert-warning">
-            Attention : Monaco a tendance a rentrer en conflit avec d'autres librairie JS et JQuery ! <br>
-            des solutions existe comme :<br>
+            Attention : Monaco a tendance à rentrer en conflit avec d'autres librairies JS et jQuery ! <br>
+            des solutions existent comme :<br>
             - appelé monaco après toutes les autres librairies dans la page<br>
-            - vpage (page virtuel/iframe)<br>
+            - vpage (page virtuelle/iframe)<br>
         </p>    
         <?php
+    }
+
+    public static function MSEdgeTTS() {
+        ?>
+        <p>Cette classe permet d'afficher un bouton pour lire le texte d'un élément (généralement une balise P). <br>
+            Contrairement à la classe MSEdgeTTS c'est le client qui effectuera la requête au service TTS.
+        </p>
+        <p class="alert alert-warning">
+            Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
+        </p>
+        <?php
+        js::monaco_highlighter('<p id="test">Ceci est une phrase de test.</p>\n'
+                . '<?php\n'
+                . 'echo js::MSEdgeTTS("test");\n'
+                . '?>');
+        ?>
+        <p>Note : il est possible de changer la voix, le pitch et son timbre avec dans le paramètres de la méthode TTS</p>
+        <p>Exemple :</p>
+        <p id="test">Ceci est une phrase de test</p>
+        <?php
+        echo js::MSEdgeTTS("test");
     }
 
     public static function fancybox() {
@@ -284,9 +305,9 @@ class docPHP_natives_js {
 
     public static function freetile() {
         ?>
-        <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery "freetile". <br />
-            Il est préferable d'appeler cette librairie via <em>js::freetile()</em> <br />
-            Les sous éléments peuvent être des images ou des DIV de différentes tailles.
+        <p>Organise dynamiquement les sous-éléments d'un conteneur avec la librairie jquery "freetile". <br />
+            Il est préférable d'appeler cette librairie via <em>js::freetile()</em> <br />
+            Les sous-éléments peuvent être des images ou des DIV de différentes tailles.
         </p>
         <?php
         js::freetile("freetile");
@@ -303,14 +324,14 @@ class docPHP_natives_js {
         }
         ?>
         <hr>
-        <p>Exemple avec 100 div généré aléatoirement :</p>
+        <p>Exemple avec 100 div générés aléatoirement :</p>
         <?php
         echo $div;
     }
 
     public static function stalactite() {
         ?> 
-        <p>Organise dynamiquement les sous éléments d'un conteneur avec la librairie jquery <a href="http://jonobr1.com/stalactite/">"stalactite"</a></p>
+        <p>Organise dynamiquement les sous-éléments d'un conteneur avec la librairie jquery <a href="http://jonobr1.com/stalactite/">"stalactite"</a></p>
         <?php
         js::stalactite("stalactite");
         js::monaco_highlighter('<?php\n js::stalactite("stalactite"); ?>\n'
@@ -326,7 +347,7 @@ class docPHP_natives_js {
         }
         ?>
         <hr>
-        <p>Exemple avec 100 div généré aléatoirement :</p>
+        <p>Exemple avec 100 div générés aléatoirement :</p>
         <?php
         echo $div;
     }
@@ -362,15 +383,15 @@ class docPHP_natives_js {
 
     public static function dialog() {
         ?> 
-        <p>Affiche la boite de dialogue de jquery-ui</p>
+        <p>Affiche la boîte de dialogue de jquery-ui</p>
         <?php
-        js::monaco_highlighter('<?php js::dialog("js_dialog", "Boite de dialogue", "<p>Ceci est une boite de dialogue JQuery</p>"); ?>');
+        js::monaco_highlighter('<?php js::dialog("js_dialog", "Boite de dialogue", "<p>Ceci est une boîte de dialogue jQuery</p>"); ?>');
         $form = new form();
         $form->hidden("test", "1");
         $form->submit("btn-primary w-100", "Tester");
         echo $form->render();
         if (isset($_POST["test"])) {
-            js::dialog("js_dialog", "Boite de dialogue", "<p>Ceci est une boite de dialogue JQuery</p>");
+            js::dialog("js_dialog", "Boite de dialogue", "<p>Ceci est une boîte de dialogue jQuery</p>");
         }
     }
 
@@ -493,7 +514,7 @@ class docPHP_natives_js {
         js::monaco_highlighter('<?php\n'
                 . '//créé un objet WLED\n'
                 . 'var wled = new wled("192.168.1.10");\n'
-                . '//change les couleur rouge, vert et bleu et envois la requête a WLED\n'
+                . '//change les couleurs rouge, vert et bleu et envoie la requête à WLED\n'
                 . 'wled->set_red(255)->set_green(255)->set_blue(255)->exec();\n'
                 . '//redémarre WLED\n'
                 . 'wled->reboot()->exec();\n'

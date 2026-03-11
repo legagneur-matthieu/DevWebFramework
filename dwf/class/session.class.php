@@ -20,6 +20,7 @@ class session {
             ini_set("session.cookie_secure", "1");
         }
         ini_set("session.cookie_samesite", "Lax");
+        ini_set("session.cookie_httponly", 1);
         session_start();
         ($regenerate_id ? session_regenerate_id(true) : null);
         $_SERVER["HTTP_USER_AGENT"] = (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Unknown");

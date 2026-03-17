@@ -20,13 +20,48 @@ class session {
             ini_set("session.cookie_secure", "1");
         }
         ini_set("session.cookie_samesite", "Lax");
-        ini_set("session.cookie_httponly", 1);
+        ini_set('session.cookie_httponly', "1");
         session_start();
-        ($regenerate_id ? session_regenerate_id(true) : null);
-        $_SERVER["HTTP_USER_AGENT"] = (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Unknown");
-        $hash = application::hash("{$_SERVER["REMOTE_ADDR"]}_{$_SERVER["HTTP_USER_AGENT"]}");
-        (!self::get_val("security_token") ? self::set_val("security_token", $hash) : null);
-        if (self::get_val("security_token") != $hash) {
+        ($regenerate_id and self::get_auth() ? session_regenerate_id(true) : null);
+        $fp = [];
+        foreach ([
+    "REMOTE_ADDR",
+    "HTTP_USER_AGENT",
+    "HTTP_ACCEPT",
+    "HTTP_ACCEPT_LANGUAGE",
+    "HTTP_ACCEPT_ENCODING"
+        ] as $key) {
+            (isset($_SERVER[$key]) ? $fp[] = $_SERVER[$key] : false);
+        }
+        $fps = [];
+        if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on") {
+            header('Accept-CH: Sec-CH-UA, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA-Platform-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Model, Device-Memory, ECT');
+            if (isset($_SERVER['HTTP_SEC_CH_UA'])) {
+                foreach ([
+            "HTTP_SEC_CH_UA",
+            "HTTP_SEC_CH_UA_FULL_VERSION_LIST",
+            "HTTP_SEC_CH_UA_PLATFORM",
+            "HTTP_SEC_CH_UA_PLATFORM_VERSION",
+            "HTTP_SEC_CH_UA_MOBILE",
+            "HTTP_DEVICE_MEMORY",
+            "HTTP_ECT",
+                ] as $key) {
+                    (isset($_SERVER[$key]) ? $fps[] = $_SERVER[$key] : false);
+                }
+            }
+        }
+        $hash = [
+            application::hash(implode("_", $fp)),
+            (count($fps) ? application::hash(implode("_", $fps)) : "")
+        ];
+        if (!self::get_val("security_token")) {
+            self::set_val("security_token", $hash);
+        } else {
+            if (empty(self::get_val("security_token")[1]) and !empty($hash[1]) and self::get_val("security_token")[0] == $hash[0]) {
+                self::set_val("security_token", $hash);
+            }
+        }
+        if (self::get_val("security_token")[0] != $hash[0] or self::get_val("security_token")[1] != $hash[1]) {
             session_destroy();
             ?>
             <script type="text/javascript">

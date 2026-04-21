@@ -108,7 +108,7 @@ class js {
         </script>
         <?php
     }
-    
+
     /**
      * Affiche un message de log d'erreur à l'écran de l'utilisateur
      * 
@@ -200,7 +200,7 @@ class js {
     public static function tinymce($id) {
         return new tinymce($id);
     }
-    
+
     /**
      * Applique un éditeur Summernote (WYSIWYG) à un textarea
      * 
@@ -269,6 +269,18 @@ class js {
      */
     public static function monaco_highlighter($code, $language = "php") {
         new monaco_highlighter($code, $language);
+    }
+
+    /**
+     * Retourne un bouton TTS
+     * @param string $id ID de l'element a lire
+     * @param string $voice Voix TTS disponine dans les constantes MSEdgeTTS.
+     * @param int $rate Le taux de parole (par défaut : 0, entre -50 et +50).
+     * @param int $pitch La hauteur de la voix (par défaut : 0, entre -50 et +50).
+     * @return string Bouton TTS
+     */
+    public static function MSEdgeTTS($id, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
+        return MSEdgeTTS_JS::TTS($id, $voice, $rate, $pitch);
     }
 
     /**
@@ -401,10 +413,10 @@ class js {
         $inner = "";
         foreach ($data as $key => $slide) {
             $inner .= tags::tag("div", ["class" => "carousel-item" . ($key ? "" : " active")],
-                            tags::tag("img", ["src" => $slide["img"], "class" => "d-block w-100"]) .
-                            (isset($slide["caption"]) ?
-                            tags::tag("div", ["class" => "carousel-caption d-none d-md-block"], tags::tag("p", [], $slide["caption"])
-                            ) : "")
+                    tags::tag("img", ["src" => $slide["img"], "class" => "d-block w-100"]) .
+                    (isset($slide["caption"]) ?
+                    tags::tag("div", ["class" => "carousel-caption d-none d-md-block"], tags::tag("p", [], $slide["caption"])
+                    ) : "")
             );
         }
         $inner = tags::tag("div", ["class" => "carousel-inner"], $inner);
@@ -418,7 +430,7 @@ class js {
                         tags::tag("span", ["class" => "carousel-control-next-icon", "aria-hidden" => "true"],
                                 tags::tag("span", ["class" => "visually-hidden"], "Next")
                         )
-        );
+                );
         echo tags::tag("div", ["id" => $id, "class" => "carousel slide"], $indicators . $inner . $buttons);
         ?>
         <script>

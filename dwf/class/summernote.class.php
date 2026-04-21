@@ -28,13 +28,50 @@ class summernote {
             export_dwf::add_files([realpath("../commun/src/js/summernote")]);
             self::$_called = true;
         }
-        $this->_id=$id;
+        $this->_id = $id;
         ?>
         <script>
             $(document).ready(function () {
+                // Fonction qui récupère automatiquement toutes les polices @font-face
+                function getAllFontFaces() {
+                    const fonts = new Set(); // pour éviter les doublons
+                    fonts.add("Arial");
+                    fonts.add("Courier New");
+                    fonts.add("Helvetica");
+                    fonts.add("Times New Roman");
+
+                    // On parcourt toutes les feuilles de style de la page
+                    Array.from(document.styleSheets).forEach(sheet => {
+                        try {
+                            const rules = sheet.cssRules || sheet.rules;
+                            if (!rules)
+                                return;
+
+                            Array.from(rules).forEach(rule => {
+                                if (rule.type === CSSRule.FONT_FACE_RULE) {
+                                    // On extrait le nom de la police (sans guillemets)
+                                    let family = rule.style.getPropertyValue('font-family');
+                                    family = family.replace(/['"]/g, '').trim();
+                                    if (family &&
+                                            family.toLowerCase() !== "summernote" &&
+                                            !family.toLowerCase().includes("icon")) {
+                                        fonts.add(family);
+                                    }
+                                }
+                            });
+                        } catch (e) {
+                            // Ignoré (problème de CORS sur certaines feuilles de style externes)
+                        }
+                    });
+
+                    return Array.from(fonts);
+                }
+                const allFonts = getAllFontFaces();
                 $('#<?= $this->_id ?>').summernote({
-                    lang:"fr-FR",
-                    minHeight:300
+                    lang: "fr-FR",
+                    minHeight: 300,
+                    fontNames: allFonts,
+                    fontNamesIgnoreCheck: allFonts
                 });
                 $("#<?= $this->_id; ?>").parents("form").css("width", "100%");
                 setInterval(function () {

@@ -1,5 +1,12 @@
 <?php
 
+class config {
+
+    public static $_title = "Parcours des sites";
+    public static $_prefix = "DWF_PDS";
+    public static $_sitemap = false;
+}
+
 class parcour_sites {
 
     private $_default = "commun/conf/default.json";
@@ -12,9 +19,9 @@ class parcour_sites {
         ?>
         <!DOCTYPE HTML>
         <html lang="fr">
-            <?= $this->head(); ?>
+                <?= $this->head(); ?>
             <body>
-                <?= $this->header(); ?>
+                    <?= $this->header(); ?>
                 <main class="contenu">
                     <?php
                     if (isset($_GET["check_update"])) {

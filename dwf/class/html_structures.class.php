@@ -302,7 +302,7 @@ class html_structures {
     public static function script($src) {
         http2::get_instance()->preload($src);
         export_dwf::add_files([realpath($src)]);
-        return tags::tag("script", ["src" => $src], "");
+        return tags::tag("script", ["src" => $src, "nonce" => csp::get_nonce()], "");
     }
 
     /**
@@ -313,7 +313,7 @@ class html_structures {
     public static function script_async($src) {
         http2::get_instance()->preload($src);
         export_dwf::add_files([realpath($src)]);
-        return tags::tag("script", ["src" => $src, "async" => "true"], "");
+        return tags::tag("script", ["src" => $src, "async" => "true", "nonce" => csp::get_nonce()], "");
     }
 
     /**
@@ -324,7 +324,32 @@ class html_structures {
     public static function script_defer($src) {
         http2::get_instance()->preload($src);
         export_dwf::add_files([realpath($src)]);
-        return tags::tag("script", ["src" => $src, "defer" => "true"], "");
+        return tags::tag("script", ["src" => $src, "defer" => "true", "nonce" => csp::get_nonce()], "");
+    }
+
+    /**
+     * Retourne un script inline sécurisé avec nonce CSP
+     *
+     * @param string $script Script JS (avec ou sans balise <script>)
+     * @return string Baliste Script avec nonce CSP
+     */
+    public static function script_inline(string $script): string {
+        $script = trim($script);
+        $nonce = csp::get_nonce();
+        if (!preg_match('/<script\b/i', $script)) {
+            return '<script nonce="' . htmlspecialchars($nonce, ENT_QUOTES, 'UTF-8') . '">' .
+                    $script .
+                    '</script>';
+        }
+        if (preg_match('/<script\b[^>]*\bnonce\s*=/i', $script)) {
+            return $script;
+        }
+        return preg_replace(
+                '/<script\b([^>]*)>/i',
+                '<script$1 nonce="' . htmlspecialchars($nonce, ENT_QUOTES, 'UTF-8') . '">',
+                $script,
+                1
+        );
     }
 
     /**

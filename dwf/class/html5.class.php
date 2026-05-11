@@ -168,6 +168,7 @@ class html5 {
         new robotstxt();
         statistiques::get_instance()->add_visit();
         http2::get_instance()->make_link();
+        security::run();
     }
 
     public static function render($document) {

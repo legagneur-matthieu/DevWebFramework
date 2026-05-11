@@ -14,7 +14,8 @@ class pages {
      * HTML, créé et appelle une fonction "private" dans une fonction "public, ", faire appel à des classes exterieures ... 
      */
     public function __construct() {
-        
+        //a décommenter en production
+        //csp::get_instance()->set_report_only(false);
     }
 
     /**

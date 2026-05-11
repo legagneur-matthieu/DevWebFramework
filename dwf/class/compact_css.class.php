@@ -56,22 +56,33 @@ class compact_css extends singleton {
     }
 
     /**
+     * Retourne la base HTML
+     */
+    private function get_base() {
+        $base = "";
+        if (!empty(html5::$_base)) {
+            $base = html5::$_base . "/";
+        }
+        return $base;
+    }
+
+    /**
      * Compacte les fichiers en un seul
      * @return string Nom du fichier compressé
      */
     private function compact_files() {
-        if (!file_exists("./src")) {
-            mkdir("./src");
-            dwf_exception::check_file_writed("./src");
+        if (!file_exists($src = $this->get_base() . "src")) {
+            mkdir($src);
+            dwf_exception::check_file_writed($src);
         }
-        if (!file_exists("./src/compact")) {
-            mkdir("./src/compact");
-            dwf_exception::check_file_writed("./src/compact");
+        if (!file_exists($compact = "{$src}/compact")) {
+            mkdir($compact);
+            dwf_exception::check_file_writed($compact);
         }
         if (($fc = count($this->_files)) === 0) {
             return false;
         }
-        $filename = "./src/compact/f_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
+        $filename = "{$compact}/f_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
         $regen = !file_exists($filename);
         $mt_gen = (($regen) ? 0 : filemtime($filename));
         foreach ($this->_files as $file) {
@@ -102,7 +113,7 @@ class compact_css extends singleton {
         if (($fc = count($this->_custom)) === 0) {
             return false;
         }
-        $filename = "./src/compact/c_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
+        $filename = $this->get_base() . "src/compact/c_" . $fc . "_" . sha1(implode("&", $_GET)) . ".css";
         $custom = self::css_minify(implode(" ", $this->_custom));
         if (!file_exists($filename) or sha1($custom) !== sha1(file_get_contents($filename))) {
             file_put_contents($filename, $custom);
@@ -126,12 +137,12 @@ class compact_css extends singleton {
     }
 
     private function clear($files) {
-        foreach (glob("./src/compact/*_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
+        foreach (glob($this->get_base() . "src/compact/*_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
             if (!in_array($f, $files)) {
                 unlink($f);
             }
         }
-        foreach (glob("./src/compact/*_*_*.css") as $f) {
+        foreach (glob($this->get_base() . "src/compact/*_*_*.css") as $f) {
             if (filemtime($f) < microtime(true) - 31536000) {
                 unlink($f);
             }
@@ -147,7 +158,7 @@ class compact_css extends singleton {
             "css_c" => $this->compact_custom(),
         ];
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             function add_link_in_head(href) {
                 if (href !== "" || document.querySelector("link[href='" + href + "']") === null) {
                     let link = document.createElement("link");
@@ -169,7 +180,7 @@ class compact_css extends singleton {
      */
     public function get_file_in_cache() {
         foreach (["f", "c"] as $p) {
-            foreach (glob("./src/compact/" . $p . "_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
+            foreach (glob($this->get_base() . "src/compact/" . $p . "_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
                 if (($nmt = filemtime($f)) > $this->_cache_files[$p]["mt"]) {
                     $this->_cache_files[$p] = [
                         "file" => $f,

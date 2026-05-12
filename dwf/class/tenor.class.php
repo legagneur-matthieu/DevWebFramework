@@ -39,7 +39,7 @@ class tenor {
         <div class="card">
             <div class="card-body tenors"></div> 
         </div>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $(".tenors").parent(".card").hide();
                 $(".form_tenor").submit(function (e) {

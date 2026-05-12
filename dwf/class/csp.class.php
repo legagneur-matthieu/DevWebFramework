@@ -37,7 +37,7 @@ class csp extends singleton {
     private $_csp = [
         'default-src' => ["'self'", "https:"],
         'script-src' => ["'strict-dynamic'"],
-        'style-src' => ["'self'", "https:"],
+        'style-src' => ["'self'", "https:", "'unsafe-inline'"],
         'img-src' => ["'self'", "https:", "data:"],
         'font-src' => ["'self'", "https:", "data:"],
         'connect-src' => ["'self'", "https:"],

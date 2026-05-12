@@ -112,7 +112,7 @@ class ip_access {
      */
     private function redir() {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             window.location = "<?= $this->_redir; ?>";
         </script>
         <?php

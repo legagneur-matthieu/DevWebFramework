@@ -26,7 +26,7 @@ class jsqr {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
         <?= ($dedug ? "qr_reader(\"$id\",true)" : "qr_reader(\"$id\")") ?>
             });

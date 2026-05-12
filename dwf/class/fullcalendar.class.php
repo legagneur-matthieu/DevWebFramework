@@ -51,7 +51,7 @@ class fullcalendar {
             echo html_structures::script("../commun/src/js/fullcalendar/locales-all.global.js");
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 fc = new FullCalendar.Calendar(
                         document.getElementById("<?= $this->_id ?>"), {

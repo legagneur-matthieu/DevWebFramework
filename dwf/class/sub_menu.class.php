@@ -68,7 +68,7 @@ class sub_menu {
      */
     public static function add_active_tab($sub_menu_key, $text, $title = "") {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#nav-<?= $sub_menu_key; ?>>li").removeClass("active");
                 $("#nav-<?= $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?= $title; ?>"<?php } ?>><?= $text; ?></a></li>');

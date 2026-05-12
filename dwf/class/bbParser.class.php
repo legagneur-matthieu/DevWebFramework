@@ -21,7 +21,7 @@ class bbParser {
      */
     public function texarea_to_bbeditor($name) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $name; ?>").bbcode();
             });

@@ -143,8 +143,8 @@ class html5 {
                 ?>
                 <!--[if IE]>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <script type="text/javascript" src="../commun/src/js/html5.js"></script>
-                <script type="text/javascript" src="../commun/src/js/respond/src/respond.js"></script>
+                <script type="text/javascript" src="../commun/src/js/html5.js" nonce="<?= csp::get_nonce() ?>"></script>
+                <script type="text/javascript" src="../commun/src/js/respond/src/respond.js" nonce="<?= csp::get_nonce() ?>"></script>
                 <![endif]-->
                 <?php
             }

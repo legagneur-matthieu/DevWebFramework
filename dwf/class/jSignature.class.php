@@ -44,7 +44,7 @@ class jSignature {
             echo html_structures::script("../commun/src/js/jSignature/jSignature.min.js");
             ?>
             <!--[if lt IE 9]>
-                <script type="text/javascript" src="../commun/src/js/jSignature/flashcanvas.js"></script>
+                <script type="text/javascript" src="../commun/src/js/jSignature/flashcanvas.js" nonce="<?= csp::get_nonce() ?>"></script>
             <![endif]-->
             <?php
             self::$_called = true;

@@ -40,7 +40,7 @@ class modal {
      */
     public function link_open_modal($a_text, $id, $title, $titre, $data, $class) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("a#<?= $id; ?>").click(function () {
                     $("#modal>div").html(stripslashes("<h1>" + $(this).attr("data-titre")) + "</h1><hr />" + base64_decode($(this).attr("data-data")));

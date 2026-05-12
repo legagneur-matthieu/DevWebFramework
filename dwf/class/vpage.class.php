@@ -37,7 +37,7 @@ class vpage {
             dwf_vpage::ajout(time() + $ttl, $key, $title, $content);
             echo tags::tag("iframe", ["src" => "./services/index.php?service=s_vpage&key={$key}", "id" => $title, "class" => "w-100"], "");
             ?>
-            <script>
+            <script nonce="<?= csp::get_nonce() ?>">
                 $('#<?= $title ?>').on('load', function () {
                     $(this).height($(this).contents().find('html').outerHeight(true));
                 });

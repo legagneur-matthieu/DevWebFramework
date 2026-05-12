@@ -13,7 +13,7 @@ class file_explorer {
      */
     public function __construct($dir) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("div.file_explorer > ul.file_explorer").menu();
             });

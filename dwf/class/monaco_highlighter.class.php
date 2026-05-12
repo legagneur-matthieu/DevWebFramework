@@ -29,7 +29,7 @@ class monaco_highlighter {
             echo html_structures::script('../commun/src/js/monaco/min/vs/loader.js');
             self::$_called = true;
             ?>
-            <script>
+            <script nonce="<?= csp::get_nonce() ?>">
                 require.config({paths: {vs: '../commun/src/js/monaco/min/vs'}});
                 function create_editor(code, language = "php", id) {
                     let editor = monaco.editor.create(document.getElementById(id), {
@@ -62,7 +62,7 @@ class monaco_highlighter {
         }
         ?>
         <div id="monaco_highlighter_<?= self::$_id; ?>"></div>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             require(['vs/editor/editor.main'], function () {
                 create_editor("<?= strtr(htmlspecialchars_decode($code), ['"' => '\"']) ?>", "<?= $language ?>", "monaco_highlighter_<?= self::$_id; ?>");
             });

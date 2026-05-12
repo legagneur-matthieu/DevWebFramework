@@ -113,7 +113,7 @@ class trad extends singleton {
                             ];
                             echo html_structures::table(["Keyword", "Texte"], $data, "", "datatable");
                             ?>
-                            <script type="text/javascript">
+                            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                                 $(document).ready(function () {
                                     i = <?= $i; ?>;
                                     $("#addkey").click(function (e) {

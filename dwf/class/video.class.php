@@ -26,7 +26,7 @@ class video {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 videojs('<?= $id; ?>', {}, function () {});
             });

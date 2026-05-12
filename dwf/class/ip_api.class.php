@@ -154,7 +154,7 @@ class ip_api extends singleton {
     public function json_browser($ip, $callback) {
         $this->call();
         ?>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 ipapi.json("<?= $ip ?>");
             });
@@ -181,7 +181,7 @@ class ip_api extends singleton {
     public function batch_browser($ips, $callback) {
         $this->call();
         ?>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 ipapi.batch(<?= json_encode($ips) ?>);
             });

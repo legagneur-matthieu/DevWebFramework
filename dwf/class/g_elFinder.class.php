@@ -23,7 +23,7 @@ class g_elFinder {
         html_structures::script("../commun/src/js/elFinder/js/elfinder.min.js");
         export_dwf::add_files([realpath(__DIR__."/elFinder")]);
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $('#elfinder').elfinder({
                     lang: 'fr',

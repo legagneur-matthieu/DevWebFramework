@@ -119,7 +119,7 @@ class easteregg {
         }
         echo html_structures::script("../commun/src/js/eastereggs/cheet/cheet.min.js");
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             cheet("U U D D L R L R b a", function () {
                 $("#modal_eggday").click();
             });
@@ -137,7 +137,7 @@ class easteregg {
         html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/soundmanager2-nodebug-jsmin.js") .
         html_structures::script("../commun/src/js/eastereggs/snowstorm/lights/christmaslights.js")
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             var urlBase = '../commun/src/js/eastereggs/snowstorm/lights/';
             soundManager.url = '../commun/src/js/eastereggs/snowstorm/lights/';
         </script>
@@ -160,7 +160,7 @@ class easteregg {
     private function valentin() {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             snowStorm.snowCharacter = "&#9829;";
             snowStorm.snowColor = "red";
             snowStorm.snowStick = false;
@@ -179,7 +179,7 @@ class easteregg {
         compact_css::get_instance()->add_css_file("../commun/src/js/eastereggs/sakura/jquery-sakura.min.css");
         echo html_structures::script("../commun/src/js/eastereggs/sakura/jquery-sakura.min.js");
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("body").sakura();
             });
@@ -229,7 +229,7 @@ class easteregg {
         if ($this->is_sunday()) {
             (new modal())->link_open_modal("", "fete_pere", "", "Bonne fête des péres", '<img src="../commun/src/js/eastereggs/fete_pere/fete_pere.jpg" alt="Diplome du meilleur père de l\'année" style="width:100%" />', '');
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 $(document).ready(function () {
                     date = new Date;
                     if (localStorage.getItem("fete_pere") === undefined || localStorage.getItem("fete_pere") < date.getFullYear()) {
@@ -264,7 +264,7 @@ class easteregg {
     private function automne() {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js")
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             snowStorm.snowCharacter = '<img src="../commun/src/js/eastereggs/automne/automne.gif" alt="" />';
             snowStorm.snowColor = "white";
             snowStorm.flakeWidth = 20;

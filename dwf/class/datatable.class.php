@@ -34,7 +34,7 @@ class datatable {
             self::$_called = true;
         }
         ?>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
             $("#<?= $id; ?>").addClass("display");
                     $('#<?= $id; ?>').DataTable(<?php

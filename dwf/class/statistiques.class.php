@@ -210,7 +210,7 @@ class statistiques extends singleton {
                     }
                     echo html_structures::ul($ul, "list-group stat_date");
                     ?>
-                    <script>
+                    <script nonce="<?= csp::get_nonce() ?>">
                         $(document).ready(function () {
                             $(".list-group ul").addClass("list-group");
                             $(".list-group li").addClass("list-group-item");

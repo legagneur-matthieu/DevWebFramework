@@ -105,7 +105,7 @@ class messagerie {
             }
             js::datatable();
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 $(document).ready(function () {
                     $(".btn_supp").click(function () {
                         return confirm("Etes-vous sur de vouloir supprimer ce message ?");

@@ -33,7 +33,7 @@ class ckeditor {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
             CKEDITOR.replace('<?= $id; ?>'<?php
         if (count($params) or count($this->_params)) {

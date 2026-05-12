@@ -41,7 +41,7 @@ class graphique {
                 echo html_structures::script($src);
             }
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 function labelFormatter(label, series) {
                     return "<p style='text-align:center; color:black; text-shadow:0 0 15px white'>" + label + " <br /> " + series.data[0][1] + " (" + Math.round(series.percent) + " %)</p>";
                 }
@@ -172,7 +172,7 @@ class graphique {
      */
     private function graph_render($data, $option) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $.plot("#<?= $this->_id; ?>", <?= json_encode($data) ?>, <?= json_encode($option) ?>);
                 $("<div id='<?= $this->_id ?>_tooltip'></div>").css({position: "absolute", display: "none", border: "1px solid black", padding: "2px", "background-color": "white", opacity: 0.85}).appendTo("body");
@@ -202,7 +202,7 @@ class graphique {
      */
     public function pie($data, $tilted = false) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
                     series: {pie: {show: true, radius: 1, tilt: <?= ($tilted ? 0.5 : 1) ?>, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},
@@ -227,7 +227,7 @@ class graphique {
      */
     public function ring($data, $tilted = false) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $this->_id ?>").plot(<?= json_encode($data) ?>, {
                     series: {pie: {innerRadius: 0.5, show: true, radius: 1, tilt: <?= ($tilted ? 0.5 : 1) ?>, label: {show: true, radius: 3 / 4, formatter: labelFormatter}}},

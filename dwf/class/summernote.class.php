@@ -30,7 +30,7 @@ class summernote {
         }
         $this->_id = $id;
         ?>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 // Fonction qui récupère automatiquement toutes les polices @font-face
                 function getAllFontFaces() {

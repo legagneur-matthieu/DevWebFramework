@@ -27,7 +27,7 @@ class ratioblocks {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $id; ?>").css("width", "<?= ((int) $width); ?>px");
                 $("#<?= $id; ?>").before().css("padding-top", "<?= ((int) $width * $ratio); ?>px");

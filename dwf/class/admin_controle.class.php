@@ -170,7 +170,7 @@ class admin_controle {
             }
         }
         $form->hidden("admin_form_ajout", "1");
-        $form->submit("btn-primary", "Ajouter");
+        $form->submit("btn-primary w-100 my-3", "Ajouter");
         echo $form->render();
     }
 

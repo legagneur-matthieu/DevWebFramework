@@ -38,7 +38,7 @@ class reveal {
                 echo html_structures::script($src);
             }
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 $(document).ready(function () {
                     $(".reveal")
                             .css("width", '<?= $width ?>')

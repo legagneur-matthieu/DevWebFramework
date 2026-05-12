@@ -32,7 +32,7 @@ class ftp_explorer {
         $this->_ftp_data = ["host" => $host, "user" => $user, "psw" => $psw];
         ($ssl ? ftp_login($this->_ftp_connect = ftp_ssl_connect($host), $user, $psw) : ftp_login($this->_ftp_connect = ftp_connect($host), $user, $psw));
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("div.ftp_explorer > ul.ftp_explorer").menu();
             });

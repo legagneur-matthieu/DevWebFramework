@@ -39,7 +39,7 @@ class giphy {
         <div class="card">
             <div class="card-body giphys"></div>        
         </div>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $(".giphys").parent(".card").hide();
                 $(".form_giphy").submit(function (e) {

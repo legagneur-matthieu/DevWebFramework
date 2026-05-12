@@ -25,7 +25,7 @@ class js {
      */
     public static function alert($msg) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             alert("<?= $msg; ?>");
         </script>
         <?php
@@ -38,7 +38,7 @@ class js {
      */
     public static function alertify_alert($msg, $title = "Message") {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.alert("<?= $title; ?>", "<?= $msg; ?>");
             });
@@ -54,7 +54,7 @@ class js {
      */
     public static function alertify_alert_redir($msg, $url, $title = "Message") {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.alert("<?= $title; ?>", "<?= $msg; ?>", function () {
                     window.location = '<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>';
@@ -71,7 +71,7 @@ class js {
      */
     public static function log_std($msg) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.message("<?= $msg; ?>");
             });
@@ -86,7 +86,7 @@ class js {
      */
     public static function log_success($msg) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.success("<?= $msg; ?>");
             });
@@ -101,7 +101,7 @@ class js {
      */
     public static function log_warning($msg) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.warning("<?= $msg; ?>");
             });
@@ -116,7 +116,7 @@ class js {
      */
     public static function log_error($msg) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 alertify.error("<?= $msg; ?>");
             });
@@ -131,7 +131,7 @@ class js {
      */
     public static function redir($url) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             window.location = "<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>";
         </script>
         <?php
@@ -150,7 +150,7 @@ class js {
         $heur = (int) ($minute / 60);
         $minute = $minute % 60;
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $minuterie_heur = <?= $heur; ?>;
                 $minuterie_min = <?= $minute; ?>;
@@ -341,7 +341,7 @@ class js {
     public static function dialog($name, $title, $html) {
         echo tags::tag("div", ["id" => $name, "title" => $title], $html);
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $("#<?= $name; ?>").dialog({autoOpen: true});
         </script>
         <?php
@@ -355,7 +355,7 @@ class js {
      */
     public static function accordion($id = "accordion", $collapsible = true, $heightStyle = false) {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $id; ?>").accordion(
         <?php
@@ -381,7 +381,7 @@ class js {
      */
     public static function menu($id = "menu") {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $id; ?>").menu();
             });
@@ -433,7 +433,7 @@ class js {
                 );
         echo tags::tag("div", ["id" => $id, "class" => "carousel slide"], $indicators . $inner . $buttons);
         ?>
-        <script>
+        <script nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector("#<?= $id; ?>"));
                 carousel.cycle();

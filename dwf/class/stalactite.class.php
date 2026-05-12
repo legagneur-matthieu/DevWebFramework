@@ -24,7 +24,7 @@ class stalactite {
             self::$_called = true;
         }
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("#<?= $id; ?>").stalactite({
                     duration: 25

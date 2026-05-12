@@ -159,7 +159,7 @@ class leaflet {
     public function tracer_itineraire($add_client_marker = false) {
         if ($add_client_marker) {
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 $(document).ready(function () {
                     navigator.geolocation.getCurrentPosition(function (pos) {
                     L.marker([pos.coords.latitude, pos.coords.longitude]).bindPopup("Vous êtes ici").addTo(map<?= $this->_id; ?>);
@@ -182,7 +182,7 @@ class leaflet {
             <?php
         } else {
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                     $(document).ready(function () {
                         L.Routing.control({
                         waypoints: [
@@ -207,7 +207,7 @@ class leaflet {
      */
     public function print_map() {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 let leaflet_default_marker = L.icon({
                     iconUrl: '/commun/src/js/leaflet/images/marker-icon.png',

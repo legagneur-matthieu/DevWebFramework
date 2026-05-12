@@ -280,7 +280,7 @@ class html_structures {
      */
     public static function link_in_body($href) {
         export_dwf::add_files([realpath($href)]);
-        return '<script>$("head").append(\'<link rel="stylesheet" href="' . $href . '" />\');</script>';
+        return '<script nonce="'.csp::get_nonce().'">$("head").append(\'<link rel="stylesheet" href="' . $href . '" />\');</script>';
     }
 
     /**

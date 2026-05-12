@@ -64,7 +64,7 @@ class session {
         if (self::get_val("security_token")[0] != $hash[0] or self::get_val("security_token")[1] != $hash[1]) {
             session_destroy();
             ?>
-            <script type="text/javascript">
+            <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                 localStorage.clear();
                 sessionStorage.clear();
                 window.location = "index.php";

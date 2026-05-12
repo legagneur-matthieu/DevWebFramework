@@ -28,7 +28,7 @@ class maskNumber {
         }
         $int = ($integer ? "true" : "false");
         $id = strtr($name, ["[" => "_", "]" => ""]);
-        echo tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () {maskNumber(\"{$id}\", {$int}, \"{$thousands}\",\"{$decimal}\");});");
+        echo tags::tag("script", ["type" => "text/javascript", "nonce" => csp::get_nonce()], "$(document).ready(function () {maskNumber(\"{$id}\", {$int}, \"{$thousands}\",\"{$decimal}\");});");
         self::$_inputs[] = ["name" => $name, "thousands" => $thousands, "integer" => $integer, "decimal" => $decimal];
     }
 
@@ -57,5 +57,4 @@ class maskNumber {
             }
         }
     }
-
 }

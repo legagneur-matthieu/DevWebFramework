@@ -39,6 +39,7 @@ class csp extends singleton {
         'script-src' => ["'strict-dynamic'"],
         'style-src' => ["'self'", "https:", "'unsafe-inline'"],
         'img-src' => ["'self'", "https:", "data:"],
+        'media-src' => ["'self'", "https:", "data:"],
         'font-src' => ["'self'", "https:", "data:"],
         'connect-src' => ["'self'", "https:"],
         'form-action' => ["'self'"],
@@ -170,6 +171,14 @@ class csp extends singleton {
     }
 
     /**
+     * Ajoute une valeur a la directive media-src
+     * @param string|array $value Une valeur ou un tableau de valeurs
+     */
+    public function add_media_src($value) {
+        $this->add("media-src", $value);
+    }
+
+    /**
      * Ajoute une valeur a la directive font-src
      * @param string|array $value Une valeur ou un tableau de valeurs
      */
@@ -259,6 +268,14 @@ class csp extends singleton {
     }
 
     /**
+     * Redefinit les valeurs de la directive media-src
+     * @param string|array $value Une valeur ou un tableau de valeurs
+     */
+    public function set_media_src($value) {
+        $this->set('media-src', $value);
+    }
+
+    /**
      * Redefinit les valeurs de la directive font-src
      * @param string|array $value Une valeur ou un tableau de valeurs
      */
@@ -339,11 +356,19 @@ class csp extends singleton {
     }
 
     /**
-     * Retourne la directive img-sr
+     * Retourne la directive img-src
      * @return array Directive img-sr
      */
     public function get_img_src() {
         return $this->get('img-src');
+    }
+
+    /**
+     * Retourne la directive media-src
+     * @return array Directive img-sr
+     */
+    public function get_media_src() {
+        return $this->get('media-src');
     }
 
     /**

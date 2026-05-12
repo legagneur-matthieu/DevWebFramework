@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         warning.title = tooltip;
         warning.innerHTML = `
-            <strong>Warning : </strong>Violation CSP : Script sans nonce !
+            <strong>Violation CSP : </strong>Script sans nonce !</p>
         `;
 
         script.parentNode.insertBefore(warning, script);

@@ -45,7 +45,7 @@ class csp extends singleton {
         'form-action' => ["'self'"],
         'base-uri' => ["'self'"],
         'object-src' => ["'none'"],
-        'frame-ancestors' => ["'none'"],
+        'frame-ancestors' => ["'self'"],
         'upgrade-insecure-requests' => [],
         'report' => [],
     ];

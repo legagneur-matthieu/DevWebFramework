@@ -42,6 +42,6 @@ function CheckAutoplayPermission(IfAllowedCallback, IfNotAllowedCallback) {
 
 function add_script(src) {
     if (!document.querySelector("script[src='" + src + "']")) {
-        $("head").append('<script type="text/javascript" src="' + src + '"></script>');
+        $("head").append('<script type="text/javascript" src="' + src + '" nonce="' + $("script[nonce]").first().attr("nonce") + '"></script>');
     }
 }

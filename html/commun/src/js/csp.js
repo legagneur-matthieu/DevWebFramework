@@ -25,7 +25,7 @@ document.addEventListener('securitypolicyviolation', (e) => {
     }).catch(err => console.warn('Erreur envoi rapport CSP:', err));
 });
 document.addEventListener('DOMContentLoaded', () => {
-    const scripts = document.querySelectorAll('script:not([nonce])');
+    const scripts = document.querySelectorAll('body script:not([nonce])');
 
     scripts.forEach(script => {
         const warning = document.createElement('p');

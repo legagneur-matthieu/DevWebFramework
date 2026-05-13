@@ -33,13 +33,19 @@ class html5 {
     public static $_real_keywords = "";
 
     /**
+     * Contient la meta base de la page HTML
+     * @var string Contient la meta base de la page HTML
+     */
+    public static $_base = "";
+
+    /**
      * Cette classe gère l'entête HTML5 et son pied de page.
      * 
      * @param string $title Titre du site
      * @param string $description Description de la page
      * @param string $keyword Mots clés de la page
      */
-    public function __construct($base="") {
+    public function __construct($base = "") {
         self::$_called = true;
         if (!isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
             $_SERVER["HTTP_ACCEPT_LANGUAGE"] = "fr";
@@ -54,8 +60,9 @@ class html5 {
         <html lang="<?= $lang; ?>">
             <head>
                 <?php
-                if(!empty($base)){
-                    echo tags::tag("base",["href"=>$base]);
+                if (!empty($base)) {
+                    self::$_base = $base;
+                    echo tags::tag("base", ["href" => $base]);
                 }
                 $meta .= tags::tag("title", [], "") .
                         tags::tag("meta", ["charset" => "UTF-8"]) .

@@ -163,11 +163,64 @@ class html5 {
                 application::event("onhtml_body_end");
                 compact_css::get_instance()->render();
                 change_reload::clear();
+                security::run();
                 ?>
+                <!--script_inline_merged-->
             </body>
         </html>
         <?php
         self::render(ob_get_clean());
+    }
+
+    private static function merge_inline_scripts($document) {
+        $nonce = preg_quote(csp::get_nonce(), '/');
+        $merged = [];
+        $document = preg_replace_callback(
+                '/<script\b([^>]*)nonce=["\']' . $nonce . '["\']([^>]*)>(.*?)<\/script>/is',
+                function ($match) use (&$merged) {
+                    $attributes = $match[1] . ' ' . $match[2];
+                    if (
+                            preg_match('/\bsrc\s*=/i', $attributes) ||
+                            preg_match('/\bid\s*=/i', $attributes) ||
+                            preg_match('/\bclass\s*=/i', $attributes) ||
+                            preg_match('/\bdata-[a-z0-9_-]+\s*=/i', $attributes) ||
+                            (preg_match('/\btype\s*=\s*["\']([^"\']+)["\']/i', $attributes, $type) && strtolower(trim($type[1])) !== 'text/javascript')
+                    ) {
+                        return $match[0];
+                    }
+                    $content = trim($match[3]);
+                    if (!empty($content)) {
+                        $merged[] = $content;
+                    }
+                    return '';
+                },
+                $document
+        );
+        if (empty($merged)) {
+            return $document;
+        }
+        $finalScript = '<script nonce="' . csp::get_nonce() . '">' .
+                "\n" .
+                implode("\n", $merged) .
+                "\n</script>";
+        return str_replace(
+                '<!--script_inline_merged-->',
+                $finalScript,
+                $document
+        );
+    }
+
+    public static function update_nonces(&$html, $nonce = null) {
+        if ($nonce === null) {
+            $nonce = csp::get_nonce();
+        }
+        $html = preg_replace_callback(
+                '/\bnonce\s*=\s*(["\'])(.*?)\1/i',
+                function ($match) use ($nonce) {
+                    return 'nonce=' . $match[1] . $nonce . $match[1];
+                },
+                $html
+        );
     }
 
     private static function before_render_tasks() {
@@ -175,11 +228,11 @@ class html5 {
         new robotstxt();
         statistiques::get_instance()->add_visit();
         http2::get_instance()->make_link();
-        security::run();
     }
 
     public static function render($document) {
         self::before_render_tasks();
+        $document = self::merge_inline_scripts($document);
         if (class_exists("tidy")) {
             $tidy = new tidy();
             $tidy->parseString($document, [

@@ -22,10 +22,12 @@ class s_vpage {
     }
 
     private static function print_vpage($vpage) {
-        $dir=basename(dirname(__FILE__,2));
+        $dir = basename(dirname(__FILE__, 2));
         new html5("../../{$dir}");
         html5::before_title($vpage->get_title());
-        echo $vpage->get_content();
+        $html = $vpage->get_content();
+        html5::update_nonces($html);
+        echo $html;
     }
 
     private function not_found() {

@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * Affiche une page virtuelle (iframe) à partir du contenu fourni.
  * /!\ les services sont requis pour utiliser cette classe
  *

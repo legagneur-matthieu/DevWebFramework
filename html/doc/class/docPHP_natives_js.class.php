@@ -260,7 +260,7 @@ class docPHP_natives_js {
         <p>Exemple :</p>
         <p id="test">Ceci est une phrase de test</p>
         <?php
-        echo js::MSEdgeTTS("test");
+        echo js::MSEdgeTTS("Ceci est une phrase de test");
     }
 
     public static function fancybox() {

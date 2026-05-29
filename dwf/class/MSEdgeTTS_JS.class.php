@@ -33,7 +33,7 @@ class MSEdgeTTS_JS extends singleton {
     public static function TTS($text, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
         self::get_instance();
         return tags::tag("a", [
-                    "onclick" => "MSEdgeTTS.TTS('$text','$voice',$rate,$pitch)",
+                    "data-tts" => "{'text':'$text','voice':'$voice','rate':$rate,'pitch':$pitch}",
                     "href" => "#",
                     "class" => "btn btn-light btn-sm"
                         ], html_structures::bi("volume-up", "Lire"));

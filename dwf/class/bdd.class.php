@@ -147,7 +147,8 @@ class bdd extends singleton {
         self::$_debug["statements"][] = ["req" => $statement, "trace" => (new dwf_exception("Trace", 700))->getTraceAsString()];
         if (isset(config::$_PDO_type) and config::$_PDO_type == "sqlite") {
             $statement = $this->mysql_to_sqlite($statement);
-        }
+        }        
+        debug::print_r($statement);
         list($statement, $params) = $this->params_filter($statement, $params);
         (!strstr(strtolower($statement), "select") ? true : dwf_exception::throw_exception(603, ["__m__" => "query", "__statement__" => $statement]));
         ($query = $this->_pdo->prepare($statement))->execute($params) ? true : dwf_exception::throw_exception(602, ["__statement__" => $statement]);
@@ -213,7 +214,7 @@ class bdd extends singleton {
             "AUTO_INCREMENT" => "AUTOINCREMENT",
             "int(11)" => "INTEGER",
             "PRIMARY KEY (id) " => "",
-            "ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 " => "",
+            "ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1" => "",
         ]);
         $statement = strtr($statement, [
             "NULL, )" => "NULL)",

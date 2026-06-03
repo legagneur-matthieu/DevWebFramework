@@ -431,7 +431,7 @@ class entity_generator {
                 }
             }
         }
-        $query .= "PRIMARY KEY (id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+        $query .= "PRIMARY KEY (id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
         return $query;
     }
 }

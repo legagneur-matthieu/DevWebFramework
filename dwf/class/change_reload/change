@@ -9,13 +9,12 @@ class change {
 
     public function __construct() {
         opcache_reset();
-        $rs_ft = 0;
+        $files=[];
         foreach (glob("class/*.class.php") as $value) {
-            $ft = filemtime($value);
-            $rs_ft = ($ft > $rs_ft ? $ft : $rs_ft);
+            $files[$value]=sha1_file($value);
         }
         header('Content-Type: application/json');
-        echo $ft;
+        echo json_encode($files);
     }
 
 }

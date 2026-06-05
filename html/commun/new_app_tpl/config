@@ -21,6 +21,7 @@ class config {
     public static $_PDO_psw = "{{PDO_PSW}}";
     /* hash */
     public static $_hash_algo = "{{HASH_ALGO}}";
+    public static $_salt = "{{SALT}}";
     /* routes */
     public static $_route_auth = [];
     public static $_route_unauth = [];

@@ -27,6 +27,8 @@ class index {
      * Inclut toutes les classes du dossier "class" se finissant par ".class.php". <br />
      * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application. <br />
      * Toutes les fonction statiques "onload()" sont appelées.
+     * 
+     * @param string $class Class a charger
      */
     private static function classloader($class) {
         $file = __DIR__ . "/class/" . $class . ".class.php";

@@ -19,9 +19,9 @@ class debug {
      */
     public static function print_r($var) {
         ?><pre class="border alert alert-light"><?php
-        echo "\r";
-        print_r($var);
-        ?></pre><?php
+            echo "\r";
+            print_r($var);
+            ?></pre><?php
     }
 
     /**
@@ -30,9 +30,9 @@ class debug {
      */
     public static function var_dump($var) {
         ?><pre class="border alert alert-light"><?php
-            echo "\r";
-            var_dump($var);
-            ?></pre><?php
+                echo "\r";
+                var_dump($var);
+                ?></pre><?php
     }
 
     /**
@@ -48,6 +48,22 @@ class debug {
      */
     public static function show_report() {
         self::$_show_report = true;
+    }
+
+    private static function check_PHPDoc() {
+        $data = [];
+        foreach (array_keys(website::$_class) as $class) {
+            if (basename($class) != "config.class.php") {
+                $r = check_PHPDoc::check_file($class);
+                if (!$r["valid"]) {
+                    $data[] = [
+                        $r["file"],
+                        html_structures::ul($r["errors"])
+                    ];
+                }
+            }
+        }
+        return html_structures::table(["Fichier", "Erreurs"], $data);
     }
 
     /**
@@ -103,6 +119,7 @@ class debug {
                 ];
             }
             $cl = html_structures::table(["Class", "File", "OPCache {$opreset}"], $cl);
+
             $modal = new modal();
             echo
             tags::tag("div", ["class" => "alert alert-info", "style" => "position: fixed; bottom: 0; width: 100%;margin: 0; padding: 0;margin-top: 600px;"],
@@ -132,11 +149,11 @@ class debug {
                                     )
                             ) .
                             tags::tag("div", ["class" => "col-sm-2"],
-                                    $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "")
+                                    $modal->link_open_modal("Données (post, get, session, ...)", "debug_data", "Données", "Données", $data, "") . "<br>" .
+                                    $modal->link_open_modal("Erreurs PHPDoc", "check_phpdoc", "Erreurs PHPDoc", "Erreurs PHPDoc", self::check_PHPDoc(), "")
                             )
                     )
             );
         }
     }
-
 }

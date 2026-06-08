@@ -10,7 +10,7 @@ class export_dwf {
 
     /**
      * Classe annonyme pour l'ecriture du fichier Json
-     * @var bool|object
+     * @var bool|object Classe annonyme pour l'ecriture du fichier Json
      */
     private static $_writer = false;
     
@@ -55,9 +55,7 @@ class export_dwf {
     /**
      * Méthode statique pour ajouter des fichiers à la liste des dépendances du projet.
      *
-     * @param mixed $files Chemin(s) des fichiers à ajouter.
-     *                     Peut être une chaîne de caractères ou un tableau de chaînes de caractères.
-     * @return void
+     * @param mixed $files Chemin(s) des fichiers à ajouter. Peut être une chaîne de caractères ou un tableau de chaînes de caractères.
      */
     public static function add_files($files) {
         if (!file_exists(__DIR__ . "/export_dwf/.export_disabled")) {
@@ -162,7 +160,6 @@ class export_dwf {
      * Méthode privée pour ajouter un répertoire et ses fichiers à l'archive ZIP.
      *
      * @param string $path Chemin du répertoire à ajouter.
-     * @return void
      */
     private function add_dir($path) {
         $glob = glob($path . "/*");

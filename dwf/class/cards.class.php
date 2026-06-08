@@ -9,7 +9,7 @@ class cards {
 
     /**
      * Paquet de cartes
-     * @var array 
+     * @var array Paquet de cartes
      */
     private $_deck = [];
 

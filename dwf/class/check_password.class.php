@@ -21,7 +21,7 @@ class check_password {
 
     /**
      * Tableau des messages liés aux erreurs
-     * @var type 
+     * @var array Tableau des messages liés aux erreurs
      */
     private $_errormsg = [
         "minlen" => "",

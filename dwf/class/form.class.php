@@ -12,6 +12,11 @@ class form {
      * @var tags Formulaire
      */
     private $_form;
+
+    /**
+     * Memento des checkbox
+     * @var array Memento des checkbox
+     */
     private $_memento = [];
 
     /**
@@ -47,6 +52,7 @@ class form {
 
     /**
      * Retourne la balise d'ouverture d'un fieldset
+     * @param string $legend Legende du fieldset
      * @return string Balise d'ouverture d'un fieldset
      */
     public function open_fieldset($legend) {
@@ -129,7 +135,7 @@ class form {
      * @param string $value Valeur de l'input (null par défaut)
      * @param string $class Classe CSS
      * @param boolean $checked Case cochée par défaut ? true/false (false par defaut)
-     * @return type
+     * @return string HTML du switch
      */
     public function input_switch($label, $name, $value, $class = "", $checked = false) {
         $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "checkbox", "value" => $value, "class" => "form-check-input"];
@@ -160,7 +166,7 @@ class form {
      * @param string $required Le champ est-il requis ? (true/false, true par defaut )
      * @param string $class Classe css
      * @param boolean $multiple Upload de fichiers multiples ? (true/false, false par défaut)
-     * @return string
+     * @return string champ file
      */
     public function file($label, $name, $required = true, $class = "", $multiple = false) {
         $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "file"];
@@ -241,14 +247,14 @@ class form {
 
     /**
      * Cette fonction renomme et redimensionne les photos envoyées.
-     * @param $img String Chemin absolu de l'image d'origine.
-     * @param $to String Chemin absolu de l'image générée (.png).
-     * @param $width Int Largeur de l'image générée. Si 0, valeur calculée en fonction de $height.
-     * @param $height Int Hauteur de l'image générée. Si 0, valeur calculée en fonction de $width.
+     * @param String $img Chemin absolu de l'image d'origine.
+     * @param String $to Chemin absolu de l'image générée (.png).
+     * @param Int $width Largeur de l'image générée. Si 0, valeur calculée en fonction de $height.
+     * @param Int $height Hauteur de l'image générée. Si 0, valeur calculée en fonction de $width.
      * Si $height = 0 et $width = 0, dimensions conservées mais conversion en .png
      * @param boolean $alpha Garder la transparence du PNG ? (true/false, true par defaut)
      * @param int $color Couleur de transition à utiliser pour la transparence, à générer avec imagecolorallocate() (blanc par défaut) 
-     * @return boolean
+     * @return boolean L'immage a été redimentioné (True/False)
      */
     public static function resize_img($img, $to, $width = 0, $height = 0, $alpha = true, $color = 16777215) {
         $dimensions = getimagesize($img);
@@ -297,6 +303,10 @@ class form {
         return true;
     }
 
+    /**
+     * Ajoute un token au formulaire
+     * @return string Champ hidden token
+     */
     public function token() {
         return $this->hidden("token", self::get_token());
     }
@@ -545,6 +555,10 @@ class form {
         return $this->append($tag) . $this->input("Captcha", $captcha["hash"]) . $this->hidden("captcha", $captcha["hash"]);
     }
 
+    /**
+     * Verifie si le captcha est correcte
+     * @return boolean Captcha correcte (True/False)
+     */
     public static function check_captcha() {
         $hash = $_POST["captcha"];
         return captcha::check($hash, $_POST[$hash]);
@@ -558,6 +572,10 @@ class form {
         return (string) $this->_form;
     }
 
+    /**
+     * Retourne le rendu du formulaire
+     * @return string Rendu du formulaire
+     */
     public function __toString() {
         return $this->render();
     }

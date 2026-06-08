@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of datatable
+ * Applique les fonctionnalités de la librairie datatable à un tableau HTML
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -16,7 +16,7 @@ class datatable {
     /**
      * Paramètres par défaut du datatable
      * 
-     * @var array
+     * @var array Paramètres par défaut du datatable
      */
     private $_params = ["language" => "{url: '../commun/src/js/DataTables/i18n/fr-FR.json'}"];
 

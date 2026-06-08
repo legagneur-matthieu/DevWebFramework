@@ -16,7 +16,7 @@ class ckeditor {
     /**
      * Paramètres par défaut du CKEditor
      * 
-     * @var array
+     * @var array Paramètres par défaut du CKEditor
      */
     private $_params = [];
 

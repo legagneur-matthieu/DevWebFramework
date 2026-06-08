@@ -14,6 +14,10 @@ class MSEdgeTTS_JS extends singleton {
      */
     private static $_called = false;
 
+    /**
+     * Cette class est une integration JS de MSEdgeTTS
+     * Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
+     */
     public function __construct() {
         if (!self::$_called) {
             self::$_called = true;

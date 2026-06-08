@@ -122,8 +122,8 @@ class csp extends singleton {
      * @param string $directive Directive CSP
      * @param string|array $values Une valeur ou un tableau de valeurs
      */
-    public function set($directive, $value) {
-        $this->_csp[$directive] = is_array($value) ? $value : [$value];
+    public function set($directive, $values) {
+        $this->_csp[$directive] = is_array($values) ? $values : [$values];
     }
 
     /**

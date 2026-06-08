@@ -33,10 +33,12 @@ class change_reload extends singleton {
         }
     }
 
+    /**
+     * Supprime le système chyange_reload
+     */
     public static function clear() {
         if (!self::$_called && file_exists("./change.php")) {
             unlink("./change.php");
         }
     }
-
 }

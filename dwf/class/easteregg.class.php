@@ -290,6 +290,10 @@ class easteregg {
         echo html_structures::script("../commun/src/js/eastereggs/snowstorm/snowstorm-min.js");
     }
 
+    /**
+     * easteregg de Sarraltroff (Cropcircle d'Astronogeek)
+     * @param string $id ID de la div
+     */
     public static function sarraltroff($id) {
         html_structures::script_async("../commun/src/js/eastereggs/sarraltroff/sarraltroff.js");
         export_dwf::add_files([realpath("../commun/src/js/eastereggs")]);

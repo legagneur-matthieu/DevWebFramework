@@ -50,6 +50,10 @@ class debug {
         self::$_show_report = true;
     }
 
+    /**
+     * Retourne le rapport de PHPDoc
+     * @return string Rapport de PHPDoc
+     */
     private static function check_PHPDoc() {
         $data = [];
         foreach (array_keys(website::$_class) as $class) {

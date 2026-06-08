@@ -5,7 +5,7 @@
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
-class dwf_exception extends Exception {
+class dwf_exception extends \Exception {
 
     /**
      * Liste des exceptions du framework
@@ -27,7 +27,6 @@ class dwf_exception extends Exception {
         624 => "Action _a_ du service _s_ introuvable",
         625 => "Les services sont requis pour utiliser la classe __c__",
         626 => "Thread Error: __te__",
-
         // 63X FS / système
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
         632 => "Git ne semble pas être installé sur la machine hôte.",
@@ -60,7 +59,7 @@ class dwf_exception extends Exception {
 
     /**
      * Affiche l'exception si config::$_debug=true et note l'exception dans dwf/log/
-     * @param dwf_exception $e
+     * @param \Exception $e Exception a afficher
      * @param string $moreinfo Affiche des informations complémentaires sur l'exception
      * @param boolean $service l'exception survient-elle dans un service ? (true/false, false par defaut)
      */
@@ -83,7 +82,7 @@ class dwf_exception extends Exception {
                             "div", ["class" => "alert alert-danger", "role" => "alert"], tags::tag(
                                     "p", [], $etype . " : \"" . $e->getMessage() . "\"") .
                             tags::tag(
-                                    "pre", ["class"=>"border alert alert-light"], "\r".$e->getTraceAsString()) . $moreinfo
+                                    "pre", ["class" => "border alert alert-light"], "\r" . $e->getTraceAsString()) . $moreinfo
                     );
                     if (!html5::$_called and $service) {
                         ?>
@@ -104,5 +103,4 @@ class dwf_exception extends Exception {
             self::throw_exception(631, ["__" => $file]);
         }
     }
-
 }

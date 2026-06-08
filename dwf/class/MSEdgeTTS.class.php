@@ -1240,28 +1240,28 @@ class MSEdgeTTS {
     /**
      * Le texte à convertir en audio.
      *
-     * @var string
+     * @var string Le texte à convertir en audio.
      */
     private $_text;
 
     /**
      * La voix à utiliser pour la synthèse vocale.
      *
-     * @var string
+     * @var string La voix à utiliser pour la synthèse vocale.
      */
     private $_voice = self::VOICE_FR_FR_CELESTE;
 
     /**
      * Le taux de parole (de -50 à +50).
      *
-     * @var int
+     * @var int Le taux de parole (de -50 à +50).
      */
     private $_rate = 0; // Valeur par défaut (de -50 à +50)
 
     /**
      * La hauteur de la voix (de -50 à +50).
      *
-     * @var int
+     * @var int La hauteur de la voix (de -50 à +50).
      */
     private $_pitch = 0; // Valeur par défaut (de -50 à +50)
 

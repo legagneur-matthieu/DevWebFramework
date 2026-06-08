@@ -160,6 +160,7 @@ class fullcalendar {
 
     /**
      * Afiche le formulaire d'edition d'un événement
+     * @param int $id Id de l'événement
      */
     private static function admin_edit($id) {
         $event = fullcalendar_event::get_from_id($id);
@@ -190,6 +191,7 @@ class fullcalendar {
 
     /**
      * Affiche la demande de confirmation pour la suppresion d'un événement
+     * @param int $id Id de l'événement
      */
     private static function admin_del($id) {
         $event = fullcalendar_event::get_from_id($id);

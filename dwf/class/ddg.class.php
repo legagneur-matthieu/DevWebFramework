@@ -16,7 +16,7 @@ class ddg {
 
     /**
      * Retourne un objet ddg_api contenant les résultats de la requête
-     * @param string $query
+     * @param string $query Requête
      * @return ddg_api obget ddg_api
      */
     public function api($query) {

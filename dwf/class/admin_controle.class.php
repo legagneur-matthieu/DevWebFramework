@@ -38,7 +38,7 @@ class admin_controle {
     /**
      * Entête du tableau
      * 
-     * @var type 
+     * @var array Entête du tableau
      */
     private $_head;
 

@@ -9,13 +9,17 @@
  */
 class fluent {
 
+    /**
+     * Buffer
+     * @var array Buffer
+     */
     private $_fuent_buffer = [];
 
     /**
      * Exécute la méthode et retourne l'instance si la fonction ne retourne rien ou null
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
-     * @return $this|mixed
+     * @return $this|mixed (fluent)
      */
     public function fluentOnNull($method, $params = []) {
         $res = (new ReflectionMethod(get_called_class(), $method))->invokeArgs($this, $params);
@@ -26,7 +30,7 @@ class fluent {
      * Exécute la méthode et retourne l'instance uniquement (tout éventuel retour de la méthode n'est pas récuperable)
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
-     * @return $this
+     * @return $this (fluent)
      */
     public function fluentStrict($method, $params = []) {
         (new ReflectionMethod(get_called_class(), $method))->invokeArgs($this, $params);
@@ -38,7 +42,7 @@ class fluent {
      * tout éventuel retour de la methode est mis dans un cache récuperable via getFluentBuffer()
      * @param string $method Méthode à appeler
      * @param array $params Paramètres de la méthode
-     * @return $this
+     * @return $this (fluent)
      */
     public function fluentBuffered($method, $params = []) {
         $res = (new ReflectionMethod(get_called_class(), $method))->invokeArgs($this, $params);
@@ -62,5 +66,4 @@ class fluent {
             return $this->_fuent_buffer;
         }
     }
-
 }

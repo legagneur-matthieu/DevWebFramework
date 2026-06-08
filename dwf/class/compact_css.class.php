@@ -37,7 +37,7 @@ class compact_css extends singleton {
     /**
      * Ajoute un fichier CSS
      * @param string $href Chemin du fichier CSS
-     * @return $this
+     * @return $this (fluent)
      */
     public function add_css_file($href) {
         $this->_files[] = $href;
@@ -48,7 +48,7 @@ class compact_css extends singleton {
     /**
      * Ajoute un script CSS
      * @param string $style Script CSS 
-     * @return $this
+     * @return $this (fluent)
      */
     public function add_style($style) {
         $this->_custom[] = $style;
@@ -136,6 +136,10 @@ class compact_css extends singleton {
         return $csstidy->print->plain();
     }
 
+    /**
+     * Supprime les fichiers CSS invalidé
+     * @param array $files Fichier a ne pas supprimer
+     */
     private function clear($files) {
         foreach (glob($this->get_base() . "src/compact/*_*_" . sha1(implode("&", $_GET)) . ".css") as $f) {
             if (!in_array($f, $files)) {

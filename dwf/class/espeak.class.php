@@ -9,13 +9,52 @@
  */
 class espeak {
 
+    /**
+     * Commande espeak ou espeak-ng
+     * @var string Commande espeak ou espeak-ng
+     */
     private $_espeak = "espeak";
+
+    /**
+     * Amplitude
+     * @var int Amplitude
+     */
     private $_amplitude = 100;
+
+    /**
+     * Wordgap
+     * @var int Wordgap
+     */
     private $_wordgap = 0;
+
+    /**
+     * Pitch
+     * @var int Pitch
+     */
     private $_pitch = 50;
+
+    /**
+     * Speed
+     * @var int Speed
+     */
     private $_speed = 175;
+
+    /**
+     * Voice
+     * @var string Voice
+     */
     private $_voice = "fr";
+
+    /**
+     * Variant
+     * @var string Variant
+     */
     private $_variant = "";
+
+    /**
+     * Output
+     * @var string Output
+     */
     private $_output = "base64";
 
     /**
@@ -228,7 +267,7 @@ class espeak {
     /**
      * Output
      * @param string $_output Output (raw ou base64, base64 par defaut)
-     * @return espeak
+     * @return espeak (fluent)
      */
     public function set_output($_output) {
         if (in_array($_output, ["raw", "base64"])) {
@@ -239,7 +278,7 @@ class espeak {
 
     /**
      * Retourne le texte en flux audio
-     * @param string $text
+     * @param string $text Texte
      * @return string Flux audio (en base64 ou raw selon l'output, base64 par defaut)
      */
     public function TTS($text) {
@@ -254,5 +293,4 @@ class espeak {
         unlink($path);
         return $output;
     }
-
 }

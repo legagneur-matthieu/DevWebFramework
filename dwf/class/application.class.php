@@ -137,7 +137,8 @@ class application {
      * Cette fonction retourne les variables $_GET courante sous forme d'URL
      * ("index.php?page=une_page&amp;variable_get=une_valeur&amp;")
      * le paramètre $skip_gets permet de ne pas retourner certaines variables indésirables ou réservées à une classe particulière
-     * @param array $skip_gets tableau des variable $_GET à exclure
+     * @param array $skip_gets Tableau des variable $_GET à exclure
+     * @param boolean $html_chars Doit terminer par "&amp;" (true) ou "&" (false)
      * @return string Les variables $_GET courante sous forme d'URL 
      */
     public static function get_url($skip_gets = [], $html_chars = true) {

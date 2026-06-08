@@ -12,7 +12,17 @@ class fancybox {
      * @var boolean Permet de vérifier que la librairie Fancybox a bien été appelée qu'une fois.
      */
     private static $_called = false;
+
+    /**
+     * Id du conteneur et nom de la galerie
+     * @var string Id du conteneur et nom de la galerie
+     */
     private $_id;
+
+    /**
+     * Tableau de donnée de la galerie
+     * @var array Tableau de donnée de la galerie
+     */
     private $_data;
 
     /**

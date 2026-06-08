@@ -43,7 +43,7 @@ class entity_generator {
     /**
      * Cette classe génère les entités destinées à faire l'interface entre la base de données et le code <br />
      * 
-     * @param array $data tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
+     * @param array $datas tableau de données à deux dimensions, correspondant aux tuples de la table correspondante , forme du tableau : <br />
      * array(array(nom_du_tuple, type_du_tuple, cle_primaire),...); <br />
      * le champ clé primaire n'est qu'un boolean à true ou false , s'il est à true, ce tuple n'aura pas de "set_" (appelé aussi seteur)
      * @param string $table nom de la table correspondant aux entités, ce nom sera également le "type" des entités générées
@@ -386,8 +386,8 @@ class entity_generator {
     /**
      * Ecrit la class/entité générée dans un fichier
      * 
-     * @param string $class
-     * @param boolean $overwrite
+     * @param string $class Class à ecrire
+     * @param boolean $overwrite Overwrite le fichier (True/False)
      */
     private static function create_class_file($class, $overwrite) {
         if (is_dir("class")) {

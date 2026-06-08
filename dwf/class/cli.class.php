@@ -39,7 +39,7 @@ class cli {
 
     /**
      * Affiche du texte sur une nouvelle ligne de la console
-     * @param string $str
+     * @param string $str Texte a afficher
      */
     public static function write($str) {
         export_dwf::add_files([realpath(__FILE__)]);
@@ -49,7 +49,7 @@ class cli {
 
     /**
      * Réécrit la dernière ligne
-     * @param string $str
+     * @param string $str Texte a afficher
      */
     public static function rewrite($str) {
         export_dwf::add_files([realpath(__FILE__)]);

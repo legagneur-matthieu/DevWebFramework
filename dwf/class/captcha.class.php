@@ -9,16 +9,23 @@
  */
 class captcha {
 
+    /**
+     * Permet de vérifier que la librairie Captcha a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie Captcha a bien été appelée qu'une fois.
+     */
     private static $_called = false;
 
     /**
-     * Cette classe génére un captcha,
-     * Utiliser la classe espeak pour l'accessibilité,
-     * requère donc espeak installé sur le serveur
-     * @var \Gregwar\Captcha\CaptchaBuilder
+     * Instance de Captcha
+     * @var \Gregwar\Captcha\CaptchaBuilder Instance de Captcha
      */
     private $_captcha;
 
+    /**
+     * Cette classe génére un captcha,
+     * Utilise la classe espeak pour l'accessibilité,
+     * requère donc espeak installé sur le serveur
+     */
     public function __construct() {
         if (!self::$_called) {
             include_once __DIR__ . "/Gregwar/Captcha/PhraseBuilderInterface.php";
@@ -33,7 +40,6 @@ class captcha {
 
     /**
      * Retourne les données du captcha
-     * @param espeak $espeak
      * @return array données du captcha
      */
     public function get() {
@@ -65,7 +71,7 @@ class captcha {
      * Verifie si le hash et la phrase corespondent (sha1)
      * @param string $hash Hash du captcha
      * @param string $phrase Phrase du captcha
-     * @return boolean 
+     * @return boolean Conrespondence entre le hash et la phrase (True/False)
      */
     public static function check($hash, $phrase) {
         return $hash == sha1($phrase);

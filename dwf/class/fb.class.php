@@ -9,7 +9,16 @@ class fb {
 
     const FB_SESSION_KEY = "fb_token";
 
+    /**
+     * Instance de Facebook
+     * @var Facebook\Facebook Instance de Facebook
+     */
     private $_fb;
+
+    /**
+     * Instance de FacebookRedirectLoginHelper
+     * @var Facebook\Helpers\FacebookRedirectLoginHelper Instance de FacebookRedirectLoginHelper
+     */
     private $_fb_helper;
 
     /**

@@ -49,7 +49,7 @@ class mail {
 
     /**
      * Permet d'accèder aux methodes et attributs de PHPMailer 
-     * @return \PHPMailer\PHPMailer\PHPMailer
+     * @return \PHPMailer\PHPMailer\PHPMailer Instance de PHPMailer
      */
     public function get_phpmailer() {
         return $this->_phpmailer;

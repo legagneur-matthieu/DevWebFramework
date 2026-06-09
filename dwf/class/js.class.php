@@ -35,6 +35,7 @@ class js {
      * Affiche un message à l'écran de l'utilisateur
      * 
      * @param string $msg Message à afficher
+     * @param string $title Titre du message à afficher
      */
     public static function alertify_alert($msg, $title = "Message") {
         ?>
@@ -50,6 +51,7 @@ class js {
      * Affiche un message à l'écran de l'utilisateur avant redirection
      * 
      * @param string $msg Message à afficher
+     * @param string $title Titre du message à afficher
      * @param string $url URL de redirection
      */
     public static function alertify_alert_redir($msg, $url, $title = "Message") {
@@ -216,8 +218,8 @@ class js {
      * Si l'élément HTML est un input alors le résultat deviendra la valeur de l'input
      * Il est déconseillé d'utiliser cette classe plusieurs fois dans la même page
      * @param string $id ID de l'ement HTML cible
-     * @param boolean $dedug affiche la webcam sur la page pour calibrer la lecture des QRCodes
-     * @return \jsqr
+     * @param boolean $debug affiche la webcam sur la page pour calibrer la lecture des QRCodes
+     * @return \jsqr instance de jsqr
      */
     public static function jsqr($id, $debug = false) {
         return new jsqr($id, $debug);

@@ -2,7 +2,7 @@
 
 /**
  * Cette classe permet de créer, vérifier et exécuter des paiements via l'API REST de PayPal 
- * @autor LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class paypal {
 

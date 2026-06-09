@@ -40,7 +40,7 @@ class g_elFinder {
 
     /**
      * Créé le connecteur
-     * @param string $conector_url URL du connecteur ( il est recommandé de laisser par defaut )
+     * @param string $connector_url URL du connecteur ( il est recommandé de laisser par defaut )
      */
     private function create_connector($connector_url) {
         $file = "<?php

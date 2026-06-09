@@ -137,7 +137,7 @@ class html_structures {
     /**
      * Retourne une ancre a
      * 
-     * @param string $id
+     * @param string $id Id de l'ancre
      * @return string ancre
      */
     public static function ancre($id) {
@@ -227,6 +227,11 @@ class html_structures {
         return $str;
     }
 
+    /**
+     * Affiche l'emoji d'un drapeau a partir de son code pays
+     * @param string $code Code Pays (ex : FR, US, BE, ...)
+     * @return string Emoji du drapeau correspondant
+     */
     public static function get_flag($code) {
         return twemojiFlags::get($code);
     }
@@ -354,7 +359,7 @@ class html_structures {
 
     /**
      * Retourne une balise link pour inclure un fichier CSS
-     * @param string $src chemin vers le fichier CSS
+     * @param string $href chemin vers le fichier CSS
      * @return string balise link
      */
     public static function link($href) {

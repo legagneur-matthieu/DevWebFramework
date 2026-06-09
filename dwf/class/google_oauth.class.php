@@ -9,7 +9,7 @@ class google_oauth {
 
     /**
      * Client Google
-     * @var Google\Client
+     * @var Google\Client Instance de Google Client
      */
     private $_gclient;
 

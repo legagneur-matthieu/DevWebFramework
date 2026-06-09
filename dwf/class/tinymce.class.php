@@ -16,7 +16,7 @@ class tinymce {
     /**
      * Paramètres par défaut du TinyMCE
      * 
-     * @var array
+     * @var array Paramètres par défaut du TinyMCE
      */
     private $_id;
 

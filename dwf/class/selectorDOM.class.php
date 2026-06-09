@@ -14,6 +14,8 @@
  *   $links = $dom->select('a');
  *   $list_links = $dom->select('ul li a');
  *
+ * @author tj <https://github.com/tj>
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class selectorDOM {
 
@@ -197,5 +199,4 @@ class selectorDOM {
 
         return $selector;
     }
-
 }

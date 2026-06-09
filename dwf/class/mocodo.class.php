@@ -242,13 +242,32 @@ class mocodo {
      */
     const ARRANGE_freely = "arrange";
 
+    /**
+     * Output mocodo
+     * @var array Output mocodo
+     */
     private $_mocodo = [
         "text" => "",
         "svg" => "",
         "zip" => "",
     ];
+
+    /**
+     * Shapes
+     * @var string Shapes
+     */
     private $_shapes;
+
+    /**
+     * Couleur
+     * @var string Couleur
+     */
     private $_colors;
+
+    /**
+     * Arrangement
+     * @var string Arrangement
+     */
     private $_arrangement;
 
     /**

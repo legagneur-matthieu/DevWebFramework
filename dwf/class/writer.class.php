@@ -7,6 +7,10 @@
  */
 class writer extends singleton {
 
+    /**
+     * Buffer du writer
+     * @var array Buffer du writer
+     */
     private $_buffer = [];
 
     /**
@@ -99,5 +103,4 @@ class writer extends singleton {
     public function __destruct() {
         $this->write();
     }
-
 }

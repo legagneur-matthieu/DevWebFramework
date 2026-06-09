@@ -7,10 +7,20 @@
  * Modifié par LEGAGNEUR Matthieu
  * @url https://dyrk.org/2015/12/11/php-une-api-pour-la-correction-de-vos-fautes-dorthographe/
  * @author Dyrk <https://dyrk.org>
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class reversoLib {
 
+    /**
+     * Langue de la correction
+     * @var string Langue de la correction
+     */
     private $_langue = "fra";
+
+    /**
+     * API de Reverso
+     * @var string API de Reverso
+     */
     private $_url = "http://orthographe.reverso.net/RISpellerWS/RestSpeller.svc/v1/CheckSpellingAsXml/language={langue}?outputFormat=json&doReplacements=true&interfLang={langue}&dictionary=both&spellOrigin=interactive&includeSpellCheckUnits=true&includeExtraInfo=true&isStandaloneSpeller=true";
 
     /**
@@ -53,5 +63,4 @@ class reversoLib {
         curl_close($ch);
         return php_finediff::DiffToHTML($result["OriginalText"], $result["AutoCorrectedText"]);
     }
-
 }

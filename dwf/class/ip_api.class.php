@@ -69,9 +69,7 @@ class ip_api extends singleton {
 
     /**
      * Envoie une requête HTTP à l'API et récupère la réponse
-     * @param string $endpint "json/$ip" ou "batch"
-     * @param string $method Méthode HTTP (GET ou POST)
-     * @param string|null $postData Données POST (pour la méthode POST)
+     * @param string|array $data IP ou liste d'IP
      * @return array|false Tableau des données de réponse ou false en cas d'échec
      */
     private function sendRequest($data) {
@@ -173,7 +171,7 @@ class ip_api extends singleton {
      * Attention : 
      * - le navigateur client envoie la requete et renvoi le resultat !
      * - limité a 15 requetes par minutes et 100 IP par requetes et par utilisateur
-     * @param string $ip IP à géolocaliser
+     * @param string $ips Liste des IP à géolocaliser
      * @param function $callback fonction de callback
      * function($ip_data){}
      * @return array|false Tableau des informations sur les IPs ou false en cas de non réponse

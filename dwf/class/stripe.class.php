@@ -88,7 +88,7 @@ class stripe {
      * Récupère les infos d'une session Checkout
      * @param string $stripe_id ID Stripe retourné en GET (success)
      * @param float $total Montant total du payement pour verrification
-     * @return \Stripe\Checkout\Session|null
+     * @return \Stripe\Checkout\Session|null Instance de Stripe Session
      */
     public function get_session($stripe_id, $total) {
         try {

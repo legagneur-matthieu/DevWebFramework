@@ -99,7 +99,7 @@ class websocket_server {
             if (isset($message["action"])) {
                 $action = strtr($message["action"], ["." => "", "/" => "", "\\" => ""]);
                 if ($action == "auth") {
-                    if (isset($message["token"]) and!empty(trim($message["token"]))) {
+                    if (isset($message["token"]) and !empty(trim($message["token"]))) {
                         $this->authentificate($client, $message["token"]);
                     } else {
                         self::log($client, "Auth fail : Empty token");
@@ -210,9 +210,9 @@ class websocket_server {
     }
 
     /**
-     * 
-     * @param websocket_client $client
-     * @param string $token
+     * Authentifie le client
+     * @param websocket_client $client Websocket client
+     * @param string $token Token d'authentification
      */
     private function authentificate($client, $token) {
         $ws_token = ws_token::get_collection("token='" . bdd::p($token) . "'");
@@ -231,5 +231,4 @@ class websocket_server {
             $client->write('{"auth":false,"message":"Token conflict"}');
         }
     }
-
 }

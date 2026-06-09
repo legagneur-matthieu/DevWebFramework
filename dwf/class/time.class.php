@@ -25,7 +25,7 @@ class time {
 
     /**
      * Convertit une date au format FR (dd/mm/yyyy) au format US (yyyy-mm-dd)
-     * @param string $dateUS date au format US
+     * @param string $dateFR date au format US
      * @return string date au format fr
      */
     public static function date_fr_to_us($dateFR) {
@@ -43,7 +43,7 @@ class time {
 
     /**
      * Convertit une date au format FR (dd/mm/yyyy hh:mm:ss) au format US (yyyy-mm-dd hh:mm:ss)
-     * @param string $dateUS date au format US
+     * @param string $dateFR date au format US
      * @return string date au format fr
      */
     public static function datetime_fr_to_us($dateFR) {

@@ -6,22 +6,40 @@
  */
 class thread_manager {
 
-    /** @var int Nombre maximum de threads simultanés autorisés */
+    /**
+     * Nombre maximum de threads simultanés autorisés 
+     * @var int Nombre maximum de threads simultanés autorisés 
+     */
     private $maxthread;
 
-    /** @var int[] Liste des IDs de threads en cours d'exécution */
+    /**
+     * Liste des IDs de threads en cours d'exécution
+     * @var int[] Liste des IDs de threads en cours d'exécution
+     */
     private $threads = [];
 
-    /** @var array Résultats des threads terminés, indexés par ID */
+    /**
+     * Résultats des threads terminés, indexés par ID
+     * @var array Résultats des threads terminés, indexés par ID
+     */
     private $results = [];
 
-    /** @var float[] Timestamps de démarrage de chaque thread (en microsecondes) */
+    /**
+     * Timestamps de démarrage de chaque thread (en microsecondes)
+     * @var float[] Timestamps de démarrage de chaque thread (en microsecondes)
+     */
     private $thread_times_start = [];
 
-    /** @var float[] Durée d'exécution des derniers threads terminés */
+    /**
+     * Durée d'exécution des derniers threads terminés
+     * @var float[] Durée d'exécution des derniers threads terminés
+     */
     private $thread_times = [];
 
-    /** @var string URL d'acces au services */
+    /**
+     * URL d'acces au services
+     * @var string URL d'acces au services
+     */
     private $services_url = "";
 
     /**

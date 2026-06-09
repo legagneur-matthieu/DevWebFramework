@@ -104,7 +104,7 @@ class leaflet {
     /**
      * Ajoute un polygone à partir d'un tableau de coordonnées
      * @param array $data tableau de coordonnées à 2 dimensions (associatif) : array( array("x"=>coordX,"y"=>coordY), array("x"=>coordX,"y"=>coordY))
-     * @param string $desc
+     * @param string $desc Description du polygon
      */
     public function add_polygon($data, $desc) {
         $this->_polygon[] = ["data" => $data, "desc" => $desc];

@@ -10,6 +10,10 @@
  */
 class jsqr {
 
+    /**
+     * Permet de vérifier que la librairie JsQR a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie JsQR a bien été appelée qu'une fois.
+     */
     private static $_called = false;
 
     /**

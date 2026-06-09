@@ -3,7 +3,7 @@
 /**
  * Cette classe affiche du code dans un monaco editor non modifiable
  *
- * @author mint
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class monaco_highlighter {
 
@@ -21,8 +21,8 @@ class monaco_highlighter {
 
     /**
      * Cette classe affiche du code dans un monaco editor non modifiable
-     * /!\ cette classe est à placer précautionneusement dans une partie administration restreinte !
-     * /!\ Incompatibilité avec monaco_highlighter !
+     * @param string $code Code a afficher
+     * @param string $language Langage de programation (php, js, csharp, python, ...)
      */
     public function __construct($code, $language = "php") {
         if (!self::$_called) {

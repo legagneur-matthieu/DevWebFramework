@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Summernot transforme une textarea en editeur WYSIWYG
+ * Summernote transforme une textarea en editeur WYSIWYG
  *
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
@@ -20,6 +20,10 @@ class summernote {
      */
     private $_id;
 
+    /**
+     * Summernote transforme une textarea en editeur WYSIWYG
+     * @param string $id Identifiant du textarea a transformer en Summernote
+     */
     public function __construct($id) {
         if (!self::$_called) {
             echo html_structures::script("../commun/src/js/summernote/summernote-lite.js");

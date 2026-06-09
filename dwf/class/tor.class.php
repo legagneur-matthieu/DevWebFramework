@@ -7,7 +7,16 @@
  */
 class tor {
 
+    /**
+     * IP du proxy tor
+     * @var string IP du proxy tor
+     */
     private $_host;
+
+    /**
+     * Port du proxy tor
+     * @var int Port du proxy tor
+     */
     private $_port;
 
     /**
@@ -36,5 +45,4 @@ class tor {
         curl_close($ch);
         return $output;
     }
-
 }

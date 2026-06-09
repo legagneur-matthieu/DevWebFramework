@@ -8,11 +8,16 @@
  */
 class update_dwf {
 
+    /**
+     * Repo DWF
+     * @var string Repo DWF
+     */
     private $_dwf_repo = "https://github.com/legagneur-matthieu/devwebframework.git";
 
     /**
      * Cette classe permet de gérer les mises à jour de DWF
      * (a placer dans une inerface d'administration)
+     * @param string $path Racine de DWF
      */
     public function __construct($path = "../../") {
         set_time_limit(0);
@@ -52,7 +57,8 @@ class update_dwf {
     }
 
     /**
-     *  Créé le dossier .git si il n'existe pas
+     * Créé le dossier .git si il n'existe pas
+     * @param string $path Racine de DWF
      */
     private function create_git($path) {
         $dwf_path = dirname(realpath($path . "dwf"));
@@ -86,5 +92,4 @@ class update_dwf {
             "msg" => ($maj ? "Update from " . $local_tags . " to " . $remote_tags : "Already up-to-date." )
         ];
     }
-
 }

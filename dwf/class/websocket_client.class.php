@@ -48,7 +48,7 @@ class websocket_client {
      * Cette classe permet de gerer les clients connecté au serveur websocket
      * (cf webserver_server.class.php)
      * 
-     * @param Socket $socket
+     * @param Socket $socket Webocket
      */
     public function __construct($socket) {
         @socket_getpeername($socket, $ip);
@@ -101,7 +101,7 @@ class websocket_client {
 
     /**
      * Definit le socket du client
-     * @param Socket $_socket
+     * @param Socket $socket Websocket
      */
     public function set_socket(Socket $socket) {
         unset(self::$clients[$this->_id]);
@@ -120,7 +120,7 @@ class websocket_client {
 
     /**
      * Definit l'IP du client
-     * @param type $_ip
+     * @param string $_ip IP du client
      */
     public function set_ip($_ip) {
         $this->_ip = $_ip;
@@ -128,7 +128,7 @@ class websocket_client {
 
     /**
      * Defini si le client est un navigateur ou non (true/false)
-     * @param boolean $isWeb
+     * @param boolean $isBrowser le client est un navigateur ou non (true/false)
      */
     public function set_isBrowser($isBrowser) {
         $this->_isBrowser = $isBrowser;
@@ -182,7 +182,7 @@ class websocket_client {
     /**
      * Retourne le client avec le socket specifié (false si non trouvé)
      * 
-     * @param Socket $socket
+     * @param Socket $socket Websocket
      * @return boolean|websocket_client le client
      */
     public static function getClientFromSocket($socket) {
@@ -263,5 +263,4 @@ class websocket_client {
         @socket_close($client->_socket);
         unset(self::$clients[$client->_id]);
     }
-
 }

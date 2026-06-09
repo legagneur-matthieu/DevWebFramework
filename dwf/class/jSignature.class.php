@@ -54,6 +54,10 @@ class jSignature {
         $this->_dataformat = $dataformat;
     }
 
+    /**
+     * Retourne le rendu du jSignatyure
+     * @return string rendu du jSignatyure
+     */
     public function render() {
         $script = "$(document).ready(function () {
                 $(\"#{$this->_id}_div\").jSignature();

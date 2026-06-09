@@ -14,19 +14,19 @@ class sitemap extends singleton {
      * Tableau contenant les URLs du sitemap.
      * Chaque élément du tableau est un tableau associatif avec les clés "loc" et "title".
      * La clé "loc" correspond à l'URL de la page et la clé "title" correspond au titre de la page.
-     * @var array
+     * @var array Tableau contenant les URLs du sitemap.
      */
     private $_urls = [];
 
     /**
      * Indique si le sitemap a été modifié depuis sa dernière écriture dans le fichier XML.
-     * @var bool
+     * @var bool sitemap a été modifié (true/false)
      */
     private $_changed = false;
 
     /**
      * Chemin complet vers le fichier sitemap.xml.
-     * @var string
+     * @var string Chemin complet vers le fichier sitemap.xml.
      */
     private $_file;
 

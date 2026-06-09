@@ -125,6 +125,10 @@ class task_manager {
         }
     }
 
+    /**
+     * Retoure un log du nombre de tache planifié restantes
+     * @return string Log du nombre de tache planifié restantes
+     */
     private static function get_waiting_tasks_lenght() {
         return date("Y-m-d H:i:s") . " " . task::get_count("status=0") . " Taches planifie";
     }

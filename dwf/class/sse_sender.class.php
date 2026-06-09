@@ -4,6 +4,8 @@
  * Cette classe permet l'envois de SSE (Server-Sent Events)
  * Optimisé pour http/2 et supperieur
  * à utiliser en JS avec new EventSource("./services/index.php?service=sse");
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.fr>
  */
 class sse_sender extends singleton {
 

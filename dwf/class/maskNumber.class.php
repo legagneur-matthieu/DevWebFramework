@@ -12,6 +12,10 @@ class maskNumber {
      * @var array  Liste des INPUT formatés
      */
     private static $_inputs = [];
+    /**
+     * Permet de vérifier que la librairie maskNumber a bien été appelée qu'une fois.
+     * @var boolean Permet de vérifier que la librairie maskNumber a bien été appelée qu'une fois.
+     */
     private static $_called = false;
 
     /**

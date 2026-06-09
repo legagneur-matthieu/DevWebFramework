@@ -41,9 +41,7 @@ class html5 {
     /**
      * Cette classe gère l'entête HTML5 et son pied de page.
      * 
-     * @param string $title Titre du site
-     * @param string $description Description de la page
-     * @param string $keyword Mots clés de la page
+     * @param string $base Meta base
      */
     public function __construct($base = "") {
         self::$_called = true;
@@ -172,6 +170,11 @@ class html5 {
         self::render(ob_get_clean());
     }
 
+    /**
+     * Regroupe les script inline de la page en un seul
+     * @param string $document page HTML avec script dispaché
+     * @return string page HTML avec script regroupé
+     */
     private static function merge_inline_scripts($document) {
         $nonce = preg_quote(csp::get_nonce(), '/');
         $merged = [];
@@ -210,6 +213,11 @@ class html5 {
         );
     }
 
+    /**
+     * Met a jour le nonce de la page HTML
+     * @param string $html Page HTML
+     * @param string|null $nonce Nonce de la page
+     */
     public static function update_nonces(&$html, $nonce = null) {
         if ($nonce === null) {
             $nonce = csp::get_nonce();
@@ -223,6 +231,9 @@ class html5 {
         );
     }
 
+    /**
+     * Cette methode est executé avant le render
+     */
     private static function before_render_tasks() {
         sitemap::get_instance()->add_url(application::get_loc(), self::$_real_title);
         new robotstxt();
@@ -230,6 +241,10 @@ class html5 {
         http2::get_instance()->make_link();
     }
 
+    /**
+     * Formate et rend la page HTML
+     * @param string $document Page HTML
+     */
     public static function render($document) {
         self::before_render_tasks();
         $document = self::merge_inline_scripts($document);
@@ -295,6 +310,10 @@ class html5 {
         self::$_real_keywords .= ", {$keywords}";
     }
 
+    /**
+     * Retourne la liste des tags autorisé (Liste W3C/MDN)
+     * @return array La liste des tags autorisé (Liste W3C/MDN)
+     */
     private static function tags_list() {
         return [
             "a",

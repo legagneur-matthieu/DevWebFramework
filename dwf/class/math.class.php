@@ -473,8 +473,8 @@ class math {
     /**
      * Retourne la partition d'un entier a $k patie,
      * si $k=null, retourne le nombre de partition de $n
-     * @param int $n
-     * @param int|null $k
+     * @param int $n N Entier
+     * @param int|null $k K Partition
      * @return int partition ou nombre de partitions
      */
     public static function int_partition($n, $k = null) {

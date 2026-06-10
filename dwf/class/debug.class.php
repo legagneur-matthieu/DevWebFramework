@@ -57,14 +57,12 @@ class debug {
     private static function check_PHPDoc() {
         $data = [];
         foreach (array_keys(website::$_class) as $class) {
-            if (basename($class) != "config.class.php") {
-                $r = check_PHPDoc::check_file($class);
-                if (!$r["valid"]) {
-                    $data[] = [
-                        $r["file"],
-                        html_structures::ul($r["errors"])
-                    ];
-                }
+            $r = check_PHPDoc::check_file($class);
+            if (!$r["valid"]) {
+                $data[] = [
+                    $r["file"],
+                    html_structures::ul($r["errors"])
+                ];
             }
         }
         return html_structures::table(["Fichier", "Erreurs"], $data);

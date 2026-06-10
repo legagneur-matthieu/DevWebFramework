@@ -13,8 +13,7 @@
  */
 #[IgnoreCheckPHPDoc]
 class config {
-    /* PDO */
-
+    /* PDO */    
     public static $_PDO_type = "{{PDO_TYPE}}";
     public static $_PDO_host = "{{PDO_HOST}}";
     public static $_PDO_dbname = "{{PDO_DBNAME}}";

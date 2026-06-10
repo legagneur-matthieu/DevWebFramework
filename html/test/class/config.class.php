@@ -10,6 +10,7 @@
  * 
  * mais vous pouvez également y ajouter des variables diverses qui vous seront utile 
  */
+#[IgnoreCheckPHPDoc]
 class config {
     /* PDO */
     public static $_PDO_type = "sqlite";

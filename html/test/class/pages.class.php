@@ -59,9 +59,11 @@ class pages {
         }
     }
 
+    /**
+     * Page de deconnexion
+     */
     public function deco() {
         auth::unauth();
         js::redir("index.php");
     }
-
 }

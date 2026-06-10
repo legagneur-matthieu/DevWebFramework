@@ -27,12 +27,28 @@ class check_PHPDoc {
     private array $errors = [];
 
     /**
-     * Constructeur
+     * Cette classe permet de vérifier la qualité et la complétude
+     * de la documentation PHPDoc d'un fichier PHP (classe uniquement).
      *
      * @param string $filePath Chemin vers le fichier PHP à analyser
      */
     public function __construct($filePath) {
         $this->filePath = $filePath;
+    }
+
+    /**
+     * Affiche le checkup de la documentation du framework
+     * Attention : peut être long a executer, mode CLI recomandé.
+     */
+    public static function check_DWF() {
+        $report = [];
+        foreach (glob(__DIR__ . "/*.class.php") as $class) {
+            $r = check_PHPDoc::check_file($class);
+            if (!$r["valid"]) {
+                $report[] = $r;
+            }
+        }
+        debug::print_r($report);
     }
 
     /**

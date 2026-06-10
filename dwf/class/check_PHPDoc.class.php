@@ -57,7 +57,7 @@ class check_PHPDoc {
      * @param string $filePath Chemin vers le fichier PHP à analyser
      * @return array Rapport de la PHPDoc
      */
-    public static function check_file(string $filePath): array {
+    public static function check_file(string $filePath) {
         return (new self($filePath))->check();
     }
 
@@ -93,8 +93,8 @@ class check_PHPDoc {
             ];
         }
         $this->checkClassDocumentation();
+        $this->checkAllProperties();
         $this->checkAllMethods();
-        $this->checkAllProperties(); // ← Support des propriétés ajouté
         return $this->getResult();
     }
 
@@ -305,7 +305,7 @@ class check_PHPDoc {
      *
      * @return bool la classe doit être ignorée
      */
-    private function shouldIgnoreClass(): bool {
+    private function shouldIgnoreClass() {
         if (!empty($this->reflection->getAttributes(IgnoreCheckPHPDoc::class))) {
             return true;
         }

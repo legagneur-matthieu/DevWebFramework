@@ -36,6 +36,7 @@
  * @author JDTeam (jdownloader.org)
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
+#[IgnoreCheckPHPDoc]
 class dlc {
 
     // >>>>>>>>> PLEASE EDIT - START !!!

@@ -16,6 +16,7 @@
  * @copyright  Copyright 2013 James Brumond
  * @repo       http://github.com/kbjr/Git.php
  */
+#[IgnoreCheckPHPDoc]
 class Git {
 
     /**
@@ -103,7 +104,6 @@ class Git {
     public static function is_repo($var) {
         return (get_class($var) == 'GitRepo');
     }
-
 }
 
 // ------------------------------------------------------------------------
@@ -687,5 +687,4 @@ class GitRepo {
     public function setenv($key, $value) {
         $this->envopts[$key] = $value;
     }
-
 }

@@ -5,6 +5,7 @@
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
+#[IgnoreCheckPHPDoc]
 class dwf_exception extends \Exception {
 
     /**

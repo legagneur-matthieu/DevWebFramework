@@ -68,6 +68,14 @@ class check_PHPDoc {
             return $this->getResult();
         }
         $this->reflection = new ReflectionClass($className);
+        if ($this->shouldIgnoreClass()) {
+            return [
+                'file' => $this->filePath,
+                'class' => $className,
+                'valid' => true,
+                'errors' => []
+            ];
+        }
         $this->checkClassDocumentation();
         $this->checkAllMethods();
         $this->checkAllProperties(); // ← Support des propriétés ajouté
@@ -277,6 +285,26 @@ class check_PHPDoc {
     }
 
     /**
+     * Vérifie si la classe doit être ignorée (via attribut ou héritage).
+     *
+     * @return bool la classe doit être ignorée
+     */
+    private function shouldIgnoreClass(): bool {
+        if (!empty($this->reflection->getAttributes(IgnoreCheckPHPDoc::class))) {
+            return true;
+        }
+        $parent = $this->reflection->getParentClass();
+        if ($parent) {
+            $parentName = $parent->getName();
+            $ignoredParents = ['Exception', 'Error', 'Throwable', 'DateTime', 'DateTimeImmutable'];
+            if (in_array($parentName, $ignoredParents)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Ajoute une erreur.
      *
      * @param string $message Message d'erreur
@@ -298,4 +326,14 @@ class check_PHPDoc {
             'errors' => $this->errors,
         ];
     }
+}
+
+/**
+ * Attribut pour ignorer le contrôle PHPDoc sur une classe
+ *
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
+#[Attribute(Attribute::TARGET_CLASS)]
+class IgnoreCheckPHPDoc {
+    
 }

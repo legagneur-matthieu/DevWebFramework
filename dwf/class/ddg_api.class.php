@@ -6,6 +6,7 @@
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
+#[IgnoreCheckPHPDoc]
 class ddg_api {
 
     /**
@@ -390,5 +391,4 @@ class ddg_api {
     public function set_ImageHeight($ImageHeight) {
         $this->_ImageHeight = $ImageHeight;
     }
-
 }

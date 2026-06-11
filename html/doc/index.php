@@ -1,19 +1,22 @@
 <?php
 
+/**
+ * Point d'entré du projet
+ * 
+ * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
+ */
 class website {
 
     /**
      * Liste des classes metier et classes natives chargé par le framework 
-     * @var array Liste des classes metier et classes natives chargé par le framework 
+     * 
+     * @var array Liste des classes metier et classes natives chargé par le framework      
      */
-    public static $_class;
+    public static $_class;/**     * point de départ du site web  */
 
-    /**
-     * point de départ du site web 
-     */
     public function __construct() {
         self::$_class[__FILE__] = __CLASS__;
-        spl_autoload_register([__CLASS__, 'classloader']);
+        spl_autoload_register([__CLASS__, "classloader"]);
         require_once "../../dwf/index.php";
         try {
             new index();
@@ -25,6 +28,8 @@ class website {
     /**
      * Inclut toutes les classes du dossier "class" se finissant par ".class.php" 
      * Vous pouvez créer vos propres classes avec cette extension pour les charger automatiquement avant de les utiliser dans votre application 
+     * 
+     * @param string $class Class a charger
      */
     private static function classloader($class) {
         $file = __DIR__ . "/class/" . $class . ".class.php";
@@ -39,7 +44,6 @@ class website {
             }
         }
     }
-
 }
 
 new website();

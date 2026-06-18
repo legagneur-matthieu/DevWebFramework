@@ -37,14 +37,13 @@ $this->_this_was_modified = false;
  }
 /** Ajoute une entrée en base de donnée */
  public static function ajout( $mt, $key, $title, $content) { 
-application::$_bdd->query("INSERT INTO dwf_vpage(mt, key, title, content) VALUES(:mt, :key, :title, :content);",[
-":mt" => (int) $mt, ":key" => $key, ":title" => $title, ":content" => $content]); } 
+return self::get_from_id(application::$_bdd->query("INSERT INTO dwf_vpage(mt, key, title, content) VALUES(:mt, :key, :title, :content);",[
+":mt" => (int) $mt, ":key" => $key, ":title" => $title, ":content" => $content])); } 
 /** Retourne la structure de l'entity au format json */
 public static function get_structure() {
     return json_decode('[["id","int",true],["mt","int",false],["key","string",false],["title","string",false],["content","string",false]]', true);
 }
-/** Retourne le contenu de la table sous forme d'une collection 
-*ATTENTION, PENSEZ A UTILISER bdd::p(); */
+/** Retourne le contenu de la table sous forme d'une collection */
 public static function get_collection($where = "", $params = []) {
     $col=[];
     foreach (dwf_vpage::get_table_array($where, $params) as $entity) {
@@ -58,8 +57,7 @@ public static function get_collection($where = "", $params = []) {
     }
     return $col;
 }
-/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions 
-* ATTENTION, PENSEZ A UTILISER bdd::p(); */
+/** Retourne le contenu de la table sous forme d'un tableau a 2 dimensions */
 public static function get_table_array($where = "", $params = []) {
     $data = application::$_bdd->fetch("select * from dwf_vpage" . (!empty($where) ? " where " . $where : "") . ";", $params);
     $tuples_array = [];
@@ -118,11 +116,6 @@ public function delete() {
 /** Met a jour l'entité dans la base de donnée*/
 public function update() { 
 if ($this->_this_was_modified and !$this->_this_was_delete) { 
- $id = bdd::p($this->get_id());
- $mt = bdd::p($this->get_mt());
- $key = bdd::p($this->get_key());
- $title = bdd::p($this->get_title());
- $content = bdd::p($this->get_content());
  application::$_bdd->query("update dwf_vpage set id = :id, mt = :mt, key = :key, title = :title, content = :content where id=:id;",[":id" => $this->get_id(),":mt" => $this->get_mt(), ":key" => $this->get_key(), ":title" => $this->get_title(), ":content" => $this->get_content()]);
     }
     if($this->_this_was_delete){

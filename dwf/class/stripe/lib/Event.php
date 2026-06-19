@@ -34,7 +34,7 @@ namespace Stripe;
  * @property null|string $context Authentication context needed to fetch the event or related object.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property (object{object: StripeObject, previous_attributes?: StripeObject}&StripeObject) $data
- * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
+ * @property bool $livemode If the object exists in live mode, the value is <code>true</code>. If the object exists in test mode, the value is <code>false</code>.
  * @property int $pending_webhooks Number of webhooks that haven't been successfully delivered (for example, to return a 20x response) to the URLs you specify.
  * @property null|(object{id: null|string, idempotency_key: null|string}&StripeObject) $request Information on the API request that triggers the event.
  * @property string $type Description of the event (for example, <code>invoice.created</code> or <code>charge.refunded</code>).
@@ -225,6 +225,13 @@ class Event extends ApiResource
     const REPORTING_REPORT_RUN_FAILED = 'reporting.report_run.failed';
     const REPORTING_REPORT_RUN_SUCCEEDED = 'reporting.report_run.succeeded';
     const REPORTING_REPORT_TYPE_UPDATED = 'reporting.report_type.updated';
+    const RESERVE_HOLD_CREATED = 'reserve.hold.created';
+    const RESERVE_HOLD_UPDATED = 'reserve.hold.updated';
+    const RESERVE_PLAN_CREATED = 'reserve.plan.created';
+    const RESERVE_PLAN_DISABLED = 'reserve.plan.disabled';
+    const RESERVE_PLAN_EXPIRED = 'reserve.plan.expired';
+    const RESERVE_PLAN_UPDATED = 'reserve.plan.updated';
+    const RESERVE_RELEASE_CREATED = 'reserve.release.created';
     const REVIEW_CLOSED = 'review.closed';
     const REVIEW_OPENED = 'review.opened';
     const SETUP_INTENT_CANCELED = 'setup_intent.canceled';
@@ -479,6 +486,13 @@ class Event extends ApiResource
     const TYPE_REPORTING_REPORT_RUN_FAILED = 'reporting.report_run.failed';
     const TYPE_REPORTING_REPORT_RUN_SUCCEEDED = 'reporting.report_run.succeeded';
     const TYPE_REPORTING_REPORT_TYPE_UPDATED = 'reporting.report_type.updated';
+    const TYPE_RESERVE_HOLD_CREATED = 'reserve.hold.created';
+    const TYPE_RESERVE_HOLD_UPDATED = 'reserve.hold.updated';
+    const TYPE_RESERVE_PLAN_CREATED = 'reserve.plan.created';
+    const TYPE_RESERVE_PLAN_DISABLED = 'reserve.plan.disabled';
+    const TYPE_RESERVE_PLAN_EXPIRED = 'reserve.plan.expired';
+    const TYPE_RESERVE_PLAN_UPDATED = 'reserve.plan.updated';
+    const TYPE_RESERVE_RELEASE_CREATED = 'reserve.release.created';
     const TYPE_REVIEW_CLOSED = 'review.closed';
     const TYPE_REVIEW_OPENED = 'review.opened';
     const TYPE_SETUP_INTENT_CANCELED = 'setup_intent.canceled';

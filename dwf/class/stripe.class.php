@@ -7,10 +7,10 @@
 class stripe {
 
     /**
-     * Clé API
-     * @var string Clé API
+     * Stripe
+     * @var \Stripe\StripeClient Stripe
      */
-    private $_secret_key;
+    private $_stripe;
 
     /**
      * Devise
@@ -25,9 +25,8 @@ class stripe {
      */
     public function __construct($secret_key, $currency = "EUR") {
         require_once '../../dwf/class/stripe/init.php';
-        $this->_secret_key = $secret_key;
         $this->_currency = strtolower($currency);
-        \Stripe\Stripe::setApiKey($this->_secret_key);
+        $this->_stripe = new \Stripe\StripeClient($secret_key);
     }
 
     /**
@@ -69,12 +68,12 @@ class stripe {
                 ];
             }
 
-            $session = \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
+            $session = $this->stripe->checkout->sessions->create([
                 'line_items' => $line_items,
                 'mode' => 'payment',
                 'success_url' => $success_url . '&stripe_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => $cancel_url,
+                'automatic_payment_methods' => ['enabled' => true],
             ]);
 
             return $session->url;
@@ -92,7 +91,7 @@ class stripe {
      */
     public function get_session($stripe_id, $total) {
         try {
-            if ($session = \Stripe\Checkout\Session::retrieve($stripe_id)) {
+            if ($session = $this->stripe->checkout->sessions->retrieve($stripe_id, [])) {
 
                 if ($session->payment_status !== 'paid') {
                     error_log("Stripe Error: Not paid !");

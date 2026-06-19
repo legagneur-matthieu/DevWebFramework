@@ -68,7 +68,7 @@ class stripe {
                 ];
             }
 
-            $session = $this->stripe->checkout->sessions->create([
+            $session = $this->_stripe->checkout->sessions->create([
                 'line_items' => $line_items,
                 'mode' => 'payment',
                 'success_url' => $success_url . '&stripe_id={CHECKOUT_SESSION_ID}',
@@ -91,7 +91,7 @@ class stripe {
      */
     public function get_session($stripe_id, $total) {
         try {
-            if ($session = $this->stripe->checkout->sessions->retrieve($stripe_id, [])) {
+            if ($session = $this->_stripe->checkout->sessions->retrieve($stripe_id, [])) {
 
                 if ($session->payment_status !== 'paid') {
                     error_log("Stripe Error: Not paid !");

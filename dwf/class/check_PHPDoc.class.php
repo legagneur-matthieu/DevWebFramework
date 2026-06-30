@@ -166,7 +166,7 @@ class check_PHPDoc {
         if (empty($parsed['author'])) {
             $this->addError('La classe n\'a pas de tag @author.');
         } elseif (!preg_match('/^[A-Za-zÀ-ÿ\s\-]+ <[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}>$/', $parsed['author'])) {
-            $this->addError('Format @author incorrect. Exemple attendu : "Nom Prénom <email@exemple.com>"');
+            $this->addError('Format @author incorrect. Exemple attendu : "Nom Prénom &lt;email@exemple.com&gt;"');
         }
     }
 

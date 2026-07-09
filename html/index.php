@@ -175,31 +175,35 @@ class parcour_sites {
         }
         if (!class_exists("tidy")) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP Tidy est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP Tidy est recommandé"));
         }
         if (!function_exists("gmp_init")) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP GMP est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP GMP est recommandé"));
         }
         if (!function_exists("mb_strlen")) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP mbstring est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP mbstring est recommandé"));
         }
         if (!function_exists("opcache_get_status") && !opcache_get_status()) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP opcache est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP opcache est recommandé"));
         }
         if (!function_exists("dom_import_simplexml")) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP xml est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP xml est recommandé"));
         }
         if (!function_exists("imagepng")) {
             $DWFStatus = false;
-            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention gd opcache est recomandé"));
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention gd opcache est recommandé"));
+        }
+        if (!class_exists("ZipArchive")) {
+            $DWFStatus = false;
+            echo tags::tag("div", ["class" => "alert alert-warning"], tags::tag("p", [], "L'extention PHP ZIP est recommandé"));
         }
         if ($DWFStatus) {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));
-        }
+        }        
     }
 }
 

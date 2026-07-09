@@ -151,7 +151,7 @@ class new_app {
         <div class="row">
             <div class="col-sm-5"></div>
             <div class="col-sm-7">
-        <?= $form->submit("btn-primary", "Créer le projet"); ?>
+                <?= $form->submit("btn-primary", "Créer le projet"); ?>
             </div>
         </div>
         <hr />
@@ -165,7 +165,7 @@ class new_app {
      */
     private function js() {
         ?>
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
                 $("title").text("<?= config::$_title ?>");
                 $("#pdo_type").change(function () {

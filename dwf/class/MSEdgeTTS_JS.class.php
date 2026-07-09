@@ -38,7 +38,6 @@ class MSEdgeTTS_JS extends singleton {
         self::get_instance();
         return tags::tag("a", [
                     "data-tts" => "{'text':'$text','voice':'$voice','rate':$rate,'pitch':$pitch}",
-                    "href" => "#",
                     "class" => "btn btn-light btn-sm"
                         ], html_structures::bi("volume-up", "Lire"));
     }

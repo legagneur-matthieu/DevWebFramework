@@ -20,6 +20,12 @@ class form {
     private $_memento = [];
 
     /**
+     * Identifiant CSRF
+     * @var string Identifiant CSRF
+     */
+    private $_csrfid;
+
+    /**
      * Créé un nouveau formulaire
      * @param string $class Classe CSS
      * @param string $action Action du formulaire
@@ -31,6 +37,7 @@ class form {
         if ($target_blank) {
             $this->_form->set_attr("target", "_blank");
         }
+        $this->_csrfid = "CSRF_" . lineuid::get_uid();
     }
 
     /**
@@ -466,6 +473,36 @@ class form {
             $attr["value"] = $value;
         }
         return $this->append(tags::tag("div", ["class" => "form-group"], tags::tag("input", $attr, false)));
+    }
+
+    /**
+     * Créé et retourne le champ CSRF
+     * @return string Champ CSRF
+     */
+    public function csrf_token() {
+        if (!isset($_POST[$this->_csrfid])) {
+            session::set_val($this->_csrfid, $value = base64_encode(random_bytes(16)));
+            return $this->hidden($this->_csrfid, $value);
+        } else {
+            return $this->hidden($this->_csrfid, session::get_val($this->_csrfid));
+        } 
+    }
+
+    /**
+     * Retourne si le CSRF est Valide ou non
+     * @return bool CSRF Valide ou non
+     */
+    public function csrf_check() {
+        if (isset($_POST[$this->_csrfid])) {
+            if (!empty(session::get_val($this->_csrfid)) and session::get_val($this->_csrfid) == $_POST[$this->_csrfid]) {
+                session::set_val($this->_csrfid, "");
+                return true;
+            } else {
+                //CSRF Invalide
+                return false;
+            }
+        }
+        return false;
     }
 
     /**

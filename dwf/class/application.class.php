@@ -185,6 +185,6 @@ class application {
      */
     public static function hash($data, $salt = false) {
         $sel = (isset(config::$_salt) ? config::$_salt : config::$_prefix);
-        return hash(config::$_hash_algo, ($salt ? hash(config::$_hash_algo, config::$_prefix) : "") . $data);
+        return hash(config::$_hash_algo, ($salt ? hash(config::$_hash_algo, $sel) : "") . $data);
     }
 }

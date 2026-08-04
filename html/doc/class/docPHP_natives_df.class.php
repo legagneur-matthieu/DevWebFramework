@@ -586,7 +586,7 @@ class docPHP_natives_df {
         <p>Résultat (visuel uniquement, exécution désactivée):</p>
         <div class="row" style="border: 1px solid #ccc; border-radius: 4px;">
             <div class="col-sm-3">
-                <script type="text/javascript">
+                <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
                     $(document).ready(function () {
                         $(".no-sub").submit(function (e) {
                             e.preventDefault();
@@ -627,6 +627,26 @@ class docPHP_natives_df {
                 'echo $form->render();\n' .
                 'if(isset($_POST["upload"])){\n' .
                 '    form::get_upload($name="fichier", $path="./files/uploads", $type=["image/jpeg"], $fname="nouveau nom.jpg");\n' .
+                '}\n' .
+                '?>'
+        );
+        ?>
+        <hr>
+        <h4 class="text-center">CSRF <small>(21.26.08)</small></h4>
+        <p>Les methodes csrf_token() et csrf_check() vous permette de mettre une protection CSRF dans votre formulaire</p>
+        <?php
+        js::monaco_highlighter('<?php\n' .
+                '$form = new form();\n' .
+                '$form->checkbox("Test", "test", 1);\n' .
+                '$form->csrf_token();\n' .
+                '$form->submit("btn-primary", "Tester");\n' .
+                'echo $form->render();\n' .
+                'if (isset($_POST["test"])) {\n' .
+                '    if ($form->csrf_check()) {\n' .
+                '        js::alertify_alert_redir("OK  !", application::get_url());\n' .
+                '    } else {\n' .
+                '        js::alertify_alert_redir("CSRF Invalide !", application::get_url(), "ERREUR !");\n' .
+                '    }\n' .
                 '}\n' .
                 '?>'
         );

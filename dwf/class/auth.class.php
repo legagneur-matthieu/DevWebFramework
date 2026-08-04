@@ -71,7 +71,7 @@ class auth {
                 $form->input("Login", "auth_login", "text");
                 $form->input("Mot de passe", "auth_psw", "password");
                 $form->csrf_token();
-                $form->submit("btn-block btn-primary", "Connexion");
+                $form->submit("btn-primary w-100 my-3", "Connexion");
                 echo $form->render();
                 ?>
             </div>

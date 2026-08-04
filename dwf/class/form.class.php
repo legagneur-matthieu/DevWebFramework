@@ -90,7 +90,7 @@ class form {
      * @return string Script de focus
      */
     public function focus($name) {
-        return $this->append(tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () { document.getElementById('{$name}').focus()});"));
+        return $this->append(tags::tag("script", ["type" => "text/javascript", "nonce" => csp::get_nonce()], "$(document).ready(function () { document.getElementById('{$name}').focus()});"));
     }
 
     /**
@@ -130,7 +130,7 @@ class form {
      * @return string Le champ input de type range
      */
     public function range($label, $name, $min, $max, $value = 0, $step = 1, $class = "") {
-        $script = tags::tag("script", ["type" => "text/javascript"], "$(\"#{$name}\").on(\"input\", function () { $(\"#{$name}_span\").text(number_format($(this).val(), 0, \",\", \" \"));});");
+        $script = tags::tag("script", ["type" => "text/javascript", "nonce" => csp::get_nonce()], "$(\"#{$name}\").on(\"input\", function () { $(\"#{$name}_span\").text(number_format($(this).val(), 0, \",\", \" \"));});");
         $attr = ["id" => strtr($name, ["[" => "_", "]" => ""]), "name" => $name, "type" => "range", "class" => "form-control-range", "min" => $min, "max" => $max, "step" => $step, "value" => $value];
         return $this->append(tags::tag("div", ["class" => "form-group {$class}"], tags::tag("label", ["for" => $name], $label . " - " .
                                         tags::tag("span", ["id" => strtr($name, ["[" => "_", "]" => ""]) . "_span"], $value)) . tags::tag("input", $attr, false)) . $script);
@@ -184,7 +184,7 @@ class form {
         if ($required) {
             $attr["required"] = "required";
         }
-        $script = tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () { $(\"#{$name}\").parents(\"form\").attr(\"enctype\", \"multipart/form-data\");});");
+        $script = tags::tag("script", ["type" => "text/javascript", "nonce" => csp::get_nonce()], "$(document).ready(function () { $(\"#{$name}\").parents(\"form\").attr(\"enctype\", \"multipart/form-data\");});");
         return $this->append(tags::tag("div", ["class" => "form-group {$class}"], tags::tag("label", ["for" => $name], $label) . tags::tag("input", $attr, false)) . $script);
     }
 
@@ -397,7 +397,7 @@ class form {
      * @return string Le script nécéssaire à faire fonctionner le datepicker
      */
     private function datepicker_script($name, $fn) {
-        return $this->append(tags::tag("script", ["type" => "text/javascript"], "$(document).ready(function () { $(\"#{$name}\").{$fn}($.timepicker.regional[\"fr\"]).{$fn}({dateFormat: \"dd/mm/yy\"}).attr(\"readonly\", true).attr(\"placeholder\", \"Cliquez pour choisir une date\");});"));
+        return $this->append(tags::tag("script", ["type" => "text/javascript", "nonce" => csp::get_nonce()], "$(document).ready(function () { $(\"#{$name}\").{$fn}($.timepicker.regional[\"fr\"]).{$fn}({dateFormat: \"dd/mm/yy\"}).attr(\"readonly\", true).attr(\"placeholder\", \"Cliquez pour choisir une date\");});"));
     }
 
     /**
@@ -485,7 +485,7 @@ class form {
             return $this->hidden($this->_csrfid, $value);
         } else {
             return $this->hidden($this->_csrfid, session::get_val($this->_csrfid));
-        } 
+        }
     }
 
     /**

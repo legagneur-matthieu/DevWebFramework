@@ -148,7 +148,7 @@ class export_dwf {
                 $this->_zip->addFile($file, strtr($file, ["{$this->_base}" => ""]));
             }
         }
-        $this->_zip->addFromString("html/index.php", "<?php header(\"Location: ./{$project}/index.php\"); ?>\n<script>window.location=\"./{$project}/index.php\"</script>");
+        $this->_zip->addFromString("html/index.php", "<?php header(\"Location: ./{$project}/index.php\"); ?>\n<script nonce=\"".csp::get_nonce()."\">window.location=\"./{$project}/index.php\"</script>");
         $this->_zip->addFromString("dwf/export_dwf/.export_disabled", "This file is just use for disable export_dwf in already exported projects");
         $this->_zip->addEmptyDir("html/{$project}/src/compact/");
         $this->_zip->close();

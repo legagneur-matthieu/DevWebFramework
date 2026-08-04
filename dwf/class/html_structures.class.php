@@ -295,7 +295,7 @@ class html_structures {
      * @return string script d'injection
      */
     public static function script_in_body($src) {
-        return tags::tag("script", [], "add_script(\"$src\")");
+        return tags::tag("script", ["nonce"=> csp::get_nonce()], "add_script(\"{$src}\")");
         export_dwf::add_files([realpath($src)]);
     }
 

@@ -78,6 +78,17 @@ class summernote {
                     fontNamesIgnoreCheck: allFonts
                 });
                 $("#<?= $this->_id; ?>").parents("form").css("width", "100%");
+                $("#<?= $this->_id; ?>").parents("form").on("submit", function () {
+                    var $editor = $('#<?= $this->_id ?>');
+                    var code = $editor.summernote('code');
+                    var fixed = code
+                            .replace(/font-family\s*:\s*"([^"]+)"/gi, "font-family: '$1'")
+                            .replace(/font-family\s*:\s*&quot;([^&]+)&quot;/gi, "font-family: '$1'");
+
+                    if (fixed !== code) {
+                        $editor.summernote('code', fixed);
+                    }
+                });
                 setInterval(function () {
                     $(".note-editor .tooltip").remove();
                 }, 200);
@@ -97,6 +108,8 @@ class summernote {
             $tags .= $more_tags;
         }
         $str = $_POST[$this->_id];
+        $str = preg_replace('/font-family\s*:\s*"([^"]+)"/i', "font-family: '$1'", $str);
+        $str = preg_replace('/font-family\s*:\s*&quot;([^&]+)&quot;/i', "font-family: '$1'", $str);
         while ($str != ($_str = strip_tags($str, $tags))) {
             $str = $_str;
         }

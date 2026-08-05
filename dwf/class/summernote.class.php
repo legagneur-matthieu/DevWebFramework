@@ -75,7 +75,19 @@ class summernote {
                     lang: "fr-FR",
                     minHeight: 300,
                     fontNames: allFonts,
-                    fontNamesIgnoreCheck: allFonts
+                    fontNamesIgnoreCheck: allFonts,
+                    fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36', '48'],
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']], // ← polices
+                        ['fontsize', ['fontsize']], // ← taille de police
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
                 });
                 $("#<?= $this->_id; ?>").parents("form").css("width", "100%");
                 $("#<?= $this->_id; ?>").parents("form").on("submit", function () {

@@ -19,9 +19,9 @@ class parcour_sites {
         ?>
         <!DOCTYPE HTML>
         <html lang="fr">
-                <?= $this->head(); ?>
+            <?= $this->head(); ?>
             <body>
-                    <?= $this->header(); ?>
+                <?= $this->header(); ?>
                 <main class="contenu">
                     <?php
                     if (isset($_GET["check_update"])) {
@@ -36,14 +36,24 @@ class parcour_sites {
                         $files = glob("../dwf/class/export_dwf/*.json");
                         if (in_array($file = "../dwf/class/export_dwf/{$_GET["del_export"]}.json", $files)) {
                             unlink($file);
-                            js::redir("index.php");
+                            ?>
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    alertify.alert("Message", "Le cache d'export du projet <?=$_GET["del_export"] ?> a bien été réinitialisé !", function () {
+                                        window.location = 'index.php';
+                                    });
+                                });
+                            </script>
+                            <?php
                         }
                     } else {
                         $this->main($this->init_main());
                     }
                     ?>
                 </main>
-                <footer> <hr /> </footer>
+                <footer>
+                    <hr />
+                </footer>
             </body>
         </html>
         <?php
@@ -119,7 +129,7 @@ class parcour_sites {
                 $file = count($json_array) . " Fichiers :&#013;" . implode("&#013;", $json_array);
                 $export = html_structures::a_link("index.php?export={$site}", html_structures::glyphicon("download-alt", "Export {$site}"), "btn btn-outline-primary btn-sm", "Export {$site}", true) .
                         tags::tag("span", ["class" => "btn btn-outline-info btn-sm", "title" => "{$file}"], html_structures::glyphicon("eye-open")) .
-                        html_structures::a_link("index.php?del_export={$site}", html_structures::glyphicon("remove", "Supprimer le fichier d'export de {$site}"), "btn btn-outline-danger btn-sm", "Supprimer le fichier d'export de {$site}", true);
+                        html_structures::a_link("index.php?del_export={$site}", html_structures::glyphicon("remove", "Supprimer le fichier d'export de {$site}"), "btn btn-outline-danger btn-sm", "Supprimer le fichier d'export de {$site}");
                 $sites[] = [
                     html_structures::a_link("{$site}/", html_structures::glyphicon("folder-open") . " &nbsp; {$site}"),
                     (file_exists($json) ? $export : "")
@@ -203,7 +213,7 @@ class parcour_sites {
         }
         if ($DWFStatus) {
             echo tags::tag("div", ["class" => "alert alert-success"], tags::tag("p", [], "DWF est fonctionnel"));
-        }        
+        }
     }
 }
 

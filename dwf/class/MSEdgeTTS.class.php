@@ -1347,7 +1347,7 @@ class MSEdgeTTS {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            'text' => $this->_text,
+            'text' => strip_tags($this->_text),
             'voice' => $this->_voice,
             'rate' => ($this->_rate < 0 ? "-" : "+") . $this->_rate . '%',
             'pitch' => ($this->_pitch < 0 ? "-" : "+") . $this->_pitch . 'Hz',

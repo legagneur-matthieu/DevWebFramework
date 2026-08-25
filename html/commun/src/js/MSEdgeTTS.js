@@ -462,8 +462,8 @@ MSEdgeTTS = {
     }
 };
 $(document).ready(function () {
-    $("a[data-tts").click(function () {
+    $("a[data-tts]").click(function () {
         let attr = json_decode(strtr($(this).attr("data-tts"), {"'": '"'}));
-        MSEdgeTTS.TTS(attr.text, attr.voice, attr.rate, attr.pitch);
+        MSEdgeTTS.TTS(base64_decode(attr.text), attr.voice, attr.rate, attr.pitch);
     })
 });

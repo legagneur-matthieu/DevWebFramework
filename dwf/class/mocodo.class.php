@@ -333,7 +333,10 @@ class mocodo {
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        if (\PHP_VERSION_ID < 80500) {
+            curl_close($ch);
+        }
+        unset($ch);
         if ($httpCode === 200) {
             $jsonResponse = json_decode($response, true);
             if (isset($jsonResponse['text'])) {
@@ -371,12 +374,15 @@ class mocodo {
             'fk_format' => '{label}',
             'sql_case' => 'snake_case',
             'strengthen_card' => '_1,1_',
-            'lib'=>''
+            'lib' => ''
         ]));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        if (\PHP_VERSION_ID < 80500) {
+            curl_close($ch);
+        }
+        unset($ch);
         if ($httpCode === 200) {
             $jsonResponse = json_decode($response, true);
             if (isset($jsonResponse['svg']) && isset($jsonResponse['zipURL'])) {

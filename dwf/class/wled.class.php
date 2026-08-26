@@ -39,7 +39,10 @@ class wled {
         $curl = curl_init($this->_url . $params);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_exec($curl);
-        curl_close($curl);
+        if (\PHP_VERSION_ID < 80500) {
+            curl_close($ch);
+        }
+        unset($ch);
         $this->params = [];
     }
 

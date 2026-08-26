@@ -104,7 +104,10 @@ class ip_api extends singleton {
             $this->ipapi[$endpoint]->set_rl($rateLimitMatches);
             $this->ipapi[$endpoint]->set_ttl($resetTimeMatches);
             $this->ipapi[$endpoint]->update();
-            curl_close($ch);
+            if (\PHP_VERSION_ID < 80500) {
+                curl_close($ch);
+            }
+            unset($ch);
             if ($httpCode === 200) {
                 return json_decode($response, true);
             } else {

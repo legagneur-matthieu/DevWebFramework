@@ -60,7 +60,10 @@ class reversoLib {
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         $result = json_decode(curl_exec($ch), true);
         $datas = curl_getinfo($ch);
-        curl_close($ch);
+        if (\PHP_VERSION_ID < 80500) {
+            curl_close($ch);
+        }
+        unset($ch);
         return php_finediff::DiffToHTML($result["OriginalText"], $result["AutoCorrectedText"]);
     }
 }

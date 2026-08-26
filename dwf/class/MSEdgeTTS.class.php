@@ -1355,7 +1355,10 @@ class MSEdgeTTS {
         ]));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         $response = curl_exec($ch);
-        curl_close($ch);
+        if (\PHP_VERSION_ID < 80500) {
+            curl_close($ch);
+        }
+        unset($ch);
         return base64_encode($response); // Retourne le base64 du fichier audio MPEG
     }
 

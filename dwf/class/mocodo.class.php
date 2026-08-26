@@ -230,12 +230,12 @@ class mocodo {
     /**
      * Arrangement équilibré avec facteur d'équilibre 0 (moins d'emphase sur l'équilibre).
      */
-    const ARRANGE_ballanced_0 = "arrange:ballanced=0";
+    const ARRANGE_balanced_0 = "arrange:balanced=0";
 
     /**
      * Arrangement équilibré avec facteur d'équilibre 1 (plus d'emphase sur l'équilibre).
      */
-    const ARRANGE_ballanced_1 = "arrange:ballanced=1";
+    const ARRANGE_balanced_1 = "arrange:balanced=1";
 
     /**
      * Arrangement libre sans contraintes spécifiques.
@@ -278,7 +278,7 @@ class mocodo {
      * @param string $colors Le schéma de couleurs (par défaut 'brewer-1').
      * @param string $shapes Le style des formes (par défaut 'verdana').
      */
-    public function __construct($db, $arrangement = self::ARRANGE_ballanced_0, $colors = self::COLORS_brewer_up_1, $shapes = self::SHAPES_verdana) {
+    public function __construct($db, $arrangement = self::ARRANGE_balanced_0, $colors = self::COLORS_brewer_up_1, $shapes = self::SHAPES_verdana) {
         $this->_shapes = $shapes;
         $this->_colors = $colors;
         $this->_arrangement = $arrangement;
@@ -325,7 +325,7 @@ class mocodo {
             'args' => $this->_arrangement,
             'text' => $text,
         ];
-        $rewriteUrl = 'https://mocodo.net/web/rewrite.php';
+        $rewriteUrl = 'https://www.mocodo.net/web/rewrite.php';
         $ch = curl_init($rewriteUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -356,7 +356,7 @@ class mocodo {
      * @throws Exception En cas d'erreur HTTP ou de réponse JSON invalide.
      */
     private function generate() {
-        $ch = curl_init('https://mocodo.net/web/generate.php');
+        $ch = curl_init('https://www.mocodo.net/web/generate.php');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
@@ -371,6 +371,7 @@ class mocodo {
             'fk_format' => '{label}',
             'sql_case' => 'snake_case',
             'strengthen_card' => '_1,1_',
+            'lib'=>''
         ]));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
         $response = curl_exec($ch);

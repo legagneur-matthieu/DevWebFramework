@@ -275,14 +275,14 @@ class js {
 
     /**
      * Retourne un bouton TTS
-     * @param string $id ID de l'element a lire
+     * @param string $text Texte a lire
      * @param string $voice Voix TTS disponine dans les constantes MSEdgeTTS.
      * @param int $rate Le taux de parole (par défaut : 0, entre -50 et +50).
      * @param int $pitch La hauteur de la voix (par défaut : 0, entre -50 et +50).
      * @return string Bouton TTS
      */
-    public static function MSEdgeTTS($id, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
-        return MSEdgeTTS_JS::TTS($id, $voice, $rate, $pitch);
+    public static function MSEdgeTTS($text, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
+        return MSEdgeTTS_JS::TTS($text, $voice, $rate, $pitch);
     }
 
     /**

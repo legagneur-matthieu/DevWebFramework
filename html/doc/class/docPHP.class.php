@@ -95,10 +95,10 @@ class docPHP {
         <h4>Prérequis et règles du framework:</h4>
         <ul>
             <li>Disposer d'un serveur WEB et savoir l'utiliser</li>
-            <li>Maîtriser la programmation orienté objet (POO) en PHP</li>
+            <li>Maîtriser la programmation orientée objet (POO) en PHP</li>
             <li>
                 Les classes dans les dossiers <em>html/[votre-projet]/class</em> et <em>dwf/class</em> doivent être nommées <em>[nom_de_classe].class.php</em> <br />
-                Ces classes seront chargées (incluses) automatiquement. Si vous créez des classes sans cette syntaxe ou dans des sous dossiers, vous devrez les inclure vous même.
+                Ces classes seront chargées (incluses) automatiquement. Si vous créez des classes sans cette syntaxe ou dans des sous-dossiers, vous devrez les inclure vous-même.
             </li>
             <li>L'utilisateur ne quitte jamais le fichier <em>html/[votre-projet]/index.php</em> hormis pour les exports PDF/CSV ... qui s'ouvrent dans un nouvel onglet.</li>            
         </ul>
@@ -124,7 +124,7 @@ class docPHP {
                             <li><?= $arrow_glyph; ?> <em>Contient vos projets</em></li>
                             <li><?= $dir_glyph; ?> commun
                                 <ul>
-                                    <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les export PDF/CSV/QRCode et création de nouveaux projets.</em></li>
+                                    <li><?= $arrow_glyph; ?> <em>Contient divers fichiers pour les exports PDF/CSV/QRCode et création de nouveaux projets.</em></li>
                                     <li><?= $dir_glyph; ?> src
                                         <ul>
                                             <li><?= $arrow_glyph; ?> <em>Contient tous les fichiers CSS et JS communs à tous les projets (et accessibles aux utilisateurs).</em></li>
@@ -187,9 +187,9 @@ class docPHP {
     private function nouveau_projet() {
         ?>
         <p>
-            La création d'un nouveau projet est automatisé par le fichier <a href="../commun/new_app.php" target="_blank"><em>/html/commun/new_app.php</em></a> accédez à ce fichier par votre navigateur -> localhost <br />
+            La création d'un nouveau projet est automatisée par le fichier <a href="../commun/new_app.php" target="_blank"><em>/html/commun/new_app.php</em></a> accédez à ce fichier par votre navigateur -> localhost <br />
             Ce fichier ne peut se lancer que depuis votre localhost. Il n'est pas possible de s'en servir à distance sans en modifier le code.<br/>
-            Une fois l'interface de création de projet ouvert, remplissez les champs correctement. Ces paramètres seront modifiable dans <em>config.class.php</em>
+            Une fois l'interface de création de projet ouverte, remplissez les champs correctement. Ces paramètres seront modifiables dans <em>config.class.php</em>
         </p>
         <div class="card">
             <div class="card-body">
@@ -214,7 +214,7 @@ class docPHP {
                             <li>Password : mot de passe</li>
                             <li>Database : nom de la base de données</li>
                             <li>Créer la base de données (si elle n'existe pas) : si la case est cochée et que la base de données n'existe pas, alors le framework pourra la créer.</li>
-                            <li>Service internes (un dossier de service sera créé dans le projet) : votre projet aura t-il besoin de services "internes" (spécifique) ?</li>
+                            <li>Services internes (un dossier de service sera créé dans le projet) : votre projet aura-t-il besoin de services "internes" (spécifiques) ?</li>
                         </ul>
                     </li>
                     <li> SMTP
@@ -230,7 +230,7 @@ class docPHP {
             </div>
         </div>
         <p>Une fois le formulaire rempli et validé, une notification vous informe du succès de la création et vous redirige vers l'index de votre projet. <br />
-            Si vous rencontrez des difficultés, verifiez que votre serveur web a bien les droits d'écriture dans le dossier HTML et que le dossier que vous essayez de créér n'existe pas déjà.
+            Si vous rencontrez des difficultés, vérifiez que votre serveur web a bien les droits d'écriture dans le dossier HTML et que le dossier que vous essayez de créer n'existe pas déjà.
         </p>
         <?php
     }
@@ -238,7 +238,7 @@ class docPHP {
     private function configuration() {
         ?>
         <p>Une fois votre projet créé, regardons le fichier de configuration, <br />
-            nous retrouvons les renseignements saisi dans le formulaire de création de projet :</p>
+            nous retrouvons les renseignements saisis dans le formulaire de création de projet :</p>
         <ul>
             <li>public static $_PDO_type</li>
             <li>public static $_PDO_host</li>
@@ -256,7 +256,7 @@ class docPHP {
         <p>
             Première chose que l'on peut remarquer : toutes ces variables sont en <em>"public static"</em>, <br />
             elles sont donc accessibles à tout moment dans le projet depuis <em>config::</em> <br />
-            Mais intéressons nous aux autres variables :
+            Mais intéressons-nous aux autres variables :
         </p>
         <ul>
             <li>public static $_favicon : chemin d'accès à la favicon du projet</li>
@@ -270,8 +270,8 @@ class docPHP {
         </ul>
         <p>
             Il s'agit des routes de l'application, par défaut il y a des routes pour les utilisateurs authentifiés (route_auth) et d'autres pour les non-authentifiés (route_unauth) <br />
-            Les routes se définissent dans la fonction <em>config::onbdd_connected()</em> afin de pouvoir etre manipulées à volonté <br />
-            ( ajouter des routes conditionelles, faire gérer les routes par une entité, utiliser la classe trad (traductions), ...)<br />
+            Les routes se définissent dans la fonction <em>config::onbdd_connected()</em> afin de pouvoir être manipulées à volonté <br />
+            ( ajouter des routes conditionnelles, faire gérer les routes par une entité, utiliser la classe trad (traductions), ...)<br />
             Une route se définit ainsi :
         </p>
         <?php
@@ -286,7 +286,7 @@ class docPHP {
                 . '        "text" => "Accueil",                       //FACULTATIF : texte affiché dans le menu principal\n'
                 . '                                                   // (si la route n\'est pas destinée à être affichée dans le menu, ne pas renseigner de clé "text")\n\n'
                 . '        "description" => "Index de Documentation", //FACULTATIF : meta description de la page pour le réferencement\n'
-                . '        "keyword" => "Index, Documentation"        //FACULTATIF : meta keywords de la page pour le réferencement\n'
+                . '        "keywords" => "Index, Documentation"       //FACULTATIF : meta keywords de la page pour le réferencement\n'
                 . '    ),\n'
                 . ');\n'
                 . '?>'
@@ -295,13 +295,13 @@ class docPHP {
 
     private function pages() {
         ?>
-        <p>La classe "pages" est le point de départ de votre projet et est constitué des éléments suivants :</p>
+        <p>La classe "pages" est le point de départ de votre projet et est constituée des éléments suivants :</p>
         <ul>
             <li>Le constructeur : contient les opérations communes à toutes les pages (génération / mise à jour de fichiers, vérifications sur les données/entités ...)  </li>
             <li>Le header : c'est le haut de page de votre application, elle est commune à toutes les pages (mais vous pouvez utiliser un switch pour créer une entête à chaque page)</li>
-            <li>Le footer : le pied de page, souvent commune à toutes les pages, contient généralement: date de création, contacts, les mentions légales, CGU ...</li>
-            <li>Les fonctions liées au routes : ces fonctions doivent être publiques, le nom de la fonction doit correspondre à la valeur de la clé "page" d'une route</li>
-            <li>Des fonctions privées : rien ne vous empêche de créer des fonctions privées dans pages qui seront appelées dans le constructeur ou dans les fonctions publiques liées au routes</li>
+            <li>Le footer : le pied de page, souvent commun à toutes les pages, contient généralement: date de création, contacts, les mentions légales, CGU ...</li>
+            <li>Les fonctions liées aux routes : ces fonctions doivent être publiques, le nom de la fonction doit correspondre à la valeur de la clé "page" d'une route</li>
+            <li>Des fonctions privées : rien ne vous empêche de créer des fonctions privées dans pages qui seront appelées dans le constructeur ou dans les fonctions publiques liées aux routes</li>
         </ul>
         <p>Dans les méthodes de "pages", vous êtes entièrement libres : <br />
             saisir du HTML, appeler des fonctions privées de pages, appeler vos "classes métiers", une classe native de DWF ou n'importe quelle autre fonction statique</p>
@@ -311,10 +311,10 @@ class docPHP {
     private function classes_metiers() {
         ?>
         <p>
-            Les classes dites "métiers" sont les classes spécifiques à votre projet que vous aurez vous mêmes créé dans le dossier <em>html/[votre-projet]/class/</em>, <br />
-            contrairement à d'autres framework comme "symfony" ces classes ne nécessitent pas d'être étendues d'une classe natif de DWF. <br />
+            Les classes dites "métiers" sont les classes spécifiques à votre projet que vous aurez vous-mêmes créées dans le dossier <em>html/[votre-projet]/class/</em>, <br />
+            contrairement à d'autres frameworks comme "symfony" ces classes ne nécessitent pas d'être étendues d'une classe native de DWF. <br />
             vous êtes libre de lui donner le nom que vous voulez ( sauf un nom déjà pris par une classe native ou une de vos entités) <br />
-            libre d'utiliser des "méthodes magiques" tels que les constructeurs, destructeurs... <br />
+            libre d'utiliser des "méthodes magiques" telles que les constructeurs, destructeurs... <br />
             La seule restriction est le nom du fichier qui doit être comme ceci : <em>[nom_de_votre_classe]<strong>.class.php</strong></em>. <br />
             Une fois votre classe créée, vous pouvez l'appeler et l'utiliser dans <em>pages.class.php</em>
         </p>
@@ -324,8 +324,8 @@ class docPHP {
     private function methodes_evenementielles() {
         ?>
         <p class="alert alert-warning">
-            Pour créer des évenements liés à votre application, préviligiez l'utilisation de <em>event.class.php</em>. <br />
-            Elle permet de créer et déclencher des évenements de manière plus stable et avec un meilleur contrôle. <br />
+            Pour créer des événements liés à votre application, privilégiez l'utilisation de <em>event.class.php</em>. <br />
+            Elle permet de créer et déclencher des événements de manière plus stable et avec un meilleur contrôle. <br />
             (cf classes natives > event)
         </p>
         <h4>Utiliser les méthodes événementielles</h4>
@@ -354,11 +354,11 @@ class docPHP {
         );
         ?>
         <p>
-            Comme indiqué, ces methodes doivent être en <em>public static</em>, elles peuvent étre utilisées dans n'importe quel classe SAUF les entités.<br />
-            Ces méthodes ne prennent pas de paramètres et ne retourne rien.
+            Comme indiqué, ces méthodes doivent être en <em>public static</em>, elles peuvent être utilisées dans n'importe quelle classe SAUF les entités.<br />
+            Ces méthodes ne prennent pas de paramètres et ne retournent rien.
         </p>
         <p class="alert alert-warning">ATTENTION : Depuis la version 21.17.12, <br />
-            pour que les methodes évenementielles se déclenchent, la classe concernée doit avoir été appelée au moins une fois avant le déclencheur.<br />
+            pour que les méthodes événementielles se déclenchent, la classe concernée doit avoir été appelée au moins une fois avant le déclencheur.<br />
             (instanciation ou appel d'une méthode statique)
         </p>
         <h4>Créer un déclencheur</h4>
@@ -371,7 +371,7 @@ class docPHP {
                 . '?>');
         ?>
         <p>
-            Losque cette instruction sera appelée, toutes les méthodes <em>public static mon_evenement()</em> présentes dans les classes seront executées.
+            Lorsque cette instruction sera appelée, toutes les méthodes <em>public static mon_evenement()</em> présentes dans les classes seront exécutées.
         </p>
         <?php
     }
@@ -383,32 +383,32 @@ class docPHP {
     private function bdd() {
         ?>
         <p class="alert alert-danger">
-            Avant le verssion 21.24.04, une fonction dans BDD (bdd::p()) permetait de securiser les variables contre des injections SQL . <br>
-            Une évaluation de cette protection a révélé certaines faiblaises. <br>
-            Depuis la version 21.24.04 les requetes sont protégé par le système de prépararation et execution, plus robuste.
+            Avant la version 21.24.04, une fonction dans BDD (bdd::p()) permettait de sécuriser les variables contre des injections SQL . <br>
+            Une évaluation de cette protection a révélé certaines faiblesses. <br>
+            Depuis la version 21.24.04 les requêtes sont protégées par le système de préparation et exécution, plus robuste.
         </p>
         <p>
             L'objet bdd est l'objet qui permet de gérer la connexion à la base de données et sécuriser les requêtes SQL. <br />
             Cet objet utilise les informations PDO qui sont renseignées dans le fichier de configuration. <br />
-            Vos entités et de nombreuses classes native de DWF exploitent cette objet.
+            Vos entités et de nombreuses classes natives de DWF exploitent cet objet.
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . '//fetch permet d\'éxecuter une requête de type select et d\'en récuperer le résultat sous forme d\'un tableau\n'
-                . '$req=application::$bdd->fetch($statement, $params=[]);\n'
+                . '$req=application::$_bdd->fetch($statement, $params=[]);\n'
                 . '//exemple :\n'
-                . '$req = application::$bdd->fetch("select * from user where id=:id", $params=[":id"=>1]);\n\n'
+                . '$req = application::$_bdd->fetch("select * from user where id=:id", $params=[":id"=>1]);\n\n'
                 . '//query permet d\'executer des requêtes de type insert into, update et delete, ne retourne rien !\n'
-                . 'application::$bdd->query($statement, $params=[]);\n\n'
+                . 'application::$_bdd->query($statement, $params=[]);\n\n'
                 . '//exemple :\n'
-                . '$req = application::$bdd->query("insert into rang(nom) values (:nom)", $params=[":nom"=>"invité"]);\n\n'
+                . '$req = application::$_bdd->query("insert into rang(nom) values (:nom)", $params=[":nom"=>"invité"]);\n\n'
                 . '//verif_email retourne true si la chaine rentrée en paramètres respecte le format email, false si non\n'
-                . '$is_email=application::$bdd->verif_email($email);\n\n'
+                . '$is_email=application::$_bdd->verif_email($email);\n\n'
                 . '//astuce pour les requetes "IN", vous pouvez directement renseigner un tableau de valeurs :\n'
-                . '$req=application::$bdd->fetch("select * from user where id in (:ids)", $params=[":ids"=>[3, 5, 9]]);\n\n'
+                . '$req=application::$_bdd->fetch("select * from user where id in (:ids)", $params=[":ids"=>[3, 5, 9]]);\n\n'
                 . '//si vous renseignez un paramettre inutilisé,\n'
                 . '//il sera ignoré sans générer d\'erreur, exemple ici avec :login inutilisé\n'
-                . '$req = application::$bdd->fetch("select * from user where id=:id", $params=[":id"=>1, ":login"=>"admin"]);\n\n'
+                . '$req = application::$_bdd->fetch("select * from user where id=:id", $params=[":id"=>1, ":login"=>"admin"]);\n\n'
                 . '//cela peux vous servir dans certain cas specifique où\n'
                 . '// des champs demandé sont conditioné par des ternaires.\n\n'
                 . '//ATTENTION ! l\'objet BDD ne tolère pas le marqueur "?" seul les marqueurs précédé de ":" sont admis'
@@ -435,13 +435,13 @@ class docPHP {
             soit d'applications extérieures (dans ce dernier cas on peut parler d'API ). <br />
             Ces classes doivent être placées dans <em>/html/commun/service</em>
         </p>
-        <p>En général les services ne retournent pas d'HTML, mais des données au format JSON (recommandé), XML, CSV ou Serialisé</p>
+        <p>En général les services ne retournent pas d'HTML, mais des données au format JSON (recommandé), XML, CSV ou Sérialisé</p>
         <p>
             Il est recommandé, mais pas obligatoire, de nommer le fichier contenant la classe comme ceci : <em>[nom_du_service]<strong>.service.php</strong></em> <br />
-            et de passer par <em>/html/commun/service/index.php?service=nom_du_service</em> pour y acceder. <br />
+            et de passer par <em>/html/commun/service/index.php?service=nom_du_service</em> pour y accéder. <br />
             En procédant ainsi, votre service pourra exploiter le framework, les classes métiers et les entités.
         </p>
-        <p>Exemple pratique, soit le projet avec l'arboressance suivante :</p>
+        <p>Exemple pratique, soit le projet avec l'arborescence suivante :</p>
         <div class="card">
             <div class="card-body">
 
@@ -567,10 +567,10 @@ class docPHP {
         ?>
         <p>start.php va charger les classes du framework, puis lancer les CLI un par un dans l'ordre alphabétique</p>
         <h4>Les CLI métiers</h4>   
-        <p>Les CLI métiers sont beaucoup moins contraignants, ils peuvent étre placés dans le dossier "class" de votre projet ou dans un sous-dossier que vous aurez créé <br />
+        <p>Les CLI métiers sont beaucoup moins contraignants, ils peuvent être placés dans le dossier "class" de votre projet ou dans un sous-dossier que vous aurez créé <br />
             <strong>html/<em>[votre-projet]</em>/class/cli</strong> par exemple,<br />
             il est recommandé (mais pas obligatoire) de nommer le fichier en <strong>.cli.php</strong> <br />
-            ne le nommez pas en <strong>.class.php</strong>. Ou le CLI rentrerait en interraction avec l'application "web"
+            ne le nommez pas en <strong>.class.php</strong>. Ou le CLI rentrerait en interaction avec l'application "web"
         </p>
         <p>il est recommandé de charger et utiliser la classe "cli" dans vos CLI métiers, comme ceci :</p>
         <?php

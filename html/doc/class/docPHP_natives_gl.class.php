@@ -5,7 +5,7 @@ class docPHP_natives_gl {
     public static function g_agenda() {
         ?>
         <p>Cette classe permet de gérer un agenda d'évènements minimalistes, <br />
-            souvent utilisé pour avertir des visiteurs des prochains évenements<br />
+            souvent utilisé pour avertir des visiteurs des prochains évènements<br />
             (salons, conventions, spectacles, ...)</p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -54,7 +54,7 @@ class docPHP_natives_gl {
             Cette classe permet de retourner des Gifs de l'API GIPHY
         </p>
         <p>
-            Afin d'etre utilisatble, la clé api doit etre renseigné dans <strong>config.class.php</strong> ainsi :
+            Afin d'être utilisable, la clé api doit être renseignée dans <strong>config.class.php</strong> ainsi :
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -91,7 +91,7 @@ class docPHP_natives_gl {
 
     public static function graphique() {
         ?>
-        <p>Cette classe permet de créér des graphiques.</p>
+        <p>Cette classe permet de créer des graphiques.</p>
         <?php
         js::monaco_highlighter('<?php\n' .
                 '$data = [\n' .
@@ -440,7 +440,7 @@ class docPHP_natives_gl {
     public static function lurl() {
         ?>
         <p class="alert alert-danger">
-            Lurl.fr a férmé définitivement en juillet 2024
+            Lurl.fr a fermé définitivement en juillet 2024
         </p>
         <p>
             Cette classe permet de générer des liens LURL ou un bouton LURL sponsorisé qui redirige vers la page courante

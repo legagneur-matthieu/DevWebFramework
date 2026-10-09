@@ -69,7 +69,7 @@ class docMobile {
         <ul class="no-puces">
             <li><?php echo $dir_glyph; ?> src
                 <ul>
-                    <li><?php echo $arrow_glyph; ?> <em>Contient l'ensemble des librairie JS intégrées</em></li>
+                    <li><?php echo $arrow_glyph; ?> <em>Contient l'ensemble des librairies JS intégrées</em></li>
                     <li><?php echo $dir_glyph; ?> dwf
                         <ul>
                             <li><?php echo $arrow_glyph; ?> <em>Contient des "prototypes" du framework</em></li>
@@ -181,7 +181,7 @@ class docMobile {
         ?>
         <p>
             Le framework mobile est apparu après le framework PHP, <br />
-            il est donc évident que le framework mobile s'inspire, voir même retranscrive, du code du framework PHP <br />
+            il est donc évident que le framework mobile s'inspire, voire même retranscrit, du code du framework PHP <br />
             au-delà des prototypes "form", "math", "time" et "trad" qui sont de retranscription du code PHP vers JS. <br />
             Et le prototype "Cordova" qui est une spécificité, le framework mobile reprend principalement la classe "js" du framework PHP. <br />
             ainsi la fonction PHP <em>js::datatable()</em> existe sous la forme JS <em>$dwf.datatable()</em> <br />

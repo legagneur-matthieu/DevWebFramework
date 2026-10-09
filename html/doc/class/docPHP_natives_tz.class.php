@@ -190,7 +190,7 @@ class docPHP_natives_tz {
             Cette classe permet de retourner des Gifs de l'API TENOR
         </p>
         <p>
-            Afin d'etre utilisable, la clé api doit etre renseignée dans <strong>config.class.php</strong> ainsi :
+            Afin d'être utilisable, la clé api doit être renseignée dans <strong>config.class.php</strong> ainsi :
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -229,14 +229,14 @@ class docPHP_natives_tz {
                 . '//temps d\'éxécution théorique (pour 20 lignes dans $data):\n'
                 . '?>');
         ?>
-        <p>Notes sur les temps théoriques et réels d'éxécution :</p>
+        <p>Notes sur les temps théoriques et réels d'exécution :</p>
         <ul>
-            <li>Temps théorique et réél monothread classique : 10s</li>
+            <li>Temps théorique et réel monothread classique : 10s</li>
             <li>Temps théorique multi-thread (4) : 2.5s</li>
             <li>temps réel multi-thread (4) : 3.5s</li>
         </ul>
         <p>L'écart entre le temps réel et théorique est dû aux requêtes SQL et HTTP au service de threads mais reste avantageux face au monothread</p>
-        <p>Si vous utilisez cette classe gardez en tête que PHP n'est pas conçu pour le multi-threading et que cette classe est juste un outil pour paralleliser des traitements de données</p>
+        <p>Si vous utilisez cette classe gardez en tête que PHP n'est pas conçu pour le multi-threading et que cette classe est juste un outil pour paralléliser des traitements de données</p>
         <?php
     }
 
@@ -404,7 +404,7 @@ class docPHP_natives_tz {
         <?php
         js::monaco_highlighter('php [chemin]/html/[votre-projet]/websocket/index.php');
         ?>
-        <p>En production, il est possible de laisser l'application lancer elle même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
+        <p>En production, il est possible de laisser l'application lancer elle-même le serveur de websocket en utilisant la classe services pour lancer une requête qui lancera le serveur :</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . 'service::HTTP_POST("http://localhost/[votre-projet]/websocket/index.php");\n'
@@ -446,11 +446,11 @@ class docPHP_natives_tz {
                 . '    })();\n');
         ?>
         <p>
-            ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffreement (SSL/TLS), <br />
+            ATTENTION ! Actuellement DWF ne gère pas le tunnel de chiffrement (SSL/TLS), <br />
             c'est à vous de le mettre en place via le système de proxy de votre serveur web.
         </p>
         <p>
-            Les websockets de DWF fonctionnent avec l'envoi et la rêception de chaînes JSON. <br />
+            Les websockets de DWF fonctionnent avec l'envoi et la réception de chaînes JSON. <br />
             dans les chaînes d'envoi vers le serveur une clé "action" est obligatoire afin d'indiquer au websocket quel traitement appliquer. <br />
             le reste des clés sont libres. <br />
             la seule action définie par défaut est l'action d'authentification qui prend en seconde clé un token d'authentification (qui peut être vide) :
@@ -458,7 +458,7 @@ class docPHP_natives_tz {
         <?php
         js::monaco_highlighter('{"action":"auth","token":""}');
         ?>
-        <p>Le retour est une des ces possibilités :</p>
+        <p>Le retour est une de ces possibilités :</p>
         <?php
         js::monaco_highlighter('{"auth":false,"message":"Token empty"}\n' .
                 '{"auth":false,"message":"Invalid token"}\n' .

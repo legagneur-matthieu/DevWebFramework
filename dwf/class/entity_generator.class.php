@@ -129,7 +129,7 @@ class entity_generator {
                     $tuple_etter .= '$this->_' . $tuple[0] . ' = (int) $' . $tuple[0] . ';' . PHP_EOL;
                     break;
                 case 'bool':
-                case 'boolen':
+                case 'boolean':
                     $tuple_etter .= '$this->_' . $tuple[0] . ' = ($' . $tuple[0] . '?1:0);' . PHP_EOL;
                     break;
                 case 'mail':
@@ -202,7 +202,7 @@ class entity_generator {
                         $class .= '(int) $' . self::$_data[$i][0];
                         break;
                     case 'bool':
-                    case 'boolen':
+                    case 'boolean':
                         $class .= '($' . self::$_data[$i][0] . '?1:0)';
                         break;
                     case 'mail':
@@ -345,7 +345,7 @@ class entity_generator {
                     case 'integer':
                     case 'string':
                     case 'bool':
-                    case 'boolen':
+                    case 'boolean':
                     case 'mail':
                     case 'psw':
                     case 'password':

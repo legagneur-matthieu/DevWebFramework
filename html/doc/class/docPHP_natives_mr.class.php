@@ -33,7 +33,7 @@ class docPHP_natives_mr {
                 '?>'
         );
         ?>
-        <p>Attention ! maskNumber::set() doit être executé avant l'exécution du formulaire ! <br />
+        <p>Attention ! maskNumber::set() doit être exécuté avant l'exécution du formulaire ! <br />
             Résultat :</p>
         <?php
         maskNumber::set("masknumber");
@@ -64,7 +64,7 @@ class docPHP_natives_mr {
 
     public static function mocodo() {
         ?>
-        <p>Cette classe permet de générer une representation graphique d'une base de donnée.</p>
+        <p>Cette classe permet de générer une représentation graphique d'une base de données.</p>
         <?php
         js::monaco_highlighter('<?php\n' .
                 '$db = [\n' .
@@ -141,7 +141,7 @@ class docPHP_natives_mr {
         <a class="btn btn-primary"><span class="bi bi-file-earmark-zip-fill"><span class="visually-hidden">&nbsp;</span></span> test.zip</a>
         <p>(Note : Ce bouton de démonstration est désactivé)</p>
         <hr/>
-        les arrangements, couleurs et polices sont paramétrable via des parametres facultatif du constructeur et des constantes de classe (exemple : mocodo::ARRANGE_ballanced_1)
+        les arrangements, couleurs et polices sont paramétrables via des paramètres facultatifs du constructeur et des constantes de classe (exemple : mocodo::ARRANGE_ballanced_1)
         <?php
     }
 
@@ -167,7 +167,7 @@ class docPHP_natives_mr {
 
     public static function monaco_editor() {
         ?>
-        <p>Cette classe génère un monaco_editor afin d'editer le code du projet courant</p>
+        <p>Cette classe génère un monaco_editor afin d'éditer le code du projet courant</p>
         <p class="alert alert-danger">/!\ cette classe est à placer précautionneusement dans une partie administration restreinte !</p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -215,8 +215,8 @@ class docPHP_natives_mr {
     public static function paypal() {
         ?>
         <p class="alert alert-warning">
-            Le SDK PHP de Paypal est obselette, bien que fonctionant toujours, il sera supprimé a therme.
-            Previlégiez d'utiliser ou migrer sur Stripe.
+            Le SDK PHP de Paypal est obsolète, bien que fonctionnant toujours, il sera supprimé à terme.
+            Privilégiez d'utiliser ou migrer sur Stripe.
         </p>
         <p>Cette classe permet de créer, vérifier et exécuter des paiements via l'API REST de PayPal</p>
         <p>Exemple d'utilisation :</p>
@@ -375,7 +375,7 @@ class docPHP_natives_mr {
     public static function pseudo_cron() {
         ?>
         <p>Cette classe permet de lancer des "pseudo cron", <br />
-            contairement à des vrais cron qui s'executent à des heures fixes planifiées par le système, <br />
+            contrairement à des vrais cron qui s'exécutent à des heures fixes planifiées par le système, <br />
             ici les pseudos cron s'exécutent : lors d'une activité utilisateur et s'il n'a pas été exécuté depuis un certain temps défini.</p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -404,8 +404,8 @@ class docPHP_natives_mr {
                 . '$pcron->file(86400,"mon_chemin/mon_script.php");\n'
                 . '?>');
         ?>
-        <p>L'intéret des cron étant de pouvoir lancer des opérations lourdes à un rythme régulier sans ralentir l'utilisateur <br />
-            il est possible de lancer un pseudo cron de façon "asynchrone" en utilisant un service et la methode service::HTTP_POST().
+        <p>L'intérêt des cron étant de pouvoir lancer des opérations lourdes à un rythme régulier sans ralentir l'utilisateur <br />
+            il est possible de lancer un pseudo cron de façon "asynchrone" en utilisant un service et la méthode service::HTTP_POST().
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -414,7 +414,7 @@ class docPHP_natives_mr {
                 . '});\n'
                 . '?>');
         ?>
-        <p>Les pseudos cron sont renseignés dans un registe ( soit un fichier json soit une table en base de données ) <br />
+        <p>Les pseudos cron sont renseignés dans un registre ( soit un fichier json soit une table en base de données ) <br />
             une entrée est supprimée si elle n'est pas mise à jour (exécutée) pendant 1 an, cette durée peut être modifiée via la méthode</p>
         <?php
         js::monaco_highlighter('<?php pseudo_cron::get_instance()->set_clear(31536000); ?>');
@@ -480,8 +480,8 @@ class docPHP_natives_mr {
     public static function robotstxt() {
         ?>
         <p>
-            Cette classe génére le robot.txt <br/>
-            elle est appelé par <em>html5.class.php</em> <br/>
+            Cette classe génère le robots.txt <br/>
+            elle est appelée par <em>html5.class.php</em> <br/>
             inutile de l'instancier d'avantage.
         </p>
         <?php

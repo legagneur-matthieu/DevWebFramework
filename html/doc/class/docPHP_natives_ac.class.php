@@ -122,7 +122,7 @@ class docPHP_natives_ac {
 
     public static function bunnyfonts() {
         ?>
-        <p>Cette classe parmet de charger des fonts/polices en provenance de https://fonts.bunny.net</p>        
+        <p>Cette classe permet de charger des fonts/polices en provenance de https://fonts.bunny.net</p>        
         <?php
         js::datatable();
         js::monaco_highlighter('<?php\n'
@@ -182,10 +182,10 @@ class docPHP_natives_ac {
 
     public static function captcha() {
         ?>
-        <p>Cette classe génére un captcha, <br />
+        <p>Cette classe génère un captcha, <br />
             Utilise la classe espeak pour l'accessibilité, <br />
             requiert donc espeak installé sur le serveur. <br />
-            cette classe peut être appellée depuis form->captcha()
+            cette classe peut être appelée depuis form->captcha()
         </p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -274,8 +274,8 @@ class docPHP_natives_ac {
 
     public static function change_reload() {
         ?>
-        <p>Cette classe permet de recharger automatiquement la page courante lorsqu'une classe metier est modifiée dans le dossier /class/ de votre projet <br />
-            (Cette classe est déconsillée en production)</p>
+        <p>Cette classe permet de recharger automatiquement la page courante lorsqu'une classe métier est modifiée dans le dossier /class/ de votre projet <br />
+            (Cette classe est déconseillée en production)</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . 'change_reload::get_instance();\n'
@@ -415,7 +415,7 @@ class docPHP_natives_ac {
 
     public static function compact_css() {
         ?>
-        <p>Compresse des scripts CSS en deux fichiers minifié</p>
+        <p>Compresse des scripts CSS en deux fichiers minifiés</p>
         <?php
         js::monaco_highlighter('<?php\n'
                 . '//ajoute un fichier CSS\n'
@@ -445,7 +445,7 @@ class docPHP_natives_ac {
 
     public static function css() {
         ?>
-        <p>Cette classe permet de génerer des feuilles de style personalisées. <br />            
+        <p>Cette classe permet de générer des feuilles de style personnalisées. <br />            
             A utiliser avec <em>"compact_src::get_instance()->add_style()"</em></p>
         <?php
         js::monaco_highlighter('<?php\n'
@@ -462,7 +462,7 @@ class docPHP_natives_ac {
         ?>
         <p>La feuille de style retournée sera optimisée et minifiée,<br />
             dans l'exemple nous voyons que "p" et "div" ont la même règle de padding, elles seront donc fusionnées. <br />
-            Voici le resultat :</p>
+            Voici le résultat :</p>
         <?php
         debug::print_r((string) (new css())->add_rule("p", ["padding" => "5px"])
                         ->add_rule("div", [

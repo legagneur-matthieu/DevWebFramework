@@ -189,7 +189,68 @@ class form {
     }
 
     /**
+     * Correspondance entre les types MIME et les extensions autorisées pour l'upload
+     * @var array
+     */
+    private static $_upload_ext = [
+        "image/jpeg" => ["jpg", "jpeg"],
+        "image/jpg" => ["jpg", "jpeg"],
+        "image/png" => ["png"],
+        "image/gif" => ["gif"],
+        "image/bmp" => ["bmp"],
+        "image/x-ms-bmp" => ["bmp"],
+        "image/webp" => ["webp"],
+        "application/pdf" => ["pdf"],
+        "text/plain" => ["txt"],
+        "text/csv" => ["csv"],
+        "application/zip" => ["zip"],
+        "audio/mpeg" => ["mp3"],
+        "video/mp4" => ["mp4"],
+    ];
+
+    /**
+     * Vérifie et déplace un fichier uploadé (utilisé par get_upload et get_multi_upload)
+     * Le type MIME est détecté côté serveur (finfo) et non plus pris dans $_FILES (envoyé par le client),
+     * l'extension doit correspondre au type détecté et le nom du fichier est nettoyé.
+     * 
+     * @param string $tmp_name Fichier temporaire ($_FILES[...]["tmp_name"])
+     * @param int $err Code d'erreur ($_FILES[...]["error"])
+     * @param string $fname Nom souhaité pour le fichier
+     * @param string $path Dossier de destination
+     * @param array $type Liste des types MIME tolérés
+     * @return string|false Nom final du fichier, "type" si le type est refusé, false en cas d'erreur
+     */
+    private static function move_upload($tmp_name, $err, $fname, $path, $type) {
+        if ($err !== UPLOAD_ERR_OK or !is_uploaded_file($tmp_name)) {
+            return false;
+        }
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp_name);
+        if ($mime === "image/jpg") {
+            $mime = "image/jpeg";
+        }
+        $type = array_map(function ($t) {
+            return $t === "image/jpg" ? "image/jpeg" : $t;
+        }, $type);
+        if ($mime === false or !in_array($mime, $type, true)) {
+            return "type";
+        }
+        $fname = preg_replace("/[^A-Za-z0-9._-]/", "_", basename((string) $fname));
+        $fname = ltrim($fname, ".");
+        $ext = strtolower(pathinfo($fname, PATHINFO_EXTENSION));
+        $allowed = self::$_upload_ext[$mime] ?? [];
+        if ($fname === "" or !in_array($ext, $allowed, true)) {
+            return "type";
+        }
+        if (!move_uploaded_file($tmp_name, "{$path}/{$fname}")) {
+            return false;
+        }
+        return $fname;
+    }
+
+    /**
      * Récupère le fichier upload dans un input de type file (avec le $multiple = false)
+     * Le type est vérifié côté serveur (finfo), l'extension doit correspondre au type et le nom est nettoyé
+     * (seuls A-Z a-z 0-9 . _ - sont conservés). Pensez à utiliser la clé "doc" pour connaitre le nom final.
      * 
      * @param string $name Name de l'input à récupérer
      * @param string $path Chemin d'accès où doit être stocké le fichier ( ne pas terminer le path par un / )
@@ -200,20 +261,16 @@ class form {
     public static function get_upload($name, $path, $type, $fname = null) {
         $doc = "";
         $error = false;
-        if (isset($_FILES[$name]["name"]) and $_FILES[$name]["size"] != 0) {
-            if (in_array($_FILES[$name]["type"], $type)) {
-                if ($fname != null) {
-                    $_FILES[$name]["name"] = $fname;
-                }
-                if (move_uploaded_file($_FILES[$name]["tmp_name"], "{$path}/{$_FILES[$name]["name"]}")) {
-                    $doc = $_FILES[$name]["name"];
-                } else {
-                    $error = true;
-                    js::alert("Erreur lors de l'upload du fichier !");
-                }
-            } else {
+        if (isset($_FILES[$name]["name"]) and is_string($_FILES[$name]["name"]) and $_FILES[$name]["size"] != 0) {
+            $res = self::move_upload($_FILES[$name]["tmp_name"], $_FILES[$name]["error"], ($fname != null ? $fname : $_FILES[$name]["name"]), $path, $type);
+            if ($res === "type") {
                 $error = true;
                 js::alert("Le fichier n'est pas du bon type !");
+            } elseif ($res === false) {
+                $error = true;
+                js::alert("Erreur lors de l'upload du fichier !");
+            } else {
+                $_FILES[$name]["name"] = $doc = $res;
             }
         }
         return array("doc" => $doc, "error" => $error);
@@ -221,6 +278,7 @@ class form {
 
     /**
      * Récupère le fichier upload dans un input de type file (avec le $multiple = true)
+     * Mêmes contrôles que get_upload (type détecté côté serveur, extension vérifiée, nom nettoyé).
      * 
      * @param string $name Name de l'input à récupérer
      * @param string $path Chemin d'accès où doit être stocké le fichier ( ne pas terminer le path par un / )
@@ -230,22 +288,18 @@ class form {
      */
     public static function get_multi_upload($name, $path, $type, $fname = null) {
         $i = 0;
-        $doc = "";
+        $doc = [];
         $error = false;
         while (isset($_FILES[$name]["name"][$i]) and $_FILES[$name]["size"][$i] != 0) {
-            if (in_array($_FILES[$name]["type"][$i], $type)) {
-                if ($fname != null) {
-                    $_FILES[$name]["name"][$i] = "{$i}_{$fname}";
-                }
-                if (move_uploaded_file($_FILES[$name]["tmp_name"][$i], "{$path}/{$_FILES[$name]["name"][$i]}")) {
-                    $doc[] = $_FILES[$name]["name"][$i];
-                } else {
-                    $error = true;
-                    js::alert("Erreur lors de l'upload du fichier !{$i}");
-                }
-            } else {
+            $res = self::move_upload($_FILES[$name]["tmp_name"][$i], $_FILES[$name]["error"][$i], ($fname != null ? "{$i}_{$fname}" : $_FILES[$name]["name"][$i]), $path, $type);
+            if ($res === "type") {
                 $error = true;
                 js::alert("Le fichier {$i} n'est pas du bon type !");
+            } elseif ($res === false) {
+                $error = true;
+                js::alert("Erreur lors de l'upload du fichier !{$i}");
+            } else {
+                $_FILES[$name]["name"][$i] = $doc[] = $res;
             }
             $i++;
         }

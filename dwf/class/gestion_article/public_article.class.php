@@ -187,15 +187,15 @@ class public_article {
      */
     private function tags() {
         if (isset($_GET["tag"])) {
-            $count = article::get_count("tags like '" . bdd::p($_GET["tag"]) . "'");
+            $count = article::get_count("tags like :tag", [":tag" => $_GET["tag"]]);
             if ($count == 0) {
                 js::redir("index.php?page=" . $_GET["page"] . "&view=categories");
             } else {
                 ?>
-                <h2><small>Tag : <?= $_GET["tag"]; ?></small></h2>
+                <h2><small>Tag : <?= htmlspecialchars($_GET["tag"]); ?></small></h2>
                 <?php
                 $p = pagination::get_limits("p", 20, $count);
-                $articles = article::get_table_array("tags like '" . bdd::p($_GET["tag"]) . "' order by date desc limit " . $p[0] . "," . $p[1]);
+                $articles = article::get_table_array("tags like :tags order by date desc limit :l1,:l2", [":tags" => $_GET["tag"], ":l1" => $p[0], ":l2" => $p[1]]);
                 $this->media($articles);
                 pagination::print_pagination("p", $p[3]);
             }

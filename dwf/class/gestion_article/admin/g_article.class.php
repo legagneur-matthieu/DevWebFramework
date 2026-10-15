@@ -101,7 +101,7 @@ class g_article {
      * Gère la suppresion d'articles
      */
     private function g_article_supp() {
-        application::$_bdd->query("delete from article where id='" . bdd::p($_GET["id"]) . "';");
+        article::delete_by_id($_GET["id"]);
         js::alert("L'article a bien été supprimé");
         js::redir("index.php?page=" . $_GET["page"] . "&admin=g_article");
     }

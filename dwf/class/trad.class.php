@@ -71,7 +71,7 @@ class trad extends singleton {
                 new admin_controle("lang_sub");
                 break;
             case "json":
-                if (isset($_GET["lang"])) {
+                if (isset($_GET["lang"]) and in_array("lang/" . $_GET["lang"] . ".json", glob("lang/*.json"))) {
                     if (isset($_POST["trad_form"])) {
                         $data = array();
                         foreach ($_POST["trad"] as $value) {
@@ -87,7 +87,7 @@ class trad extends singleton {
                             $lang = json_decode(file_get_contents($file), true);
                             //js::datatable();
                             ?>
-                            <h2>Fichier de traduction <?= $_GET["lang"]; ?></h2>
+                            <h2>Fichier de traduction <?= htmlspecialchars($_GET["lang"]); ?></h2>
                             <?php
                             $form = new form("form_trad");
                             echo $form->get_open_form() .

@@ -136,17 +136,17 @@ class MSEdgeTTS {
     /** Pradeep - Bangla (Bangladesh) - Male */
     const VOICE_BN_BD_PRADEEP = 'bn-BD-PradeepNeural';
 
-    /** Bashkar - Bengali (India) - Male */
+    /** Bashkar - Bangla (India) - Male */
     const VOICE_BN_IN_BASHKAR = 'bn-IN-BashkarNeural';
 
     /** Tanishaa - Bengali (India) - Female */
     const VOICE_BN_IN_TANISHAA = 'bn-IN-TanishaaNeural';
 
-    /** Goran - Bosnian (Bosnia and Herzegovina) - Male */
-    const VOICE_BS_BA_GORAN = 'bs-BA-GoranNeural';
-
     /** Vesna - Bosnian (Bosnia and Herzegovina) - Female */
     const VOICE_BS_BA_VESNA = 'bs-BA-VesnaNeural';
+
+    /** Goran - Bosnian (Bosnia) - Male */
+    const VOICE_BS_BA_GORAN = 'bs-BA-GoranNeural';
 
     /** Borislav - Bulgarian (Bulgaria) - Male */
     const VOICE_BG_BG_BORISLAV = 'bg-BG-BorislavNeural';
@@ -160,67 +160,64 @@ class MSEdgeTTS {
     /** Thiha - Burmese (Myanmar) - Male */
     const VOICE_MY_MM_THIHA = 'my-MM-ThihaNeural';
 
-    /** Alba - Catalan (Spain) - Female */
-    const VOICE_CA_ES_ALBA = 'ca-ES-AlbaNeural';
-
-    /** Enric - Catalan (Spain) - Male */
+    /** Enric - Catalan - Male */
     const VOICE_CA_ES_ENRIC = 'ca-ES-EnricNeural';
 
-    /** Joana - Catalan (Spain) - Female */
+    /** Joana - Catalan - Female */
     const VOICE_CA_ES_JOANA = 'ca-ES-JoanaNeural';
 
-    /** HiuGaai - Chinese (Hong Kong) - Female */
+    /** HiuGaai - Chinese (Cantonese Traditional) - Female */
     const VOICE_ZH_HK_HIUGAAI = 'zh-HK-HiuGaaiNeural';
 
-    /** HiuMaan - Chinese (Hong Kong) - Female */
+    /** HiuMaan - Chinese (Hong Kong SAR) - Female */
     const VOICE_ZH_HK_HIUMAAN = 'zh-HK-HiuMaanNeural';
 
-    /** WanLung - Chinese (Hong Kong) - Male */
+    /** WanLung - Chinese (Hong Kong SAR) - Male */
     const VOICE_ZH_HK_WANLUNG = 'zh-HK-WanLungNeural';
 
-    /** Xiaoxiao - Chinese (Mainland China) - Female */
+    /** Xiaoxiao - Chinese (Mainland) - Female */
     const VOICE_ZH_CN_XIAOXIAO = 'zh-CN-XiaoxiaoNeural';
 
-    /** Xiaoyi - Chinese (Mainland China) - Female */
+    /** Xiaoyi - Chinese (Mainland) - Female */
     const VOICE_ZH_CN_XIAOYI = 'zh-CN-XiaoyiNeural';
 
-    /** Yunjian - Chinese (Mainland China) - Male */
+    /** Yunjian - Chinese (Mainland) - Male */
     const VOICE_ZH_CN_YUNJIAN = 'zh-CN-YunjianNeural';
 
-    /** Yunxi - Chinese (Mainland China) - Male */
+    /** Yunxi - Chinese (Mainland) - Male */
     const VOICE_ZH_CN_YUNXI = 'zh-CN-YunxiNeural';
 
-    /** Yunxia - Chinese (Mainland China) - Male */
+    /** Yunxia - Chinese (Mainland) - Male */
     const VOICE_ZH_CN_YUNXIA = 'zh-CN-YunxiaNeural';
 
-    /** Yunyang - Chinese (Mainland China) - Male */
+    /** Yunyang - Chinese (Mainland) - Male */
     const VOICE_ZH_CN_YUNYANG = 'zh-CN-YunyangNeural';
 
-    /** Xiaobei - Chinese (Liaoning) - Female */
+    /** Xiaobei - Chinese (Northeastern Mandarin) - Female */
     const VOICE_ZH_CN_LIAONING_XIAOBEI = 'zh-CN-liaoning-XiaobeiNeural';
 
     /** HsiaoChen - Chinese (Taiwan) - Female */
     const VOICE_ZH_TW_HSIAOCHEN = 'zh-TW-HsiaoChenNeural';
 
-    /** HsiaoYu - Chinese (Taiwan) - Female */
-    const VOICE_ZH_TW_HSIAOYU = 'zh-TW-HsiaoYuNeural';
-
     /** YunJhe - Chinese (Taiwan) - Male */
     const VOICE_ZH_TW_YUNJHE = 'zh-TW-YunJheNeural';
 
-    /** Xiaoni - Chinese (Shaanxi) - Female */
+    /** HsiaoYu - Chinese (Taiwanese Mandarin) - Female */
+    const VOICE_ZH_TW_HSIAOYU = 'zh-TW-HsiaoYuNeural';
+
+    /** Xiaoni - Chinese (Zhongyuan Mandarin Shaanxi) - Female */
     const VOICE_ZH_CN_SHAANXI_XIAONI = 'zh-CN-shaanxi-XiaoniNeural';
 
-    /** Gabrijel - Croatian (Croatia) - Male */
-    const VOICE_HR_HR_GABRIJEL = 'hr-HR-GabrijelNeural';
+    /** Gabrijela - Croatian (Croatia) - Female */
+    const VOICE_HR_HR_GABRIJELA = 'hr-HR-GabrijelaNeural';
 
     /** Srecko - Croatian (Croatia) - Male */
     const VOICE_HR_HR_SRECKO = 'hr-HR-SreckoNeural';
 
-    /** Antonin - Czech (Czech Republic) - Male */
+    /** Antonin - Czech (Czech) - Male */
     const VOICE_CS_CZ_ANTONIN = 'cs-CZ-AntoninNeural';
 
-    /** Vlasta - Czech (Czech Republic) - Female */
+    /** Vlasta - Czech (Czech) - Female */
     const VOICE_CS_CZ_VLASTA = 'cs-CZ-VlastaNeural';
 
     /** Christel - Danish (Denmark) - Female */
@@ -244,47 +241,11 @@ class MSEdgeTTS {
     /** Maarten - Dutch (Netherlands) - Male */
     const VOICE_NL_NL_MAARTEN = 'nl-NL-MaartenNeural';
 
-    /** Annette - English (Australia) - Female */
-    const VOICE_EN_AU_ANNETTE = 'en-AU-AnnetteNeural';
-
-    /** Carly - English (Australia) - Female */
-    const VOICE_EN_AU_CARLY = 'en-AU-CarlyNeural';
-
-    /** Darren - English (Australia) - Male */
-    const VOICE_EN_AU_DARREN = 'en-AU-DarrenNeural';
-
-    /** Duncan - English (Australia) - Male */
-    const VOICE_EN_AU_DUNCAN = 'en-AU-DuncanNeural';
-
-    /** Elsie - English (Australia) - Female */
-    const VOICE_EN_AU_ELSIE = 'en-AU-ElsieNeural';
-
-    /** Freya - English (Australia) - Female */
-    const VOICE_EN_AU_FREYA = 'en-AU-FreyaNeural';
-
-    /** Joanne - English (Australia) - Female */
-    const VOICE_EN_AU_JOANNE = 'en-AU-JoanneNeural';
-
-    /** Ken - English (Australia) - Male */
-    const VOICE_EN_AU_KEN = 'en-AU-KenNeural';
-
-    /** Kim - English (Australia) - Female */
-    const VOICE_EN_AU_KIM = 'en-AU-KimNeural';
-
     /** Natasha - English (Australia) - Female */
     const VOICE_EN_AU_NATASHA = 'en-AU-NatashaNeural';
 
-    /** Neil - English (Australia) - Male */
-    const VOICE_EN_AU_NEIL = 'en-AU-NeilNeural';
-
-    /** Tim - English (Australia) - Male */
-    const VOICE_EN_AU_TIM = 'en-AU-TimNeural';
-
-    /** Tina - English (Australia) - Female */
-    const VOICE_EN_AU_TINA = 'en-AU-TinaNeural';
-
-    /** William - English (Australia) - Male */
-    const VOICE_EN_AU_WILLIAM = 'en-AU-WilliamNeural';
+    /** William Multilingual - English (Australia) - Male */
+    const VOICE_EN_AU_WILLIAM_MULTILINGUAL = 'en-AU-WilliamMultilingualNeural';
 
     /** Clara - English (Canada) - Female */
     const VOICE_EN_CA_CLARA = 'en-CA-ClaraNeural';
@@ -292,23 +253,20 @@ class MSEdgeTTS {
     /** Liam - English (Canada) - Male */
     const VOICE_EN_CA_LIAM = 'en-CA-LiamNeural';
 
-    /** Sam - English (Hong Kong) - Male */
-    const VOICE_EN_HK_SAM = 'en-HK-SamNeural';
-
-    /** Yan - English (Hong Kong) - Female */
+    /** Yan - English (Hong Kong SAR) - Female */
     const VOICE_EN_HK_YAN = 'en-HK-YanNeural';
 
-    /** Aarav - English (India) - Male */
-    const VOICE_EN_IN_AARAV = 'en-IN-AaravNeural';
-
-    /** Aashi - English (India) - Female */
-    const VOICE_EN_IN_AASHI = 'en-IN-AashiNeural';
+    /** Sam - English (Hongkong) - Male */
+    const VOICE_EN_HK_SAM = 'en-HK-SamNeural';
 
     /** Neerja - English (India) - Female */
     const VOICE_EN_IN_NEERJA = 'en-IN-NeerjaNeural';
 
     /** Prabhat - English (India) - Male */
     const VOICE_EN_IN_PRABHAT = 'en-IN-PrabhatNeural';
+
+    /** Neerja Expressive - English (India) (Preview) - Female */
+    const VOICE_EN_IN_NEERJA_EXPRESSIVE = 'en-IN-NeerjaExpressiveNeural';
 
     /** Connor - English (Ireland) - Male */
     const VOICE_EN_IE_CONNOR = 'en-IE-ConnorNeural';
@@ -358,38 +316,11 @@ class MSEdgeTTS {
     /** Imani - English (Tanzania) - Female */
     const VOICE_EN_TZ_IMANI = 'en-TZ-ImaniNeural';
 
-    /** Abbi - English (United Kingdom) - Female */
-    const VOICE_EN_GB_ABBI = 'en-GB-AbbiNeural';
-
-    /** Alfie - English (United Kingdom) - Male */
-    const VOICE_EN_GB_ALFIE = 'en-GB-AlfieNeural';
-
-    /** Bella - English (United Kingdom) - Female */
-    const VOICE_EN_GB_BELLA = 'en-GB-BellaNeural';
-
-    /** Elliot - English (United Kingdom) - Male */
-    const VOICE_EN_GB_ELLIOT = 'en-GB-ElliotNeural';
-
-    /** Ethan - English (United Kingdom) - Male */
-    const VOICE_EN_GB_ETHAN = 'en-GB-EthanNeural';
-
-    /** Hollie - English (United Kingdom) - Female */
-    const VOICE_EN_GB_HOLLIE = 'en-GB-HollieNeural';
-
     /** Libby - English (United Kingdom) - Female */
     const VOICE_EN_GB_LIBBY = 'en-GB-LibbyNeural';
 
     /** Maisie - English (United Kingdom) - Female */
     const VOICE_EN_GB_MAISIE = 'en-GB-MaisieNeural';
-
-    /** Noah - English (United Kingdom) - Male */
-    const VOICE_EN_GB_NOAH = 'en-GB-NoahNeural';
-
-    /** Oliver - English (United Kingdom) - Male */
-    const VOICE_EN_GB_OLIVER = 'en-GB-OliverNeural';
-
-    /** Olivia - English (United Kingdom) - Female */
-    const VOICE_EN_GB_OLIVIA = 'en-GB-OliviaNeural';
 
     /** Ryan - English (United Kingdom) - Male */
     const VOICE_EN_GB_RYAN = 'en-GB-RyanNeural';
@@ -403,32 +334,32 @@ class MSEdgeTTS {
     /** Ana - English (United States) - Female */
     const VOICE_EN_US_ANA = 'en-US-AnaNeural';
 
-    /** Aria - English (United States) - Female */
-    const VOICE_EN_US_ARIA = 'en-US-AriaNeural';
-
-    /** Ashley - English (United States) - Female */
-    const VOICE_EN_US_ASHLEY = 'en-US-AshleyNeural';
-
-    /** Ava - English (United States) - Female */
-    const VOICE_EN_US_AVA = 'en-US-AvaNeural';
+    /** Andrew Multilingual - English (United States) - Male */
+    const VOICE_EN_US_ANDREW_MULTILINGUAL = 'en-US-AndrewMultilingualNeural';
 
     /** Andrew - English (United States) - Male */
     const VOICE_EN_US_ANDREW = 'en-US-AndrewNeural';
 
-    /** Brandon - English (United States) - Male */
-    const VOICE_EN_US_BRANDON = 'en-US-BrandonNeural';
+    /** Aria - English (United States) - Female */
+    const VOICE_EN_US_ARIA = 'en-US-AriaNeural';
+
+    /** Ava Multilingual - English (United States) - Female */
+    const VOICE_EN_US_AVA_MULTILINGUAL = 'en-US-AvaMultilingualNeural';
+
+    /** Ava - English (United States) - Female */
+    const VOICE_EN_US_AVA = 'en-US-AvaNeural';
+
+    /** Brian Multilingual - English (United States) - Male */
+    const VOICE_EN_US_BRIAN_MULTILINGUAL = 'en-US-BrianMultilingualNeural';
+
+    /** Brian - English (United States) - Male */
+    const VOICE_EN_US_BRIAN = 'en-US-BrianNeural';
 
     /** Christopher - English (United States) - Male */
     const VOICE_EN_US_CHRISTOPHER = 'en-US-ChristopherNeural';
 
-    /** Cora - English (United States) - Female */
-    const VOICE_EN_US_CORA = 'en-US-CoraNeural';
-
-    /** Davis - English (United States) - Male */
-    const VOICE_EN_US_DAVIS = 'en-US-DavisNeural';
-
-    /** Elizabeth - English (United States) - Female */
-    const VOICE_EN_US_ELIZABETH = 'en-US-ElizabethNeural';
+    /** Emma Multilingual - English (United States) - Female */
+    const VOICE_EN_US_EMMA_MULTILINGUAL = 'en-US-EmmaMultilingualNeural';
 
     /** Emma - English (United States) - Female */
     const VOICE_EN_US_EMMA = 'en-US-EmmaNeural';
@@ -439,38 +370,17 @@ class MSEdgeTTS {
     /** Guy - English (United States) - Male */
     const VOICE_EN_US_GUY = 'en-US-GuyNeural';
 
-    /** Jacob - English (United States) - Male */
-    const VOICE_EN_US_JACOB = 'en-US-JacobNeural';
-
-    /** Jane - English (United States) - Female */
-    const VOICE_EN_US_JANE = 'en-US-JaneNeural';
-
-    /** Jason - English (United States) - Male */
-    const VOICE_EN_US_JASON = 'en-US-JasonNeural';
-
     /** Jenny - English (United States) - Female */
     const VOICE_EN_US_JENNY = 'en-US-JennyNeural';
 
     /** Michelle - English (United States) - Female */
     const VOICE_EN_US_MICHELLE = 'en-US-MichelleNeural';
 
-    /** Monica - English (United States) - Female */
-    const VOICE_EN_US_MONICA = 'en-US-MonicaNeural';
-
-    /** Nancy - English (United States) - Female */
-    const VOICE_EN_US_NANCY = 'en-US-NancyNeural';
-
     /** Roger - English (United States) - Male */
     const VOICE_EN_US_ROGER = 'en-US-RogerNeural';
 
-    /** Sara - English (United States) - Female */
-    const VOICE_EN_US_SARA = 'en-US-SaraNeural';
-
     /** Steffan - English (United States) - Male */
     const VOICE_EN_US_STEFFAN = 'en-US-SteffanNeural';
-
-    /** Tony - English (United States) - Male */
-    const VOICE_EN_US_TONY = 'en-US-TonyNeural';
 
     /** Anu - Estonian (Estonia) - Female */
     const VOICE_ET_EE_ANU = 'et-EE-AnuNeural';
@@ -505,20 +415,8 @@ class MSEdgeTTS {
     /** Sylvie - French (Canada) - Female */
     const VOICE_FR_CA_SYLVIE = 'fr-CA-SylvieNeural';
 
-    /** Alain - French (France) - Male */
-    const VOICE_FR_FR_ALAIN = 'fr-FR-AlainNeural';
-
-    /** Brigitte - French (France) - Female */
-    const VOICE_FR_FR_BRIGITTE = 'fr-FR-BrigitteNeural';
-
-    /** Celeste - French (France) - Female */
-    const VOICE_FR_FR_CELESTE = 'fr-FR-CelesteNeural';
-
-    /** Claude - French (France) - Male */
-    const VOICE_FR_FR_CLAUDE = 'fr-FR-ClaudeNeural';
-
-    /** Coralie - French (France) - Female */
-    const VOICE_FR_FR_CORALIE = 'fr-FR-CoralieNeural';
+    /** Thierry - French (Canada) - Male */
+    const VOICE_FR_CA_THIERRY = 'fr-CA-ThierryNeural';
 
     /** Denise - French (France) - Female */
     const VOICE_FR_FR_DENISE = 'fr-FR-DeniseNeural';
@@ -529,23 +427,11 @@ class MSEdgeTTS {
     /** Henri - French (France) - Male */
     const VOICE_FR_FR_HENRI = 'fr-FR-HenriNeural';
 
-    /** Jacqueline - French (France) - Female */
-    const VOICE_FR_FR_JACQUELINE = 'fr-FR-JacquelineNeural';
+    /** Remy Multilingual - French (France) - Male */
+    const VOICE_FR_FR_REMY_MULTILINGUAL = 'fr-FR-RemyMultilingualNeural';
 
-    /** Jerome - French (France) - Male */
-    const VOICE_FR_FR_JEROME = 'fr-FR-JeromeNeural';
-
-    /** Josephine - French (France) - Female */
-    const VOICE_FR_FR_JOSEPHINE = 'fr-FR-JosephineNeural';
-
-    /** Maurice - French (France) - Male */
-    const VOICE_FR_FR_MAURICE = 'fr-FR-MauriceNeural';
-
-    /** Yves - French (France) - Male */
-    const VOICE_FR_FR_YVES = 'fr-FR-YvesNeural';
-
-    /** Yvette - French (France) - Female */
-    const VOICE_FR_FR_YVETTE = 'fr-FR-YvetteNeural';
+    /** Vivienne Multilingual - French (France) - Female */
+    const VOICE_FR_FR_VIVIENNE_MULTILINGUAL = 'fr-FR-VivienneMultilingualNeural';
 
     /** Ariane - French (Switzerland) - Female */
     const VOICE_FR_CH_ARIANE = 'fr-CH-ArianeNeural';
@@ -553,10 +439,10 @@ class MSEdgeTTS {
     /** Fabrice - French (Switzerland) - Male */
     const VOICE_FR_CH_FABRICE = 'fr-CH-FabriceNeural';
 
-    /** Roi - Galician (Spain) - Male */
+    /** Roi - Galician - Male */
     const VOICE_GL_ES_ROI = 'gl-ES-RoiNeural';
 
-    /** Sabela - Galician (Spain) - Female */
+    /** Sabela - Galician - Female */
     const VOICE_GL_ES_SABELA = 'gl-ES-SabelaNeural';
 
     /** Eka - Georgian (Georgia) - Female */
@@ -574,23 +460,11 @@ class MSEdgeTTS {
     /** Amala - German (Germany) - Female */
     const VOICE_DE_DE_AMALA = 'de-DE-AmalaNeural';
 
-    /** Bernd - German (Germany) - Male */
-    const VOICE_DE_DE_BERND = 'de-DE-BerndNeural';
-
-    /** Christoph - German (Germany) - Male */
-    const VOICE_DE_DE_CHRISTOPH = 'de-DE-ChristophNeural';
-
     /** Conrad - German (Germany) - Male */
     const VOICE_DE_DE_CONRAD = 'de-DE-ConradNeural';
 
-    /** Elke - German (Germany) - Female */
-    const VOICE_DE_DE_ELKE = 'de-DE-ElkeNeural';
-
-    /** Gisela - German (Germany) - Female */
-    const VOICE_DE_DE_GISELA = 'de-DE-GiselaNeural';
-
-    /** Kasper - German (Germany) - Male */
-    const VOICE_DE_DE_KASPER = 'de-DE-KasperNeural';
+    /** Florian Multilingual - German (Germany) - Male */
+    const VOICE_DE_DE_FLORIAN_MULTILINGUAL = 'de-DE-FlorianMultilingualNeural';
 
     /** Katja - German (Germany) - Female */
     const VOICE_DE_DE_KATJA = 'de-DE-KatjaNeural';
@@ -598,23 +472,8 @@ class MSEdgeTTS {
     /** Killian - German (Germany) - Male */
     const VOICE_DE_DE_KILLIAN = 'de-DE-KillianNeural';
 
-    /** Klarissa - German (Germany) - Female */
-    const VOICE_DE_DE_KLARISSA = 'de-DE-KlarissaNeural';
-
-    /** Klaus - German (Germany) - Male */
-    const VOICE_DE_DE_KLAUS = 'de-DE-KlausNeural';
-
-    /** Louisa - German (Germany) - Female */
-    const VOICE_DE_DE_LOUISA = 'de-DE-LouisaNeural';
-
-    /** Maja - German (Germany) - Female */
-    const VOICE_DE_DE_MAJA = 'de-DE-MajaNeural';
-
-    /** Ralf - German (Germany) - Male */
-    const VOICE_DE_DE_RALF = 'de-DE-RalfNeural';
-
-    /** Tanja - German (Germany) - Female */
-    const VOICE_DE_DE_TANJA = 'de-DE-TanjaNeural';
+    /** Seraphina Multilingual - German (Germany) - Female */
+    const VOICE_DE_DE_SERAPHINA_MULTILINGUAL = 'de-DE-SeraphinaMultilingualNeural';
 
     /** Jan - German (Switzerland) - Male */
     const VOICE_DE_CH_JAN = 'de-CH-JanNeural';
@@ -664,20 +523,23 @@ class MSEdgeTTS {
     /** Gadis - Indonesian (Indonesia) - Female */
     const VOICE_ID_ID_GADIS = 'id-ID-GadisNeural';
 
+    /** Siqiniq - Inuktitut (Latin, Canada) - Female */
+    const VOICE_IU_LATN_CA_SIQINIQ = 'iu-Latn-CA-SiqiniqNeural';
+
+    /** Taqqiq - Inuktitut (Latin, Canada) - Male */
+    const VOICE_IU_LATN_CA_TAQQIQ = 'iu-Latn-CA-TaqqiqNeural';
+
+    /** Siqiniq - Inuktitut (Syllabics, Canada) - Female */
+    const VOICE_IU_CANS_CA_SIQINIQ = 'iu-Cans-CA-SiqiniqNeural';
+
+    /** Taqqiq - Inuktitut (Syllabics, Canada) - Male */
+    const VOICE_IU_CANS_CA_TAQQIQ = 'iu-Cans-CA-TaqqiqNeural';
+
     /** Colm - Irish (Ireland) - Male */
     const VOICE_GA_IE_COLM = 'ga-IE-ColmNeural';
 
     /** Orla - Irish (Ireland) - Female */
     const VOICE_GA_IE_ORLA = 'ga-IE-OrlaNeural';
-
-    /** Benigno - Italian (Italy) - Male */
-    const VOICE_IT_IT_BENIGNO = 'it-IT-BenignoNeural';
-
-    /** Calimera - Italian (Italy) - Female */
-    const VOICE_IT_IT_CALIMERA = 'it-IT-CalimeraNeural';
-
-    /** Cataldo - Italian (Italy) - Male */
-    const VOICE_IT_IT_CATALDO = 'it-IT-CataldoNeural';
 
     /** Diego - Italian (Italy) - Male */
     const VOICE_IT_IT_DIEGO = 'it-IT-DiegoNeural';
@@ -685,62 +547,17 @@ class MSEdgeTTS {
     /** Elsa - Italian (Italy) - Female */
     const VOICE_IT_IT_ELSA = 'it-IT-ElsaNeural';
 
-    /** Fabiola - Italian (Italy) - Female */
-    const VOICE_IT_IT_FABIOLA = 'it-IT-FabiolaNeural';
-
-    /** Fiamma - Italian (Italy) - Female */
-    const VOICE_IT_IT_FIAMMA = 'it-IT-FiammaNeural';
-
-    /** Gianni - Italian (Italy) - Male */
-    const VOICE_IT_IT_GIANNI = 'it-IT-GianniNeural';
-
-    /** Immacolata - Italian (Italy) - Female */
-    const VOICE_IT_IT_IMMACOLATA = 'it-IT-ImmacolataNeural';
-
-    /** Irma - Italian (Italy) - Female */
-    const VOICE_IT_IT_IRMA = 'it-IT-IrmaNeural';
+    /** Giuseppe Multilingual - Italian (Italy) - Male */
+    const VOICE_IT_IT_GIUSEPPE_MULTILINGUAL = 'it-IT-GiuseppeMultilingualNeural';
 
     /** Isabella - Italian (Italy) - Female */
     const VOICE_IT_IT_ISABELLA = 'it-IT-IsabellaNeural';
 
-    /** Lisandro - Italian (Italy) - Male */
-    const VOICE_IT_IT_LISANDRO = 'it-IT-LisandroNeural';
-
-    /** Palmira - Italian (Italy) - Female */
-    const VOICE_IT_IT_PALMIRA = 'it-IT-PalmiraNeural';
-
-    /** Pierina - Italian (Italy) - Female */
-    const VOICE_IT_IT_PIERINA = 'it-IT-PierinaNeural';
-
-    /** Rinaldo - Italian (Italy) - Male */
-    const VOICE_IT_IT_RINALDO = 'it-IT-RinaldoNeural';
-
-    /** Aoi - Japanese (Japan) - Female */
-    const VOICE_JA_JP_AOI = 'ja-JP-AoiNeural';
-
-    /** Daichi - Japanese (Japan) - Male */
-    const VOICE_JA_JP_DAICHI = 'ja-JP-DaichiNeural';
-
-    /** Hajime - Japanese (Japan) - Male */
-    const VOICE_JA_JP_HAJIME = 'ja-JP-HajimeNeural';
-
     /** Keita - Japanese (Japan) - Male */
     const VOICE_JA_JP_KEITA = 'ja-JP-KeitaNeural';
 
-    /** Mayu - Japanese (Japan) - Female */
-    const VOICE_JA_JP_MAYU = 'ja-JP-MayuNeural';
-
-    /** Midori - Japanese (Japan) - Female */
-    const VOICE_JA_JP_MIDORI = 'ja-JP-MidoriNeural';
-
     /** Nanami - Japanese (Japan) - Female */
     const VOICE_JA_JP_NANAMI = 'ja-JP-NanamiNeural';
-
-    /** Naoki - Japanese (Japan) - Male */
-    const VOICE_JA_JP_NAOKI = 'ja-JP-NaokiNeural';
-
-    /** Shiori - Japanese (Japan) - Female */
-    const VOICE_JA_JP_SHIORI = 'ja-JP-ShioriNeural';
 
     /** Dimas - Javanese (Indonesia) - Male */
     const VOICE_JV_ID_DIMAS = 'jv-ID-DimasNeural';
@@ -766,8 +583,8 @@ class MSEdgeTTS {
     /** Sreymom - Khmer (Cambodia) - Female */
     const VOICE_KM_KH_SREYMOM = 'km-KH-SreymomNeural';
 
-    /** Hyunsu - Korean (Korea) - Male */
-    const VOICE_KO_KR_HYUNSU = 'ko-KR-HyunsuNeural';
+    /** Hyunsu Multilingual - Korean (Korea) - Male */
+    const VOICE_KO_KR_HYUNSU_MULTILINGUAL = 'ko-KR-HyunsuMultilingualNeural';
 
     /** InJoon - Korean (Korea) - Male */
     const VOICE_KO_KR_INJOON = 'ko-KR-InJoonNeural';
@@ -835,13 +652,10 @@ class MSEdgeTTS {
     /** Sagar - Nepali (Nepal) - Male */
     const VOICE_NE_NP_SAGAR = 'ne-NP-SagarNeural';
 
-    /** Finn - Norwegian (Norway) - Male */
+    /** Finn - Norwegian (Bokmål Norway) - Male */
     const VOICE_NB_NO_FINN = 'nb-NO-FinnNeural';
 
-    /** Iselin - Norwegian (Norway) - Female */
-    const VOICE_NB_NO_ISELIN = 'nb-NO-IselinNeural';
-
-    /** Pernille - Norwegian (Norway) - Female */
+    /** Pernille - Norwegian (Bokmål, Norway) - Female */
     const VOICE_NB_NO_PERNILLE = 'nb-NO-PernilleNeural';
 
     /** GulNawaz - Pashto (Afghanistan) - Male */
@@ -868,11 +682,11 @@ class MSEdgeTTS {
     /** Francisca - Portuguese (Brazil) - Female */
     const VOICE_PT_BR_FRANCISCA = 'pt-BR-FranciscaNeural';
 
+    /** Thalita Multilingual - Portuguese (Brazil) - Female */
+    const VOICE_PT_BR_THALITA_MULTILINGUAL = 'pt-BR-ThalitaMultilingualNeural';
+
     /** Duarte - Portuguese (Portugal) - Male */
     const VOICE_PT_PT_DUARTE = 'pt-PT-DuarteNeural';
-
-    /** Fernanda - Portuguese (Portugal) - Female */
-    const VOICE_PT_PT_FERNANDA = 'pt-PT-FernandaNeural';
 
     /** Raquel - Portuguese (Portugal) - Female */
     const VOICE_PT_PT_RAQUEL = 'pt-PT-RaquelNeural';
@@ -943,6 +757,9 @@ class MSEdgeTTS {
     /** Salome - Spanish (Colombia) - Female */
     const VOICE_ES_CO_SALOME = 'es-CO-SalomeNeural';
 
+    /** Ximena - Spanish (Colombia) - Female */
+    const VOICE_ES_ES_XIMENA = 'es-ES-XimenaNeural';
+
     /** Juan - Spanish (Costa Rica) - Male */
     const VOICE_ES_CR_JUAN = 'es-CR-JuanNeural';
 
@@ -991,50 +808,11 @@ class MSEdgeTTS {
     /** Karla - Spanish (Honduras) - Female */
     const VOICE_ES_HN_KARLA = 'es-HN-KarlaNeural';
 
-    /** Beatriz - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_BEATRIZ = 'es-MX-BeatrizNeural';
-
-    /** Candela - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_CANDELA = 'es-MX-CandelaNeural';
-
-    /** Carlota - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_CARLOTA = 'es-MX-CarlotaNeural';
-
     /** Dalia - Spanish (Mexico) - Female */
     const VOICE_ES_MX_DALIA = 'es-MX-DaliaNeural';
 
-    /** Elda - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_ELDA = 'es-MX-EldaNeural';
-
-    /** Gerardo - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_GERARDO = 'es-MX-GerardoNeural';
-
     /** Jorge - Spanish (Mexico) - Male */
     const VOICE_ES_MX_JORGE = 'es-MX-JorgeNeural';
-
-    /** Larlo - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_LARLO = 'es-MX-LarloNeural';
-
-    /** Liberto - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_LIBERTO = 'es-MX-LibertoNeural';
-
-    /** Lorenzo - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_LORENZO = 'es-MX-LorenzoNeural';
-
-    /** Marina - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_MARINA = 'es-MX-MarinaNeural';
-
-    /** Nilda - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_NILDA = 'es-MX-NildaNeural';
-
-    /** Pelayo - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_PELAYO = 'es-MX-PelayoNeural';
-
-    /** Renata - Spanish (Mexico) - Female */
-    const VOICE_ES_MX_RENATA = 'es-MX-RenataNeural';
-
-    /** Yago - Spanish (Mexico) - Male */
-    const VOICE_ES_MX_YAGO = 'es-MX-YagoNeural';
 
     /** Federico - Spanish (Nicaragua) - Male */
     const VOICE_ES_NI_FEDERICO = 'es-NI-FedericoNeural';
@@ -1042,11 +820,11 @@ class MSEdgeTTS {
     /** Yolanda - Spanish (Nicaragua) - Female */
     const VOICE_ES_NI_YOLANDA = 'es-NI-YolandaNeural';
 
-    /** Emilio - Spanish (Panama) - Male */
-    const VOICE_ES_PA_EMILIO = 'es-PA-EmilioNeural';
-
     /** Margarita - Spanish (Panama) - Female */
     const VOICE_ES_PA_MARGARITA = 'es-PA-MargaritaNeural';
+
+    /** Roberto - Spanish (Panama) - Male */
+    const VOICE_ES_PA_ROBERTO = 'es-PA-RobertoNeural';
 
     /** Mario - Spanish (Paraguay) - Male */
     const VOICE_ES_PY_MARIO = 'es-PY-MarioNeural';
@@ -1066,47 +844,11 @@ class MSEdgeTTS {
     /** Victor - Spanish (Puerto Rico) - Male */
     const VOICE_ES_PR_VICTOR = 'es-PR-VictorNeural';
 
-    /** Abril - Spanish (Spain) - Female */
-    const VOICE_ES_ES_ABRIL = 'es-ES-AbrilNeural';
-
     /** Alvaro - Spanish (Spain) - Male */
     const VOICE_ES_ES_ALVARO = 'es-ES-AlvaroNeural';
 
-    /** Arnau - Spanish (Spain) - Male */
-    const VOICE_ES_ES_ARNAU = 'es-ES-ArnauNeural';
-
-    /** Dario - Spanish (Spain) - Male */
-    const VOICE_ES_ES_DARIO = 'es-ES-DarioNeural';
-
     /** Elvira - Spanish (Spain) - Female */
     const VOICE_ES_ES_ELVIRA = 'es-ES-ElviraNeural';
-
-    /** Elias - Spanish (Spain) - Male */
-    const VOICE_ES_ES_ELIAS = 'es-ES-EliasNeural';
-
-    /** Esther - Spanish (Spain) - Female */
-    const VOICE_ES_ES_ESTHER = 'es-ES-EstherNeural';
-
-    /** Irene - Spanish (Spain) - Female */
-    const VOICE_ES_ES_IRENE = 'es-ES-IreneNeural';
-
-    /** Lia - Spanish (Spain) - Female */
-    const VOICE_ES_ES_LIA = 'es-ES-LiaNeural';
-
-    /** Nil - Spanish (Spain) - Male */
-    const VOICE_ES_ES_NIL = 'es-ES-NilNeural';
-
-    /** Saul - Spanish (Spain) - Male */
-    const VOICE_ES_ES_SAUL = 'es-ES-SaulNeural';
-
-    /** Teo - Spanish (Spain) - Male */
-    const VOICE_ES_ES_TEO = 'es-ES-TeoNeural';
-
-    /** Triana - Spanish (Spain) - Female */
-    const VOICE_ES_ES_TRIANA = 'es-ES-TrianaNeural';
-
-    /** Vera - Spanish (Spain) - Female */
-    const VOICE_ES_ES_VERA = 'es-ES-VeraNeural';
 
     /** Alonso - Spanish (United States) - Male */
     const VOICE_ES_US_ALONSO = 'es-US-AlonsoNeural';
@@ -1180,20 +922,17 @@ class MSEdgeTTS {
     /** Shruti - Telugu (India) - Female */
     const VOICE_TE_IN_SHRUTI = 'te-IN-ShrutiNeural';
 
-    /** Achara - Thai (Thailand) - Female */
-    const VOICE_TH_TH_ACHARA = 'th-TH-AcharaNeural';
-
     /** Niwat - Thai (Thailand) - Male */
     const VOICE_TH_TH_NIWAT = 'th-TH-NiwatNeural';
 
     /** Premwadee - Thai (Thailand) - Female */
     const VOICE_TH_TH_PREMWADEE = 'th-TH-PremwadeeNeural';
 
-    /** Ahmet - Turkish (Turkey) - Male */
-    const VOICE_TR_TR_AHMET = 'tr-TR-AhmetNeural';
-
     /** Emel - Turkish (Turkey) - Female */
     const VOICE_TR_TR_EMEL = 'tr-TR-EmelNeural';
+
+    /** Ahmet - Turkish (Türkiye) - Male */
+    const VOICE_TR_TR_AHMET = 'tr-TR-AhmetNeural';
 
     /** Ostap - Ukrainian (Ukraine) - Male */
     const VOICE_UK_UA_OSTAP = 'uk-UA-OstapNeural';
@@ -1249,7 +988,7 @@ class MSEdgeTTS {
      *
      * @var string La voix à utiliser pour la synthèse vocale.
      */
-    private $_voice = self::VOICE_FR_FR_CELESTE;
+    private $_voice = self::VOICE_FR_FR_DENISE;
 
     /**
      * Le taux de parole (de -50 à +50).
@@ -1453,13 +1192,17 @@ class MSEdgeTTS {
                 ["bn-BD-NabanitaNeural", "Nabanita (Female)", false],
                 ["bn-BD-PradeepNeural", "Pradeep (Male)", false],
             ],
-            "Bengali (India)" => [
+            "Bangla (India)" => [
                 ["bn-IN-BashkarNeural", "Bashkar (Male)", false],
+            ],
+            "Bengali (India)" => [
                 ["bn-IN-TanishaaNeural", "Tanishaa (Female)", false],
             ],
             "Bosnian (Bosnia and Herzegovina)" => [
-                ["bs-BA-GoranNeural", "Goran (Male)", false],
                 ["bs-BA-VesnaNeural", "Vesna (Female)", false],
+            ],
+            "Bosnian (Bosnia)" => [
+                ["bs-BA-GoranNeural", "Goran (Male)", false],
             ],
             "Bulgarian (Bulgaria)" => [
                 ["bg-BG-BorislavNeural", "Borislav (Male)", false],
@@ -1469,17 +1212,18 @@ class MSEdgeTTS {
                 ["my-MM-NilarNeural", "Nilar (Female)", false],
                 ["my-MM-ThihaNeural", "Thiha (Male)", false],
             ],
-            "Catalan (Spain)" => [
-                ["ca-ES-AlbaNeural", "Alba (Female)", false],
+            "Catalan" => [
                 ["ca-ES-EnricNeural", "Enric (Male)", false],
                 ["ca-ES-JoanaNeural", "Joana (Female)", false],
             ],
-            "Chinese (Hong Kong)" => [
+            "Chinese (Cantonese Traditional)" => [
                 ["zh-HK-HiuGaaiNeural", "HiuGaai (Female)", false],
+            ],
+            "Chinese (Hong Kong SAR)" => [
                 ["zh-HK-HiuMaanNeural", "HiuMaan (Female)", false],
                 ["zh-HK-WanLungNeural", "WanLung (Male)", false],
             ],
-            "Chinese (Mainland China)" => [
+            "Chinese (Mainland)" => [
                 ["zh-CN-XiaoxiaoNeural", "Xiaoxiao (Female)", false],
                 ["zh-CN-XiaoyiNeural", "Xiaoyi (Female)", false],
                 ["zh-CN-YunjianNeural", "Yunjian (Male)", false],
@@ -1487,22 +1231,24 @@ class MSEdgeTTS {
                 ["zh-CN-YunxiaNeural", "Yunxia (Male)", false],
                 ["zh-CN-YunyangNeural", "Yunyang (Male)", false],
             ],
-            "Chinese (Liaoning)" => [
+            "Chinese (Northeastern Mandarin)" => [
                 ["zh-CN-liaoning-XiaobeiNeural", "Xiaobei (Female)", false],
             ],
             "Chinese (Taiwan)" => [
                 ["zh-TW-HsiaoChenNeural", "HsiaoChen (Female)", false],
-                ["zh-TW-HsiaoYuNeural", "HsiaoYu (Female)", false],
                 ["zh-TW-YunJheNeural", "YunJhe (Male)", false],
             ],
-            "Chinese (Shaanxi)" => [
+            "Chinese (Taiwanese Mandarin)" => [
+                ["zh-TW-HsiaoYuNeural", "HsiaoYu (Female)", false],
+            ],
+            "Chinese (Zhongyuan Mandarin Shaanxi)" => [
                 ["zh-CN-shaanxi-XiaoniNeural", "Xiaoni (Female)", false],
             ],
             "Croatian (Croatia)" => [
-                ["hr-HR-GabrijelNeural", "Gabrijel (Male)", false],
+                ["hr-HR-GabrijelaNeural", "Gabrijela (Female)", false],
                 ["hr-HR-SreckoNeural", "Srecko (Male)", false],
             ],
-            "Czech (Czech Republic)" => [
+            "Czech (Czech)" => [
                 ["cs-CZ-AntoninNeural", "Antonin (Male)", false],
                 ["cs-CZ-VlastaNeural", "Vlasta (Female)", false],
             ],
@@ -1520,34 +1266,25 @@ class MSEdgeTTS {
                 ["nl-NL-MaartenNeural", "Maarten (Male)", false],
             ],
             "English (Australia)" => [
-                ["en-AU-AnnetteNeural", "Annette (Female)", false],
-                ["en-AU-CarlyNeural", "Carly (Female)", false],
-                ["en-AU-DarrenNeural", "Darren (Male)", false],
-                ["en-AU-DuncanNeural", "Duncan (Male)", false],
-                ["en-AU-ElsieNeural", "Elsie (Female)", false],
-                ["en-AU-FreyaNeural", "Freya (Female)", false],
-                ["en-AU-JoanneNeural", "Joanne (Female)", false],
-                ["en-AU-KenNeural", "Ken (Male)", false],
-                ["en-AU-KimNeural", "Kim (Female)", false],
                 ["en-AU-NatashaNeural", "Natasha (Female)", false],
-                ["en-AU-NeilNeural", "Neil (Male)", false],
-                ["en-AU-TimNeural", "Tim (Male)", false],
-                ["en-AU-TinaNeural", "Tina (Female)", false],
-                ["en-AU-WilliamNeural", "William (Male)", false],
+                ["en-AU-WilliamMultilingualNeural", "William Multilingual (Male)", false],
             ],
             "English (Canada)" => [
                 ["en-CA-ClaraNeural", "Clara (Female)", false],
                 ["en-CA-LiamNeural", "Liam (Male)", false],
             ],
-            "English (Hong Kong)" => [
-                ["en-HK-SamNeural", "Sam (Male)", false],
+            "English (Hong Kong SAR)" => [
                 ["en-HK-YanNeural", "Yan (Female)", false],
             ],
+            "English (Hongkong)" => [
+                ["en-HK-SamNeural", "Sam (Male)", false],
+            ],
             "English (India)" => [
-                ["en-IN-AaravNeural", "Aarav (Male)", false],
-                ["en-IN-AashiNeural", "Aashi (Female)", false],
                 ["en-IN-NeerjaNeural", "Neerja (Female)", false],
                 ["en-IN-PrabhatNeural", "Prabhat (Male)", false],
+            ],
+            "English (India) (Preview)" => [
+                ["en-IN-NeerjaExpressiveNeural", "Neerja Expressive (Female)", false],
             ],
             "English (Ireland)" => [
                 ["en-IE-ConnorNeural", "Connor (Male)", false],
@@ -1582,46 +1319,30 @@ class MSEdgeTTS {
                 ["en-TZ-ImaniNeural", "Imani (Female)", false],
             ],
             "English (United Kingdom)" => [
-                ["en-GB-AbbiNeural", "Abbi (Female)", false],
-                ["en-GB-AlfieNeural", "Alfie (Male)", false],
-                ["en-GB-BellaNeural", "Bella (Female)", false],
-                ["en-GB-ElliotNeural", "Elliot (Male)", false],
-                ["en-GB-EthanNeural", "Ethan (Male)", false],
-                ["en-GB-HollieNeural", "Hollie (Female)", false],
                 ["en-GB-LibbyNeural", "Libby (Female)", false],
                 ["en-GB-MaisieNeural", "Maisie (Female)", false],
-                ["en-GB-NoahNeural", "Noah (Male)", false],
-                ["en-GB-OliverNeural", "Oliver (Male)", false],
-                ["en-GB-OliviaNeural", "Olivia (Female)", false],
                 ["en-GB-RyanNeural", "Ryan (Male)", false],
                 ["en-GB-SoniaNeural", "Sonia (Female)", false],
                 ["en-GB-ThomasNeural", "Thomas (Male)", false],
             ],
             "English (United States)" => [
                 ["en-US-AnaNeural", "Ana (Female)", false],
-                ["en-US-AriaNeural", "Aria (Female)", false],
-                ["en-US-AshleyNeural", "Ashley (Female)", false],
-                ["en-US-AvaNeural", "Ava (Female)", false],
+                ["en-US-AndrewMultilingualNeural", "Andrew Multilingual (Male)", false],
                 ["en-US-AndrewNeural", "Andrew (Male)", false],
-                ["en-US-BrandonNeural", "Brandon (Male)", false],
+                ["en-US-AriaNeural", "Aria (Female)", false],
+                ["en-US-AvaMultilingualNeural", "Ava Multilingual (Female)", false],
+                ["en-US-AvaNeural", "Ava (Female)", false],
+                ["en-US-BrianMultilingualNeural", "Brian Multilingual (Male)", false],
+                ["en-US-BrianNeural", "Brian (Male)", false],
                 ["en-US-ChristopherNeural", "Christopher (Male)", false],
-                ["en-US-CoraNeural", "Cora (Female)", false],
-                ["en-US-DavisNeural", "Davis (Male)", false],
-                ["en-US-ElizabethNeural", "Elizabeth (Female)", false],
+                ["en-US-EmmaMultilingualNeural", "Emma Multilingual (Female)", false],
                 ["en-US-EmmaNeural", "Emma (Female)", false],
                 ["en-US-EricNeural", "Eric (Male)", false],
                 ["en-US-GuyNeural", "Guy (Male)", false],
-                ["en-US-JacobNeural", "Jacob (Male)", false],
-                ["en-US-JaneNeural", "Jane (Female)", false],
-                ["en-US-JasonNeural", "Jason (Male)", false],
                 ["en-US-JennyNeural", "Jenny (Female)", false],
                 ["en-US-MichelleNeural", "Michelle (Female)", false],
-                ["en-US-MonicaNeural", "Monica (Female)", false],
-                ["en-US-NancyNeural", "Nancy (Female)", false],
                 ["en-US-RogerNeural", "Roger (Male)", false],
-                ["en-US-SaraNeural", "Sara (Female)", false],
                 ["en-US-SteffanNeural", "Steffan (Male)", false],
-                ["en-US-TonyNeural", "Tony (Male)", false],
             ],
             "Estonian (Estonia)" => [
                 ["et-EE-AnuNeural", "Anu (Female)", false],
@@ -1643,28 +1364,20 @@ class MSEdgeTTS {
                 ["fr-CA-AntoineNeural", "Antoine (Male)", false],
                 ["fr-CA-JeanNeural", "Jean (Male)", false],
                 ["fr-CA-SylvieNeural", "Sylvie (Female)", false],
+                ["fr-CA-ThierryNeural", "Thierry (Male)", false],
             ],
             "French (France)" => [
-                ["fr-FR-AlainNeural", "Alain (Male)", false],
-                ["fr-FR-BrigitteNeural", "Brigitte (Female)", false],
-                ["fr-FR-CelesteNeural", "Celeste (Female)", false],
-                ["fr-FR-ClaudeNeural", "Claude (Male)", false],
-                ["fr-FR-CoralieNeural", "Coralie (Female)", false],
                 ["fr-FR-DeniseNeural", "Denise (Female)", false],
                 ["fr-FR-EloiseNeural", "Eloise (Female)", false],
                 ["fr-FR-HenriNeural", "Henri (Male)", false],
-                ["fr-FR-JacquelineNeural", "Jacqueline (Female)", false],
-                ["fr-FR-JeromeNeural", "Jerome (Male)", false],
-                ["fr-FR-JosephineNeural", "Josephine (Female)", false],
-                ["fr-FR-MauriceNeural", "Maurice (Male)", false],
-                ["fr-FR-YvesNeural", "Yves (Male)", false],
-                ["fr-FR-YvetteNeural", "Yvette (Female)", false],
+                ["fr-FR-RemyMultilingualNeural", "Remy Multilingual (Male)", false],
+                ["fr-FR-VivienneMultilingualNeural", "Vivienne Multilingual (Female)", false],
             ],
             "French (Switzerland)" => [
                 ["fr-CH-ArianeNeural", "Ariane (Female)", false],
                 ["fr-CH-FabriceNeural", "Fabrice (Male)", false],
             ],
-            "Galician (Spain)" => [
+            "Galician" => [
                 ["gl-ES-RoiNeural", "Roi (Male)", false],
                 ["gl-ES-SabelaNeural", "Sabela (Female)", false],
             ],
@@ -1678,20 +1391,11 @@ class MSEdgeTTS {
             ],
             "German (Germany)" => [
                 ["de-DE-AmalaNeural", "Amala (Female)", false],
-                ["de-DE-BerndNeural", "Bernd (Male)", false],
-                ["de-DE-ChristophNeural", "Christoph (Male)", false],
                 ["de-DE-ConradNeural", "Conrad (Male)", false],
-                ["de-DE-ElkeNeural", "Elke (Female)", false],
-                ["de-DE-GiselaNeural", "Gisela (Female)", false],
-                ["de-DE-KasperNeural", "Kasper (Male)", false],
+                ["de-DE-FlorianMultilingualNeural", "Florian Multilingual (Male)", false],
                 ["de-DE-KatjaNeural", "Katja (Female)", false],
                 ["de-DE-KillianNeural", "Killian (Male)", false],
-                ["de-DE-KlarissaNeural", "Klarissa (Female)", false],
-                ["de-DE-KlausNeural", "Klaus (Male)", false],
-                ["de-DE-LouisaNeural", "Louisa (Female)", false],
-                ["de-DE-MajaNeural", "Maja (Female)", false],
-                ["de-DE-RalfNeural", "Ralf (Male)", false],
-                ["de-DE-TanjaNeural", "Tanja (Female)", false],
+                ["de-DE-SeraphinaMultilingualNeural", "Seraphina Multilingual (Female)", false],
             ],
             "German (Switzerland)" => [
                 ["de-CH-JanNeural", "Jan (Male)", false],
@@ -1725,37 +1429,27 @@ class MSEdgeTTS {
                 ["id-ID-ArdiNeural", "Ardi (Male)", false],
                 ["id-ID-GadisNeural", "Gadis (Female)", false],
             ],
+            "Inuktitut (Latin, Canada)" => [
+                ["iu-Latn-CA-SiqiniqNeural", "Siqiniq (Female)", false],
+                ["iu-Latn-CA-TaqqiqNeural", "Taqqiq (Male)", false],
+            ],
+            "Inuktitut (Syllabics, Canada)" => [
+                ["iu-Cans-CA-SiqiniqNeural", "Siqiniq (Female)", false],
+                ["iu-Cans-CA-TaqqiqNeural", "Taqqiq (Male)", false],
+            ],
             "Irish (Ireland)" => [
                 ["ga-IE-ColmNeural", "Colm (Male)", false],
                 ["ga-IE-OrlaNeural", "Orla (Female)", false],
             ],
             "Italian (Italy)" => [
-                ["it-IT-BenignoNeural", "Benigno (Male)", false],
-                ["it-IT-CalimeraNeural", "Calimera (Female)", false],
-                ["it-IT-CataldoNeural", "Cataldo (Male)", false],
                 ["it-IT-DiegoNeural", "Diego (Male)", false],
                 ["it-IT-ElsaNeural", "Elsa (Female)", false],
-                ["it-IT-FabiolaNeural", "Fabiola (Female)", false],
-                ["it-IT-FiammaNeural", "Fiamma (Female)", false],
-                ["it-IT-GianniNeural", "Gianni (Male)", false],
-                ["it-IT-ImmacolataNeural", "Immacolata (Female)", false],
-                ["it-IT-IrmaNeural", "Irma (Female)", false],
+                ["it-IT-GiuseppeMultilingualNeural", "Giuseppe Multilingual (Male)", false],
                 ["it-IT-IsabellaNeural", "Isabella (Female)", false],
-                ["it-IT-LisandroNeural", "Lisandro (Male)", false],
-                ["it-IT-PalmiraNeural", "Palmira (Female)", false],
-                ["it-IT-PierinaNeural", "Pierina (Female)", false],
-                ["it-IT-RinaldoNeural", "Rinaldo (Male)", false],
             ],
             "Japanese (Japan)" => [
-                ["ja-JP-AoiNeural", "Aoi (Female)", false],
-                ["ja-JP-DaichiNeural", "Daichi (Male)", false],
-                ["ja-JP-HajimeNeural", "Hajime (Male)", false],
                 ["ja-JP-KeitaNeural", "Keita (Male)", false],
-                ["ja-JP-MayuNeural", "Mayu (Female)", false],
-                ["ja-JP-MidoriNeural", "Midori (Female)", false],
                 ["ja-JP-NanamiNeural", "Nanami (Female)", false],
-                ["ja-JP-NaokiNeural", "Naoki (Male)", false],
-                ["ja-JP-ShioriNeural", "Shiori (Female)", false],
             ],
             "Javanese (Indonesia)" => [
                 ["jv-ID-DimasNeural", "Dimas (Male)", false],
@@ -1774,7 +1468,7 @@ class MSEdgeTTS {
                 ["km-KH-SreymomNeural", "Sreymom (Female)", false],
             ],
             "Korean (Korea)" => [
-                ["ko-KR-HyunsuNeural", "Hyunsu (Male)", false],
+                ["ko-KR-HyunsuMultilingualNeural", "Hyunsu Multilingual (Male)", false],
                 ["ko-KR-InJoonNeural", "InJoon (Male)", false],
                 ["ko-KR-SunHiNeural", "SunHi (Female)", false],
             ],
@@ -1818,9 +1512,10 @@ class MSEdgeTTS {
                 ["ne-NP-HemkalaNeural", "Hemkala (Female)", false],
                 ["ne-NP-SagarNeural", "Sagar (Male)", false],
             ],
-            "Norwegian (Norway)" => [
+            "Norwegian (Bokmål Norway)" => [
                 ["nb-NO-FinnNeural", "Finn (Male)", false],
-                ["nb-NO-IselinNeural", "Iselin (Female)", false],
+            ],
+            "Norwegian (Bokmål, Norway)" => [
                 ["nb-NO-PernilleNeural", "Pernille (Female)", false],
             ],
             "Pashto (Afghanistan)" => [
@@ -1838,10 +1533,10 @@ class MSEdgeTTS {
             "Portuguese (Brazil)" => [
                 ["pt-BR-AntonioNeural", "Antonio (Male)", false],
                 ["pt-BR-FranciscaNeural", "Francisca (Female)", false],
+                ["pt-BR-ThalitaMultilingualNeural", "Thalita Multilingual (Female)", false],
             ],
             "Portuguese (Portugal)" => [
                 ["pt-PT-DuarteNeural", "Duarte (Male)", false],
-                ["pt-PT-FernandaNeural", "Fernanda (Female)", false],
                 ["pt-PT-RaquelNeural", "Raquel (Female)", false],
             ],
             "Romanian (Romania)" => [
@@ -1887,6 +1582,7 @@ class MSEdgeTTS {
             "Spanish (Colombia)" => [
                 ["es-CO-GonzaloNeural", "Gonzalo (Male)", false],
                 ["es-CO-SalomeNeural", "Salome (Female)", false],
+                ["es-ES-XimenaNeural", "Ximena (Female)", false],
             ],
             "Spanish (Costa Rica)" => [
                 ["es-CR-JuanNeural", "Juan (Male)", false],
@@ -1921,29 +1617,16 @@ class MSEdgeTTS {
                 ["es-HN-KarlaNeural", "Karla (Female)", false],
             ],
             "Spanish (Mexico)" => [
-                ["es-MX-BeatrizNeural", "Beatriz (Female)", false],
-                ["es-MX-CandelaNeural", "Candela (Female)", false],
-                ["es-MX-CarlotaNeural", "Carlota (Female)", false],
                 ["es-MX-DaliaNeural", "Dalia (Female)", false],
-                ["es-MX-EldaNeural", "Elda (Female)", false],
-                ["es-MX-GerardoNeural", "Gerardo (Male)", false],
                 ["es-MX-JorgeNeural", "Jorge (Male)", false],
-                ["es-MX-LarloNeural", "Larlo (Male)", false],
-                ["es-MX-LibertoNeural", "Liberto (Male)", false],
-                ["es-MX-LorenzoNeural", "Lorenzo (Male)", false],
-                ["es-MX-MarinaNeural", "Marina (Female)", false],
-                ["es-MX-NildaNeural", "Nilda (Female)", false],
-                ["es-MX-PelayoNeural", "Pelayo (Male)", false],
-                ["es-MX-RenataNeural", "Renata (Female)", false],
-                ["es-MX-YagoNeural", "Yago (Male)", false],
             ],
             "Spanish (Nicaragua)" => [
                 ["es-NI-FedericoNeural", "Federico (Male)", false],
                 ["es-NI-YolandaNeural", "Yolanda (Female)", false],
             ],
             "Spanish (Panama)" => [
-                ["es-PA-EmilioNeural", "Emilio (Male)", false],
                 ["es-PA-MargaritaNeural", "Margarita (Female)", false],
+                ["es-PA-RobertoNeural", "Roberto (Male)", false],
             ],
             "Spanish (Paraguay)" => [
                 ["es-PY-MarioNeural", "Mario (Male)", false],
@@ -1958,20 +1641,8 @@ class MSEdgeTTS {
                 ["es-PR-VictorNeural", "Victor (Male)", false],
             ],
             "Spanish (Spain)" => [
-                ["es-ES-AbrilNeural", "Abril (Female)", false],
                 ["es-ES-AlvaroNeural", "Alvaro (Male)", false],
-                ["es-ES-ArnauNeural", "Arnau (Male)", false],
-                ["es-ES-DarioNeural", "Dario (Male)", false],
                 ["es-ES-ElviraNeural", "Elvira (Female)", false],
-                ["es-ES-EliasNeural", "Elias (Male)", false],
-                ["es-ES-EstherNeural", "Esther (Female)", false],
-                ["es-ES-IreneNeural", "Irene (Female)", false],
-                ["es-ES-LiaNeural", "Lia (Female)", false],
-                ["es-ES-NilNeural", "Nil (Male)", false],
-                ["es-ES-SaulNeural", "Saul (Male)", false],
-                ["es-ES-TeoNeural", "Teo (Male)", false],
-                ["es-ES-TrianaNeural", "Triana (Female)", false],
-                ["es-ES-VeraNeural", "Vera (Female)", false],
             ],
             "Spanish (United States)" => [
                 ["es-US-AlonsoNeural", "Alonso (Male)", false],
@@ -2022,13 +1693,14 @@ class MSEdgeTTS {
                 ["te-IN-ShrutiNeural", "Shruti (Female)", false],
             ],
             "Thai (Thailand)" => [
-                ["th-TH-AcharaNeural", "Achara (Female)", false],
                 ["th-TH-NiwatNeural", "Niwat (Male)", false],
                 ["th-TH-PremwadeeNeural", "Premwadee (Female)", false],
             ],
             "Turkish (Turkey)" => [
-                ["tr-TR-AhmetNeural", "Ahmet (Male)", false],
                 ["tr-TR-EmelNeural", "Emel (Female)", false],
+            ],
+            "Turkish (Türkiye)" => [
+                ["tr-TR-AhmetNeural", "Ahmet (Male)", false],
             ],
             "Ukrainian (Ukraine)" => [
                 ["uk-UA-OstapNeural", "Ostap (Male)", false],

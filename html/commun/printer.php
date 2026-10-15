@@ -10,6 +10,7 @@ class printer {
     public function __construct() {
         session_start();
         if (
+                isset($_POST["content"]) and
                 isset($_SESSION[$_POST["content"]]) and
                 in_array($type = explode("_", $_POST["content"])[0], ["PDF", "CSV", "QRCODE"])
         ) {

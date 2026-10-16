@@ -65,16 +65,9 @@ class ckeditor {
      * Filtre de sécurité à utiliser lors de l'exécution d'un formulaire pour filter les balises utilisées dans CKEditor ( protection XSS )
      * 
      * @param string $str Retour du CKEditor
-     * @param string $more_tags Ajouter des balises à witelister
+     * @param string $more_tags Balises supplémentaires à autoriser (format strip_tags : "<mark></mark>"), transmises à html_sanitizer::clean()
      */
     public function parse($str, $more_tags = "") {
-        $tags = "<h1></h1><h2></h2><h3></h3><h4></h4><h5></h5><h6></h6><p></p><a></a><span></span><small></small><big></big><strong><em></em><u></u><s></s></strong><quote></quote><img><img/><sup></sup><sub></sub><div></div><ul></ul><ol></ol><li></li><dl></dl><dt></dt><dd></dd><time></time><br /><hr /><table></table><thead></thead><tbody></tbody><tfoot></tfoot><tr></tr><th></th><td></td><caption></caption><figure></figure><figcaption></figcaption>";
-        if (!empty($more_tags)) {
-            $tags .= $more_tags;
-        }
-        while ($str != ($_str = strip_tags($str, $tags))) {
-            $str = $_str;
-        }
-        return $_str;
+        return html_sanitizer::clean($str, $more_tags);
     }
 }

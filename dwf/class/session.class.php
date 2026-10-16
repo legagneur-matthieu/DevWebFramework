@@ -21,6 +21,7 @@ class session {
         }
         ini_set("session.cookie_samesite", "Lax");
         ini_set('session.cookie_httponly', "1");
+        ini_set("session.use_strict_mode", "1");
         session_start();
         ($regenerate_id and self::get_auth() ? session_regenerate_id(true) : null);
         $fp = [];

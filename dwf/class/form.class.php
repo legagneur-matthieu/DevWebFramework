@@ -367,6 +367,7 @@ class form {
     /**
      * Ajoute un token au formulaire
      * @return string Champ hidden token
+     * @deprecated Conservé à titre historique, utiliser csrf_token() / csrf_check()
      */
     public function token() {
         return $this->hidden("token", self::get_token());
@@ -382,10 +383,12 @@ class form {
 
     /**
      * Retourne si le token d'un formulaire est conforme à la session en cours
+     * Comparaison du token en temps constant (hash_equals)
      * @return boolean True si le token est conforme sinon false
+     * @deprecated Conservé à titre historique, utiliser csrf_token() / csrf_check()
      */
     public static function validate_token() {
-        return (isset($_POST["token"]) and $_POST["token"] == self::get_token() and $_SERVER["REMOTE_ADDR"] == session::get_val("ip") and $_SERVER["HTTP_USER_AGENT"] == session::get_val("browser"));
+        return (isset($_POST["token"]) and is_string($_POST["token"]) and hash_equals((string) self::get_token(), $_POST["token"]) and $_SERVER["REMOTE_ADDR"] == session::get_val("ip") and $_SERVER["HTTP_USER_AGENT"] == session::get_val("browser"));
     }
 
     /**
@@ -543,12 +546,13 @@ class form {
     }
 
     /**
-     * Retourne si le CSRF est Valide ou non
+     * Retourne si le CSRF est Valide ou non (comparaison en temps constant avec hash_equals)
      * @return bool CSRF Valide ou non
      */
     public function csrf_check() {
         if (isset($_POST[$this->_csrfid])) {
-            if (!empty(session::get_val($this->_csrfid)) and session::get_val($this->_csrfid) == $_POST[$this->_csrfid]) {
+            $expected = session::get_val($this->_csrfid);
+            if (is_string($expected) and !empty($expected) and is_string($_POST[$this->_csrfid]) and hash_equals($expected, $_POST[$this->_csrfid])) {
                 session::set_val($this->_csrfid, "");
                 return true;
             } else {

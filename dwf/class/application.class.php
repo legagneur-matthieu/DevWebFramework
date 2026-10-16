@@ -145,7 +145,7 @@ class application {
         $url = "index.php?";
         foreach ($_GET as $key => $value) {
             if (!in_array($key, $skip_gets)) {
-                $url .= "{$key}={$value}" . ($html_chars ? "&amp;" : "&");
+                $url .= (is_array($value) ? http_build_query([$key => $value], "", ($html_chars ? "&amp;" : "&"), PHP_QUERY_RFC3986) : rawurlencode($key) . "=" . rawurlencode((string) $value)) . ($html_chars ? "&amp;" : "&");
             }
         }
         return $url;

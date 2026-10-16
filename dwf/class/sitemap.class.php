@@ -94,19 +94,45 @@ class sitemap extends singleton {
      */
     public function admin() {
         if (isset($_GET["loc"])) {
-            $this->remove_url($_GET["loc"]);
-            js::redir(application::get_url(["loc"]));
+            $this->admin_supp();
+            return;
         }
         $data = [];
         foreach ($this->_urls as $url) {
             $data[] = [
                 $url["loc"],
                 $url["title"],
-                html_structures::a_link(application::get_url() . "loc={$url["loc"]}", "Supprimer", "btn- btn-danger")
+                html_structures::a_link(application::get_url() . "loc={$url["loc"]}", "Supprimer", "btn btn-danger")
             ];
         }
         js::datatable();
         html_structures::table(["Loc", "Title", "Supprimer"], $data, "", "datatable");
+    }
+
+    /**
+     * Gère la suppression d'une URL du sitemap après confirmation (formulaire POST)
+     */
+    private function admin_supp() {
+        $form = new form();
+        $form->hidden("confirm", 1);
+        $form->submit("btn btn-danger w-100", "Oui");
+        $form->csrf_token();
+        if (isset($_POST["confirm"]) and $form->csrf_check()) {
+            $this->remove_url($_GET["loc"]);
+            js::alertify_alert_redir("L'URL a bien été supprimée du sitemap", application::get_url(["loc"]));
+        }
+        ?>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->render() ?>
+            </div>
+            <div class="col-6">
+                <div class="mx-auto" style="width: 300px;">
+                    <a href="<?= application::get_url(["loc"]) ?>" class="btn btn-primary text-center w-100">Non</a>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 
     /**

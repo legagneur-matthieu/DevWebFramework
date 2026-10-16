@@ -56,7 +56,16 @@ class g_categorie_article {
      */
     private function g_categorie_supp() {
         if ($_GET["id"] != 1 and $_GET["id"] != 2 and math::is_int($_GET["id"])) {
-            if (cat_article::get_count("id=:id", [":id" => $_GET["id"]]) != 0) {
+            if (cat_article::get_count("id=:id", [":id" => $_GET["id"]]) == 0) {
+                js::alert("ERREUR : Cette catégorie n'existe pas !");
+                js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
+                return;
+            }
+            $form = new form();
+            $form->hidden("confirm", 1);
+            $form->submit("btn btn-danger w-100", "Oui");
+            $form->csrf_token();
+            if (isset($_POST["confirm"]) and $form->csrf_check()) {
                 $cat = cat_article::get_table_array("id=:id", [":id" => $_GET["id"]]);
                 $articles = article::get_collection("categorie=:id", [":id" => $_GET["id"]]);
                 if ($articles) {
@@ -74,14 +83,24 @@ class g_categorie_article {
                     }
                 }
                 cat_article::delete_by_id($cat[0]["id"]);
-                js::alert("La catégorie \"" . $cat[0]["nom"] . "\" a bien été supprimé");
-            } else {
-                js::alert("ERREUR : Cette catégorie n'existe pas !");
+                js::alertify_alert_redir("La catégorie « " . htmlspecialchars($cat[0]["nom"], ENT_QUOTES, "UTF-8") . " » a bien été supprimée", application::get_url(["action", "id"]));
             }
+            ?>
+            <div class="row">
+                <div class="col-6">
+                    <?= $form->render() ?>
+                </div>
+                <div class="col-6">
+                    <div class="mx-auto" style="width: 300px;">
+                        <a href="<?= application::get_url(["action", "id"]) ?>" class="btn btn-primary text-center w-100">Non</a>
+                    </div>
+                </div>
+            </div>
+            <?php
         } else {
             js::alert("ERREUR : Cette catérogie est protégé !");
+            js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
         }
-        js::redir("index.php?page=" . $_GET["page"] . "&admin=g_categorie");
     }
 
     /**

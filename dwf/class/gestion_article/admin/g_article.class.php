@@ -101,9 +101,26 @@ class g_article {
      * Gère la suppresion d'articles
      */
     private function g_article_supp() {
-        article::delete_by_id($_GET["id"]);
-        js::alert("L'article a bien été supprimé");
-        js::redir("index.php?page=" . $_GET["page"] . "&admin=g_article");
+        $form = new form();
+        $form->hidden("confirm", 1);
+        $form->submit("btn btn-danger w-100", "Oui");
+        $form->csrf_token();
+        if (isset($_POST["confirm"]) and $form->csrf_check()) {
+            article::delete_by_id($_GET["id"]);
+            js::alertify_alert_redir("L'article a bien été supprimé", application::get_url(["action", "id"]));
+        }
+        ?>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->render() ?>
+            </div>
+            <div class="col-6">
+                <div class="mx-auto" style="width: 300px;">
+                    <a href="<?= application::get_url(["action", "id"]) ?>" class="btn btn-primary text-center w-100">Non</a>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 
     /**

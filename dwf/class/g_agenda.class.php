@@ -173,8 +173,25 @@ class g_agenda {
      * Suppresion d'un évènement dans l'administration
      */
     private function agenda_admin_supp() {
-        agenda::delete_by_id($_GET["agenda_supp"]);
-        js::alert("L'événement a bien été supprimé");
-        js::redir("index.php?page=" . $_GET["page"]);
+        $form = new form();
+        $form->hidden("confirm", 1);
+        $form->submit("btn btn-danger w-100", "Oui");
+        $form->csrf_token();
+        if (isset($_POST["confirm"]) and $form->csrf_check()) {
+            agenda::delete_by_id($_GET["agenda_supp"]);
+            js::alertify_alert_redir("L'événement a bien été supprimé", application::get_url(["agenda_supp"]));
+        }
+        ?>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->render() ?>
+            </div>
+            <div class="col-6">
+                <div class="mx-auto" style="width: 300px;">
+                    <a href="<?= application::get_url(["agenda_supp"]) ?>" class="btn btn-primary text-center w-100">Non</a>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 }

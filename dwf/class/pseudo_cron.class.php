@@ -181,7 +181,7 @@ class pseudo_cron extends singleton {
         $result = null;
         $data = $this->get_file_data($file);
         if ($data["mt"] < microtime(true) - $interval) {
-            $result = shell_exec("php -f " . $file);
+            $result = shell_exec("php -f " . escapeshellarg($file));
             $this->save($data["hkey"]);
         }
         return $result;

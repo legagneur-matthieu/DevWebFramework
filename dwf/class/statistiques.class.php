@@ -341,6 +341,16 @@ class statistiques extends singleton {
     }
 
     /**
+     * Échappe une valeur pour un affichage HTML (contenu ou attribut)
+     * Les valeurs affichées proviennent du client ($_SERVER, URL) ou d'ip-api et ne sont pas fiables
+     * @param mixed $value Valeur à échapper
+     * @return string Valeur échappée
+     */
+    private static function h($value) {
+        return htmlspecialchars((string) $value, ENT_QUOTES, "UTF-8");
+    }
+
+    /**
      * Retourne les paramètres GET de l'URL
      * @param string $url URL complete
      * @return string Paramètres GET de l'URL
@@ -386,11 +396,11 @@ class statistiques extends singleton {
             $stat["user"][] = [
                 date("Y-m-d H:i:s", $visite->get_timestamp()),
                 html_structures::a_link(application::get_url() . "view=user&user={$visite->get_user()->get_id()}",
-                        twemojiFlags::get($visite->get_user()->get_country()->get_code()) .
-                        tags::tag("span", ["title" => "ISP : {$visite->get_user()->get_isp()->get_name()}"], $visite->get_user()->get_ip()) .
-                        " ({$visite->get_user()->get_browser()->get_agent()})"
+                        twemojiFlags::get(self::h($visite->get_user()->get_country()->get_code())) .
+                        tags::tag("span", ["title" => "ISP : " . self::h($visite->get_user()->get_isp()->get_name())], self::h($visite->get_user()->get_ip())) .
+                        " (" . self::h($visite->get_user()->get_browser()->get_agent()) . ")"
                 ),
-                html_structures::a_link($visite->get_page()->get_url(), $visite->get_page()->get_title(), "", "", true)
+                html_structures::a_link(self::h($visite->get_page()->get_url()), self::h($visite->get_page()->get_title()), "", "", true)
             ];
         }
         foreach (["isp", "pays", "browser", "page"] as $key) {
@@ -422,7 +432,7 @@ class statistiques extends singleton {
                 $page = stat_page::get_from_id($id);
                 $data[] = [
                     $i++,
-                    html_structures::a_link($page->get_url(), $page->get_title(), "", $this->get_params($page->get_url()), true),
+                    html_structures::a_link(self::h($page->get_url()), self::h($page->get_title()), "", self::h($this->get_params($page->get_url())), true),
                     $nb,
                     number_format($nb / $sum * 100, 2)
                 ];
@@ -441,7 +451,7 @@ class statistiques extends singleton {
                 $pays = stat_country::get_from_id($id);
                 $data[] = [
                     $i++,
-                    twemojiFlags::get($pays->get_code()) . " {$pays->get_name()}",
+                    twemojiFlags::get(self::h($pays->get_code())) . " " . self::h($pays->get_name()),
                     $nb,
                     number_format($nb / $sum * 100, 2)
                 ];
@@ -461,7 +471,7 @@ class statistiques extends singleton {
                 $browser = stat_browser::get_from_id($id);
                 $data[] = [
                     $i++,
-                    $browser->get_agent(),
+                    self::h($browser->get_agent()),
                     $nb,
                     number_format($nb / $sum * 100, 2)
                 ];
@@ -481,7 +491,7 @@ class statistiques extends singleton {
                 $isp = stat_isp::get_from_id($id);
                 $data[] = [
                     $i++,
-                    $isp->get_name(),
+                    self::h($isp->get_name()),
                     $nb,
                     number_format($nb / $sum * 100, 2)
                 ];
@@ -523,10 +533,10 @@ class statistiques extends singleton {
                         </div>
                         <div class="card-body">
                             <ul>
-                                <li><strong>IP : </strong><?= $user->get_ip() ?></li>
-                                <li><strong>Pays : </strong><?= twemojiFlags::get($user->get_country()->get_code()) . " " . $user->get_country()->get_name() ?></li>
-                                <li><strong>ISP : </strong><?= $user->get_isp()->get_name() ?></li>
-                                <li><strong>Agent : </strong><?= $user->get_browser()->get_agent() ?></li>
+                                <li><strong>IP : </strong><?= self::h($user->get_ip()) ?></li>
+                                <li><strong>Pays : </strong><?= twemojiFlags::get(self::h($user->get_country()->get_code())) . " " . self::h($user->get_country()->get_name()) ?></li>
+                                <li><strong>ISP : </strong><?= self::h($user->get_isp()->get_name()) ?></li>
+                                <li><strong>Agent : </strong><?= self::h($user->get_browser()->get_agent()) ?></li>
                                 <li><strong>Pages vues <small>(pour la periode indiquée)</small> : </strong><?= count($visites) ?></li>
                             </ul>
                         </div>
@@ -539,8 +549,8 @@ class statistiques extends singleton {
             foreach ($visites as $visite) {
                 $data[] = [
                     date("Y-m-d H:i:s", $visite->get_timestamp()),
-                    html_structures::a_link($visite->get_page()->get_url(), $visite->get_page()->get_title(), "", "", true),
-                    $this->get_params($visite->get_page()->get_url()),
+                    html_structures::a_link(self::h($visite->get_page()->get_url()), self::h($visite->get_page()->get_title()), "", "", true),
+                    self::h($this->get_params($visite->get_page()->get_url())),
                 ];
             }
             echo html_structures::table(["Date", "Page", "GET"], $data);

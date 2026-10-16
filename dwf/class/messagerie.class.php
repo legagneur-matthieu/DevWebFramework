@@ -78,9 +78,17 @@ class messagerie {
         $form->select("Envoyer a", "dest", $option);
         $form->textarea("Message", "msg");
         $form->submit("btn-primary", "");
-        echo $form->render();
         if (isset($_POST["dest"])) {
-            message::ajout(date("Y-m-d H:i:s"), $_POST["msg"], session::get_user_id(), $_POST["dest"], 0);
+            if ($form->csrf_check()) {
+                message::ajout(date("Y-m-d H:i:s"), $_POST["msg"], session::get_user_id(), $_POST["dest"], 0);
+                js::alert("Votre message a bien été envoyé");
+            } else {
+                js::alert("ERREUR : le formulaire a expiré ou est invalide, le message n'a pas été envoyé !");
+            }
+            js::redir("index.php?page=" . $_GET["page"] . "&action=write");
+        } else {
+            $form->csrf_token();
+            echo $form->render();
         }
     }
 
@@ -100,7 +108,7 @@ class messagerie {
             if ($msg) {
                 foreach ($msg as $value) {
                     $date = explode(" ", $value->get_heur());
-                    $data[] = [html_structures::time($value->get_heur(), $this->_time->date_us_to_fr($date[0]) . "<br />" . $date[1]), $value->get_emet()->get_login(), $value->get_contenu(), html_structures::a_link("index.php?page=" . $_GET["page"] . "&action=get&action=supp&id=" . $value->get_id(), html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger btn_supp")];
+                    $data[] = [html_structures::time($value->get_heur(), $this->_time->date_us_to_fr($date[0]) . "<br />" . $date[1]), htmlspecialchars((string) $value->get_emet()->get_login(), ENT_QUOTES, "UTF-8"), nl2br(htmlspecialchars((string) $value->get_contenu(), ENT_QUOTES, "UTF-8")), html_structures::a_link("index.php?page=" . $_GET["page"] . "&action=get&action=supp&id=" . $value->get_id(), html_structures::glyphicon("remove", "Supprimer"), "btn btn-xs btn-danger btn_supp")];
                 }
             }
             js::datatable();
@@ -127,7 +135,7 @@ class messagerie {
         if ($msg) {
             foreach ($msg as $value) {
                 $date = explode(" ", $value->get_heur());
-                $data[] = [html_structures::time($value->get_heur(), $this->_time->date_us_to_fr($date[0]) . "<br />" . $date[1]), $value->get_dest()->get_login(), $value->get_contenu()];
+                $data[] = [html_structures::time($value->get_heur(), $this->_time->date_us_to_fr($date[0]) . "<br />" . $date[1]), htmlspecialchars((string) $value->get_dest()->get_login(), ENT_QUOTES, "UTF-8"), nl2br(htmlspecialchars((string) $value->get_contenu(), ENT_QUOTES, "UTF-8"))];
             }
         }
         js::datatable();

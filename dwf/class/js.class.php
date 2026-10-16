@@ -26,7 +26,7 @@ class js {
     public static function alert($msg) {
         ?>
         <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
-            alert("<?= $msg; ?>");
+            alert(<?= self::js_string($msg); ?>);
         </script>
         <?php
     }
@@ -134,7 +134,7 @@ class js {
     public static function redir($url) {
         ?>
         <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
-            window.location = "<?= strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"]); ?>";
+            window.location = <?= self::js_string(strtr($url . "___", ["&amp;___" => "", "___" => "", "&amp;" => "&"])); ?>;
         </script>
         <?php
     }
@@ -456,5 +456,14 @@ class js {
             });
         </script>
         <?php
+    }
+
+    /**
+     * Retourne une chaîne JavaScript littérale (guillemets inclus) sûre à insérer dans une balise script
+     * @param string $str Chaîne à convertir
+     * @return string Chaîne JavaScript encodée en JSON
+     */
+    private static function js_string($str) {
+        return json_encode((string) $str, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
 }

@@ -7,7 +7,7 @@
  */
 class printer_pdf {
 
-    public function __construct($content, $filename, $landscape) {
+    public function __construct($content, $filename, $landscape = false) {
         include_once __DIR__ . '/../../../dwf/class/dompdf/autoload.inc.php';
         $dompdf = new \Dompdf\Dompdf();
         if ($landscape) {

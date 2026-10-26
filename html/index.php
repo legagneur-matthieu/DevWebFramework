@@ -88,7 +88,7 @@ class parcour_sites {
         if (!in_array($_SERVER["REMOTE_ADDR"], array("localhost", "127.0.0.1", "::1"))) {
             header("HTTP/1.1 301 Moved Permanently");
             header("Status: 301 Moved Permanently", false, 301);
-            header("Location: ./" . $this->_project["project"] . "/index.php");
+            header("Location: /" . $this->_project["project"] . "/index.php");
             exit();
         }
     }

@@ -28,7 +28,6 @@ class session {
         foreach ([
     "REMOTE_ADDR",
     "HTTP_USER_AGENT",
-    "HTTP_ACCEPT",
     "HTTP_ACCEPT_LANGUAGE",
     "HTTP_ACCEPT_ENCODING"
         ] as $key) {
@@ -44,8 +43,6 @@ class session {
             "HTTP_SEC_CH_UA_PLATFORM",
             "HTTP_SEC_CH_UA_PLATFORM_VERSION",
             "HTTP_SEC_CH_UA_MOBILE",
-            "HTTP_DEVICE_MEMORY",
-            "HTTP_ECT",
                 ] as $key) {
                     (isset($_SERVER[$key]) ? $fps[] = $_SERVER[$key] : false);
                 }

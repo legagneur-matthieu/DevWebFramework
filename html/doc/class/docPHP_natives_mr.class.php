@@ -272,7 +272,6 @@ class docPHP_natives_mr {
         <p>Plus de renseignements dans la documentation technique et sur <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a></p>
         <hr/>
         <?php
-        self::stripe();
     }
 
     public static function php_finediff() {

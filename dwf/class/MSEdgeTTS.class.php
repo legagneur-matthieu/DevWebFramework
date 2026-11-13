@@ -2,14 +2,12 @@
 
 /**
  * Cette classe permet d'utiliser le service TTS de Micrisoft Edge
- * passe par le miroir tts.webextools.com
+ * via le CLI local edge-tts (https://github.com/rany2/edge-tts), installé de préférence via pipx
  * Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
  * 
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class MSEdgeTTS {
-    // Constantes pour les voix de MS Edge TTS
-
     /** Adri - Afrikaans (South Africa) - Female */
     const VOICE_AF_ZA_ADRI = 'af-ZA-AdriNeural';
 
@@ -981,7 +979,7 @@ class MSEdgeTTS {
      *
      * @var string Le texte à convertir en audio.
      */
-    private $_text;
+    private $_text = '';
 
     /**
      * La voix à utiliser pour la synthèse vocale.
@@ -995,16 +993,58 @@ class MSEdgeTTS {
      *
      * @var int Le taux de parole (de -50 à +50).
      */
-    private $_rate = 0; // Valeur par défaut (de -50 à +50)
+    private $_rate = 0;
 
     /**
      * La hauteur de la voix (de -50 à +50).
      *
      * @var int La hauteur de la voix (de -50 à +50).
      */
-    private $_pitch = 0; // Valeur par défaut (de -50 à +50)
+    private $_pitch = 0;
 
-    private const VOLUME = '+0%'; // Fixe, non modifiable
+    private const VOLUME = '+0%';
+
+    /** Format d'un nom de voix edge-tts (ex. : fr-FR-DeniseNeural, zh-CN-liaoning-XiaobeiNeural) : lettres et tirets uniquement */
+    private const VOICE_PATTERN = '/^[a-z]{2,3}-[A-Z]{2}(-[a-z]+)?-[A-Za-z]+Neural$/';
+
+    /** Bornes communes du taux et de la hauteur */
+    private const MIN_VALUE = -50;
+    private const MAX_VALUE = 50;
+
+    /** Durée maximale (en secondes) d'un appel à edge-tts */
+    private const TIMEOUT = 60;
+
+    /** Durée (en secondes) pendant laquelle une installation pipx échouée n'est pas retentée */
+    private const INSTALL_RETRY_DELAY = 3600;
+
+    /** Code d'erreur dwf_exception : edge-tts absent */
+    const ERR_NOT_INSTALLED = 634;
+
+    /** Code d'erreur dwf_exception : échec de la génération audio */
+    const ERR_GENERATION = 635;
+
+    /** Code d'erreur dwf_exception : texte vide */
+    const ERR_EMPTY_TEXT = 636;
+
+    /** Code d'erreur dwf_exception : fichier non créé (code natif du framework) */
+    private const ERR_FILE = 631;
+
+    /** Commande edge-tts : nom interne, résolu par le système via le PATH (Linux, macOS, Windows : edge-tts.exe / .cmd) */
+    private const COMMAND = 'edge-tts';
+
+    /**
+     * Commande edge-tts validée par "edge-tts -h" (cache pour la durée du processus).
+     *
+     * @var string|null La commande edge-tts, ou null si non encore validée.
+     */
+    private static $_bin = null;
+
+    /**
+     * Dossier ajouté en tête du PATH des commandes lancées (dossier bin de pipx, souvent absent du PATH du serveur web).
+     *
+     * @var string|null Le dossier, ou null.
+     */
+    private static $_path_dir = null;
 
     /**
      * Définit le texte à convertir en audio.
@@ -1012,7 +1052,7 @@ class MSEdgeTTS {
      * @param string $text Le texte à convertir.
      * @return self L'instance actuelle pour le chaînage.
      */
-    public function setText(string $text): self {
+    private function setText(string $text): self {
         $this->_text = $text;
         return $this;
     }
@@ -1023,45 +1063,46 @@ class MSEdgeTTS {
      * @param string $voice La voix (ex. : 'fr-FR-CelesteNeural').
      * @return self L'instance actuelle pour le chaînage.
      */
-    public function setVoice(string $voice): self {
+    private function setVoice(string $voice): self {
         $this->_voice = $voice;
         return $this;
     }
 
     /**
      * Définit le taux de parole.
+     * Une valeur hors bornes est ramenée dans l'intervalle [-50 ; +50]
      *
      * @param int $rate Le taux (entre -50 et +50).
      * @return self L'instance actuelle pour le chaînage.
      */
-    public function setRate(int $rate): self {
-        if ($rate < -50 and $rate > 50) {
-            $this->_rate = $rate;
-        }
+    private function setRate(int $rate): self {
+        $this->_rate = max(self::MIN_VALUE, min(self::MAX_VALUE, $rate));
         return $this;
     }
 
     /**
      * Définit la hauteur de la voix.
+     * Une valeur hors bornes est ramenée dans l'intervalle [-50 ; +50]
      *
      * @param int $pitch La hauteur (entre -50 et +50).
      * @return self L'instance actuelle pour le chaînage.
      */
-    public function setPitch(int $pitch): self {
-        if ($pitch < -50 and $pitch > 50) {
-            $this->_pitch = $pitch;
-        }
+    private function setPitch(int $pitch): self {
+        $this->_pitch = max(self::MIN_VALUE, min(self::MAX_VALUE, $pitch));
         return $this;
     }
 
     /**
-     * Génère un audio TTS à partir des paramètres fournis (méthode statique).
+     * Génère un audio TTS à partir des paramètres fournis.
+     * Seul point d'entrée public de la classe : crée une instance, la configure puis appelle sendRequest().
      *
      * @param string $text Le texte à convertir (obligatoire).
-     * @param string $voice La voix à utiliser (par défaut : fr-FR-EloiseNeural).
+     * @param string $voice La voix à utiliser (par défaut : fr-FR-DeniseNeural).
      * @param int $rate Le taux de parole (par défaut : 0, entre -50 et +50).
      * @param int $pitch La hauteur de la voix (par défaut : 0, entre -50 et +50).
-     * @return string Le fichier audio MPEG encodé en base64.
+     * @return string Le fichier audio MPEG encodé en base64, ou une chaîne vide ('') en cas d'erreur
+     *                (texte vide, edge-tts absent, échec de génération). Ne lève jamais d'exception :
+     *                l'erreur est signalée de manière non bloquante (dwf_exception::warning_exception).
      */
     public static function TTS(string $text, string $voice = self::VOICE_FR_FR_DENISE, int $rate = 0, int $pitch = 0): string {
         $instance = new self();
@@ -1073,32 +1114,274 @@ class MSEdgeTTS {
     }
 
     /**
-     * Envoie la requête POST à l'API pour générer l'audio.
+     * Retourne la commande edge-tts, validée en lançant "edge-tts -h" (aide reçue = succès, commande inconnue = échec).
+     * Tente une installation via pipx en dernier recours (si pipx est disponible), puis reteste "edge-tts -h".
      *
-     * @return string Le base64 du fichier audio MPEG.
-     * @throws RuntimeException Si le texte est vide, en cas d'erreur cURL ou si la réponse n'est pas un base64 valide.
+     * @return string La commande edge-tts ('edge-tts'), ou une chaîne vide ('') si edge-tts est introuvable
+     *                et n'a pas pu être installé (erreur 634 signalée de manière non bloquante).
+     */
+    private function getBinary(): string {
+        if (!empty(self::$_bin)) {
+            return self::$_bin;
+        }
+        try {
+            if ($this->isAvailable() or $this->installWithPipx()) {
+                self::$_bin = self::COMMAND;
+            }
+        } catch (\Throwable $e) {
+            self::$_bin = null;
+        }
+        if (empty(self::$_bin)) {
+            self::$_bin = null;
+            $user = ((function_exists('posix_geteuid') and function_exists('posix_getpwuid')) ? (posix_getpwuid(posix_geteuid())['name'] ?? '') : '');
+            dwf_exception::warning_exception(self::ERR_NOT_INSTALLED, ["msg" => "edge-tts doit être installé sur le serveur et la commande edge-tts accessible dans le PATH de l'utilisateur "
+                . (!empty($user) ? $user : get_current_user()) . " (ex. : pipx install edge-tts)"]);
+            return '';
+        }
+        return self::$_bin;
+    }
+
+    /**
+     * Indique si edge-tts est disponible sur le serveur (sans tenter d'installation) : "edge-tts -h" doit afficher l'aide.
+     *
+     * @return bool True si la commande edge-tts répond.
+     */
+    private function isAvailable(): bool {
+        return (!empty(self::$_bin) or $this->answers(self::COMMAND));
+    }
+
+    /**
+     * Sous-dossier du dossier "src" du projet (relatif au répertoire courant, convention DWF : ./src/compact, ./src/fonts...)
+     * où sont stockés les fichiers texte et MP3 générés, nommés par le SHA-256 du texte et des paramètres de génération.
+     */
+    private const CACHE_DIR = './src/tts';
+
+    /** Contenu du .htaccess du dossier de cache : aucun accès web direct aux fichiers (MP3, texte) */
+    private const CACHE_HTACCESS = "# MSEdgeTTS : fichiers texte et MP3 générés, accès web direct interdit\n"
+            . "<IfModule mod_authz_core.c>\n"
+            . "    Require all denied\n"
+            . "</IfModule>\n"
+            . "<IfModule !mod_authz_core.c>\n"
+            . "    Order Deny,Allow\n"
+            . "    Deny from all\n"
+            . "</IfModule>\n";
+
+    /**
+     * Génère l'audio via le CLI edge-tts, ou réutilise le MP3 déjà généré pour le même texte et les mêmes paramètres.
+     * Les fichiers sont stockés dans ./src/tts/ (protégé par .htaccess) sous le nom <sha256>.txt et <sha256>.mp3,
+     * où sha256 = hash("sha256", "texte|voix|taux|hauteur|volume") (convention de tts.service.php).
+     *
+     * @return string Le base64 du fichier audio MPEG, ou une chaîne vide ('') en cas d'erreur.
+     *                Ne lève jamais d'exception : toute erreur (texte vide 636, edge-tts absent 634, fichier/dossier 631,
+     *                génération 635, erreur PHP inattendue 635) est signalée via dwf_exception::warning_exception (non bloquant).
      */
     private function sendRequest(): string {
-        if (empty($this->_text)) {
-            throw new RuntimeException('Le texte est obligatoire.');
+        $text = trim(strip_tags((string) $this->_text));
+        if (empty($text) and $text !== '0') {
+            dwf_exception::warning_exception(self::ERR_EMPTY_TEXT, ["msg" => "MSEdgeTTS : le texte à lire est vide."]);
+            return '';
         }
-        $ch = curl_init('https://tts.webextools.com/tts');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            'text' => strip_tags($this->_text),
-            'voice' => $this->_voice,
-            'rate' => ($this->_rate < 0 ? "-" : "+") . $this->_rate . '%',
-            'pitch' => ($this->_pitch < 0 ? "-" : "+") . $this->_pitch . 'Hz',
-            'volume' => self::VOLUME
-        ]));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $response = curl_exec($ch);
-        if (\PHP_VERSION_ID < 80500) {
-            curl_close($ch);
+        if (empty(preg_match(self::VOICE_PATTERN, (string) $this->_voice))) {
+            dwf_exception::warning_exception(self::ERR_GENERATION, ["msg" => "MSEdgeTTS : la voix demandée n'est pas un nom de voix edge-tts valide."]);
+            return '';
         }
-        unset($ch);
-        return base64_encode($response); // Retourne le base64 du fichier audio MPEG
+        $rate = ($this->_rate >= 0 ? '+' : '-') . abs($this->_rate) . '%';
+        $pitch = ($this->_pitch >= 0 ? '+' : '-') . abs($this->_pitch) . 'Hz';
+        $part_file = false;
+        try {
+            $dir = self::CACHE_DIR;
+            if (!is_dir($dir) and !@mkdir($dir, 0775, true) and !is_dir($dir)) {
+                dwf_exception::warning_exception(self::ERR_FILE, ["__" => $dir]);
+                return '';
+            }
+            if (!is_writable($dir)) {
+                dwf_exception::warning_exception(self::ERR_FILE, ["__" => $dir]);
+                return '';
+            }
+            $htaccess = $dir . '/.htaccess';
+            if (!is_file($htaccess) and @file_put_contents($htaccess, self::CACHE_HTACCESS, LOCK_EX) === false) {
+                dwf_exception::warning_exception(self::ERR_FILE, ["__" => $htaccess]);
+                return '';
+            }
+            $dir = (realpath($dir) ?: $dir);
+            $hash = hash('sha256', $text . '|' . $this->_voice . '|' . $rate . '|' . $pitch . '|' . self::VOLUME);
+            $text_file = $dir . '/' . $hash . '.txt';
+            $media_file = $dir . '/' . $hash . '.mp3';
+            clearstatcache(true, $media_file);
+            if (is_file($media_file) and filesize($media_file) > 0) {
+                $audio = @file_get_contents($media_file);
+                if (!empty($audio)) {
+                    return base64_encode($audio);
+                }
+            }
+            $bin = $this->getBinary();
+            if (empty($bin)) {
+                return '';
+            }
+            if (file_put_contents($text_file, $text, LOCK_EX) === false) {
+                dwf_exception::warning_exception(self::ERR_FILE, ["__" => $text_file]);
+                return '';
+            }
+            $part_file = tempnam($dir, $hash . '_');
+            if ($part_file === false or dirname($part_file) !== $dir) {
+                if ($part_file !== false) {
+                    @unlink($part_file);
+                    $part_file = false;
+                }
+                dwf_exception::warning_exception(self::ERR_FILE, ["__" => $dir . "/" . $hash . "_*"]);
+                return '';
+            }
+            $cmd = escapeshellarg($bin)
+                    . ' ' . escapeshellarg('--file=' . $text_file)
+                    . ' ' . escapeshellarg('--voice=' . $this->_voice)
+                    . ' ' . escapeshellarg('--rate=' . $rate)
+                    . ' ' . escapeshellarg('--pitch=' . $pitch)
+                    . ' ' . escapeshellarg('--volume=' . self::VOLUME)
+                    . ' ' . escapeshellarg('--write-media=' . $part_file);
+            [$code, $output] = $this->run($cmd, self::TIMEOUT);
+            $output = preg_split('/\R/', $output);
+            clearstatcache(true, $part_file);
+            if ($code !== 0 or !is_file($part_file) or filesize($part_file) === 0) {
+                $lines = array_slice(array_values(array_filter(array_map('trim', $output))), -3);
+                dwf_exception::warning_exception(self::ERR_GENERATION, ["msg" => "edge-tts a échoué (code de sortie " . $code . ") : "
+                    . (!empty($lines) ? mb_substr(implode(' | ', $lines), 0, 500) : 'aucune sortie')]);
+                return '';
+            }
+            $audio = file_get_contents($part_file);
+            if (empty($audio)) {
+                dwf_exception::warning_exception(self::ERR_GENERATION, ["msg" => "edge-tts n'a produit aucun audio."]);
+                return '';
+            }
+            @chmod($part_file, 0664);
+            if (@rename($part_file, $media_file)) {
+                $part_file = false;
+            }
+            return base64_encode($audio);
+        } catch (\Throwable $e) {
+            dwf_exception::warning_exception(self::ERR_GENERATION, ["msg" => "MSEdgeTTS : erreur inattendue (" . get_class($e) . ") : " . $e->getMessage()]);
+            return '';
+        } finally {
+            if ($part_file !== false) {
+                @unlink($part_file);
+            }
+        }
+    }
+
+    /**
+     * Indique si une commande répond à "-h" (aide affichée) : distingue une commande installée d'une commande inconnue
+     * (code 127 sous Linux/macOS, 9009 ou 1 sous Windows), sans dépendre d'un chemin propre au système.
+     *
+     * @param string $command Le nom de la commande (ex. : 'edge-tts', 'pipx').
+     * @return bool True si la commande a affiché son aide.
+     */
+    private function answers(string $command): bool {
+        [$code, $output] = $this->run(escapeshellarg($command) . ' -h');
+        return ($code === 0 and stripos($output, 'usage') !== false);
+    }
+
+    /**
+     * Lance une commande via le shell du système (sortie d'erreur fusionnée), avec PYTHONUTF8=1, HOME (Linux/macOS)
+     * et le dossier bin de pipx en tête du PATH. Ne lève jamais d'exception.
+     *
+     * @param string $cmd La commande (arguments déjà protégés par escapeshellarg).
+     * @param int $timeout Durée maximale en secondes (0 = illimitée ; appliquée si la commande timeout existe).
+     * @return array [code de sortie (-1 si non lancée), sortie texte].
+     */
+    private function run(string $cmd, int $timeout = 0): array {
+        if ($timeout > 0 and DIRECTORY_SEPARATOR === '/' and @is_executable('/usr/bin/timeout')) {
+            $cmd = '/usr/bin/timeout ' . $timeout . ' ' . $cmd;
+        }
+        $cmd .= ' 2>&1';
+        $code = -1;
+        $output = '';
+        if (function_exists('proc_open')) {
+            $env = getenv();
+            $env = (is_array($env) ? $env : []);
+            $key = 'PATH';
+            foreach (array_keys($env) as $name) {
+                if (strcasecmp($name, 'PATH') === 0) {
+                    $key = $name;
+                    break;
+                }
+            }
+            if (!empty(self::$_path_dir)) {
+                $env[$key] = self::$_path_dir . (!empty($env[$key]) ? PATH_SEPARATOR . $env[$key] : '');
+            }
+            $home = $this->homeDir();
+            if (DIRECTORY_SEPARATOR === '/' and empty($env['HOME']) and !empty($home)) {
+                $env['HOME'] = $home;
+            }
+            $env['PYTHONUTF8'] = '1';
+            $proc = @proc_open($cmd, [0 => ['pipe', 'r'], 1 => ['pipe', 'w']], $pipes, null, $env);
+            if (is_resource($proc)) {
+                fclose($pipes[0]);
+                $output = (string) stream_get_contents($pipes[1]);
+                fclose($pipes[1]);
+                $code = proc_close($proc);
+            }
+        } elseif (function_exists('exec')) {
+            $lines = [];
+            @exec($cmd, $lines, $code);
+            $output = implode("\n", $lines);
+        }
+        return [$code, $output];
+    }
+
+    /**
+     * Tente d'installer edge-tts via pipx pour l'utilisateur courant (ex. : www-data), si pipx est disponible,
+     * puis reteste "edge-tts -h" avec le dossier bin de pipx ajouté au PATH.
+     * Un échec est mémorisé pendant INSTALL_RETRY_DELAY secondes pour ne pas relancer pipx à chaque requête.
+     *
+     * @return bool True si la commande edge-tts répond après installation.
+     */
+    private function installWithPipx(): bool {
+        if (!$this->answers('pipx')) {
+            return false;
+        }
+        [$code, $dir] = $this->run('pipx environment --value PIPX_BIN_DIR');
+        $dir = trim($dir);
+        if ($code !== 0 or empty($dir) or strpbrk($dir, "\r\n") !== false) {
+            $dir = getenv('PIPX_BIN_DIR');
+            $home = $this->homeDir();
+            if (empty($dir) and !empty($home)) {
+                $dir = $home . DIRECTORY_SEPARATOR . '.local' . DIRECTORY_SEPARATOR . 'bin';
+            }
+        }
+        if (!empty($dir) and strpbrk($dir, "\r\n\0" . PATH_SEPARATOR) === false
+                and (str_starts_with($dir, '/') or !empty(preg_match('/^[A-Za-z]:[\\\\\/]/', $dir)))) {
+            self::$_path_dir = $dir;
+            if ($this->answers(self::COMMAND)) {
+                return true;
+            }
+        }
+        $marker = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'MSEdgeTTS_pipx_failed_' . md5((string) $this->homeDir());
+        if (is_file($marker) and (time() - (int) filemtime($marker)) < self::INSTALL_RETRY_DELAY) {
+            return false;
+        }
+        $this->run('pipx install edge-tts', 300);
+        if ($this->answers(self::COMMAND)) {
+            @unlink($marker);
+            return true;
+        }
+        @touch($marker);
+        return false;
+    }
+
+    /**
+     * Retourne le dossier personnel de l'utilisateur courant (www-data : /var/www ; Windows : %USERPROFILE%).
+     *
+     * @return string|null Le dossier personnel ou null.
+     */
+    private function homeDir(): ?string {
+        if (function_exists('posix_geteuid') and function_exists('posix_getpwuid')) {
+            $pw = posix_getpwuid(posix_geteuid());
+            if (!empty($pw['dir'])) {
+                return rtrim($pw['dir'], '/');
+            }
+        }
+        $home = getenv('HOME');
+        $home = (!empty($home) ? $home : getenv('USERPROFILE'));
+        return (!empty($home) ? rtrim($home, '/\\') : null);
     }
 
     /**

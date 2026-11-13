@@ -389,6 +389,105 @@ class docPHP_natives_tz {
                 . '?>');
     }
 
+    public static function web_push() {
+        ?>
+        <p>
+            Cette classe permet d'envoyer des notifications Web Push (API Push des navigateurs) : <br />
+            l'utilisateur reçoit la notification même si le site est fermé, tant que son navigateur est ouvert ou actif en arrière-plan. <br />
+            Elle est écrite en PHP pur, sans librairie externe : authentification VAPID (RFC 8292) et chiffrement aes128gcm (RFC 8291), <br />
+            elle requiert les extensions PHP <em>openssl</em> et <em>curl</em>.
+        </p>
+        <p class="alert alert-warning">
+            L'API Push n'est disponible que dans un contexte sécurisé : un site en HTTPS ou en <em>http://localhost</em>. <br />
+            Elle ne fonctionne pas en HTTP via une adresse IP du réseau local (exemple : <em>http://192.168.1.10/</em>), le bouton d'activation est alors désactivé.
+        </p>
+        <p>Au premier <em>new web_push()</em>, la classe génère elle-même tout ce dont elle a besoin, aucune commande n'est à lancer :</p>
+        <ul>
+            <li>l'entité <em>web_push_subscription</em> (abonnements des navigateurs) via <em>entity_generator</em></li>
+            <li>le service worker <em>src/web_push_sw.js</em></li>
+            <li>le service d'abonnement <em>services/s_web_push.service.php</em> (les services doivent être actifs dans le projet)</li>
+            <li>
+                la paire de clés VAPID, une par projet (<em>web_push_[empreinte du projet].pem</em>), 
+                hors du dossier web, dans le dossier de configuration de l'utilisateur qui exécute le serveur web :
+                <ul>
+                    <li>Linux : <em>~/.config/dwf</em> (ou <em>$XDG_CONFIG_HOME/dwf</em>)</li>
+                    <li>Windows : <em>%APPDATA%\dwf</em></li>
+                    <li>macOS : <em>~/Library/Application Support/dwf</em></li>
+                </ul>
+            </li>
+        </ul>
+        <p>Il est possible d'imposer un autre dossier pour les clés VAPID dans la config du projet :</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . 'class config {\n'
+                . '    //...\n'
+                . '    //dossier des clés VAPID de web_push (doit être accessible en écriture par le serveur web)\n'
+                . '    public static $_web_push_dir = "/var/lib/dwf";\n'
+                . '}\n'
+                . '?>');
+        ?>
+        <p class="alert alert-info">
+            Ne perdez pas et ne partagez pas la clé VAPID : si elle est régénérée, tous les abonnements existants deviennent invalides. <br />
+            Si le dossier personnel de l'utilisateur du serveur web est aussi la racine de votre dépôt git 
+            (c'est le cas de <em>www-data</em> sous Debian / Ubuntu, dont le dossier personnel est <em>/var/www</em>), 
+            pensez à ajouter <em>/.config/</em> au <em>.gitignore</em>. <br />
+            Si le dossier ne peut pas être créé ou si la clé ne peut pas être générée, la classe affiche un warning (631 ou 641) sans interrompre le script.
+        </p>
+        <p>Usage :</p>
+        <?php
+        js::monaco_highlighter('<?php\n'
+                . '//contact VAPID transmis aux services push ("mailto:" ou URL https, "mailto:webmaster@[nom du serveur]" par défaut)\n'
+                . '$push = new web_push("mailto:contact@mon-site.fr");\n\n'
+                . '//affiche le bouton d\'activation des notifications et son script\n'
+                . '//(demande de permission, enregistrement du service worker et de l\'abonnement)\n'
+                . 'echo $push->button("Activer les notifications", "btn btn-primary");\n\n'
+                . '//envoie une notification à tous les abonnés\n'
+                . '//l\'URL ouverte au clic est relative à la racine du projet\n'
+                . '$result = $push->send("Titre", "Message", "index.php?page=messages");\n\n'
+                . '//envoie une notification aux navigateurs d\'un utilisateur, conservée 1 heure par le service push si l\'appareil est hors ligne\n'
+                . '$result = $push->send("Titre", "Message", "index.php", session::get_user_id(), 3600);\n\n'
+                . '//bilan de l\'envoi\n'
+                . '//["sent" => envoyées, "expired" => abonnements expirés supprimés, "failed" => échecs]\n'
+                . 'echo $result["sent"];\n\n'
+                . '//autorise un autre service push (suffixe d\'hôte)\n'
+                . 'web_push::$_push_hosts[] = "push.mon-service.fr";\n'
+                . '?>');
+        ?>
+        <p>
+            L'abonnement est rattaché à l'utilisateur connecté au moment où il clique sur le bouton (0 s'il n'est pas connecté), <br />
+            la signature de <em>send()</em> est : <em>send($title, $body, $url = "index.php", $user = null, $ttl = 86400)</em>, <br />
+            <em>$user = null</em> envoie la notification à tous les abonnements. <br />
+            Les abonnements expirés (réponse 404 ou 410 du service push) sont supprimés automatiquement. <br />
+            La directive CSP <em>worker-src 'self'</em> est ajoutée automatiquement par <em>button()</em>.
+        </p>
+        <p>Sécurité :</p>
+        <ul>
+            <li>
+                le serveur ne contacte que des endpoints en HTTPS (port 443) dont l'hôte appartient à <em>web_push::$_push_hosts</em> 
+                (FCM / Chrome, Mozilla, Windows, Apple), un abonnement vers un autre hôte est refusé : 
+                cela empêche d'utiliser votre serveur pour appeler votre réseau interne (SSRF)
+            </li>
+            <li>le service <em>s_web_push</em> exige un jeton de session généré par <em>button()</em> (protection CSRF)</li>
+            <li>les clés de l'abonnement sont vérifiées avant l'enregistrement et chaque notification est chiffrée pour le seul navigateur destinataire</li>
+        </ul>
+        <p>Limites :</p>
+        <ul>
+            <li>les notifications sont envoyées une par une, l'envoi peut être long avec beaucoup d'abonnés (pensez à <em>task_manager</em> ou <em>thread_manager</em>)</li>
+            <li>le contenu d'une notification (titre, texte, URL et icône) est limité à 3993 octets</li>
+            <li>sur iPhone et iPad (iOS 16.4 et supérieur), les notifications ne sont disponibles qu'une fois le site ajouté à l'écran d'accueil</li>
+            <li>il n'y a pas encore de désabonnement manuel, l'utilisateur peut révoquer la permission depuis son navigateur</li>
+            <li>en production, réservez l'envoi de notifications aux utilisateurs authentifiés (administration, événements métiers ...)</li>
+        </ul>
+        <p>Codes d'erreurs (warnings, n'interrompent pas le script) :</p>
+        <ul>
+            <li>631 : le dossier des clés, le service worker ou le service n'a pu être créé (droits d'écriture)</li>
+            <li>641 : la clé VAPID n'a pu être générée, enregistrée ou lue</li>
+            <li>642 : la notification n'a pu être signée ou chiffrée, ou elle est trop volumineuse</li>
+            <li>643 : le service push a refusé la notification (code HTTP autre que 2XX, 404 ou 410) ou n'a pas pu être contacté</li>
+        </ul>
+        <?php
+    }
+
     public static function websocket() {
         ?>
         <p> 

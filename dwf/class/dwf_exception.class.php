@@ -32,6 +32,12 @@ class dwf_exception extends \Exception {
         631 => "Le fichier __ n'a pu être créé (problèmes de droits ou d'espace disque ?)",
         632 => "Git ne semble pas être installé sur la machine hôte.",
         633 => "PHPini : le profil n'a pas pu être chargé.",
+        // 64X : notifications (Web Push)
+        641 => "Web Push : la clé VAPID __ n'a pu être générée ou lue (__e__)",
+        642 => "Web Push : la notification n'a pu être signée ou chiffrée (__e__)",
+        643 => "Web Push : le service push __h__ a refusé la notification (HTTP __c__) __e__",
+        // 65X : exports
+        651 => "Fullcalendar : l'évènement __ n'a pu être exporté en ICS (date de début absente ou invalide)",
     ];
 
     /**

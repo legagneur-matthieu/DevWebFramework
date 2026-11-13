@@ -19,9 +19,9 @@ class printer {
         $key = "PDF_" . sha1($content);
         $_SESSION[$key] = $content;
         export_dwf::add_files([
-            realpath(__DIR__ . "/printer.php"),
+            realpath("../commun/printer.php"),
             realpath(__DIR__ . "/dompdf"),
-            realpath(__DIR__ . "/printer"),
+            realpath("../commun/printer"),
         ]);
         $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("filename", $filename);
@@ -42,8 +42,8 @@ class printer {
         $key = "CSV_" . sha1($content);
         $_SESSION[$key] = $content;
         export_dwf::add_files([
-            realpath(__DIR__ . "/printer.php"),
-            realpath(__DIR__ . "/printer"),
+            realpath("../commun/printer.php"),
+            realpath("../commun/printer"),
         ]);
         $form = new form("", "../commun/printer.php", "post", true);
         $form->hidden("filename", $filename);
@@ -64,8 +64,8 @@ class printer {
         $key = "QRCODE_" . sha1($content);
         $_SESSION[$key] = $content;
         export_dwf::add_files([
-            realpath(__DIR__ . "/printer.php"),
-            realpath(__DIR__ . "/printer"),
+            realpath("../commun/printer.php"),
+            realpath("../commun/printer"),
             realpath(__DIR__ . "/phpqrcode"),
         ]);
         if ($get_png_b64) {

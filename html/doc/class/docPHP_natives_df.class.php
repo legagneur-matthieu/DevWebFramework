@@ -136,6 +136,8 @@ class docPHP_natives_df {
             <li>les codes d'erreurs 61X concernent les routes et méthodes</li>
             <li>les codes d'erreurs 62X concernent les services</li>
             <li>les codes d'erreurs 63X concernent le système</li>
+            <li>les codes d'erreurs 64X concernent les notifications (Web Push)</li>
+            <li>les codes d'erreurs 65X concernent les exports</li>
         </ul>
         <p>Il est cependant possible pour vous de créer des exceptions personnalisées avec dwf_exeption :</p>
         <?php
@@ -677,20 +679,37 @@ class docPHP_natives_df {
         </p>
         <?php
         js::monaco_highlighter('<?php\n' .
-                '//Affiche l\'administration du Fullcalendar\n' .
+                '//Affiche l\'administration du Fullcalendar (ajout, modification, suppression et import de fichiers ICS)\n' .
                 'fullcalendar::admin();\n\n' .
                 '//Affiche le fullcalendar avec les évènements enregistrés en base de données\n' .
                 'new fullcalendar($id="fullcanlendar", fullcalendar_event::get_table_array());\n\n' .
-                '//Affiche le fullcalendar avec l\'agenda d\'un compte Google\n' .
-                'new fullcalendar($id="fullcanlendar", null, $api_key, "abcd1234@group.calendar.google.com");\n' .
+                '//Bouton d\'export de l\'agenda au format ICS (iCalendar), non affiché par défaut\n' .
+                '$fc = new fullcalendar($id="fullcanlendar", fullcalendar_event::get_table_array());\n' .
+                'echo $fc->export_btn($text="Exporter l\'agenda", $filename="agenda.ics");\n' .
                 '?>');
-        ?><p>Exemple</p><?php
-        new fullcalendar("fullcalendar", [
+        ?>
+        <p>Les évènements peuvent également contenir les clés optionnelles <em>allDay</em>, <em>description</em>, <em>location</em>, <em>uid</em> et <em>id</em> : <br />
+            la description et le lieu s'affichent au survol de l'évènement et sont exportés en ICS, <em>uid</em> (ou à défaut <em>id</em>@hôte) sert d'UID à l'export. <br />
+            La table <em>fullcalendar_event</em> contient les colonnes calendar, title, start, end, url, description, location et uid. <br />
+            Le fichier ICS est servi par <em>../commun/printer.php</em>, comme les exports PDF/CSV de la classe <em>printer</em>.
+        </p>
+        <p>L'administration permet d'importer un fichier ICS (Google Agenda, Outlook, Thunderbird, export de <em>export_btn()</em>, ...) dans un agenda, via <em>form::get_upload()</em> (taille limitée par upload_max_filesize et post_max_size) : <br />
+            le titre, les dates, l'URL, la description, le lieu et l'UID sont importés ; <br />
+            les évènements déjà présents dans l'agenda (même UID, ou à défaut même titre et même début) sont mis à jour ou ignorés, un fichier peut donc être réimporté sans créer de doublons ; <br />
+            les fuseaux horaires (TZID, UTC) sont convertis dans le fuseau du projet, les journées entières et DURATION sont gérées ; <br />
+            les évènements récurrents (RRULE) ne sont importés qu'à leur première occurrence, les évènements annulés sont ignorés.
+        </p>
+        <p>Exemple</p>
+        <?php
+        $fc = new fullcalendar("fullcalendar", [
             [
                 "title" => "évènement de démonstation",
-                "start" => date("Y-m-d") . " " . date("H:i:s"),
-                "end" => date("Y-m-d") . " " . (date("H") + 1) . date(":i:s")
+                "start" => date("Y-m-d H:i:s"),
+                "end" => date("Y-m-d H:i:s", strtotime("+1 hour")),
+                "description" => "Description affichée au survol et exportée en ICS",
+                "location" => "Lieu de démonstration"
             ]
         ]);
+        echo $fc->export_btn("Exporter l'agenda");
     }
 }

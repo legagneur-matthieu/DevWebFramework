@@ -4,6 +4,7 @@
  * Cette class est une integration JS de MSEdgeTTS
  * Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
  *
+ * @deprecated since version 21.26.11
  * @author LEGAGNEUR Matthieu <legagneur.matthieu@gmail.com>
  */
 class MSEdgeTTS_JS extends singleton {
@@ -17,6 +18,7 @@ class MSEdgeTTS_JS extends singleton {
     /**
      * Cette class est une integration JS de MSEdgeTTS
      * Attention, conformément aux CGU de Microsoft, l'utilisation de cette classe n'est pas autorisé dans le cadre d'un usage commercial
+     * @deprecated since version 21.26.11
      */
     public function __construct() {
         if (!self::$_called) {
@@ -33,10 +35,11 @@ class MSEdgeTTS_JS extends singleton {
      * @param int $rate Le taux de parole (par défaut : 0, entre -50 et +50).
      * @param int $pitch La hauteur de la voix (par défaut : 0, entre -50 et +50).
      * @return string Bouton TTS
+     * @deprecated since version 21.26.11
      */
     public static function TTS($text, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
         self::get_instance();
-        $text= base64_encode(strip_tags($text));
+        $text = base64_encode(strip_tags($text));
         return tags::tag("a", [
                     "data-tts" => "{'text':'$text','voice':'$voice','rate':$rate,'pitch':$pitch}",
                     "class" => "btn btn-light btn-sm"

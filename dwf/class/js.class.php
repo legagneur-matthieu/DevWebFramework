@@ -280,6 +280,7 @@ class js {
      * @param int $rate Le taux de parole (par défaut : 0, entre -50 et +50).
      * @param int $pitch La hauteur de la voix (par défaut : 0, entre -50 et +50).
      * @return string Bouton TTS
+     * @deprecated since version 21.26.11
      */
     public static function MSEdgeTTS($text, $voice = MSEdgeTTS::VOICE_FR_FR_DENISE, $rate = 0, $pitch = 0) {
         return MSEdgeTTS_JS::TTS($text, $voice, $rate, $pitch);

@@ -481,6 +481,10 @@ class docPHP_natives {
         docPHP_natives_tz::w3c_validate();
     }
 
+    public static function web_push() {
+        docPHP_natives_tz::web_push();
+    }
+
     public static function websocket() {
         docPHP_natives_tz::websocket();
     }

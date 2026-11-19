@@ -9,8 +9,11 @@
 class download {
 
     public function __construct() {
-        ini_set("display_errors", "On");
         session_start();
+        if (!is_string($_POST["hash"] ?? null)) {
+            http_response_code(400);
+            exit;
+        }
         $key = "dwf_downloads_allow";
         if (
                 isset($_SESSION[$key]) &&
@@ -21,7 +24,7 @@ class download {
             if (file_exists($file)) {
                 $mime = mime_content_type($file);
                 $filename = basename($file);
-                header("Content-Disposition: attachment; filename=$filename;");
+                header("Content-Disposition: attachment; filename=\"" . preg_replace('/[^\w.-]/u', "_", $filename) . "\"");
                 header('Content-Length: ' . filesize($file));
                 header("Content-type:$mime; charset=UTF-8");
                 echo file_get_contents($file);

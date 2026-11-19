@@ -87,9 +87,9 @@ class dwf_exception extends \Exception {
                     }
                     echo tags::tag(
                             "div", ["class" => "alert alert-danger", "role" => "alert"], tags::tag(
-                                    "p", [], $etype . " : \"" . $e->getMessage() . "\"") .
+                                    "p", [], $etype . " : \"" . strip_tags($e->getMessage()) . "\"") .
                             tags::tag(
-                                    "pre", ["class" => "border alert alert-light"], "\r" . $e->getTraceAsString()) . $moreinfo
+                                    "pre", ["class" => "border alert alert-light"], "\r" . strip_tags($e->getTraceAsString())) . $moreinfo
                     );
                     if (!html5::$_called and $service) {
                         ?>
@@ -98,7 +98,7 @@ class dwf_exception extends \Exception {
                 <?php
             }
         }
-        (new log_file(true))->severe($etype . " : \"" . $e->getMessage() . "\"\n" . $e->getTraceAsString() . "\n" . $moreinfo . "\n");
+        (new log_file(true))->severe($etype . " : \"" . strip_tags($e->getMessage()) . "\"\n" . strip_tags($e->getTraceAsString()) . "\n" . $moreinfo . "\n");
     }
 
     /**

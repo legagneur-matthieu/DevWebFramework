@@ -192,14 +192,14 @@ class new_app {
      */
     private function exec() {
         if (isset($_POST["dirname"])) {
-            if ($_POST["smtp_auth"] == "0") {
+            if ($_POST["smtp_auth"] === "0") {
                 $_POST["smtp_auth"] = "false";
                 $_POST["smtp_login"] = "";
                 $_POST["smtp_psw"] = "";
             } else {
                 $_POST["smtp_auth"] = "true";
             }
-            if ($_POST["pdo_type"] == "sqlite") {
+            if ($_POST["pdo_type"] === "sqlite") {
                 $_POST["pdo_host"] = "";
                 $_POST["pdo_login"] = "";
                 $_POST["pdo_psw"] = "";

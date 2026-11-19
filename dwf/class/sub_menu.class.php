@@ -34,7 +34,7 @@ class sub_menu {
                 $href .= $key . "=" . $value[$key];
                 $ul->append_content(
                         tags::tag(
-                                "li", ["class" => "nav-item"], html_structures::a_link($href, $value["text"], "nav-link" . ($_GET[$key] == $value[$key] ? " active" : ""), $value["title"])
+                                "li", ["class" => "nav-item"], html_structures::a_link($href, $value["text"], "nav-link" . ($_GET[$key] === $value[$key] ? " active" : ""), $value["title"])
                         )
                 );
             }
@@ -42,7 +42,7 @@ class sub_menu {
         echo $ul;
         $action_finded = false;
         foreach ($route as $value) {
-            if ($_GET[$key] == $value[$key]) {
+            if ($_GET[$key] === $value[$key]) {
                 $action_finded = true;
                 $v = $value[$key];
                 if (isset($value["title"]) and ! empty($value["title"])) {

@@ -92,7 +92,8 @@ class service {
      */
     public static function security_check($IP_Allow = ["localhost", "127.0.0.1", "::1"]) {
         if (!in_array($_SERVER["REMOTE_ADDR"], $IP_Allow)) {
-            exit(403);
+            http_response_code(403);
+            exit;
         }
     }
 

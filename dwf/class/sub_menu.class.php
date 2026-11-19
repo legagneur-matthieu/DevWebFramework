@@ -29,7 +29,7 @@ class sub_menu {
             if (isset($value["text"])) {
                 $href = "index.php?";
                 foreach ($keys_route_sup as $k) {
-                    $href .= $k . "=" . $_GET[$k] . "&";
+                    $href .= $k . "=" . rawurlencode(is_string($_GET[$k] ?? null) ? $_GET[$k] : "") . "&";
                 }
                 $href .= $key . "=" . $value[$key];
                 $ul->append_content(
@@ -56,6 +56,7 @@ class sub_menu {
             }
         }
         if (!$action_finded) {
+            $_GET[$key] = $route_default;
             $this_class->$route_default();
         }
     }
@@ -67,11 +68,17 @@ class sub_menu {
      * @param string $title Title de l'onglet
      */
     public static function add_active_tab($sub_menu_key, $text, $title = "") {
+        $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
         ?>
         <script type="text/javascript" nonce="<?= csp::get_nonce() ?>">
             $(document).ready(function () {
-                $("#nav-<?= $sub_menu_key; ?>>li").removeClass("active");
-                $("#nav-<?= $sub_menu_key; ?>").append('<li class="active"><a href="#" <?php if ($title != "") { ?>title="<?= $title; ?>"<?php } ?>><?= $text; ?></a></li>');
+                var nav = $(document.getElementById(<?= json_encode("nav-" . $sub_menu_key, $flags); ?>));
+                var a = $("<a>", {"href": "#", "text": <?= json_encode((string) $text, $flags); ?>});
+                <?php if (!empty($title)) { ?>
+                    a.attr("title", <?= json_encode((string) $title, $flags); ?>);
+                <?php } ?>
+                nav.children("li").removeClass("active");
+                nav.append($("<li>", {"class": "active"}).append(a));
             });
         </script>
         <?php

@@ -320,7 +320,7 @@ class ProjectsLocationsEndpoints extends \Google\Service\Resource
   /**
    * Updates an Endpoint. (endpoints.patch)
    *
-   * @param string $name Output only. The resource name of the Endpoint.
+   * @param string $name Identifier. The resource name of the Endpoint.
    * @param GoogleCloudAiplatformV1Endpoint $postBody
    * @param array $optParams Optional parameters.
    *
@@ -336,7 +336,7 @@ class ProjectsLocationsEndpoints extends \Google\Service\Resource
     return $this->call('patch', [$params], GoogleCloudAiplatformV1Endpoint::class);
   }
   /**
-   * Perform an online prediction. (endpoints.predict)
+   * (endpoints.predict)
    *
    * @param string $endpoint Required. The name of the Endpoint requested to serve
    * the prediction. Format:
@@ -469,7 +469,7 @@ class ProjectsLocationsEndpoints extends \Google\Service\Resource
   /**
    * Updates an Endpoint with a long running operation. (endpoints.update)
    *
-   * @param string $name Output only. The resource name of the Endpoint.
+   * @param string $name Identifier. The resource name of the Endpoint.
    * @param GoogleCloudAiplatformV1UpdateEndpointLongRunningRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleLongrunningOperation

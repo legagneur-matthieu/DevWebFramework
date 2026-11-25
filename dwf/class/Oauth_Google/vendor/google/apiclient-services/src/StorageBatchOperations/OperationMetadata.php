@@ -41,7 +41,7 @@ class OperationMetadata extends \Google\Model
   protected $jobDataType = '';
   /**
    * Output only. The unique operation resource name. Format:
-   * projects/{project}/locations/global/operations/{operation}.
+   * projects/{project_id}/locations/global/operations/{operation}.
    *
    * @var string
    */
@@ -122,7 +122,7 @@ class OperationMetadata extends \Google\Model
   }
   /**
    * Output only. The unique operation resource name. Format:
-   * projects/{project}/locations/global/operations/{operation}.
+   * projects/{project_id}/locations/global/operations/{operation}.
    *
    * @param string $operation
    */

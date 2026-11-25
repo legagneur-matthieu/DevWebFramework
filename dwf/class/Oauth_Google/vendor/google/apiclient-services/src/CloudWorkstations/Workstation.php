@@ -17,7 +17,7 @@
 
 namespace Google\Service\CloudWorkstations;
 
-class Workstation extends \Google\Model
+class Workstation extends \Google\Collection
 {
   /**
    * Do not use.
@@ -41,6 +41,15 @@ class Workstation extends \Google\Model
    * it is started.
    */
   public const STATE_STATE_STOPPED = 'STATE_STOPPED';
+  /**
+   * The workstation is being suspended.
+   */
+  public const STATE_STATE_SUSPENDING = 'STATE_SUSPENDING';
+  /**
+   * The workstation is suspended.
+   */
+  public const STATE_STATE_SUSPENDED = 'STATE_SUSPENDED';
+  protected $collection_key = 'persistentDirectories';
   /**
    * Optional. Client-specified annotations.
    *
@@ -113,6 +122,8 @@ class Workstation extends \Google\Model
    * @var string
    */
   public $name;
+  protected $persistentDirectoriesType = WorkstationPersistentDirectory::class;
+  protected $persistentDirectoriesDataType = 'array';
   /**
    * Output only. Indicates whether this workstation is currently being updated
    * to match its intended state.
@@ -328,6 +339,22 @@ class Workstation extends \Google\Model
     return $this->name;
   }
   /**
+   * Optional. Directories to persist across workstation sessions.
+   *
+   * @param WorkstationPersistentDirectory[] $persistentDirectories
+   */
+  public function setPersistentDirectories($persistentDirectories)
+  {
+    $this->persistentDirectories = $persistentDirectories;
+  }
+  /**
+   * @return WorkstationPersistentDirectory[]
+   */
+  public function getPersistentDirectories()
+  {
+    return $this->persistentDirectories;
+  }
+  /**
    * Output only. Indicates whether this workstation is currently being updated
    * to match its intended state.
    *
@@ -399,7 +426,7 @@ class Workstation extends \Google\Model
    * Output only. Current state of the workstation.
    *
    * Accepted values: STATE_UNSPECIFIED, STATE_STARTING, STATE_RUNNING,
-   * STATE_STOPPING, STATE_STOPPED
+   * STATE_STOPPING, STATE_STOPPED, STATE_SUSPENDING, STATE_SUSPENDED
    *
    * @param self::STATE_* $state
    */

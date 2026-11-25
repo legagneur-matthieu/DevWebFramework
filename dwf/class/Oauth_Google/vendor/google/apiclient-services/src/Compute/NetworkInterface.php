@@ -76,6 +76,15 @@ class NetworkInterface extends \Google\Collection
   protected $accessConfigsDataType = 'array';
   protected $aliasIpRangesType = AliasIpRange::class;
   protected $aliasIpRangesDataType = 'array';
+  protected $aliasIpv6RangesType = AliasIpRange::class;
+  protected $aliasIpv6RangesDataType = 'array';
+  /**
+   * Optional. If true, DNS resolution will be enabled over this interface. Only
+   * valid with network_attachment.
+   *
+   * @var bool
+   */
+  public $enableVpcScopedDns;
   /**
    * Fingerprint hash of contents stored in this network interface. This field
    * will be ignored when inserting an Instance or adding a NetworkInterface. An
@@ -191,6 +200,15 @@ class NetworkInterface extends \Google\Collection
    */
   public $queueCount;
   /**
+   * Optional. Producer Service's Service class Id for the region of this
+   * network interface. Can only be used with network_attachment. It is not
+   * possible to use on its own however, network_attachment can be used without
+   * service_class_id.
+   *
+   * @var string
+   */
+  public $serviceClassId;
+  /**
    * The stack type for this network interface. To assign only IPv4 addresses,
    * use IPV4_ONLY. To assign both IPv4 and IPv6 addresses, useIPV4_IPV6. If not
    * specified, IPV4_ONLY is used.
@@ -256,6 +274,40 @@ class NetworkInterface extends \Google\Collection
   public function getAliasIpRanges()
   {
     return $this->aliasIpRanges;
+  }
+  /**
+   * An array of alias IPv6 ranges for this network interface. You can only
+   * specify this field for network interfaces in VPC networks.
+   *
+   * @param AliasIpRange[] $aliasIpv6Ranges
+   */
+  public function setAliasIpv6Ranges($aliasIpv6Ranges)
+  {
+    $this->aliasIpv6Ranges = $aliasIpv6Ranges;
+  }
+  /**
+   * @return AliasIpRange[]
+   */
+  public function getAliasIpv6Ranges()
+  {
+    return $this->aliasIpv6Ranges;
+  }
+  /**
+   * Optional. If true, DNS resolution will be enabled over this interface. Only
+   * valid with network_attachment.
+   *
+   * @param bool $enableVpcScopedDns
+   */
+  public function setEnableVpcScopedDns($enableVpcScopedDns)
+  {
+    $this->enableVpcScopedDns = $enableVpcScopedDns;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableVpcScopedDns()
+  {
+    return $this->enableVpcScopedDns;
   }
   /**
    * Fingerprint hash of contents stored in this network interface. This field
@@ -524,6 +576,25 @@ class NetworkInterface extends \Google\Collection
   public function getQueueCount()
   {
     return $this->queueCount;
+  }
+  /**
+   * Optional. Producer Service's Service class Id for the region of this
+   * network interface. Can only be used with network_attachment. It is not
+   * possible to use on its own however, network_attachment can be used without
+   * service_class_id.
+   *
+   * @param string $serviceClassId
+   */
+  public function setServiceClassId($serviceClassId)
+  {
+    $this->serviceClassId = $serviceClassId;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceClassId()
+  {
+    return $this->serviceClassId;
   }
   /**
    * The stack type for this network interface. To assign only IPv4 addresses,

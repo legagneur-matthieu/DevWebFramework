@@ -34,8 +34,8 @@ class GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest extends \Google\Model
    * is used to identify the ResourcePolicy to be updated, in the format: ``` pr
    * ojects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
    * licy_id} ``` Note that the `service_id` element must be a supported service
-   * ID. Currently, the following service IDs are supported: *
-   * `oauth2.googleapis.com` (Google Identity for iOS)
+   * ID. Consult the ResourcePolicy.name field for a list of supported service
+   * IDs.
    *
    * @param GoogleFirebaseAppcheckV1ResourcePolicy $resourcePolicy
    */

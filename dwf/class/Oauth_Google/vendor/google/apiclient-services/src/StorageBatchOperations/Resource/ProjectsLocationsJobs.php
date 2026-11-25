@@ -38,7 +38,7 @@ class ProjectsLocationsJobs extends \Google\Service\Resource
    * Cancels a batch job. (jobs.cancel)
    *
    * @param string $name Required. The `name` of the job to cancel. Format:
-   * projects/{project_id}/locations/global/jobs/{job_id}.
+   * `projects/{project_id}/locations/global/jobs/{job_id}`.
    * @param CancelJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return CancelJobResponse
@@ -53,19 +53,18 @@ class ProjectsLocationsJobs extends \Google\Service\Resource
   /**
    * Creates a batch job. (jobs.create)
    *
-   * @param string $parent Required. Value for parent.
+   * @param string $parent Required. The value for parent.
    * @param Job $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string jobId Required. The optional `job_id` for this Job . If not
-   * specified, an id is generated. `job_id` should be no more than 128 characters
-   * and must include only characters available in DNS names, as defined by
-   * RFC-1123.
+   * @opt_param string jobId Required. A unique identifier for the job. `job_id`
+   * must be up to 128 characters and must include only characters available in
+   * DNS names, as defined by RFC-1123.
    * @opt_param string requestId Optional. An optional request ID to identify
    * requests. Specify a unique request ID in case you need to retry your request.
-   * Requests with same `request_id` will be ignored for at least 60 minutes since
-   * the first request. The request ID must be a valid UUID with the exception
-   * that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+   * Requests with same `request_id` are ignored for at least 60 minutes since the
+   * first request. The request ID must be a valid UUID with the exception that
+   * zero UUID isn't supported (00000000-0000-0000-0000-000000000000).
    * @return Operation
    * @throws \Google\Service\Exception
    */
@@ -79,14 +78,18 @@ class ProjectsLocationsJobs extends \Google\Service\Resource
    * Deletes a batch job. (jobs.delete)
    *
    * @param string $name Required. The `name` of the job to delete. Format:
-   * projects/{project_id}/locations/global/jobs/{job_id} .
+   * `projects/{project_id}/locations/global/jobs/{job_id}`.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool force Optional. If set to true, any child bucket operations
+   * of the job are deleted. We recommend setting this to `true`. You can't mutate
+   * bucket operations directly, so only the `jobs.delete` permission is required
+   * to delete a job (and its child bucket operations).
    * @opt_param string requestId Optional. An optional request ID to identify
    * requests. Specify a unique request ID in case you need to retry your request.
-   * Requests with same `request_id` will be ignored for at least 60 minutes since
-   * the first request. The request ID must be a valid UUID with the exception
-   * that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+   * Requests with same `request_id` are ignored for at least 60 minutes since the
+   * first request. The request ID must be a valid UUID with the exception that
+   * zero UUID isn't supported (00000000-0000-0000-0000-000000000000).
    * @return StoragebatchoperationsEmpty
    * @throws \Google\Service\Exception
    */
@@ -99,8 +102,8 @@ class ProjectsLocationsJobs extends \Google\Service\Resource
   /**
    * Gets a batch job. (jobs.get)
    *
-   * @param string $name Required. `name` of the job to retrieve. Format:
-   * projects/{project_id}/locations/global/jobs/{job_id} .
+   * @param string $name Required. The `name` of the job to retrieve. Format:
+   * `projects/{project_id}/locations/global/jobs/{job_id}`.
    * @param array $optParams Optional parameters.
    * @return Job
    * @throws \Google\Service\Exception
@@ -121,9 +124,9 @@ class ProjectsLocationsJobs extends \Google\Service\Resource
    * @opt_param string filter Optional. Filters results as defined by
    * https://google.aip.dev/160.
    * @opt_param string orderBy Optional. Field to sort by. Supported fields are
-   * name, create_time.
-   * @opt_param int pageSize Optional. The list page size. default page size is
-   * 100.
+   * `name` and `create_time`.
+   * @opt_param int pageSize Optional. The list page size. The default page size
+   * is 100.
    * @opt_param string pageToken Optional. The list page token.
    * @return ListJobsResponse
    * @throws \Google\Service\Exception

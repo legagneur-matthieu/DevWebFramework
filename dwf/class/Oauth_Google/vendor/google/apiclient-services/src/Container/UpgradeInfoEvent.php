@@ -59,6 +59,10 @@ class UpgradeInfoEvent extends \Google\Model
    */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
   /**
+   * SCHEDULED indicates the upgrade was scheduled.
+   */
+  public const STATE_SCHEDULED = 'SCHEDULED';
+  /**
    * STARTED indicates the upgrade has started.
    */
   public const STATE_STARTED = 'STARTED';
@@ -74,6 +78,12 @@ class UpgradeInfoEvent extends \Google\Model
    * CANCELED indicates the upgrade has canceled.
    */
   public const STATE_CANCELED = 'CANCELED';
+  /**
+   * Output only. The current emulated version before the upgrade.
+   *
+   * @var string
+   */
+  public $currentEmulatedVersion;
   /**
    * The current version before the upgrade.
    *
@@ -144,12 +154,34 @@ class UpgradeInfoEvent extends \Google\Model
    */
   public $state;
   /**
+   * Output only. The target emulated version for the upgrade.
+   *
+   * @var string
+   */
+  public $targetEmulatedVersion;
+  /**
    * The target version for the upgrade.
    *
    * @var string
    */
   public $targetVersion;
 
+  /**
+   * Output only. The current emulated version before the upgrade.
+   *
+   * @param string $currentEmulatedVersion
+   */
+  public function setCurrentEmulatedVersion($currentEmulatedVersion)
+  {
+    $this->currentEmulatedVersion = $currentEmulatedVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getCurrentEmulatedVersion()
+  {
+    return $this->currentEmulatedVersion;
+  }
   /**
    * The current version before the upgrade.
    *
@@ -336,7 +368,8 @@ class UpgradeInfoEvent extends \Google\Model
   /**
    * Output only. The state of the upgrade.
    *
-   * Accepted values: STATE_UNSPECIFIED, STARTED, SUCCEEDED, FAILED, CANCELED
+   * Accepted values: STATE_UNSPECIFIED, SCHEDULED, STARTED, SUCCEEDED, FAILED,
+   * CANCELED
    *
    * @param self::STATE_* $state
    */
@@ -350,6 +383,22 @@ class UpgradeInfoEvent extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * Output only. The target emulated version for the upgrade.
+   *
+   * @param string $targetEmulatedVersion
+   */
+  public function setTargetEmulatedVersion($targetEmulatedVersion)
+  {
+    $this->targetEmulatedVersion = $targetEmulatedVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getTargetEmulatedVersion()
+  {
+    return $this->targetEmulatedVersion;
   }
   /**
    * The target version for the upgrade.

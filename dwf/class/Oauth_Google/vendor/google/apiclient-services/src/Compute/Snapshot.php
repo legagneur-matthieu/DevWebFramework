@@ -31,7 +31,14 @@ class Snapshot extends \Google\Collection
    * Machines with architecture X86_64
    */
   public const ARCHITECTURE_X86_64 = 'X86_64';
+  /**
+   * Indicates an archive snapshot, which is recommended for long-term retention
+   * and compliance.
+   */
   public const SNAPSHOT_TYPE_ARCHIVE = 'ARCHIVE';
+  /**
+   * Indicates a standard snapshot, which is recommended for frequent restores.
+   */
   public const SNAPSHOT_TYPE_STANDARD = 'STANDARD';
   /**
    * Snapshot creation is in progress.
@@ -201,6 +208,13 @@ class Snapshot extends \Google\Collection
   protected $paramsType = SnapshotParams::class;
   protected $paramsDataType = '';
   /**
+   * Output only. [Output Only] URL of the region where the snapshot resides.
+   * Only applicable for regional snapshots.
+   *
+   * @var string
+   */
+  public $region;
+  /**
    * Output only. Reserved for future use.
    *
    * @var bool
@@ -221,7 +235,22 @@ class Snapshot extends \Google\Collection
   protected $snapshotEncryptionKeyType = CustomerEncryptionKey::class;
   protected $snapshotEncryptionKeyDataType = '';
   /**
-   * Indicates the type of the snapshot.
+   * Output only. [Output Only] The unique ID of the snapshot group that this
+   * snapshot belongs to. The usage of snapshot group feature is restricted.
+   *
+   * @var string
+   */
+  public $snapshotGroupId;
+  /**
+   * Output only. [Output only] The snapshot group that this snapshot belongs
+   * to. The usage of snapshot group feature is restricted.
+   *
+   * @var string
+   */
+  public $snapshotGroupName;
+  /**
+   * Indicates the type of the snapshot. Valid values are ARCHIVE or STANDARD.
+   * The default is STANDARD.
    *
    * @var string
    */
@@ -303,11 +332,12 @@ class Snapshot extends \Google\Collection
    */
   public $storageBytes;
   /**
-   * Output only. [Output Only] An indicator whether storageBytes is in a stable
-   * state or it is being adjusted as a result of shared storage reallocation.
-   * This status can either be UPDATING, meaning the size of the snapshot is
-   * being updated, or UP_TO_DATE, meaning the size of the snapshot is up-to-
-   * date.
+   * Output only. [Deprecated] Instead, check the storageBytes field. After
+   * snapshot creation, the storageBytesStatus field is alwaysUP_TO_DATE.
+   * [Output Only] An indicator whether storageBytes is in a stable state or it
+   * is being adjusted as a result of shared storage reallocation. This status
+   * can either be unset, meaning the snapshot is being created, or UP_TO_DATE,
+   * meaning the size of the snapshot is up-to-date.
    *
    * @var string
    */
@@ -678,6 +708,23 @@ class Snapshot extends \Google\Collection
     return $this->params;
   }
   /**
+   * Output only. [Output Only] URL of the region where the snapshot resides.
+   * Only applicable for regional snapshots.
+   *
+   * @param string $region
+   */
+  public function setRegion($region)
+  {
+    $this->region = $region;
+  }
+  /**
+   * @return string
+   */
+  public function getRegion()
+  {
+    return $this->region;
+  }
+  /**
    * Output only. Reserved for future use.
    *
    * @param bool $satisfiesPzi
@@ -754,7 +801,42 @@ class Snapshot extends \Google\Collection
     return $this->snapshotEncryptionKey;
   }
   /**
-   * Indicates the type of the snapshot.
+   * Output only. [Output Only] The unique ID of the snapshot group that this
+   * snapshot belongs to. The usage of snapshot group feature is restricted.
+   *
+   * @param string $snapshotGroupId
+   */
+  public function setSnapshotGroupId($snapshotGroupId)
+  {
+    $this->snapshotGroupId = $snapshotGroupId;
+  }
+  /**
+   * @return string
+   */
+  public function getSnapshotGroupId()
+  {
+    return $this->snapshotGroupId;
+  }
+  /**
+   * Output only. [Output only] The snapshot group that this snapshot belongs
+   * to. The usage of snapshot group feature is restricted.
+   *
+   * @param string $snapshotGroupName
+   */
+  public function setSnapshotGroupName($snapshotGroupName)
+  {
+    $this->snapshotGroupName = $snapshotGroupName;
+  }
+  /**
+   * @return string
+   */
+  public function getSnapshotGroupName()
+  {
+    return $this->snapshotGroupName;
+  }
+  /**
+   * Indicates the type of the snapshot. Valid values are ARCHIVE or STANDARD.
+   * The default is STANDARD.
    *
    * Accepted values: ARCHIVE, STANDARD
    *
@@ -970,11 +1052,12 @@ class Snapshot extends \Google\Collection
     return $this->storageBytes;
   }
   /**
-   * Output only. [Output Only] An indicator whether storageBytes is in a stable
-   * state or it is being adjusted as a result of shared storage reallocation.
-   * This status can either be UPDATING, meaning the size of the snapshot is
-   * being updated, or UP_TO_DATE, meaning the size of the snapshot is up-to-
-   * date.
+   * Output only. [Deprecated] Instead, check the storageBytes field. After
+   * snapshot creation, the storageBytesStatus field is alwaysUP_TO_DATE.
+   * [Output Only] An indicator whether storageBytes is in a stable state or it
+   * is being adjusted as a result of shared storage reallocation. This status
+   * can either be unset, meaning the snapshot is being created, or UP_TO_DATE,
+   * meaning the size of the snapshot is up-to-date.
    *
    * Accepted values: UPDATING, UP_TO_DATE
    *

@@ -72,11 +72,14 @@ class AppEngineHttpTarget extends \Google\Model
    * JobName`: This header will contain the job name. * `X-CloudScheduler-
    * ScheduleTime`: For Cloud Scheduler jobs specified in the unix-cron format,
    * this header will contain the job schedule as an offset of UTC parsed
-   * according to RFC3339. If the job has a body and the following headers are
-   * not set by the user, Cloud Scheduler sets default values: * `Content-Type`:
-   * This will be set to `"application/octet-stream"`. You can override this
-   * default by explicitly setting `Content-Type` to a particular media type
-   * when creating the job. For example, you can set `Content-Type` to
+   * according to RFC3339. Remains constant across retries and can be used for
+   * [job request
+   * deduplication](https://docs.cloud.google.com/scheduler/docs/overview#job-
+   * deduplication). If the job has a body and the following headers are not set
+   * by the user, Cloud Scheduler sets default values: * `Content-Type`: This
+   * will be set to `"application/octet-stream"`. You can override this default
+   * by explicitly setting `Content-Type` to a particular media type when
+   * creating the job. For example, you can set `Content-Type` to
    * `"application/json"`. The headers below are output only. They cannot be set
    * or overridden: * `Content-Length`: This is computed by Cloud Scheduler. *
    * `X-Google-*`: For Google internal use only. * `X-AppEngine-*`: For Google
@@ -149,11 +152,14 @@ class AppEngineHttpTarget extends \Google\Model
    * JobName`: This header will contain the job name. * `X-CloudScheduler-
    * ScheduleTime`: For Cloud Scheduler jobs specified in the unix-cron format,
    * this header will contain the job schedule as an offset of UTC parsed
-   * according to RFC3339. If the job has a body and the following headers are
-   * not set by the user, Cloud Scheduler sets default values: * `Content-Type`:
-   * This will be set to `"application/octet-stream"`. You can override this
-   * default by explicitly setting `Content-Type` to a particular media type
-   * when creating the job. For example, you can set `Content-Type` to
+   * according to RFC3339. Remains constant across retries and can be used for
+   * [job request
+   * deduplication](https://docs.cloud.google.com/scheduler/docs/overview#job-
+   * deduplication). If the job has a body and the following headers are not set
+   * by the user, Cloud Scheduler sets default values: * `Content-Type`: This
+   * will be set to `"application/octet-stream"`. You can override this default
+   * by explicitly setting `Content-Type` to a particular media type when
+   * creating the job. For example, you can set `Content-Type` to
    * `"application/json"`. The headers below are output only. They cannot be set
    * or overridden: * `Content-Length`: This is computed by Cloud Scheduler. *
    * `X-Google-*`: For Google internal use only. * `X-AppEngine-*`: For Google

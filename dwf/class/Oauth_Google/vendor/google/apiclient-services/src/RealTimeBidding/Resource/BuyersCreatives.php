@@ -17,6 +17,7 @@
 
 namespace Google\Service\RealTimeBidding\Resource;
 
+use Google\Service\RealTimeBidding\AddDealsRequest;
 use Google\Service\RealTimeBidding\Creative;
 use Google\Service\RealTimeBidding\ListCreativesResponse;
 
@@ -30,6 +31,23 @@ use Google\Service\RealTimeBidding\ListCreativesResponse;
  */
 class BuyersCreatives extends \Google\Service\Resource
 {
+  /**
+   * Adds a list of deals to a creative, which submits the creative for publisher
+   * review. Returns the updated creative. (creatives.addDeals)
+   *
+   * @param string $name Required. Name of the creative to add the deals to. See
+   * creative.name.
+   * @param AddDealsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Creative
+   * @throws \Google\Service\Exception
+   */
+  public function addDeals($name, AddDealsRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('addDeals', [$params], Creative::class);
+  }
   /**
    * Creates a creative. (creatives.create)
    *
@@ -56,6 +74,9 @@ class BuyersCreatives extends \Google\Service\Resource
    * creative.name.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string adCategoryTaxonomyOverride Optional. The category taxonomy
+   * to use for the response. Overrides the default category taxonomy for the
+   * bidder.
    * @opt_param string view Controls the amount of information included in the
    * response. By default only creativeServingDecision is included. To retrieve
    * the entire creative resource (including the declared fields and the creative
@@ -92,6 +113,9 @@ class BuyersCreatives extends \Google\Service\Resource
    * creatives pertaining to bidder (`123`), use `bidders/123`.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string adCategoryTaxonomyOverride Optional. The category taxonomy
+   * to use for the response. Overrides the default category taxonomy for the
+   * bidder.
    * @opt_param string filter Query string to filter creatives. If no filter is
    * specified, all active creatives will be returned. Example: 'accountId=12345
    * AND (dealsStatus:DISAPPROVED AND disapprovalReason:UNACCEPTABLE_CONTENT) OR

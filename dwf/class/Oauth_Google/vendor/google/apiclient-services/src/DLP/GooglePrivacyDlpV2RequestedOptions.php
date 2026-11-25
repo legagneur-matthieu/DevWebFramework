@@ -41,8 +41,8 @@ class GooglePrivacyDlpV2RequestedOptions extends \Google\Model
     return $this->jobConfig;
   }
   /**
-   * If run with an InspectTemplate, a snapshot of its state at the time of this
-   * run.
+   * Output only. If run with an InspectTemplate, a snapshot of its state at the
+   * time of this run.
    *
    * @param GooglePrivacyDlpV2InspectTemplate $snapshotInspectTemplate
    */

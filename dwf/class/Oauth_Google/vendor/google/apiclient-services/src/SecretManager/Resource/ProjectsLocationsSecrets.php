@@ -18,8 +18,10 @@
 namespace Google\Service\SecretManager\Resource;
 
 use Google\Service\SecretManager\AddSecretVersionRequest;
+use Google\Service\SecretManager\EnableManagedRotationRequest;
 use Google\Service\SecretManager\ListSecretsResponse;
 use Google\Service\SecretManager\Policy;
+use Google\Service\SecretManager\RotateSecretRequest;
 use Google\Service\SecretManager\Secret;
 use Google\Service\SecretManager\SecretVersion;
 use Google\Service\SecretManager\SecretmanagerEmpty;
@@ -94,6 +96,26 @@ class ProjectsLocationsSecrets extends \Google\Service\Resource
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('delete', [$params], SecretmanagerEmpty::class);
+  }
+  /**
+   * Enables the managed rotation feature for a Secret. This method can only be
+   * triggered once for a secret. In order to do further rotations, RotateSecret
+   * should be used. This method will add a secret version and update the password
+   * in Cloud SQL. (secrets.enableManagedRotation)
+   *
+   * @param string $parent Required. The resource name of the Secret to associate
+   * with the SecretVersion in the format `projects/secrets` or
+   * `projects/locations/secrets`.
+   * @param EnableManagedRotationRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return SecretVersion
+   * @throws \Google\Service\Exception
+   */
+  public function enableManagedRotation($parent, EnableManagedRotationRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('enableManagedRotation', [$params], SecretVersion::class);
   }
   /**
    * Gets metadata for a given Secret. (secrets.get)
@@ -184,6 +206,25 @@ class ProjectsLocationsSecrets extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Secret::class);
+  }
+  /**
+   * Do a managed rotation for a Secret. This can only be triggered after Managed
+   * rotation has been enabled. This method will add a secret version and update
+   * the password in Cloud SQL. (secrets.rotateSecret)
+   *
+   * @param string $parent Required. The resource name of the Secret to associate
+   * with the SecretVersion in the format `projects/secrets` or
+   * `projects/locations/secrets`.
+   * @param RotateSecretRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return SecretVersion
+   * @throws \Google\Service\Exception
+   */
+  public function rotateSecret($parent, RotateSecretRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('rotateSecret', [$params], SecretVersion::class);
   }
   /**
    * Sets the access control policy on the specified secret. Replaces any existing

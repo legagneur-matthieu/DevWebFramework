@@ -17,14 +17,33 @@
 
 namespace Google\Service\DiscoveryEngine;
 
-class GoogleCloudDiscoveryengineV1ActionConfig extends \Google\Model
+class GoogleCloudDiscoveryengineV1ActionConfig extends \Google\Collection
 {
+  protected $collection_key = 'customerManagedScopes';
   /**
    * Optional. Action parameters in structured json format.
    *
    * @var array[]
    */
   public $actionParams;
+  /**
+   * Optional. Whether to create a BAP connection for the connector.
+   *
+   * @var bool
+   */
+  public $createBapConnection;
+  /**
+   * Optional. Customer-supplied OAuth scopes for connectors that opt into
+   * customer- managed scopes via
+   * ConnectorSource.enable_customer_managed_scopes. When non-empty on an opted-
+   * in connector, this list **replaces** the connector's built-in per-tool
+   * scopes: the OAuth authorization URL requests exactly these scopes for every
+   * operation, and the built-in scopes are never merged in. Ignored for
+   * connectors that do not opt in.
+   *
+   * @var string[]
+   */
+  public $customerManagedScopes;
   /**
    * Output only. The connector contains the necessary parameters and is
    * configured to support actions.
@@ -54,6 +73,8 @@ class GoogleCloudDiscoveryengineV1ActionConfig extends \Google\Model
    * @var bool
    */
   public $useStaticSecrets;
+  protected $userDefinedScopesMappingType = GoogleCloudDiscoveryengineV1ActionConfigScopeList::class;
+  protected $userDefinedScopesMappingDataType = 'map';
 
   /**
    * Optional. Action parameters in structured json format.
@@ -70,6 +91,44 @@ class GoogleCloudDiscoveryengineV1ActionConfig extends \Google\Model
   public function getActionParams()
   {
     return $this->actionParams;
+  }
+  /**
+   * Optional. Whether to create a BAP connection for the connector.
+   *
+   * @param bool $createBapConnection
+   */
+  public function setCreateBapConnection($createBapConnection)
+  {
+    $this->createBapConnection = $createBapConnection;
+  }
+  /**
+   * @return bool
+   */
+  public function getCreateBapConnection()
+  {
+    return $this->createBapConnection;
+  }
+  /**
+   * Optional. Customer-supplied OAuth scopes for connectors that opt into
+   * customer- managed scopes via
+   * ConnectorSource.enable_customer_managed_scopes. When non-empty on an opted-
+   * in connector, this list **replaces** the connector's built-in per-tool
+   * scopes: the OAuth authorization URL requests exactly these scopes for every
+   * operation, and the built-in scopes are never merged in. Ignored for
+   * connectors that do not opt in.
+   *
+   * @param string[] $customerManagedScopes
+   */
+  public function setCustomerManagedScopes($customerManagedScopes)
+  {
+    $this->customerManagedScopes = $customerManagedScopes;
+  }
+  /**
+   * @return string[]
+   */
+  public function getCustomerManagedScopes()
+  {
+    return $this->customerManagedScopes;
   }
   /**
    * Output only. The connector contains the necessary parameters and is
@@ -139,6 +198,23 @@ class GoogleCloudDiscoveryengineV1ActionConfig extends \Google\Model
   public function getUseStaticSecrets()
   {
     return $this->useStaticSecrets;
+  }
+  /**
+   * Optional. Mapping from operation name to the list of scopes. Only be
+   * populated if there are user specified scopes.
+   *
+   * @param GoogleCloudDiscoveryengineV1ActionConfigScopeList[] $userDefinedScopesMapping
+   */
+  public function setUserDefinedScopesMapping($userDefinedScopesMapping)
+  {
+    $this->userDefinedScopesMapping = $userDefinedScopesMapping;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1ActionConfigScopeList[]
+   */
+  public function getUserDefinedScopesMapping()
+  {
+    return $this->userDefinedScopesMapping;
   }
 }
 

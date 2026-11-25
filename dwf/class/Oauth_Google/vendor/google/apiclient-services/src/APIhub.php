@@ -34,6 +34,12 @@ use Google\Client;
  */
 class APIhub extends \Google\Service
 {
+  /** See your Google Cloud API hub data and the email address of your Google Account. */
+  const APIHUB_READONLY =
+      "https://www.googleapis.com/auth/apihub.readonly";
+  /** See, edit, configure, and delete your Google Cloud API hub data and see the email address for your Google Account. */
+  const APIHUB_READWRITE =
+      "https://www.googleapis.com/auth/apihub.readwrite";
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
@@ -53,12 +59,14 @@ class APIhub extends \Google\Service
   public $projects_locations_discoveredApiObservations;
   public $projects_locations_discoveredApiObservations_discoveredApiOperations;
   public $projects_locations_externalApis;
+  public $projects_locations_generatedSpecApis;
   public $projects_locations_hostProjectRegistrations;
   public $projects_locations_operations;
   public $projects_locations_plugins;
   public $projects_locations_plugins_instances;
   public $projects_locations_plugins_styleGuide;
   public $projects_locations_runtimeProjectAttachments;
+  public $projects_locations_servers;
   public $rootUrlTemplate;
 
   /**
@@ -281,6 +289,20 @@ class APIhub extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -1141,6 +1163,58 @@ class APIhub extends \Google\Service
           ]
         ]
     );
+    $this->projects_locations_generatedSpecApis = new APIhub\Resource\ProjectsLocationsGeneratedSpecApis(
+        $this,
+        $this->serviceName,
+        'generatedSpecApis',
+        [
+          'methods' => [
+            'generateSpec' => [
+              'path' => 'v1/{+name}:generateSpec',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/generatedSpecApis',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->projects_locations_hostProjectRegistrations = new APIhub\Resource\ProjectsLocationsHostProjectRegistrations(
         $this,
         $this->serviceName,
@@ -1581,6 +1655,26 @@ class APIhub extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_servers = new APIhub\Resource\ProjectsLocationsServers(
+        $this,
+        $this->serviceName,
+        'servers',
+        [
+          'methods' => [
+            'configureAndDeployServer' => [
+              'path' => 'v1/{+parent}/servers:configureAndDeployServer',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

@@ -21,14 +21,12 @@ class ConsumerPolicy extends \Google\Collection
 {
   protected $collection_key = 'enableRules';
   /**
-   * Optional. Annotations is an unstructured key-value map stored with a policy
-   * that may be set by external tools to store and retrieve arbitrary metadata.
-   * They are not queryable and should be preserved when modifying objects.
-   * [AIP-128](https://google.aip.dev/128#annotations)
+   * Output only. The time the policy was created. For singleton policies, this
+   * is the first touch of the policy.
    *
-   * @var string[]
+   * @var string
    */
-  public $annotations;
+  public $createTime;
   protected $enableRulesType = EnableRule::class;
   protected $enableRulesDataType = 'array';
   /**
@@ -39,8 +37,8 @@ class ConsumerPolicy extends \Google\Collection
    */
   public $etag;
   /**
-   * Output only. The resource name of the policy. We only allow consumer policy
-   * name as `default` for now: `projects/12345/consumerPolicies/default`,
+   * Output only. The resource name of the policy. Only the `default` policy is
+   * supported: `projects/12345/consumerPolicies/default`,
    * `folders/12345/consumerPolicies/default`,
    * `organizations/12345/consumerPolicies/default`.
    *
@@ -48,33 +46,32 @@ class ConsumerPolicy extends \Google\Collection
    */
   public $name;
   /**
-   * The last-modified time.
+   * Output only. The time the policy was last updated.
    *
    * @var string
    */
   public $updateTime;
 
   /**
-   * Optional. Annotations is an unstructured key-value map stored with a policy
-   * that may be set by external tools to store and retrieve arbitrary metadata.
-   * They are not queryable and should be preserved when modifying objects.
-   * [AIP-128](https://google.aip.dev/128#annotations)
+   * Output only. The time the policy was created. For singleton policies, this
+   * is the first touch of the policy.
    *
-   * @param string[] $annotations
+   * @param string $createTime
    */
-  public function setAnnotations($annotations)
+  public function setCreateTime($createTime)
   {
-    $this->annotations = $annotations;
+    $this->createTime = $createTime;
   }
   /**
-   * @return string[]
+   * @return string
    */
-  public function getAnnotations()
+  public function getCreateTime()
   {
-    return $this->annotations;
+    return $this->createTime;
   }
   /**
-   * Enable rules define usable services and service groups.
+   * Enable rules define usable services and groups. There can currently be at
+   * most one `EnableRule`. This restriction will be lifted in later releases.
    *
    * @param EnableRule[] $enableRules
    */
@@ -107,8 +104,8 @@ class ConsumerPolicy extends \Google\Collection
     return $this->etag;
   }
   /**
-   * Output only. The resource name of the policy. We only allow consumer policy
-   * name as `default` for now: `projects/12345/consumerPolicies/default`,
+   * Output only. The resource name of the policy. Only the `default` policy is
+   * supported: `projects/12345/consumerPolicies/default`,
    * `folders/12345/consumerPolicies/default`,
    * `organizations/12345/consumerPolicies/default`.
    *
@@ -126,7 +123,7 @@ class ConsumerPolicy extends \Google\Collection
     return $this->name;
   }
   /**
-   * The last-modified time.
+   * Output only. The time the policy was last updated.
    *
    * @param string $updateTime
    */

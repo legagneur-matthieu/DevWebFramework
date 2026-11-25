@@ -89,9 +89,23 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'exchangeAuthCode' => [
               'path' => 'v2/{+name}:exchangeAuthCode',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'executeHttpRequest' => [
+              'path' => 'v2/{+name}:executeHttpRequest',
               'httpMethod' => 'POST',
               'parameters' => [
                 'name' => [
@@ -110,11 +124,41 @@ class Connectors extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'generateConnectionToolspecOverride' => [
+              'path' => 'v2/{+name}:generateConnectionToolspecOverride',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'listCustomToolNames' => [
+              'path' => 'v2/{+name}:listCustomToolNames',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'refreshAccessToken' => [
               'path' => 'v2/{+name}:refreshAccessToken',
               'httpMethod' => 'POST',
               'parameters' => [
                 'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'tools' => [
+              'path' => 'v2/{+parent}/tools',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
@@ -149,6 +193,10 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'view' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -162,6 +210,10 @@ class Connectors extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -199,6 +251,10 @@ class Connectors extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'view' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -212,6 +268,10 @@ class Connectors extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -245,6 +305,10 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'delete' => [
               'path' => 'v2/{+name}',
@@ -254,6 +318,10 @@ class Connectors extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'deleteEntitiesWithConditions' => [
@@ -269,6 +337,10 @@ class Connectors extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'get' => [
               'path' => 'v2/{+name}',
@@ -278,6 +350,10 @@ class Connectors extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'list' => [
@@ -290,6 +366,10 @@ class Connectors extends \Google\Service
                   'required' => true,
                 ],
                 'conditions' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'executionConfig.headers' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -321,6 +401,10 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'updateEntitiesWithConditions' => [
               'path' => 'v2/{+entityType}/entities:updateEntitiesWithConditions',
@@ -332,6 +416,10 @@ class Connectors extends \Google\Service
                   'required' => true,
                 ],
                 'conditions' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'executionConfig.headers' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -355,6 +443,20 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'getResourcePost' => [
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
               ],
             ],'list' => [
               'path' => 'v2/{+parent}/resources',
@@ -364,6 +466,10 @@ class Connectors extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -403,6 +509,10 @@ class Connectors extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'executionConfig.headers' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'pageSize' => [
                   'location' => 'query',
                   'type' => 'integer',
@@ -410,6 +520,11 @@ class Connectors extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'toolNames' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
               ],
             ],

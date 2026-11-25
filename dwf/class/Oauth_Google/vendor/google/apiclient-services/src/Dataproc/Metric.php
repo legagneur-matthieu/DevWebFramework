@@ -24,9 +24,9 @@ class Metric extends \Google\Collection
    */
   public const METRIC_SOURCE_METRIC_SOURCE_UNSPECIFIED = 'METRIC_SOURCE_UNSPECIFIED';
   /**
-   * Monitoring agent metrics. If this source is enabled, Dataproc enables the
-   * monitoring agent in Compute Engine, and collects monitoring agent metrics,
-   * which are published with an agent.googleapis.com prefix.
+   * Monitoring agent metrics. If this source is enabled, the service enables
+   * the monitoring agent in Compute Engine, and collects monitoring agent
+   * metrics, which are published with an agent.googleapis.com prefix.
    */
   public const METRIC_SOURCE_MONITORING_AGENT_DEFAULTS = 'MONITORING_AGENT_DEFAULTS';
   /**
@@ -64,8 +64,8 @@ class Metric extends \Google\Collection
    * metrics#custom_metrics) to collect for the metric course (for the SPARK
    * metric source (any Spark metric
    * (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
-   * specified).Provide metrics in the following format: METRIC_SOURCE:
-   * INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples:
+   * specified).Provide metrics in the following format:METRIC_SOURCE:INSTANCE
+   * :GROUP:METRIC Use camelcase as appropriate.Examples:
    * yarn:ResourceManager:QueueMetrics:AppsCompleted
    * spark:driver:DAGScheduler:job.allJobs
    * sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed
@@ -96,8 +96,8 @@ class Metric extends \Google\Collection
    * metrics#custom_metrics) to collect for the metric course (for the SPARK
    * metric source (any Spark metric
    * (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
-   * specified).Provide metrics in the following format: METRIC_SOURCE:
-   * INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples:
+   * specified).Provide metrics in the following format:METRIC_SOURCE:INSTANCE
+   * :GROUP:METRIC Use camelcase as appropriate.Examples:
    * yarn:ResourceManager:QueueMetrics:AppsCompleted
    * spark:driver:DAGScheduler:job.allJobs
    * sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed

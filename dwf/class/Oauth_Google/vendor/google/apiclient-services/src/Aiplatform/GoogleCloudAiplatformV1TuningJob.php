@@ -17,7 +17,7 @@
 
 namespace Google\Service\Aiplatform;
 
-class GoogleCloudAiplatformV1TuningJob extends \Google\Model
+class GoogleCloudAiplatformV1TuningJob extends \Google\Collection
 {
   /**
    * The job state is unspecified.
@@ -69,6 +69,7 @@ class GoogleCloudAiplatformV1TuningJob extends \Google\Model
    * The job is partially succeeded, some results may be missing due to errors.
    */
   public const STATE_JOB_STATE_PARTIALLY_SUCCEEDED = 'JOB_STATE_PARTIALLY_SUCCEEDED';
+  protected $collection_key = 'evaluateDatasetRuns';
   /**
    * The base model that is being tuned. See [Supported
    * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-
@@ -101,12 +102,20 @@ class GoogleCloudAiplatformV1TuningJob extends \Google\Model
   public $endTime;
   protected $errorType = GoogleRpcStatus::class;
   protected $errorDataType = '';
+  protected $evaluateDatasetRunsType = GoogleCloudAiplatformV1EvaluateDatasetRun::class;
+  protected $evaluateDatasetRunsDataType = 'array';
   /**
    * Output only. The Experiment associated with this TuningJob.
    *
    * @var string
    */
   public $experiment;
+  /**
+   * Output only. The Cloud Storage metrics URI associated with this TuningJob.
+   *
+   * @var string
+   */
+  public $gcsMetricsUri;
   /**
    * Optional. The labels with user-defined metadata to organize TuningJob and
    * generated resources such as Model and Endpoint. Label keys and values can
@@ -279,6 +288,22 @@ class GoogleCloudAiplatformV1TuningJob extends \Google\Model
     return $this->error;
   }
   /**
+   * Output only. Evaluation runs for the Tuning Job.
+   *
+   * @param GoogleCloudAiplatformV1EvaluateDatasetRun[] $evaluateDatasetRuns
+   */
+  public function setEvaluateDatasetRuns($evaluateDatasetRuns)
+  {
+    $this->evaluateDatasetRuns = $evaluateDatasetRuns;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1EvaluateDatasetRun[]
+   */
+  public function getEvaluateDatasetRuns()
+  {
+    return $this->evaluateDatasetRuns;
+  }
+  /**
    * Output only. The Experiment associated with this TuningJob.
    *
    * @param string $experiment
@@ -293,6 +318,22 @@ class GoogleCloudAiplatformV1TuningJob extends \Google\Model
   public function getExperiment()
   {
     return $this->experiment;
+  }
+  /**
+   * Output only. The Cloud Storage metrics URI associated with this TuningJob.
+   *
+   * @param string $gcsMetricsUri
+   */
+  public function setGcsMetricsUri($gcsMetricsUri)
+  {
+    $this->gcsMetricsUri = $gcsMetricsUri;
+  }
+  /**
+   * @return string
+   */
+  public function getGcsMetricsUri()
+  {
+    return $this->gcsMetricsUri;
   }
   /**
    * Optional. The labels with user-defined metadata to organize TuningJob and

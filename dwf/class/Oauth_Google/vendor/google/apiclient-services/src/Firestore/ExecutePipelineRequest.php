@@ -19,6 +19,14 @@ namespace Google\Service\Firestore;
 
 class ExecutePipelineRequest extends \Google\Model
 {
+  /**
+   * Optional. Automatically commits the transaction after the pipeline has been
+   * executed. Only permitted in combination with `transaction` or
+   * `new_transaction`.
+   *
+   * @var bool
+   */
+  public $autoCommitTransaction;
   protected $newTransactionType = TransactionOptions::class;
   protected $newTransactionDataType = '';
   /**
@@ -30,6 +38,8 @@ class ExecutePipelineRequest extends \Google\Model
    * @var string
    */
   public $readTime;
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
   protected $structuredPipelineType = StructuredPipeline::class;
   protected $structuredPipelineDataType = '';
   /**
@@ -40,6 +50,24 @@ class ExecutePipelineRequest extends \Google\Model
    */
   public $transaction;
 
+  /**
+   * Optional. Automatically commits the transaction after the pipeline has been
+   * executed. Only permitted in combination with `transaction` or
+   * `new_transaction`.
+   *
+   * @param bool $autoCommitTransaction
+   */
+  public function setAutoCommitTransaction($autoCommitTransaction)
+  {
+    $this->autoCommitTransaction = $autoCommitTransaction;
+  }
+  /**
+   * @return bool
+   */
+  public function getAutoCommitTransaction()
+  {
+    return $this->autoCommitTransaction;
+  }
   /**
    * Execute the pipeline in a new transaction. The identifier of the newly
    * created transaction will be returned in the first response on the stream.
@@ -76,6 +104,22 @@ class ExecutePipelineRequest extends \Google\Model
   public function getReadTime()
   {
     return $this->readTime;
+  }
+  /**
+   * Optional. The request options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
   /**
    * A pipelined operation.

@@ -19,21 +19,86 @@ namespace Google\Service\CloudAlloyDBAdmin;
 
 class StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo extends \Google\Collection
 {
-  protected $collection_key = 'denyMaintenanceSchedules';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_MAINTENANCE_STATE_UNSPECIFIED = 'MAINTENANCE_STATE_UNSPECIFIED';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_CREATING = 'CREATING';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_READY = 'READY';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_UPDATING = 'UPDATING';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_REPAIRING = 'REPAIRING';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_DELETING = 'DELETING';
+  /**
+   * Disable validation warnings
+   */
+  public const MAINTENANCE_STATE_ERROR = 'ERROR';
+  protected $collection_key = 'nextAvailableMaintenanceVersions';
+  protected $currentVersionReleaseDateType = GoogleTypeDate::class;
+  protected $currentVersionReleaseDateDataType = '';
   protected $denyMaintenanceSchedulesType = StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule::class;
   protected $denyMaintenanceSchedulesDataType = 'array';
+  /**
+   * Optional. Disable validation warnings
+   *
+   * @var bool
+   */
+  public $isInstanceStopped;
   protected $maintenanceScheduleType = StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule::class;
   protected $maintenanceScheduleDataType = '';
   /**
-   * Optional. Current Maintenance version of the database resource. Example:
-   * "MYSQL_8_0_41.R20250531.01_15"
+   * Output only. Disable validation warnings
+   *
+   * @var string
+   */
+  public $maintenanceState;
+  /**
+   * Optional. Disable validation warnings
    *
    * @var string
    */
   public $maintenanceVersion;
+  /**
+   * Optional. Disable validation warnings
+   *
+   * @var string[]
+   */
+  public $nextAvailableMaintenanceVersions;
+  protected $upcomingMaintenanceType = StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance::class;
+  protected $upcomingMaintenanceDataType = '';
 
   /**
-   * Optional. List of Deny maintenance period for the database resource.
+   * Optional. Disable validation warnings
+   *
+   * @param GoogleTypeDate $currentVersionReleaseDate
+   */
+  public function setCurrentVersionReleaseDate(GoogleTypeDate $currentVersionReleaseDate)
+  {
+    $this->currentVersionReleaseDate = $currentVersionReleaseDate;
+  }
+  /**
+   * @return GoogleTypeDate
+   */
+  public function getCurrentVersionReleaseDate()
+  {
+    return $this->currentVersionReleaseDate;
+  }
+  /**
+   * Optional. Disable validation warnings
    *
    * @param StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule[] $denyMaintenanceSchedules
    */
@@ -49,7 +114,23 @@ class StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo extends \Goog
     return $this->denyMaintenanceSchedules;
   }
   /**
-   * Optional. Maintenance window for the database resource.
+   * Optional. Disable validation warnings
+   *
+   * @param bool $isInstanceStopped
+   */
+  public function setIsInstanceStopped($isInstanceStopped)
+  {
+    $this->isInstanceStopped = $isInstanceStopped;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsInstanceStopped()
+  {
+    return $this->isInstanceStopped;
+  }
+  /**
+   * Optional. Disable validation warnings
    *
    * @param StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule $maintenanceSchedule
    */
@@ -65,8 +146,26 @@ class StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo extends \Goog
     return $this->maintenanceSchedule;
   }
   /**
-   * Optional. Current Maintenance version of the database resource. Example:
-   * "MYSQL_8_0_41.R20250531.01_15"
+   * Output only. Disable validation warnings
+   *
+   * Accepted values: MAINTENANCE_STATE_UNSPECIFIED, CREATING, READY, UPDATING,
+   * REPAIRING, DELETING, ERROR
+   *
+   * @param self::MAINTENANCE_STATE_* $maintenanceState
+   */
+  public function setMaintenanceState($maintenanceState)
+  {
+    $this->maintenanceState = $maintenanceState;
+  }
+  /**
+   * @return self::MAINTENANCE_STATE_*
+   */
+  public function getMaintenanceState()
+  {
+    return $this->maintenanceState;
+  }
+  /**
+   * Optional. Disable validation warnings
    *
    * @param string $maintenanceVersion
    */
@@ -80,6 +179,38 @@ class StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo extends \Goog
   public function getMaintenanceVersion()
   {
     return $this->maintenanceVersion;
+  }
+  /**
+   * Optional. Disable validation warnings
+   *
+   * @param string[] $nextAvailableMaintenanceVersions
+   */
+  public function setNextAvailableMaintenanceVersions($nextAvailableMaintenanceVersions)
+  {
+    $this->nextAvailableMaintenanceVersions = $nextAvailableMaintenanceVersions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getNextAvailableMaintenanceVersions()
+  {
+    return $this->nextAvailableMaintenanceVersions;
+  }
+  /**
+   * Optional. Disable validation warnings
+   *
+   * @param StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance $upcomingMaintenance
+   */
+  public function setUpcomingMaintenance(StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance $upcomingMaintenance)
+  {
+    $this->upcomingMaintenance = $upcomingMaintenance;
+  }
+  /**
+   * @return StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance
+   */
+  public function getUpcomingMaintenance()
+  {
+    return $this->upcomingMaintenance;
   }
 }
 

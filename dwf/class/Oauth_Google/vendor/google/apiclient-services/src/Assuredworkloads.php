@@ -34,6 +34,12 @@ use Google\Client;
  */
 class Assuredworkloads extends \Google\Service
 {
+  /** See, edit, configure, and delete your Google Cloud Assured Workloads data and see the email address for your Google Account. */
+  const ASSUREDWORKLOADS =
+      "https://www.googleapis.com/auth/assuredworkloads";
+  /** See your Google Cloud Assured Workloads data and the email address of your Google Account. */
+  const ASSUREDWORKLOADS_READONLY =
+      "https://www.googleapis.com/auth/assuredworkloads.readonly";
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
@@ -321,6 +327,10 @@ class Assuredworkloads extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'view' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'list' => [
               'path' => 'v1/{+parent}/violations',
@@ -343,11 +353,19 @@ class Assuredworkloads extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'pageSize' => [
                   'location' => 'query',
                   'type' => 'integer',
                 ],
                 'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'view' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

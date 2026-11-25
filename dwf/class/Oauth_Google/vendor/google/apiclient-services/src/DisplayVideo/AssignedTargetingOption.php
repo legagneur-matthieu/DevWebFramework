@@ -260,6 +260,10 @@ class AssignedTargetingOption extends \Google\Model
    * YouTube and Demand Gen line item resources.
    */
   public const TARGETING_TYPE_TARGETING_TYPE_CONTENT_THEME_EXCLUSION = 'TARGETING_TYPE_CONTENT_THEME_EXCLUSION';
+  /**
+   * Target ads to a specific YouTube channel pack.
+   */
+  public const TARGETING_TYPE_TARGETING_TYPE_YOUTUBE_CHANNEL_PACK = 'TARGETING_TYPE_YOUTUBE_CHANNEL_PACK';
   protected $ageRangeDetailsType = AgeRangeAssignedTargetingOptionDetails::class;
   protected $ageRangeDetailsDataType = '';
   protected $appCategoryDetailsType = AppCategoryAssignedTargetingOptionDetails::class;
@@ -402,6 +406,8 @@ class AssignedTargetingOption extends \Google\Model
   protected $viewabilityDetailsDataType = '';
   protected $youtubeChannelDetailsType = YoutubeChannelAssignedTargetingOptionDetails::class;
   protected $youtubeChannelDetailsDataType = '';
+  protected $youtubeChannelPackDetailsType = YoutubeChannelPackAssignedTargetingOptionDetails::class;
+  protected $youtubeChannelPackDetailsDataType = '';
   protected $youtubeVideoDetailsType = YoutubeVideoAssignedTargetingOptionDetails::class;
   protected $youtubeVideoDetailsDataType = '';
 
@@ -932,7 +938,8 @@ class AssignedTargetingOption extends \Google\Model
   }
   /**
    * Inventory source details. This field will be populated when the
-   * targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE`.
+   * targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE` or
+   * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
    *
    * @param InventorySourceAssignedTargetingOptionDetails $inventorySourceDetails
    */
@@ -1253,7 +1260,7 @@ class AssignedTargetingOption extends \Google\Model
    * TARGETING_TYPE_OMID, TARGETING_TYPE_AUDIO_CONTENT_TYPE,
    * TARGETING_TYPE_CONTENT_GENRE, TARGETING_TYPE_YOUTUBE_VIDEO,
    * TARGETING_TYPE_YOUTUBE_CHANNEL, TARGETING_TYPE_SESSION_POSITION,
-   * TARGETING_TYPE_CONTENT_THEME_EXCLUSION
+   * TARGETING_TYPE_CONTENT_THEME_EXCLUSION, TARGETING_TYPE_YOUTUBE_CHANNEL_PACK
    *
    * @param self::TARGETING_TYPE_* $targetingType
    */
@@ -1370,6 +1377,23 @@ class AssignedTargetingOption extends \Google\Model
   public function getYoutubeChannelDetails()
   {
     return $this->youtubeChannelDetails;
+  }
+  /**
+   * YouTube channel pack details. This field will be populated when the
+   * targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL_PACK`.
+   *
+   * @param YoutubeChannelPackAssignedTargetingOptionDetails $youtubeChannelPackDetails
+   */
+  public function setYoutubeChannelPackDetails(YoutubeChannelPackAssignedTargetingOptionDetails $youtubeChannelPackDetails)
+  {
+    $this->youtubeChannelPackDetails = $youtubeChannelPackDetails;
+  }
+  /**
+   * @return YoutubeChannelPackAssignedTargetingOptionDetails
+   */
+  public function getYoutubeChannelPackDetails()
+  {
+    return $this->youtubeChannelPackDetails;
   }
   /**
    * YouTube video details. This field will be populated when the targeting_type

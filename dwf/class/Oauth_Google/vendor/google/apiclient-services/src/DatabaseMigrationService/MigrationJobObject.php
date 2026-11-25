@@ -48,6 +48,15 @@ class MigrationJobObject extends \Google\Model
    */
   public const PHASE_DIFF_BACKUP = 'DIFF_BACKUP';
   /**
+   * The migration job object is creating a fully managed backup of the source.
+   */
+  public const PHASE_CREATING_BACKUP = 'CREATING_BACKUP';
+  /**
+   * The migration job object is restoring a fully managed backup to the
+   * destination.
+   */
+  public const PHASE_RESTORING_BACKUP = 'RESTORING_BACKUP';
+  /**
    * The state of the migration job object is unknown.
    */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
@@ -192,7 +201,8 @@ class MigrationJobObject extends \Google\Model
    * Output only. The phase of the migration job object.
    *
    * Accepted values: PHASE_UNSPECIFIED, FULL_DUMP, CDC, READY_FOR_PROMOTE,
-   * PROMOTE_IN_PROGRESS, PROMOTED, DIFF_BACKUP
+   * PROMOTE_IN_PROGRESS, PROMOTED, DIFF_BACKUP, CREATING_BACKUP,
+   * RESTORING_BACKUP
    *
    * @param self::PHASE_* $phase
    */

@@ -76,10 +76,14 @@ class User extends \Google\Collection
    */
   public const TYPE_CLOUD_IAM_GROUP_SERVICE_ACCOUNT = 'CLOUD_IAM_GROUP_SERVICE_ACCOUNT';
   /**
+   * Cloud IAM workforce identity managed by Workforce Identity Federation.
+   */
+  public const TYPE_CLOUD_IAM_WORKFORCE_IDENTITY = 'CLOUD_IAM_WORKFORCE_IDENTITY';
+  /**
    * Microsoft Entra ID user.
    */
   public const TYPE_ENTRAID_USER = 'ENTRAID_USER';
-  protected $collection_key = 'databaseRoles';
+  protected $collection_key = 'serverRoles';
   /**
    * Optional. Role memberships of the user
    *
@@ -158,6 +162,12 @@ class User extends \Google\Collection
    * @var string
    */
   public $project;
+  /**
+   * Optional. The server roles for the SQL Server login.
+   *
+   * @var string[]
+   */
+  public $serverRoles;
   protected $sqlserverUserDetailsType = SqlServerUserDetails::class;
   protected $sqlserverUserDetailsDataType = '';
   /**
@@ -376,6 +386,22 @@ class User extends \Google\Collection
     return $this->project;
   }
   /**
+   * Optional. The server roles for the SQL Server login.
+   *
+   * @param string[] $serverRoles
+   */
+  public function setServerRoles($serverRoles)
+  {
+    $this->serverRoles = $serverRoles;
+  }
+  /**
+   * @return string[]
+   */
+  public function getServerRoles()
+  {
+    return $this->serverRoles;
+  }
+  /**
    * @param SqlServerUserDetails $sqlserverUserDetails
    */
   public function setSqlserverUserDetails(SqlServerUserDetails $sqlserverUserDetails)
@@ -395,7 +421,7 @@ class User extends \Google\Collection
    *
    * Accepted values: BUILT_IN, CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT,
    * CLOUD_IAM_GROUP, CLOUD_IAM_GROUP_USER, CLOUD_IAM_GROUP_SERVICE_ACCOUNT,
-   * ENTRAID_USER
+   * CLOUD_IAM_WORKFORCE_IDENTITY, ENTRAID_USER
    *
    * @param self::TYPE_* $type
    */

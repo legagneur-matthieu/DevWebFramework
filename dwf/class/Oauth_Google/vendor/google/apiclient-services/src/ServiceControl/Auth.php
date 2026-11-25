@@ -59,6 +59,15 @@ class Auth extends \Google\Collection
    * @var array[]
    */
   public $claims;
+  /**
+   * Identifies the client credential id used for authentication. credential_id
+   * is in the format of AUTH_METHOD:IDENTIFIER, e.g. "serviceaccount:XXXXX,
+   * apikey:XXXXX" where the format of the IDENTIFIER can vary for different
+   * AUTH_METHODs.
+   *
+   * @var string
+   */
+  public $credentialId;
   protected $oauthType = Oauth::class;
   protected $oauthDataType = '';
   /**
@@ -148,6 +157,25 @@ class Auth extends \Google\Collection
   public function getClaims()
   {
     return $this->claims;
+  }
+  /**
+   * Identifies the client credential id used for authentication. credential_id
+   * is in the format of AUTH_METHOD:IDENTIFIER, e.g. "serviceaccount:XXXXX,
+   * apikey:XXXXX" where the format of the IDENTIFIER can vary for different
+   * AUTH_METHODs.
+   *
+   * @param string $credentialId
+   */
+  public function setCredentialId($credentialId)
+  {
+    $this->credentialId = $credentialId;
+  }
+  /**
+   * @return string
+   */
+  public function getCredentialId()
+  {
+    return $this->credentialId;
   }
   /**
    * Attributes of the OAuth token associated with the request.

@@ -26,23 +26,42 @@ class CloudRunRevisionInfo extends \Google\Model
    */
   public $displayName;
   /**
+   * IP address of a Cloud Run revision. If the Cloud Run revision is in dual-
+   * stack subnetwork, this is the IP address relevant to the trace. Populated
+   * for `ARRIVE_AT_CLOUD_RUN_REVISION` steps.
+   *
+   * @var string
+   */
+  public $ipAddress;
+  /**
    * Location in which this revision is deployed.
    *
    * @var string
    */
   public $location;
   /**
-   * URI of Cloud Run service this revision belongs to.
+   * URI of Cloud Run service this revision belongs to. Format:
+   * `projects/{project}/locations/{location}/services/{service}` Mutually
+   * exclusive with `worker_pool_uri`.
    *
    * @var string
    */
   public $serviceUri;
   /**
-   * URI of a Cloud Run revision.
+   * URI of the Cloud Run revision. Format:
+   * `projects/{project}/locations/{location}/revisions/{revision}`
    *
    * @var string
    */
   public $uri;
+  /**
+   * URI of Cloud Run worker pool this revision belongs to. Format:
+   * `projects/{project}/locations/{location}/workerPools/{worker_pool}`
+   * Mutually exclusive with `service_uri`.
+   *
+   * @var string
+   */
+  public $workerPoolUri;
 
   /**
    * Name of a Cloud Run revision.
@@ -61,6 +80,24 @@ class CloudRunRevisionInfo extends \Google\Model
     return $this->displayName;
   }
   /**
+   * IP address of a Cloud Run revision. If the Cloud Run revision is in dual-
+   * stack subnetwork, this is the IP address relevant to the trace. Populated
+   * for `ARRIVE_AT_CLOUD_RUN_REVISION` steps.
+   *
+   * @param string $ipAddress
+   */
+  public function setIpAddress($ipAddress)
+  {
+    $this->ipAddress = $ipAddress;
+  }
+  /**
+   * @return string
+   */
+  public function getIpAddress()
+  {
+    return $this->ipAddress;
+  }
+  /**
    * Location in which this revision is deployed.
    *
    * @param string $location
@@ -77,7 +114,9 @@ class CloudRunRevisionInfo extends \Google\Model
     return $this->location;
   }
   /**
-   * URI of Cloud Run service this revision belongs to.
+   * URI of Cloud Run service this revision belongs to. Format:
+   * `projects/{project}/locations/{location}/services/{service}` Mutually
+   * exclusive with `worker_pool_uri`.
    *
    * @param string $serviceUri
    */
@@ -93,7 +132,8 @@ class CloudRunRevisionInfo extends \Google\Model
     return $this->serviceUri;
   }
   /**
-   * URI of a Cloud Run revision.
+   * URI of the Cloud Run revision. Format:
+   * `projects/{project}/locations/{location}/revisions/{revision}`
    *
    * @param string $uri
    */
@@ -107,6 +147,24 @@ class CloudRunRevisionInfo extends \Google\Model
   public function getUri()
   {
     return $this->uri;
+  }
+  /**
+   * URI of Cloud Run worker pool this revision belongs to. Format:
+   * `projects/{project}/locations/{location}/workerPools/{worker_pool}`
+   * Mutually exclusive with `service_uri`.
+   *
+   * @param string $workerPoolUri
+   */
+  public function setWorkerPoolUri($workerPoolUri)
+  {
+    $this->workerPoolUri = $workerPoolUri;
+  }
+  /**
+   * @return string
+   */
+  public function getWorkerPoolUri()
+  {
+    return $this->workerPoolUri;
   }
 }
 

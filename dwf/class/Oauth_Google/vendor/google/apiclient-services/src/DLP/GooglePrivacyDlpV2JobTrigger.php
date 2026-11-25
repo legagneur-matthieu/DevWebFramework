@@ -65,8 +65,8 @@ class GooglePrivacyDlpV2JobTrigger extends \Google\Collection
    */
   public $lastRunTime;
   /**
-   * Unique resource name for the triggeredJob, assigned by the service when the
-   * triggeredJob is created, for example `projects/dlp-test-
+   * Output only. Unique resource name for the triggeredJob, assigned by the
+   * service when the triggeredJob is created, for example `projects/dlp-test-
    * project/jobTriggers/53234423`.
    *
    * @var string
@@ -187,8 +187,8 @@ class GooglePrivacyDlpV2JobTrigger extends \Google\Collection
     return $this->lastRunTime;
   }
   /**
-   * Unique resource name for the triggeredJob, assigned by the service when the
-   * triggeredJob is created, for example `projects/dlp-test-
+   * Output only. Unique resource name for the triggeredJob, assigned by the
+   * service when the triggeredJob is created, for example `projects/dlp-test-
    * project/jobTriggers/53234423`.
    *
    * @param string $name

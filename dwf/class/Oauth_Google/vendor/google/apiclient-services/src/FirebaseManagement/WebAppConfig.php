@@ -124,6 +124,12 @@ class WebAppConfig extends \Google\Model
    */
   public $realtimeDatabaseUrl;
   /**
+   * Optional. Recaptcha Enterprise site key associated with the Firebase App.
+   *
+   * @var string
+   */
+  public $recaptchaSiteKey;
+  /**
    * **DEPRECATED.** _Instead, find the name of the default Cloud Storage for
    * Firebase bucket using the [list endpoint](https://firebase.google.com/docs/
    * reference/rest/storage/rest/v1beta/projects.buckets/list) within the Cloud
@@ -350,6 +356,22 @@ class WebAppConfig extends \Google\Model
   public function getRealtimeDatabaseUrl()
   {
     return $this->realtimeDatabaseUrl;
+  }
+  /**
+   * Optional. Recaptcha Enterprise site key associated with the Firebase App.
+   *
+   * @param string $recaptchaSiteKey
+   */
+  public function setRecaptchaSiteKey($recaptchaSiteKey)
+  {
+    $this->recaptchaSiteKey = $recaptchaSiteKey;
+  }
+  /**
+   * @return string
+   */
+  public function getRecaptchaSiteKey()
+  {
+    return $this->recaptchaSiteKey;
   }
   /**
    * **DEPRECATED.** _Instead, find the name of the default Cloud Storage for

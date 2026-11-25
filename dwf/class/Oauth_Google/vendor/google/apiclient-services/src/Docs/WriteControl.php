@@ -20,6 +20,18 @@ namespace Google\Service\Docs;
 class WriteControl extends \Google\Model
 {
   /**
+   * The write mode is unspecified. Defaults to EDIT behavior.
+   */
+  public const WRITE_MODE_WRITE_MODE_UNSPECIFIED = 'WRITE_MODE_UNSPECIFIED';
+  /**
+   * Apply all updates as normal edits.
+   */
+  public const WRITE_MODE_EDIT = 'EDIT';
+  /**
+   * Apply all updates as suggestions.
+   */
+  public const WRITE_MODE_SUGGEST = 'SUGGEST';
+  /**
    * The optional revision ID of the document the write request is applied to.
    * If this is not the latest revision of the document, the request is not
    * processed and returns a 400 bad request error. When a required revision ID
@@ -48,6 +60,13 @@ class WriteControl extends \Google\Model
    * @var string
    */
   public $targetRevisionId;
+  /**
+   * How the request updates should be applied to the document. If unspecified,
+   * the request updates will be applied as normal edits.
+   *
+   * @var string
+   */
+  public $writeMode;
 
   /**
    * The optional revision ID of the document the write request is applied to.
@@ -97,6 +116,25 @@ class WriteControl extends \Google\Model
   public function getTargetRevisionId()
   {
     return $this->targetRevisionId;
+  }
+  /**
+   * How the request updates should be applied to the document. If unspecified,
+   * the request updates will be applied as normal edits.
+   *
+   * Accepted values: WRITE_MODE_UNSPECIFIED, EDIT, SUGGEST
+   *
+   * @param self::WRITE_MODE_* $writeMode
+   */
+  public function setWriteMode($writeMode)
+  {
+    $this->writeMode = $writeMode;
+  }
+  /**
+   * @return self::WRITE_MODE_*
+   */
+  public function getWriteMode()
+  {
+    return $this->writeMode;
   }
 }
 

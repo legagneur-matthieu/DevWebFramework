@@ -68,6 +68,10 @@ class Repository extends \Google\Model
    */
   public const FORMAT_RUBY = 'RUBY';
   /**
+   * Conda package format.
+   */
+  public const FORMAT_CONDA = 'CONDA';
+  /**
    * Unspecified mode.
    */
   public const MODE_MODE_UNSPECIFIED = 'MODE_UNSPECIFIED';
@@ -161,6 +165,8 @@ class Repository extends \Google\Model
    * @var string
    */
   public $name;
+  protected $platformLogsConfigType = PlatformLogsConfig::class;
+  protected $platformLogsConfigDataType = '';
   /**
    * Output only. The repository endpoint, for example: `us-docker.pkg.dev/my-
    * proj/my-repo`.
@@ -307,7 +313,7 @@ class Repository extends \Google\Model
    * Optional. The format of packages that are stored in the repository.
    *
    * Accepted values: FORMAT_UNSPECIFIED, DOCKER, MAVEN, NPM, APT, YUM, GOOGET,
-   * PYTHON, KFP, GO, GENERIC, RUBY
+   * PYTHON, KFP, GO, GENERIC, RUBY, CONDA
    *
    * @param self::FORMAT_* $format
    */
@@ -413,6 +419,22 @@ class Repository extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. Configuration for platform logs.
+   *
+   * @param PlatformLogsConfig $platformLogsConfig
+   */
+  public function setPlatformLogsConfig(PlatformLogsConfig $platformLogsConfig)
+  {
+    $this->platformLogsConfig = $platformLogsConfig;
+  }
+  /**
+   * @return PlatformLogsConfig
+   */
+  public function getPlatformLogsConfig()
+  {
+    return $this->platformLogsConfig;
   }
   /**
    * Output only. The repository endpoint, for example: `us-docker.pkg.dev/my-

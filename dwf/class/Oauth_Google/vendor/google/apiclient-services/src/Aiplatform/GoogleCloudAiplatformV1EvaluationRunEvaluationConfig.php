@@ -20,8 +20,30 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1EvaluationRunEvaluationConfig extends \Google\Collection
 {
   protected $collection_key = 'rubricConfigs';
+  /**
+   * Optional. Allows judge model calls to be made in a region other than the
+   * run location. The service picks the region for each judge model call as
+   * follows: 1. If this flag is true and the model is a fully-qualified
+   * publisher model name (`projects/{project}/locations/{location}/publishers/{
+   * publisher}/models/{model}`), the call is made in `{location}`. 2. If this
+   * flag is true and the model is given by ID only, or is chosen by the service
+   * (for example, for predefined metrics), the call is made in the model
+   * family's default location: `global` for Gemini models, or a fixed regional
+   * endpoint for supported partner models. 3. Otherwise, the call is made in
+   * the run location. Without this flag, the location in a fully-qualified
+   * model name is ignored.
+   *
+   * @var bool
+   */
+  public $allowCrossRegionModel;
   protected $autoraterConfigType = GoogleCloudAiplatformV1EvaluationRunEvaluationConfigAutoraterConfig::class;
   protected $autoraterConfigDataType = '';
+  protected $cloudLoggingConfigType = GoogleCloudAiplatformV1CloudLoggingConfig::class;
+  protected $cloudLoggingConfigDataType = '';
+  protected $datasetCustomMetricsType = GoogleCloudAiplatformV1DatasetCustomMetric::class;
+  protected $datasetCustomMetricsDataType = 'array';
+  protected $lossAnalysisConfigType = GoogleCloudAiplatformV1LossAnalysisConfig::class;
+  protected $lossAnalysisConfigDataType = 'array';
   protected $metricsType = GoogleCloudAiplatformV1EvaluationRunMetric::class;
   protected $metricsDataType = 'array';
   protected $outputConfigType = GoogleCloudAiplatformV1EvaluationRunEvaluationConfigOutputConfig::class;
@@ -31,6 +53,32 @@ class GoogleCloudAiplatformV1EvaluationRunEvaluationConfig extends \Google\Colle
   protected $rubricConfigsType = GoogleCloudAiplatformV1EvaluationRubricConfig::class;
   protected $rubricConfigsDataType = 'array';
 
+  /**
+   * Optional. Allows judge model calls to be made in a region other than the
+   * run location. The service picks the region for each judge model call as
+   * follows: 1. If this flag is true and the model is a fully-qualified
+   * publisher model name (`projects/{project}/locations/{location}/publishers/{
+   * publisher}/models/{model}`), the call is made in `{location}`. 2. If this
+   * flag is true and the model is given by ID only, or is chosen by the service
+   * (for example, for predefined metrics), the call is made in the model
+   * family's default location: `global` for Gemini models, or a fixed regional
+   * endpoint for supported partner models. 3. Otherwise, the call is made in
+   * the run location. Without this flag, the location in a fully-qualified
+   * model name is ignored.
+   *
+   * @param bool $allowCrossRegionModel
+   */
+  public function setAllowCrossRegionModel($allowCrossRegionModel)
+  {
+    $this->allowCrossRegionModel = $allowCrossRegionModel;
+  }
+  /**
+   * @return bool
+   */
+  public function getAllowCrossRegionModel()
+  {
+    return $this->allowCrossRegionModel;
+  }
   /**
    * Optional. The autorater config for the evaluation run.
    *
@@ -48,7 +96,57 @@ class GoogleCloudAiplatformV1EvaluationRunEvaluationConfig extends \Google\Colle
     return $this->autoraterConfig;
   }
   /**
-   * Required. The metrics to be calculated in the evaluation run.
+   * Optional. Configuration for exporting evaluation results to Cloud Logging.
+   *
+   * @param GoogleCloudAiplatformV1CloudLoggingConfig $cloudLoggingConfig
+   */
+  public function setCloudLoggingConfig(GoogleCloudAiplatformV1CloudLoggingConfig $cloudLoggingConfig)
+  {
+    $this->cloudLoggingConfig = $cloudLoggingConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1CloudLoggingConfig
+   */
+  public function getCloudLoggingConfig()
+  {
+    return $this->cloudLoggingConfig;
+  }
+  /**
+   * Optional. Specifications for custom dataset-level aggregations.
+   *
+   * @param GoogleCloudAiplatformV1DatasetCustomMetric[] $datasetCustomMetrics
+   */
+  public function setDatasetCustomMetrics($datasetCustomMetrics)
+  {
+    $this->datasetCustomMetrics = $datasetCustomMetrics;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1DatasetCustomMetric[]
+   */
+  public function getDatasetCustomMetrics()
+  {
+    return $this->datasetCustomMetrics;
+  }
+  /**
+   * Optional. Specifications for loss analysis. Each config can be specified
+   * for one metric.
+   *
+   * @param GoogleCloudAiplatformV1LossAnalysisConfig[] $lossAnalysisConfig
+   */
+  public function setLossAnalysisConfig($lossAnalysisConfig)
+  {
+    $this->lossAnalysisConfig = $lossAnalysisConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1LossAnalysisConfig[]
+   */
+  public function getLossAnalysisConfig()
+  {
+    return $this->lossAnalysisConfig;
+  }
+  /**
+   * Optional. The metrics to be calculated in the evaluation run. Required when
+   * analysis_configs is not set.
    *
    * @param GoogleCloudAiplatformV1EvaluationRunMetric[] $metrics
    */

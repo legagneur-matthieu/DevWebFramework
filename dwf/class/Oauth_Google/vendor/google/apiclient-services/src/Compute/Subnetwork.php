@@ -79,6 +79,27 @@ class Subnetwork extends \Google\Collection
    */
   public const PURPOSE_REGIONAL_MANAGED_PROXY = 'REGIONAL_MANAGED_PROXY';
   /**
+   * All ranges assigned to the VM NIC will respond to ARP.
+   */
+  public const RESOLVE_SUBNET_MASK_ARP_ALL_RANGES = 'ARP_ALL_RANGES';
+  /**
+   * VMs will receive an ARP response from a VM instance owning the target IP
+   * address within the subnetwork's primary CIDR range, if such a VM instance
+   * exists and is running.
+   */
+  public const RESOLVE_SUBNET_MASK_ARP_BROADCAST_PRIMARY_RANGE = 'ARP_BROADCAST_PRIMARY_RANGE';
+  /**
+   * Combines ARP_BROADCAST_PRIMARY_RANGE with MAC learning. Enables cache
+   * mapping between IP addresses and custom MAC addresses of instances and use
+   * of it to set the correct destination MAC address. If this option is chosen,
+   * the subnetwork must have /24 or a smaller CIDR range.
+   */
+  public const RESOLVE_SUBNET_MASK_ARP_BROADCAST_PRIMARY_RANGE_WITH_LEARNING = 'ARP_BROADCAST_PRIMARY_RANGE_WITH_LEARNING';
+  /**
+   * Only the primary range of the VM NIC will respond to ARP.
+   */
+  public const RESOLVE_SUBNET_MASK_ARP_PRIMARY_RANGE = 'ARP_PRIMARY_RANGE';
+  /**
    * The ACTIVE subnet that is currently used.
    */
   public const ROLE_ACTIVE = 'ACTIVE';
@@ -108,9 +129,9 @@ class Subnetwork extends \Google\Collection
   public const STATE_READY = 'READY';
   protected $collection_key = 'systemReservedInternalIpv6Ranges';
   /**
-   * Whether this subnetwork's ranges can conflict with existing static routes.
+   * Whether this subnetwork's ranges can conflict with existing custom routes.
    * Setting this to true allows this subnetwork's primary and secondary ranges
-   * to overlap with (and contain) static routes that have already been
+   * to overlap with (and contain) custom routes that have already been
    * configured on the corresponding network.
    *
    * For example if a static route has range 10.1.0.0/16, a subnet range
@@ -126,8 +147,6 @@ class Subnetwork extends \Google\Collection
    *
    * The default value is false and applies to all existing subnetworks and
    * automatically created subnetworks.
-   *
-   * This field cannot be set to true at resource creation time.
    *
    * @var bool
    */
@@ -315,6 +334,12 @@ class Subnetwork extends \Google\Collection
    */
   public $reservedInternalRange;
   /**
+   * Configures subnet mask resolution for this subnetwork.
+   *
+   * @var string
+   */
+  public $resolveSubnetMask;
+  /**
    * The role of subnetwork. Currently, this field is only used when purpose is
    * set to GLOBAL_MANAGED_PROXY orREGIONAL_MANAGED_PROXY. The value can be set
    * toACTIVE or BACKUP. An ACTIVE subnetwork is one that is currently being
@@ -374,9 +399,9 @@ class Subnetwork extends \Google\Collection
   protected $utilizationDetailsDataType = '';
 
   /**
-   * Whether this subnetwork's ranges can conflict with existing static routes.
+   * Whether this subnetwork's ranges can conflict with existing custom routes.
    * Setting this to true allows this subnetwork's primary and secondary ranges
-   * to overlap with (and contain) static routes that have already been
+   * to overlap with (and contain) custom routes that have already been
    * configured on the corresponding network.
    *
    * For example if a static route has range 10.1.0.0/16, a subnet range
@@ -392,8 +417,6 @@ class Subnetwork extends \Google\Collection
    *
    * The default value is false and applies to all existing subnetworks and
    * automatically created subnetworks.
-   *
-   * This field cannot be set to true at resource creation time.
    *
    * @param bool $allowSubnetCidrRoutesOverlap
    */
@@ -838,6 +861,25 @@ class Subnetwork extends \Google\Collection
     return $this->reservedInternalRange;
   }
   /**
+   * Configures subnet mask resolution for this subnetwork.
+   *
+   * Accepted values: ARP_ALL_RANGES, ARP_BROADCAST_PRIMARY_RANGE,
+   * ARP_BROADCAST_PRIMARY_RANGE_WITH_LEARNING, ARP_PRIMARY_RANGE
+   *
+   * @param self::RESOLVE_SUBNET_MASK_* $resolveSubnetMask
+   */
+  public function setResolveSubnetMask($resolveSubnetMask)
+  {
+    $this->resolveSubnetMask = $resolveSubnetMask;
+  }
+  /**
+   * @return self::RESOLVE_SUBNET_MASK_*
+   */
+  public function getResolveSubnetMask()
+  {
+    return $this->resolveSubnetMask;
+  }
+  /**
    * The role of subnetwork. Currently, this field is only used when purpose is
    * set to GLOBAL_MANAGED_PROXY orREGIONAL_MANAGED_PROXY. The value can be set
    * toACTIVE or BACKUP. An ACTIVE subnetwork is one that is currently being
@@ -865,6 +907,7 @@ class Subnetwork extends \Google\Collection
    * contained in this subnetwork. The primary IP of such VM must belong to the
    * primary ipCidrRange of the subnetwork. The alias IPs may belong to either
    * primary or secondary ranges. This field can be updated with apatch request.
+   * Supports both IPv4 and IPv6 ranges.
    *
    * @param SubnetworkSecondaryRange[] $secondaryIpRanges
    */

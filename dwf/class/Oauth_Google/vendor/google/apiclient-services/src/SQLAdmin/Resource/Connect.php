@@ -70,6 +70,23 @@ class Connect extends \Google\Service\Resource
     $params = array_merge($params, $optParams);
     return $this->call('get', [$params], ConnectSettings::class);
   }
+  /**
+   * Retrieves connect settings about a Cloud SQL instance using the instance DNS
+   * name. (connect.resolve)
+   *
+   * @param string $location Required. The region of the instance.
+   * @param string $dnsName Required. Cloud SQL instance ID. This does not include
+   * the project ID.
+   * @param array $optParams Optional parameters.
+   * @return ConnectSettings
+   * @throws \Google\Service\Exception
+   */
+  public function resolve($location, $dnsName, $optParams = [])
+  {
+    $params = ['location' => $location, 'dnsName' => $dnsName];
+    $params = array_merge($params, $optParams);
+    return $this->call('resolve', [$params], ConnectSettings::class);
+  }
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.

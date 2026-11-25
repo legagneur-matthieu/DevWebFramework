@@ -17,33 +17,37 @@
 
 namespace Google\Service\Dialogflow;
 
-class GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse extends \Google\Model
+class GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse extends \Google\Collection
 {
+  protected $collection_key = 'additionalSuggestedQueryResults';
+  protected $additionalSuggestedQueryResultsType = GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult::class;
+  protected $additionalSuggestedQueryResultsDataType = 'array';
   /**
-   * Number of messages prior to and including latest_message to compile the
-   * suggestion. It may be smaller than the
-   * SuggestKnowledgeAssistRequest.context_size field in the request if there
-   * are fewer messages in the conversation.
-   *
    * @var int
    */
   public $contextSize;
   protected $knowledgeAssistAnswerType = GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer::class;
   protected $knowledgeAssistAnswerDataType = '';
   /**
-   * The name of the latest conversation message used to compile suggestion for.
-   * Format: `projects//locations//conversations//messages/`.
-   *
    * @var string
    */
   public $latestMessage;
 
   /**
-   * Number of messages prior to and including latest_message to compile the
-   * suggestion. It may be smaller than the
-   * SuggestKnowledgeAssistRequest.context_size field in the request if there
-   * are fewer messages in the conversation.
-   *
+   * @param GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult[] $additionalSuggestedQueryResults
+   */
+  public function setAdditionalSuggestedQueryResults($additionalSuggestedQueryResults)
+  {
+    $this->additionalSuggestedQueryResults = $additionalSuggestedQueryResults;
+  }
+  /**
+   * @return GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult[]
+   */
+  public function getAdditionalSuggestedQueryResults()
+  {
+    return $this->additionalSuggestedQueryResults;
+  }
+  /**
    * @param int $contextSize
    */
   public function setContextSize($contextSize)
@@ -58,8 +62,6 @@ class GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse extends \Google
     return $this->contextSize;
   }
   /**
-   * Output only. Knowledge Assist suggestion.
-   *
    * @param GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer $knowledgeAssistAnswer
    */
   public function setKnowledgeAssistAnswer(GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer $knowledgeAssistAnswer)
@@ -74,9 +76,6 @@ class GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse extends \Google
     return $this->knowledgeAssistAnswer;
   }
   /**
-   * The name of the latest conversation message used to compile suggestion for.
-   * Format: `projects//locations//conversations//messages/`.
-   *
    * @param string $latestMessage
    */
   public function setLatestMessage($latestMessage)

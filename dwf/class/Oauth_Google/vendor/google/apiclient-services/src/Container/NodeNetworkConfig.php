@@ -19,7 +19,38 @@ namespace Google\Service\Container;
 
 class NodeNetworkConfig extends \Google\Collection
 {
+  /**
+   * Default value.
+   */
+  public const DATAPATH_PROVIDER_DATAPATH_PROVIDER_UNSPECIFIED = 'DATAPATH_PROVIDER_UNSPECIFIED';
+  /**
+   * Use the IPTables implementation based on kube-proxy.
+   */
+  public const DATAPATH_PROVIDER_LEGACY_DATAPATH = 'LEGACY_DATAPATH';
+  /**
+   * Use the eBPF based GKE Dataplane V2 with additional features. See the [GKE
+   * Dataplane V2 documentation](https://cloud.google.com/kubernetes-
+   * engine/docs/how-to/dataplane-v2) for more.
+   */
+  public const DATAPATH_PROVIDER_ADVANCED_DATAPATH = 'ADVANCED_DATAPATH';
+  /**
+   * Cluster has some existing nodes but new nodes should use ADVANCED_DATAPATH.
+   */
+  public const DATAPATH_PROVIDER_MIGRATE_TO_ADVANCED_DATAPATH = 'MIGRATE_TO_ADVANCED_DATAPATH';
+  /**
+   * Cluster has some existing nodes but new nodes should use LEGACY_DATAPATH.
+   */
+  public const DATAPATH_PROVIDER_MIGRATE_TO_LEGACY_DATAPATH = 'MIGRATE_TO_LEGACY_DATAPATH';
   protected $collection_key = 'additionalPodNetworkConfigs';
+  /**
+   * Immutable. The accelerator network profile for the node pool. For now the
+   * only valid value is "auto". If specified, the network configuration of the
+   * nodes in this node pool will be managed by this profile for the supported
+   * machine types, zone, etc.
+   *
+   * @var string
+   */
+  public $acceleratorNetworkProfile;
   protected $additionalNodeNetworkConfigsType = AdditionalNodeNetworkConfig::class;
   protected $additionalNodeNetworkConfigsDataType = 'array';
   protected $additionalPodNetworkConfigsType = AdditionalPodNetworkConfig::class;
@@ -36,6 +67,12 @@ class NodeNetworkConfig extends \Google\Collection
    */
   public $createPodRange;
   /**
+   * The datapath provider for this node pool.
+   *
+   * @var string
+   */
+  public $datapathProvider;
+  /**
    * Whether nodes have internal IP addresses only. If enable_private_nodes is
    * not specified, then the value is derived from
    * Cluster.NetworkConfig.default_enable_private_nodes
@@ -43,6 +80,12 @@ class NodeNetworkConfig extends \Google\Collection
    * @var bool
    */
   public $enablePrivateNodes;
+  /**
+   * Optional. Immutable. The VPC network for the node pool.
+   *
+   * @var string
+   */
+  public $network;
   protected $networkPerformanceConfigType = NetworkPerformanceConfig::class;
   protected $networkPerformanceConfigDataType = '';
   protected $networkTierConfigType = NetworkTierConfig::class;
@@ -81,16 +124,40 @@ class NodeNetworkConfig extends \Google\Collection
    */
   public $podRange;
   /**
-   * The subnetwork path for the node pool. Format:
+   * Optional. The subnetwork name/path for the node pool. Format:
    * projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
-   * is associated with multiple subnetworks, the subnetwork for the node pool
-   * is picked based on the IP utilization during node pool creation and is
-   * immutable.
+   * is associated with multiple subnetworks, the subnetwork can be either: - A
+   * user supplied subnetwork name during node pool creation (e.g., `my-
+   * subnet`). The name must be between 1 and 63 characters long, start with a
+   * letter, contain only letters, numbers, and hyphens, and end with a letter
+   * or a number. - A full subnetwork path during node pool creation, such as
+   * `projects/gke-project/regions/us-central1/subnetworks/my-subnet` - A
+   * subnetwork path picked based on the IP utilization during node pool
+   * creation and is immutable.
    *
    * @var string
    */
   public $subnetwork;
 
+  /**
+   * Immutable. The accelerator network profile for the node pool. For now the
+   * only valid value is "auto". If specified, the network configuration of the
+   * nodes in this node pool will be managed by this profile for the supported
+   * machine types, zone, etc.
+   *
+   * @param string $acceleratorNetworkProfile
+   */
+  public function setAcceleratorNetworkProfile($acceleratorNetworkProfile)
+  {
+    $this->acceleratorNetworkProfile = $acceleratorNetworkProfile;
+  }
+  /**
+   * @return string
+   */
+  public function getAcceleratorNetworkProfile()
+  {
+    return $this->acceleratorNetworkProfile;
+  }
   /**
    * We specify the additional node networks for this node pool using this list.
    * Each node network corresponds to an additional interface
@@ -147,6 +214,25 @@ class NodeNetworkConfig extends \Google\Collection
     return $this->createPodRange;
   }
   /**
+   * The datapath provider for this node pool.
+   *
+   * Accepted values: DATAPATH_PROVIDER_UNSPECIFIED, LEGACY_DATAPATH,
+   * ADVANCED_DATAPATH, MIGRATE_TO_ADVANCED_DATAPATH, MIGRATE_TO_LEGACY_DATAPATH
+   *
+   * @param self::DATAPATH_PROVIDER_* $datapathProvider
+   */
+  public function setDatapathProvider($datapathProvider)
+  {
+    $this->datapathProvider = $datapathProvider;
+  }
+  /**
+   * @return self::DATAPATH_PROVIDER_*
+   */
+  public function getDatapathProvider()
+  {
+    return $this->datapathProvider;
+  }
+  /**
    * Whether nodes have internal IP addresses only. If enable_private_nodes is
    * not specified, then the value is derived from
    * Cluster.NetworkConfig.default_enable_private_nodes
@@ -163,6 +249,22 @@ class NodeNetworkConfig extends \Google\Collection
   public function getEnablePrivateNodes()
   {
     return $this->enablePrivateNodes;
+  }
+  /**
+   * Optional. Immutable. The VPC network for the node pool.
+   *
+   * @param string $network
+   */
+  public function setNetwork($network)
+  {
+    $this->network = $network;
+  }
+  /**
+   * @return string
+   */
+  public function getNetwork()
+  {
+    return $this->network;
   }
   /**
    * Network bandwidth tier configuration.
@@ -199,11 +301,11 @@ class NodeNetworkConfig extends \Google\Collection
     return $this->networkTierConfig;
   }
   /**
-   * [PRIVATE FIELD] Pod CIDR size overprovisioning config for the nodepool. Pod
-   * CIDR size per node depends on max_pods_per_node. By default, the value of
-   * max_pods_per_node is rounded off to next power of 2 and we then double that
-   * to get the size of pod CIDR block per node. Example: max_pods_per_node of
-   * 30 would result in 64 IPs (/26). This config can disable the doubling of
+   * [PRIVATE FIELD] Pod CIDR size overprovisioning config for the node pool.
+   * Pod CIDR size per node depends on max_pods_per_node. By default, the value
+   * of max_pods_per_node is rounded off to next power of 2 and we then double
+   * that to get the size of pod CIDR block per node. Example: max_pods_per_node
+   * of 30 would result in 64 IPs (/26). This config can disable the doubling of
    * IPs (we still round off to next power of 2) Example: max_pods_per_node of
    * 30 will result in 32 IPs (/27) when overprovisioning is disabled.
    *
@@ -272,11 +374,16 @@ class NodeNetworkConfig extends \Google\Collection
     return $this->podRange;
   }
   /**
-   * The subnetwork path for the node pool. Format:
+   * Optional. The subnetwork name/path for the node pool. Format:
    * projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
-   * is associated with multiple subnetworks, the subnetwork for the node pool
-   * is picked based on the IP utilization during node pool creation and is
-   * immutable.
+   * is associated with multiple subnetworks, the subnetwork can be either: - A
+   * user supplied subnetwork name during node pool creation (e.g., `my-
+   * subnet`). The name must be between 1 and 63 characters long, start with a
+   * letter, contain only letters, numbers, and hyphens, and end with a letter
+   * or a number. - A full subnetwork path during node pool creation, such as
+   * `projects/gke-project/regions/us-central1/subnetworks/my-subnet` - A
+   * subnetwork path picked based on the IP utilization during node pool
+   * creation and is immutable.
    *
    * @param string $subnetwork
    */

@@ -52,6 +52,10 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
    */
   public const STATE_GENERATING_RUBRICS = 'GENERATING_RUBRICS';
   /**
+   * The evaluation run is performing loss analysis.
+   */
+  public const STATE_GENERATING_LOSS_CLUSTERS = 'GENERATING_LOSS_CLUSTERS';
+  /**
    * Output only. Time when the evaluation run was completed.
    *
    * @var string
@@ -71,6 +75,8 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
    * @var string
    */
   public $displayName;
+  protected $encryptionSpecType = GoogleCloudAiplatformV1EncryptionSpec::class;
+  protected $encryptionSpecDataType = '';
   protected $errorType = GoogleRpcStatus::class;
   protected $errorDataType = '';
   protected $evaluationConfigType = GoogleCloudAiplatformV1EvaluationRunEvaluationConfig::class;
@@ -108,6 +114,21 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * Optional. The service account to run the evaluation run as. If set, the run
+   * uses this service account to access Google Cloud resources. Access is
+   * limited to the IAM permissions that you grant to the service account. Must
+   * be provided if an inference config sets `harbor_run_config`,
+   * `data_agent_config`. If no inference config requires this field, setting it
+   * returns an error. The caller must have the `iam.serviceAccounts.actAs`
+   * permission on this service account, and the project's [Vertex AI Service
+   * Agent](https://cloud.google.com/vertex-ai/docs/general/access-
+   * control#service-agents) must have the
+   * `roles/iam.serviceAccountTokenCreator` role on it.
+   *
+   * @var string
+   */
+  public $serviceAccount;
   /**
    * Output only. The state of the evaluation run.
    *
@@ -180,6 +201,23 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
     return $this->displayName;
   }
   /**
+   * Optional. Customer-managed encryption key spec for this EvaluationRun. If
+   * set, this EvaluationRun will be secured by this key.
+   *
+   * @param GoogleCloudAiplatformV1EncryptionSpec $encryptionSpec
+   */
+  public function setEncryptionSpec(GoogleCloudAiplatformV1EncryptionSpec $encryptionSpec)
+  {
+    $this->encryptionSpec = $encryptionSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1EncryptionSpec
+   */
+  public function getEncryptionSpec()
+  {
+    return $this->encryptionSpec;
+  }
+  /**
    * Output only. Only populated when the evaluation run's state is FAILED or
    * CANCELLED.
    *
@@ -197,7 +235,8 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
     return $this->error;
   }
   /**
-   * Required. The configuration used for the evaluation.
+   * Optional. The configuration used for the evaluation. Optional when
+   * analysis_configs is provided.
    *
    * @param GoogleCloudAiplatformV1EvaluationRunEvaluationConfig $evaluationConfig
    */
@@ -317,10 +356,35 @@ class GoogleCloudAiplatformV1EvaluationRun extends \Google\Model
     return $this->name;
   }
   /**
+   * Optional. The service account to run the evaluation run as. If set, the run
+   * uses this service account to access Google Cloud resources. Access is
+   * limited to the IAM permissions that you grant to the service account. Must
+   * be provided if an inference config sets `harbor_run_config`,
+   * `data_agent_config`. If no inference config requires this field, setting it
+   * returns an error. The caller must have the `iam.serviceAccounts.actAs`
+   * permission on this service account, and the project's [Vertex AI Service
+   * Agent](https://cloud.google.com/vertex-ai/docs/general/access-
+   * control#service-agents) must have the
+   * `roles/iam.serviceAccountTokenCreator` role on it.
+   *
+   * @param string $serviceAccount
+   */
+  public function setServiceAccount($serviceAccount)
+  {
+    $this->serviceAccount = $serviceAccount;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceAccount()
+  {
+    return $this->serviceAccount;
+  }
+  /**
    * Output only. The state of the evaluation run.
    *
    * Accepted values: STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED,
-   * CANCELLED, INFERENCE, GENERATING_RUBRICS
+   * CANCELLED, INFERENCE, GENERATING_RUBRICS, GENERATING_LOSS_CLUSTERS
    *
    * @param self::STATE_* $state
    */

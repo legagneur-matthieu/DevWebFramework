@@ -19,6 +19,9 @@ namespace Google\Service\CloudRedis;
 
 class BackupRun extends \Google\Model
 {
+  /**
+   * Unspecified status.
+   */
   public const STATUS_STATUS_UNSPECIFIED = 'STATUS_UNSPECIFIED';
   /**
    * The backup was successful.

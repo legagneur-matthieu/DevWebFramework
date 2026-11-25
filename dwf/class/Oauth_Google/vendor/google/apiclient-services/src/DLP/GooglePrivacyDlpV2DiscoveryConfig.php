@@ -58,8 +58,8 @@ class GooglePrivacyDlpV2DiscoveryConfig extends \Google\Collection
    * specified, it will be copied to that region and used instead. If no global
    * or region-specific template is provided for a region with data, that
    * region's data will not be scanned. For more information, see
-   * https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-
-   * residency.
+   * https://docs.cloud.google.com/sensitive-data-protection/docs/data-
+   * profiles#data-residency.
    *
    * @var string[]
    */
@@ -71,9 +71,9 @@ class GooglePrivacyDlpV2DiscoveryConfig extends \Google\Collection
    */
   public $lastRunTime;
   /**
-   * Unique resource name for the DiscoveryConfig, assigned by the service when
-   * the DiscoveryConfig is created, for example `projects/dlp-test-
-   * project/locations/global/discoveryConfigs/53234423`.
+   * Output only. Unique resource name for the DiscoveryConfig, assigned by the
+   * service when the DiscoveryConfig is created, for example `projects/dlp-
+   * test-project/locations/global/discoveryConfigs/53234423`.
    *
    * @var string
    */
@@ -176,8 +176,8 @@ class GooglePrivacyDlpV2DiscoveryConfig extends \Google\Collection
    * specified, it will be copied to that region and used instead. If no global
    * or region-specific template is provided for a region with data, that
    * region's data will not be scanned. For more information, see
-   * https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-
-   * residency.
+   * https://docs.cloud.google.com/sensitive-data-protection/docs/data-
+   * profiles#data-residency.
    *
    * @param string[] $inspectTemplates
    */
@@ -209,9 +209,9 @@ class GooglePrivacyDlpV2DiscoveryConfig extends \Google\Collection
     return $this->lastRunTime;
   }
   /**
-   * Unique resource name for the DiscoveryConfig, assigned by the service when
-   * the DiscoveryConfig is created, for example `projects/dlp-test-
-   * project/locations/global/discoveryConfigs/53234423`.
+   * Output only. Unique resource name for the DiscoveryConfig, assigned by the
+   * service when the DiscoveryConfig is created, for example `projects/dlp-
+   * test-project/locations/global/discoveryConfigs/53234423`.
    *
    * @param string $name
    */

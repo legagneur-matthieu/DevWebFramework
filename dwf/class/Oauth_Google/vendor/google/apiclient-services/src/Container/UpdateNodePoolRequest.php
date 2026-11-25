@@ -19,6 +19,15 @@ namespace Google\Service\Container;
 
 class UpdateNodePoolRequest extends \Google\Collection
 {
+  /**
+   * Unspecified.
+   */
+  public const NODE_CONFIG_UPDATE_MODE_NODE_CONFIG_UPDATE_MODE_UNSPECIFIED = 'NODE_CONFIG_UPDATE_MODE_UNSPECIFIED';
+  /**
+   * Node updates are applied in-place on the running VM without VM recreation
+   * and without draining workloads/pods.
+   */
+  public const NODE_CONFIG_UPDATE_MODE_LIVE_UPDATE_WITHOUT_DRAIN = 'LIVE_UPDATE_WITHOUT_DRAIN';
   protected $collection_key = 'storagePools';
   protected $acceleratorsType = AcceleratorConfig::class;
   protected $acceleratorsDataType = 'array';
@@ -34,6 +43,14 @@ class UpdateNodePoolRequest extends \Google\Collection
   public $clusterId;
   protected $confidentialNodesType = ConfidentialNodes::class;
   protected $confidentialNodesDataType = '';
+  /**
+   * Consolidation delay defines duration after which the Cluster Autoscaler can
+   * scale down underutilized nodes. If not set, nodes are scaled down by
+   * default behavior, i.e. according to the chosen autoscaling profile.
+   *
+   * @var string
+   */
+  public $consolidationDelay;
   protected $containerdConfigType = ContainerdConfig::class;
   protected $containerdConfigDataType = '';
   /**
@@ -72,6 +89,20 @@ class UpdateNodePoolRequest extends \Google\Collection
   protected $gcfsConfigDataType = '';
   protected $gvnicType = VirtualNIC::class;
   protected $gvnicDataType = '';
+  /**
+   * The desired name of the image name to use for this node. This is used to
+   * create clusters using a custom image.
+   *
+   * @var string
+   */
+  public $image;
+  /**
+   * The project containing the desired image to use for this node pool. This is
+   * used to create clusters using a custom image.
+   *
+   * @var string
+   */
+  public $imageProject;
   /**
    * Required. The desired image type for the node pool. Please see
    * https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
@@ -114,6 +145,8 @@ class UpdateNodePoolRequest extends \Google\Collection
    * @var string
    */
   public $machineType;
+  protected $maintenancePolicyType = NodePoolMaintenancePolicy::class;
+  protected $maintenancePolicyDataType = '';
   /**
    * The maximum duration for the nodes to exist. If unspecified, the nodes can
    * exist indefinitely.
@@ -128,6 +161,14 @@ class UpdateNodePoolRequest extends \Google\Collection
    * @var string
    */
   public $name;
+  /**
+   * Optional. Option to specify the rollout strategy to apply node pool
+   * configuration updates. If unspecified, standard rolling update strategy
+   * with VM recreation is used as the default behavior.
+   *
+   * @var string
+   */
+  public $nodeConfigUpdateMode;
   protected $nodeDrainConfigType = NodeDrainConfig::class;
   protected $nodeDrainConfigDataType = '';
   protected $nodeNetworkConfigType = NodeNetworkConfig::class;
@@ -176,6 +217,8 @@ class UpdateNodePoolRequest extends \Google\Collection
   public $storagePools;
   protected $tagsType = NetworkTags::class;
   protected $tagsDataType = '';
+  protected $taintConfigType = TaintConfig::class;
+  protected $taintConfigDataType = '';
   protected $taintsType = NodeTaints::class;
   protected $taintsDataType = '';
   protected $upgradeSettingsType = UpgradeSettings::class;
@@ -266,6 +309,24 @@ class UpdateNodePoolRequest extends \Google\Collection
   public function getConfidentialNodes()
   {
     return $this->confidentialNodes;
+  }
+  /**
+   * Consolidation delay defines duration after which the Cluster Autoscaler can
+   * scale down underutilized nodes. If not set, nodes are scaled down by
+   * default behavior, i.e. according to the chosen autoscaling profile.
+   *
+   * @param string $consolidationDelay
+   */
+  public function setConsolidationDelay($consolidationDelay)
+  {
+    $this->consolidationDelay = $consolidationDelay;
+  }
+  /**
+   * @return string
+   */
+  public function getConsolidationDelay()
+  {
+    return $this->consolidationDelay;
   }
   /**
    * The desired containerd config for nodes in the node pool. Initiates an
@@ -403,6 +464,40 @@ class UpdateNodePoolRequest extends \Google\Collection
     return $this->gvnic;
   }
   /**
+   * The desired name of the image name to use for this node. This is used to
+   * create clusters using a custom image.
+   *
+   * @param string $image
+   */
+  public function setImage($image)
+  {
+    $this->image = $image;
+  }
+  /**
+   * @return string
+   */
+  public function getImage()
+  {
+    return $this->image;
+  }
+  /**
+   * The project containing the desired image to use for this node pool. This is
+   * used to create clusters using a custom image.
+   *
+   * @param string $imageProject
+   */
+  public function setImageProject($imageProject)
+  {
+    $this->imageProject = $imageProject;
+  }
+  /**
+   * @return string
+   */
+  public function getImageProject()
+  {
+    return $this->imageProject;
+  }
+  /**
    * Required. The desired image type for the node pool. Please see
    * https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
    * available image types.
@@ -533,6 +628,23 @@ class UpdateNodePoolRequest extends \Google\Collection
     return $this->machineType;
   }
   /**
+   * Optional. Specifies the maintenance policy for the node pool, including
+   * maintenance exclusion options.
+   *
+   * @param NodePoolMaintenancePolicy $maintenancePolicy
+   */
+  public function setMaintenancePolicy(NodePoolMaintenancePolicy $maintenancePolicy)
+  {
+    $this->maintenancePolicy = $maintenancePolicy;
+  }
+  /**
+   * @return NodePoolMaintenancePolicy
+   */
+  public function getMaintenancePolicy()
+  {
+    return $this->maintenancePolicy;
+  }
+  /**
    * The maximum duration for the nodes to exist. If unspecified, the nodes can
    * exist indefinitely.
    *
@@ -565,6 +677,27 @@ class UpdateNodePoolRequest extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. Option to specify the rollout strategy to apply node pool
+   * configuration updates. If unspecified, standard rolling update strategy
+   * with VM recreation is used as the default behavior.
+   *
+   * Accepted values: NODE_CONFIG_UPDATE_MODE_UNSPECIFIED,
+   * LIVE_UPDATE_WITHOUT_DRAIN
+   *
+   * @param self::NODE_CONFIG_UPDATE_MODE_* $nodeConfigUpdateMode
+   */
+  public function setNodeConfigUpdateMode($nodeConfigUpdateMode)
+  {
+    $this->nodeConfigUpdateMode = $nodeConfigUpdateMode;
+  }
+  /**
+   * @return self::NODE_CONFIG_UPDATE_MODE_*
+   */
+  public function getNodeConfigUpdateMode()
+  {
+    return $this->nodeConfigUpdateMode;
   }
   /**
    * The desired node drain configuration for nodes in the node pool.
@@ -744,6 +877,22 @@ class UpdateNodePoolRequest extends \Google\Collection
   public function getTags()
   {
     return $this->tags;
+  }
+  /**
+   * The taint configuration for the node pool.
+   *
+   * @param TaintConfig $taintConfig
+   */
+  public function setTaintConfig(TaintConfig $taintConfig)
+  {
+    $this->taintConfig = $taintConfig;
+  }
+  /**
+   * @return TaintConfig
+   */
+  public function getTaintConfig()
+  {
+    return $this->taintConfig;
   }
   /**
    * The desired node taints to be applied to all nodes in the node pool. If

@@ -115,6 +115,8 @@ class GoogleCloudDiscoveryengineV1alphaDataStore extends \Google\Collection
    * @var string
    */
   public $createTime;
+  protected $dataProtectionPolicyType = GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy::class;
+  protected $dataProtectionPolicyDataType = '';
   /**
    * Output only. The id of the default Schema associated to this data store.
    *
@@ -131,8 +133,21 @@ class GoogleCloudDiscoveryengineV1alphaDataStore extends \Google\Collection
   public $displayName;
   protected $documentProcessingConfigType = GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig::class;
   protected $documentProcessingConfigDataType = '';
+  protected $federatedSearchConfigType = GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig::class;
+  protected $federatedSearchConfigDataType = '';
   protected $healthcareFhirConfigType = GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig::class;
   protected $healthcareFhirConfigDataType = '';
+  /**
+   * Output only. Provides the icon URI of the data store's connector source, if
+   * this is a connector-backed data store. Empty for data stores without an
+   * associated connector source. In DataStoreService.ListDataStores and
+   * DataStoreService.GetDataStore, this is only populated when
+   * DataStoreView.DATA_STORE_VIEW_FULL is requested via
+   * ListDataStoresRequest.view or GetDataStoreRequest.view respectively.
+   *
+   * @var string
+   */
+  public $iconUri;
   /**
    * Immutable. The fully qualified resource name of the associated
    * IdentityMappingStore. This field can only be set for acl_enabled DataStores
@@ -337,6 +352,22 @@ class GoogleCloudDiscoveryengineV1alphaDataStore extends \Google\Collection
     return $this->createTime;
   }
   /**
+   * Optional. Specifies the data protection policy for the data store.
+   *
+   * @param GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy $dataProtectionPolicy
+   */
+  public function setDataProtectionPolicy(GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy $dataProtectionPolicy)
+  {
+    $this->dataProtectionPolicy = $dataProtectionPolicy;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy
+   */
+  public function getDataProtectionPolicy()
+  {
+    return $this->dataProtectionPolicy;
+  }
+  /**
    * Output only. The id of the default Schema associated to this data store.
    *
    * @param string $defaultSchemaId
@@ -387,6 +418,22 @@ class GoogleCloudDiscoveryengineV1alphaDataStore extends \Google\Collection
     return $this->documentProcessingConfig;
   }
   /**
+   * Optional. If set, this DataStore is a federated search DataStore.
+   *
+   * @param GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig $federatedSearchConfig
+   */
+  public function setFederatedSearchConfig(GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig $federatedSearchConfig)
+  {
+    $this->federatedSearchConfig = $federatedSearchConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig
+   */
+  public function getFederatedSearchConfig()
+  {
+    return $this->federatedSearchConfig;
+  }
+  /**
    * Optional. Configuration for `HEALTHCARE_FHIR` vertical.
    *
    * @param GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig $healthcareFhirConfig
@@ -401,6 +448,27 @@ class GoogleCloudDiscoveryengineV1alphaDataStore extends \Google\Collection
   public function getHealthcareFhirConfig()
   {
     return $this->healthcareFhirConfig;
+  }
+  /**
+   * Output only. Provides the icon URI of the data store's connector source, if
+   * this is a connector-backed data store. Empty for data stores without an
+   * associated connector source. In DataStoreService.ListDataStores and
+   * DataStoreService.GetDataStore, this is only populated when
+   * DataStoreView.DATA_STORE_VIEW_FULL is requested via
+   * ListDataStoresRequest.view or GetDataStoreRequest.view respectively.
+   *
+   * @param string $iconUri
+   */
+  public function setIconUri($iconUri)
+  {
+    $this->iconUri = $iconUri;
+  }
+  /**
+   * @return string
+   */
+  public function getIconUri()
+  {
+    return $this->iconUri;
   }
   /**
    * Immutable. The fully qualified resource name of the associated

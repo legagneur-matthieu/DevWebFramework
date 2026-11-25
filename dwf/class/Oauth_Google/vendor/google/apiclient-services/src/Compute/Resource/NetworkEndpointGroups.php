@@ -38,6 +38,8 @@ use Google\Service\Compute\TestPermissionsResponse;
  */
 class NetworkEndpointGroups extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Retrieves the list of network endpoint groups and sorts them by zone.
    *
@@ -116,13 +118,6 @@ class NetworkEndpointGroups extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @opt_param string serviceProjectNumber The Shared VPC service project id or
    * service project number for which aggregated list request is invoked for
    * subnetworks list-usable api.
@@ -255,7 +250,14 @@ class NetworkEndpointGroups extends \Google\Service\Resource
   }
   /**
    * Creates a network endpoint group in the specified project using the
-   * parameters that are included in the request. (networkEndpointGroups.insert)
+   * parameters that are included in the request.
+   *
+   * Note: Use the following APIs to manage network endpoint groups:        -
+   * To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+   * NEGs): zonal    API    -     To manage NEGs with regional scope (such as
+   * regional internet NEGs,    serverless NEGs, Private Service Connect NEGs):
+   * regional    API    -     To manage NEGs with global scope (such as global
+   * internet NEGs):global    API (networkEndpointGroups.insert)
    *
    * @param string $project Project ID for this request.
    * @param string $zone The name of the zone where you want to create the network
@@ -355,13 +357,6 @@ class NetworkEndpointGroups extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return NetworkEndpointGroupList
    * @throws \Google\Service\Exception
    */
@@ -446,13 +441,6 @@ class NetworkEndpointGroups extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return NetworkEndpointGroupsListNetworkEndpoints
    * @throws \Google\Service\Exception
    */

@@ -20,6 +20,22 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1EvaluateInstancesRequest extends \Google\Collection
 {
   protected $collection_key = 'metrics';
+  /**
+   * Optional. Allows judge model calls to be made in a region other than the
+   * request location. The service picks the region for each judge model call as
+   * follows: 1. If this flag is true and the model is a fully-qualified
+   * publisher model name (`projects/{project}/locations/{location}/publishers/{
+   * publisher}/models/{model}`), the call is made in `{location}`. 2. If this
+   * flag is true and the model is given by ID only, or is chosen by the service
+   * (for example, for predefined metrics), the call is made in the model
+   * family's default location: `global` for Gemini models, or a fixed regional
+   * endpoint for supported partner models. 3. Otherwise, the call is made in
+   * the request location. Without this flag, the location in a fully-qualified
+   * model name is ignored.
+   *
+   * @var bool
+   */
+  public $allowCrossRegionModel;
   protected $autoraterConfigType = GoogleCloudAiplatformV1AutoraterConfig::class;
   protected $autoraterConfigDataType = '';
   protected $bleuInputType = GoogleCloudAiplatformV1BleuInput::class;
@@ -45,6 +61,8 @@ class GoogleCloudAiplatformV1EvaluateInstancesRequest extends \Google\Collection
    * @var string
    */
   public $location;
+  protected $metricSourcesType = GoogleCloudAiplatformV1MetricSource::class;
+  protected $metricSourcesDataType = 'array';
   protected $metricsType = GoogleCloudAiplatformV1Metric::class;
   protected $metricsDataType = 'array';
   protected $metricxInputType = GoogleCloudAiplatformV1MetricxInput::class;
@@ -99,7 +117,35 @@ class GoogleCloudAiplatformV1EvaluateInstancesRequest extends \Google\Collection
   protected $trajectorySingleToolUseInputDataType = '';
 
   /**
-   * Optional. Autorater config used for evaluation.
+   * Optional. Allows judge model calls to be made in a region other than the
+   * request location. The service picks the region for each judge model call as
+   * follows: 1. If this flag is true and the model is a fully-qualified
+   * publisher model name (`projects/{project}/locations/{location}/publishers/{
+   * publisher}/models/{model}`), the call is made in `{location}`. 2. If this
+   * flag is true and the model is given by ID only, or is chosen by the service
+   * (for example, for predefined metrics), the call is made in the model
+   * family's default location: `global` for Gemini models, or a fixed regional
+   * endpoint for supported partner models. 3. Otherwise, the call is made in
+   * the request location. Without this flag, the location in a fully-qualified
+   * model name is ignored.
+   *
+   * @param bool $allowCrossRegionModel
+   */
+  public function setAllowCrossRegionModel($allowCrossRegionModel)
+  {
+    $this->allowCrossRegionModel = $allowCrossRegionModel;
+  }
+  /**
+   * @return bool
+   */
+  public function getAllowCrossRegionModel()
+  {
+    return $this->allowCrossRegionModel;
+  }
+  /**
+   * Optional. Autorater config used for evaluation. Not applicable for
+   * predefined metrics (PredefinedMetricSpec); the server uses its own model
+   * configuration for predefined metrics and this field is ignored.
    *
    * @param GoogleCloudAiplatformV1AutoraterConfig $autoraterConfig
    */
@@ -259,6 +305,24 @@ class GoogleCloudAiplatformV1EvaluateInstancesRequest extends \Google\Collection
   public function getLocation()
   {
     return $this->location;
+  }
+  /**
+   * Optional. The metrics (either inline or registered) used for evaluation.
+   * Currently, we only support evaluating a single metric. If multiple metrics
+   * are provided, only the first one will be evaluated.
+   *
+   * @param GoogleCloudAiplatformV1MetricSource[] $metricSources
+   */
+  public function setMetricSources($metricSources)
+  {
+    $this->metricSources = $metricSources;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1MetricSource[]
+   */
+  public function getMetricSources()
+  {
+    return $this->metricSources;
   }
   /**
    * The metrics used for evaluation. Currently, we only support evaluating a

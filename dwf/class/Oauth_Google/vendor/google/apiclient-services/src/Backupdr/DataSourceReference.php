@@ -33,6 +33,10 @@ class DataSourceReference extends \Google\Model
    */
   public const DATA_SOURCE_BACKUP_CONFIG_STATE_PASSIVE = 'PASSIVE';
   /**
+   * The data source has been created but backups are paused
+   */
+  public const DATA_SOURCE_BACKUP_CONFIG_STATE_PAUSED = 'PAUSED';
+  /**
    * Output only. The time when the DataSourceReference was created.
    *
    * @var string
@@ -128,7 +132,7 @@ class DataSourceReference extends \Google\Model
   /**
    * Output only. The backup configuration state of the DataSource.
    *
-   * Accepted values: BACKUP_CONFIG_STATE_UNSPECIFIED, ACTIVE, PASSIVE
+   * Accepted values: BACKUP_CONFIG_STATE_UNSPECIFIED, ACTIVE, PASSIVE, PAUSED
    *
    * @param self::DATA_SOURCE_BACKUP_CONFIG_STATE_* $dataSourceBackupConfigState
    */
@@ -160,7 +164,8 @@ class DataSourceReference extends \Google\Model
     return $this->dataSourceBackupCount;
   }
   /**
-   * Output only. The GCP resource that the DataSource is associated with.
+   * Output only. The Google Cloud resource that the DataSource is associated
+   * with.
    *
    * @param DataSourceGcpResourceInfo $dataSourceGcpResourceInfo
    */

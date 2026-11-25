@@ -63,13 +63,16 @@ class InstanceInfo extends \Google\Collection
    */
   public $networkTags;
   /**
-   * URI of a Compute Engine network.
+   * URI of a Compute Engine network in format
+   * "projects/{project}/global/networks/{network}"
    *
    * @var string
    */
   public $networkUri;
   /**
-   * URI of the PSC network attachment the NIC is attached to (if relevant).
+   * URI of the PSC network attachment the NIC is attached to (if relevant) in
+   * format "projects/{project}/regions/{region}/networkAttachments/{network_att
+   * achment}"
    *
    * @var string
    */
@@ -96,7 +99,8 @@ class InstanceInfo extends \Google\Collection
    */
   public $status;
   /**
-   * URI of a Compute Engine instance.
+   * URI of a Compute Engine instance in format
+   * "projects/{project}/zones/{zone}/instances/{instance}"
    *
    * @var string
    */
@@ -183,7 +187,8 @@ class InstanceInfo extends \Google\Collection
     return $this->networkTags;
   }
   /**
-   * URI of a Compute Engine network.
+   * URI of a Compute Engine network in format
+   * "projects/{project}/global/networks/{network}"
    *
    * @param string $networkUri
    */
@@ -199,7 +204,9 @@ class InstanceInfo extends \Google\Collection
     return $this->networkUri;
   }
   /**
-   * URI of the PSC network attachment the NIC is attached to (if relevant).
+   * URI of the PSC network attachment the NIC is attached to (if relevant) in
+   * format "projects/{project}/regions/{region}/networkAttachments/{network_att
+   * achment}"
    *
    * @param string $pscNetworkAttachmentUri
    */
@@ -270,7 +277,8 @@ class InstanceInfo extends \Google\Collection
     return $this->status;
   }
   /**
-   * URI of a Compute Engine instance.
+   * URI of a Compute Engine instance in format
+   * "projects/{project}/zones/{zone}/instances/{instance}"
    *
    * @param string $uri
    */

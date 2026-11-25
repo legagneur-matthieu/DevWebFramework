@@ -97,6 +97,8 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    */
   public const LAUNCH_STAGE_DEPRECATED = 'DEPRECATED';
   protected $collection_key = 'volumes';
+  protected $ambientNetworkingType = GoogleCloudRunV2AmbientNetworking::class;
+  protected $ambientNetworkingDataType = '';
   /**
    * Output only. Unstructured key value map that may be set by external tools
    * to store and arbitrary metadata. They are not queryable and should be
@@ -105,8 +107,22 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * @var string[]
    */
   public $annotations;
+  /**
+   * Output only. Arbitrary identifier for the API client.
+   *
+   * @var string
+   */
+  public $client;
+  /**
+   * Output only. Arbitrary version identifier for the API client.
+   *
+   * @var string
+   */
+  public $clientVersion;
   protected $conditionsType = GoogleCloudRunV2Condition::class;
   protected $conditionsDataType = 'array';
+  protected $containerStatusesType = GoogleCloudRunV2ContainerStatus::class;
+  protected $containerStatusesDataType = 'array';
   protected $containersType = GoogleCloudRunV2Container::class;
   protected $containersDataType = 'array';
   /**
@@ -201,7 +217,7 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports
    * `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used
    * as input. For example, if ALPHA was provided as input in the parent
-   * resource, but only BETA and GA-level features are were, this field will be
+   * resource, but only BETA and GA-level features are used, this field will be
    * BETA.
    *
    * @var string
@@ -243,6 +259,8 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * @var bool
    */
   public $reconciling;
+  protected $sandboxesType = GoogleCloudRunV2SandboxConfiguration::class;
+  protected $sandboxesDataType = '';
   /**
    * Output only. Reserved for future use.
    *
@@ -299,7 +317,25 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   protected $volumesDataType = 'array';
   protected $vpcAccessType = GoogleCloudRunV2VpcAccess::class;
   protected $vpcAccessDataType = '';
+  protected $workloadIdentityConfigType = GoogleCloudRunV2WorkloadIdentityConfig::class;
+  protected $workloadIdentityConfigDataType = '';
 
+  /**
+   * Output only. The ambient networking configuration for this revision.
+   *
+   * @param GoogleCloudRunV2AmbientNetworking $ambientNetworking
+   */
+  public function setAmbientNetworking(GoogleCloudRunV2AmbientNetworking $ambientNetworking)
+  {
+    $this->ambientNetworking = $ambientNetworking;
+  }
+  /**
+   * @return GoogleCloudRunV2AmbientNetworking
+   */
+  public function getAmbientNetworking()
+  {
+    return $this->ambientNetworking;
+  }
   /**
    * Output only. Unstructured key value map that may be set by external tools
    * to store and arbitrary metadata. They are not queryable and should be
@@ -317,6 +353,38 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   public function getAnnotations()
   {
     return $this->annotations;
+  }
+  /**
+   * Output only. Arbitrary identifier for the API client.
+   *
+   * @param string $client
+   */
+  public function setClient($client)
+  {
+    $this->client = $client;
+  }
+  /**
+   * @return string
+   */
+  public function getClient()
+  {
+    return $this->client;
+  }
+  /**
+   * Output only. Arbitrary version identifier for the API client.
+   *
+   * @param string $clientVersion
+   */
+  public function setClientVersion($clientVersion)
+  {
+    $this->clientVersion = $clientVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getClientVersion()
+  {
+    return $this->clientVersion;
   }
   /**
    * Output only. The Condition of this Revision, containing its readiness
@@ -337,8 +405,24 @@ class GoogleCloudRunV2Revision extends \Google\Collection
     return $this->conditions;
   }
   /**
-   * Holds the single container that defines the unit of execution for this
-   * Revision.
+   * Output only. Status information for each of the specified containers. The
+   * status includes the resolved digest for specified images.
+   *
+   * @param GoogleCloudRunV2ContainerStatus[] $containerStatuses
+   */
+  public function setContainerStatuses($containerStatuses)
+  {
+    $this->containerStatuses = $containerStatuses;
+  }
+  /**
+   * @return GoogleCloudRunV2ContainerStatus[]
+   */
+  public function getContainerStatuses()
+  {
+    return $this->containerStatuses;
+  }
+  /**
+   * Holds the list which define the units of execution for this Revision.
    *
    * @param GoogleCloudRunV2Container[] $containers
    */
@@ -571,7 +655,7 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports
    * `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used
    * as input. For example, if ALPHA was provided as input in the parent
-   * resource, but only BETA and GA-level features are were, this field will be
+   * resource, but only BETA and GA-level features are used, this field will be
    * BETA.
    *
    * Accepted values: LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH,
@@ -689,6 +773,22 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   public function getReconciling()
   {
     return $this->reconciling;
+  }
+  /**
+   * Output only. Configuration for sandboxes.
+   *
+   * @param GoogleCloudRunV2SandboxConfiguration $sandboxes
+   */
+  public function setSandboxes(GoogleCloudRunV2SandboxConfiguration $sandboxes)
+  {
+    $this->sandboxes = $sandboxes;
+  }
+  /**
+   * @return GoogleCloudRunV2SandboxConfiguration
+   */
+  public function getSandboxes()
+  {
+    return $this->sandboxes;
   }
   /**
    * Output only. Reserved for future use.
@@ -886,6 +986,22 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   public function getVpcAccess()
   {
     return $this->vpcAccess;
+  }
+  /**
+   * Optional. The Revision's workload identity settings.
+   *
+   * @param GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig
+   */
+  public function setWorkloadIdentityConfig(GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig)
+  {
+    $this->workloadIdentityConfig = $workloadIdentityConfig;
+  }
+  /**
+   * @return GoogleCloudRunV2WorkloadIdentityConfig
+   */
+  public function getWorkloadIdentityConfig()
+  {
+    return $this->workloadIdentityConfig;
   }
 }
 

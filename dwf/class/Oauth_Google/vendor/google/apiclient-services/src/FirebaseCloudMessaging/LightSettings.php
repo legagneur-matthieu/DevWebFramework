@@ -22,7 +22,7 @@ class LightSettings extends \Google\Model
   protected $colorType = Color::class;
   protected $colorDataType = '';
   /**
-   * Required. Along with `light_on_duration `, define the blink rate of LED
+   * Required. Along with `light_on_duration`, define the blink rate of LED
    * flashes. Resolution defined by
    * [proto.Duration](https://developers.google.com/protocol-
    * buffers/docs/reference/google.protobuf#google.protobuf.Duration)
@@ -58,7 +58,7 @@ class LightSettings extends \Google\Model
     return $this->color;
   }
   /**
-   * Required. Along with `light_on_duration `, define the blink rate of LED
+   * Required. Along with `light_on_duration`, define the blink rate of LED
    * flashes. Resolution defined by
    * [proto.Duration](https://developers.google.com/protocol-
    * buffers/docs/reference/google.protobuf#google.protobuf.Duration)

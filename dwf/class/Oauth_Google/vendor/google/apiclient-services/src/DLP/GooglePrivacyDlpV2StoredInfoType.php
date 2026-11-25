@@ -23,7 +23,7 @@ class GooglePrivacyDlpV2StoredInfoType extends \Google\Collection
   protected $currentVersionType = GooglePrivacyDlpV2StoredInfoTypeVersion::class;
   protected $currentVersionDataType = '';
   /**
-   * Resource name.
+   * Output only. Resource name.
    *
    * @var string
    */
@@ -48,7 +48,7 @@ class GooglePrivacyDlpV2StoredInfoType extends \Google\Collection
     return $this->currentVersion;
   }
   /**
-   * Resource name.
+   * Output only. Resource name.
    *
    * @param string $name
    */

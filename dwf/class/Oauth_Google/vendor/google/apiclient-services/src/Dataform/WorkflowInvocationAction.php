@@ -49,8 +49,15 @@ class WorkflowInvocationAction extends \Google\Model
    * The action failed. A terminal state.
    */
   public const STATE_FAILED = 'FAILED';
+  /**
+   * Execution of the action was queued waiting for an available concurrency
+   * slot.
+   */
+  public const STATE_QUEUED = 'QUEUED';
   protected $bigqueryActionType = BigQueryAction::class;
   protected $bigqueryActionDataType = '';
+  protected $bigqueryUnitTestActionType = BigQueryUnitTestAction::class;
+  protected $bigqueryUnitTestActionDataType = '';
   protected $canonicalTargetType = Target::class;
   protected $canonicalTargetDataType = '';
   protected $dataPreparationActionType = DataPreparationAction::class;
@@ -98,6 +105,22 @@ class WorkflowInvocationAction extends \Google\Model
   public function getBigqueryAction()
   {
     return $this->bigqueryAction;
+  }
+  /**
+   * Output only. The workflow action's unit test details.
+   *
+   * @param BigQueryUnitTestAction $bigqueryUnitTestAction
+   */
+  public function setBigqueryUnitTestAction(BigQueryUnitTestAction $bigqueryUnitTestAction)
+  {
+    $this->bigqueryUnitTestAction = $bigqueryUnitTestAction;
+  }
+  /**
+   * @return BigQueryUnitTestAction
+   */
+  public function getBigqueryUnitTestAction()
+  {
+    return $this->bigqueryUnitTestAction;
   }
   /**
    * Output only. The action's identifier if the project had been compiled
@@ -205,7 +228,7 @@ class WorkflowInvocationAction extends \Google\Model
    * Output only. This action's current state.
    *
    * Accepted values: PENDING, RUNNING, SKIPPED, DISABLED, SUCCEEDED, CANCELLED,
-   * FAILED
+   * FAILED, QUEUED
    *
    * @param self::STATE_* $state
    */

@@ -46,7 +46,7 @@ class QuotaGroup extends \Google\Collection
   /**
    * Output only. The current quota usage, meaning the number of calls already
    * made on a given day to the methods in the group. The daily quota limits
-   * reset at at 12:00 PM midday UTC.
+   * reset at 12:00 PM midday UTC.
    *
    * @var string
    */
@@ -122,7 +122,7 @@ class QuotaGroup extends \Google\Collection
   /**
    * Output only. The current quota usage, meaning the number of calls already
    * made on a given day to the methods in the group. The daily quota limits
-   * reset at at 12:00 PM midday UTC.
+   * reset at 12:00 PM midday UTC.
    *
    * @param string $quotaUsage
    */

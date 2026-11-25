@@ -17,18 +17,31 @@
 
 namespace Google\Service\DataManager;
 
-class IngestEventsResponse extends \Google\Model
+class IngestEventsResponse extends \Google\Collection
 {
+  protected $collection_key = 'fieldWarnings';
+  protected $fieldWarningsType = FieldWarning::class;
+  protected $fieldWarningsDataType = 'array';
   /**
-   * The auto-generated ID of the request.
-   *
    * @var string
    */
   public $requestId;
 
   /**
-   * The auto-generated ID of the request.
-   *
+   * @param FieldWarning[] $fieldWarnings
+   */
+  public function setFieldWarnings($fieldWarnings)
+  {
+    $this->fieldWarnings = $fieldWarnings;
+  }
+  /**
+   * @return FieldWarning[]
+   */
+  public function getFieldWarnings()
+  {
+    return $this->fieldWarnings;
+  }
+  /**
    * @param string $requestId
    */
   public function setRequestId($requestId)

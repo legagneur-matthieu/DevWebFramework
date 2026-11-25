@@ -35,8 +35,27 @@ class GoogleCloudDiscoveryengineV1Assistant extends \Google\Model
    * Grounding with Enterprise Web Search is enabled.
    */
   public const WEB_GROUNDING_TYPE_WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH = 'WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH';
+  /**
+   * Output only. Represents the time when this Assistant was created.
+   *
+   * @var string
+   */
+  public $createTime;
   protected $customerPolicyType = GoogleCloudDiscoveryengineV1AssistantCustomerPolicy::class;
   protected $customerPolicyDataType = '';
+  /**
+   * Optional. This field controls the default web grounding toggle for end
+   * users if `web_grounding_type` is set to `WEB_GROUNDING_TYPE_GOOGLE_SEARCH`
+   * or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is
+   * set to false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH`
+   * or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+   * grounding enabled by default on UI. If true, grounding toggle will be
+   * disabled by default on UI. End users can still enable web grounding in the
+   * UI if web grounding is enabled.
+   *
+   * @var bool
+   */
+  public $defaultWebGroundingToggleOff;
   /**
    * Optional. Description for additional information. Expected to be shown on
    * the configuration UI, not to the users of the assistant.
@@ -65,12 +84,35 @@ class GoogleCloudDiscoveryengineV1Assistant extends \Google\Model
    */
   public $name;
   /**
+   * Output only. Represents the time when this Assistant was most recently
+   * updated.
+   *
+   * @var string
+   */
+  public $updateTime;
+  /**
    * Optional. The type of web grounding to use.
    *
    * @var string
    */
   public $webGroundingType;
 
+  /**
+   * Output only. Represents the time when this Assistant was created.
+   *
+   * @param string $createTime
+   */
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
   /**
    * Optional. Customer policy for the assistant.
    *
@@ -86,6 +128,29 @@ class GoogleCloudDiscoveryengineV1Assistant extends \Google\Model
   public function getCustomerPolicy()
   {
     return $this->customerPolicy;
+  }
+  /**
+   * Optional. This field controls the default web grounding toggle for end
+   * users if `web_grounding_type` is set to `WEB_GROUNDING_TYPE_GOOGLE_SEARCH`
+   * or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is
+   * set to false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH`
+   * or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+   * grounding enabled by default on UI. If true, grounding toggle will be
+   * disabled by default on UI. End users can still enable web grounding in the
+   * UI if web grounding is enabled.
+   *
+   * @param bool $defaultWebGroundingToggleOff
+   */
+  public function setDefaultWebGroundingToggleOff($defaultWebGroundingToggleOff)
+  {
+    $this->defaultWebGroundingToggleOff = $defaultWebGroundingToggleOff;
+  }
+  /**
+   * @return bool
+   */
+  public function getDefaultWebGroundingToggleOff()
+  {
+    return $this->defaultWebGroundingToggleOff;
   }
   /**
    * Optional. Description for additional information. Expected to be shown on
@@ -122,14 +187,15 @@ class GoogleCloudDiscoveryengineV1Assistant extends \Google\Model
     return $this->displayName;
   }
   /**
-   * Optional. Note: not implemented yet. Use enabled_actions instead. The
-   * enabled tools on this assistant. The keys are connector name, for example "
-   * projects/{projectId}/locations/{locationId}/collections/{collectionId}/data
-   * connector The values consist of admin enabled tools towards the connector
-   * instance. Admin can selectively enable multiple tools on any of the
-   * connector instances that they created in the project. For example
-   * {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
-   * "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+   * Optional. The enabled tools on this assistant. The keys are data connector
+   * resource names, in the format `projects/{project}/locations/{location}/coll
+   * ections/{collection}/dataConnector`. The values are the tools that the
+   * admin enabled on that connector. Admins can selectively enable tools on any
+   * of the connectors that they created in the project. For example: ``` {
+   * "projects/my-project/locations/global/collections/jira1/dataConnector": {
+   * "toolInfo": [ { "toolName": "create_jira_issue", "toolDisplayName": "Create
+   * Jira issue" }, { "toolName": "update_jira_issue", "toolDisplayName":
+   * "Update Jira issue" } ] } } ```
    *
    * @param GoogleCloudDiscoveryengineV1AssistantToolList[] $enabledTools
    */
@@ -178,6 +244,23 @@ class GoogleCloudDiscoveryengineV1Assistant extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Output only. Represents the time when this Assistant was most recently
+   * updated.
+   *
+   * @param string $updateTime
+   */
+  public function setUpdateTime($updateTime)
+  {
+    $this->updateTime = $updateTime;
+  }
+  /**
+   * @return string
+   */
+  public function getUpdateTime()
+  {
+    return $this->updateTime;
   }
   /**
    * Optional. The type of web grounding to use.

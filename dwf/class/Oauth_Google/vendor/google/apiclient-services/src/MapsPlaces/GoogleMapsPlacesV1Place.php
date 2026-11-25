@@ -36,6 +36,10 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
    */
   public const BUSINESS_STATUS_CLOSED_PERMANENTLY = 'CLOSED_PERMANENTLY';
   /**
+   * The establishment will open in the future.
+   */
+  public const BUSINESS_STATUS_FUTURE_OPENING = 'FUTURE_OPENING';
+  /**
    * Place price level is unspecified or unknown.
    */
   public const PRICE_LEVEL_PRICE_LEVEL_UNSPECIFIED = 'PRICE_LEVEL_UNSPECIFIED';
@@ -116,6 +120,8 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   protected $displayNameDataType = '';
   protected $editorialSummaryType = GoogleTypeLocalizedText::class;
   protected $editorialSummaryDataType = '';
+  protected $entrancesType = GoogleMapsPlacesV1PlaceEntrance::class;
+  protected $entrancesDataType = 'array';
   protected $evChargeAmenitySummaryType = GoogleMapsPlacesV1PlaceEvChargeAmenitySummary::class;
   protected $evChargeAmenitySummaryDataType = '';
   protected $evChargeOptionsType = GoogleMapsPlacesV1EVChargeOptions::class;
@@ -150,6 +156,8 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public $goodForWatchingSports;
   protected $googleMapsLinksType = GoogleMapsPlacesV1PlaceGoogleMapsLinks::class;
   protected $googleMapsLinksDataType = '';
+  protected $googleMapsTypeLabelType = GoogleTypeLocalizedText::class;
+  protected $googleMapsTypeLabelDataType = '';
   /**
    * A URL providing more information about this place.
    *
@@ -227,8 +235,12 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
    * @var string
    */
   public $nationalPhoneNumber;
+  protected $navigationPointsType = GoogleMapsPlacesV1PlaceNavigationPoint::class;
+  protected $navigationPointsDataType = 'array';
   protected $neighborhoodSummaryType = GoogleMapsPlacesV1PlaceNeighborhoodSummary::class;
   protected $neighborhoodSummaryDataType = '';
+  protected $openingDateType = GoogleTypeDate::class;
+  protected $openingDateDataType = '';
   /**
    * Place provides outdoor seating.
    *
@@ -380,6 +392,8 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public $takeout;
   protected $timeZoneType = GoogleTypeTimeZone::class;
   protected $timeZoneDataType = '';
+  protected $transitStationType = GoogleMapsPlacesV1TransitStation::class;
+  protected $transitStationDataType = '';
   /**
    * A set of type tags for this result. For example, "political" and
    * "locality". For the complete list of possible values, see Table A and Table
@@ -530,7 +544,7 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
    * The business status for the place.
    *
    * Accepted values: BUSINESS_STATUS_UNSPECIFIED, OPERATIONAL,
-   * CLOSED_TEMPORARILY, CLOSED_PERMANENTLY
+   * CLOSED_TEMPORARILY, CLOSED_PERMANENTLY, FUTURE_OPENING
    *
    * @param self::BUSINESS_STATUS_* $businessStatus
    */
@@ -595,10 +609,14 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
     return $this->curbsidePickup;
   }
   /**
-   * The hours of operation for the next seven days (including today). The time
-   * period starts at midnight on the date of the request and ends at 11:59 pm
-   * six days later. This field includes the special_days subfield of all hours,
-   * set for dates that have exceptional hours.
+   * The hours of operation for the next seven days (including today)
+   * incorporating any special opening hours. The time period starts at midnight
+   * on the date of the request and ends at 11:59 pm six days later. If the
+   * actual opening hours are outside of this range, the opening hours will be
+   * truncated. For example, if a place is open from 10pm yesterday to 6am
+   * today, the opening hours will be truncated to 12am today to 6am today. This
+   * field includes the special_days subfield of all hours, set for dates that
+   * have exceptional hours.
    *
    * @param GoogleMapsPlacesV1PlaceOpeningHours $currentOpeningHours
    */
@@ -702,6 +720,22 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public function getEditorialSummary()
   {
     return $this->editorialSummary;
+  }
+  /**
+   * Entrances for this destination.
+   *
+   * @param GoogleMapsPlacesV1PlaceEntrance[] $entrances
+   */
+  public function setEntrances($entrances)
+  {
+    $this->entrances = $entrances;
+  }
+  /**
+   * @return GoogleMapsPlacesV1PlaceEntrance[]
+   */
+  public function getEntrances()
+  {
+    return $this->entrances;
   }
   /**
    * The summary of amenities near the EV charging station.
@@ -847,6 +881,27 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public function getGoogleMapsLinks()
   {
     return $this->googleMapsLinks;
+  }
+  /**
+   * The type label of the place on Google Maps, localized to the request
+   * language if applicable, for example, "Restaurant", "Cafe", "Airport", etc.
+   * The type label may be different from the primary type display name and may
+   * not be a supported type in [Places API Place Types
+   * table](https://developers.google.com/maps/documentation/places/web-
+   * service/place-types).
+   *
+   * @param GoogleTypeLocalizedText $googleMapsTypeLabel
+   */
+  public function setGoogleMapsTypeLabel(GoogleTypeLocalizedText $googleMapsTypeLabel)
+  {
+    $this->googleMapsTypeLabel = $googleMapsTypeLabel;
+  }
+  /**
+   * @return GoogleTypeLocalizedText
+   */
+  public function getGoogleMapsTypeLabel()
+  {
+    return $this->googleMapsTypeLabel;
   }
   /**
    * A URL providing more information about this place.
@@ -1050,6 +1105,22 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
     return $this->nationalPhoneNumber;
   }
   /**
+   * Navigation points for this destination.
+   *
+   * @param GoogleMapsPlacesV1PlaceNavigationPoint[] $navigationPoints
+   */
+  public function setNavigationPoints($navigationPoints)
+  {
+    $this->navigationPoints = $navigationPoints;
+  }
+  /**
+   * @return GoogleMapsPlacesV1PlaceNavigationPoint[]
+   */
+  public function getNavigationPoints()
+  {
+    return $this->navigationPoints;
+  }
+  /**
    * A summary of points of interest near the place.
    *
    * @param GoogleMapsPlacesV1PlaceNeighborhoodSummary $neighborhoodSummary
@@ -1064,6 +1135,23 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public function getNeighborhoodSummary()
   {
     return $this->neighborhoodSummary;
+  }
+  /**
+   * The date this place will open in the future. This field is only populated
+   * if the business status is FUTURE_OPENING.
+   *
+   * @param GoogleTypeDate $openingDate
+   */
+  public function setOpeningDate(GoogleTypeDate $openingDate)
+  {
+    $this->openingDate = $openingDate;
+  }
+  /**
+   * @return GoogleTypeDate
+   */
+  public function getOpeningDate()
+  {
+    return $this->openingDate;
   }
   /**
    * Place provides outdoor seating.
@@ -1271,9 +1359,10 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
     return $this->rating;
   }
   /**
-   * The regular hours of operation. Note that if a place is always open (24
-   * hours), the `close` field will not be set. Clients can rely on always open
-   * (24 hours) being represented as an
+   * The regular hours are the hours of operation for a place on a typical
+   * schedule. Note that if a place is always open (24 hours), the `close` field
+   * will not be set. Clients can rely on always open (24 hours) being
+   * represented as an
    * [`open`](https://developers.google.com/maps/documentation/places/web-
    * service/reference/rest/v1/places#Period) period containing
    * [`day`](https://developers.google.com/maps/documentation/places/web-
@@ -1605,6 +1694,22 @@ class GoogleMapsPlacesV1Place extends \Google\Collection
   public function getTimeZone()
   {
     return $this->timeZone;
+  }
+  /**
+   * The transit station information for the place.
+   *
+   * @param GoogleMapsPlacesV1TransitStation $transitStation
+   */
+  public function setTransitStation(GoogleMapsPlacesV1TransitStation $transitStation)
+  {
+    $this->transitStation = $transitStation;
+  }
+  /**
+   * @return GoogleMapsPlacesV1TransitStation
+   */
+  public function getTransitStation()
+  {
+    return $this->transitStation;
   }
   /**
    * A set of type tags for this result. For example, "political" and

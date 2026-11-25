@@ -26,9 +26,16 @@ class NotebookAction extends \Google\Model
    */
   public $contents;
   /**
-   * Output only. The ID of the Vertex job that executed the notebook in
-   * contents and also the ID used for the outputs created in Google Cloud
-   * Storage buckets. Only set once the job has started to run.
+   * Output only. The path to the notebook file in the repository.
+   *
+   * @var string
+   */
+  public $filePath;
+  /**
+   * Output only. The ID of the Gemini Enterprise Agent Platform job that
+   * executed the notebook in contents and also the ID used for the outputs
+   * created in Google Cloud Storage buckets. Only set once the job has started
+   * to run.
    *
    * @var string
    */
@@ -51,9 +58,26 @@ class NotebookAction extends \Google\Model
     return $this->contents;
   }
   /**
-   * Output only. The ID of the Vertex job that executed the notebook in
-   * contents and also the ID used for the outputs created in Google Cloud
-   * Storage buckets. Only set once the job has started to run.
+   * Output only. The path to the notebook file in the repository.
+   *
+   * @param string $filePath
+   */
+  public function setFilePath($filePath)
+  {
+    $this->filePath = $filePath;
+  }
+  /**
+   * @return string
+   */
+  public function getFilePath()
+  {
+    return $this->filePath;
+  }
+  /**
+   * Output only. The ID of the Gemini Enterprise Agent Platform job that
+   * executed the notebook in contents and also the ID used for the outputs
+   * created in Google Cloud Storage buckets. Only set once the job has started
+   * to run.
    *
    * @param string $jobId
    */

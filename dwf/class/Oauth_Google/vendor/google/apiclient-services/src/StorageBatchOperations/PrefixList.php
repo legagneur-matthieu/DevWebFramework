@@ -21,18 +21,20 @@ class PrefixList extends \Google\Collection
 {
   protected $collection_key = 'includedObjectPrefixes';
   /**
-   * Optional. Include prefixes of the objects to be transformed. * Supports
-   * full object name * Supports prefix of the object name * Wildcards are not
-   * supported * Supports empty string for all objects in a bucket.
+   * Optional. Specify one or more object prefixes. For example: * To match one
+   * object, use a single prefix, `prefix1`. * To match multiple objects, use
+   * comma-separated prefixes, `prefix1, prefix2`. * To match all objects, use
+   * an empty prefix, `''`
    *
    * @var string[]
    */
   public $includedObjectPrefixes;
 
   /**
-   * Optional. Include prefixes of the objects to be transformed. * Supports
-   * full object name * Supports prefix of the object name * Wildcards are not
-   * supported * Supports empty string for all objects in a bucket.
+   * Optional. Specify one or more object prefixes. For example: * To match one
+   * object, use a single prefix, `prefix1`. * To match multiple objects, use
+   * comma-separated prefixes, `prefix1, prefix2`. * To match all objects, use
+   * an empty prefix, `''`
    *
    * @param string[] $includedObjectPrefixes
    */

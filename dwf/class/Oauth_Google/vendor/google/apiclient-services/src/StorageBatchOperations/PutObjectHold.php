@@ -20,7 +20,7 @@ namespace Google\Service\StorageBatchOperations;
 class PutObjectHold extends \Google\Model
 {
   /**
-   * Default value, Object hold status will not be changed.
+   * Default value, Object hold status isn't changed.
    */
   public const EVENT_BASED_HOLD_HOLD_STATUS_UNSPECIFIED = 'HOLD_STATUS_UNSPECIFIED';
   /**
@@ -32,7 +32,7 @@ class PutObjectHold extends \Google\Model
    */
   public const EVENT_BASED_HOLD_UNSET = 'UNSET';
   /**
-   * Default value, Object hold status will not be changed.
+   * Default value, Object hold status isn't changed.
    */
   public const TEMPORARY_HOLD_HOLD_STATUS_UNSPECIFIED = 'HOLD_STATUS_UNSPECIFIED';
   /**
@@ -45,7 +45,7 @@ class PutObjectHold extends \Google\Model
   public const TEMPORARY_HOLD_UNSET = 'UNSET';
   /**
    * Required. Updates object event based holds state. When object event based
-   * hold is set, object cannot be deleted or replaced. Resets object's time in
+   * hold is set, object can't be deleted or replaced. Resets object's time in
    * the bucket for the purposes of the retention period.
    *
    * @var string
@@ -53,7 +53,7 @@ class PutObjectHold extends \Google\Model
   public $eventBasedHold;
   /**
    * Required. Updates object temporary holds state. When object temporary hold
-   * is set, object cannot be deleted or replaced.
+   * is set, object can't be deleted or replaced.
    *
    * @var string
    */
@@ -61,7 +61,7 @@ class PutObjectHold extends \Google\Model
 
   /**
    * Required. Updates object event based holds state. When object event based
-   * hold is set, object cannot be deleted or replaced. Resets object's time in
+   * hold is set, object can't be deleted or replaced. Resets object's time in
    * the bucket for the purposes of the retention period.
    *
    * Accepted values: HOLD_STATUS_UNSPECIFIED, SET, UNSET
@@ -81,7 +81,7 @@ class PutObjectHold extends \Google\Model
   }
   /**
    * Required. Updates object temporary holds state. When object temporary hold
-   * is set, object cannot be deleted or replaced.
+   * is set, object can't be deleted or replaced.
    *
    * Accepted values: HOLD_STATUS_UNSPECIFIED, SET, UNSET
    *

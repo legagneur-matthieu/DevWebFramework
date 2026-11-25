@@ -62,7 +62,7 @@ class GoogleCloudDocumentaiV1beta3Processor extends \Google\Collection
   /**
    * Optional. SchemaVersion used by the Processor. It is the same as
    * Processor's DatasetSchema.schema_version Format is `projects/{project}/loca
-   * tions/{location}/schemas/{schema}/schemaVersions/{schema_version}
+   * tions/{location}/schemas/{schema}/schemaVersions/{schema_version}.
    *
    * @var string
    */
@@ -137,7 +137,7 @@ class GoogleCloudDocumentaiV1beta3Processor extends \Google\Collection
   /**
    * Optional. SchemaVersion used by the Processor. It is the same as
    * Processor's DatasetSchema.schema_version Format is `projects/{project}/loca
-   * tions/{location}/schemas/{schema}/schemaVersions/{schema_version}
+   * tions/{location}/schemas/{schema}/schemaVersions/{schema_version}.
    *
    * @param string $activeSchemaVersion
    */

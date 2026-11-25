@@ -80,6 +80,24 @@ class DeviceRadioState extends \Google\Model
    */
   public const MINIMUM_WIFI_SECURITY_LEVEL_ENTERPRISE_BIT192_NETWORK_SECURITY = 'ENTERPRISE_BIT192_NETWORK_SECURITY';
   /**
+   * Unspecified. Defaults to NFC_USER_CHOICE.
+   */
+  public const NFC_NFC_UNSPECIFIED = 'NFC_UNSPECIFIED';
+  /**
+   * The user is allowed to toggle NFC between enabled and disabled. A
+   * NonComplianceDetail with API_LEVEL is reported if the Android version is
+   * less than 15.
+   */
+  public const NFC_NFC_USER_CHOICE = 'NFC_USER_CHOICE';
+  /**
+   * NFC is disabled on the device. The user is not allowed to toggle NFC on.
+   * This is supported on fully managed devices and work profiles on company-
+   * owned devices. For other management modes, a NonComplianceDetail with
+   * MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is
+   * reported if the Android version is less than 15.
+   */
+  public const NFC_NFC_DISABLED = 'NFC_DISABLED';
+  /**
    * Unspecified. Defaults to ULTRA_WIDEBAND_USER_CHOICE.
    */
   public const ULTRA_WIDEBAND_STATE_ULTRA_WIDEBAND_STATE_UNSPECIFIED = 'ULTRA_WIDEBAND_STATE_UNSPECIFIED';
@@ -93,6 +111,27 @@ class DeviceRadioState extends \Google\Model
    * if the Android version is less than 14.
    */
   public const ULTRA_WIDEBAND_STATE_ULTRA_WIDEBAND_DISABLED = 'ULTRA_WIDEBAND_DISABLED';
+  /**
+   * Unspecified. Defaults to USER_INITIATED_ADD_ESIM_ALLOWED.
+   */
+  public const USER_INITIATED_ADD_ESIM_SETTINGS_USER_INITIATED_ADD_ESIM_SETTINGS_UNSPECIFIED = 'USER_INITIATED_ADD_ESIM_SETTINGS_UNSPECIFIED';
+  /**
+   * The user is allowed to add eSIM profiles.
+   */
+  public const USER_INITIATED_ADD_ESIM_SETTINGS_USER_INITIATED_ADD_ESIM_ALLOWED = 'USER_INITIATED_ADD_ESIM_ALLOWED';
+  /**
+   * Prevents the user from adding any new eSIM profiles. Note the following
+   * behaviors: * Admin-provisioned eSIMs: This setting does not block adding or
+   * managing eSIMs programmatically using commands like ADD_ESIM. * Existing
+   * eSIMs: Any eSIM profiles already present on the device before this
+   * restriction is applied, will remain and are not removed. To view existing
+   * eSIMs, refer to the data reported in TelephonyInfo.Supported on Android 15
+   * and higher. A NonComplianceDetail with API_LEVEL is reported if the Android
+   * version is less than 15.Supported only on company-owned devices. A
+   * NonComplianceDetail with MANAGEMENT_MODE is reported for personally-owned
+   * devices.
+   */
+  public const USER_INITIATED_ADD_ESIM_SETTINGS_USER_INITIATED_ADD_ESIM_DISALLOWED = 'USER_INITIATED_ADD_ESIM_DISALLOWED';
   /**
    * Unspecified. Defaults to WIFI_STATE_USER_CHOICE
    */
@@ -114,40 +153,56 @@ class DeviceRadioState extends \Google\Model
    */
   public const WIFI_STATE_WIFI_DISABLED = 'WIFI_DISABLED';
   /**
-   * Controls whether airplane mode can be toggled by the user or not.
+   * Optional. Controls whether airplane mode can be toggled by the user or not.
    *
    * @var string
    */
   public $airplaneModeState;
   /**
-   * Controls whether cellular 2G setting can be toggled by the user or not.
+   * Optional. Controls whether cellular 2G setting can be toggled by the user
+   * or not.
    *
    * @var string
    */
   public $cellularTwoGState;
   /**
-   * The minimum required security level of Wi-Fi networks that the device can
-   * connect to.
+   * Optional. The minimum required security level of Wi-Fi networks that the
+   * device can connect to.
    *
    * @var string
    */
   public $minimumWifiSecurityLevel;
   /**
-   * Controls the state of the ultra wideband setting and whether the user can
-   * toggle it on or off.
+   * Optional. Controls whether NFC is disabled on the device and if the user
+   * can toggle NFC between enabled and disabled. This is for fully managed
+   * devices. To control NFC on work profiles on company-owned devices, use
+   * deviceWidePolicies.deviceRadioState.nfc instead.
+   *
+   * @var string
+   */
+  public $nfc;
+  /**
+   * Optional. Controls the state of the ultra wideband setting and whether the
+   * user can toggle it on or off.
    *
    * @var string
    */
   public $ultraWidebandState;
   /**
-   * Controls current state of Wi-Fi and if user can change its state.
+   * Optional. Controls whether the user is allowed to add eSIM profiles.
+   *
+   * @var string
+   */
+  public $userInitiatedAddEsimSettings;
+  /**
+   * Optional. Controls current state of Wi-Fi and if user can change its state.
    *
    * @var string
    */
   public $wifiState;
 
   /**
-   * Controls whether airplane mode can be toggled by the user or not.
+   * Optional. Controls whether airplane mode can be toggled by the user or not.
    *
    * Accepted values: AIRPLANE_MODE_STATE_UNSPECIFIED,
    * AIRPLANE_MODE_USER_CHOICE, AIRPLANE_MODE_DISABLED
@@ -166,7 +221,8 @@ class DeviceRadioState extends \Google\Model
     return $this->airplaneModeState;
   }
   /**
-   * Controls whether cellular 2G setting can be toggled by the user or not.
+   * Optional. Controls whether cellular 2G setting can be toggled by the user
+   * or not.
    *
    * Accepted values: CELLULAR_TWO_G_STATE_UNSPECIFIED,
    * CELLULAR_TWO_G_USER_CHOICE, CELLULAR_TWO_G_DISABLED
@@ -185,8 +241,8 @@ class DeviceRadioState extends \Google\Model
     return $this->cellularTwoGState;
   }
   /**
-   * The minimum required security level of Wi-Fi networks that the device can
-   * connect to.
+   * Optional. The minimum required security level of Wi-Fi networks that the
+   * device can connect to.
    *
    * Accepted values: MINIMUM_WIFI_SECURITY_LEVEL_UNSPECIFIED,
    * OPEN_NETWORK_SECURITY, PERSONAL_NETWORK_SECURITY,
@@ -206,8 +262,29 @@ class DeviceRadioState extends \Google\Model
     return $this->minimumWifiSecurityLevel;
   }
   /**
-   * Controls the state of the ultra wideband setting and whether the user can
-   * toggle it on or off.
+   * Optional. Controls whether NFC is disabled on the device and if the user
+   * can toggle NFC between enabled and disabled. This is for fully managed
+   * devices. To control NFC on work profiles on company-owned devices, use
+   * deviceWidePolicies.deviceRadioState.nfc instead.
+   *
+   * Accepted values: NFC_UNSPECIFIED, NFC_USER_CHOICE, NFC_DISABLED
+   *
+   * @param self::NFC_* $nfc
+   */
+  public function setNfc($nfc)
+  {
+    $this->nfc = $nfc;
+  }
+  /**
+   * @return self::NFC_*
+   */
+  public function getNfc()
+  {
+    return $this->nfc;
+  }
+  /**
+   * Optional. Controls the state of the ultra wideband setting and whether the
+   * user can toggle it on or off.
    *
    * Accepted values: ULTRA_WIDEBAND_STATE_UNSPECIFIED,
    * ULTRA_WIDEBAND_USER_CHOICE, ULTRA_WIDEBAND_DISABLED
@@ -226,7 +303,26 @@ class DeviceRadioState extends \Google\Model
     return $this->ultraWidebandState;
   }
   /**
-   * Controls current state of Wi-Fi and if user can change its state.
+   * Optional. Controls whether the user is allowed to add eSIM profiles.
+   *
+   * Accepted values: USER_INITIATED_ADD_ESIM_SETTINGS_UNSPECIFIED,
+   * USER_INITIATED_ADD_ESIM_ALLOWED, USER_INITIATED_ADD_ESIM_DISALLOWED
+   *
+   * @param self::USER_INITIATED_ADD_ESIM_SETTINGS_* $userInitiatedAddEsimSettings
+   */
+  public function setUserInitiatedAddEsimSettings($userInitiatedAddEsimSettings)
+  {
+    $this->userInitiatedAddEsimSettings = $userInitiatedAddEsimSettings;
+  }
+  /**
+   * @return self::USER_INITIATED_ADD_ESIM_SETTINGS_*
+   */
+  public function getUserInitiatedAddEsimSettings()
+  {
+    return $this->userInitiatedAddEsimSettings;
+  }
+  /**
+   * Optional. Controls current state of Wi-Fi and if user can change its state.
    *
    * Accepted values: WIFI_STATE_UNSPECIFIED, WIFI_STATE_USER_CHOICE,
    * WIFI_ENABLED, WIFI_DISABLED

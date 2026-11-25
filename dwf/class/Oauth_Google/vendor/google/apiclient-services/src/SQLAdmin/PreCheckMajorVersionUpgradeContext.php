@@ -138,6 +138,10 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
    */
   public const TARGET_DATABASE_VERSION_MYSQL_8_4 = 'MYSQL_8_4';
   /**
+   * The database version is MySQL 9.7.
+   */
+  public const TARGET_DATABASE_VERSION_MYSQL_9_7 = 'MYSQL_9_7';
+  /**
    * The database version is SQL Server 2017 Standard.
    */
   public const TARGET_DATABASE_VERSION_SQLSERVER_2017_STANDARD = 'SQLSERVER_2017_STANDARD';
@@ -194,6 +198,14 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
    */
   public const TARGET_DATABASE_VERSION_POSTGRES_18 = 'POSTGRES_18';
   /**
+   * The database version is PostgreSQL 19.
+   */
+  public const TARGET_DATABASE_VERSION_POSTGRES_19 = 'POSTGRES_19';
+  /**
+   * The database version is PostgreSQL 20.
+   */
+  public const TARGET_DATABASE_VERSION_POSTGRES_20 = 'POSTGRES_20';
+  /**
    * The database version is SQL Server 2019 Standard.
    */
   public const TARGET_DATABASE_VERSION_SQLSERVER_2019_STANDARD = 'SQLSERVER_2019_STANDARD';
@@ -225,6 +237,18 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
    * The database version is SQL Server 2022 Web.
    */
   public const TARGET_DATABASE_VERSION_SQLSERVER_2022_WEB = 'SQLSERVER_2022_WEB';
+  /**
+   * The database version is SQL Server 2025 Standard.
+   */
+  public const TARGET_DATABASE_VERSION_SQLSERVER_2025_STANDARD = 'SQLSERVER_2025_STANDARD';
+  /**
+   * The database version is SQL Server 2025 Enterprise.
+   */
+  public const TARGET_DATABASE_VERSION_SQLSERVER_2025_ENTERPRISE = 'SQLSERVER_2025_ENTERPRISE';
+  /**
+   * The database version is SQL Server 2025 Express.
+   */
+  public const TARGET_DATABASE_VERSION_SQLSERVER_2025_EXPRESS = 'SQLSERVER_2025_EXPRESS';
   protected $collection_key = 'preCheckResponse';
   /**
    * Optional. This is always `sql#preCheckMajorVersionUpgradeContext`.
@@ -232,6 +256,12 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
    * @var string
    */
   public $kind;
+  /**
+   * Optional. The maximum allowed runtime for the precheck operation.
+   *
+   * @var string
+   */
+  public $maxRuntime;
   protected $preCheckResponseType = PreCheckResponse::class;
   protected $preCheckResponseDataType = 'array';
   /**
@@ -258,6 +288,22 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
     return $this->kind;
   }
   /**
+   * Optional. The maximum allowed runtime for the precheck operation.
+   *
+   * @param string $maxRuntime
+   */
+  public function setMaxRuntime($maxRuntime)
+  {
+    $this->maxRuntime = $maxRuntime;
+  }
+  /**
+   * @return string
+   */
+  public function getMaxRuntime()
+  {
+    return $this->maxRuntime;
+  }
+  /**
    * Output only. The responses from the precheck operation.
    *
    * @param PreCheckResponse[] $preCheckResponse
@@ -281,13 +327,15 @@ class PreCheckMajorVersionUpgradeContext extends \Google\Collection
    * MYSQL_8_0_28, MYSQL_8_0_29, MYSQL_8_0_30, MYSQL_8_0_31, MYSQL_8_0_32,
    * MYSQL_8_0_33, MYSQL_8_0_34, MYSQL_8_0_35, MYSQL_8_0_36, MYSQL_8_0_37,
    * MYSQL_8_0_39, MYSQL_8_0_40, MYSQL_8_0_41, MYSQL_8_0_42, MYSQL_8_0_43,
-   * MYSQL_8_0_44, MYSQL_8_0_45, MYSQL_8_0_46, MYSQL_8_4,
+   * MYSQL_8_0_44, MYSQL_8_0_45, MYSQL_8_0_46, MYSQL_8_4, MYSQL_9_7,
    * SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS,
    * SQLSERVER_2017_WEB, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12,
    * POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17,
-   * POSTGRES_18, SQLSERVER_2019_STANDARD, SQLSERVER_2019_ENTERPRISE,
-   * SQLSERVER_2019_EXPRESS, SQLSERVER_2019_WEB, SQLSERVER_2022_STANDARD,
-   * SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS, SQLSERVER_2022_WEB
+   * POSTGRES_18, POSTGRES_19, POSTGRES_20, SQLSERVER_2019_STANDARD,
+   * SQLSERVER_2019_ENTERPRISE, SQLSERVER_2019_EXPRESS, SQLSERVER_2019_WEB,
+   * SQLSERVER_2022_STANDARD, SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS,
+   * SQLSERVER_2022_WEB, SQLSERVER_2025_STANDARD, SQLSERVER_2025_ENTERPRISE,
+   * SQLSERVER_2025_EXPRESS
    *
    * @param self::TARGET_DATABASE_VERSION_* $targetDatabaseVersion
    */

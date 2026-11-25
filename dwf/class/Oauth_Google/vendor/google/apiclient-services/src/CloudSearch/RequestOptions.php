@@ -19,6 +19,21 @@ namespace Google\Service\CloudSearch;
 
 class RequestOptions extends \Google\Model
 {
+  /**
+   * The BCP-47 language code, such as "pt" or "en". It represents the user's
+   * preferred Display Language.
+   *
+   * @var string
+   */
+  public $clientDisplayLanguageCode;
+  /**
+   * Optional. Specifies the country/region where the query originated, as a
+   * lowercase ISO 3166-1 alpha-2 region code (using 'uk' instead of 'gb' for
+   * the United Kingdom).
+   *
+   * @var string
+   */
+  public $countryCode;
   protected $debugOptionsType = DebugOptions::class;
   protected $debugOptionsDataType = '';
   /**
@@ -34,6 +49,12 @@ class RequestOptions extends \Google\Model
    * @var string
    */
   public $languageCode;
+  /**
+   * Optional. The BCP-47 language code representing the language of the query.
+   *
+   * @var string
+   */
+  public $queryLanguageCode;
   /**
    * The ID generated when you create a search application using the [admin
    * console](https://support.google.com/a/answer/9043922).
@@ -54,6 +75,41 @@ class RequestOptions extends \Google\Model
    */
   public $timeZone;
 
+  /**
+   * The BCP-47 language code, such as "pt" or "en". It represents the user's
+   * preferred Display Language.
+   *
+   * @param string $clientDisplayLanguageCode
+   */
+  public function setClientDisplayLanguageCode($clientDisplayLanguageCode)
+  {
+    $this->clientDisplayLanguageCode = $clientDisplayLanguageCode;
+  }
+  /**
+   * @return string
+   */
+  public function getClientDisplayLanguageCode()
+  {
+    return $this->clientDisplayLanguageCode;
+  }
+  /**
+   * Optional. Specifies the country/region where the query originated, as a
+   * lowercase ISO 3166-1 alpha-2 region code (using 'uk' instead of 'gb' for
+   * the United Kingdom).
+   *
+   * @param string $countryCode
+   */
+  public function setCountryCode($countryCode)
+  {
+    $this->countryCode = $countryCode;
+  }
+  /**
+   * @return string
+   */
+  public function getCountryCode()
+  {
+    return $this->countryCode;
+  }
   /**
    * Debug options of the request
    *
@@ -92,6 +148,22 @@ class RequestOptions extends \Google\Model
   public function getLanguageCode()
   {
     return $this->languageCode;
+  }
+  /**
+   * Optional. The BCP-47 language code representing the language of the query.
+   *
+   * @param string $queryLanguageCode
+   */
+  public function setQueryLanguageCode($queryLanguageCode)
+  {
+    $this->queryLanguageCode = $queryLanguageCode;
+  }
+  /**
+   * @return string
+   */
+  public function getQueryLanguageCode()
+  {
+    return $this->queryLanguageCode;
   }
   /**
    * The ID generated when you create a search application using the [admin

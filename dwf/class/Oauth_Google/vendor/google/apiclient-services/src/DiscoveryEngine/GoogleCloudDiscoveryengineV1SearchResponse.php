@@ -33,6 +33,12 @@ class GoogleCloudDiscoveryengineV1SearchResponse extends \Google\Collection
   public const SEMANTIC_STATE_ENABLED = 'ENABLED';
   protected $collection_key = 'searchLinkPromotions';
   /**
+   * Optional. Controls applied as part of the Control service.
+   *
+   * @var string[]
+   */
+  public $appliedControls;
+  /**
    * A unique search token. This should be included in the UserEvent logs
    * resulting from this search, which enables accurate attribution of search
    * model performance. This also helps to identify a request during the
@@ -51,6 +57,8 @@ class GoogleCloudDiscoveryengineV1SearchResponse extends \Google\Collection
   public $correctedQuery;
   protected $facetsType = GoogleCloudDiscoveryengineV1SearchResponseFacet::class;
   protected $facetsDataType = 'array';
+  protected $naturalLanguageQueryUnderstandingInfoType = GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo::class;
+  protected $naturalLanguageQueryUnderstandingInfoDataType = '';
   /**
    * A token that can be sent as SearchRequest.page_token to retrieve the next
    * page. If this field is omitted, there are no subsequent pages.
@@ -91,6 +99,22 @@ class GoogleCloudDiscoveryengineV1SearchResponse extends \Google\Collection
    */
   public $totalSize;
 
+  /**
+   * Optional. Controls applied as part of the Control service.
+   *
+   * @param string[] $appliedControls
+   */
+  public function setAppliedControls($appliedControls)
+  {
+    $this->appliedControls = $appliedControls;
+  }
+  /**
+   * @return string[]
+   */
+  public function getAppliedControls()
+  {
+    return $this->appliedControls;
+  }
   /**
    * A unique search token. This should be included in the UserEvent logs
    * resulting from this search, which enables accurate attribution of search
@@ -143,6 +167,23 @@ class GoogleCloudDiscoveryengineV1SearchResponse extends \Google\Collection
   public function getFacets()
   {
     return $this->facets;
+  }
+  /**
+   * Output only. Natural language query understanding information for the
+   * returned results.
+   *
+   * @param GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo $naturalLanguageQueryUnderstandingInfo
+   */
+  public function setNaturalLanguageQueryUnderstandingInfo(GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo $naturalLanguageQueryUnderstandingInfo)
+  {
+    $this->naturalLanguageQueryUnderstandingInfo = $naturalLanguageQueryUnderstandingInfo;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo
+   */
+  public function getNaturalLanguageQueryUnderstandingInfo()
+  {
+    return $this->naturalLanguageQueryUnderstandingInfo;
   }
   /**
    * A token that can be sent as SearchRequest.page_token to retrieve the next

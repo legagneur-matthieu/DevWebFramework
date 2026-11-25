@@ -43,7 +43,21 @@ class BackupPlanAssociation extends \Google\Collection
    * The resource is being updated.
    */
   public const STATE_UPDATING = 'UPDATING';
+  /**
+   * The resource has been created but backups are paused.
+   */
+  public const STATE_PAUSED = 'PAUSED';
   protected $collection_key = 'rulesConfigInfo';
+  protected $alloydbClusterBackupPlanAssociationPropertiesType = AlloyDBClusterBackupPlanAssociationProperties::class;
+  protected $alloydbClusterBackupPlanAssociationPropertiesDataType = '';
+  /**
+   * Output only. The resource name of the `AutoProtectionPolicyBinding` that
+   * manages this association, if any. Format: `projects/{project}/locations/{lo
+   * cation}/autoProtectionPolicies/{policy}/bindings/{binding}`.
+   *
+   * @var string
+   */
+  public $autoProtectionPolicyBinding;
   /**
    * Required. Resource name of backup plan which needs to be applied on
    * workload. Format:
@@ -83,6 +97,8 @@ class BackupPlanAssociation extends \Google\Collection
    * @var string
    */
   public $dataSource;
+  protected $filestoreInstanceBackupPlanAssociationPropertiesType = FilestoreInstanceBackupPlanAssociationProperties::class;
+  protected $filestoreInstanceBackupPlanAssociationPropertiesDataType = '';
   /**
    * Output only. Identifier. The resource name of BackupPlanAssociation in
    * below format Format : projects/{project}/locations/{location}/backupPlanAss
@@ -91,6 +107,8 @@ class BackupPlanAssociation extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $netappVolumeBackupPlanAssociationPropertiesType = NetAppVolumeBackupPlanAssociationProperties::class;
+  protected $netappVolumeBackupPlanAssociationPropertiesDataType = '';
   /**
    * Required. Immutable. Resource name of workload on which the backup plan is
    * applied. The format can either be the resource name (e.g., "projects/my-
@@ -123,6 +141,40 @@ class BackupPlanAssociation extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * Output only. AlloyDB cluster's backup plan association properties.
+   *
+   * @param AlloyDBClusterBackupPlanAssociationProperties $alloydbClusterBackupPlanAssociationProperties
+   */
+  public function setAlloydbClusterBackupPlanAssociationProperties(AlloyDBClusterBackupPlanAssociationProperties $alloydbClusterBackupPlanAssociationProperties)
+  {
+    $this->alloydbClusterBackupPlanAssociationProperties = $alloydbClusterBackupPlanAssociationProperties;
+  }
+  /**
+   * @return AlloyDBClusterBackupPlanAssociationProperties
+   */
+  public function getAlloydbClusterBackupPlanAssociationProperties()
+  {
+    return $this->alloydbClusterBackupPlanAssociationProperties;
+  }
+  /**
+   * Output only. The resource name of the `AutoProtectionPolicyBinding` that
+   * manages this association, if any. Format: `projects/{project}/locations/{lo
+   * cation}/autoProtectionPolicies/{policy}/bindings/{binding}`.
+   *
+   * @param string $autoProtectionPolicyBinding
+   */
+  public function setAutoProtectionPolicyBinding($autoProtectionPolicyBinding)
+  {
+    $this->autoProtectionPolicyBinding = $autoProtectionPolicyBinding;
+  }
+  /**
+   * @return string
+   */
+  public function getAutoProtectionPolicyBinding()
+  {
+    return $this->autoProtectionPolicyBinding;
+  }
   /**
    * Required. Resource name of backup plan which needs to be applied on
    * workload. Format:
@@ -227,6 +279,22 @@ class BackupPlanAssociation extends \Google\Collection
     return $this->dataSource;
   }
   /**
+   * Output only. Filestore instance's backup plan association properties.
+   *
+   * @param FilestoreInstanceBackupPlanAssociationProperties $filestoreInstanceBackupPlanAssociationProperties
+   */
+  public function setFilestoreInstanceBackupPlanAssociationProperties(FilestoreInstanceBackupPlanAssociationProperties $filestoreInstanceBackupPlanAssociationProperties)
+  {
+    $this->filestoreInstanceBackupPlanAssociationProperties = $filestoreInstanceBackupPlanAssociationProperties;
+  }
+  /**
+   * @return FilestoreInstanceBackupPlanAssociationProperties
+   */
+  public function getFilestoreInstanceBackupPlanAssociationProperties()
+  {
+    return $this->filestoreInstanceBackupPlanAssociationProperties;
+  }
+  /**
    * Output only. Identifier. The resource name of BackupPlanAssociation in
    * below format Format : projects/{project}/locations/{location}/backupPlanAss
    * ociations/{backupPlanAssociationId}
@@ -243,6 +311,22 @@ class BackupPlanAssociation extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Output only. NetApp volume backup plan association properties.
+   *
+   * @param NetAppVolumeBackupPlanAssociationProperties $netappVolumeBackupPlanAssociationProperties
+   */
+  public function setNetappVolumeBackupPlanAssociationProperties(NetAppVolumeBackupPlanAssociationProperties $netappVolumeBackupPlanAssociationProperties)
+  {
+    $this->netappVolumeBackupPlanAssociationProperties = $netappVolumeBackupPlanAssociationProperties;
+  }
+  /**
+   * @return NetAppVolumeBackupPlanAssociationProperties
+   */
+  public function getNetappVolumeBackupPlanAssociationProperties()
+  {
+    return $this->netappVolumeBackupPlanAssociationProperties;
   }
   /**
    * Required. Immutable. Resource name of workload on which the backup plan is
@@ -301,7 +385,7 @@ class BackupPlanAssociation extends \Google\Collection
    * Output only. The BackupPlanAssociation resource state.
    *
    * Accepted values: STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE,
-   * UPDATING
+   * UPDATING, PAUSED
    *
    * @param self::STATE_* $state
    */

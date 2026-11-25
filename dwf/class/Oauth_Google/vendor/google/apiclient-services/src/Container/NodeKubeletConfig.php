@@ -56,6 +56,24 @@ class NodeKubeletConfig extends \Google\Collection
    */
   public $containerLogMaxSize;
   /**
+   * Optional. Defines the maximum number of concurrent workers to rotate
+   * container log files. See https://kubernetes.io/docs/concepts/cluster-
+   * administration/logging/#log-rotation The value must be an integer between 1
+   * and 10, inclusive. The default value is 1 if unspecified.
+   *
+   * @var int
+   */
+  public $containerLogMaxWorkers;
+  /**
+   * Optional. Specifies the interval at which the container logs are monitored
+   * for performing the log rotate operation. The value must be a positive
+   * interval between 3s and 300s, inclusive. The default value is "10s" if
+   * unspecified.
+   *
+   * @var string
+   */
+  public $containerLogMonitorInterval;
+  /**
    * Enable CPU CFS quota enforcement for containers that specify CPU limits.
    * This option is enabled by default which makes kubelet use CFS quota
    * (https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt) to
@@ -88,6 +106,8 @@ class NodeKubeletConfig extends \Google\Collection
    * @var string
    */
   public $cpuManagerPolicy;
+  protected $crashLoopBackOffType = CrashLoopBackOffConfig::class;
+  protected $crashLoopBackOffDataType = '';
   /**
    * Optional. eviction_max_pod_grace_period_seconds is the maximum allowed
    * grace period (in seconds) to use when terminating pods in response to a
@@ -173,6 +193,39 @@ class NodeKubeletConfig extends \Google\Collection
    * @var string
    */
   public $podPidsLimit;
+  protected $reservedResourcesConfigType = ReservedResourcesConfig::class;
+  protected $reservedResourcesConfigDataType = '';
+  /**
+   * Optional. The reserved_system_cpus option specifies the CPU list reserved
+   * for the host system services. Format: a list of CPU IDs (e.g. "0-3", "0,1")
+   * that can be parsed as a cpuset.
+   *
+   * @var string
+   */
+  public $reservedSystemCpus;
+  /**
+   * Optional. shutdown_grace_period_critical_pods_seconds is the maximum
+   * allowed grace period (in seconds) used to terminate critical pods during a
+   * node shutdown. This value should be <= shutdown_grace_period_seconds, and
+   * is only valid if shutdown_grace_period_seconds is set.
+   * https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/
+   * Range: [0, 120].
+   *
+   * @var int
+   */
+  public $shutdownGracePeriodCriticalPodsSeconds;
+  /**
+   * Optional. shutdown_grace_period_seconds is the maximum allowed grace period
+   * (in seconds) the total duration that the node should delay the shutdown
+   * during a graceful shutdown. This is the total grace period for pod
+   * termination for both regular and critical pods.
+   * https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/
+   * If set to 0, node will not enable the graceful node shutdown functionality.
+   * This field is only valid for Spot VMs. Allowed values: 0, 30, 120.
+   *
+   * @var int
+   */
+  public $shutdownGracePeriodSeconds;
   /**
    * Optional. Defines whether to enable single process OOM killer. If true,
    * will prevent the memory.oom.group flag from being set for container cgroups
@@ -251,6 +304,44 @@ class NodeKubeletConfig extends \Google\Collection
     return $this->containerLogMaxSize;
   }
   /**
+   * Optional. Defines the maximum number of concurrent workers to rotate
+   * container log files. See https://kubernetes.io/docs/concepts/cluster-
+   * administration/logging/#log-rotation The value must be an integer between 1
+   * and 10, inclusive. The default value is 1 if unspecified.
+   *
+   * @param int $containerLogMaxWorkers
+   */
+  public function setContainerLogMaxWorkers($containerLogMaxWorkers)
+  {
+    $this->containerLogMaxWorkers = $containerLogMaxWorkers;
+  }
+  /**
+   * @return int
+   */
+  public function getContainerLogMaxWorkers()
+  {
+    return $this->containerLogMaxWorkers;
+  }
+  /**
+   * Optional. Specifies the interval at which the container logs are monitored
+   * for performing the log rotate operation. The value must be a positive
+   * interval between 3s and 300s, inclusive. The default value is "10s" if
+   * unspecified.
+   *
+   * @param string $containerLogMonitorInterval
+   */
+  public function setContainerLogMonitorInterval($containerLogMonitorInterval)
+  {
+    $this->containerLogMonitorInterval = $containerLogMonitorInterval;
+  }
+  /**
+   * @return string
+   */
+  public function getContainerLogMonitorInterval()
+  {
+    return $this->containerLogMonitorInterval;
+  }
+  /**
    * Enable CPU CFS quota enforcement for containers that specify CPU limits.
    * This option is enabled by default which makes kubelet use CFS quota
    * (https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt) to
@@ -312,6 +403,23 @@ class NodeKubeletConfig extends \Google\Collection
   public function getCpuManagerPolicy()
   {
     return $this->cpuManagerPolicy;
+  }
+  /**
+   * Optional. Contains configuration options to modify node-level parameters
+   * for container restart behavior.
+   *
+   * @param CrashLoopBackOffConfig $crashLoopBackOff
+   */
+  public function setCrashLoopBackOff(CrashLoopBackOffConfig $crashLoopBackOff)
+  {
+    $this->crashLoopBackOff = $crashLoopBackOff;
+  }
+  /**
+   * @return CrashLoopBackOffConfig
+   */
+  public function getCrashLoopBackOff()
+  {
+    return $this->crashLoopBackOff;
   }
   /**
    * Optional. eviction_max_pod_grace_period_seconds is the maximum allowed
@@ -543,6 +651,84 @@ class NodeKubeletConfig extends \Google\Collection
   public function getPodPidsLimit()
   {
     return $this->podPidsLimit;
+  }
+  /**
+   * Optional. Controls the reserved resources on the node. Only included if any
+   * fields are specified.
+   *
+   * @param ReservedResourcesConfig $reservedResourcesConfig
+   */
+  public function setReservedResourcesConfig(ReservedResourcesConfig $reservedResourcesConfig)
+  {
+    $this->reservedResourcesConfig = $reservedResourcesConfig;
+  }
+  /**
+   * @return ReservedResourcesConfig
+   */
+  public function getReservedResourcesConfig()
+  {
+    return $this->reservedResourcesConfig;
+  }
+  /**
+   * Optional. The reserved_system_cpus option specifies the CPU list reserved
+   * for the host system services. Format: a list of CPU IDs (e.g. "0-3", "0,1")
+   * that can be parsed as a cpuset.
+   *
+   * @param string $reservedSystemCpus
+   */
+  public function setReservedSystemCpus($reservedSystemCpus)
+  {
+    $this->reservedSystemCpus = $reservedSystemCpus;
+  }
+  /**
+   * @return string
+   */
+  public function getReservedSystemCpus()
+  {
+    return $this->reservedSystemCpus;
+  }
+  /**
+   * Optional. shutdown_grace_period_critical_pods_seconds is the maximum
+   * allowed grace period (in seconds) used to terminate critical pods during a
+   * node shutdown. This value should be <= shutdown_grace_period_seconds, and
+   * is only valid if shutdown_grace_period_seconds is set.
+   * https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/
+   * Range: [0, 120].
+   *
+   * @param int $shutdownGracePeriodCriticalPodsSeconds
+   */
+  public function setShutdownGracePeriodCriticalPodsSeconds($shutdownGracePeriodCriticalPodsSeconds)
+  {
+    $this->shutdownGracePeriodCriticalPodsSeconds = $shutdownGracePeriodCriticalPodsSeconds;
+  }
+  /**
+   * @return int
+   */
+  public function getShutdownGracePeriodCriticalPodsSeconds()
+  {
+    return $this->shutdownGracePeriodCriticalPodsSeconds;
+  }
+  /**
+   * Optional. shutdown_grace_period_seconds is the maximum allowed grace period
+   * (in seconds) the total duration that the node should delay the shutdown
+   * during a graceful shutdown. This is the total grace period for pod
+   * termination for both regular and critical pods.
+   * https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/
+   * If set to 0, node will not enable the graceful node shutdown functionality.
+   * This field is only valid for Spot VMs. Allowed values: 0, 30, 120.
+   *
+   * @param int $shutdownGracePeriodSeconds
+   */
+  public function setShutdownGracePeriodSeconds($shutdownGracePeriodSeconds)
+  {
+    $this->shutdownGracePeriodSeconds = $shutdownGracePeriodSeconds;
+  }
+  /**
+   * @return int
+   */
+  public function getShutdownGracePeriodSeconds()
+  {
+    return $this->shutdownGracePeriodSeconds;
   }
   /**
    * Optional. Defines whether to enable single process OOM killer. If true,

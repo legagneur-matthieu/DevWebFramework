@@ -91,7 +91,11 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
    * `SOLUTION_TYPE_CHAT` solution.
    */
   public const SOLUTION_TYPE_SOLUTION_TYPE_GENERATIVE_CHAT = 'SOLUTION_TYPE_GENERATIVE_CHAT';
-  protected $collection_key = 'facetField';
+  /**
+   * Used for AI Mode.
+   */
+  public const SOLUTION_TYPE_SOLUTION_TYPE_AI_MODE = 'SOLUTION_TYPE_AI_MODE';
+  protected $collection_key = 'nodes';
   protected $accessSettingsType = GoogleCloudDiscoveryengineV1WidgetConfigAccessSettings::class;
   protected $accessSettingsDataType = '';
   /**
@@ -112,6 +116,8 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
   public $allowlistedDomains;
   protected $assistantSettingsType = GoogleCloudDiscoveryengineV1WidgetConfigAssistantSettings::class;
   protected $assistantSettingsDataType = '';
+  protected $batchAuthStatusesType = GoogleCloudDiscoveryengineV1WidgetConfigBatchAuthStatus::class;
+  protected $batchAuthStatusesDataType = 'array';
   protected $collectionComponentsType = GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent::class;
   protected $collectionComponentsDataType = 'array';
   /**
@@ -266,6 +272,8 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $nodesType = GoogleCloudDiscoveryengineV1WidgetConfigNode::class;
+  protected $nodesDataType = 'array';
   /**
    * The type of snippet to display in UCS widget. -
    * RESULT_DISPLAY_TYPE_UNSPECIFIED for existing users. - SNIPPET for new non-
@@ -366,10 +374,34 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
     return $this->assistantSettings;
   }
   /**
+   * Output only. The batch authorization statuses for the widget's connectors.
+   *
+   * @param GoogleCloudDiscoveryengineV1WidgetConfigBatchAuthStatus[] $batchAuthStatuses
+   */
+  public function setBatchAuthStatuses($batchAuthStatuses)
+  {
+    $this->batchAuthStatuses = $batchAuthStatuses;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1WidgetConfigBatchAuthStatus[]
+   */
+  public function getBatchAuthStatuses()
+  {
+    return $this->batchAuthStatuses;
+  }
+  /**
    * Output only. Collection components that lists all collections and child
    * data stores associated with the widget config, those data sources can be
    * used for filtering in widget service APIs, users can return results that
-   * from selected data sources.
+   * from selected data sources. For SaaS / Business engines, when
+   * `LookupWidgetConfig` is called with `view = WITH_AVAILABLE_CONNECTORS`,
+   * this list is additionally augmented with synthetic placeholder entries for
+   * connectors the caller may attach but has not yet attached (see
+   * `CollectionComponent` for the placeholder contract). The frontend can
+   * therefore render a unified list of already-attached and available-to-attach
+   * sources by iterating this single field. For Enterprise engines and for the
+   * default `view`, only already-attached connectors are returned (today's
+   * behavior).
    *
    * @param GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent[] $collectionComponents
    */
@@ -851,6 +883,22 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
     return $this->name;
   }
   /**
+   * Output only. The nodes associated with the Widget Config.
+   *
+   * @param GoogleCloudDiscoveryengineV1WidgetConfigNode[] $nodes
+   */
+  public function setNodes($nodes)
+  {
+    $this->nodes = $nodes;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1WidgetConfigNode[]
+   */
+  public function getNodes()
+  {
+    return $this->nodes;
+  }
+  /**
    * The type of snippet to display in UCS widget. -
    * RESULT_DISPLAY_TYPE_UNSPECIFIED for existing users. - SNIPPET for new non-
    * enterprise search users. - EXTRACTIVE_ANSWER for new enterprise search
@@ -879,7 +927,8 @@ class GoogleCloudDiscoveryengineV1WidgetConfig extends \Google\Collection
    * be used for.
    *
    * Accepted values: SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION,
-   * SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT
+   * SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT,
+   * SOLUTION_TYPE_AI_MODE
    *
    * @param self::SOLUTION_TYPE_* $solutionType
    */

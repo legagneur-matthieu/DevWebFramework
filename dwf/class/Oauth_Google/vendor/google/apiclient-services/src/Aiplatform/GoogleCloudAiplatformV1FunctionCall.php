@@ -22,14 +22,21 @@ class GoogleCloudAiplatformV1FunctionCall extends \Google\Collection
   protected $collection_key = 'partialArgs';
   /**
    * Optional. The function parameters and values in JSON object format. See
-   * [FunctionDeclaration.parameters] for parameter details.
+   * FunctionDeclaration.parameters for parameter details.
    *
    * @var array[]
    */
   public $args;
   /**
+   * Optional. The unique id of the function call. If populated, the client to
+   * execute the `function_call` and return the response with the matching `id`.
+   *
+   * @var string
+   */
+  public $id;
+  /**
    * Optional. The name of the function to call. Matches
-   * [FunctionDeclaration.name].
+   * FunctionDeclaration.name.
    *
    * @var string
    */
@@ -46,7 +53,7 @@ class GoogleCloudAiplatformV1FunctionCall extends \Google\Collection
 
   /**
    * Optional. The function parameters and values in JSON object format. See
-   * [FunctionDeclaration.parameters] for parameter details.
+   * FunctionDeclaration.parameters for parameter details.
    *
    * @param array[] $args
    */
@@ -62,8 +69,25 @@ class GoogleCloudAiplatformV1FunctionCall extends \Google\Collection
     return $this->args;
   }
   /**
+   * Optional. The unique id of the function call. If populated, the client to
+   * execute the `function_call` and return the response with the matching `id`.
+   *
+   * @param string $id
+   */
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+  /**
+   * @return string
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
+  /**
    * Optional. The name of the function to call. Matches
-   * [FunctionDeclaration.name].
+   * FunctionDeclaration.name.
    *
    * @param string $name
    */

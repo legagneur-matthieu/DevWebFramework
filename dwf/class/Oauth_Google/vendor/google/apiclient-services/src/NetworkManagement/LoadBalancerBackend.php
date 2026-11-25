@@ -62,7 +62,11 @@ class LoadBalancerBackend extends \Google\Collection
    */
   public $healthCheckFirewallState;
   /**
-   * URI of a Compute Engine instance or network endpoint.
+   * URI of the backend instance or network endpoint. Format: *
+   * `projects/{project}/zones/{zone}/instances/{instance}` (instance) *
+   * `projects/{project}/zones/{zone}/networkEndpointGroups/{neg}` (zonal NEG) *
+   * `projects/{project}/regions/{region}/networkEndpointGroups/{neg}` (regional
+   * NEG) * `projects/{project}/global/networkEndpointGroups/{neg}` (global NEG)
    *
    * @var string
    */
@@ -136,7 +140,11 @@ class LoadBalancerBackend extends \Google\Collection
     return $this->healthCheckFirewallState;
   }
   /**
-   * URI of a Compute Engine instance or network endpoint.
+   * URI of the backend instance or network endpoint. Format: *
+   * `projects/{project}/zones/{zone}/instances/{instance}` (instance) *
+   * `projects/{project}/zones/{zone}/networkEndpointGroups/{neg}` (zonal NEG) *
+   * `projects/{project}/regions/{region}/networkEndpointGroups/{neg}` (regional
+   * NEG) * `projects/{project}/global/networkEndpointGroups/{neg}` (global NEG)
    *
    * @param string $uri
    */

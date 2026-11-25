@@ -20,6 +20,7 @@ namespace Google\Service\HangoutsChat\Resource;
 use Google\Service\HangoutsChat\ChatEmpty;
 use Google\Service\HangoutsChat\CompleteImportSpaceRequest;
 use Google\Service\HangoutsChat\CompleteImportSpaceResponse;
+use Google\Service\HangoutsChat\FindGroupChatsResponse;
 use Google\Service\HangoutsChat\ListSpacesResponse;
 use Google\Service\HangoutsChat\SearchSpacesResponse;
 use Google\Service\HangoutsChat\SetUpSpaceRequest;
@@ -96,11 +97,19 @@ class Spaces extends \Google\Service\Resource
    * @param Space $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string requestId Optional. A unique identifier for this request. A
-   * random UUID is recommended. Specifying an existing request ID returns the
-   * space created with that ID instead of creating a new space. Specifying an
-   * existing request ID from the same Chat app with a different authenticated
-   * user returns an error.
+   * @opt_param string requestId Optional. A unique ID for this request. A random
+   * UUID is recommended. Specifying a request ID makes the request idempotent,
+   * which ensures that multiple identical requests with the same request ID
+   * result in only a single space being created. Subsequent requests with the
+   * same request ID return the existing space and do not update the space, even
+   * if the requested details differ from the current state. To use this field
+   * effectively: - Ensure that subsequent requests are identical and use the same
+   * authentication credentials as the original request. - If a space was already
+   * created with the provided request ID, the request returns that space. Note
+   * that the returned space might not be fully populated; the API echoes the
+   * space in your request with the system-assigned resource name populated. To
+   * retrieve the latest metadata for the space, call `GetSpace`. - Reusing an
+   * existing request ID with a different authenticated user results in an error.
    * @return Space
    * @throws \Google\Service\Exception
    */
@@ -195,6 +204,62 @@ class Spaces extends \Google\Service\Resource
     $params = [];
     $params = array_merge($params, $optParams);
     return $this->call('findDirectMessage', [$params], Space::class);
+  }
+  /**
+   * Returns all spaces with `spaceType == GROUP_CHAT`, whose human memberships
+   * contain exactly the calling user, and the users specified in
+   * `FindGroupChatsRequest.users`. Only members that have joined the conversation
+   * are supported. For an example, see [Find group
+   * chats](https://developers.google.com/workspace/chat/find-group-chats). If the
+   * calling user blocks, or is blocked by, some users, and no spaces with the
+   * entire specified set of users are found, this method returns spaces that
+   * don't include the blocked or blocking users. The specified set of users must
+   * contain only human (non-app) memberships. A request that contains non-human
+   * users doesn't return any spaces. Requires [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user) with one of the following [authorization
+   * scopes](https://developers.google.com/workspace/chat/authenticate-
+   * authorize#chat-api-scopes): -
+   * `https://www.googleapis.com/auth/chat.memberships.readonly` -
+   * `https://www.googleapis.com/auth/chat.memberships` (spaces.findGroupChats)
+   *
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param int pageSize Optional. The maximum number of spaces to return. The
+   * service might return fewer than this value. If unspecified, at most 10 spaces
+   * are returned. The maximum value is 30. If you use a value more than 30, it's
+   * automatically changed to 30. Negative values return an `INVALID_ARGUMENT`
+   * error.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * call to find group chats. Provide this parameter to retrieve the subsequent
+   * page. When paginating, all other parameters provided should match the call
+   * that provided the token. Passing different values may lead to unexpected
+   * results.
+   * @opt_param string spaceView Requested space view type. If unset, defaults to
+   * `SPACE_VIEW_RESOURCE_NAME_ONLY`. Requests that specify `SPACE_VIEW_EXPANDED`
+   * must include scopes that allow reading space data, for example,
+   * https://www.googleapis.com/auth/chat.spaces or
+   * https://www.googleapis.com/auth/chat.spaces.readonly.
+   * @opt_param string users Optional. Resource names of all human users in group
+   * chat with the calling user. Chat apps can't be included in the request. The
+   * maximum number of users that can be specified in a single request is `49`.
+   * Format: `users/{user}`, where `{user}` is either the `id` for the
+   * [person](https://developers.google.com/people/api/rest/v1/people) from the
+   * People API, or the `id` for the [user](https://developers.google.com/admin-
+   * sdk/directory/reference/rest/v1/users) in the Directory API. For example, to
+   * find all group chats with the calling user and two other users, with People
+   * API profile IDs `123456789` and `987654321`, you can use `users/123456789`
+   * and `users/987654321`. You can also use the email as an alias for `{user}`.
+   * For example, `users/example@gmail.com` where `example@gmail.com` is the email
+   * of the Google Chat user.
+   * @return FindGroupChatsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function findGroupChats($optParams = [])
+  {
+    $params = [];
+    $params = array_merge($params, $optParams);
+    return $this->call('findGroupChats', [$params], FindGroupChatsResponse::class);
   }
   /**
    * Returns details about a space. For an example, see [Get details about a
@@ -328,37 +393,51 @@ class Spaces extends \Google\Service\Resource
    * @opt_param string updateMask Required. The updated field paths, comma
    * separated if there are multiple. You can update the following fields for a
    * space: `space_details`: Updates the space's description and guidelines. You
-   * must pass both description and guidelines in the update request as
-   * `SpaceDetails`. If you only want to update one of the fields, pass the
-   * existing value for the other field. `display_name`: Only supports updating
-   * the display name for spaces where `spaceType` field is `SPACE`. If you
-   * receive the error message `ALREADY_EXISTS`, try a different value. An
-   * existing space within the Google Workspace organization might already use
-   * this display name. `space_type`: Only supports changing a `GROUP_CHAT` space
-   * type to `SPACE`. Include `display_name` together with `space_type` in the
-   * update mask and ensure that the specified space has a non-empty display name
-   * and the `SPACE` space type. Including the `space_type` mask and the `SPACE`
-   * type in the specified space when updating the display name is optional if the
-   * existing space already has the `SPACE` type. Trying to update the space type
-   * in other ways results in an invalid argument error. `space_type` is not
-   * supported with `useAdminAccess`. `space_history_state`: Updates [space
-   * history settings](https://support.google.com/chat/answer/7664687) by turning
-   * history on or off for the space. Only supported if history settings are
-   * enabled for the Google Workspace organization. To update the space history
-   * state, you must omit all other field masks in your request.
-   * `space_history_state` is not supported with `useAdminAccess`.
-   * `access_settings.audience`: Updates the [access
-   * setting](https://support.google.com/chat/answer/11971020) of who can discover
-   * the space, join the space, and preview the messages in named space where
-   * `spaceType` field is `SPACE`. If the existing space has a target audience,
-   * you can remove the audience and restrict space access by omitting a value for
-   * this field mask. To update access settings for a space, the authenticating
-   * user must be a space manager and omit all other field masks in your request.
-   * You can't update this field if the space is in [import
+   * must pass description and guidelines in the update request as `SpaceDetails`.
+   * If you only want to update one of the fields, pass the existing value for the
+   * other field. `display_name`: Only supports updating the display name for
+   * spaces where `spaceType` field is `SPACE`. If you receive the error message
+   * `ALREADY_EXISTS`, try a different value. An existing space within the Google
+   * Workspace organization might already use this display name. `space_type`:
+   * Only supports changing a `GROUP_CHAT` space type to `SPACE`. Include
+   * `display_name` together with `space_type` in the update mask and ensure that
+   * the specified space has a non-empty display name and the `SPACE` space type.
+   * Including the `space_type` mask and the `SPACE` type in the specified space
+   * when updating the display name is optional if the existing space already has
+   * the `SPACE` type. Trying to update the space type in other ways results in an
+   * invalid argument error. `space_type` is not supported with `useAdminAccess`.
+   * `space_history_state`: Updates [space history
+   * settings](https://support.google.com/chat/answer/7664687) by turning history
+   * on or off for the space. Only supported if history settings are enabled for
+   * the Google Workspace organization. To update the space history state, you
+   * must omit all other field masks in your request. `space_history_state` is not
+   * supported with `useAdminAccess`. `access_settings.audience`: Updates the
+   * [access setting](https://support.google.com/chat/answer/11971020) of who can
+   * discover the space, join the space, and preview the messages in named space
+   * where `spaceType` field is `SPACE`. If the existing space has a target
+   * audience, you can remove the audience and restrict space access by omitting a
+   * value for this field mask. To update access settings for a space, the
+   * authenticating user must be a space manager and omit all other field masks in
+   * your request. You can't update this field if the space is in [import
    * mode](https://developers.google.com/workspace/chat/import-data-overview). To
    * learn more, see [Make a space discoverable to specific
    * users](https://developers.google.com/workspace/chat/space-target-audience).
    * `access_settings.audience` is not supported with `useAdminAccess`.
+   * `access_settings.access_permission_settings`: Updates the [access permission
+   * settings](https://support.google.com/chat/answer/11971020) of who can
+   * discover and join the space where `spaceType` field is `SPACE`. Principals
+   * allowed to join the space must also be allowed to discover it. To update
+   * access permission settings for a space, the authenticating user must be a
+   * space manager or assistant manager and omit all other field masks in the
+   * request. You can't update this field if the space is in [import
+   * mode](https://developers.google.com/workspace/chat/import-data-overview). To
+   * learn more, see [Make a space discoverable to specific
+   * users](https://developers.google.com/workspace/chat/space-target-audience).
+   * `access_settings.access_permission_settings` is not supported with
+   * `useAdminAccess`. The supported field masks include: -
+   * `access_settings.access_permission_settings.discoverSpaceSetting` -
+   * `access_settings.access_permission_settings.joinSpaceSetting` -
+   * `access_settings.access_permission_settings.viewSpaceMembershipSetting`
    * `permission_settings`: Supports changing the [permission
    * settings](https://support.google.com/chat/answer/13340792) of a space. When
    * updating permission settings, you can only specify `permissionSettings` field
@@ -367,7 +446,8 @@ class Spaces extends \Google\Service\Resource
    * `permission_settings.modifySpaceDetails` -
    * `permission_settings.toggleHistory` - `permission_settings.useAtMentionAll` -
    * `permission_settings.manageApps` - `permission_settings.manageWebhooks` -
-   * `permission_settings.replyMessages`
+   * `permission_settings.replyMessages` -
+   * `permission_settings.viewSpaceMembership`
    * @opt_param bool useAdminAccess Optional. When `true`, the method runs using
    * the user's Google Workspace administrator privileges. The calling user must
    * be a Google Workspace administrator with the [manage chat and spaces
@@ -386,11 +466,19 @@ class Spaces extends \Google\Service\Resource
     return $this->call('patch', [$params], Space::class);
   }
   /**
-   * Returns a list of spaces in a Google Workspace organization based on an
-   * administrator's search. In the request, set `use_admin_access` to `true`. For
-   * an example, see [Search for and manage
+   * Returns a list of spaces in a Google Workspace organization. For an example,
+   * see [Search for and manage
    * spaces](https://developers.google.com/workspace/chat/search-manage-admin).
-   * Requires [user authentication with administrator
+   * When `use_admin_access` is set to `false`, the results are limited to spaces
+   * where the calling user is a joined member. To search with administrator
+   * privileges, set `use_admin_access` to `true`. Supports the following types of
+   * [authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize): - [User
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user) with one of the following authorization scopes: -
+   * `https://www.googleapis.com/auth/chat.spaces.readonly` -
+   * `https://www.googleapis.com/auth/chat.spaces` - [User authentication with
+   * administrator
    * privileges](https://developers.google.com/workspace/chat/authenticate-
    * authorize-chat-user#admin-privileges) and one of the following [authorization
    * scopes](https://developers.google.com/workspace/chat/authenticate-
@@ -405,34 +493,44 @@ class Spaces extends \Google\Service\Resource
    * `membership_count.joined_direct_human_user_count` — Denotes the count of
    * human users that have directly joined a space. - `last_active_time` — Denotes
    * the time when last eligible item is added to any topic of this space. -
-   * `create_time` — Denotes the time of the space creation. Valid ordering
-   * operation values are: - `ASC` for ascending. Default value. - `DESC` for
-   * descending. The supported syntax are: -
-   * `membership_count.joined_direct_human_user_count DESC` -
+   * `create_time` — Denotes the time of the space creation. When `useAdminAccess`
+   * is `false`, only `create_time` and `relevance` are supported for ordering.
+   * Only `DESC` is supported for these fields in non-admin searches. Valid
+   * ordering operation values are: - `ASC` for ascending. Default value. - `DESC`
+   * for descending. The supported syntax are when `useAdminAccess` is set to
+   * `true`: - `membership_count.joined_direct_human_user_count DESC` -
    * `membership_count.joined_direct_human_user_count ASC` - `last_active_time
-   * DESC` - `last_active_time ASC` - `create_time DESC` - `create_time ASC`
+   * DESC` - `last_active_time ASC` - `create_time DESC` - `create_time ASC` When
+   * `useAdminAccess` is set to `false`: - `create_time DESC` - `relevance DESC`
+   * [Developer Preview](https://developers.google.com/workspace/preview).
    * @opt_param int pageSize The maximum number of spaces to return. The service
    * may return fewer than this value. If unspecified, at most 100 spaces are
-   * returned. The maximum value is 1000. If you use a value more than 1000, it's
-   * automatically changed to 1000.
+   * returned. The maximum value is 1000 when `useAdminAccess` is set to `true`.
+   * Otherwise, the maximum value is 100. If you use a value more than the maximum
+   * value, it's automatically changed to the maximum value.
    * @opt_param string pageToken A token, received from the previous search spaces
    * call. Provide this parameter to retrieve the subsequent page. When
    * paginating, all other parameters provided should match the call that provided
    * the page token. Passing different values to the other parameters might lead
    * to unexpected results.
    * @opt_param string query Required. A search query. You can search by using the
-   * following parameters: - `create_time` - `customer` - `display_name` -
-   * `external_user_allowed` - `last_active_time` - `space_history_state` -
-   * `space_type` `create_time` and `last_active_time` accept a timestamp in
+   * following parameters when `useAdminAccess` is set to `true`: - `create_time`
+   * - `customer` - `display_name` - `external_user_allowed` - `last_active_time`
+   * - `space_history_state` - `space_type` When `useAdminAccess` is set to
+   * `false`: - `display_name` - `external_user_allowed` - `space_type`
+   * `create_time` and `last_active_time` accept a timestamp in
    * [RFC-3339](https://www.rfc-editor.org/rfc/rfc3339) format and the supported
    * comparison operators are: `=`, `<`, `>`, `<=`, `>=`. `customer` is required
-   * and is used to indicate which customer to fetch spaces from.
-   * `customers/my_customer` is the only supported value. `display_name` only
-   * accepts the `HAS` (`:`) operator. The text to match is first tokenized into
-   * tokens and each token is prefix-matched case-insensitively and independently
-   * as a substring anywhere in the space's `display_name`. For example, `Fun Eve`
-   * matches `Fun event` or `The evening was fun`, but not `notFun event` or
-   * `even`. `external_user_allowed` accepts either `true` or `false`.
+   * when `useAdminAccess` is set to `true`, and is used to indicate which
+   * customer to fetch spaces from. `customers/my_customer` is the only supported
+   * value. `display_name` only accepts the `HAS` (`:`) operator. The text to
+   * match is first tokenized into tokens and each token is prefix-matched case-
+   * insensitively and independently as a substring anywhere in the space's
+   * `display_name`. For example, `Fun Eve` matches `Fun event` or `The evening
+   * was fun`, but not `notFun event` or `even`. When `useAdminAccess` is set to
+   * `false`, `display_name` is required to retrieve meaningful results.
+   * Otherwise, the default behavior is to return an empty response.
+   * `external_user_allowed` accepts either `true` or `false`.
    * `space_history_state` only accepts values from the [`historyState`] (https://
    * developers.google.com/workspace/chat/api/reference/rest/v1/spaces#Space.Histo
    * ryState) field of a `space` resource. `space_type` is required and the only
@@ -444,27 +542,34 @@ class Spaces extends \Google\Service\Resource
    * support `OR` operators. `last_active_time` and `create_time` support both
    * `AND` and `OR` operators. `AND` can only be used to represent an interval,
    * such as `last_active_time < "2022-01-01T00:00:00+00:00" AND last_active_time
-   * > "2023-01-01T00:00:00+00:00"`. The following example queries are valid: ```
-   * customer = "customers/my_customer" AND space_type = "SPACE" customer =
-   * "customers/my_customer" AND space_type = "SPACE" AND display_name:"Hello
-   * World" customer = "customers/my_customer" AND space_type = "SPACE" AND
-   * (last_active_time < "2020-01-01T00:00:00+00:00" OR last_active_time >
+   * > "2023-01-01T00:00:00+00:00"`. The following example queries are valid when
+   * `useAdminAccess` is set to `true`: ``` customer = "customers/my_customer" AND
+   * space_type = "SPACE" customer = "customers/my_customer" AND space_type =
+   * "SPACE" AND display_name:"Hello World" customer = "customers/my_customer" AND
+   * space_type = "SPACE" AND (last_active_time < "2020-01-01T00:00:00+00:00" OR
+   * last_active_time > "2022-01-01T00:00:00+00:00") customer =
+   * "customers/my_customer" AND space_type = "SPACE" AND (display_name:"Hello
+   * World" OR display_name:"Fun event") AND (last_active_time >
+   * "2020-01-01T00:00:00+00:00" AND last_active_time <
    * "2022-01-01T00:00:00+00:00") customer = "customers/my_customer" AND
-   * space_type = "SPACE" AND (display_name:"Hello World" OR display_name:"Fun
-   * event") AND (last_active_time > "2020-01-01T00:00:00+00:00" AND
-   * last_active_time < "2022-01-01T00:00:00+00:00") customer =
-   * "customers/my_customer" AND space_type = "SPACE" AND (create_time >
-   * "2019-01-01T00:00:00+00:00" AND create_time < "2020-01-01T00:00:00+00:00")
-   * AND (external_user_allowed = "true") AND (space_history_state = "HISTORY_ON"
-   * OR space_history_state = "HISTORY_OFF") ```
+   * space_type = "SPACE" AND (create_time > "2019-01-01T00:00:00+00:00" AND
+   * create_time < "2020-01-01T00:00:00+00:00") AND (external_user_allowed =
+   * "true") AND (space_history_state = "HISTORY_ON" OR space_history_state =
+   * "HISTORY_OFF") ``` The following example queries are valid when
+   * `useAdminAccess` is set to `false`: ``` display_name:"Hello World" AND
+   * space_type = "SPACE" (display_name:"Hello" OR display_name:"Fun") AND
+   * space_type = "SPACE" (external_user_allowed = "true" AND space_type =
+   * "SPACE") // Returns an empty response. (external_user_allowed = "true" AND
+   * display_name:"Hello" AND space_type = "SPACE") ``` The maximum query length
+   * is 1,000 characters. Invalid queries are rejected by the server with an
+   * `INVALID_ARGUMENT` error.
    * @opt_param bool useAdminAccess When `true`, the method runs using the user's
    * Google Workspace administrator privileges. The calling user must be a Google
    * Workspace administrator with the [manage chat and spaces conversations
    * privilege](https://support.google.com/a/answer/13369245). Requires either the
    * `chat.admin.spaces.readonly` or `chat.admin.spaces` [OAuth 2.0
    * scope](https://developers.google.com/workspace/chat/authenticate-
-   * authorize#chat-api-scopes). This method currently only supports admin access,
-   * thus only `true` is accepted for this field.
+   * authorize#chat-api-scopes).
    * @return SearchSpacesResponse
    * @throws \Google\Service\Exception
    */

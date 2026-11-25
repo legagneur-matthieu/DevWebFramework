@@ -25,7 +25,7 @@ class GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDel
   protected $statusDataType = '';
 
   /**
-   * The document id of the document.
+   * The document ID of the document.
    *
    * @param GoogleCloudDocumentaiV1beta3DocumentId $documentId
    */

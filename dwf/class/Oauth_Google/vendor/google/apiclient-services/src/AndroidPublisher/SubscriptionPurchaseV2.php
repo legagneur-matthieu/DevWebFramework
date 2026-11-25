@@ -88,8 +88,18 @@ class SubscriptionPurchaseV2 extends \Google\Collection
   public $acknowledgementState;
   protected $canceledStateContextType = CanceledStateContext::class;
   protected $canceledStateContextDataType = '';
+  /**
+   * Entity tag representing the current state of the subscription. The
+   * developer will provide this etag for subscription actions. This etag is
+   * always present for auto-renewing and prepaid subscriptions.
+   *
+   * @var string
+   */
+  public $etag;
   protected $externalAccountIdentifiersType = ExternalAccountIdentifiers::class;
   protected $externalAccountIdentifiersDataType = '';
+  protected $inGracePeriodStateContextType = InGracePeriodStateContext::class;
+  protected $inGracePeriodStateContextDataType = '';
   /**
    * This kind represents a SubscriptionPurchaseV2 object in the
    * androidpublisher service.
@@ -97,18 +107,6 @@ class SubscriptionPurchaseV2 extends \Google\Collection
    * @var string
    */
   public $kind;
-  /**
-   * Deprecated: Use line_items.latest_successful_order_id instead. The order id
-   * of the latest order associated with the purchase of the subscription. For
-   * autoRenewing subscription, this is the order id of signup order if it is
-   * not renewed yet, or the last recurring order id (success, pending, or
-   * declined order). For prepaid subscription, this is the order id associated
-   * with the queried purchase token.
-   *
-   * @deprecated
-   * @var string
-   */
-  public $latestOrderId;
   protected $lineItemsType = SubscriptionPurchaseLineItem::class;
   protected $lineItemsDataType = 'array';
   /**
@@ -121,6 +119,8 @@ class SubscriptionPurchaseV2 extends \Google\Collection
    * @var string
    */
   public $linkedPurchaseToken;
+  protected $onHoldStateContextType = OnHoldStateContext::class;
+  protected $onHoldStateContextDataType = '';
   protected $outOfAppPurchaseContextType = OutOfAppPurchaseContext::class;
   protected $outOfAppPurchaseContextDataType = '';
   protected $pausedStateContextType = PausedStateContext::class;
@@ -189,6 +189,24 @@ class SubscriptionPurchaseV2 extends \Google\Collection
     return $this->canceledStateContext;
   }
   /**
+   * Entity tag representing the current state of the subscription. The
+   * developer will provide this etag for subscription actions. This etag is
+   * always present for auto-renewing and prepaid subscriptions.
+   *
+   * @param string $etag
+   */
+  public function setEtag($etag)
+  {
+    $this->etag = $etag;
+  }
+  /**
+   * @return string
+   */
+  public function getEtag()
+  {
+    return $this->etag;
+  }
+  /**
    * User account identifier in the third-party service.
    *
    * @param ExternalAccountIdentifiers $externalAccountIdentifiers
@@ -203,6 +221,24 @@ class SubscriptionPurchaseV2 extends \Google\Collection
   public function getExternalAccountIdentifiers()
   {
     return $this->externalAccountIdentifiers;
+  }
+  /**
+   * Optional. Additional context around subscriptions in IN_GRACE_PERIOD state.
+   * Only present if the subscription currently has subscription_state
+   * SUBSCRIPTION_STATE_IN_GRACE_PERIOD.
+   *
+   * @param InGracePeriodStateContext $inGracePeriodStateContext
+   */
+  public function setInGracePeriodStateContext(InGracePeriodStateContext $inGracePeriodStateContext)
+  {
+    $this->inGracePeriodStateContext = $inGracePeriodStateContext;
+  }
+  /**
+   * @return InGracePeriodStateContext
+   */
+  public function getInGracePeriodStateContext()
+  {
+    return $this->inGracePeriodStateContext;
   }
   /**
    * This kind represents a SubscriptionPurchaseV2 object in the
@@ -220,29 +256,6 @@ class SubscriptionPurchaseV2 extends \Google\Collection
   public function getKind()
   {
     return $this->kind;
-  }
-  /**
-   * Deprecated: Use line_items.latest_successful_order_id instead. The order id
-   * of the latest order associated with the purchase of the subscription. For
-   * autoRenewing subscription, this is the order id of signup order if it is
-   * not renewed yet, or the last recurring order id (success, pending, or
-   * declined order). For prepaid subscription, this is the order id associated
-   * with the queried purchase token.
-   *
-   * @deprecated
-   * @param string $latestOrderId
-   */
-  public function setLatestOrderId($latestOrderId)
-  {
-    $this->latestOrderId = $latestOrderId;
-  }
-  /**
-   * @deprecated
-   * @return string
-   */
-  public function getLatestOrderId()
-  {
-    return $this->latestOrderId;
   }
   /**
    * Item-level info for a subscription purchase. The items in the same purchase
@@ -280,6 +293,24 @@ class SubscriptionPurchaseV2 extends \Google\Collection
   public function getLinkedPurchaseToken()
   {
     return $this->linkedPurchaseToken;
+  }
+  /**
+   * Optional. Additional context around subscriptions in ON_HOLD state. Only
+   * present if the subscription currently has subscription_state
+   * SUBSCRIPTION_STATE_ON_HOLD.
+   *
+   * @param OnHoldStateContext $onHoldStateContext
+   */
+  public function setOnHoldStateContext(OnHoldStateContext $onHoldStateContext)
+  {
+    $this->onHoldStateContext = $onHoldStateContext;
+  }
+  /**
+   * @return OnHoldStateContext
+   */
+  public function getOnHoldStateContext()
+  {
+    return $this->onHoldStateContext;
   }
   /**
    * Additional context for out of app purchases. This information is only

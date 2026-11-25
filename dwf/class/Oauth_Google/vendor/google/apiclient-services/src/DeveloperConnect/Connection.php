@@ -30,7 +30,7 @@ class Connection extends \Google\Model
   protected $bitbucketDataCenterConfigType = BitbucketDataCenterConfig::class;
   protected $bitbucketDataCenterConfigDataType = '';
   /**
-   * Output only. [Output only] Create timestamp
+   * Output only. Create timestamp.
    *
    * @var string
    */
@@ -38,7 +38,7 @@ class Connection extends \Google\Model
   protected $cryptoKeyConfigType = CryptoKeyConfig::class;
   protected $cryptoKeyConfigDataType = '';
   /**
-   * Output only. [Output only] Delete timestamp
+   * Output only. Delete timestamp.
    *
    * @var string
    */
@@ -69,6 +69,8 @@ class Connection extends \Google\Model
   protected $gitlabConfigDataType = '';
   protected $gitlabEnterpriseConfigType = GitLabEnterpriseConfig::class;
   protected $gitlabEnterpriseConfigDataType = '';
+  protected $httpConfigType = GenericHTTPEndpointConfig::class;
+  protected $httpConfigDataType = '';
   protected $installationStateType = InstallationState::class;
   protected $installationStateDataType = '';
   /**
@@ -91,6 +93,8 @@ class Connection extends \Google\Model
    * @var bool
    */
   public $reconciling;
+  protected $secureSourceManagerInstanceConfigType = SecureSourceManagerInstanceConfig::class;
+  protected $secureSourceManagerInstanceConfigDataType = '';
   /**
    * Output only. A system-assigned unique identifier for the Connection.
    *
@@ -98,7 +102,7 @@ class Connection extends \Google\Model
    */
   public $uid;
   /**
-   * Output only. [Output only] Update timestamp
+   * Output only. Update timestamp.
    *
    * @var string
    */
@@ -153,7 +157,7 @@ class Connection extends \Google\Model
     return $this->bitbucketDataCenterConfig;
   }
   /**
-   * Output only. [Output only] Create timestamp
+   * Output only. Create timestamp.
    *
    * @param string $createTime
    */
@@ -186,7 +190,7 @@ class Connection extends \Google\Model
     return $this->cryptoKeyConfig;
   }
   /**
-   * Output only. [Output only] Delete timestamp
+   * Output only. Delete timestamp.
    *
    * @param string $deleteTime
    */
@@ -238,9 +242,10 @@ class Connection extends \Google\Model
     return $this->etag;
   }
   /**
-   * Optional. Configuration for the git proxy feature. Enabling the git proxy
-   * allows clients to perform git operations on the repositories linked in the
-   * connection.
+   * Optional. Configuration for the Git proxy feature. Enabling the Git proxy
+   * allows clients to perform Git operations on the repositories linked in the
+   * connection. [Learn more](https://docs.cloud.google.com/developer-
+   * connect/docs/configure-git-proxy).
    *
    * @param GitProxyConfig $gitProxyConfig
    */
@@ -320,6 +325,22 @@ class Connection extends \Google\Model
     return $this->gitlabEnterpriseConfig;
   }
   /**
+   * Optional. Configuration for connections to an HTTP service provider.
+   *
+   * @param GenericHTTPEndpointConfig $httpConfig
+   */
+  public function setHttpConfig(GenericHTTPEndpointConfig $httpConfig)
+  {
+    $this->httpConfig = $httpConfig;
+  }
+  /**
+   * @return GenericHTTPEndpointConfig
+   */
+  public function getHttpConfig()
+  {
+    return $this->httpConfig;
+  }
+  /**
    * Output only. Installation state of the Connection.
    *
    * @param InstallationState $installationState
@@ -386,6 +407,22 @@ class Connection extends \Google\Model
     return $this->reconciling;
   }
   /**
+   * Configuration for connections to an instance of Secure Source Manager.
+   *
+   * @param SecureSourceManagerInstanceConfig $secureSourceManagerInstanceConfig
+   */
+  public function setSecureSourceManagerInstanceConfig(SecureSourceManagerInstanceConfig $secureSourceManagerInstanceConfig)
+  {
+    $this->secureSourceManagerInstanceConfig = $secureSourceManagerInstanceConfig;
+  }
+  /**
+   * @return SecureSourceManagerInstanceConfig
+   */
+  public function getSecureSourceManagerInstanceConfig()
+  {
+    return $this->secureSourceManagerInstanceConfig;
+  }
+  /**
    * Output only. A system-assigned unique identifier for the Connection.
    *
    * @param string $uid
@@ -402,7 +439,7 @@ class Connection extends \Google\Model
     return $this->uid;
   }
   /**
-   * Output only. [Output only] Update timestamp
+   * Output only. Update timestamp.
    *
    * @param string $updateTime
    */

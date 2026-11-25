@@ -39,7 +39,7 @@ class CloudSQLInstanceInfo extends \Google\Model
   public $internalIp;
   /**
    * URI of a Cloud SQL instance network or empty string if the instance does
-   * not have one.
+   * not have one. In format "projects/{project}/global/networks/{network}".
    *
    * @var string
    */
@@ -51,7 +51,8 @@ class CloudSQLInstanceInfo extends \Google\Model
    */
   public $region;
   /**
-   * URI of a Cloud SQL instance.
+   * URI of a Cloud SQL instance in format
+   * "projects/{project}/instances/{instance}"
    *
    * @var string
    */
@@ -107,7 +108,7 @@ class CloudSQLInstanceInfo extends \Google\Model
   }
   /**
    * URI of a Cloud SQL instance network or empty string if the instance does
-   * not have one.
+   * not have one. In format "projects/{project}/global/networks/{network}".
    *
    * @param string $networkUri
    */
@@ -139,7 +140,8 @@ class CloudSQLInstanceInfo extends \Google\Model
     return $this->region;
   }
   /**
-   * URI of a Cloud SQL instance.
+   * URI of a Cloud SQL instance in format
+   * "projects/{project}/instances/{instance}"
    *
    * @param string $uri
    */

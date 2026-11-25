@@ -21,7 +21,8 @@ class CloudRunRevisionEndpoint extends \Google\Model
 {
   /**
    * Output only. The URI of the Cloud Run service that the revision belongs to.
-   * The format is: projects/{project}/locations/{location}/services/{service}
+   * The format is: projects/{project}/locations/{location}/services/{service}.
+   * Mutually exclusive with worker_pool_uri.
    *
    * @var string
    */
@@ -37,7 +38,8 @@ class CloudRunRevisionEndpoint extends \Google\Model
 
   /**
    * Output only. The URI of the Cloud Run service that the revision belongs to.
-   * The format is: projects/{project}/locations/{location}/services/{service}
+   * The format is: projects/{project}/locations/{location}/services/{service}.
+   * Mutually exclusive with worker_pool_uri.
    *
    * @param string $serviceUri
    */

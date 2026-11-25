@@ -149,7 +149,7 @@ class BasicChartSpec extends \Google\Collection
   public $legendPosition;
   /**
    * Gets whether all lines should be rendered smooth or straight by default.
-   * Applies to Line charts.
+   * Applies to Line and Combo charts.
    *
    * @var bool
    */
@@ -164,7 +164,9 @@ class BasicChartSpec extends \Google\Collection
    */
   public $stackedType;
   /**
-   * True to make the chart 3D. Applies to Bar and Column charts.
+   * True to make the chart 3D. Applies to Bar and Column charts. Setting it on
+   * a Combo chart is allowed but has no effect; setting it on any other chart
+   * type returns an error.
    *
    * @var bool
    */
@@ -300,7 +302,7 @@ class BasicChartSpec extends \Google\Collection
   }
   /**
    * Gets whether all lines should be rendered smooth or straight by default.
-   * Applies to Line charts.
+   * Applies to Line and Combo charts.
    *
    * @param bool $lineSmoothing
    */
@@ -352,7 +354,9 @@ class BasicChartSpec extends \Google\Collection
     return $this->stackedType;
   }
   /**
-   * True to make the chart 3D. Applies to Bar and Column charts.
+   * True to make the chart 3D. Applies to Bar and Column charts. Setting it on
+   * a Combo chart is allowed but has no effect; setting it on any other chart
+   * type returns an error.
    *
    * @param bool $threeDimensional
    */

@@ -17,8 +17,16 @@
 
 namespace Google\Service\BigtableAdmin;
 
-class AutomatedBackupPolicy extends \Google\Model
+class AutomatedBackupPolicy extends \Google\Collection
 {
+  protected $collection_key = 'locations';
+  /**
+   * Optional. If `true`, automated backups are explicitly disabled on this
+   * table. This allows users to opt out of default enablement.
+   *
+   * @var bool
+   */
+  public $disabled;
   /**
    * How frequently automated backups should occur. The only supported value at
    * this time is 24 hours. An undefined frequency is treated as 24 hours.
@@ -27,6 +35,26 @@ class AutomatedBackupPolicy extends \Google\Model
    */
   public $frequency;
   /**
+   * Optional. The amount of time that the automated backups remain hot. If
+   * specified, the backups created by this policy are `HOT` backups. If not
+   * specified, the backups are `STANDARD` backups. The value must be at least
+   * 24 hours and at most 10 days, and can't exceed the policy's
+   * `retention_period`. Only SSD instances support `HOT` automated backups.
+   *
+   * @var string
+   */
+  public $keepHotDuration;
+  /**
+   * Optional. A list of Cloud Bigtable zones where automated backups are
+   * allowed to be created. If empty, automated backups will be created in all
+   * zones of the instance. Locations are in the format
+   * `projects/{project}/locations/{zone}`. You can set this field only for
+   * tables in Enterprise Plus instances.
+   *
+   * @var string[]
+   */
+  public $locations;
+  /**
    * Required. How long the automated backups should be retained. Values must be
    * at least 3 days and at most 90 days.
    *
@@ -34,6 +62,23 @@ class AutomatedBackupPolicy extends \Google\Model
    */
   public $retentionPeriod;
 
+  /**
+   * Optional. If `true`, automated backups are explicitly disabled on this
+   * table. This allows users to opt out of default enablement.
+   *
+   * @param bool $disabled
+   */
+  public function setDisabled($disabled)
+  {
+    $this->disabled = $disabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getDisabled()
+  {
+    return $this->disabled;
+  }
   /**
    * How frequently automated backups should occur. The only supported value at
    * this time is 24 hours. An undefined frequency is treated as 24 hours.
@@ -50,6 +95,46 @@ class AutomatedBackupPolicy extends \Google\Model
   public function getFrequency()
   {
     return $this->frequency;
+  }
+  /**
+   * Optional. The amount of time that the automated backups remain hot. If
+   * specified, the backups created by this policy are `HOT` backups. If not
+   * specified, the backups are `STANDARD` backups. The value must be at least
+   * 24 hours and at most 10 days, and can't exceed the policy's
+   * `retention_period`. Only SSD instances support `HOT` automated backups.
+   *
+   * @param string $keepHotDuration
+   */
+  public function setKeepHotDuration($keepHotDuration)
+  {
+    $this->keepHotDuration = $keepHotDuration;
+  }
+  /**
+   * @return string
+   */
+  public function getKeepHotDuration()
+  {
+    return $this->keepHotDuration;
+  }
+  /**
+   * Optional. A list of Cloud Bigtable zones where automated backups are
+   * allowed to be created. If empty, automated backups will be created in all
+   * zones of the instance. Locations are in the format
+   * `projects/{project}/locations/{zone}`. You can set this field only for
+   * tables in Enterprise Plus instances.
+   *
+   * @param string[] $locations
+   */
+  public function setLocations($locations)
+  {
+    $this->locations = $locations;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLocations()
+  {
+    return $this->locations;
   }
   /**
    * Required. How long the automated backups should be retained. Values must be

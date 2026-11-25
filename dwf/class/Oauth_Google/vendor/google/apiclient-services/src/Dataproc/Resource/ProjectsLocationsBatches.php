@@ -62,11 +62,10 @@ class ProjectsLocationsBatches extends \Google\Service\Resource
    * become the final component of the batch's resource name.This value must be
    * 4-63 characters. Valid characters are /[a-z][0-9]-/.
    * @opt_param string requestId Optional. A unique ID used to identify the
-   * request. If the service receives two CreateBatchRequest (https://cloud.google
-   * .com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.datapr
-   * oc.v1.CreateBatchRequest)s with the same request_id, the second request is
-   * ignored and the Operation that corresponds to the first Batch created and
-   * stored in the backend is returned.Recommendation: Set this value to a UUID
+   * request. If the service receives two CreateBatchRequests with the same
+   * request_id, the second request is ignored and the operation that corresponds
+   * to the first Batch created and stored in the backend is
+   * returned.Recommendation: Set this value to a UUID
    * (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must
    * contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens
    * (-). The maximum length is 40 characters.
@@ -123,14 +122,15 @@ class ProjectsLocationsBatches extends \Google\Service\Resource
    * @opt_param string filter Optional. A filter for the batches to return in the
    * response.A filter is a logical expression constraining the values of various
    * fields in each batch resource. Filters are case sensitive, and may contain
-   * multiple clauses combined with logical operators (AND/OR). Supported fields
-   * are batch_id, batch_uuid, state, create_time, and labels.e.g. state = RUNNING
-   * and create_time < "2023-01-01T00:00:00Z" filters for batches in state RUNNING
-   * that were created before 2023-01-01. state = RUNNING and
-   * labels.environment=production filters for batches in state in a RUNNING state
-   * that have a production environment label.See
-   * https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
-   * description of the filter syntax and a list of supported comparisons.
+   * multiple clauses combined with logical operators (AND/OR). Supported fields:
+   * * batch_id * batch_uuid * state * create_time * labels *
+   * runtime_info.cohort_info.cohort e.g. state = RUNNING and create_time <
+   * "2023-01-01T00:00:00Z" filters for batches in state RUNNING that were created
+   * before 2023-01-01. state = RUNNING and labels.environment=production filters
+   * for batches in state in a RUNNING state that have a production environment
+   * label.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a
+   * detailed description of the filter syntax and a list of supported
+   * comparisons.
    * @opt_param string orderBy Optional. Field(s) on which to sort the list of
    * batches.Currently the only supported sort orders are unspecified (empty) and
    * create_time desc to sort by most recently created batches first.See

@@ -20,7 +20,7 @@ namespace Google\Service\Contactcenterinsights;
 class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collection
 {
   /**
-   * Default value, if unspecified will default to PHONE_CALL.
+   * Default value for unspecified.
    */
   public const MEDIUM_MEDIUM_UNSPECIFIED = 'MEDIUM_UNSPECIFIED';
   /**
@@ -41,6 +41,8 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
   public $agentId;
   protected $callMetadataType = GoogleCloudContactcenterinsightsV1mainConversationCallMetadata::class;
   protected $callMetadataDataType = '';
+  protected $correlationInfoType = GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo::class;
+  protected $correlationInfoDataType = '';
   /**
    * Output only. The time at which the conversation was created.
    *
@@ -82,14 +84,13 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
   protected $latestSummaryType = GoogleCloudContactcenterinsightsV1mainConversationSummarizationSuggestionData::class;
   protected $latestSummaryDataType = '';
   /**
-   * Immutable. The conversation medium, if unspecified will default to
-   * PHONE_CALL.
+   * Immutable. The conversation medium.
    *
    * @var string
    */
   public $medium;
   /**
-   * Input only. JSON metadata encoded as a string. This field is primarily used
+   * Optional. JSON metadata encoded as a string. This field is primarily used
    * by Insights integrations with various telephony systems and must be in one
    * of Insight's supported formats.
    *
@@ -113,6 +114,18 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
   protected $qualityMetadataDataType = '';
   protected $runtimeAnnotationsType = GoogleCloudContactcenterinsightsV1mainRuntimeAnnotation::class;
   protected $runtimeAnnotationsDataType = 'array';
+  /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * The time at which the conversation started.
    *
@@ -173,6 +186,22 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
   public function getCallMetadata()
   {
     return $this->callMetadata;
+  }
+  /**
+   * Output only. Info for correlating across conversations.
+   *
+   * @param GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo $correlationInfo
+   */
+  public function setCorrelationInfo(GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo $correlationInfo)
+  {
+    $this->correlationInfo = $correlationInfo;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo
+   */
+  public function getCorrelationInfo()
+  {
+    return $this->correlationInfo;
   }
   /**
    * Output only. The time at which the conversation was created.
@@ -323,8 +352,7 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
     return $this->latestSummary;
   }
   /**
-   * Immutable. The conversation medium, if unspecified will default to
-   * PHONE_CALL.
+   * Immutable. The conversation medium.
    *
    * Accepted values: MEDIUM_UNSPECIFIED, PHONE_CALL, CHAT
    *
@@ -342,7 +370,7 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
     return $this->medium;
   }
   /**
-   * Input only. JSON metadata encoded as a string. This field is primarily used
+   * Optional. JSON metadata encoded as a string. This field is primarily used
    * by Insights integrations with various telephony systems and must be in one
    * of Insight's supported formats.
    *
@@ -424,6 +452,38 @@ class GoogleCloudContactcenterinsightsV1mainConversation extends \Google\Collect
   public function getRuntimeAnnotations()
   {
     return $this->runtimeAnnotations;
+  }
+  /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @param bool $satisfiesPzi
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @param bool $satisfiesPzs
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * The time at which the conversation started.

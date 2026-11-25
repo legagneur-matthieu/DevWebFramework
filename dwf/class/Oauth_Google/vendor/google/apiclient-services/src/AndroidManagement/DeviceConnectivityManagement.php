@@ -81,15 +81,15 @@ class DeviceConnectivityManagement extends \Google\Model
   public const TETHERING_SETTINGS_ALLOW_ALL_TETHERING = 'ALLOW_ALL_TETHERING';
   /**
    * Disallows the user from using Wi-Fi tethering. Supported on company owned
-   * devices running Android 13 and above. If the setting is not supported,
-   * ALLOW_ALL_TETHERING will be set. A NonComplianceDetail with API_LEVEL is
-   * reported if the Android version is less than 13. tetheringConfigDisabled is
-   * ignored.
+   * devices running Android 13 (API level 33) and higher. If the setting is not
+   * supported, ALLOW_ALL_TETHERING will be set. A NonComplianceDetail with
+   * API_LEVEL is reported if the Android version is less than 13.
+   * tetheringConfigDisabled is ignored.
    */
   public const TETHERING_SETTINGS_DISALLOW_WIFI_TETHERING = 'DISALLOW_WIFI_TETHERING';
   /**
    * Disallows all forms of tethering. Supported on fully managed devices and
-   * work profile on company-owned devices, on all supported android versions.
+   * work profile on company-owned devices, on all supported Android versions.
    * The setting tetheringConfigDisabled is ignored.
    */
   public const TETHERING_SETTINGS_DISALLOW_ALL_TETHERING = 'DISALLOW_ALL_TETHERING';
@@ -140,31 +140,34 @@ class DeviceConnectivityManagement extends \Google\Model
    */
   public $bluetoothSharing;
   /**
-   * Controls Wi-Fi configuring privileges. Based on the option set, user will
-   * have either full or limited or no control in configuring Wi-Fi networks.
+   * Optional. Controls Wi-Fi configuring privileges. Based on the option set,
+   * user will have either full or limited or no control in configuring Wi-Fi
+   * networks.
    *
    * @var string
    */
   public $configureWifi;
   protected $preferentialNetworkServiceSettingsType = PreferentialNetworkServiceSettings::class;
   protected $preferentialNetworkServiceSettingsDataType = '';
+  protected $privateDnsSettingsType = PrivateDnsSettings::class;
+  protected $privateDnsSettingsDataType = '';
   /**
-   * Controls tethering settings. Based on the value set, the user is partially
-   * or fully disallowed from using different forms of tethering.
+   * Optional. Controls tethering settings. Based on the value set, the user is
+   * partially or fully disallowed from using different forms of tethering.
    *
    * @var string
    */
   public $tetheringSettings;
   /**
-   * Controls what files and/or data can be transferred via USB. Supported only
-   * on company-owned devices.
+   * Optional. Controls what files and/or data can be transferred via USB.
+   * Supported only on company-owned devices.
    *
    * @var string
    */
   public $usbDataAccess;
   /**
-   * Controls configuring and using Wi-Fi direct settings. Supported on company-
-   * owned devices running Android 13 and above.
+   * Optional. Controls configuring and using Wi-Fi direct settings. Supported
+   * on company-owned devices running Android 13 and above.
    *
    * @var string
    */
@@ -212,8 +215,9 @@ class DeviceConnectivityManagement extends \Google\Model
     return $this->bluetoothSharing;
   }
   /**
-   * Controls Wi-Fi configuring privileges. Based on the option set, user will
-   * have either full or limited or no control in configuring Wi-Fi networks.
+   * Optional. Controls Wi-Fi configuring privileges. Based on the option set,
+   * user will have either full or limited or no control in configuring Wi-Fi
+   * networks.
    *
    * Accepted values: CONFIGURE_WIFI_UNSPECIFIED, ALLOW_CONFIGURING_WIFI,
    * DISALLOW_ADD_WIFI_CONFIG, DISALLOW_CONFIGURING_WIFI
@@ -252,8 +256,24 @@ class DeviceConnectivityManagement extends \Google\Model
     return $this->preferentialNetworkServiceSettings;
   }
   /**
-   * Controls tethering settings. Based on the value set, the user is partially
-   * or fully disallowed from using different forms of tethering.
+   * Optional. The global private DNS settings.
+   *
+   * @param PrivateDnsSettings $privateDnsSettings
+   */
+  public function setPrivateDnsSettings(PrivateDnsSettings $privateDnsSettings)
+  {
+    $this->privateDnsSettings = $privateDnsSettings;
+  }
+  /**
+   * @return PrivateDnsSettings
+   */
+  public function getPrivateDnsSettings()
+  {
+    return $this->privateDnsSettings;
+  }
+  /**
+   * Optional. Controls tethering settings. Based on the value set, the user is
+   * partially or fully disallowed from using different forms of tethering.
    *
    * Accepted values: TETHERING_SETTINGS_UNSPECIFIED, ALLOW_ALL_TETHERING,
    * DISALLOW_WIFI_TETHERING, DISALLOW_ALL_TETHERING
@@ -272,8 +292,8 @@ class DeviceConnectivityManagement extends \Google\Model
     return $this->tetheringSettings;
   }
   /**
-   * Controls what files and/or data can be transferred via USB. Supported only
-   * on company-owned devices.
+   * Optional. Controls what files and/or data can be transferred via USB.
+   * Supported only on company-owned devices.
    *
    * Accepted values: USB_DATA_ACCESS_UNSPECIFIED, ALLOW_USB_DATA_TRANSFER,
    * DISALLOW_USB_FILE_TRANSFER, DISALLOW_USB_DATA_TRANSFER
@@ -292,8 +312,8 @@ class DeviceConnectivityManagement extends \Google\Model
     return $this->usbDataAccess;
   }
   /**
-   * Controls configuring and using Wi-Fi direct settings. Supported on company-
-   * owned devices running Android 13 and above.
+   * Optional. Controls configuring and using Wi-Fi direct settings. Supported
+   * on company-owned devices running Android 13 and above.
    *
    * Accepted values: WIFI_DIRECT_SETTINGS_UNSPECIFIED, ALLOW_WIFI_DIRECT,
    * DISALLOW_WIFI_DIRECT
@@ -328,9 +348,13 @@ class DeviceConnectivityManagement extends \Google\Model
     return $this->wifiRoamingPolicy;
   }
   /**
-   * Restrictions on which Wi-Fi SSIDs the device can connect to. Note that this
-   * does not affect which networks can be configured on the device. Supported
-   * on company-owned devices running Android 13 and above.
+   * Optional. Restrictions on which Wi-Fi SSIDs the device can connect to. Note
+   * that this does not affect which networks can be configured on the
+   * device.Supported on Android 13 (API level 33) and higher on fully managed
+   * devices and work profiles on company-owned devices. A NonComplianceDetail
+   * with MANAGEMENT_MODE is reported on other management modes. A
+   * NonComplianceDetail with API_LEVEL is reported if the Android version is
+   * less than 13 (API level 33).
    *
    * @param WifiSsidPolicy $wifiSsidPolicy
    */

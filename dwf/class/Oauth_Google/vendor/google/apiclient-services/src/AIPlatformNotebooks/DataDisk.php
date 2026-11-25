@@ -52,13 +52,34 @@ class DataDisk extends \Google\Collection
    */
   public const DISK_TYPE_PD_EXTREME = 'PD_EXTREME';
   /**
-   * Hyperdisk Balanced persistent disk type.
+   * Represents the Hyperdisk Balanced persistent disk type. Can be used as a
+   * boot disk or data disk.
    */
   public const DISK_TYPE_HYPERDISK_BALANCED = 'HYPERDISK_BALANCED';
+  /**
+   * Represents the Hyperdisk Extreme persistent disk type. Can only be used as
+   * a data disk.
+   */
+  public const DISK_TYPE_HYPERDISK_EXTREME = 'HYPERDISK_EXTREME';
+  /**
+   * Represents the Hyperdisk Throughput persistent disk type. Can only be used
+   * as a data disk.
+   */
+  public const DISK_TYPE_HYPERDISK_THROUGHPUT = 'HYPERDISK_THROUGHPUT';
+  /**
+   * Represents the Hyperdisk Balanced High Availability persistent disk type.
+   * Can be used as a boot disk or data disk.
+   */
+  public const DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY = 'HYPERDISK_BALANCED_HIGH_AVAILABILITY';
+  /**
+   * Represents the Hyperdisk ML persistent disk type. Can be used as a boot
+   * disk or data disk.
+   */
+  public const DISK_TYPE_HYPERDISK_ML = 'HYPERDISK_ML';
   protected $collection_key = 'resourcePolicies';
   /**
-   * Optional. Input only. Disk encryption method used on the boot and data
-   * disks, defaults to GMEK.
+   * Optional. Disk encryption method used on the boot and data disks, defaults
+   * to GMEK.
    *
    * @var string
    */
@@ -71,16 +92,16 @@ class DataDisk extends \Google\Collection
    */
   public $diskSizeGb;
   /**
-   * Optional. Input only. Indicates the type of the disk.
+   * Optional. Indicates the type of the disk.
    *
    * @var string
    */
   public $diskType;
   /**
-   * Optional. Input only. The KMS key used to encrypt the disks, only
-   * applicable if disk_encryption is CMEK. Format: `projects/{project_id}/locat
-   * ions/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}` Learn more
-   * about using your own encryption keys.
+   * Optional. The KMS key used to encrypt the disks, only applicable if
+   * disk_encryption is CMEK. Format: `projects/{project_id}/locations/{location
+   * }/keyRings/{key_ring_id}/cryptoKeys/{key_id}` Learn more about using your
+   * own encryption keys.
    *
    * @var string
    */
@@ -93,8 +114,8 @@ class DataDisk extends \Google\Collection
   public $resourcePolicies;
 
   /**
-   * Optional. Input only. Disk encryption method used on the boot and data
-   * disks, defaults to GMEK.
+   * Optional. Disk encryption method used on the boot and data disks, defaults
+   * to GMEK.
    *
    * Accepted values: DISK_ENCRYPTION_UNSPECIFIED, GMEK, CMEK
    *
@@ -129,10 +150,11 @@ class DataDisk extends \Google\Collection
     return $this->diskSizeGb;
   }
   /**
-   * Optional. Input only. Indicates the type of the disk.
+   * Optional. Indicates the type of the disk.
    *
    * Accepted values: DISK_TYPE_UNSPECIFIED, PD_STANDARD, PD_SSD, PD_BALANCED,
-   * PD_EXTREME, HYPERDISK_BALANCED
+   * PD_EXTREME, HYPERDISK_BALANCED, HYPERDISK_EXTREME, HYPERDISK_THROUGHPUT,
+   * HYPERDISK_BALANCED_HIGH_AVAILABILITY, HYPERDISK_ML
    *
    * @param self::DISK_TYPE_* $diskType
    */
@@ -148,10 +170,10 @@ class DataDisk extends \Google\Collection
     return $this->diskType;
   }
   /**
-   * Optional. Input only. The KMS key used to encrypt the disks, only
-   * applicable if disk_encryption is CMEK. Format: `projects/{project_id}/locat
-   * ions/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}` Learn more
-   * about using your own encryption keys.
+   * Optional. The KMS key used to encrypt the disks, only applicable if
+   * disk_encryption is CMEK. Format: `projects/{project_id}/locations/{location
+   * }/keyRings/{key_ring_id}/cryptoKeys/{key_id}` Learn more about using your
+   * own encryption keys.
    *
    * @param string $kmsKey
    */

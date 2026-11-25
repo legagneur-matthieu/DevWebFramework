@@ -20,15 +20,15 @@ namespace Google\Service\Dialogflow;
 class GoogleCloudDialogflowV2ToolCallResultError extends \Google\Model
 {
   /**
-   * Optional. The error message of the function.
-   *
    * @var string
    */
   public $message;
+  /**
+   * @var bool
+   */
+  public $retryable;
 
   /**
-   * Optional. The error message of the function.
-   *
    * @param string $message
    */
   public function setMessage($message)
@@ -41,6 +41,20 @@ class GoogleCloudDialogflowV2ToolCallResultError extends \Google\Model
   public function getMessage()
   {
     return $this->message;
+  }
+  /**
+   * @param bool $retryable
+   */
+  public function setRetryable($retryable)
+  {
+    $this->retryable = $retryable;
+  }
+  /**
+   * @return bool
+   */
+  public function getRetryable()
+  {
+    return $this->retryable;
   }
 }
 

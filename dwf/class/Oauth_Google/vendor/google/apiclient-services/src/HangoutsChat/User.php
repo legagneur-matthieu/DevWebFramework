@@ -32,7 +32,29 @@ class User extends \Google\Model
    */
   public const TYPE_BOT = 'BOT';
   /**
-   * Output only. The user's display name.
+   * Output only. The user's avatar image URL. When calling the Messages and
+   * Memberships APIs with [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
+   *
+   * @var string
+   */
+  public $avatarUrl;
+  /**
+   * Output only. The user's display name. Populated for both app authentication
+   * and user authentication. This field is always populated for requests made
+   * with [app
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-app). When calling the Messages and Memberships APIs with
+   * [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
    *
    * @var string
    */
@@ -44,8 +66,21 @@ class User extends \Google\Model
    */
   public $domainId;
   /**
+   * Output only. The user's email address. When calling the Messages and
+   * Memberships APIs with [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
+   *
+   * @var string
+   */
+  public $email;
+  /**
    * Output only. When `true`, the user is deleted or their profile is not
-   * visible.
+   * visible, such as when a user is mentioned in a space without being a member
+   * and without prior affinity with the calling user.
    *
    * @var bool
    */
@@ -76,7 +111,39 @@ class User extends \Google\Model
   public $type;
 
   /**
-   * Output only. The user's display name.
+   * Output only. The user's avatar image URL. When calling the Messages and
+   * Memberships APIs with [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
+   *
+   * @param string $avatarUrl
+   */
+  public function setAvatarUrl($avatarUrl)
+  {
+    $this->avatarUrl = $avatarUrl;
+  }
+  /**
+   * @return string
+   */
+  public function getAvatarUrl()
+  {
+    return $this->avatarUrl;
+  }
+  /**
+   * Output only. The user's display name. Populated for both app authentication
+   * and user authentication. This field is always populated for requests made
+   * with [app
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-app). When calling the Messages and Memberships APIs with
+   * [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
    *
    * @param string $displayName
    */
@@ -108,8 +175,31 @@ class User extends \Google\Model
     return $this->domainId;
   }
   /**
+   * Output only. The user's email address. When calling the Messages and
+   * Memberships APIs with [user
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-user), this field is populated for both internal and
+   * external users for the `sender` of a message, users within `annotations`
+   * (such as user mentions), and within `Membership` resources, provided the
+   * user is a member of the space or has prior affinity with the calling user.
+   *
+   * @param string $email
+   */
+  public function setEmail($email)
+  {
+    $this->email = $email;
+  }
+  /**
+   * @return string
+   */
+  public function getEmail()
+  {
+    return $this->email;
+  }
+  /**
    * Output only. When `true`, the user is deleted or their profile is not
-   * visible.
+   * visible, such as when a user is mentioned in a space without being a member
+   * and without prior affinity with the calling user.
    *
    * @param bool $isAnonymous
    */

@@ -47,9 +47,9 @@ class TransferOptions extends \Google\Model
    */
   public $deleteObjectsFromSourceAfterTransfer;
   /**
-   * Whether objects that exist only in the sink should be deleted. **Note:**
-   * This option and delete_objects_from_source_after_transfer are mutually
-   * exclusive.
+   * Whether objects that exist only in the sink should be deleted from the
+   * sink. **Note:** This option and delete_objects_from_source_after_transfer
+   * are mutually exclusive.
    *
    * @var bool
    */
@@ -93,9 +93,9 @@ class TransferOptions extends \Google\Model
     return $this->deleteObjectsFromSourceAfterTransfer;
   }
   /**
-   * Whether objects that exist only in the sink should be deleted. **Note:**
-   * This option and delete_objects_from_source_after_transfer are mutually
-   * exclusive.
+   * Whether objects that exist only in the sink should be deleted from the
+   * sink. **Note:** This option and delete_objects_from_source_after_transfer
+   * are mutually exclusive.
    *
    * @param bool $deleteObjectsUniqueInSink
    */

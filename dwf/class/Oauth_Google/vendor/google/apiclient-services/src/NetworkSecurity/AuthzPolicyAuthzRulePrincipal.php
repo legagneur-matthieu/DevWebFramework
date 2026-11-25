@@ -45,10 +45,9 @@ class AuthzPolicyAuthzRulePrincipal extends \Google\Model
    * certificate is not supported. Requests with multiple common names in the
    * client certificate will be rejected if CLIENT_CERT_COMMON_NAME is set as
    * the principal selector. A match happens when there is an exact common name
-   * value match. This is only applicable for Application Load Balancers except
-   * for global external Application Load Balancer and classic Application Load
-   * Balancer. CLIENT_CERT_COMMON_NAME is not supported for
-   * INTERNAL_SELF_MANAGED load balancing scheme.
+   * value match. This is only applicable for Application Load Balancers and not
+   * for Classic Application Load Balancer. CLIENT_CERT_COMMON_NAME is not
+   * supported for INTERNAL_SELF_MANAGED load balancing scheme.
    */
   public const PRINCIPAL_SELECTOR_CLIENT_CERT_COMMON_NAME = 'CLIENT_CERT_COMMON_NAME';
   protected $principalType = AuthzPolicyAuthzRuleStringMatch::class;

@@ -24,17 +24,26 @@ class GoogleChromeManagementV1RiskAssessmentEntry extends \Google\Model
    */
   public const PROVIDER_RISK_ASSESSMENT_PROVIDER_UNSPECIFIED = 'RISK_ASSESSMENT_PROVIDER_UNSPECIFIED';
   /**
-   * CRXcavator.
+   * Deprecated: Please use other risk score providers instead. CRXcavator.
+   *
+   * @deprecated
    */
   public const PROVIDER_RISK_ASSESSMENT_PROVIDER_CRXCAVATOR = 'RISK_ASSESSMENT_PROVIDER_CRXCAVATOR';
   /**
+   * Deprecated: Please use RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2 instead.
    * Spin.Ai.
+   *
+   * @deprecated
    */
   public const PROVIDER_RISK_ASSESSMENT_PROVIDER_SPIN_AI = 'RISK_ASSESSMENT_PROVIDER_SPIN_AI';
   /**
    * LayerX Security.
    */
   public const PROVIDER_RISK_ASSESSMENT_PROVIDER_LAYERX = 'RISK_ASSESSMENT_PROVIDER_LAYERX';
+  /**
+   * Spin.AI V2.
+   */
+  public const PROVIDER_RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2 = 'RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2';
   /**
    * Risk level not specified.
    */
@@ -71,7 +80,7 @@ class GoogleChromeManagementV1RiskAssessmentEntry extends \Google\Model
    *
    * Accepted values: RISK_ASSESSMENT_PROVIDER_UNSPECIFIED,
    * RISK_ASSESSMENT_PROVIDER_CRXCAVATOR, RISK_ASSESSMENT_PROVIDER_SPIN_AI,
-   * RISK_ASSESSMENT_PROVIDER_LAYERX
+   * RISK_ASSESSMENT_PROVIDER_LAYERX, RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2
    *
    * @param self::PROVIDER_* $provider
    */

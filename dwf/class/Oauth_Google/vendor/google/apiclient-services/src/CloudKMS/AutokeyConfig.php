@@ -20,6 +20,32 @@ namespace Google\Service\CloudKMS;
 class AutokeyConfig extends \Google\Model
 {
   /**
+   * Default value. When KeyProjectResolutionMode is set to
+   * KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED for a folder and that folder has a
+   * key_project set, the folder acts like its KeyProjectResolutionMode is
+   * DEDICATED_KEY_PROJECT.
+   */
+  public const KEY_PROJECT_RESOLUTION_MODE_KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED = 'KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED';
+  /**
+   * Keys are created in a dedicated project specified by `key_project`.
+   */
+  public const KEY_PROJECT_RESOLUTION_MODE_DEDICATED_KEY_PROJECT = 'DEDICATED_KEY_PROJECT';
+  /**
+   * Keys are created in the same project as the resource requesting the key.
+   * The `key_project` must not be set when this mode is used.
+   */
+  public const KEY_PROJECT_RESOLUTION_MODE_RESOURCE_PROJECT = 'RESOURCE_PROJECT';
+  /**
+   * Disables the AutokeyConfig. When this mode is set, any AutokeyConfig from
+   * higher levels in the resource hierarchy are ignored for this resource and
+   * its descendants. This setting can be overridden by a more specific
+   * configuration at a lower level. For example, if Autokey is disabled on a
+   * folder, it can be re-enabled on a sub-folder or project within that folder
+   * by setting a different mode (e.g., DEDICATED_KEY_PROJECT or
+   * RESOURCE_PROJECT).
+   */
+  public const KEY_PROJECT_RESOLUTION_MODE_DISABLED = 'DISABLED';
+  /**
    * The state of the AutokeyConfig is unspecified.
    */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
@@ -37,6 +63,12 @@ class AutokeyConfig extends \Google\Model
    * uninitialized state.
    */
   public const STATE_UNINITIALIZED = 'UNINITIALIZED';
+  /**
+   * Deprecated: This state is not returned by the backend.
+   *
+   * @deprecated
+   */
+  public const STATE_KEY_PROJECT_PERMISSION_DENIED = 'KEY_PROJECT_PERMISSION_DENIED';
   /**
    * Optional. A checksum computed by the server based on the value of other
    * fields. This may be sent on update requests to ensure that the client has
@@ -61,8 +93,17 @@ class AutokeyConfig extends \Google\Model
    */
   public $keyProject;
   /**
+   * Optional. KeyProjectResolutionMode for the AutokeyConfig. Valid values are
+   * `DEDICATED_KEY_PROJECT`, `RESOURCE_PROJECT`, or `DISABLED`.
+   *
+   * @var string
+   */
+  public $keyProjectResolutionMode;
+  /**
    * Identifier. Name of the AutokeyConfig resource, e.g.
-   * `folders/{FOLDER_NUMBER}/autokeyConfig`
+   * `folders/{FOLDER_NUMBER}/autokeyConfig`,
+   * `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+   * `projects/{PROJECT_ID}/autokeyConfig`.
    *
    * @var string
    */
@@ -118,8 +159,30 @@ class AutokeyConfig extends \Google\Model
     return $this->keyProject;
   }
   /**
+   * Optional. KeyProjectResolutionMode for the AutokeyConfig. Valid values are
+   * `DEDICATED_KEY_PROJECT`, `RESOURCE_PROJECT`, or `DISABLED`.
+   *
+   * Accepted values: KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED,
+   * DEDICATED_KEY_PROJECT, RESOURCE_PROJECT, DISABLED
+   *
+   * @param self::KEY_PROJECT_RESOLUTION_MODE_* $keyProjectResolutionMode
+   */
+  public function setKeyProjectResolutionMode($keyProjectResolutionMode)
+  {
+    $this->keyProjectResolutionMode = $keyProjectResolutionMode;
+  }
+  /**
+   * @return self::KEY_PROJECT_RESOLUTION_MODE_*
+   */
+  public function getKeyProjectResolutionMode()
+  {
+    return $this->keyProjectResolutionMode;
+  }
+  /**
    * Identifier. Name of the AutokeyConfig resource, e.g.
-   * `folders/{FOLDER_NUMBER}/autokeyConfig`
+   * `folders/{FOLDER_NUMBER}/autokeyConfig`,
+   * `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+   * `projects/{PROJECT_ID}/autokeyConfig`.
    *
    * @param string $name
    */
@@ -138,7 +201,7 @@ class AutokeyConfig extends \Google\Model
    * Output only. The state for the AutokeyConfig.
    *
    * Accepted values: STATE_UNSPECIFIED, ACTIVE, KEY_PROJECT_DELETED,
-   * UNINITIALIZED
+   * UNINITIALIZED, KEY_PROJECT_PERMISSION_DENIED
    *
    * @param self::STATE_* $state
    */

@@ -19,54 +19,44 @@ namespace Google\Service\SecurityCommandCenter;
 
 class SecuritycenterFile extends \Google\Collection
 {
+  public const FILE_LOAD_STATE_FILE_LOAD_STATE_UNSPECIFIED = 'FILE_LOAD_STATE_UNSPECIFIED';
+  public const FILE_LOAD_STATE_LOADED_BY_PROCESS = 'LOADED_BY_PROCESS';
+  public const FILE_LOAD_STATE_NOT_LOADED_BY_PROCESS = 'NOT_LOADED_BY_PROCESS';
   protected $collection_key = 'operations';
   /**
-   * Prefix of the file contents as a JSON-encoded string.
-   *
    * @var string
    */
   public $contents;
   protected $diskPathType = DiskPath::class;
   protected $diskPathDataType = '';
   /**
-   * The length in bytes of the file prefix that was hashed. If hashed_size ==
-   * size, any hashes reported represent the entire file.
-   *
+   * @var string
+   */
+  public $fileLoadState;
+  /**
    * @var string
    */
   public $hashedSize;
   protected $operationsType = FileOperation::class;
   protected $operationsDataType = 'array';
   /**
-   * True when the hash covers only a prefix of the file.
-   *
    * @var bool
    */
   public $partiallyHashed;
   /**
-   * Absolute path of the file as a JSON encoded string.
-   *
    * @var string
    */
   public $path;
   /**
-   * SHA256 hash of the first hashed_size bytes of the file encoded as a hex
-   * string. If hashed_size == size, sha256 represents the SHA256 hash of the
-   * entire file.
-   *
    * @var string
    */
   public $sha256;
   /**
-   * Size of the file in bytes.
-   *
    * @var string
    */
   public $size;
 
   /**
-   * Prefix of the file contents as a JSON-encoded string.
-   *
    * @param string $contents
    */
   public function setContents($contents)
@@ -81,8 +71,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->contents;
   }
   /**
-   * Path of the file in terms of underlying disk/partition identifiers.
-   *
    * @param DiskPath $diskPath
    */
   public function setDiskPath(DiskPath $diskPath)
@@ -97,9 +85,20 @@ class SecuritycenterFile extends \Google\Collection
     return $this->diskPath;
   }
   /**
-   * The length in bytes of the file prefix that was hashed. If hashed_size ==
-   * size, any hashes reported represent the entire file.
-   *
+   * @param self::FILE_LOAD_STATE_* $fileLoadState
+   */
+  public function setFileLoadState($fileLoadState)
+  {
+    $this->fileLoadState = $fileLoadState;
+  }
+  /**
+   * @return self::FILE_LOAD_STATE_*
+   */
+  public function getFileLoadState()
+  {
+    return $this->fileLoadState;
+  }
+  /**
    * @param string $hashedSize
    */
   public function setHashedSize($hashedSize)
@@ -114,8 +113,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->hashedSize;
   }
   /**
-   * Operation(s) performed on a file.
-   *
    * @param FileOperation[] $operations
    */
   public function setOperations($operations)
@@ -130,8 +127,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->operations;
   }
   /**
-   * True when the hash covers only a prefix of the file.
-   *
    * @param bool $partiallyHashed
    */
   public function setPartiallyHashed($partiallyHashed)
@@ -146,8 +141,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->partiallyHashed;
   }
   /**
-   * Absolute path of the file as a JSON encoded string.
-   *
    * @param string $path
    */
   public function setPath($path)
@@ -162,10 +155,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->path;
   }
   /**
-   * SHA256 hash of the first hashed_size bytes of the file encoded as a hex
-   * string. If hashed_size == size, sha256 represents the SHA256 hash of the
-   * entire file.
-   *
    * @param string $sha256
    */
   public function setSha256($sha256)
@@ -180,8 +169,6 @@ class SecuritycenterFile extends \Google\Collection
     return $this->sha256;
   }
   /**
-   * Size of the file in bytes.
-   *
    * @param string $size
    */
   public function setSize($size)

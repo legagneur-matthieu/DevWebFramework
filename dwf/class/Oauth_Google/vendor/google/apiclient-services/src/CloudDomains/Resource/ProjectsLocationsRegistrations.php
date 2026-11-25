@@ -307,6 +307,8 @@ class ProjectsLocationsRegistrations extends \Google\Service\Resource
    * @opt_param string updateMask Required. The field mask describing which fields
    * to update as a comma-separated list. For example, if only the labels are
    * being updated, the `update_mask` is `"labels"`.
+   * @opt_param bool validateOnly Optional. If set, validates the request without
+   * actually updating the registration.
    * @return Operation
    * @throws \Google\Service\Exception
    */

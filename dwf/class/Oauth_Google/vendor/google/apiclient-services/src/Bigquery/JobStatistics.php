@@ -81,6 +81,16 @@ class JobStatistics extends \Google\Collection
    * @var string
    */
   public $finalExecutionDurationMs;
+  /**
+   * Output only. The list of remote regions from which a global query accesses
+   * data. This field is populated only for parent global query jobs in the
+   * primary execution region. It is empty for child global query jobs and
+   * single-region queries. For more information, see [Global
+   * queries](https://cloud.google.com/bigquery/docs/global-queries).
+   *
+   * @var string[]
+   */
+  public $globalQueryRemoteRegions;
   protected $loadType = JobStatistics3::class;
   protected $loadDataType = '';
   /**
@@ -89,6 +99,8 @@ class JobStatistics extends \Google\Collection
    * @var string
    */
   public $numChildJobs;
+  protected $parentGlobalQueryJobType = JobReference::class;
+  protected $parentGlobalQueryJobDataType = '';
   /**
    * Output only. If this is a child job, specifies the job ID of the parent.
    *
@@ -106,7 +118,7 @@ class JobStatistics extends \Google\Collection
   /**
    * Output only. The reservation group path of the reservation assigned to this
    * job. This field has a limit of 10 nested reservation groups. This is to
-   * maintain consistency between reservatins info schema and jobs info schema.
+   * maintain consistency between reservations info schema and jobs info schema.
    * The first reservation group is the root reservation group and the last is
    * the leaf or lowest level reservation group.
    *
@@ -282,6 +294,26 @@ class JobStatistics extends \Google\Collection
     return $this->finalExecutionDurationMs;
   }
   /**
+   * Output only. The list of remote regions from which a global query accesses
+   * data. This field is populated only for parent global query jobs in the
+   * primary execution region. It is empty for child global query jobs and
+   * single-region queries. For more information, see [Global
+   * queries](https://cloud.google.com/bigquery/docs/global-queries).
+   *
+   * @param string[] $globalQueryRemoteRegions
+   */
+  public function setGlobalQueryRemoteRegions($globalQueryRemoteRegions)
+  {
+    $this->globalQueryRemoteRegions = $globalQueryRemoteRegions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getGlobalQueryRemoteRegions()
+  {
+    return $this->globalQueryRemoteRegions;
+  }
+  /**
    * Output only. Statistics for a load job.
    *
    * @param JobStatistics3 $load
@@ -312,6 +344,28 @@ class JobStatistics extends \Google\Collection
   public function getNumChildJobs()
   {
     return $this->numChildJobs;
+  }
+  /**
+   * Output only. Reference to the parent global query job, if this is a child
+   * global query job. This field is populated only for child global query jobs
+   * (remote subqueries or cross-region table copy jobs) executed in remote
+   * regions on behalf of a global query. It contains the project ID, job ID,
+   * and location of the parent global query job. It is unset for parent global
+   * query jobs and single-region queries. For more information, see [Global
+   * queries](https://cloud.google.com/bigquery/docs/global-queries).
+   *
+   * @param JobReference $parentGlobalQueryJob
+   */
+  public function setParentGlobalQueryJob(JobReference $parentGlobalQueryJob)
+  {
+    $this->parentGlobalQueryJob = $parentGlobalQueryJob;
+  }
+  /**
+   * @return JobReference
+   */
+  public function getParentGlobalQueryJob()
+  {
+    return $this->parentGlobalQueryJob;
   }
   /**
    * Output only. If this is a child job, specifies the job ID of the parent.
@@ -364,7 +418,7 @@ class JobStatistics extends \Google\Collection
   /**
    * Output only. The reservation group path of the reservation assigned to this
    * job. This field has a limit of 10 nested reservation groups. This is to
-   * maintain consistency between reservatins info schema and jobs info schema.
+   * maintain consistency between reservations info schema and jobs info schema.
    * The first reservation group is the root reservation group and the last is
    * the leaf or lowest level reservation group.
    *

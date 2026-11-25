@@ -51,8 +51,11 @@ class AccessContextManager extends \Google\Service
   public $accessPolicies_accessLevels;
   public $accessPolicies_authorizedOrgsDescs;
   public $accessPolicies_servicePerimeters;
+  public $folders;
   public $operations;
   public $organizations_gcpUserAccessBindings;
+  public $permissions;
+  public $projects;
   public $services;
   public $rootUrlTemplate;
 
@@ -385,6 +388,10 @@ class AccessContextManager extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'deletedPrincipalSyntax' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'list' => [
               'path' => 'v1/{+parent}/servicePerimeters',
@@ -394,6 +401,10 @@ class AccessContextManager extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'deletedPrincipalSyntax' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -413,6 +424,10 @@ class AccessContextManager extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'deletedPrincipalSyntax' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -431,6 +446,26 @@ class AccessContextManager extends \Google\Service
             ],'testIamPermissions' => [
               'path' => 'v1/{+resource}:testIamPermissions',
               'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->folders = new AccessContextManager\Resource\Folders(
+        $this,
+        $this->serviceName,
+        'folders',
+        [
+          'methods' => [
+            'lookupConfiguredServicePerimeter' => [
+              'path' => 'v1/{+resource}:lookupConfiguredServicePerimeter',
+              'httpMethod' => 'GET',
               'parameters' => [
                 'resource' => [
                   'location' => 'path',
@@ -553,6 +588,10 @@ class AccessContextManager extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'pageSize' => [
                   'location' => 'query',
                   'type' => 'integer',
@@ -578,6 +617,49 @@ class AccessContextManager extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->permissions = new AccessContextManager\Resource\Permissions(
+        $this,
+        $this->serviceName,
+        'permissions',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v1/permissions',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects = new AccessContextManager\Resource\Projects(
+        $this,
+        $this->serviceName,
+        'projects',
+        [
+          'methods' => [
+            'lookupConfiguredServicePerimeter' => [
+              'path' => 'v1/{+resource}:lookupConfiguredServicePerimeter',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

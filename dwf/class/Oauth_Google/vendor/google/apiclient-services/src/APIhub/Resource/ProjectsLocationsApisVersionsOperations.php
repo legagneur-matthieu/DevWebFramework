@@ -49,7 +49,7 @@ class ProjectsLocationsApisVersionsOperations extends \Google\Service\Resource
    * operation resource in the API hub. * If not provided, a system generated id
    * will be used. This value should be 4-500 characters, overall resource name
    * which will be of format `projects/{project}/locations/{location}/apis/{api}/v
-   * ersions/{version}/operations/{operation}`, its length is limited to 700
+   * ersions/{version}/operations/{operation}`, its length is limited to 1000
    * characters, and valid characters are /a-z[0-9]-_/.
    * @return GoogleCloudApihubV1ApiOperation
    * @throws \Google\Service\Exception
@@ -63,7 +63,9 @@ class ProjectsLocationsApisVersionsOperations extends \Google\Service\Resource
   /**
    * Delete an operation in an API version and we can delete only the operations
    * created via create API. If the operation was created by parsing the spec,
-   * then it can be deleted by editing or deleting the spec. (operations.delete)
+   * then it can be deleted by editing or deleting the spec. Deleting an operation
+   * will also remove any links between the operation and deployments.
+   * (operations.delete)
    *
    * @param string $name Required. The name of the operation resource to delete.
    * Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version

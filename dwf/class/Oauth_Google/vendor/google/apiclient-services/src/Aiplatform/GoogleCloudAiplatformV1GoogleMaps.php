@@ -20,15 +20,25 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1GoogleMaps extends \Google\Model
 {
   /**
-   * Optional. If true, include the widget context token in the response.
+   * Optional. Deprecated: The Google Maps contextual widget behavior in
+   * Grounding with Google Maps is being deprecated; this field is planned for
+   * removal and no longer has any effect once removed. If true, include the
+   * widget context token in the response.
    *
+   * @deprecated
    * @var bool
    */
   public $enableWidget;
+  protected $groundingTypesType = GoogleCloudAiplatformV1GoogleMapsGroundingTypes::class;
+  protected $groundingTypesDataType = '';
 
   /**
-   * Optional. If true, include the widget context token in the response.
+   * Optional. Deprecated: The Google Maps contextual widget behavior in
+   * Grounding with Google Maps is being deprecated; this field is planned for
+   * removal and no longer has any effect once removed. If true, include the
+   * widget context token in the response.
    *
+   * @deprecated
    * @param bool $enableWidget
    */
   public function setEnableWidget($enableWidget)
@@ -36,11 +46,31 @@ class GoogleCloudAiplatformV1GoogleMaps extends \Google\Model
     $this->enableWidget = $enableWidget;
   }
   /**
+   * @deprecated
    * @return bool
    */
   public function getEnableWidget()
   {
     return $this->enableWidget;
+  }
+  /**
+   * Optional. Specifies the types of Google Maps grounding to enable. Defaults
+   * to `places` when unset, and to `places` and `routing` for Gemini 4 and
+   * later models. When set, only the listed types are enabled; for example,
+   * setting only `places` disables routing.
+   *
+   * @param GoogleCloudAiplatformV1GoogleMapsGroundingTypes $groundingTypes
+   */
+  public function setGroundingTypes(GoogleCloudAiplatformV1GoogleMapsGroundingTypes $groundingTypes)
+  {
+    $this->groundingTypes = $groundingTypes;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1GoogleMapsGroundingTypes
+   */
+  public function getGroundingTypes()
+  {
+    return $this->groundingTypes;
   }
 }
 

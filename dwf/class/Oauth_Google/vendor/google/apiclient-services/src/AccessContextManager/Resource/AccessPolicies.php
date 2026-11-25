@@ -60,7 +60,7 @@ class AccessPolicies extends \Google\Service\Resource
    * long-lasting storage. (accessPolicies.delete)
    *
    * @param string $name Required. Resource name for the access policy to delete.
-   * Format `accessPolicies/{policy_id}`
+   * Format: `accessPolicies/{policy_id}`
    * @param array $optParams Optional parameters.
    * @return Operation
    * @throws \Google\Service\Exception
@@ -75,7 +75,7 @@ class AccessPolicies extends \Google\Service\Resource
    * Returns an access policy based on the name. (accessPolicies.get)
    *
    * @param string $name Required. Resource name for the access policy to get.
-   * Format `accessPolicies/{policy_id}`
+   * Format: `accessPolicies/{policy_id}`
    * @param array $optParams Optional parameters.
    * @return AccessPolicy
    * @throws \Google\Service\Exception
@@ -171,7 +171,9 @@ class AccessPolicies extends \Google\Service\Resource
   /**
    * Returns the IAM permissions that the caller has on the specified Access
    * Context Manager resource. The resource can be an AccessPolicy, AccessLevel,
-   * or ServicePerimeter. This method does not support other resources.
+   * or ServicePerimeter. This method does not support other resources. **IAM
+   * Permissions**: No specific IAM permission is required to call this method. It
+   * returns the subset of the requested permissions that the caller possesses.
    * (accessPolicies.testIamPermissions)
    *
    * @param string $resource REQUIRED: The resource for which the policy detail is

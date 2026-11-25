@@ -18,11 +18,13 @@
 namespace Google\Service\OracleDatabase\Resource;
 
 use Google\Service\OracleDatabase\AutonomousDatabase;
+use Google\Service\OracleDatabase\AutonomousDatabaseRefreshableClones;
 use Google\Service\OracleDatabase\FailoverAutonomousDatabaseRequest;
 use Google\Service\OracleDatabase\GenerateAutonomousDatabaseWalletRequest;
 use Google\Service\OracleDatabase\GenerateAutonomousDatabaseWalletResponse;
 use Google\Service\OracleDatabase\ListAutonomousDatabasesResponse;
 use Google\Service\OracleDatabase\Operation;
+use Google\Service\OracleDatabase\RefreshAutonomousDatabaseRequest;
 use Google\Service\OracleDatabase\RestartAutonomousDatabaseRequest;
 use Google\Service\OracleDatabase\RestoreAutonomousDatabaseRequest;
 use Google\Service\OracleDatabase\StartAutonomousDatabaseRequest;
@@ -145,6 +147,23 @@ class ProjectsLocationsAutonomousDatabases extends \Google\Service\Resource
     return $this->call('get', [$params], AutonomousDatabase::class);
   }
   /**
+   * Gets the refreshable clones for a given Autonomous Database.
+   * (autonomousDatabases.getRefreshableClones)
+   *
+   * @param string $name Required. The Autonomous Database resource whose
+   * refreshable clones are to be listed. Format: projects/{project}/locations/{lo
+   * cation}/autonomousDatabases/{autonomous_database}
+   * @param array $optParams Optional parameters.
+   * @return AutonomousDatabaseRefreshableClones
+   * @throws \Google\Service\Exception
+   */
+  public function getRefreshableClones($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getRefreshableClones', [$params], AutonomousDatabaseRefreshableClones::class);
+  }
+  /**
    * Lists the Autonomous Databases in a given project and location.
    * (autonomousDatabases.listProjectsLocationsAutonomousDatabases)
    *
@@ -189,9 +208,12 @@ class ProjectsLocationsAutonomousDatabases extends \Google\Service\Resource
    * (00000000-0000-0000-0000-000000000000).
    * @opt_param string updateMask Optional. Field mask is used to specify the
    * fields to be overwritten in the Exadata resource by the update. The fields
-   * specified in the update_mask are relative to the resource, not the full
+   * specified in the `update_mask` are relative to the resource, not the full
    * request. A field will be overwritten if it is in the mask. If the user does
-   * not provide a mask then all fields will be overwritten.
+   * not provide a mask then the service treats this as an implied field mask
+   * equivalent to all fields that are populated (have a non-empty value). To
+   * clear or unset a field, the field must be explicitly specified in the
+   * `update_mask`.
    * @return Operation
    * @throws \Google\Service\Exception
    */
@@ -200,6 +222,24 @@ class ProjectsLocationsAutonomousDatabases extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Operation::class);
+  }
+  /**
+   * Refreshes the refreshable clone of an Autonomous Database.
+   * (autonomousDatabases.refresh)
+   *
+   * @param string $name Required. The name of the AutonomousDatabase resource.
+   * Format: projects/{project}/location/{location}/autonomousDatabases/{autonomou
+   * s_database}
+   * @param RefreshAutonomousDatabaseRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function refresh($name, RefreshAutonomousDatabaseRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('refresh', [$params], Operation::class);
   }
   /**
    * Restarts an Autonomous Database. (autonomousDatabases.restart)

@@ -49,6 +49,30 @@ class GoogleCloudRunV2Condition extends \Google\Model
    */
   public const EXECUTION_REASON_DELAYED_START_PENDING = 'DELAYED_START_PENDING';
   /**
+   * A delayed execution exceeded the maximum runtime duration.
+   */
+  public const EXECUTION_REASON_DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT = 'DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT';
+  /**
+   * Default value.
+   */
+  public const INSTANCE_REASON_INSTANCE_REASON_UNSPECIFIED = 'INSTANCE_REASON_UNSPECIFIED';
+  /**
+   * Instance deleted.
+   */
+  public const INSTANCE_REASON_INSTANCE_DELETED = 'INSTANCE_DELETED';
+  /**
+   * Instance stopped.
+   */
+  public const INSTANCE_REASON_INSTANCE_STOPPED = 'INSTANCE_STOPPED';
+  /**
+   * Instance stopping.
+   */
+  public const INSTANCE_REASON_INSTANCE_STOPPING = 'INSTANCE_STOPPING';
+  /**
+   * Instance exited with a non-zero exit code.
+   */
+  public const INSTANCE_REASON_INSTANCE_NON_ZERO_EXIT_CODE = 'INSTANCE_NON_ZERO_EXIT_CODE';
+  /**
    * Default value.
    */
   public const REASON_COMMON_REASON_UNDEFINED = 'COMMON_REASON_UNDEFINED';
@@ -213,13 +237,21 @@ class GoogleCloudRunV2Condition extends \Google\Model
    */
   public $executionReason;
   /**
-   * Last time the condition transitioned from one status to another.
+   * Output only. A reason for the instance condition.
+   *
+   * @var string
+   */
+  public $instanceReason;
+  /**
+   * Output only. Last time the condition transitioned from one status to
+   * another.
    *
    * @var string
    */
   public $lastTransitionTime;
   /**
-   * Human readable message indicating details about the current status.
+   * Output only. Human readable message indicating details about the current
+   * status.
    *
    * @var string
    */
@@ -237,20 +269,21 @@ class GoogleCloudRunV2Condition extends \Google\Model
    */
   public $revisionReason;
   /**
-   * How to interpret failures of this condition, one of Error, Warning, Info
+   * Output only. How to interpret failures of this condition, one of Error,
+   * Warning, Info
    *
    * @var string
    */
   public $severity;
   /**
-   * State of the condition.
+   * Output only. State of the condition.
    *
    * @var string
    */
   public $state;
   /**
-   * type is used to communicate the status of the reconciliation process. See
-   * also:
+   * Output only. type is used to communicate the status of the reconciliation
+   * process. See also:
    * https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-
    * conditions-and-reporting Types common to all resources include: * "Ready":
    * True when the Resource is ready.
@@ -264,7 +297,8 @@ class GoogleCloudRunV2Condition extends \Google\Model
    *
    * Accepted values: EXECUTION_REASON_UNDEFINED,
    * JOB_STATUS_SERVICE_POLLING_ERROR, NON_ZERO_EXIT_CODE, CANCELLED,
-   * CANCELLING, DELETED, DELAYED_START_PENDING
+   * CANCELLING, DELETED, DELAYED_START_PENDING,
+   * DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT
    *
    * @param self::EXECUTION_REASON_* $executionReason
    */
@@ -280,7 +314,27 @@ class GoogleCloudRunV2Condition extends \Google\Model
     return $this->executionReason;
   }
   /**
-   * Last time the condition transitioned from one status to another.
+   * Output only. A reason for the instance condition.
+   *
+   * Accepted values: INSTANCE_REASON_UNSPECIFIED, INSTANCE_DELETED,
+   * INSTANCE_STOPPED, INSTANCE_STOPPING, INSTANCE_NON_ZERO_EXIT_CODE
+   *
+   * @param self::INSTANCE_REASON_* $instanceReason
+   */
+  public function setInstanceReason($instanceReason)
+  {
+    $this->instanceReason = $instanceReason;
+  }
+  /**
+   * @return self::INSTANCE_REASON_*
+   */
+  public function getInstanceReason()
+  {
+    return $this->instanceReason;
+  }
+  /**
+   * Output only. Last time the condition transitioned from one status to
+   * another.
    *
    * @param string $lastTransitionTime
    */
@@ -296,7 +350,8 @@ class GoogleCloudRunV2Condition extends \Google\Model
     return $this->lastTransitionTime;
   }
   /**
-   * Human readable message indicating details about the current status.
+   * Output only. Human readable message indicating details about the current
+   * status.
    *
    * @param string $message
    */
@@ -357,7 +412,8 @@ class GoogleCloudRunV2Condition extends \Google\Model
     return $this->revisionReason;
   }
   /**
-   * How to interpret failures of this condition, one of Error, Warning, Info
+   * Output only. How to interpret failures of this condition, one of Error,
+   * Warning, Info
    *
    * Accepted values: SEVERITY_UNSPECIFIED, ERROR, WARNING, INFO
    *
@@ -375,7 +431,7 @@ class GoogleCloudRunV2Condition extends \Google\Model
     return $this->severity;
   }
   /**
-   * State of the condition.
+   * Output only. State of the condition.
    *
    * Accepted values: STATE_UNSPECIFIED, CONDITION_PENDING,
    * CONDITION_RECONCILING, CONDITION_FAILED, CONDITION_SUCCEEDED
@@ -394,8 +450,8 @@ class GoogleCloudRunV2Condition extends \Google\Model
     return $this->state;
   }
   /**
-   * type is used to communicate the status of the reconciliation process. See
-   * also:
+   * Output only. type is used to communicate the status of the reconciliation
+   * process. See also:
    * https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-
    * conditions-and-reporting Types common to all resources include: * "Ready":
    * True when the Resource is ready.

@@ -151,6 +151,10 @@ class ServiceMeshCondition extends \Google\Model
    */
   public const CODE_QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS = 'QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS';
   /**
+   * Configuration failed to apply due to fleet being blocked.
+   */
+  public const CODE_CONFIG_APPLY_BLOCKED = 'CONFIG_APPLY_BLOCKED';
+  /**
    * Legacy istio secrets found for multicluster error code
    */
   public const CODE_LEGACY_MC_SECRETS = 'LEGACY_MC_SECRETS';
@@ -170,6 +174,40 @@ class ServiceMeshCondition extends \Google\Model
    * Managed CNI not enabled error code
    */
   public const CODE_MANAGED_CNI_NOT_ENABLED = 'MANAGED_CNI_NOT_ENABLED';
+  /**
+   * Missing control plane configuration error code
+   */
+  public const CODE_MISSING_CONTROL_PLANE_CONFIG = 'MISSING_CONTROL_PLANE_CONFIG';
+  /**
+   * Shared VPC missing permissions error code
+   */
+  public const CODE_SHARED_VPC_MISSING_PERMISSIONS = 'SHARED_VPC_MISSING_PERMISSIONS';
+  /**
+   * Required org policy disabled error code
+   */
+  public const CODE_REQUIRED_ORG_POLICY_DISABLED = 'REQUIRED_ORG_POLICY_DISABLED';
+  /**
+   * One or more Pods have unsupported annotations.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION = 'MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION';
+  /**
+   * Incompatible config found in the cluster.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE_CONFIG = 'MODERNIZATION_INCOMPATIBLE_CONFIG';
+  /**
+   * Gateway pods per cluster limit exceeded.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE = 'MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE';
+  /**
+   * Cluster contains workloads that will require manual restart during
+   * modernization.
+   */
+  public const CODE_MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART = 'MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART';
+  /**
+   * Cluster contains PodDisruptionBudgets that prevent automated pod eviction
+   * during modernization.
+   */
+  public const CODE_MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET = 'MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET';
   /**
    * Modernization is scheduled for a cluster.
    */
@@ -207,6 +245,11 @@ class ServiceMeshCondition extends \Google\Model
    */
   public const CODE_MODERNIZATION_ROLLING_BACK_CLUSTER = 'MODERNIZATION_ROLLING_BACK_CLUSTER';
   /**
+   * Modernization of a cluster is awaiting manual restart of workloads. The
+   * customer must restart these workloads to complete modernization.
+   */
+  public const CODE_MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART = 'MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART';
+  /**
    * Modernization will be scheduled for a fleet.
    */
   public const CODE_MODERNIZATION_WILL_BE_SCHEDULED = 'MODERNIZATION_WILL_BE_SCHEDULED';
@@ -236,6 +279,33 @@ class ServiceMeshCondition extends \Google\Model
    * Rollback is in progress for modernization of all clusters in a fleet.
    */
   public const CODE_MODERNIZATION_ROLLING_BACK_FLEET = 'MODERNIZATION_ROLLING_BACK_FLEET';
+  /**
+   * Modernization of all the fleet's clusters is complete. Soaking before
+   * finalizing the modernization.
+   */
+  public const CODE_MODERNIZATION_MODERNIZED = 'MODERNIZATION_MODERNIZED';
+  /**
+   * Fleet modernization must be Customer-Triggered, and cannot be Google-
+   * driven. Specific details may be reported via another fleet/cluster
+   * condition.
+   */
+  public const CODE_MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER = 'MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER';
+  /**
+   * Fleet is compatible for modernization.
+   */
+  public const CODE_MODERNIZATION_COMPATIBLE = 'MODERNIZATION_COMPATIBLE';
+  /**
+   * Fleet is not yet compatible for modernization.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE = 'MODERNIZATION_INCOMPATIBLE';
+  /**
+   * Fleet exceeds service mesh fleet-level scalability limits.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE_FLEET_SCALE = 'MODERNIZATION_INCOMPATIBLE_FLEET_SCALE';
+  /**
+   * Fleet exceeds service mesh fleet-level quota limits.
+   */
+  public const CODE_MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA = 'MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA';
   /**
    * Unspecified severity
    */
@@ -297,17 +367,26 @@ class ServiceMeshCondition extends \Google\Model
    * QUOTA_EXCEEDED_MESHES, QUOTA_EXCEEDED_SERVER_TLS_POLICIES,
    * QUOTA_EXCEEDED_CLIENT_TLS_POLICIES, QUOTA_EXCEEDED_SERVICE_LB_POLICIES,
    * QUOTA_EXCEEDED_HTTP_FILTERS, QUOTA_EXCEEDED_TCP_FILTERS,
-   * QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS, LEGACY_MC_SECRETS,
-   * WORKLOAD_IDENTITY_REQUIRED, NON_STANDARD_BINARY_USAGE,
+   * QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS, CONFIG_APPLY_BLOCKED,
+   * LEGACY_MC_SECRETS, WORKLOAD_IDENTITY_REQUIRED, NON_STANDARD_BINARY_USAGE,
    * UNSUPPORTED_GATEWAY_CLASS, MANAGED_CNI_NOT_ENABLED,
-   * MODERNIZATION_SCHEDULED, MODERNIZATION_IN_PROGRESS,
-   * MODERNIZATION_COMPLETED, MODERNIZATION_ABORTED, MODERNIZATION_PREPARING,
-   * MODERNIZATION_STALLED, MODERNIZATION_PREPARED,
+   * MISSING_CONTROL_PLANE_CONFIG, SHARED_VPC_MISSING_PERMISSIONS,
+   * REQUIRED_ORG_POLICY_DISABLED, MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION,
+   * MODERNIZATION_INCOMPATIBLE_CONFIG,
+   * MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE,
+   * MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART,
+   * MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET, MODERNIZATION_SCHEDULED,
+   * MODERNIZATION_IN_PROGRESS, MODERNIZATION_COMPLETED, MODERNIZATION_ABORTED,
+   * MODERNIZATION_PREPARING, MODERNIZATION_STALLED, MODERNIZATION_PREPARED,
    * MODERNIZATION_MIGRATING_WORKLOADS, MODERNIZATION_ROLLING_BACK_CLUSTER,
+   * MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART,
    * MODERNIZATION_WILL_BE_SCHEDULED, MODERNIZATION_MANUAL,
    * MODERNIZATION_ELIGIBLE, MODERNIZATION_MODERNIZING,
    * MODERNIZATION_MODERNIZED_SOAKING, MODERNIZATION_FINALIZED,
-   * MODERNIZATION_ROLLING_BACK_FLEET
+   * MODERNIZATION_ROLLING_BACK_FLEET, MODERNIZATION_MODERNIZED,
+   * MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER, MODERNIZATION_COMPATIBLE,
+   * MODERNIZATION_INCOMPATIBLE, MODERNIZATION_INCOMPATIBLE_FLEET_SCALE,
+   * MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA
    *
    * @param self::CODE_* $code
    */

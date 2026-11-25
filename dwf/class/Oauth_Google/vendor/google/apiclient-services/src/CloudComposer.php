@@ -37,6 +37,12 @@ class CloudComposer extends \Google\Service
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
+  /** See, edit, configure, and delete your Google Cloud Composer data and see the email address for your Google Account. */
+  const CLOUDCOMPOSER =
+      "https://www.googleapis.com/auth/cloudcomposer";
+  /** See your Google Cloud Composer data and the email address of your Google Account. */
+  const CLOUDCOMPOSER_READONLY =
+      "https://www.googleapis.com/auth/cloudcomposer.readonly";
 
   public $projects_locations_environments;
   public $projects_locations_environments_userWorkloadsConfigMaps;
@@ -139,6 +145,16 @@ class CloudComposer extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'hibernate' => [
+              'path' => 'v1/{+name}:hibernate',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'list' => [
               'path' => 'v1/{+parent}/environments',
               'httpMethod' => 'GET',
@@ -193,6 +209,16 @@ class CloudComposer extends \Google\Service
               ],
             ],'restartWebServer' => [
               'path' => 'v1/{+name}:restartWebServer',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'resume' => [
+              'path' => 'v1/{+name}:resume',
               'httpMethod' => 'POST',
               'parameters' => [
                 'name' => [

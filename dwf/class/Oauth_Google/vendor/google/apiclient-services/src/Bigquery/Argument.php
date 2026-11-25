@@ -33,6 +33,14 @@ class Argument extends \Google\Model
    */
   public const ARGUMENT_KIND_ANY_TYPE = 'ANY_TYPE';
   /**
+   * The argument is a table with fully specified column names and types.
+   */
+  public const ARGUMENT_KIND_FIXED_TABLE = 'FIXED_TABLE';
+  /**
+   * The argument is any table type.
+   */
+  public const ARGUMENT_KIND_ANY_TABLE = 'ANY_TABLE';
+  /**
    * Default value.
    */
   public const MODE_MODE_UNSPECIFIED = 'MODE_UNSPECIFIED';
@@ -80,11 +88,14 @@ class Argument extends \Google\Model
    * @var string
    */
   public $name;
+  protected $tableTypeType = StandardSqlTableType::class;
+  protected $tableTypeDataType = '';
 
   /**
    * Optional. Defaults to FIXED_TYPE.
    *
-   * Accepted values: ARGUMENT_KIND_UNSPECIFIED, FIXED_TYPE, ANY_TYPE
+   * Accepted values: ARGUMENT_KIND_UNSPECIFIED, FIXED_TYPE, ANY_TYPE,
+   * FIXED_TABLE, ANY_TABLE
    *
    * @param self::ARGUMENT_KIND_* $argumentKind
    */
@@ -170,6 +181,22 @@ class Argument extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. Set if argument_kind == FIXED_TABLE.
+   *
+   * @param StandardSqlTableType $tableType
+   */
+  public function setTableType(StandardSqlTableType $tableType)
+  {
+    $this->tableType = $tableType;
+  }
+  /**
+   * @return StandardSqlTableType
+   */
+  public function getTableType()
+  {
+    return $this->tableType;
   }
 }
 

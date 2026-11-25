@@ -35,12 +35,38 @@ class ProjectsJobs extends \Google\Service\Resource
 {
   /**
    * List the jobs of a project across all regions. **Note:** This method doesn't
-   * support filtering the list of jobs by name. (jobs.aggregated)
+   * support filtering the list of jobs by name. # IAM Permissions Requires the
+   * `dataflow.jobs.list` permission on the project. (jobs.aggregated)
    *
    * @param string $projectId The project which owns the jobs.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string createTimeRange.endTime Optional. Exclusive end of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * before the end.
+   * @opt_param string createTimeRange.startTime Optional. Inclusive start of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * the same or after the start.
    * @opt_param string filter The kind of filter to use.
+   * @opt_param string filterExpression Optional. Restricts the results to jobs
+   * that match this [AIP-160](https://google.aip.dev/160) filter expression. The
+   * expression is ANDed with `filter` and the time ranges, and is limited to 4
+   * KiB and 32 levels of nesting. Not yet implemented: the service currently
+   * ignores this field and returns unfiltered results. Support will be added in a
+   * future release. Supported fields are `name`, `id`, `location`,
+   * `job_metadata.sdk_version.version`, `type`, `current_state`, `create_time`
+   * and `current_state_time`: * String fields support `=` and `!=`, where `*` in
+   * the value matches any sequence of characters, and `:`, which matches the same
+   * way but ignores ASCII case. `field:*` matches any non-empty value. * `type`
+   * and `current_state` support `=`, `!=` and `:` with enum value names, e.g.
+   * `current_state = JOB_STATE_RUNNING`. * Timestamp fields support `=`, `!=`,
+   * `<`, `<=`, `>` and `>=` with RFC 3339 values, e.g. `create_time >=
+   * "2026-10-01T00:00:00Z"`. A job without the timestamp doesn't match any
+   * comparison on it. Restrictions can be combined with `AND`, `OR`, `NOT` (or
+   * its equivalent, `-`) and parentheses; `AND` and `OR` can't be mixed without
+   * parentheses. For example: `name:"wordcount-*" AND -type = JOB_TYPE_STREAMING
+   * AND (current_state = JOB_STATE_FAILED OR current_state =
+   * JOB_STATE_CANCELLED)`.
    * @opt_param string location The [regional endpoint]
    * (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
    * contains this job.
@@ -50,8 +76,15 @@ class ProjectsJobs extends \Google\Service\Resource
    * max_responses and an unspecified server-defined limit.
    * @opt_param string pageToken Set this to the 'next_page_token' field of a
    * previous response to request additional results in a long list.
-   * @opt_param string view Deprecated. ListJobs always returns summaries now. Use
-   * GetJob for other JobViews.
+   * @opt_param bool regionalFanoutRequested Optional.
+   * @opt_param string terminationTimeRange.endTime Optional. Exclusive end of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * before the end.
+   * @opt_param string terminationTimeRange.startTime Optional. Inclusive start of
+   * the interval. If specified, a Timestamp matching this interval will have to
+   * be the same or after the start.
+   * @opt_param string view Deprecated. `ListJobs` always returns summaries now.
+   * Use `GetJob` for other `JobView`s.
    * @return ListJobsResponse
    * @throws \Google\Service\Exception
    */
@@ -67,7 +100,10 @@ class ProjectsJobs extends \Google\Service\Resource
    * (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
    * `projects.jobs.create` is not recommended, as your job will always start in
    * `us-central1`. Do not enter confidential information when you supply string
-   * values using the API. (jobs.create)
+   * values using the API. # IAM Permissions 1. Requires the
+   * `dataflow.jobs.create` permission on the project. 2.
+   * `resourcemanager.projects.get` (Specifically required for regional endpoints
+   * to resolve regional resource metadata) (jobs.create)
    *
    * @param string $projectId The ID of the Cloud Platform project that the job
    * belongs to.
@@ -94,7 +130,8 @@ class ProjectsJobs extends \Google\Service\Resource
    * job, we recommend using `projects.locations.jobs.get` with a [regional
    * endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-
    * endpoints). Using `projects.jobs.get` is not recommended, as you can only get
-   * the state of jobs that are running in `us-central1`. (jobs.get)
+   * the state of jobs that are running in `us-central1`. # IAM Permissions
+   * Requires the `dataflow.jobs.get` permission on the job. (jobs.get)
    *
    * @param string $projectId The ID of the Cloud Platform project that the job
    * belongs to.
@@ -119,7 +156,8 @@ class ProjectsJobs extends \Google\Service\Resource
    * `projects.locations.jobs.getMetrics` with a [regional endpoint]
    * (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
    * `projects.jobs.getMetrics` is not recommended, as you can only request the
-   * status of jobs that are running in `us-central1`. (jobs.getMetrics)
+   * status of jobs that are running in `us-central1`. # IAM Permissions Requires
+   * the `dataflow.metrics.get` permission on the job. (jobs.getMetrics)
    *
    * @param string $projectId A project id.
    * @param string $jobId The job to get metrics for.
@@ -148,12 +186,39 @@ class ProjectsJobs extends \Google\Service\Resource
    * `projects.jobs.list` is not recommended, because you can only get the list of
    * jobs that are running in `us-central1`. `projects.locations.jobs.list` and
    * `projects.jobs.list` support filtering the list of jobs by name. Filtering by
-   * name isn't supported by `projects.jobs.aggregated`. (jobs.listProjectsJobs)
+   * name isn't supported by `projects.jobs.aggregated`. # IAM Permissions
+   * Requires the `dataflow.jobs.list` permission on the project.
+   * (jobs.listProjectsJobs)
    *
    * @param string $projectId The project which owns the jobs.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string createTimeRange.endTime Optional. Exclusive end of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * before the end.
+   * @opt_param string createTimeRange.startTime Optional. Inclusive start of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * the same or after the start.
    * @opt_param string filter The kind of filter to use.
+   * @opt_param string filterExpression Optional. Restricts the results to jobs
+   * that match this [AIP-160](https://google.aip.dev/160) filter expression. The
+   * expression is ANDed with `filter` and the time ranges, and is limited to 4
+   * KiB and 32 levels of nesting. Not yet implemented: the service currently
+   * ignores this field and returns unfiltered results. Support will be added in a
+   * future release. Supported fields are `name`, `id`, `location`,
+   * `job_metadata.sdk_version.version`, `type`, `current_state`, `create_time`
+   * and `current_state_time`: * String fields support `=` and `!=`, where `*` in
+   * the value matches any sequence of characters, and `:`, which matches the same
+   * way but ignores ASCII case. `field:*` matches any non-empty value. * `type`
+   * and `current_state` support `=`, `!=` and `:` with enum value names, e.g.
+   * `current_state = JOB_STATE_RUNNING`. * Timestamp fields support `=`, `!=`,
+   * `<`, `<=`, `>` and `>=` with RFC 3339 values, e.g. `create_time >=
+   * "2026-10-01T00:00:00Z"`. A job without the timestamp doesn't match any
+   * comparison on it. Restrictions can be combined with `AND`, `OR`, `NOT` (or
+   * its equivalent, `-`) and parentheses; `AND` and `OR` can't be mixed without
+   * parentheses. For example: `name:"wordcount-*" AND -type = JOB_TYPE_STREAMING
+   * AND (current_state = JOB_STATE_FAILED OR current_state =
+   * JOB_STATE_CANCELLED)`.
    * @opt_param string location The [regional endpoint]
    * (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
    * contains this job.
@@ -163,8 +228,15 @@ class ProjectsJobs extends \Google\Service\Resource
    * max_responses and an unspecified server-defined limit.
    * @opt_param string pageToken Set this to the 'next_page_token' field of a
    * previous response to request additional results in a long list.
-   * @opt_param string view Deprecated. ListJobs always returns summaries now. Use
-   * GetJob for other JobViews.
+   * @opt_param bool regionalFanoutRequested Optional.
+   * @opt_param string terminationTimeRange.endTime Optional. Exclusive end of the
+   * interval. If specified, a Timestamp matching this interval will have to be
+   * before the end.
+   * @opt_param string terminationTimeRange.startTime Optional. Inclusive start of
+   * the interval. If specified, a Timestamp matching this interval will have to
+   * be the same or after the start.
+   * @opt_param string view Deprecated. `ListJobs` always returns summaries now.
+   * Use `GetJob` for other `JobView`s.
    * @return ListJobsResponse
    * @throws \Google\Service\Exception
    */
@@ -175,7 +247,8 @@ class ProjectsJobs extends \Google\Service\Resource
     return $this->call('list', [$params], ListJobsResponse::class);
   }
   /**
-   * Snapshot the state of a streaming job. (jobs.snapshot)
+   * Snapshot the state of a streaming job. # IAM Permissions Requires the
+   * `dataflow.jobs.snapshot` permission on the job. (jobs.snapshot)
    *
    * @param string $projectId The project which owns the job to be snapshotted.
    * @param string $jobId The job to be snapshotted.
@@ -196,7 +269,10 @@ class ProjectsJobs extends \Google\Service\Resource
    * [regional endpoint]
    * (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
    * `projects.jobs.update` is not recommended, as you can only update the state
-   * of jobs that are running in `us-central1`. (jobs.update)
+   * of jobs that are running in `us-central1`. # IAM Permissions 1. Requires the
+   * `dataflow.jobs.cancel` permission to cancel a job. 2. Requires the
+   * `dataflow.jobs.updateContents` permission to update runtime parameters.
+   * (jobs.update)
    *
    * @param string $projectId The ID of the Cloud Platform project that the job
    * belongs to.

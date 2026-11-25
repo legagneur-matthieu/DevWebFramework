@@ -49,13 +49,18 @@ class LoadBalancerBackendInfo extends \Google\Model
    */
   public const HEALTH_CHECK_FIREWALLS_CONFIG_STATE_FIREWALLS_UNSUPPORTED = 'FIREWALLS_UNSUPPORTED';
   /**
-   * URI of the backend bucket this backend targets (if applicable).
+   * URI of the backend bucket this backend targets (if applicable) in format
+   * "projects/{project}/global/backendBuckets/{backend_bucket}".
    *
    * @var string
    */
   public $backendBucketUri;
   /**
-   * URI of the backend service this backend belongs to (if applicable).
+   * URI of the backend service this backend belongs to (if applicable) in
+   * format
+   * "projects/{project}/regions/{region}/backendServices/{backend_service}"
+   * (regional) or "projects/{project}/global/backendServices/{backend_service}"
+   * (global).
    *
    * @var string
    */
@@ -72,20 +77,25 @@ class LoadBalancerBackendInfo extends \Google\Model
    */
   public $healthCheckFirewallsConfigState;
   /**
-   * URI of the health check attached to this backend (if applicable).
+   * URI of the health check attached to this backend (if applicable). Format: *
+   * `projects/{project}/global/healthChecks/{health_check}` *
+   * `projects/{project}/regions/{region}/healthChecks/{health_check}` *
+   * `projects/{project}/global/httpHealthChecks/{health_check}` (legacy)
    *
    * @var string
    */
   public $healthCheckUri;
   /**
-   * URI of the instance group this backend belongs to (if applicable).
+   * URI of the instance group this backend belongs to (if applicable) in format
+   * "projects/{project}/zones/{zone}/instanceGroups/{instance_group}".
    *
    * @var string
    */
   public $instanceGroupUri;
   /**
-   * URI of the backend instance (if applicable). Populated for instance group
-   * backends, and zonal NEG backends.
+   * URI of the backend instance (if applicable) in format
+   * "projects/{project}/zones/{zone}/instances/{instance}". Populated for
+   * instance group backends, and zonal NEG backends.
    *
    * @var string
    */
@@ -99,7 +109,11 @@ class LoadBalancerBackendInfo extends \Google\Model
    */
   public $name;
   /**
-   * URI of the network endpoint group this backend belongs to (if applicable).
+   * URI of the network endpoint group this backend belongs to (if applicable)
+   * Format: * `projects/{project}/zones/{zone}/networkEndpointGroups/{neg}`
+   * (zonal NEG) *
+   * `projects/{project}/regions/{region}/networkEndpointGroups/{neg}` (regional
+   * NEG) * `projects/{project}/global/networkEndpointGroups/{neg}` (global NEG)
    *
    * @var string
    */
@@ -112,14 +126,16 @@ class LoadBalancerBackendInfo extends \Google\Model
   public $pscGoogleApiTarget;
   /**
    * URI of the PSC service attachment this PSC NEG backend targets (if
-   * applicable).
+   * applicable) in format "projects/{project}/regions/{region}/serviceAttachmen
+   * ts/{service_attachment}".
    *
    * @var string
    */
   public $pscServiceAttachmentUri;
 
   /**
-   * URI of the backend bucket this backend targets (if applicable).
+   * URI of the backend bucket this backend targets (if applicable) in format
+   * "projects/{project}/global/backendBuckets/{backend_bucket}".
    *
    * @param string $backendBucketUri
    */
@@ -135,7 +151,11 @@ class LoadBalancerBackendInfo extends \Google\Model
     return $this->backendBucketUri;
   }
   /**
-   * URI of the backend service this backend belongs to (if applicable).
+   * URI of the backend service this backend belongs to (if applicable) in
+   * format
+   * "projects/{project}/regions/{region}/backendServices/{backend_service}"
+   * (regional) or "projects/{project}/global/backendServices/{backend_service}"
+   * (global).
    *
    * @param string $backendServiceUri
    */
@@ -176,7 +196,10 @@ class LoadBalancerBackendInfo extends \Google\Model
     return $this->healthCheckFirewallsConfigState;
   }
   /**
-   * URI of the health check attached to this backend (if applicable).
+   * URI of the health check attached to this backend (if applicable). Format: *
+   * `projects/{project}/global/healthChecks/{health_check}` *
+   * `projects/{project}/regions/{region}/healthChecks/{health_check}` *
+   * `projects/{project}/global/httpHealthChecks/{health_check}` (legacy)
    *
    * @param string $healthCheckUri
    */
@@ -192,7 +215,8 @@ class LoadBalancerBackendInfo extends \Google\Model
     return $this->healthCheckUri;
   }
   /**
-   * URI of the instance group this backend belongs to (if applicable).
+   * URI of the instance group this backend belongs to (if applicable) in format
+   * "projects/{project}/zones/{zone}/instanceGroups/{instance_group}".
    *
    * @param string $instanceGroupUri
    */
@@ -208,8 +232,9 @@ class LoadBalancerBackendInfo extends \Google\Model
     return $this->instanceGroupUri;
   }
   /**
-   * URI of the backend instance (if applicable). Populated for instance group
-   * backends, and zonal NEG backends.
+   * URI of the backend instance (if applicable) in format
+   * "projects/{project}/zones/{zone}/instances/{instance}". Populated for
+   * instance group backends, and zonal NEG backends.
    *
    * @param string $instanceUri
    */
@@ -243,7 +268,11 @@ class LoadBalancerBackendInfo extends \Google\Model
     return $this->name;
   }
   /**
-   * URI of the network endpoint group this backend belongs to (if applicable).
+   * URI of the network endpoint group this backend belongs to (if applicable)
+   * Format: * `projects/{project}/zones/{zone}/networkEndpointGroups/{neg}`
+   * (zonal NEG) *
+   * `projects/{project}/regions/{region}/networkEndpointGroups/{neg}` (regional
+   * NEG) * `projects/{project}/global/networkEndpointGroups/{neg}` (global NEG)
    *
    * @param string $networkEndpointGroupUri
    */
@@ -276,7 +305,8 @@ class LoadBalancerBackendInfo extends \Google\Model
   }
   /**
    * URI of the PSC service attachment this PSC NEG backend targets (if
-   * applicable).
+   * applicable) in format "projects/{project}/regions/{region}/serviceAttachmen
+   * ts/{service_attachment}".
    *
    * @param string $pscServiceAttachmentUri
    */

@@ -21,7 +21,8 @@ class ConfigManagementOciConfig extends \Google\Model
 {
   /**
    * Optional. The Google Cloud Service Account Email used for auth when
-   * secret_type is gcpServiceAccount.
+   * secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync`
+   * controller's Kubernetes Service Account.
    *
    * @var string
    */
@@ -35,8 +36,8 @@ class ConfigManagementOciConfig extends \Google\Model
   public $policyDir;
   /**
    * Required. Type of secret configured for access to the OCI repo. Must be one
-   * of gcenode, gcpserviceaccount, k8sserviceaccount or none. The validation of
-   * this is case-sensitive.
+   * of `gcenode`, `gcpserviceaccount`, `k8sserviceaccount` or `none`. The
+   * validation of this is case-sensitive.
    *
    * @var string
    */
@@ -57,7 +58,8 @@ class ConfigManagementOciConfig extends \Google\Model
 
   /**
    * Optional. The Google Cloud Service Account Email used for auth when
-   * secret_type is gcpServiceAccount.
+   * secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync`
+   * controller's Kubernetes Service Account.
    *
    * @param string $gcpServiceAccountEmail
    */
@@ -91,8 +93,8 @@ class ConfigManagementOciConfig extends \Google\Model
   }
   /**
    * Required. Type of secret configured for access to the OCI repo. Must be one
-   * of gcenode, gcpserviceaccount, k8sserviceaccount or none. The validation of
-   * this is case-sensitive.
+   * of `gcenode`, `gcpserviceaccount`, `k8sserviceaccount` or `none`. The
+   * validation of this is case-sensitive.
    *
    * @param string $secretType
    */

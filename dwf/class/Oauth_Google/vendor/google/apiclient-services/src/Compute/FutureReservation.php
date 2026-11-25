@@ -20,6 +20,15 @@ namespace Google\Service\Compute;
 class FutureReservation extends \Google\Model
 {
   /**
+   * Bare Metal Secure AI.
+   */
+  public const CONFIDENTIAL_COMPUTE_TYPE_CONFIDENTIAL_COMPUTE_TYPE_BMSAI = 'CONFIDENTIAL_COMPUTE_TYPE_BMSAI';
+  /**
+   * Intel Trust Domain Extensions.
+   */
+  public const CONFIDENTIAL_COMPUTE_TYPE_CONFIDENTIAL_COMPUTE_TYPE_TDX = 'CONFIDENTIAL_COMPUTE_TYPE_TDX';
+  public const CONFIDENTIAL_COMPUTE_TYPE_CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED = 'CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED';
+  /**
    * The reserved capacity is made up of densely deployed reservation blocks.
    */
   public const DEPLOYMENT_TYPE_DENSE = 'DENSE';
@@ -81,8 +90,19 @@ class FutureReservation extends \Google\Model
    * @var bool
    */
   public $autoDeleteAutoCreatedReservations;
+  /**
+   * Full or partial URL of an existing future reservation to indicate intent
+   * for reserving capacity in the same cluster as the colocation resource.
+   *
+   * @var string
+   */
+  public $colocationResource;
   protected $commitmentInfoType = FutureReservationCommitmentInfo::class;
   protected $commitmentInfoDataType = '';
+  /**
+   * @var string
+   */
+  public $confidentialComputeType;
   /**
    * Output only. [Output Only] The creation timestamp for this future
    * reservation inRFC3339 text format.
@@ -144,6 +164,8 @@ class FutureReservation extends \Google\Model
    * @var string
    */
   public $namePrefix;
+  protected $paramsType = FutureReservationParams::class;
+  protected $paramsDataType = '';
   /**
    * Planning state before being submitted for evaluation
    *
@@ -167,6 +189,16 @@ class FutureReservation extends \Google\Model
    * @var string
    */
   public $reservationName;
+  protected $resourceMetadataType = ResourceMetadata::class;
+  protected $resourceMetadataDataType = '';
+  /**
+   * Name of the resource intended to be delivered. Name should conform to
+   * RFC1035. This will be the name of storage pool or Exapool for persistent
+   * disk FRs.
+   *
+   * @var string
+   */
+  public $resourceName;
   /**
    * Maintenance information for this reservation
    *
@@ -201,6 +233,8 @@ class FutureReservation extends \Google\Model
   protected $specificSkuPropertiesDataType = '';
   protected $statusType = FutureReservationStatus::class;
   protected $statusDataType = '';
+  protected $storagePoolPropertiesType = FutureReservationStoragePoolProperties::class;
+  protected $storagePoolPropertiesDataType = '';
   protected $timeWindowType = FutureReservationTimeWindow::class;
   protected $timeWindowDataType = '';
   /**
@@ -287,6 +321,23 @@ class FutureReservation extends \Google\Model
     return $this->autoDeleteAutoCreatedReservations;
   }
   /**
+   * Full or partial URL of an existing future reservation to indicate intent
+   * for reserving capacity in the same cluster as the colocation resource.
+   *
+   * @param string $colocationResource
+   */
+  public function setColocationResource($colocationResource)
+  {
+    $this->colocationResource = $colocationResource;
+  }
+  /**
+   * @return string
+   */
+  public function getColocationResource()
+  {
+    return $this->colocationResource;
+  }
+  /**
    * If not present, then FR will not deliver a new commitment or update an
    * existing commitment.
    *
@@ -302,6 +353,20 @@ class FutureReservation extends \Google\Model
   public function getCommitmentInfo()
   {
     return $this->commitmentInfo;
+  }
+  /**
+   * @param self::CONFIDENTIAL_COMPUTE_TYPE_* $confidentialComputeType
+   */
+  public function setConfidentialComputeType($confidentialComputeType)
+  {
+    $this->confidentialComputeType = $confidentialComputeType;
+  }
+  /**
+   * @return self::CONFIDENTIAL_COMPUTE_TYPE_*
+   */
+  public function getConfidentialComputeType()
+  {
+    return $this->confidentialComputeType;
   }
   /**
    * Output only. [Output Only] The creation timestamp for this future
@@ -447,6 +512,23 @@ class FutureReservation extends \Google\Model
     return $this->namePrefix;
   }
   /**
+   * Input only. Additional params passed with the request, but not persisted as
+   * part of resource payload.
+   *
+   * @param FutureReservationParams $params
+   */
+  public function setParams(FutureReservationParams $params)
+  {
+    $this->params = $params;
+  }
+  /**
+   * @return FutureReservationParams
+   */
+  public function getParams()
+  {
+    return $this->params;
+  }
+  /**
    * Planning state before being submitted for evaluation
    *
    * Accepted values: DRAFT, PLANNING_STATUS_UNSPECIFIED, SUBMITTED
@@ -502,6 +584,43 @@ class FutureReservation extends \Google\Model
   public function getReservationName()
   {
     return $this->reservationName;
+  }
+  /**
+   * Output only. Contains standard resource metadata for an FutureReservation
+   * resource. It is populated for each instance of the FutureReservation
+   * resource, and includes the api_version the instance was retrieved through,
+   * and its canonical resource_type name.
+   *
+   * @param ResourceMetadata $resourceMetadata
+   */
+  public function setResourceMetadata(ResourceMetadata $resourceMetadata)
+  {
+    $this->resourceMetadata = $resourceMetadata;
+  }
+  /**
+   * @return ResourceMetadata
+   */
+  public function getResourceMetadata()
+  {
+    return $this->resourceMetadata;
+  }
+  /**
+   * Name of the resource intended to be delivered. Name should conform to
+   * RFC1035. This will be the name of storage pool or Exapool for persistent
+   * disk FRs.
+   *
+   * @param string $resourceName
+   */
+  public function setResourceName($resourceName)
+  {
+    $this->resourceName = $resourceName;
+  }
+  /**
+   * @return string
+   */
+  public function getResourceName()
+  {
+    return $this->resourceName;
   }
   /**
    * Maintenance information for this reservation
@@ -621,6 +740,22 @@ class FutureReservation extends \Google\Model
   public function getStatus()
   {
     return $this->status;
+  }
+  /**
+   * Storage pool details for the future reservation.
+   *
+   * @param FutureReservationStoragePoolProperties $storagePoolProperties
+   */
+  public function setStoragePoolProperties(FutureReservationStoragePoolProperties $storagePoolProperties)
+  {
+    $this->storagePoolProperties = $storagePoolProperties;
+  }
+  /**
+   * @return FutureReservationStoragePoolProperties
+   */
+  public function getStoragePoolProperties()
+  {
+    return $this->storagePoolProperties;
   }
   /**
    * Time window for this Future Reservation.

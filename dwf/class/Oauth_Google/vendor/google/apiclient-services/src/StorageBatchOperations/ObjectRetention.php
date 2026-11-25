@@ -20,36 +20,46 @@ namespace Google\Service\StorageBatchOperations;
 class ObjectRetention extends \Google\Model
 {
   /**
-   * If set and retain_until_time is empty, clears the retention.
+   * The retention mode isn't specified.
    */
   public const RETENTION_MODE_RETENTION_MODE_UNSPECIFIED = 'RETENTION_MODE_UNSPECIFIED';
   /**
-   * Sets the retention mode to locked.
+   * When the retention mode is `LOCKED`, the `retainUntilTime` can't be removed
+   * or reduced.
    */
   public const RETENTION_MODE_LOCKED = 'LOCKED';
   /**
-   * Sets the retention mode to unlocked.
+   * When the retention mode is `UNLOCKED`, the `retainUntilTime` can be removed
+   * or modified.
    */
   public const RETENTION_MODE_UNLOCKED = 'UNLOCKED';
   /**
-   * Required. The time when the object will be retained until. UNSET will clear
-   * the retention. Must be specified in RFC 3339 format e.g. YYYY-MM-
-   * DD'T'HH:MM:SS.SS'Z' or YYYY-MM-DD'T'HH:MM:SS'Z'.
+   * Required. The object's retention expiration time, during which, the object
+   * is protected from being deleted or overwritten. The time must be specified
+   * in RFC 3339 format, for example `YYYY-MM-DD'T'HH:MM:SS'Z'` or `YYYY-MM-
+   * DD'T'HH:MM:SS.SS'Z'`. To clear an object's retention, both `retentionMode`
+   * and `retainUntilTime` must be left unset (omitted). Setting `retentionMode`
+   * to `RETENTION_MODE_UNSPECIFIED` is treated as a no-op. Unlike an unset
+   * field, it doesn't modify or clear the retention settings.
    *
    * @var string
    */
   public $retainUntilTime;
   /**
-   * Required. The retention mode of the object.
+   * Required. The retention mode.
    *
    * @var string
    */
   public $retentionMode;
 
   /**
-   * Required. The time when the object will be retained until. UNSET will clear
-   * the retention. Must be specified in RFC 3339 format e.g. YYYY-MM-
-   * DD'T'HH:MM:SS.SS'Z' or YYYY-MM-DD'T'HH:MM:SS'Z'.
+   * Required. The object's retention expiration time, during which, the object
+   * is protected from being deleted or overwritten. The time must be specified
+   * in RFC 3339 format, for example `YYYY-MM-DD'T'HH:MM:SS'Z'` or `YYYY-MM-
+   * DD'T'HH:MM:SS.SS'Z'`. To clear an object's retention, both `retentionMode`
+   * and `retainUntilTime` must be left unset (omitted). Setting `retentionMode`
+   * to `RETENTION_MODE_UNSPECIFIED` is treated as a no-op. Unlike an unset
+   * field, it doesn't modify or clear the retention settings.
    *
    * @param string $retainUntilTime
    */
@@ -65,7 +75,7 @@ class ObjectRetention extends \Google\Model
     return $this->retainUntilTime;
   }
   /**
-   * Required. The retention mode of the object.
+   * Required. The retention mode.
    *
    * Accepted values: RETENTION_MODE_UNSPECIFIED, LOCKED, UNLOCKED
    *

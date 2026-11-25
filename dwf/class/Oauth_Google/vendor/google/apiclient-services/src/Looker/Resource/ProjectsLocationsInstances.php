@@ -24,6 +24,7 @@ use Google\Service\Looker\ListInstancesResponse;
 use Google\Service\Looker\Operation;
 use Google\Service\Looker\RestartInstanceRequest;
 use Google\Service\Looker\RestoreInstanceRequest;
+use Google\Service\Looker\UndeleteInstanceRequest;
 
 /**
  * The "instances" collection of methods.
@@ -131,6 +132,8 @@ class ProjectsLocationsInstances extends \Google\Service\Resource
    * unspecified at most 256 will be returned. The maximum possible value is 2048.
    * @opt_param string pageToken A page token received from a previous
    * ListInstancesRequest.
+   * @opt_param bool showDeleted Optional. Whether to include deleted instances in
+   * the response.
    * @return ListInstancesResponse
    * @throws \Google\Service\Exception
    */
@@ -192,6 +195,22 @@ class ProjectsLocationsInstances extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('restore', [$params], Operation::class);
+  }
+  /**
+   * Undeletes Looker instance. (instances.undelete)
+   *
+   * @param string $name Required. Format:
+   * projects/{project}/locations/{location}/instances/{instance}
+   * @param UndeleteInstanceRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function undelete($name, UndeleteInstanceRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('undelete', [$params], Operation::class);
   }
 }
 

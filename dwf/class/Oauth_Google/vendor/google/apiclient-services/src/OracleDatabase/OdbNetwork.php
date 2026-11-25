@@ -53,9 +53,9 @@ class OdbNetwork extends \Google\Model
    */
   public $entitlementId;
   /**
-   * Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-
-   * east4-b-r2. If not specified, the system will pick a zone based on
-   * availability.
+   * Optional. Immutable. The GCP Oracle zone where OdbNetwork is hosted.
+   * Example: us-east4-b-r2. If not specified, the system will pick a zone based
+   * on availability.
    *
    * @var string
    */
@@ -74,12 +74,21 @@ class OdbNetwork extends \Google\Model
    */
   public $name;
   /**
-   * Required. The name of the VPC network in the following format:
+   * Required. Immutable. The name of the VPC network in the following format:
    * projects/{project}/global/networks/{network}
    *
    * @var string
    */
   public $network;
+  /**
+   * Output only. Indicates whether the OdbNetwork is currently reconciling
+   * changes.
+   *
+   * @var bool
+   */
+  public $reconciling;
+  protected $serviceConnectivityConfigType = ServiceConnectivityConfig::class;
+  protected $serviceConnectivityConfigDataType = '';
   /**
    * Output only. State of the ODB Network.
    *
@@ -121,9 +130,9 @@ class OdbNetwork extends \Google\Model
     return $this->entitlementId;
   }
   /**
-   * Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-
-   * east4-b-r2. If not specified, the system will pick a zone based on
-   * availability.
+   * Optional. Immutable. The GCP Oracle zone where OdbNetwork is hosted.
+   * Example: us-east4-b-r2. If not specified, the system will pick a zone based
+   * on availability.
    *
    * @param string $gcpOracleZone
    */
@@ -172,7 +181,7 @@ class OdbNetwork extends \Google\Model
     return $this->name;
   }
   /**
-   * Required. The name of the VPC network in the following format:
+   * Required. Immutable. The name of the VPC network in the following format:
    * projects/{project}/global/networks/{network}
    *
    * @param string $network
@@ -187,6 +196,44 @@ class OdbNetwork extends \Google\Model
   public function getNetwork()
   {
     return $this->network;
+  }
+  /**
+   * Output only. Indicates whether the OdbNetwork is currently reconciling
+   * changes.
+   *
+   * @param bool $reconciling
+   */
+  public function setReconciling($reconciling)
+  {
+    $this->reconciling = $reconciling;
+  }
+  /**
+   * @return bool
+   */
+  public function getReconciling()
+  {
+    return $this->reconciling;
+  }
+  /**
+   * Optional. Configuration to enable the service (Oracledatabase@Google Cloud)
+   * to establish connectivity to the database. This should be specified if you
+   * intend to associate this OdbNetwork with a DatabaseConnection resource to
+   * `ExecuteSQL` on the database, or to create a ServiceIntegration with the
+   * Database. Please don't specify it otherwise to avoid complicating the
+   * network setup.
+   *
+   * @param ServiceConnectivityConfig $serviceConnectivityConfig
+   */
+  public function setServiceConnectivityConfig(ServiceConnectivityConfig $serviceConnectivityConfig)
+  {
+    $this->serviceConnectivityConfig = $serviceConnectivityConfig;
+  }
+  /**
+   * @return ServiceConnectivityConfig
+   */
+  public function getServiceConnectivityConfig()
+  {
+    return $this->serviceConnectivityConfig;
   }
   /**
    * Output only. State of the ODB Network.

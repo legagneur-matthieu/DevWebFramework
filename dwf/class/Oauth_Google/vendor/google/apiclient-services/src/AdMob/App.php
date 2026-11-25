@@ -45,7 +45,7 @@ class App extends \Google\Model
   public $appApprovalState;
   /**
    * The externally visible ID of the app which can be used to integrate with
-   * the AdMob SDK. This is a read only property. Example: ca-app-
+   * AdMob. This is a read only property. Example: ca-app-
    * pub-9876543210987654~0123456789
    *
    * @var string
@@ -91,7 +91,7 @@ class App extends \Google\Model
   }
   /**
    * The externally visible ID of the app which can be used to integrate with
-   * the AdMob SDK. This is a read only property. Example: ca-app-
+   * AdMob. This is a read only property. Example: ca-app-
    * pub-9876543210987654~0123456789
    *
    * @param string $appId

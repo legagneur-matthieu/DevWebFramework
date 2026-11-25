@@ -19,7 +19,28 @@ namespace Google\Service\Networkconnectivity;
 
 class LinkedRouterApplianceInstances extends \Google\Collection
 {
-  protected $collection_key = 'instances';
+  protected $collection_key = 'proposedIncludeImportRanges';
+  /**
+   * Optional. Dynamic routes overlapped/encompassed by exclude export ranges
+   * are excluded during export to hub.
+   *
+   * @var string[]
+   */
+  public $excludeExportRanges;
+  /**
+   * Optional. Hub routes overlapped/encompassed by exclude import ranges are
+   * excluded during import from hub.
+   *
+   * @var string[]
+   */
+  public $excludeImportRanges;
+  /**
+   * Optional. Dynamic routes fully encompassed by include export ranges are
+   * included during export to hub.
+   *
+   * @var string[]
+   */
+  public $includeExportRanges;
   /**
    * Optional. Hub routes fully encompassed by include import ranges are
    * included during import from hub.
@@ -29,6 +50,34 @@ class LinkedRouterApplianceInstances extends \Google\Collection
   public $includeImportRanges;
   protected $instancesType = RouterApplianceInstance::class;
   protected $instancesDataType = 'array';
+  /**
+   * Output only. The proposed exclude export IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @var string[]
+   */
+  public $proposedExcludeExportRanges;
+  /**
+   * Output only. The proposed exclude import IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @var string[]
+   */
+  public $proposedExcludeImportRanges;
+  /**
+   * Output only. The proposed include export IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @var string[]
+   */
+  public $proposedIncludeExportRanges;
+  /**
+   * Output only. The proposed include import IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @var string[]
+   */
+  public $proposedIncludeImportRanges;
   /**
    * A value that controls whether site-to-site data transfer is enabled for
    * these resources. Data transfer is available only in [supported
@@ -46,6 +95,57 @@ class LinkedRouterApplianceInstances extends \Google\Collection
    */
   public $vpcNetwork;
 
+  /**
+   * Optional. Dynamic routes overlapped/encompassed by exclude export ranges
+   * are excluded during export to hub.
+   *
+   * @param string[] $excludeExportRanges
+   */
+  public function setExcludeExportRanges($excludeExportRanges)
+  {
+    $this->excludeExportRanges = $excludeExportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExcludeExportRanges()
+  {
+    return $this->excludeExportRanges;
+  }
+  /**
+   * Optional. Hub routes overlapped/encompassed by exclude import ranges are
+   * excluded during import from hub.
+   *
+   * @param string[] $excludeImportRanges
+   */
+  public function setExcludeImportRanges($excludeImportRanges)
+  {
+    $this->excludeImportRanges = $excludeImportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExcludeImportRanges()
+  {
+    return $this->excludeImportRanges;
+  }
+  /**
+   * Optional. Dynamic routes fully encompassed by include export ranges are
+   * included during export to hub.
+   *
+   * @param string[] $includeExportRanges
+   */
+  public function setIncludeExportRanges($includeExportRanges)
+  {
+    $this->includeExportRanges = $includeExportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getIncludeExportRanges()
+  {
+    return $this->includeExportRanges;
+  }
   /**
    * Optional. Hub routes fully encompassed by include import ranges are
    * included during import from hub.
@@ -78,6 +178,74 @@ class LinkedRouterApplianceInstances extends \Google\Collection
   public function getInstances()
   {
     return $this->instances;
+  }
+  /**
+   * Output only. The proposed exclude export IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @param string[] $proposedExcludeExportRanges
+   */
+  public function setProposedExcludeExportRanges($proposedExcludeExportRanges)
+  {
+    $this->proposedExcludeExportRanges = $proposedExcludeExportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getProposedExcludeExportRanges()
+  {
+    return $this->proposedExcludeExportRanges;
+  }
+  /**
+   * Output only. The proposed exclude import IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @param string[] $proposedExcludeImportRanges
+   */
+  public function setProposedExcludeImportRanges($proposedExcludeImportRanges)
+  {
+    $this->proposedExcludeImportRanges = $proposedExcludeImportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getProposedExcludeImportRanges()
+  {
+    return $this->proposedExcludeImportRanges;
+  }
+  /**
+   * Output only. The proposed include export IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @param string[] $proposedIncludeExportRanges
+   */
+  public function setProposedIncludeExportRanges($proposedIncludeExportRanges)
+  {
+    $this->proposedIncludeExportRanges = $proposedIncludeExportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getProposedIncludeExportRanges()
+  {
+    return $this->proposedIncludeExportRanges;
+  }
+  /**
+   * Output only. The proposed include import IP ranges waiting for hub
+   * administrator's approval.
+   *
+   * @param string[] $proposedIncludeImportRanges
+   */
+  public function setProposedIncludeImportRanges($proposedIncludeImportRanges)
+  {
+    $this->proposedIncludeImportRanges = $proposedIncludeImportRanges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getProposedIncludeImportRanges()
+  {
+    return $this->proposedIncludeImportRanges;
   }
   /**
    * A value that controls whether site-to-site data transfer is enabled for

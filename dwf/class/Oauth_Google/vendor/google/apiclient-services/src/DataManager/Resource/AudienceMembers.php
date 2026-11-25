@@ -19,6 +19,8 @@ namespace Google\Service\DataManager\Resource;
 
 use Google\Service\DataManager\IngestAudienceMembersRequest;
 use Google\Service\DataManager\IngestAudienceMembersResponse;
+use Google\Service\DataManager\RemoveAllAudienceMembersRequest;
+use Google\Service\DataManager\RemoveAllAudienceMembersResponse;
 use Google\Service\DataManager\RemoveAudienceMembersRequest;
 use Google\Service\DataManager\RemoveAudienceMembersResponse;
 
@@ -33,7 +35,6 @@ use Google\Service\DataManager\RemoveAudienceMembersResponse;
 class AudienceMembers extends \Google\Service\Resource
 {
   /**
-   * Uploads a list of AudienceMember resources to the provided Destination.
    * (audienceMembers.ingest)
    *
    * @param IngestAudienceMembersRequest $postBody
@@ -48,7 +49,6 @@ class AudienceMembers extends \Google\Service\Resource
     return $this->call('ingest', [$params], IngestAudienceMembersResponse::class);
   }
   /**
-   * Removes a list of AudienceMember resources from the provided Destination.
    * (audienceMembers.remove)
    *
    * @param RemoveAudienceMembersRequest $postBody
@@ -61,6 +61,20 @@ class AudienceMembers extends \Google\Service\Resource
     $params = ['postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('remove', [$params], RemoveAudienceMembersResponse::class);
+  }
+  /**
+   * (audienceMembers.removeAll)
+   *
+   * @param RemoveAllAudienceMembersRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return RemoveAllAudienceMembersResponse
+   * @throws \Google\Service\Exception
+   */
+  public function removeAll(RemoveAllAudienceMembersRequest $postBody, $optParams = [])
+  {
+    $params = ['postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('removeAll', [$params], RemoveAllAudienceMembersResponse::class);
   }
 }
 

@@ -100,6 +100,30 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
   /**
    * Value used when unset.
    */
+  public const PARTIAL_MATCHABLE_OPTION_PARTIAL_MATCHABLE_OPTION_UNSPECIFIED = 'PARTIAL_MATCHABLE_OPTION_UNSPECIFIED';
+  /**
+   * Partial Matchable option enabled.
+   */
+  public const PARTIAL_MATCHABLE_OPTION_PARTIAL_MATCHABLE_OPTION_ENABLED = 'PARTIAL_MATCHABLE_OPTION_ENABLED';
+  /**
+   * Partial Matchable option disabled.
+   */
+  public const PARTIAL_MATCHABLE_OPTION_PARTIAL_MATCHABLE_OPTION_DISABLED = 'PARTIAL_MATCHABLE_OPTION_DISABLED';
+  /**
+   * Value used when unset.
+   */
+  public const PREFIX_MATCHABLE_OPTION_PREFIX_MATCHABLE_OPTION_UNSPECIFIED = 'PREFIX_MATCHABLE_OPTION_UNSPECIFIED';
+  /**
+   * Prefix Matchable option enabled.
+   */
+  public const PREFIX_MATCHABLE_OPTION_PREFIX_MATCHABLE_OPTION_ENABLED = 'PREFIX_MATCHABLE_OPTION_ENABLED';
+  /**
+   * Prefix Matchable option disabled.
+   */
+  public const PREFIX_MATCHABLE_OPTION_PREFIX_MATCHABLE_OPTION_DISABLED = 'PREFIX_MATCHABLE_OPTION_DISABLED';
+  /**
+   * Value used when unset.
+   */
   public const RECS_FILTERABLE_OPTION_FILTERABLE_OPTION_UNSPECIFIED = 'FILTERABLE_OPTION_UNSPECIFIED';
   /**
    * Filterable option enabled for a schema field.
@@ -121,6 +145,32 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
    * Retrievable option disabled for a schema field.
    */
   public const RETRIEVABLE_OPTION_RETRIEVABLE_DISABLED = 'RETRIEVABLE_DISABLED';
+  /**
+   * Value used when unset. Behaves as `DEFAULT_IMPORTANCE` if the field is
+   * searchable.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED = 'SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED';
+  /**
+   * Provides a tiny signal for search.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_VERY_LOW_IMPORTANCE = 'VERY_LOW_IMPORTANCE';
+  /**
+   * Indicates the field is used for search, but is less important than the
+   * default.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_LOW_IMPORTANCE = 'LOW_IMPORTANCE';
+  /**
+   * Default importance. Equivalent to previous behavior.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_DEFAULT_IMPORTANCE = 'DEFAULT_IMPORTANCE';
+  /**
+   * More important than default fields.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_HIGH_IMPORTANCE = 'HIGH_IMPORTANCE';
+  /**
+   * Most important field for search.
+   */
+  public const SEARCHABLE_FIELD_IMPORTANCE_VERY_HIGH_IMPORTANCE = 'VERY_HIGH_IMPORTANCE';
   /**
    * Value used when unset.
    */
@@ -218,6 +268,30 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
    */
   public $metatagName;
   /**
+   * Optional. If partial_matchable_option is PARTIAL_MATCHABLE_OPTION_ENABLED,
+   * field values are partial matchable. If partial_matchable_option is unset,
+   * the server behavior defaults to PARTIAL_MATCHABLE_OPTION_DISABLED for
+   * fields that support setting partial matchable options. For those fields
+   * that do not support setting partial matchable options, the server will skip
+   * partial matchable option setting, and setting partial_matchable_option for
+   * those fields will throw `INVALID_ARGUMENT` error.
+   *
+   * @var string
+   */
+  public $partialMatchableOption;
+  /**
+   * Optional. If prefix_matchable_option is PREFIX_MATCHABLE_OPTION_ENABLED,
+   * field values are prefix matchable. If prefix_matchable_option is unset, the
+   * server behavior defaults to PREFIX_MATCHABLE_OPTION_DISABLED for fields
+   * that support setting prefix matchable options. For those fields that do not
+   * support setting prefix matchable options, the server will skip prefix
+   * matchable option setting, and setting prefix_matchable_option for those
+   * fields will throw `INVALID_ARGUMENT` error.
+   *
+   * @var string
+   */
+  public $prefixMatchableOption;
+  /**
    * If recs_filterable_option is FILTERABLE_ENABLED, field values are
    * filterable by filter expression in RecommendationService.Recommend. If
    * FILTERABLE_ENABLED but the field type is numerical, field values are not
@@ -255,6 +329,18 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
    * @var string[]
    */
   public $schemaOrgPaths;
+  /**
+   * Optional. Specifies the importance of the field when `searchable_option` is
+   * `SEARCHABLE_ENABLED`. If `searchable_option` is `SEARCHABLE_DISABLED`, this
+   * field is ignored. If `searchable_option` is `SEARCHABLE_ENABLED` and this
+   * is `SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED`, it behaves as
+   * `DEFAULT_IMPORTANCE`. For more information, see [Weight searchable
+   * fields](https://cloud.google.com/generative-ai-app-builder/docs/configure-
+   * field-settings#weight-search).
+   *
+   * @var string
+   */
+  public $searchableFieldImportance;
   /**
    * If searchable_option is SEARCHABLE_ENABLED, field values are searchable by
    * text queries in SearchService.Search. If SEARCHABLE_ENABLED but field type
@@ -447,6 +533,56 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
     return $this->metatagName;
   }
   /**
+   * Optional. If partial_matchable_option is PARTIAL_MATCHABLE_OPTION_ENABLED,
+   * field values are partial matchable. If partial_matchable_option is unset,
+   * the server behavior defaults to PARTIAL_MATCHABLE_OPTION_DISABLED for
+   * fields that support setting partial matchable options. For those fields
+   * that do not support setting partial matchable options, the server will skip
+   * partial matchable option setting, and setting partial_matchable_option for
+   * those fields will throw `INVALID_ARGUMENT` error.
+   *
+   * Accepted values: PARTIAL_MATCHABLE_OPTION_UNSPECIFIED,
+   * PARTIAL_MATCHABLE_OPTION_ENABLED, PARTIAL_MATCHABLE_OPTION_DISABLED
+   *
+   * @param self::PARTIAL_MATCHABLE_OPTION_* $partialMatchableOption
+   */
+  public function setPartialMatchableOption($partialMatchableOption)
+  {
+    $this->partialMatchableOption = $partialMatchableOption;
+  }
+  /**
+   * @return self::PARTIAL_MATCHABLE_OPTION_*
+   */
+  public function getPartialMatchableOption()
+  {
+    return $this->partialMatchableOption;
+  }
+  /**
+   * Optional. If prefix_matchable_option is PREFIX_MATCHABLE_OPTION_ENABLED,
+   * field values are prefix matchable. If prefix_matchable_option is unset, the
+   * server behavior defaults to PREFIX_MATCHABLE_OPTION_DISABLED for fields
+   * that support setting prefix matchable options. For those fields that do not
+   * support setting prefix matchable options, the server will skip prefix
+   * matchable option setting, and setting prefix_matchable_option for those
+   * fields will throw `INVALID_ARGUMENT` error.
+   *
+   * Accepted values: PREFIX_MATCHABLE_OPTION_UNSPECIFIED,
+   * PREFIX_MATCHABLE_OPTION_ENABLED, PREFIX_MATCHABLE_OPTION_DISABLED
+   *
+   * @param self::PREFIX_MATCHABLE_OPTION_* $prefixMatchableOption
+   */
+  public function setPrefixMatchableOption($prefixMatchableOption)
+  {
+    $this->prefixMatchableOption = $prefixMatchableOption;
+  }
+  /**
+   * @return self::PREFIX_MATCHABLE_OPTION_*
+   */
+  public function getPrefixMatchableOption()
+  {
+    return $this->prefixMatchableOption;
+  }
+  /**
    * If recs_filterable_option is FILTERABLE_ENABLED, field values are
    * filterable by filter expression in RecommendationService.Recommend. If
    * FILTERABLE_ENABLED but the field type is numerical, field values are not
@@ -519,6 +655,32 @@ class GoogleCloudDiscoveryengineV1alphaFieldConfig extends \Google\Collection
   public function getSchemaOrgPaths()
   {
     return $this->schemaOrgPaths;
+  }
+  /**
+   * Optional. Specifies the importance of the field when `searchable_option` is
+   * `SEARCHABLE_ENABLED`. If `searchable_option` is `SEARCHABLE_DISABLED`, this
+   * field is ignored. If `searchable_option` is `SEARCHABLE_ENABLED` and this
+   * is `SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED`, it behaves as
+   * `DEFAULT_IMPORTANCE`. For more information, see [Weight searchable
+   * fields](https://cloud.google.com/generative-ai-app-builder/docs/configure-
+   * field-settings#weight-search).
+   *
+   * Accepted values: SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED,
+   * VERY_LOW_IMPORTANCE, LOW_IMPORTANCE, DEFAULT_IMPORTANCE, HIGH_IMPORTANCE,
+   * VERY_HIGH_IMPORTANCE
+   *
+   * @param self::SEARCHABLE_FIELD_IMPORTANCE_* $searchableFieldImportance
+   */
+  public function setSearchableFieldImportance($searchableFieldImportance)
+  {
+    $this->searchableFieldImportance = $searchableFieldImportance;
+  }
+  /**
+   * @return self::SEARCHABLE_FIELD_IMPORTANCE_*
+   */
+  public function getSearchableFieldImportance()
+  {
+    return $this->searchableFieldImportance;
   }
   /**
    * If searchable_option is SEARCHABLE_ENABLED, field values are searchable by

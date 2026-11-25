@@ -30,6 +30,16 @@ class ConversionCountingConfig extends \Google\Collection
    * @var string
    */
   public $postViewCountPercentageMillis;
+  /**
+   * Optional. The attribution model to use for conversion measurement. This
+   * attribution model will determine how conversions are counted. The Primary
+   * model can be set by you for a floodlight config or group. More details
+   * [here](https://support.google.com/displayvideo/answer/7409983). Only
+   * applicable to Demand Gen line items.
+   *
+   * @var string
+   */
+  public $primaryAttributionModelId;
 
   /**
    * The Floodlight activity configs used to track conversions. The number of
@@ -70,6 +80,26 @@ class ConversionCountingConfig extends \Google\Collection
   public function getPostViewCountPercentageMillis()
   {
     return $this->postViewCountPercentageMillis;
+  }
+  /**
+   * Optional. The attribution model to use for conversion measurement. This
+   * attribution model will determine how conversions are counted. The Primary
+   * model can be set by you for a floodlight config or group. More details
+   * [here](https://support.google.com/displayvideo/answer/7409983). Only
+   * applicable to Demand Gen line items.
+   *
+   * @param string $primaryAttributionModelId
+   */
+  public function setPrimaryAttributionModelId($primaryAttributionModelId)
+  {
+    $this->primaryAttributionModelId = $primaryAttributionModelId;
+  }
+  /**
+   * @return string
+   */
+  public function getPrimaryAttributionModelId()
+  {
+    return $this->primaryAttributionModelId;
   }
 }
 

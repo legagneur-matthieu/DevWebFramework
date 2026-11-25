@@ -18,6 +18,7 @@
 namespace Google\Service\DisplayVideo\Resource;
 
 use Google\Service\DisplayVideo\AdGroupAd;
+use Google\Service\DisplayVideo\DisplayvideoEmpty;
 use Google\Service\DisplayVideo\ListAdGroupAdsResponse;
 
 /**
@@ -31,11 +32,43 @@ use Google\Service\DisplayVideo\ListAdGroupAdsResponse;
 class AdvertisersAdGroupAds extends \Google\Service\Resource
 {
   /**
+   * Creates an ad group ad. (adGroupAds.create)
+   *
+   * @param string $advertiserId Output only. The unique ID of the advertiser the
+   * ad belongs to.
+   * @param AdGroupAd $postBody
+   * @param array $optParams Optional parameters.
+   * @return AdGroupAd
+   * @throws \Google\Service\Exception
+   */
+  public function create($advertiserId, AdGroupAd $postBody, $optParams = [])
+  {
+    $params = ['advertiserId' => $advertiserId, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('create', [$params], AdGroupAd::class);
+  }
+  /**
+   * Deletes an ad group ad. (adGroupAds.delete)
+   *
+   * @param string $advertiserId Required. The ID of the advertiser the ad belongs
+   * to.
+   * @param string $adGroupAdId Required. The ID of the ad to delete.
+   * @param array $optParams Optional parameters.
+   * @return DisplayvideoEmpty
+   * @throws \Google\Service\Exception
+   */
+  public function delete($advertiserId, $adGroupAdId, $optParams = [])
+  {
+    $params = ['advertiserId' => $advertiserId, 'adGroupAdId' => $adGroupAdId];
+    $params = array_merge($params, $optParams);
+    return $this->call('delete', [$params], DisplayvideoEmpty::class);
+  }
+  /**
    * Gets an ad group ad. (adGroupAds.get)
    *
    * @param string $advertiserId Required. The ID of the advertiser this ad group
    * ad belongs to.
-   * @param string $adGroupAdId Required. The ID of the ad group ad to fetch.
+   * @param string $adGroupAdId Required. The ID of the ad to fetch.
    * @param array $optParams Optional parameters.
    * @return AdGroupAd
    * @throws \Google\Service\Exception
@@ -49,22 +82,23 @@ class AdvertisersAdGroupAds extends \Google\Service\Resource
   /**
    * Lists ad group ads. (adGroupAds.listAdvertisersAdGroupAds)
    *
-   * @param string $advertiserId Required. The ID of the advertiser the ad groups
-   * belongs to.
+   * @param string $advertiserId Required. The ID of the advertiser the ads belong
+   * to.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string filter Optional. Allows filtering by custom ad group ad
-   * fields. Supported syntax: * Filter expressions are made up of one or more
+   * @opt_param string filter Optional. Allows filtering by ad group ad fields.
+   * Supported syntax: * Filter expressions are made up of one or more
    * restrictions. * Restrictions can be combined by `AND` and `OR`. A sequence of
    * restrictions implicitly uses `AND`. * A restriction has the form of `{field}
    * {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
    * Supported fields: * `adGroupId` * `displayName` * `entityStatus` *
-   * `adGroupAdId` Examples: * All ad group ads under an ad group:
-   * `adGroupId="1234"` * All ad group ads under an ad group with an entityStatus
-   * of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`:
+   * `adGroupAdId` * `parentCreativeId` Examples: * All ad group ads under an ad
+   * group: `adGroupId="1234"` * All ad group ads under an ad group with an
+   * entityStatus of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`:
    * `(entityStatus="ENTITY_STATUS_ACTIVE" OR entityStatus="ENTITY_STATUS_PAUSED")
-   * AND adGroupId="12345"` The length of this field should be no more than 500
-   * characters. Reference our [filter `LIST` requests](/display-
+   * AND adGroupId="12345"` * All ad group ads under a parent creative:
+   * `parentCreativeId="12345"` The length of this field should be no more than
+   * 500 characters. Reference our [filter `LIST` requests](/display-
    * video/api/guides/how-tos/filters) guide for more information.
    * @opt_param string orderBy Optional. Field by which to sort the list.
    * Acceptable values are: * `displayName` (default) * `entityStatus` The default
@@ -85,6 +119,27 @@ class AdvertisersAdGroupAds extends \Google\Service\Resource
     $params = ['advertiserId' => $advertiserId];
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], ListAdGroupAdsResponse::class);
+  }
+  /**
+   * Updates an ad group ad. (adGroupAds.patch)
+   *
+   * @param string $advertiserId Output only. The unique ID of the advertiser the
+   * ad belongs to.
+   * @param string $adGroupAdId Output only. The unique ID of the ad. Assigned by
+   * the system.
+   * @param AdGroupAd $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Required. The mask to control which fields to
+   * update.
+   * @return AdGroupAd
+   * @throws \Google\Service\Exception
+   */
+  public function patch($advertiserId, $adGroupAdId, AdGroupAd $postBody, $optParams = [])
+  {
+    $params = ['advertiserId' => $advertiserId, 'adGroupAdId' => $adGroupAdId, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', [$params], AdGroupAd::class);
   }
 }
 

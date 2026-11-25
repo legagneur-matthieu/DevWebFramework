@@ -36,7 +36,8 @@ class EnrollmentToken extends \Google\Model
    * minute to [`Durations.MAX_VALUE`](https://developers.google.com/protocol-bu
    * ffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE
    * ), approximately 10,000 years. If not specified, the default duration is 1
-   * hour.
+   * hour. In the JSON REST API, this is represented as a string (e.g.,
+   * `3600s`).
    *
    * @var string
    */
@@ -62,7 +63,8 @@ class EnrollmentToken extends \Google\Model
    * minute to [`Durations.MAX_VALUE`](https://developers.google.com/protocol-bu
    * ffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE
    * ), approximately 10,000 years. If not specified, the default duration is 1
-   * hour.
+   * hour. In the JSON REST API, this is represented as a string (e.g.,
+   * `3600s`).
    *
    * @param string $duration
    */

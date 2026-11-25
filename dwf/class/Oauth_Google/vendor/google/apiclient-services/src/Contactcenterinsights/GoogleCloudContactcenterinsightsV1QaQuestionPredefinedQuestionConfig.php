@@ -35,6 +35,17 @@ class GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig exten
    */
   public const TYPE_CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE = 'CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE';
   /**
+   * Classifies whether the customer demonstrates AI aversion by instantly
+   * requesting escalation to a human agent without attempting to work with the
+   * AI agent.
+   */
+  public const TYPE_CONVERSATION_OUTCOME_AI_AVERSION = 'CONVERSATION_OUTCOME_AI_AVERSION';
+  /**
+   * Classifies the primary reason for escalating the conversation to a human
+   * agent.
+   */
+  public const TYPE_CONVERSATION_OUTCOME_ESCALATION_REASON = 'CONVERSATION_OUTCOME_ESCALATION_REASON';
+  /**
    * The type of the predefined question.
    *
    * @var string
@@ -45,7 +56,8 @@ class GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig exten
    * The type of the predefined question.
    *
    * Accepted values: PREDEFINED_QUESTION_TYPE_UNSPECIFIED,
-   * CONVERSATION_OUTCOME, CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE
+   * CONVERSATION_OUTCOME, CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE,
+   * CONVERSATION_OUTCOME_AI_AVERSION, CONVERSATION_OUTCOME_ESCALATION_REASON
    *
    * @param self::TYPE_* $type
    */

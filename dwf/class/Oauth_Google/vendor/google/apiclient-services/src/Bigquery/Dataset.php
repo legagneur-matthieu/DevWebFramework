@@ -51,6 +51,14 @@ class Dataset extends \Google\Collection
   protected $accessType = DatasetAccess::class;
   protected $accessDataType = 'array';
   /**
+   * Output only. The origin of the dataset, one of: * (Unset) - Native BigQuery
+   * Dataset * BIGLAKE - Dataset is backed by a namespace stored natively in
+   * Biglake
+   *
+   * @var string
+   */
+  public $catalogSource;
+  /**
    * Output only. The time when this dataset was created, in milliseconds since
    * the epoch.
    *
@@ -133,6 +141,15 @@ class Dataset extends \Google\Collection
   protected $externalDatasetReferenceType = ExternalDatasetReference::class;
   protected $externalDatasetReferenceDataType = '';
   /**
+   * Optional. The failover reservation associated with the dataset in the
+   * regionless format. Example: .. To learn about about failover reservations
+   * see: https://docs.cloud.google.com/bigquery/docs/managed-disaster-
+   * recovery#overview
+   *
+   * @var string
+   */
+  public $failoverReservationId;
+  /**
    * Optional. A descriptive name for the dataset.
    *
    * @var string
@@ -198,6 +215,8 @@ class Dataset extends \Google\Collection
    * @var string
    */
   public $maxTimeTravelHours;
+  protected $replicasType = Replica::class;
+  protected $replicasDataType = 'array';
   /**
    * Optional. The [tags](https://cloud.google.com/bigquery/docs/tags) attached
    * to this dataset. Tag keys are globally unique. Tag key is expected to be in
@@ -243,7 +262,9 @@ class Dataset extends \Google\Collection
    * Output only. Same as `type` in `ListFormatDataset`. The type of the
    * dataset, one of: * DEFAULT - only accessible by owner and authorized
    * accounts, * PUBLIC - accessible by everyone, * LINKED - linked dataset, *
-   * EXTERNAL - dataset with definition in external metadata catalog.
+   * EXTERNAL - dataset with definition in external metadata catalog, *
+   * BIGLAKE_ICEBERG - a Biglake dataset accessible through the Iceberg API, *
+   * BIGLAKE_HIVE - a Biglake dataset accessible through the Hive API.
    *
    * @var string
    */
@@ -274,6 +295,24 @@ class Dataset extends \Google\Collection
   public function getAccess()
   {
     return $this->access;
+  }
+  /**
+   * Output only. The origin of the dataset, one of: * (Unset) - Native BigQuery
+   * Dataset * BIGLAKE - Dataset is backed by a namespace stored natively in
+   * Biglake
+   *
+   * @param string $catalogSource
+   */
+  public function setCatalogSource($catalogSource)
+  {
+    $this->catalogSource = $catalogSource;
+  }
+  /**
+   * @return string
+   */
+  public function getCatalogSource()
+  {
+    return $this->catalogSource;
   }
   /**
    * Output only. The time when this dataset was created, in milliseconds since
@@ -493,6 +532,25 @@ class Dataset extends \Google\Collection
     return $this->externalDatasetReference;
   }
   /**
+   * Optional. The failover reservation associated with the dataset in the
+   * regionless format. Example: .. To learn about about failover reservations
+   * see: https://docs.cloud.google.com/bigquery/docs/managed-disaster-
+   * recovery#overview
+   *
+   * @param string $failoverReservationId
+   */
+  public function setFailoverReservationId($failoverReservationId)
+  {
+    $this->failoverReservationId = $failoverReservationId;
+  }
+  /**
+   * @return string
+   */
+  public function getFailoverReservationId()
+  {
+    return $this->failoverReservationId;
+  }
+  /**
    * Optional. A descriptive name for the dataset.
    *
    * @param string $friendlyName
@@ -671,6 +729,23 @@ class Dataset extends \Google\Collection
     return $this->maxTimeTravelHours;
   }
   /**
+   * Optional. The list of replicas in a cross region replicated or disaster
+   * recovery dataset.
+   *
+   * @param Replica[] $replicas
+   */
+  public function setReplicas($replicas)
+  {
+    $this->replicas = $replicas;
+  }
+  /**
+   * @return Replica[]
+   */
+  public function getReplicas()
+  {
+    return $this->replicas;
+  }
+  /**
    * Optional. The [tags](https://cloud.google.com/bigquery/docs/tags) attached
    * to this dataset. Tag keys are globally unique. Tag key is expected to be in
    * the namespaced format, for example "123456789012/environment" where
@@ -802,7 +877,9 @@ class Dataset extends \Google\Collection
    * Output only. Same as `type` in `ListFormatDataset`. The type of the
    * dataset, one of: * DEFAULT - only accessible by owner and authorized
    * accounts, * PUBLIC - accessible by everyone, * LINKED - linked dataset, *
-   * EXTERNAL - dataset with definition in external metadata catalog.
+   * EXTERNAL - dataset with definition in external metadata catalog, *
+   * BIGLAKE_ICEBERG - a Biglake dataset accessible through the Iceberg API, *
+   * BIGLAKE_HIVE - a Biglake dataset accessible through the Hive API.
    *
    * @param string $type
    */

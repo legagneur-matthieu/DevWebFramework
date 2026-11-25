@@ -20,17 +20,11 @@ namespace Google\Service\Compute;
 class SslPolicyReference extends \Google\Model
 {
   /**
-   * URL of the SSL policy resource. Set this to empty string to clear any
-   * existing SSL policy associated with the target proxy resource.
-   *
    * @var string
    */
   public $sslPolicy;
 
   /**
-   * URL of the SSL policy resource. Set this to empty string to clear any
-   * existing SSL policy associated with the target proxy resource.
-   *
    * @param string $sslPolicy
    */
   public function setSslPolicy($sslPolicy)

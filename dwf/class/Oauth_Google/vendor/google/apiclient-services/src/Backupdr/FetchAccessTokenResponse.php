@@ -32,7 +32,7 @@ class FetchAccessTokenResponse extends \Google\Model
    */
   public $readLocation;
   /**
-   * The downscoped token that was created.
+   * Input only. The downscoped token that was created.
    *
    * @var string
    */
@@ -77,7 +77,7 @@ class FetchAccessTokenResponse extends \Google\Model
     return $this->readLocation;
   }
   /**
-   * The downscoped token that was created.
+   * Input only. The downscoped token that was created.
    *
    * @param string $token
    */

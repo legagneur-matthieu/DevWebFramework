@@ -64,7 +64,7 @@ class GoogleCloudDocumentaiV1DocumentProvenance extends \Google\Collection
   public const TYPE_EVAL_SKIPPED = 'EVAL_SKIPPED';
   protected $collection_key = 'parents';
   /**
-   * The Id of this operation. Needs to be unique within the scope of the
+   * The ID of this operation. Needs to be unique within the scope of the
    * revision.
    *
    * @deprecated
@@ -88,7 +88,7 @@ class GoogleCloudDocumentaiV1DocumentProvenance extends \Google\Collection
   public $type;
 
   /**
-   * The Id of this operation. Needs to be unique within the scope of the
+   * The ID of this operation. Needs to be unique within the scope of the
    * revision.
    *
    * @deprecated

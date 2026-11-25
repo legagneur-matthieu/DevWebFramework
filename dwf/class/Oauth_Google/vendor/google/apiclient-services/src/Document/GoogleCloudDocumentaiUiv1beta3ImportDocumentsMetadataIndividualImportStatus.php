@@ -54,7 +54,7 @@ class GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatu
     return $this->inputGcsSource;
   }
   /**
-   * The document id of imported document if it was successful, otherwise empty.
+   * The document ID of imported document if it was successful, otherwise empty.
    *
    * @param GoogleCloudDocumentaiUiv1beta3DocumentId $outputDocumentId
    */

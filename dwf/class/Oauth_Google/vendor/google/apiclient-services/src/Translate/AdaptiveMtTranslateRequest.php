@@ -27,14 +27,21 @@ class AdaptiveMtTranslateRequest extends \Google\Collection
    */
   public $content;
   /**
-   * Required. The resource name for the dataset to use for adaptive MT.
-   * `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
+   * Required. The resource name for the dataset to use for adaptive MT
+   * translation. `projects/{project}/locations/{location-
+   * id}/adaptiveMtDatasets/{dataset}`
    *
    * @var string
    */
   public $dataset;
   protected $glossaryConfigType = GlossaryConfig::class;
   protected $glossaryConfigDataType = '';
+  /**
+   * The format of the source text. Currently only text/plain is supported.
+   *
+   * @var string
+   */
+  public $mimeType;
   protected $referenceSentenceConfigType = ReferenceSentenceConfig::class;
   protected $referenceSentenceConfigDataType = '';
 
@@ -55,8 +62,9 @@ class AdaptiveMtTranslateRequest extends \Google\Collection
     return $this->content;
   }
   /**
-   * Required. The resource name for the dataset to use for adaptive MT.
-   * `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
+   * Required. The resource name for the dataset to use for adaptive MT
+   * translation. `projects/{project}/locations/{location-
+   * id}/adaptiveMtDatasets/{dataset}`
    *
    * @param string $dataset
    */
@@ -88,6 +96,22 @@ class AdaptiveMtTranslateRequest extends \Google\Collection
   public function getGlossaryConfig()
   {
     return $this->glossaryConfig;
+  }
+  /**
+   * The format of the source text. Currently only text/plain is supported.
+   *
+   * @param string $mimeType
+   */
+  public function setMimeType($mimeType)
+  {
+    $this->mimeType = $mimeType;
+  }
+  /**
+   * @return string
+   */
+  public function getMimeType()
+  {
+    return $this->mimeType;
   }
   /**
    * Configuration for caller provided reference sentences.

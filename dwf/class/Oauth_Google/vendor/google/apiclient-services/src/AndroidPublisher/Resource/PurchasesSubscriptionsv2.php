@@ -17,10 +17,20 @@
 
 namespace Google\Service\AndroidPublisher\Resource;
 
+use Google\Service\AndroidPublisher\ActivateOfferTargetingRequest;
+use Google\Service\AndroidPublisher\ActivateOfferTargetingResponse;
+use Google\Service\AndroidPublisher\CancelPlanTransitionRequest;
+use Google\Service\AndroidPublisher\CancelPlanTransitionResponse;
 use Google\Service\AndroidPublisher\CancelSubscriptionPurchaseRequest;
 use Google\Service\AndroidPublisher\CancelSubscriptionPurchaseResponse;
+use Google\Service\AndroidPublisher\DeactivateOfferTargetingRequest;
+use Google\Service\AndroidPublisher\DeactivateOfferTargetingResponse;
+use Google\Service\AndroidPublisher\DeferSubscriptionPurchaseRequest;
+use Google\Service\AndroidPublisher\DeferSubscriptionPurchaseResponse;
 use Google\Service\AndroidPublisher\RevokeSubscriptionPurchaseRequest;
 use Google\Service\AndroidPublisher\RevokeSubscriptionPurchaseResponse;
+use Google\Service\AndroidPublisher\SchedulePlanTransitionRequest;
+use Google\Service\AndroidPublisher\SchedulePlanTransitionResponse;
 use Google\Service\AndroidPublisher\SubscriptionPurchaseV2;
 
 /**
@@ -33,6 +43,25 @@ use Google\Service\AndroidPublisher\SubscriptionPurchaseV2;
  */
 class PurchasesSubscriptionsv2 extends \Google\Service\Resource
 {
+  /**
+   * Activates targeting for a specific offer.
+   * (subscriptionsv2.activateoffertargeting)
+   *
+   * @param string $packageName Required. The package of the application for which
+   * this subscription was purchased. Required.
+   * @param string $purchaseToken Required. The purchase token provided to the
+   * user's device when the subscription was purchased. Required.
+   * @param ActivateOfferTargetingRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return ActivateOfferTargetingResponse
+   * @throws \Google\Service\Exception
+   */
+  public function activateoffertargeting($packageName, $purchaseToken, ActivateOfferTargetingRequest $postBody, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'purchaseToken' => $purchaseToken, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('activateoffertargeting', [$params], ActivateOfferTargetingResponse::class);
+  }
   /**
    * Cancel a subscription purchase for the user. (subscriptionsv2.cancel)
    *
@@ -50,6 +79,62 @@ class PurchasesSubscriptionsv2 extends \Google\Service\Resource
     $params = ['packageName' => $packageName, 'token' => $token, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('cancel', [$params], CancelSubscriptionPurchaseResponse::class);
+  }
+  /**
+   * Cancel a plan transition for a subscription.
+   * (subscriptionsv2.cancelplantransition)
+   *
+   * @param string $packageName Required. The package of the application for which
+   * this subscription was purchased (for example, 'com.some.thing').
+   * @param string $token Required. The token provided to the user's device when
+   * the subscription was purchased.
+   * @param CancelPlanTransitionRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return CancelPlanTransitionResponse
+   * @throws \Google\Service\Exception
+   */
+  public function cancelplantransition($packageName, $token, CancelPlanTransitionRequest $postBody, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'token' => $token, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('cancelplantransition', [$params], CancelPlanTransitionResponse::class);
+  }
+  /**
+   * Deactivates targeting for a specific offer.
+   * (subscriptionsv2.deactivateoffertargeting)
+   *
+   * @param string $packageName Required. The package of the application for which
+   * this subscription was purchased. Required.
+   * @param string $purchaseToken Required. The purchase token provided to the
+   * user's device when the subscription was purchased. Required.
+   * @param DeactivateOfferTargetingRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return DeactivateOfferTargetingResponse
+   * @throws \Google\Service\Exception
+   */
+  public function deactivateoffertargeting($packageName, $purchaseToken, DeactivateOfferTargetingRequest $postBody, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'purchaseToken' => $purchaseToken, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('deactivateoffertargeting', [$params], DeactivateOfferTargetingResponse::class);
+  }
+  /**
+   * Defers the renewal of a subscription. (subscriptionsv2.defer)
+   *
+   * @param string $packageName Required. The package of the application for which
+   * this subscription was purchased (for example, 'com.some.thing').
+   * @param string $token Required. The token provided to the user's device when
+   * the subscription was purchased.
+   * @param DeferSubscriptionPurchaseRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return DeferSubscriptionPurchaseResponse
+   * @throws \Google\Service\Exception
+   */
+  public function defer($packageName, $token, DeferSubscriptionPurchaseRequest $postBody, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'token' => $token, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('defer', [$params], DeferSubscriptionPurchaseResponse::class);
   }
   /**
    * Get metadata about a subscription (subscriptionsv2.get)
@@ -85,6 +170,25 @@ class PurchasesSubscriptionsv2 extends \Google\Service\Resource
     $params = ['packageName' => $packageName, 'token' => $token, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('revoke', [$params], RevokeSubscriptionPurchaseResponse::class);
+  }
+  /**
+   * Schedule a plan transition for a subscription.
+   * (subscriptionsv2.scheduleplantransition)
+   *
+   * @param string $packageName Required. The package of the application for which
+   * this subscription was purchased (for example, 'com.some.thing').
+   * @param string $token Required. The token provided to the user's device when
+   * the subscription was purchased.
+   * @param SchedulePlanTransitionRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return SchedulePlanTransitionResponse
+   * @throws \Google\Service\Exception
+   */
+  public function scheduleplantransition($packageName, $token, SchedulePlanTransitionRequest $postBody, $optParams = [])
+  {
+    $params = ['packageName' => $packageName, 'token' => $token, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('scheduleplantransition', [$params], SchedulePlanTransitionResponse::class);
   }
 }
 

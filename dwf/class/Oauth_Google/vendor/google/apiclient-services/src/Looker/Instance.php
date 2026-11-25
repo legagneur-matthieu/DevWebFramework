@@ -32,53 +32,85 @@ class Instance extends \Google\Model
    */
   public const CLASS_TYPE_P1 = 'P1';
   /**
-   * Platform edition is unspecified.
+   * Represents an unspecified platform edition.
    */
   public const PLATFORM_EDITION_PLATFORM_EDITION_UNSPECIFIED = 'PLATFORM_EDITION_UNSPECIFIED';
   /**
-   * Trial.
+   * Represents the Looker Core Trial edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_TRIAL = 'LOOKER_CORE_TRIAL';
   /**
-   * Standard.
+   * Represents the Looker Core Standard edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_STANDARD = 'LOOKER_CORE_STANDARD';
   /**
-   * Subscription Standard.
+   * Represents the Looker Core Standard Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_STANDARD_ANNUAL = 'LOOKER_CORE_STANDARD_ANNUAL';
   /**
-   * Subscription Enterprise.
+   * Represents the Looker Core Enterprise Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_ENTERPRISE_ANNUAL = 'LOOKER_CORE_ENTERPRISE_ANNUAL';
   /**
-   * Subscription Embed.
+   * Represents the Looker Core Embed Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_EMBED_ANNUAL = 'LOOKER_CORE_EMBED_ANNUAL';
   /**
-   * Nonprod Subscription Standard.
+   * Represents the Looker Core Nonprod Standard Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_NONPROD_STANDARD_ANNUAL = 'LOOKER_CORE_NONPROD_STANDARD_ANNUAL';
   /**
-   * Nonprod Subscription Enterprise.
+   * Represents the Looker Core Nonprod Enterprise Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL = 'LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL';
   /**
-   * Nonprod Subscription Embed.
+   * Represents the Looker Core Nonprod Embed Annual edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_NONPROD_EMBED_ANNUAL = 'LOOKER_CORE_NONPROD_EMBED_ANNUAL';
   /**
-   * Trial Standard.
+   * Represents the Looker Core Trial Standard edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_TRIAL_STANDARD = 'LOOKER_CORE_TRIAL_STANDARD';
   /**
-   * Trial Enterprise.
+   * Represents the Looker Core Trial Enterprise edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_TRIAL_ENTERPRISE = 'LOOKER_CORE_TRIAL_ENTERPRISE';
   /**
-   * Trial Embed.
+   * Represents the Looker Core Trial Embed edition.
    */
   public const PLATFORM_EDITION_LOOKER_CORE_TRIAL_EMBED = 'LOOKER_CORE_TRIAL_EMBED';
+  /**
+   * Unspecified release channel.
+   */
+  public const RELEASE_CHANNEL_RELEASE_CHANNEL_UNSPECIFIED = 'RELEASE_CHANNEL_UNSPECIFIED';
+  /**
+   * Rapid: Most frequent updates.
+   */
+  public const RELEASE_CHANNEL_RAPID = 'RAPID';
+  /**
+   * Regular: Balanced, default for production.
+   */
+  public const RELEASE_CHANNEL_REGULAR = 'REGULAR';
+  /**
+   * Stable: Least frequent, for maximum stability.
+   */
+  public const RELEASE_CHANNEL_STABLE = 'STABLE';
+  /**
+   * Soft delete reason is unspecified. This is the default value.
+   */
+  public const SOFT_DELETE_REASON_SOFT_DELETE_REASON_UNSPECIFIED = 'SOFT_DELETE_REASON_UNSPECIFIED';
+  /**
+   * Instance is soft deleted due to billing account issues.
+   */
+  public const SOFT_DELETE_REASON_BILLING_ACCOUNT_ISSUE = 'BILLING_ACCOUNT_ISSUE';
+  /**
+   * Instance is soft deleted due to trial expiration.
+   */
+  public const SOFT_DELETE_REASON_TRIAL_EXPIRED = 'TRIAL_EXPIRED';
+  /**
+   * Instance is soft deleted by the customer.
+   */
+  public const SOFT_DELETE_REASON_CUSTOMER_REQUEST = 'CUSTOMER_REQUEST';
   /**
    * State is unspecified.
    */
@@ -115,8 +147,23 @@ class Instance extends \Google\Model
    * Instance is importing data.
    */
   public const STATE_IMPORTING = 'IMPORTING';
+  /**
+   * Optional. Accelerated security patch enabled for the instance.
+   *
+   * @var bool
+   */
+  public $acceleratedSecurityPatchEnabled;
   protected $adminSettingsType = AdminSettings::class;
   protected $adminSettingsDataType = '';
+  protected $authTypeType = AuthType::class;
+  protected $authTypeDataType = '';
+  /**
+   * Optional. Indicates whether catalog integration is disabled for the Looker
+   * instance.
+   *
+   * @var bool
+   */
+  public $catalogIntegrationOptOut;
   /**
    * Optional. Storage class of the instance.
    *
@@ -124,7 +171,7 @@ class Instance extends \Google\Model
    */
   public $classType;
   /**
-   * Network name in the consumer project. Format:
+   * Optional. Network name in the consumer project. Format:
    * `projects/{project}/global/networks/{network}`. Note that the consumer
    * network may be in a different GCP project than the consumer project that is
    * hosting the Looker Instance.
@@ -171,6 +218,8 @@ class Instance extends \Google\Model
    * @var bool
    */
   public $geminiEnabled;
+  protected $ingressIpAllowlistConfigType = IngressIpAllowlistConfig::class;
+  protected $ingressIpAllowlistConfigDataType = '';
   /**
    * Output only. Private Ingress IP (IPv4).
    *
@@ -220,13 +269,14 @@ class Instance extends \Google\Model
   protected $periodicExportConfigType = PeriodicExportConfig::class;
   protected $periodicExportConfigDataType = '';
   /**
-   * Platform edition.
+   * Optional. Platform edition. Marked as OPTIONAL for backward compatibility,
+   * though it is required during instance creation.
    *
    * @var string
    */
   public $platformEdition;
   /**
-   * Whether private IP is enabled on the Looker instance.
+   * Optional. Whether private IP is enabled on the Looker instance.
    *
    * @var bool
    */
@@ -242,15 +292,21 @@ class Instance extends \Google\Model
    */
   public $pscEnabled;
   /**
-   * Whether public IP is enabled on the Looker instance.
+   * Optional. Whether public IP is enabled on the Looker instance.
    *
    * @var bool
    */
   public $publicIpEnabled;
   /**
-   * Name of a reserved IP address range within the Instance.consumer_network,
-   * to be used for private services access connection. May or may not be
-   * specified in a create request.
+   * Optional. The selected release channel for the instance.
+   *
+   * @var string
+   */
+  public $releaseChannel;
+  /**
+   * Optional. Name of a reserved IP address range within the
+   * Instance.consumer_network, to be used for private services access
+   * connection. May or may not be specified in a create request.
    *
    * @var string
    */
@@ -268,11 +324,24 @@ class Instance extends \Google\Model
    */
   public $satisfiesPzs;
   /**
+   * Output only. The reason for the instance being in a soft-deleted state.
+   *
+   * @var string
+   */
+  public $softDeleteReason;
+  /**
    * Output only. The state of the instance.
    *
    * @var string
    */
   public $state;
+  /**
+   * Output only. The time when the Looker instance was suspended (soft
+   * deleted).
+   *
+   * @var string
+   */
+  public $suspendedTime;
   /**
    * Output only. The time when the Looker instance was last updated.
    *
@@ -283,7 +352,23 @@ class Instance extends \Google\Model
   protected $userMetadataDataType = '';
 
   /**
-   * Looker Instance Admin settings.
+   * Optional. Accelerated security patch enabled for the instance.
+   *
+   * @param bool $acceleratedSecurityPatchEnabled
+   */
+  public function setAcceleratedSecurityPatchEnabled($acceleratedSecurityPatchEnabled)
+  {
+    $this->acceleratedSecurityPatchEnabled = $acceleratedSecurityPatchEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getAcceleratedSecurityPatchEnabled()
+  {
+    return $this->acceleratedSecurityPatchEnabled;
+  }
+  /**
+   * Optional. Looker Instance Admin settings.
    *
    * @param AdminSettings $adminSettings
    */
@@ -297,6 +382,39 @@ class Instance extends \Google\Model
   public function getAdminSettings()
   {
     return $this->adminSettings;
+  }
+  /**
+   * Optional. Auth type for the Looker instance.
+   *
+   * @param AuthType $authType
+   */
+  public function setAuthType(AuthType $authType)
+  {
+    $this->authType = $authType;
+  }
+  /**
+   * @return AuthType
+   */
+  public function getAuthType()
+  {
+    return $this->authType;
+  }
+  /**
+   * Optional. Indicates whether catalog integration is disabled for the Looker
+   * instance.
+   *
+   * @param bool $catalogIntegrationOptOut
+   */
+  public function setCatalogIntegrationOptOut($catalogIntegrationOptOut)
+  {
+    $this->catalogIntegrationOptOut = $catalogIntegrationOptOut;
+  }
+  /**
+   * @return bool
+   */
+  public function getCatalogIntegrationOptOut()
+  {
+    return $this->catalogIntegrationOptOut;
   }
   /**
    * Optional. Storage class of the instance.
@@ -317,7 +435,7 @@ class Instance extends \Google\Model
     return $this->classType;
   }
   /**
-   * Network name in the consumer project. Format:
+   * Optional. Network name in the consumer project. Format:
    * `projects/{project}/global/networks/{network}`. Note that the consumer
    * network may be in a different GCP project than the consumer project that is
    * hosting the Looker Instance.
@@ -385,7 +503,7 @@ class Instance extends \Google\Model
     return $this->createTime;
   }
   /**
-   * Custom domain configuration for the instance.
+   * Optional. Custom domain configuration for the instance.
    *
    * @param CustomDomain $customDomain
    */
@@ -401,7 +519,7 @@ class Instance extends \Google\Model
     return $this->customDomain;
   }
   /**
-   * Maintenance denial period for this instance.
+   * Optional. Maintenance denial period for this instance.
    *
    * @param DenyMaintenancePeriod $denyMaintenancePeriod
    */
@@ -433,8 +551,8 @@ class Instance extends \Google\Model
     return $this->egressPublicIp;
   }
   /**
-   * Encryption configuration (CMEK). Only set if CMEK has been enabled on the
-   * instance.
+   * Optional. Encryption configuration (CMEK). Only set if CMEK has been
+   * enabled on the instance.
    *
    * @param EncryptionConfig $encryptionConfig
    */
@@ -480,6 +598,22 @@ class Instance extends \Google\Model
   public function getGeminiEnabled()
   {
     return $this->geminiEnabled;
+  }
+  /**
+   * Optional. Ingress IP allowlist configuration for the Looker instance.
+   *
+   * @param IngressIpAllowlistConfig $ingressIpAllowlistConfig
+   */
+  public function setIngressIpAllowlistConfig(IngressIpAllowlistConfig $ingressIpAllowlistConfig)
+  {
+    $this->ingressIpAllowlistConfig = $ingressIpAllowlistConfig;
+  }
+  /**
+   * @return IngressIpAllowlistConfig
+   */
+  public function getIngressIpAllowlistConfig()
+  {
+    return $this->ingressIpAllowlistConfig;
   }
   /**
    * Output only. Private Ingress IP (IPv4).
@@ -579,7 +713,7 @@ class Instance extends \Google\Model
     return $this->lookerVersion;
   }
   /**
-   * Maintenance schedule for this instance.
+   * Output only. Maintenance schedule for this instance.
    *
    * @param MaintenanceSchedule $maintenanceSchedule
    */
@@ -595,7 +729,7 @@ class Instance extends \Google\Model
     return $this->maintenanceSchedule;
   }
   /**
-   * Maintenance window for this instance.
+   * Optional. Maintenance window for this instance.
    *
    * @param MaintenanceWindow $maintenanceWindow
    */
@@ -628,7 +762,7 @@ class Instance extends \Google\Model
     return $this->name;
   }
   /**
-   * Looker instance OAuth login settings.
+   * Optional. Looker instance OAuth login settings.
    *
    * @param OAuthConfig $oauthConfig
    */
@@ -660,7 +794,8 @@ class Instance extends \Google\Model
     return $this->periodicExportConfig;
   }
   /**
-   * Platform edition.
+   * Optional. Platform edition. Marked as OPTIONAL for backward compatibility,
+   * though it is required during instance creation.
    *
    * Accepted values: PLATFORM_EDITION_UNSPECIFIED, LOOKER_CORE_TRIAL,
    * LOOKER_CORE_STANDARD, LOOKER_CORE_STANDARD_ANNUAL,
@@ -683,7 +818,7 @@ class Instance extends \Google\Model
     return $this->platformEdition;
   }
   /**
-   * Whether private IP is enabled on the Looker instance.
+   * Optional. Whether private IP is enabled on the Looker instance.
    *
    * @param bool $privateIpEnabled
    */
@@ -733,7 +868,7 @@ class Instance extends \Google\Model
     return $this->pscEnabled;
   }
   /**
-   * Whether public IP is enabled on the Looker instance.
+   * Optional. Whether public IP is enabled on the Looker instance.
    *
    * @param bool $publicIpEnabled
    */
@@ -749,9 +884,27 @@ class Instance extends \Google\Model
     return $this->publicIpEnabled;
   }
   /**
-   * Name of a reserved IP address range within the Instance.consumer_network,
-   * to be used for private services access connection. May or may not be
-   * specified in a create request.
+   * Optional. The selected release channel for the instance.
+   *
+   * Accepted values: RELEASE_CHANNEL_UNSPECIFIED, RAPID, REGULAR, STABLE
+   *
+   * @param self::RELEASE_CHANNEL_* $releaseChannel
+   */
+  public function setReleaseChannel($releaseChannel)
+  {
+    $this->releaseChannel = $releaseChannel;
+  }
+  /**
+   * @return self::RELEASE_CHANNEL_*
+   */
+  public function getReleaseChannel()
+  {
+    return $this->releaseChannel;
+  }
+  /**
+   * Optional. Name of a reserved IP address range within the
+   * Instance.consumer_network, to be used for private services access
+   * connection. May or may not be specified in a create request.
    *
    * @param string $reservedRange
    */
@@ -799,6 +952,25 @@ class Instance extends \Google\Model
     return $this->satisfiesPzs;
   }
   /**
+   * Output only. The reason for the instance being in a soft-deleted state.
+   *
+   * Accepted values: SOFT_DELETE_REASON_UNSPECIFIED, BILLING_ACCOUNT_ISSUE,
+   * TRIAL_EXPIRED, CUSTOMER_REQUEST
+   *
+   * @param self::SOFT_DELETE_REASON_* $softDeleteReason
+   */
+  public function setSoftDeleteReason($softDeleteReason)
+  {
+    $this->softDeleteReason = $softDeleteReason;
+  }
+  /**
+   * @return self::SOFT_DELETE_REASON_*
+   */
+  public function getSoftDeleteReason()
+  {
+    return $this->softDeleteReason;
+  }
+  /**
    * Output only. The state of the instance.
    *
    * Accepted values: STATE_UNSPECIFIED, ACTIVE, CREATING, FAILED, SUSPENDED,
@@ -816,6 +988,23 @@ class Instance extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * Output only. The time when the Looker instance was suspended (soft
+   * deleted).
+   *
+   * @param string $suspendedTime
+   */
+  public function setSuspendedTime($suspendedTime)
+  {
+    $this->suspendedTime = $suspendedTime;
+  }
+  /**
+   * @return string
+   */
+  public function getSuspendedTime()
+  {
+    return $this->suspendedTime;
   }
   /**
    * Output only. The time when the Looker instance was last updated.

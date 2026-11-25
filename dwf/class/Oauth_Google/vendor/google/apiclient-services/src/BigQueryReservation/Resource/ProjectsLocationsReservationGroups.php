@@ -105,6 +105,28 @@ class ProjectsLocationsReservationGroups extends \Google\Service\Resource
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], ListReservationGroupsResponse::class);
   }
+  /**
+   * Updates an existing reservation group resource. (reservationGroups.patch)
+   *
+   * @param string $name Identifier. The resource name of the reservation group,
+   * e.g., `projects/locations/reservationGroups/team1-prod`. The
+   * reservation_group_id must only contain lower case alphanumeric characters or
+   * dashes. It must start with a letter and must not end with a dash. Its maximum
+   * length is 64 characters.
+   * @param ReservationGroup $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Optional. Standard field mask for the set of
+   * fields to be updated.
+   * @return ReservationGroup
+   * @throws \Google\Service\Exception
+   */
+  public function patch($name, ReservationGroup $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', [$params], ReservationGroup::class);
+  }
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.

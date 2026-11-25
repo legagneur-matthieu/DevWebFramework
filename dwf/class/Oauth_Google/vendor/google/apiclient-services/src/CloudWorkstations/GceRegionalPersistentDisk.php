@@ -33,6 +33,17 @@ class GceRegionalPersistentDisk extends \Google\Model
    */
   public const RECLAIM_POLICY_RETAIN = 'RETAIN';
   /**
+   * Optional. Number of seconds to wait after initially creating or
+   * subsequently shutting down the workstation before converting its disk into
+   * a snapshot. This generally saves costs at the expense of greater startup
+   * time on next workstation start, as the service will need to create a disk
+   * from the archival snapshot. A value of `"0s"` indicates that the disk will
+   * never be archived.
+   *
+   * @var string
+   */
+  public $archiveTimeout;
+  /**
    * Optional. The [type of the persistent
    * disk](https://cloud.google.com/compute/docs/disks#disk-types) for the home
    * directory. Defaults to `"pd-standard"`.
@@ -48,6 +59,15 @@ class GceRegionalPersistentDisk extends \Google\Model
    * @var string
    */
   public $fsType;
+  /**
+   * Optional. Maximum size in GB to which this persistent directory can be
+   * resized. Defaults to `0`, which indicates no maximum limit is enforced by
+   * this configuration. Resizing is still subject to the quotas and limits of
+   * the underlying disk type.
+   *
+   * @var int
+   */
+  public $maxSizeGb;
   /**
    * Optional. Whether the persistent disk should be deleted when the
    * workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults to
@@ -75,6 +95,27 @@ class GceRegionalPersistentDisk extends \Google\Model
    */
   public $sourceSnapshot;
 
+  /**
+   * Optional. Number of seconds to wait after initially creating or
+   * subsequently shutting down the workstation before converting its disk into
+   * a snapshot. This generally saves costs at the expense of greater startup
+   * time on next workstation start, as the service will need to create a disk
+   * from the archival snapshot. A value of `"0s"` indicates that the disk will
+   * never be archived.
+   *
+   * @param string $archiveTimeout
+   */
+  public function setArchiveTimeout($archiveTimeout)
+  {
+    $this->archiveTimeout = $archiveTimeout;
+  }
+  /**
+   * @return string
+   */
+  public function getArchiveTimeout()
+  {
+    return $this->archiveTimeout;
+  }
   /**
    * Optional. The [type of the persistent
    * disk](https://cloud.google.com/compute/docs/disks#disk-types) for the home
@@ -110,6 +151,25 @@ class GceRegionalPersistentDisk extends \Google\Model
   public function getFsType()
   {
     return $this->fsType;
+  }
+  /**
+   * Optional. Maximum size in GB to which this persistent directory can be
+   * resized. Defaults to `0`, which indicates no maximum limit is enforced by
+   * this configuration. Resizing is still subject to the quotas and limits of
+   * the underlying disk type.
+   *
+   * @param int $maxSizeGb
+   */
+  public function setMaxSizeGb($maxSizeGb)
+  {
+    $this->maxSizeGb = $maxSizeGb;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxSizeGb()
+  {
+    return $this->maxSizeGb;
   }
   /**
    * Optional. Whether the persistent disk should be deleted when the

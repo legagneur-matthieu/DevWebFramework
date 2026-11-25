@@ -24,19 +24,26 @@ class GoogleCloudAiplatformV1CodeExecutionResult extends \Google\Model
    */
   public const OUTCOME_OUTCOME_UNSPECIFIED = 'OUTCOME_UNSPECIFIED';
   /**
-   * Code execution completed successfully.
+   * Code execution completed successfully. `output` contains the stdout, if
+   * any.
    */
   public const OUTCOME_OUTCOME_OK = 'OUTCOME_OK';
   /**
-   * Code execution finished but with a failure. `stderr` should contain the
-   * reason.
+   * Code execution failed. `output` contains the stderr and stdout, if any.
    */
   public const OUTCOME_OUTCOME_FAILED = 'OUTCOME_FAILED';
   /**
    * Code execution ran for too long, and was cancelled. There may or may not be
-   * a partial output present.
+   * a partial `output` present.
    */
   public const OUTCOME_OUTCOME_DEADLINE_EXCEEDED = 'OUTCOME_DEADLINE_EXCEEDED';
+  /**
+   * Optional. The identifier of the `ExecutableCode` part this result is for.
+   * Only populated if the corresponding `ExecutableCode` has an id.
+   *
+   * @var string
+   */
+  public $id;
   /**
    * Required. Outcome of the code execution.
    *
@@ -51,6 +58,23 @@ class GoogleCloudAiplatformV1CodeExecutionResult extends \Google\Model
    */
   public $output;
 
+  /**
+   * Optional. The identifier of the `ExecutableCode` part this result is for.
+   * Only populated if the corresponding `ExecutableCode` has an id.
+   *
+   * @param string $id
+   */
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+  /**
+   * @return string
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
   /**
    * Required. Outcome of the code execution.
    *

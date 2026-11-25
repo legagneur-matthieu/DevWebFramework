@@ -20,6 +20,23 @@ namespace Google\Service\BigtableAdmin;
 class Instance extends \Google\Model
 {
   /**
+   * The edition is unspecified. This is treated as `ENTERPRISE`.
+   */
+  public const EDITION_EDITION_UNSPECIFIED = 'EDITION_UNSPECIFIED';
+  /**
+   * The Enterprise edition. This is the default offering that is designed to
+   * meet the needs of most enterprise workloads.
+   */
+  public const EDITION_ENTERPRISE = 'ENTERPRISE';
+  /**
+   * The Enterprise Plus edition. This is a premium tier that is designed for
+   * demanding, multi-tenant workloads requiring the highest levels of
+   * performance, scale, and global availability. The nodes in the Enterprise
+   * Plus tier come at a higher cost than the Enterprise tier. Any Enterprise
+   * Plus features must be disabled before downgrading to Enterprise.
+   */
+  public const EDITION_ENTERPRISE_PLUS = 'ENTERPRISE_PLUS';
+  /**
    * The state of the instance could not be determined.
    */
   public const STATE_STATE_NOT_KNOWN = 'STATE_NOT_KNOWN';
@@ -66,6 +83,19 @@ class Instance extends \Google\Model
    */
   public $displayName;
   /**
+   * Optional. The edition of the instance. See Edition for details.
+   *
+   * @var string
+   */
+  public $edition;
+  /**
+   * Output only. The region where Knowledge Catalog data is synced to and
+   * stored, including user-created aspects.
+   *
+   * @var string
+   */
+  public $knowledgeCatalogRegion;
+  /**
    * Labels are a flexible and lightweight mechanism for organizing cloud
    * resources into groups that reflect a customer's organizational needs and
    * deployment strategies. They can be used to filter resources and aggregate
@@ -74,7 +104,10 @@ class Instance extends \Google\Model
    * must be between 0 and 63 characters long and must conform to the regular
    * expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
    * associated with a given resource. * Keys and values must both be under 128
-   * bytes.
+   * bytes. Labels and Tags (below) are both used to bind metadata to resources,
+   * with different use-cases. See https://cloud.google.com/resource-
+   * manager/docs/tags/tags-overview for an in-depth overview on the difference
+   * between tags and labels.
    *
    * @var string[]
    */
@@ -159,6 +192,41 @@ class Instance extends \Google\Model
     return $this->displayName;
   }
   /**
+   * Optional. The edition of the instance. See Edition for details.
+   *
+   * Accepted values: EDITION_UNSPECIFIED, ENTERPRISE, ENTERPRISE_PLUS
+   *
+   * @param self::EDITION_* $edition
+   */
+  public function setEdition($edition)
+  {
+    $this->edition = $edition;
+  }
+  /**
+   * @return self::EDITION_*
+   */
+  public function getEdition()
+  {
+    return $this->edition;
+  }
+  /**
+   * Output only. The region where Knowledge Catalog data is synced to and
+   * stored, including user-created aspects.
+   *
+   * @param string $knowledgeCatalogRegion
+   */
+  public function setKnowledgeCatalogRegion($knowledgeCatalogRegion)
+  {
+    $this->knowledgeCatalogRegion = $knowledgeCatalogRegion;
+  }
+  /**
+   * @return string
+   */
+  public function getKnowledgeCatalogRegion()
+  {
+    return $this->knowledgeCatalogRegion;
+  }
+  /**
    * Labels are a flexible and lightweight mechanism for organizing cloud
    * resources into groups that reflect a customer's organizational needs and
    * deployment strategies. They can be used to filter resources and aggregate
@@ -167,7 +235,10 @@ class Instance extends \Google\Model
    * must be between 0 and 63 characters long and must conform to the regular
    * expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
    * associated with a given resource. * Keys and values must both be under 128
-   * bytes.
+   * bytes. Labels and Tags (below) are both used to bind metadata to resources,
+   * with different use-cases. See https://cloud.google.com/resource-
+   * manager/docs/tags/tags-overview for an in-depth overview on the difference
+   * between tags and labels.
    *
    * @param string[] $labels
    */

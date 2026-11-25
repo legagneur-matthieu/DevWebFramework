@@ -19,7 +19,7 @@ namespace Google\Service\Storagetransfer;
 
 class ObjectConditions extends \Google\Collection
 {
-  protected $collection_key = 'includePrefixes';
+  protected $collection_key = 'includeStorageClasses';
   /**
    * If you specify `exclude_prefixes`, Storage Transfer Service uses the items
    * in the `exclude_prefixes` array to determine which objects to exclude from
@@ -66,6 +66,19 @@ class ObjectConditions extends \Google\Collection
    * @var string[]
    */
   public $includePrefixes;
+  /**
+   * Optional. If specified, objects in the source matching any of the storage
+   * classes in this field will be transferred. Objects in storage classes not
+   * included in this field will be skipped. If empty, the default behavior
+   * regarding the storage classes is applied. This includes all storage classes
+   * except "GLACIER" as per default behavior. Currently, this field only
+   * supports S3 data source. For the list of valid Amazon S3 storage
+   * classnames, please refer to the AWS documentation:
+   * https://docs.aws.amazon.com/AmazonS3/latest/userguide/sc-howtoset.html
+   *
+   * @var string[]
+   */
+  public $includeStorageClasses;
   /**
    * If specified, only objects with a "last modification time" before this
    * timestamp and objects that don't have a "last modification time" are
@@ -182,6 +195,29 @@ class ObjectConditions extends \Google\Collection
   public function getIncludePrefixes()
   {
     return $this->includePrefixes;
+  }
+  /**
+   * Optional. If specified, objects in the source matching any of the storage
+   * classes in this field will be transferred. Objects in storage classes not
+   * included in this field will be skipped. If empty, the default behavior
+   * regarding the storage classes is applied. This includes all storage classes
+   * except "GLACIER" as per default behavior. Currently, this field only
+   * supports S3 data source. For the list of valid Amazon S3 storage
+   * classnames, please refer to the AWS documentation:
+   * https://docs.aws.amazon.com/AmazonS3/latest/userguide/sc-howtoset.html
+   *
+   * @param string[] $includeStorageClasses
+   */
+  public function setIncludeStorageClasses($includeStorageClasses)
+  {
+    $this->includeStorageClasses = $includeStorageClasses;
+  }
+  /**
+   * @return string[]
+   */
+  public function getIncludeStorageClasses()
+  {
+    return $this->includeStorageClasses;
   }
   /**
    * If specified, only objects with a "last modification time" before this

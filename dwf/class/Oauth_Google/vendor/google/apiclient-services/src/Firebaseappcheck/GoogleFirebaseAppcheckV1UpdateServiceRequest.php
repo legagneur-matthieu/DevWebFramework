@@ -33,11 +33,8 @@ class GoogleFirebaseAppcheckV1UpdateServiceRequest extends \Google\Model
    * Required. The Service to update. The Service's `name` field is used to
    * identify the Service to be updated, in the format: ```
    * projects/{project_number}/services/{service_id} ``` Note that the
-   * `service_id` element must be a supported service ID. Currently, the
-   * following service IDs are supported: * `firebasestorage.googleapis.com`
-   * (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
-   * Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) *
-   * `oauth2.googleapis.com` (Google Identity for iOS)
+   * `service_id` element must be a supported service ID. Consult the
+   * Service.name field for a list of supported service IDs.
    *
    * @param GoogleFirebaseAppcheckV1Service $service
    */

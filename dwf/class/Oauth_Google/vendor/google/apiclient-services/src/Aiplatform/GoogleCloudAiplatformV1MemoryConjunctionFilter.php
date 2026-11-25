@@ -24,7 +24,7 @@ class GoogleCloudAiplatformV1MemoryConjunctionFilter extends \Google\Collection
   protected $filtersDataType = 'array';
 
   /**
-   * Filters that will combined using AND logic.
+   * Represents filters that will be combined using AND logic.
    *
    * @param GoogleCloudAiplatformV1MemoryFilter[] $filters
    */

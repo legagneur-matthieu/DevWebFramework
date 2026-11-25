@@ -95,15 +95,16 @@ class Accounts extends \Google\Service\Resource
    * Returns all accounts accessible by the caller. Note that these accounts might
    * not currently have GA properties. Soft-deleted (ie: "trashed") accounts are
    * excluded by default. Returns an empty list if no relevant accounts are found.
-   * (accounts.listAccounts)
+   * Note: The easiest way to retrieve a list of all properties you have access to
+   * is by using `ListAccountSummaries`. (accounts.listAccounts)
    *
    * @param array $optParams Optional parameters.
    *
-   * @opt_param int pageSize The maximum number of resources to return. The
-   * service may return fewer than this value, even if there are additional pages.
-   * If unspecified, at most 50 resources will be returned. The maximum value is
-   * 200; (higher values will be coerced to the maximum)
-   * @opt_param string pageToken A page token, received from a previous
+   * @opt_param int pageSize Optional. The maximum number of resources to return.
+   * The service may return fewer than this value, even if there are additional
+   * pages. If unspecified, at most 50 resources will be returned. The maximum
+   * value is 200; (higher values will be coerced to the maximum)
+   * @opt_param string pageToken Optional. A page token, received from a previous
    * `ListAccounts` call. Provide this to retrieve the subsequent page. When
    * paginating, all other parameters provided to `ListAccounts` must match the
    * call that provided the page token.
@@ -122,7 +123,7 @@ class Accounts extends \Google\Service\Resource
   /**
    * Updates an account. (accounts.patch)
    *
-   * @param string $name Output only. Resource name of this account. Format:
+   * @param string $name Identifier. Resource name of this account. Format:
    * accounts/{account} Example: "accounts/100"
    * @param GoogleAnalyticsAdminV1betaAccount $postBody
    * @param array $optParams Optional parameters.

@@ -35,7 +35,15 @@ class ExecuteSqlPayload extends \Google\Model
    */
   public const PARTIAL_RESULT_MODE_ALLOW_PARTIAL_RESULT = 'ALLOW_PARTIAL_RESULT';
   /**
-   * Optional. When set to true, the API caller identity associated with the
+   * Optional. Specifies the name of the application that is making the request.
+   * This field is used for telemetry. Only alphanumeric characters, dashes, and
+   * underscores are allowed. The maximum length is 32 characters.
+   *
+   * @var string
+   */
+  public $application;
+  /**
+   * Optional. When set to `true`, the API caller identity associated with the
    * request is used for database authentication. The API caller must be an IAM
    * user in the database.
    *
@@ -43,7 +51,8 @@ class ExecuteSqlPayload extends \Google\Model
    */
   public $autoIamAuthn;
   /**
-   * Optional. Name of the database on which the statement will be executed.
+   * Optional. Name of the database on which the statement will be executed. For
+   * Postgres and SQL Server it's required, for MySQL it's optional.
    *
    * @var string
    */
@@ -56,6 +65,18 @@ class ExecuteSqlPayload extends \Google\Model
    * @var string
    */
   public $partialResultMode;
+  /**
+   * Optional. The resource name of the Secret Manager secret holding the
+   * password for the user to log into the database. The secret should be
+   * created using the regional endpoint (for API) or from the Regional Secrets
+   * page (for UI), and stored in the same region as the Cloud SQL instance. The
+   * expected resource name format is `projects/{project}/locations/{location}/s
+   * ecrets/{secret}/versions/{secret_version}`. Used together with the `user`
+   * field. The secret resource name will not be stored.
+   *
+   * @var string
+   */
+  public $passwordSecretVersion;
   /**
    * Optional. The maximum number of rows returned per SQL statement.
    *
@@ -79,7 +100,25 @@ class ExecuteSqlPayload extends \Google\Model
   public $user;
 
   /**
-   * Optional. When set to true, the API caller identity associated with the
+   * Optional. Specifies the name of the application that is making the request.
+   * This field is used for telemetry. Only alphanumeric characters, dashes, and
+   * underscores are allowed. The maximum length is 32 characters.
+   *
+   * @param string $application
+   */
+  public function setApplication($application)
+  {
+    $this->application = $application;
+  }
+  /**
+   * @return string
+   */
+  public function getApplication()
+  {
+    return $this->application;
+  }
+  /**
+   * Optional. When set to `true`, the API caller identity associated with the
    * request is used for database authentication. The API caller must be an IAM
    * user in the database.
    *
@@ -97,7 +136,8 @@ class ExecuteSqlPayload extends \Google\Model
     return $this->autoIamAuthn;
   }
   /**
-   * Optional. Name of the database on which the statement will be executed.
+   * Optional. Name of the database on which the statement will be executed. For
+   * Postgres and SQL Server it's required, for MySQL it's optional.
    *
    * @param string $database
    */
@@ -132,6 +172,28 @@ class ExecuteSqlPayload extends \Google\Model
   public function getPartialResultMode()
   {
     return $this->partialResultMode;
+  }
+  /**
+   * Optional. The resource name of the Secret Manager secret holding the
+   * password for the user to log into the database. The secret should be
+   * created using the regional endpoint (for API) or from the Regional Secrets
+   * page (for UI), and stored in the same region as the Cloud SQL instance. The
+   * expected resource name format is `projects/{project}/locations/{location}/s
+   * ecrets/{secret}/versions/{secret_version}`. Used together with the `user`
+   * field. The secret resource name will not be stored.
+   *
+   * @param string $passwordSecretVersion
+   */
+  public function setPasswordSecretVersion($passwordSecretVersion)
+  {
+    $this->passwordSecretVersion = $passwordSecretVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getPasswordSecretVersion()
+  {
+    return $this->passwordSecretVersion;
   }
   /**
    * Optional. The maximum number of rows returned per SQL statement.

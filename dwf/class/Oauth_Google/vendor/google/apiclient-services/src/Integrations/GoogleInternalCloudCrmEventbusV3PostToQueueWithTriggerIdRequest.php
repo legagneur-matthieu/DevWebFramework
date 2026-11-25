@@ -132,6 +132,15 @@ class GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest extends \G
    */
   public $userGeneratedExecutionId;
   /**
+   * Optional. Pins the enqueue to this exact version. Requires client_id, and
+   * only an ACTIVE version is accepted: the drain re-resolves by trigger id, so
+   * nothing else could run. Unset by every caller today; draft support is
+   * b/570602030. See integrationplatform/api/executionsservice/README.md.
+   *
+   * @var string
+   */
+  public $workflowId;
+  /**
    * Optional. If provided, the workflow_name is used to filter all the matched
    * workflows having same trigger_id+client_id. A combination of trigger_id,
    * client_id and workflow_name identifies a unique workflow.
@@ -339,6 +348,25 @@ class GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest extends \G
   public function getUserGeneratedExecutionId()
   {
     return $this->userGeneratedExecutionId;
+  }
+  /**
+   * Optional. Pins the enqueue to this exact version. Requires client_id, and
+   * only an ACTIVE version is accepted: the drain re-resolves by trigger id, so
+   * nothing else could run. Unset by every caller today; draft support is
+   * b/570602030. See integrationplatform/api/executionsservice/README.md.
+   *
+   * @param string $workflowId
+   */
+  public function setWorkflowId($workflowId)
+  {
+    $this->workflowId = $workflowId;
+  }
+  /**
+   * @return string
+   */
+  public function getWorkflowId()
+  {
+    return $this->workflowId;
   }
   /**
    * Optional. If provided, the workflow_name is used to filter all the matched

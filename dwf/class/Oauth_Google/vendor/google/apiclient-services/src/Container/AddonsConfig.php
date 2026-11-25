@@ -19,6 +19,8 @@ namespace Google\Service\Container;
 
 class AddonsConfig extends \Google\Model
 {
+  protected $agentSandboxConfigType = AgentSandboxConfig::class;
+  protected $agentSandboxConfigDataType = '';
   protected $cloudRunConfigType = CloudRunConfig::class;
   protected $cloudRunConfigDataType = '';
   protected $configConnectorConfigType = ConfigConnectorConfig::class;
@@ -45,13 +47,39 @@ class AddonsConfig extends \Google\Model
   protected $lustreCsiDriverConfigDataType = '';
   protected $networkPolicyConfigType = NetworkPolicyConfig::class;
   protected $networkPolicyConfigDataType = '';
+  protected $nodeReadinessConfigType = NodeReadinessConfig::class;
+  protected $nodeReadinessConfigDataType = '';
   protected $parallelstoreCsiDriverConfigType = ParallelstoreCsiDriverConfig::class;
   protected $parallelstoreCsiDriverConfigDataType = '';
+  protected $podSnapshotConfigType = PodSnapshotConfig::class;
+  protected $podSnapshotConfigDataType = '';
   protected $rayOperatorConfigType = RayOperatorConfig::class;
   protected $rayOperatorConfigDataType = '';
+  protected $sliceControllerConfigType = SliceControllerConfig::class;
+  protected $sliceControllerConfigDataType = '';
+  protected $slurmOperatorConfigType = SlurmOperatorConfig::class;
+  protected $slurmOperatorConfigDataType = '';
   protected $statefulHaConfigType = StatefulHAConfig::class;
   protected $statefulHaConfigDataType = '';
+  protected $wizSensorConfigType = WizSensorConfig::class;
+  protected $wizSensorConfigDataType = '';
 
+  /**
+   * Optional. Configuration for the AgentSandbox addon.
+   *
+   * @param AgentSandboxConfig $agentSandboxConfig
+   */
+  public function setAgentSandboxConfig(AgentSandboxConfig $agentSandboxConfig)
+  {
+    $this->agentSandboxConfig = $agentSandboxConfig;
+  }
+  /**
+   * @return AgentSandboxConfig
+   */
+  public function getAgentSandboxConfig()
+  {
+    return $this->agentSandboxConfig;
+  }
   /**
    * Configuration for the Cloud Run addon, which allows the user to use a
    * managed Knative service.
@@ -274,8 +302,26 @@ class AddonsConfig extends \Google\Model
     return $this->networkPolicyConfig;
   }
   /**
+   * Optional. Configuration for NodeReadinessController add-on.
+   *
+   * @param NodeReadinessConfig $nodeReadinessConfig
+   */
+  public function setNodeReadinessConfig(NodeReadinessConfig $nodeReadinessConfig)
+  {
+    $this->nodeReadinessConfig = $nodeReadinessConfig;
+  }
+  /**
+   * @return NodeReadinessConfig
+   */
+  public function getNodeReadinessConfig()
+  {
+    return $this->nodeReadinessConfig;
+  }
+  /**
+   * Deprecated: The Parallelstore CSI driver is no longer supported.
    * Configuration for the Cloud Storage Parallelstore CSI driver.
    *
+   * @deprecated
    * @param ParallelstoreCsiDriverConfig $parallelstoreCsiDriverConfig
    */
   public function setParallelstoreCsiDriverConfig(ParallelstoreCsiDriverConfig $parallelstoreCsiDriverConfig)
@@ -283,11 +329,28 @@ class AddonsConfig extends \Google\Model
     $this->parallelstoreCsiDriverConfig = $parallelstoreCsiDriverConfig;
   }
   /**
+   * @deprecated
    * @return ParallelstoreCsiDriverConfig
    */
   public function getParallelstoreCsiDriverConfig()
   {
     return $this->parallelstoreCsiDriverConfig;
+  }
+  /**
+   * Optional. Configuration for the Pod Snapshot feature.
+   *
+   * @param PodSnapshotConfig $podSnapshotConfig
+   */
+  public function setPodSnapshotConfig(PodSnapshotConfig $podSnapshotConfig)
+  {
+    $this->podSnapshotConfig = $podSnapshotConfig;
+  }
+  /**
+   * @return PodSnapshotConfig
+   */
+  public function getPodSnapshotConfig()
+  {
+    return $this->podSnapshotConfig;
   }
   /**
    * Optional. Configuration for Ray Operator addon.
@@ -306,6 +369,38 @@ class AddonsConfig extends \Google\Model
     return $this->rayOperatorConfig;
   }
   /**
+   * Optional. Configuration for the slice controller add-on.
+   *
+   * @param SliceControllerConfig $sliceControllerConfig
+   */
+  public function setSliceControllerConfig(SliceControllerConfig $sliceControllerConfig)
+  {
+    $this->sliceControllerConfig = $sliceControllerConfig;
+  }
+  /**
+   * @return SliceControllerConfig
+   */
+  public function getSliceControllerConfig()
+  {
+    return $this->sliceControllerConfig;
+  }
+  /**
+   * Configuration for the Slurm Operator.
+   *
+   * @param SlurmOperatorConfig $slurmOperatorConfig
+   */
+  public function setSlurmOperatorConfig(SlurmOperatorConfig $slurmOperatorConfig)
+  {
+    $this->slurmOperatorConfig = $slurmOperatorConfig;
+  }
+  /**
+   * @return SlurmOperatorConfig
+   */
+  public function getSlurmOperatorConfig()
+  {
+    return $this->slurmOperatorConfig;
+  }
+  /**
    * Optional. Configuration for the StatefulHA add-on.
    *
    * @param StatefulHAConfig $statefulHaConfig
@@ -320,6 +415,22 @@ class AddonsConfig extends \Google\Model
   public function getStatefulHaConfig()
   {
     return $this->statefulHaConfig;
+  }
+  /**
+   * Optional. Configuration for the Wiz Sensor add-on.
+   *
+   * @param WizSensorConfig $wizSensorConfig
+   */
+  public function setWizSensorConfig(WizSensorConfig $wizSensorConfig)
+  {
+    $this->wizSensorConfig = $wizSensorConfig;
+  }
+  /**
+   * @return WizSensorConfig
+   */
+  public function getWizSensorConfig()
+  {
+    return $this->wizSensorConfig;
   }
 }
 

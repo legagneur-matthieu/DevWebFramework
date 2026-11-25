@@ -183,6 +183,8 @@ class GoogleCloudRunV2Task extends \Google\Collection
    * @var int
    */
   public $retried;
+  protected $sandboxesType = GoogleCloudRunV2SandboxConfiguration::class;
+  protected $sandboxesDataType = '';
   /**
    * Output only. Reserved for future use.
    *
@@ -239,6 +241,8 @@ class GoogleCloudRunV2Task extends \Google\Collection
   protected $volumesDataType = 'array';
   protected $vpcAccessType = GoogleCloudRunV2VpcAccess::class;
   protected $vpcAccessDataType = '';
+  protected $workloadIdentityConfigType = GoogleCloudRunV2WorkloadIdentityConfig::class;
+  protected $workloadIdentityConfigDataType = '';
 
   /**
    * Output only. Unstructured key value map that may be set by external tools
@@ -653,6 +657,22 @@ class GoogleCloudRunV2Task extends \Google\Collection
     return $this->retried;
   }
   /**
+   * Configuration for sandboxes.
+   *
+   * @param GoogleCloudRunV2SandboxConfiguration $sandboxes
+   */
+  public function setSandboxes(GoogleCloudRunV2SandboxConfiguration $sandboxes)
+  {
+    $this->sandboxes = $sandboxes;
+  }
+  /**
+   * @return GoogleCloudRunV2SandboxConfiguration
+   */
+  public function getSandboxes()
+  {
+    return $this->sandboxes;
+  }
+  /**
    * Output only. Reserved for future use.
    *
    * @param bool $satisfiesPzs
@@ -807,6 +827,22 @@ class GoogleCloudRunV2Task extends \Google\Collection
   public function getVpcAccess()
   {
     return $this->vpcAccess;
+  }
+  /**
+   * Optional. The Task's workload identity settings.
+   *
+   * @param GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig
+   */
+  public function setWorkloadIdentityConfig(GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig)
+  {
+    $this->workloadIdentityConfig = $workloadIdentityConfig;
+  }
+  /**
+   * @return GoogleCloudRunV2WorkloadIdentityConfig
+   */
+  public function getWorkloadIdentityConfig()
+  {
+    return $this->workloadIdentityConfig;
   }
 }
 

@@ -38,6 +38,8 @@ class Scope3FlightEmissions extends \Google\Model
   public const SOURCE_DISTANCE_BASED_EMISSIONS = 'DISTANCE_BASED_EMISSIONS';
   protected $flightType = Scope3FlightSegment::class;
   protected $flightDataType = '';
+  protected $modelVersionType = ModelVersion::class;
+  protected $modelVersionDataType = '';
   /**
    * Optional. The source of the emissions data.
    *
@@ -69,7 +71,7 @@ class Scope3FlightEmissions extends \Google\Model
   public $wtwEmissionsGramsPerPax;
 
   /**
-   * Required. Matches the flight identifiers in the request.
+   * Identifier. Matches the flight identifiers in the request.
    *
    * @param Scope3FlightSegment $flight
    */
@@ -83,6 +85,22 @@ class Scope3FlightEmissions extends \Google\Model
   public function getFlight()
   {
     return $this->flight;
+  }
+  /**
+   * Optional. The model version under which the emissions were computed.
+   *
+   * @param ModelVersion $modelVersion
+   */
+  public function setModelVersion(ModelVersion $modelVersion)
+  {
+    $this->modelVersion = $modelVersion;
+  }
+  /**
+   * @return ModelVersion
+   */
+  public function getModelVersion()
+  {
+    return $this->modelVersion;
   }
   /**
    * Optional. The source of the emissions data.

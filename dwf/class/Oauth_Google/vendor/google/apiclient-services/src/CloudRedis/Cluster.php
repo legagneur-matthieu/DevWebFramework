@@ -32,6 +32,10 @@ class Cluster extends \Google\Collection
    */
   public const AUTHORIZATION_MODE_AUTH_MODE_DISABLED = 'AUTH_MODE_DISABLED';
   /**
+   * Token based authorization mode
+   */
+  public const AUTHORIZATION_MODE_AUTH_MODE_TOKEN_AUTH = 'AUTH_MODE_TOKEN_AUTH';
+  /**
    * Node type unspecified
    */
   public const NODE_TYPE_NODE_TYPE_UNSPECIFIED = 'NODE_TYPE_UNSPECIFIED';
@@ -51,6 +55,34 @@ class Cluster extends \Google\Collection
    * Redis standard small node_type.
    */
   public const NODE_TYPE_REDIS_STANDARD_SMALL = 'REDIS_STANDARD_SMALL';
+  /**
+   * Redis highcpu medium node_type.
+   */
+  public const NODE_TYPE_REDIS_HIGHCPU_MEDIUM = 'REDIS_HIGHCPU_MEDIUM';
+  /**
+   * Redis standard large node_type.
+   */
+  public const NODE_TYPE_REDIS_STANDARD_LARGE = 'REDIS_STANDARD_LARGE';
+  /**
+   * Redis highmem 2xlarge node_type.
+   */
+  public const NODE_TYPE_REDIS_HIGHMEM_2XLARGE = 'REDIS_HIGHMEM_2XLARGE';
+  /**
+   * Server CA mode not specified.
+   */
+  public const SERVER_CA_MODE_SERVER_CA_MODE_UNSPECIFIED = 'SERVER_CA_MODE_UNSPECIFIED';
+  /**
+   * Each cluster has its own Google managed CA.
+   */
+  public const SERVER_CA_MODE_SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA = 'SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA';
+  /**
+   * The cluster uses Google managed shared CA in the region.
+   */
+  public const SERVER_CA_MODE_SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA = 'SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA';
+  /**
+   * The cluster uses customer managed CA from CAS.
+   */
+  public const SERVER_CA_MODE_SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA = 'SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA';
   /**
    * Not set.
    */
@@ -84,6 +116,22 @@ class Cluster extends \Google\Collection
    */
   public const TRANSIT_ENCRYPTION_MODE_TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION = 'TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION';
   protected $collection_key = 'pscServiceAttachments';
+  /**
+   * Optional. The ACL policy to be applied to the cluster.
+   *
+   * @var string
+   */
+  public $aclPolicy;
+  /**
+   * Optional. Output only. Deprecated: Indicates whether the ACL rules applied
+   * to the cluster are in sync.
+   *
+   * @deprecated
+   * @var bool
+   */
+  public $aclPolicyInSync;
+  protected $aclPolicyInfoType = AclPolicyInfo::class;
+  protected $aclPolicyInfoDataType = '';
   /**
    * Optional. Immutable. Deprecated, do not use.
    *
@@ -229,6 +277,12 @@ class Cluster extends \Google\Collection
    */
   public $replicaCount;
   /**
+   * Optional. Input only. Rotate the server certificates.
+   *
+   * @var bool
+   */
+  public $rotateServerCertificate;
+  /**
    * Optional. Output only. Reserved for future use.
    *
    * @var bool
@@ -240,6 +294,20 @@ class Cluster extends \Google\Collection
    * @var bool
    */
   public $satisfiesPzs;
+  /**
+   * Optional. Server CA mode for the cluster.
+   *
+   * @var string
+   */
+  public $serverCaMode;
+  /**
+   * Optional. Customer-managed CA pool for the cluster. Only applicable for
+   * BYOCA i.e. if server_ca_mode is SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA.
+   * Format: "projects/{project}/locations/{region}/caPools/{ca_pool}".
+   *
+   * @var string
+   */
+  public $serverCaPool;
   /**
    * Optional. Number of shards for the Redis cluster.
    *
@@ -285,6 +353,57 @@ class Cluster extends \Google\Collection
   protected $zoneDistributionConfigDataType = '';
 
   /**
+   * Optional. The ACL policy to be applied to the cluster.
+   *
+   * @param string $aclPolicy
+   */
+  public function setAclPolicy($aclPolicy)
+  {
+    $this->aclPolicy = $aclPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getAclPolicy()
+  {
+    return $this->aclPolicy;
+  }
+  /**
+   * Optional. Output only. Deprecated: Indicates whether the ACL rules applied
+   * to the cluster are in sync.
+   *
+   * @deprecated
+   * @param bool $aclPolicyInSync
+   */
+  public function setAclPolicyInSync($aclPolicyInSync)
+  {
+    $this->aclPolicyInSync = $aclPolicyInSync;
+  }
+  /**
+   * @deprecated
+   * @return bool
+   */
+  public function getAclPolicyInSync()
+  {
+    return $this->aclPolicyInSync;
+  }
+  /**
+   * Output only. Details of the applied ACL policy.
+   *
+   * @param AclPolicyInfo $aclPolicyInfo
+   */
+  public function setAclPolicyInfo(AclPolicyInfo $aclPolicyInfo)
+  {
+    $this->aclPolicyInfo = $aclPolicyInfo;
+  }
+  /**
+   * @return AclPolicyInfo
+   */
+  public function getAclPolicyInfo()
+  {
+    return $this->aclPolicyInfo;
+  }
+  /**
    * Optional. Immutable. Deprecated, do not use.
    *
    * @deprecated
@@ -326,7 +445,7 @@ class Cluster extends \Google\Collection
    * auth feature is disabled for the cluster.
    *
    * Accepted values: AUTH_MODE_UNSPECIFIED, AUTH_MODE_IAM_AUTH,
-   * AUTH_MODE_DISABLED
+   * AUTH_MODE_DISABLED, AUTH_MODE_TOKEN_AUTH
    *
    * @param self::AUTHORIZATION_MODE_* $authorizationMode
    */
@@ -646,7 +765,8 @@ class Cluster extends \Google\Collection
    * underlying machine-type of a redis node.
    *
    * Accepted values: NODE_TYPE_UNSPECIFIED, REDIS_SHARED_CORE_NANO,
-   * REDIS_HIGHMEM_MEDIUM, REDIS_HIGHMEM_XLARGE, REDIS_STANDARD_SMALL
+   * REDIS_HIGHMEM_MEDIUM, REDIS_HIGHMEM_XLARGE, REDIS_STANDARD_SMALL,
+   * REDIS_HIGHCPU_MEDIUM, REDIS_STANDARD_LARGE, REDIS_HIGHMEM_2XLARGE
    *
    * @param self::NODE_TYPE_* $nodeType
    */
@@ -788,6 +908,22 @@ class Cluster extends \Google\Collection
     return $this->replicaCount;
   }
   /**
+   * Optional. Input only. Rotate the server certificates.
+   *
+   * @param bool $rotateServerCertificate
+   */
+  public function setRotateServerCertificate($rotateServerCertificate)
+  {
+    $this->rotateServerCertificate = $rotateServerCertificate;
+  }
+  /**
+   * @return bool
+   */
+  public function getRotateServerCertificate()
+  {
+    return $this->rotateServerCertificate;
+  }
+  /**
    * Optional. Output only. Reserved for future use.
    *
    * @param bool $satisfiesPzi
@@ -818,6 +954,45 @@ class Cluster extends \Google\Collection
   public function getSatisfiesPzs()
   {
     return $this->satisfiesPzs;
+  }
+  /**
+   * Optional. Server CA mode for the cluster.
+   *
+   * Accepted values: SERVER_CA_MODE_UNSPECIFIED,
+   * SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA,
+   * SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA,
+   * SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA
+   *
+   * @param self::SERVER_CA_MODE_* $serverCaMode
+   */
+  public function setServerCaMode($serverCaMode)
+  {
+    $this->serverCaMode = $serverCaMode;
+  }
+  /**
+   * @return self::SERVER_CA_MODE_*
+   */
+  public function getServerCaMode()
+  {
+    return $this->serverCaMode;
+  }
+  /**
+   * Optional. Customer-managed CA pool for the cluster. Only applicable for
+   * BYOCA i.e. if server_ca_mode is SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA.
+   * Format: "projects/{project}/locations/{region}/caPools/{ca_pool}".
+   *
+   * @param string $serverCaPool
+   */
+  public function setServerCaPool($serverCaPool)
+  {
+    $this->serverCaPool = $serverCaPool;
+  }
+  /**
+   * @return string
+   */
+  public function getServerCaPool()
+  {
+    return $this->serverCaPool;
   }
   /**
    * Optional. Number of shards for the Redis cluster.

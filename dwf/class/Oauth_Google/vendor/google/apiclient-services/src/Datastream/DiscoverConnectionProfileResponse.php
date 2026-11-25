@@ -29,6 +29,10 @@ class DiscoverConnectionProfileResponse extends \Google\Model
   protected $postgresqlRdbmsDataType = '';
   protected $salesforceOrgType = SalesforceOrg::class;
   protected $salesforceOrgDataType = '';
+  protected $sourceCatalogType = SourceCatalog::class;
+  protected $sourceCatalogDataType = '';
+  protected $spannerDatabaseType = SpannerDatabase::class;
+  protected $spannerDatabaseDataType = '';
   protected $sqlServerRdbmsType = SqlServerRdbms::class;
   protected $sqlServerRdbmsDataType = '';
 
@@ -111,6 +115,39 @@ class DiscoverConnectionProfileResponse extends \Google\Model
   public function getSalesforceOrg()
   {
     return $this->salesforceOrg;
+  }
+  /**
+   * Enriched source catalog. This is mainly used to represent SaaS sources
+   * databases.
+   *
+   * @param SourceCatalog $sourceCatalog
+   */
+  public function setSourceCatalog(SourceCatalog $sourceCatalog)
+  {
+    $this->sourceCatalog = $sourceCatalog;
+  }
+  /**
+   * @return SourceCatalog
+   */
+  public function getSourceCatalog()
+  {
+    return $this->sourceCatalog;
+  }
+  /**
+   * Enriched Spanner database.
+   *
+   * @param SpannerDatabase $spannerDatabase
+   */
+  public function setSpannerDatabase(SpannerDatabase $spannerDatabase)
+  {
+    $this->spannerDatabase = $spannerDatabase;
+  }
+  /**
+   * @return SpannerDatabase
+   */
+  public function getSpannerDatabase()
+  {
+    return $this->spannerDatabase;
   }
   /**
    * Enriched SQLServer RDBMS object.

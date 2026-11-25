@@ -20,13 +20,17 @@ namespace Google\Service\NetworkManagement;
 class GKEMasterInfo extends \Google\Model
 {
   /**
-   * URI of a GKE cluster network.
+   * URI of the GKE cluster network. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @var string
    */
   public $clusterNetworkUri;
   /**
-   * URI of a GKE cluster.
+   * URI of the GKE cluster. Format: *
+   * `projects/{project}/locations/{location}/clusters/{cluster}` (regional
+   * cluster) * `projects/{project}/zones/{zone}/clusters/{cluster}` (zonal
+   * cluster)
    *
    * @var string
    */
@@ -51,7 +55,8 @@ class GKEMasterInfo extends \Google\Model
   public $internalIp;
 
   /**
-   * URI of a GKE cluster network.
+   * URI of the GKE cluster network. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @param string $clusterNetworkUri
    */
@@ -67,7 +72,10 @@ class GKEMasterInfo extends \Google\Model
     return $this->clusterNetworkUri;
   }
   /**
-   * URI of a GKE cluster.
+   * URI of the GKE cluster. Format: *
+   * `projects/{project}/locations/{location}/clusters/{cluster}` (regional
+   * cluster) * `projects/{project}/zones/{zone}/clusters/{cluster}` (zonal
+   * cluster)
    *
    * @param string $clusterUri
    */

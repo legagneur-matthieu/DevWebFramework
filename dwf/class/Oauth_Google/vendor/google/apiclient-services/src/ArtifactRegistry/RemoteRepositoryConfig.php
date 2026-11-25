@@ -40,6 +40,8 @@ class RemoteRepositoryConfig extends \Google\Model
   protected $dockerRepositoryDataType = '';
   protected $mavenRepositoryType = MavenRepository::class;
   protected $mavenRepositoryDataType = '';
+  protected $noCacheType = NoCacheFetching::class;
+  protected $noCacheDataType = '';
   protected $npmRepositoryType = NpmRepository::class;
   protected $npmRepositoryDataType = '';
   protected $pythonRepositoryType = PythonRepository::class;
@@ -146,6 +148,22 @@ class RemoteRepositoryConfig extends \Google\Model
   public function getMavenRepository()
   {
     return $this->mavenRepository;
+  }
+  /**
+   * The remote repository will act as a non-caching proxy.
+   *
+   * @param NoCacheFetching $noCache
+   */
+  public function setNoCache(NoCacheFetching $noCache)
+  {
+    $this->noCache = $noCache;
+  }
+  /**
+   * @return NoCacheFetching
+   */
+  public function getNoCache()
+  {
+    return $this->noCache;
   }
   /**
    * Specific settings for an Npm remote repository.

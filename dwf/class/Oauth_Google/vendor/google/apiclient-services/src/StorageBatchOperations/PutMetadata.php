@@ -20,64 +20,69 @@ namespace Google\Service\StorageBatchOperations;
 class PutMetadata extends \Google\Model
 {
   /**
-   * Optional. Updates objects Cache-Control fixed metadata. Unset values will
-   * be ignored. Set empty values to clear the metadata. Additionally, the value
-   * for Custom-Time cannot decrease. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#caching_data.
+   * Optional. Updates the objects `Cache-Control` fixed metadata. Unset values
+   * in the request are ignored. To clear the metadata, set an empty value.
+   * Additionally, the value for `Custom-Time` can't decrease. For details, see
+   * [Cache-
+   * Control](https://cloud.google.com/storage/docs/metadata#caching_data).
    *
    * @var string
    */
   public $cacheControl;
   /**
-   * Optional. Updates objects Content-Disposition fixed metadata. Unset values
-   * will be ignored. Set empty values to clear the metadata. Refer
-   * https://cloud.google.com/storage/docs/metadata#content-disposition for
-   * additional documentation.
+   * Optional. Updates objects `Content-Disposition` fixed metadata. Unset
+   * values in the request are ignored. To clear the metadata, set an empty
+   * value. For details, see [Content-
+   * Disposition](https://cloud.google.com/storage/docs/metadata#content-
+   * disposition).
    *
    * @var string
    */
   public $contentDisposition;
   /**
-   * Optional. Updates objects Content-Encoding fixed metadata. Unset values
-   * will be ignored. Set empty values to clear the metadata. Refer to
-   * documentation in https://cloud.google.com/storage/docs/metadata#content-
-   * encoding.
+   * Optional. Updates the objects `Content-Encoding` fixed metadata. Unset
+   * values in the request are ignored. To clear the metadata, set an empty
+   * value. For details, see [Content-
+   * Encoding](https://cloud.google.com/storage/docs/metadata#content-encoding).
    *
    * @var string
    */
   public $contentEncoding;
   /**
-   * Optional. Updates objects Content-Language fixed metadata. Refer to ISO
-   * 639-1 language codes for typical values of this metadata. Max length 100
-   * characters. Unset values will be ignored. Set empty values to clear the
-   * metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#content-language.
+   * Optional. Updates the objects `Content-Language` fixed metadata. Metadata
+   * values must use ISO 639-1 language codes. The maximum length for metadata
+   * values is 100 characters. Unset values in the request are ignored. To clear
+   * the metadata, set an empty value. For details, see [Content-
+   * Language](https://cloud.google.com/storage/docs/metadata#content-language).
    *
    * @var string
    */
   public $contentLanguage;
   /**
-   * Optional. Updates objects Content-Type fixed metadata. Unset values will be
-   * ignored. Set empty values to clear the metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#content-type
+   * Optional. Updates objects `Content-Type` fixed metadata. Unset values in
+   * the request are ignored. To clear the metadata, set an empty value. For
+   * details, see [Content-
+   * Type](https://cloud.google.com/storage/docs/metadata#content-type).
    *
    * @var string
    */
   public $contentType;
   /**
-   * Optional. Updates objects custom metadata. Adds or sets individual custom
-   * metadata key value pairs on objects. Keys that are set with empty custom
-   * metadata values will have its value cleared. Existing custom metadata not
-   * specified with this flag is not changed. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#custom-metadata
+   * Optional. Updates the object's custom metadata. This operation adds or sets
+   * individual custom metadata key-value pairs. Keys specified with empty
+   * values have their values cleared. Existing custom metadata keys not
+   * included in the request remain unchanged. For details, see [Custom
+   * metadata](https://cloud.google.com/storage/docs/metadata#custom-metadata).
    *
    * @var string[]
    */
   public $customMetadata;
   /**
-   * Optional. Updates objects Custom-Time fixed metadata. Unset values will be
-   * ignored. Set empty values to clear the metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#custom-time.
+   * Optional. Updates the objects `Custom-Time` fixed metadata. Unset values in
+   * the request are ignored. To clear the metadata, set an empty value. The
+   * time must be specified in RFC 3339 format, for example `YYYY-MM-
+   * DD'T'HH:MM:SS'Z'` or `YYYY-MM-DD'T'HH:MM:SS.SS'Z'`. For details, see
+   * [Custom-Time](https://cloud.google.com/storage/docs/metadata#custom-time).
    *
    * @var string
    */
@@ -86,10 +91,11 @@ class PutMetadata extends \Google\Model
   protected $objectRetentionDataType = '';
 
   /**
-   * Optional. Updates objects Cache-Control fixed metadata. Unset values will
-   * be ignored. Set empty values to clear the metadata. Additionally, the value
-   * for Custom-Time cannot decrease. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#caching_data.
+   * Optional. Updates the objects `Cache-Control` fixed metadata. Unset values
+   * in the request are ignored. To clear the metadata, set an empty value.
+   * Additionally, the value for `Custom-Time` can't decrease. For details, see
+   * [Cache-
+   * Control](https://cloud.google.com/storage/docs/metadata#caching_data).
    *
    * @param string $cacheControl
    */
@@ -105,10 +111,11 @@ class PutMetadata extends \Google\Model
     return $this->cacheControl;
   }
   /**
-   * Optional. Updates objects Content-Disposition fixed metadata. Unset values
-   * will be ignored. Set empty values to clear the metadata. Refer
-   * https://cloud.google.com/storage/docs/metadata#content-disposition for
-   * additional documentation.
+   * Optional. Updates objects `Content-Disposition` fixed metadata. Unset
+   * values in the request are ignored. To clear the metadata, set an empty
+   * value. For details, see [Content-
+   * Disposition](https://cloud.google.com/storage/docs/metadata#content-
+   * disposition).
    *
    * @param string $contentDisposition
    */
@@ -124,10 +131,10 @@ class PutMetadata extends \Google\Model
     return $this->contentDisposition;
   }
   /**
-   * Optional. Updates objects Content-Encoding fixed metadata. Unset values
-   * will be ignored. Set empty values to clear the metadata. Refer to
-   * documentation in https://cloud.google.com/storage/docs/metadata#content-
-   * encoding.
+   * Optional. Updates the objects `Content-Encoding` fixed metadata. Unset
+   * values in the request are ignored. To clear the metadata, set an empty
+   * value. For details, see [Content-
+   * Encoding](https://cloud.google.com/storage/docs/metadata#content-encoding).
    *
    * @param string $contentEncoding
    */
@@ -143,11 +150,11 @@ class PutMetadata extends \Google\Model
     return $this->contentEncoding;
   }
   /**
-   * Optional. Updates objects Content-Language fixed metadata. Refer to ISO
-   * 639-1 language codes for typical values of this metadata. Max length 100
-   * characters. Unset values will be ignored. Set empty values to clear the
-   * metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#content-language.
+   * Optional. Updates the objects `Content-Language` fixed metadata. Metadata
+   * values must use ISO 639-1 language codes. The maximum length for metadata
+   * values is 100 characters. Unset values in the request are ignored. To clear
+   * the metadata, set an empty value. For details, see [Content-
+   * Language](https://cloud.google.com/storage/docs/metadata#content-language).
    *
    * @param string $contentLanguage
    */
@@ -163,9 +170,10 @@ class PutMetadata extends \Google\Model
     return $this->contentLanguage;
   }
   /**
-   * Optional. Updates objects Content-Type fixed metadata. Unset values will be
-   * ignored. Set empty values to clear the metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#content-type
+   * Optional. Updates objects `Content-Type` fixed metadata. Unset values in
+   * the request are ignored. To clear the metadata, set an empty value. For
+   * details, see [Content-
+   * Type](https://cloud.google.com/storage/docs/metadata#content-type).
    *
    * @param string $contentType
    */
@@ -181,11 +189,11 @@ class PutMetadata extends \Google\Model
     return $this->contentType;
   }
   /**
-   * Optional. Updates objects custom metadata. Adds or sets individual custom
-   * metadata key value pairs on objects. Keys that are set with empty custom
-   * metadata values will have its value cleared. Existing custom metadata not
-   * specified with this flag is not changed. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#custom-metadata
+   * Optional. Updates the object's custom metadata. This operation adds or sets
+   * individual custom metadata key-value pairs. Keys specified with empty
+   * values have their values cleared. Existing custom metadata keys not
+   * included in the request remain unchanged. For details, see [Custom
+   * metadata](https://cloud.google.com/storage/docs/metadata#custom-metadata).
    *
    * @param string[] $customMetadata
    */
@@ -201,9 +209,11 @@ class PutMetadata extends \Google\Model
     return $this->customMetadata;
   }
   /**
-   * Optional. Updates objects Custom-Time fixed metadata. Unset values will be
-   * ignored. Set empty values to clear the metadata. Refer to documentation in
-   * https://cloud.google.com/storage/docs/metadata#custom-time.
+   * Optional. Updates the objects `Custom-Time` fixed metadata. Unset values in
+   * the request are ignored. To clear the metadata, set an empty value. The
+   * time must be specified in RFC 3339 format, for example `YYYY-MM-
+   * DD'T'HH:MM:SS'Z'` or `YYYY-MM-DD'T'HH:MM:SS.SS'Z'`. For details, see
+   * [Custom-Time](https://cloud.google.com/storage/docs/metadata#custom-time).
    *
    * @param string $customTime
    */
@@ -219,11 +229,14 @@ class PutMetadata extends \Google\Model
     return $this->customTime;
   }
   /**
-   * Optional. Updates objects retention lock configuration. Unset values will
-   * be ignored. Set empty values to clear the retention for the object with
-   * existing `Unlocked` retention mode. Object with existing `Locked` retention
-   * mode cannot be cleared or reduce retain_until_time. Refer to documentation
-   * in https://cloud.google.com/storage/docs/object-lock
+   * Optional. Updates an object's retention configuration. To clear an object's
+   * retention, both `retentionMode` and `retainUntilTime` must be left unset
+   * (omitted). Setting `retentionMode` to `RETENTION_MODE_UNSPECIFIED` is
+   * treated as a no-op. Unlike an unset field, it doesn't modify or clear the
+   * retention settings. An object with `LOCKED` retention mode can't have its
+   * retention cleared or its `retainUntilTime` reduced. For more information,
+   * see [Object retention](https://cloud.google.com/storage/docs/batch-
+   * operations/create-manage-batch-operation-jobs#retain-until-time).
    *
    * @param ObjectRetention $objectRetention
    */

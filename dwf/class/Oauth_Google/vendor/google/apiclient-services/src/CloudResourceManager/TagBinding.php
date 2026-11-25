@@ -22,7 +22,9 @@ class TagBinding extends \Google\Model
   /**
    * Output only. The name of the TagBinding. This is a String of the form:
    * `tagBindings/{full-resource-name}/{tag-value-name}` (e.g. `tagBindings/%2F%
-   * 2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagValues/456`).
+   * 2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagValues/456`) or
+   * `tagBindings/{full-resource-name}/{tag-key-name}` (e.g. `tagBindings/%2F%2F
+   * cloudresourcemanager.googleapis.com%2Fprojects%2F123/tagKeys/123`).
    *
    * @var string
    */
@@ -41,10 +43,11 @@ class TagBinding extends \Google\Model
    */
   public $tagValue;
   /**
-   * The namespaced name for the TagValue of the TagBinding. Must be in the
-   * format `{parent_id}/{tag_key_short_name}/{short_name}`. For methods that
-   * support TagValue namespaced name, only one of tag_value_namespaced_name or
-   * tag_value may be filled. Requests with both fields will be rejected.
+   * Optional. The namespaced name for the TagValue of the TagBinding. Must be
+   * in the format `{parent_id}/{tag_key_short_name}/{short_name}`. For methods
+   * that support TagValue namespaced name, only one of
+   * tag_value_namespaced_name or tag_value may be filled. Requests with both
+   * fields will be rejected.
    *
    * @var string
    */
@@ -53,7 +56,9 @@ class TagBinding extends \Google\Model
   /**
    * Output only. The name of the TagBinding. This is a String of the form:
    * `tagBindings/{full-resource-name}/{tag-value-name}` (e.g. `tagBindings/%2F%
-   * 2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagValues/456`).
+   * 2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagValues/456`) or
+   * `tagBindings/{full-resource-name}/{tag-key-name}` (e.g. `tagBindings/%2F%2F
+   * cloudresourcemanager.googleapis.com%2Fprojects%2F123/tagKeys/123`).
    *
    * @param string $name
    */
@@ -102,10 +107,11 @@ class TagBinding extends \Google\Model
     return $this->tagValue;
   }
   /**
-   * The namespaced name for the TagValue of the TagBinding. Must be in the
-   * format `{parent_id}/{tag_key_short_name}/{short_name}`. For methods that
-   * support TagValue namespaced name, only one of tag_value_namespaced_name or
-   * tag_value may be filled. Requests with both fields will be rejected.
+   * Optional. The namespaced name for the TagValue of the TagBinding. Must be
+   * in the format `{parent_id}/{tag_key_short_name}/{short_name}`. For methods
+   * that support TagValue namespaced name, only one of
+   * tag_value_namespaced_name or tag_value may be filled. Requests with both
+   * fields will be rejected.
    *
    * @param string $tagValueNamespacedName
    */

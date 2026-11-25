@@ -43,6 +43,13 @@ class Version extends \Google\Collection
    * @var bool
    */
   public $appEngineApis;
+  /**
+   * List of specific App Engine Bundled Services that are enabled for this
+   * Version.
+   *
+   * @var string[]
+   */
+  public $appEngineBundledServices;
   protected $automaticScalingType = AutomaticScaling::class;
   protected $automaticScalingDataType = '';
   protected $basicScalingType = BasicScaling::class;
@@ -239,6 +246,8 @@ class Version extends \Google\Collection
    * @var bool
    */
   public $vm;
+  protected $vpcAccessType = VpcAccess::class;
+  protected $vpcAccessDataType = '';
   protected $vpcAccessConnectorType = VpcAccessConnector::class;
   protected $vpcAccessConnectorDataType = '';
   /**
@@ -285,6 +294,23 @@ class Version extends \Google\Collection
   public function getAppEngineApis()
   {
     return $this->appEngineApis;
+  }
+  /**
+   * List of specific App Engine Bundled Services that are enabled for this
+   * Version.
+   *
+   * @param string[] $appEngineBundledServices
+   */
+  public function setAppEngineBundledServices($appEngineBundledServices)
+  {
+    $this->appEngineBundledServices = $appEngineBundledServices;
+  }
+  /**
+   * @return string[]
+   */
+  public function getAppEngineBundledServices()
+  {
+    return $this->appEngineBundledServices;
   }
   /**
    * Automatic scaling is based on request rate, response latencies, and other
@@ -944,6 +970,22 @@ class Version extends \Google\Collection
   public function getVm()
   {
     return $this->vm;
+  }
+  /**
+   * Enables VPC access connectivity for standard apps.
+   *
+   * @param VpcAccess $vpcAccess
+   */
+  public function setVpcAccess(VpcAccess $vpcAccess)
+  {
+    $this->vpcAccess = $vpcAccess;
+  }
+  /**
+   * @return VpcAccess
+   */
+  public function getVpcAccess()
+  {
+    return $this->vpcAccess;
   }
   /**
    * Enables VPC connectivity for standard apps.

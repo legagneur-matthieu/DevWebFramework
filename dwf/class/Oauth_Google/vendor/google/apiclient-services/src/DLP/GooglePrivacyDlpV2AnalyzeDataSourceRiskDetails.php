@@ -39,7 +39,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
   protected $requestedSourceTableDataType = '';
 
   /**
-   * Categorical stats result
+   * Output only. Categorical stats result
    *
    * @param GooglePrivacyDlpV2CategoricalStatsResult $categoricalStatsResult
    */
@@ -55,7 +55,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
     return $this->categoricalStatsResult;
   }
   /**
-   * Delta-presence result
+   * Output only. Delta-presence result
    *
    * @param GooglePrivacyDlpV2DeltaPresenceEstimationResult $deltaPresenceEstimationResult
    */
@@ -71,7 +71,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
     return $this->deltaPresenceEstimationResult;
   }
   /**
-   * K-anonymity result
+   * Output only. K-anonymity result
    *
    * @param GooglePrivacyDlpV2KAnonymityResult $kAnonymityResult
    */
@@ -87,7 +87,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
     return $this->kAnonymityResult;
   }
   /**
-   * K-map result
+   * Output only. K-map result
    *
    * @param GooglePrivacyDlpV2KMapEstimationResult $kMapEstimationResult
    */
@@ -103,7 +103,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
     return $this->kMapEstimationResult;
   }
   /**
-   * L-divesity result
+   * Output only. L-divesity result
    *
    * @param GooglePrivacyDlpV2LDiversityResult $lDiversityResult
    */
@@ -119,7 +119,7 @@ class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails extends \Google\Model
     return $this->lDiversityResult;
   }
   /**
-   * Numerical stats result
+   * Output only. Numerical stats result
    *
    * @param GooglePrivacyDlpV2NumericalStatsResult $numericalStatsResult
    */

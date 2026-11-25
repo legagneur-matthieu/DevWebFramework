@@ -38,6 +38,8 @@ use Google\Service\Compute\TestPermissionsResponse;
  */
 class FirewallPolicies extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Inserts an association for the specified firewall policy.
    * (firewallPolicies.addAssociation)
@@ -325,13 +327,6 @@ class FirewallPolicies extends \Google\Service\Resource
    * @opt_param string parentId Parent ID for this request. The ID can be either
    * be "folders/[FOLDER_ID]" if the parent is a folder or
    * "organizations/[ORGANIZATION_ID]" if the parent is an organization.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return FirewallPolicyList
    * @throws \Google\Service\Exception
    */
@@ -347,6 +342,10 @@ class FirewallPolicies extends \Google\Service\Resource
    *
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool includeInheritedPolicies If set to "true", the response will
+   * contain a list of all associations for the containing folders and the
+   * containing organization of the target. The parameter has no effect if the
+   * target is an organization.
    * @opt_param string targetResource The target resource to list associations. It
    * is an organization, or a folder.
    * @return FirewallPoliciesListAssociationsResponse

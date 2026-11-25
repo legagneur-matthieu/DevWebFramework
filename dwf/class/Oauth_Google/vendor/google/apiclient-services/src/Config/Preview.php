@@ -108,11 +108,11 @@ class Preview extends \Google\Collection
    */
   public $annotations;
   /**
-   * Optional. User-defined location of Cloud Build logs, artifacts, and in
-   * Google Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket
-   * will be bootstrapped if the field is not set or empty Default Bucket
-   * Format: `gs://--blueprint-config` Constraints: - The bucket needs to be in
-   * the same project as the deployment - The path cannot be within the path of
+   * User-defined location of Cloud Build logs, artifacts, and in Google Cloud
+   * Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
+   * bootstrapped if the field is not set or empty Default Bucket Format:
+   * `gs://--blueprint-config` Constraints: - The bucket needs to be in the same
+   * project as the deployment - The path cannot be within the path of
    * `gcs_source` If omitted and deployment resource ref provided has
    * artifacts_gcs_bucket defined, that artifact bucket is used.
    *
@@ -132,10 +132,10 @@ class Preview extends \Google\Collection
    */
   public $createTime;
   /**
-   * Optional. Optional deployment reference. If specified, the preview will be
-   * performed using the provided deployment's current state and use any
-   * relevant fields from the deployment unless explicitly specified in the
-   * preview create request.
+   * Optional. Deployment reference. If specified, the preview will be performed
+   * using the provided deployment's current state and use any relevant fields
+   * from the deployment unless explicitly specified in the preview create
+   * request.
    *
    * @var string
    */
@@ -147,9 +147,8 @@ class Preview extends \Google\Collection
    */
   public $errorCode;
   /**
-   * Output only. Link to tf-error.ndjson file, which contains the full list of
-   * the errors encountered during a Terraform preview. Format:
-   * `gs://{bucket}/{object}`.
+   * Output only. Link to the error log file, which contains the full list of
+   * the errors encountered during a preview. Format: `gs://{bucket}/{object}`.
    *
    * @var string
    */
@@ -212,15 +211,14 @@ class Preview extends \Google\Collection
    */
   public $tfVersion;
   /**
-   * Optional. The user-specified Terraform version constraint. Example:
-   * "=1.3.10".
+   * The user-specified Terraform version constraint. Example: "=1.3.10".
    *
    * @var string
    */
   public $tfVersionConstraint;
   /**
-   * Optional. The user-specified Worker Pool resource in which the Cloud Build
-   * job will execute. Format
+   * The user-specified Worker Pool resource in which the Cloud Build job will
+   * execute. Format
    * projects/{project}/locations/{location}/workerPools/{workerPoolId} If this
    * field is unspecified, the default Cloud Build worker pool will be used. If
    * omitted and deployment resource ref provided has worker_pool defined, that
@@ -250,11 +248,11 @@ class Preview extends \Google\Collection
     return $this->annotations;
   }
   /**
-   * Optional. User-defined location of Cloud Build logs, artifacts, and in
-   * Google Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket
-   * will be bootstrapped if the field is not set or empty Default Bucket
-   * Format: `gs://--blueprint-config` Constraints: - The bucket needs to be in
-   * the same project as the deployment - The path cannot be within the path of
+   * User-defined location of Cloud Build logs, artifacts, and in Google Cloud
+   * Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
+   * bootstrapped if the field is not set or empty Default Bucket Format:
+   * `gs://--blueprint-config` Constraints: - The bucket needs to be in the same
+   * project as the deployment - The path cannot be within the path of
    * `gcs_source` If omitted and deployment resource ref provided has
    * artifacts_gcs_bucket defined, that artifact bucket is used.
    *
@@ -304,10 +302,10 @@ class Preview extends \Google\Collection
     return $this->createTime;
   }
   /**
-   * Optional. Optional deployment reference. If specified, the preview will be
-   * performed using the provided deployment's current state and use any
-   * relevant fields from the deployment unless explicitly specified in the
-   * preview create request.
+   * Optional. Deployment reference. If specified, the preview will be performed
+   * using the provided deployment's current state and use any relevant fields
+   * from the deployment unless explicitly specified in the preview create
+   * request.
    *
    * @param string $deployment
    */
@@ -344,9 +342,8 @@ class Preview extends \Google\Collection
     return $this->errorCode;
   }
   /**
-   * Output only. Link to tf-error.ndjson file, which contains the full list of
-   * the errors encountered during a Terraform preview. Format:
-   * `gs://{bucket}/{object}`.
+   * Output only. Link to the error log file, which contains the full list of
+   * the errors encountered during a preview. Format: `gs://{bucket}/{object}`.
    *
    * @param string $errorLogs
    */
@@ -565,8 +562,7 @@ class Preview extends \Google\Collection
     return $this->tfVersion;
   }
   /**
-   * Optional. The user-specified Terraform version constraint. Example:
-   * "=1.3.10".
+   * The user-specified Terraform version constraint. Example: "=1.3.10".
    *
    * @param string $tfVersionConstraint
    */
@@ -582,8 +578,8 @@ class Preview extends \Google\Collection
     return $this->tfVersionConstraint;
   }
   /**
-   * Optional. The user-specified Worker Pool resource in which the Cloud Build
-   * job will execute. Format
+   * The user-specified Worker Pool resource in which the Cloud Build job will
+   * execute. Format
    * projects/{project}/locations/{location}/workerPools/{workerPoolId} If this
    * field is unspecified, the default Cloud Build worker pool will be used. If
    * omitted and deployment resource ref provided has worker_pool defined, that

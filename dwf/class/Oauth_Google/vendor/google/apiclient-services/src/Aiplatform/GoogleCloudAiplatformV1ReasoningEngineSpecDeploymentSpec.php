@@ -20,6 +20,8 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\Collection
 {
   protected $collection_key = 'secretEnv';
+  protected $agentGatewayConfigType = GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpecAgentGatewayConfig::class;
+  protected $agentGatewayConfigDataType = '';
   /**
    * Optional. Concurrency for each container and agent server. Recommended
    * value: 2 * cpu + 1. Defaults to 9.
@@ -29,6 +31,8 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\C
   public $containerConcurrency;
   protected $envType = GoogleCloudAiplatformV1EnvVar::class;
   protected $envDataType = 'array';
+  protected $keepAliveProbeType = GoogleCloudAiplatformV1KeepAliveProbe::class;
+  protected $keepAliveProbeDataType = '';
   /**
    * Optional. The maximum number of application instances that can be launched
    * to handle increased traffic. Defaults to 100. Range: [1, 1000]. If VPC-SC
@@ -39,7 +43,7 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\C
   public $maxInstances;
   /**
    * Optional. The minimum number of application instances that will be kept
-   * running at all times. Defaults to 1. Range: [0, 10].
+   * running at all times. Defaults to 1. Range: [0, 75].
    *
    * @var int
    */
@@ -61,6 +65,22 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\C
   protected $secretEnvType = GoogleCloudAiplatformV1SecretEnvVar::class;
   protected $secretEnvDataType = 'array';
 
+  /**
+   * Optional. Agent Gateway configuration for the Reasoning Engine deployment.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpecAgentGatewayConfig $agentGatewayConfig
+   */
+  public function setAgentGatewayConfig(GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpecAgentGatewayConfig $agentGatewayConfig)
+  {
+    $this->agentGatewayConfig = $agentGatewayConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpecAgentGatewayConfig
+   */
+  public function getAgentGatewayConfig()
+  {
+    return $this->agentGatewayConfig;
+  }
   /**
    * Optional. Concurrency for each container and agent server. Recommended
    * value: 2 * cpu + 1. Defaults to 9.
@@ -97,6 +117,24 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\C
     return $this->env;
   }
   /**
+   * Optional. Specifies the configuration for keep-alive probe. Contains
+   * configuration on a specified endpoint that a deployment host should use to
+   * keep the container alive based on the probe settings.
+   *
+   * @param GoogleCloudAiplatformV1KeepAliveProbe $keepAliveProbe
+   */
+  public function setKeepAliveProbe(GoogleCloudAiplatformV1KeepAliveProbe $keepAliveProbe)
+  {
+    $this->keepAliveProbe = $keepAliveProbe;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1KeepAliveProbe
+   */
+  public function getKeepAliveProbe()
+  {
+    return $this->keepAliveProbe;
+  }
+  /**
    * Optional. The maximum number of application instances that can be launched
    * to handle increased traffic. Defaults to 100. Range: [1, 1000]. If VPC-SC
    * or PSC-I is enabled, the acceptable range is [1, 100].
@@ -116,7 +154,7 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec extends \Google\C
   }
   /**
    * Optional. The minimum number of application instances that will be kept
-   * running at all times. Defaults to 1. Range: [0, 10].
+   * running at all times. Defaults to 1. Range: [0, 75].
    *
    * @param int $minInstances
    */

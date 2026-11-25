@@ -45,9 +45,10 @@ class Role extends \Google\Model
    * device.The app having this role type is set as the preferred home intent
    * and allowlisted for lock task mode. When there is an app with this role
    * type, status bar will be automatically disabled.This is preferable to
-   * setting installType to KIOSK.On Android 11 and above, the user control is
-   * disallowed but userControlSettings can be set to USER_CONTROL_ALLOWED to
-   * allow user control for the app with this role.
+   * setting installType to KIOSK.On Android 11 and above, when an app has this
+   * role, the user control is disallowed for all apps. The IT admin can set
+   * userControlSettings to USER_CONTROL_ALLOWED to allow user control for
+   * specific apps.
    */
   public const ROLE_TYPE_KIOSK = 'KIOSK';
   /**
@@ -67,6 +68,8 @@ class Role extends \Google\Model
    * USER_CONTROL_ALLOWED for the app with this role.
    */
   public const ROLE_TYPE_SYSTEM_HEALTH_MONITORING = 'SYSTEM_HEALTH_MONITORING';
+  protected $extraCapabilitiesType = ExtraCapabilities::class;
+  protected $extraCapabilitiesDataType = '';
   /**
    * Required. The type of the role an app can have.
    *
@@ -74,6 +77,23 @@ class Role extends \Google\Model
    */
   public $roleType;
 
+  /**
+   * Optional. Extra capabilities configured specifically for this role. Not all
+   * role types support or utilize extra capabilities.
+   *
+   * @param ExtraCapabilities $extraCapabilities
+   */
+  public function setExtraCapabilities(ExtraCapabilities $extraCapabilities)
+  {
+    $this->extraCapabilities = $extraCapabilities;
+  }
+  /**
+   * @return ExtraCapabilities
+   */
+  public function getExtraCapabilities()
+  {
+    return $this->extraCapabilities;
+  }
   /**
    * Required. The type of the role an app can have.
    *

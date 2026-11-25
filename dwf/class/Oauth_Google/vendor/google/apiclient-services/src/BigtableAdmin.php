@@ -69,6 +69,7 @@ class BigtableAdmin extends \Google\Service
   public $projects_instances_clusters;
   public $projects_instances_clusters_backups;
   public $projects_instances_clusters_hotTablets;
+  public $projects_instances_clusters_memoryLayers;
   public $projects_instances_logicalViews;
   public $projects_instances_materializedViews;
   public $projects_instances_tables;
@@ -386,6 +387,16 @@ class BigtableAdmin extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getMemoryLayer' => [
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'list' => [
               'path' => 'v2/{+parent}/clusters',
               'httpMethod' => 'GET',
@@ -422,6 +433,20 @@ class BigtableAdmin extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'updateMemoryLayer' => [
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -588,6 +613,34 @@ class BigtableAdmin extends \Google\Service
           ]
         ]
     );
+    $this->projects_instances_clusters_memoryLayers = new BigtableAdmin\Resource\ProjectsInstancesClustersMemoryLayers(
+        $this,
+        $this->serviceName,
+        'memoryLayers',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v2/{+parent}/memoryLayers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->projects_instances_logicalViews = new BigtableAdmin\Resource\ProjectsInstancesLogicalViews(
         $this,
         $this->serviceName,
@@ -712,6 +765,10 @@ class BigtableAdmin extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'ignoreWarnings' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'materializedViewId' => [
                   'location' => 'query',

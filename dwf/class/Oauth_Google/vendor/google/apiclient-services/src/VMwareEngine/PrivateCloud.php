@@ -83,6 +83,8 @@ class PrivateCloud extends \Google\Model
    * @var string
    */
   public $description;
+  protected $encryptionConfigType = EncryptionConfig::class;
+  protected $encryptionConfigDataType = '';
   /**
    * Output only. Time when the resource will be irreversibly deleted.
    *
@@ -181,6 +183,23 @@ class PrivateCloud extends \Google\Model
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * Optional. Encryption configuration for the private cloud. If this field is
+   * left unspecified, Google default encryption is used.
+   *
+   * @param EncryptionConfig $encryptionConfig
+   */
+  public function setEncryptionConfig(EncryptionConfig $encryptionConfig)
+  {
+    $this->encryptionConfig = $encryptionConfig;
+  }
+  /**
+   * @return EncryptionConfig
+   */
+  public function getEncryptionConfig()
+  {
+    return $this->encryptionConfig;
   }
   /**
    * Output only. Time when the resource will be irreversibly deleted.

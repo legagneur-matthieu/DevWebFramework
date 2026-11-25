@@ -63,6 +63,8 @@ class GoogleCloudRunV2TaskTemplate extends \Google\Collection
   public $maxRetries;
   protected $nodeSelectorType = GoogleCloudRunV2NodeSelector::class;
   protected $nodeSelectorDataType = '';
+  protected $sandboxesType = GoogleCloudRunV2SandboxConfiguration::class;
+  protected $sandboxesDataType = '';
   /**
    * Optional. Email address of the IAM service account associated with the Task
    * of a Job. The service account represents the identity of the running task,
@@ -85,6 +87,8 @@ class GoogleCloudRunV2TaskTemplate extends \Google\Collection
   protected $volumesDataType = 'array';
   protected $vpcAccessType = GoogleCloudRunV2VpcAccess::class;
   protected $vpcAccessDataType = '';
+  protected $workloadIdentityConfigType = GoogleCloudRunV2WorkloadIdentityConfig::class;
+  protected $workloadIdentityConfigDataType = '';
 
   /**
    * Holds the single container that defines the unit of execution for this
@@ -190,6 +194,22 @@ class GoogleCloudRunV2TaskTemplate extends \Google\Collection
     return $this->nodeSelector;
   }
   /**
+   * Optional. Configuration for sandboxes.
+   *
+   * @param GoogleCloudRunV2SandboxConfiguration $sandboxes
+   */
+  public function setSandboxes(GoogleCloudRunV2SandboxConfiguration $sandboxes)
+  {
+    $this->sandboxes = $sandboxes;
+  }
+  /**
+   * @return GoogleCloudRunV2SandboxConfiguration
+   */
+  public function getSandboxes()
+  {
+    return $this->sandboxes;
+  }
+  /**
    * Optional. Email address of the IAM service account associated with the Task
    * of a Job. The service account represents the identity of the running task,
    * and determines what permissions the task has. If not provided, the task
@@ -260,6 +280,22 @@ class GoogleCloudRunV2TaskTemplate extends \Google\Collection
   public function getVpcAccess()
   {
     return $this->vpcAccess;
+  }
+  /**
+   * Optional. The Task's workload identity settings.
+   *
+   * @param GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig
+   */
+  public function setWorkloadIdentityConfig(GoogleCloudRunV2WorkloadIdentityConfig $workloadIdentityConfig)
+  {
+    $this->workloadIdentityConfig = $workloadIdentityConfig;
+  }
+  /**
+   * @return GoogleCloudRunV2WorkloadIdentityConfig
+   */
+  public function getWorkloadIdentityConfig()
+  {
+    return $this->workloadIdentityConfig;
   }
 }
 

@@ -20,7 +20,8 @@ namespace Google\Service\NetworkManagement;
 class DirectVpcEgressConnectionInfo extends \Google\Model
 {
   /**
-   * URI of direct access network.
+   * URI of the VPC network for direct egress. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @var string
    */
@@ -44,14 +45,16 @@ class DirectVpcEgressConnectionInfo extends \Google\Model
    */
   public $selectedIpRange;
   /**
-   * URI of direct access subnetwork.
+   * URI of the subnetwork for direct egress. Format:
+   * `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
    *
    * @var string
    */
   public $subnetworkUri;
 
   /**
-   * URI of direct access network.
+   * URI of the VPC network for direct egress. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @param string $networkUri
    */
@@ -115,7 +118,8 @@ class DirectVpcEgressConnectionInfo extends \Google\Model
     return $this->selectedIpRange;
   }
   /**
-   * URI of direct access subnetwork.
+   * URI of the subnetwork for direct egress. Format:
+   * `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
    *
    * @param string $subnetworkUri
    */

@@ -49,15 +49,15 @@ class ProjectsSnapshots extends \Google\Service\Resource
    * `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field.
    * If the name is not provided in the request, the server will assign a random
    * name for this snapshot on the same project as the subscription, conforming to
-   * the [resource name format] (https://cloud.google.com/pubsub/docs/pubsub-
+   * the [resource name format]( https://cloud.google.com/pubsub/docs/pubsub-
    * basics#resource_names). The generated name is populated in the returned
    * Snapshot object. Note that for REST API requests, you must specify a name in
    * the request. (snapshots.create)
    *
-   * @param string $name Required. Identifier. User-provided name for this
-   * snapshot. If the name is not provided in the request, the server will assign
-   * a random name for this snapshot on the same project as the subscription. Note
-   * that for REST API requests, you must specify a name. See the [resource name
+   * @param string $name Required. User-provided name for this snapshot. If the
+   * name is not provided in the request, the server will assign a random name for
+   * this snapshot on the same project as the subscription. Note that for REST API
+   * requests, you must specify a name. See the [resource name
    * rules](https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
    * Format is `projects/{project}/snapshots/{snap}`.
    * @param CreateSnapshotRequest $postBody
@@ -72,9 +72,9 @@ class ProjectsSnapshots extends \Google\Service\Resource
     return $this->call('create', [$params], Snapshot::class);
   }
   /**
-   * Removes an existing snapshot. Snapshots are used in [Seek]
-   * (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
-   * allow you to manage message acknowledgments in bulk. That is, you can set the
+   * Removes an existing snapshot. Snapshots are used in [Seek](
+   * https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow
+   * you to manage message acknowledgments in bulk. That is, you can set the
    * acknowledgment state of messages in an existing subscription to the state
    * captured by a snapshot. When the snapshot is deleted, all messages retained
    * in the snapshot are immediately dropped. After a snapshot is deleted, a new
@@ -82,8 +82,8 @@ class ProjectsSnapshots extends \Google\Service\Resource
    * with the old snapshot or its subscription, unless the same subscription is
    * specified. (snapshots.delete)
    *
-   * @param string $snapshot Required. Identifier. The name of the snapshot to
-   * delete. Format is `projects/{project}/snapshots/{snap}`.
+   * @param string $snapshot Required. The name of the snapshot to delete. Format
+   * is `projects/{project}/snapshots/{snap}`.
    * @param array $optParams Optional parameters.
    * @return PubsubEmpty
    * @throws \Google\Service\Exception
@@ -101,8 +101,8 @@ class ProjectsSnapshots extends \Google\Service\Resource
    * set the acknowledgment state of messages in an existing subscription to the
    * state captured by a snapshot. (snapshots.get)
    *
-   * @param string $snapshot Required. Identifier. The name of the snapshot to
-   * get. Format is `projects/{project}/snapshots/{snap}`.
+   * @param string $snapshot Required. The name of the snapshot to get. Format is
+   * `projects/{project}/snapshots/{snap}`.
    * @param array $optParams Optional parameters.
    * @return Snapshot
    * @throws \Google\Service\Exception
@@ -151,8 +151,8 @@ class ProjectsSnapshots extends \Google\Service\Resource
    * acknowledgment state of messages in an existing subscription to the state
    * captured by a snapshot. (snapshots.listProjectsSnapshots)
    *
-   * @param string $project Required. Identifier. The name of the project in which
-   * to list snapshots. Format is `projects/{project-id}`.
+   * @param string $project Required. The name of the project in which to list
+   * snapshots. Format is `projects/{project-id}`.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int pageSize Optional. Maximum number of snapshots to return.

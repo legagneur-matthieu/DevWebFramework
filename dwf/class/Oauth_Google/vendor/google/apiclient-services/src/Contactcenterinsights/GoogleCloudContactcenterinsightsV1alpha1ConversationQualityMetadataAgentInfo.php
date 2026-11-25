@@ -78,11 +78,37 @@ class GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentIn
    */
   public $dispositionCode;
   /**
+   * The entry subagent's display name.
+   *
+   * @var string
+   */
+  public $entrySubagentDisplayName;
+  /**
+   * The entry subagent's ID.
+   *
+   * @var string
+   */
+  public $entrySubagentId;
+  /**
    * The agent's location.
    *
    * @var string
    */
   public $location;
+  /**
+   * The study arm ID associated with the conversation. Only applicable to
+   * automated agents.
+   *
+   * @var string
+   */
+  public $studyArmId;
+  /**
+   * The study ID associated with the conversation. Only applicable to automated
+   * agents.
+   *
+   * @var string
+   */
+  public $studyId;
   /**
    * A user-specified string representing the agent's team. Deprecated in favor
    * of the `teams` field.
@@ -211,6 +237,38 @@ class GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentIn
     return $this->dispositionCode;
   }
   /**
+   * The entry subagent's display name.
+   *
+   * @param string $entrySubagentDisplayName
+   */
+  public function setEntrySubagentDisplayName($entrySubagentDisplayName)
+  {
+    $this->entrySubagentDisplayName = $entrySubagentDisplayName;
+  }
+  /**
+   * @return string
+   */
+  public function getEntrySubagentDisplayName()
+  {
+    return $this->entrySubagentDisplayName;
+  }
+  /**
+   * The entry subagent's ID.
+   *
+   * @param string $entrySubagentId
+   */
+  public function setEntrySubagentId($entrySubagentId)
+  {
+    $this->entrySubagentId = $entrySubagentId;
+  }
+  /**
+   * @return string
+   */
+  public function getEntrySubagentId()
+  {
+    return $this->entrySubagentId;
+  }
+  /**
    * The agent's location.
    *
    * @param string $location
@@ -225,6 +283,40 @@ class GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentIn
   public function getLocation()
   {
     return $this->location;
+  }
+  /**
+   * The study arm ID associated with the conversation. Only applicable to
+   * automated agents.
+   *
+   * @param string $studyArmId
+   */
+  public function setStudyArmId($studyArmId)
+  {
+    $this->studyArmId = $studyArmId;
+  }
+  /**
+   * @return string
+   */
+  public function getStudyArmId()
+  {
+    return $this->studyArmId;
+  }
+  /**
+   * The study ID associated with the conversation. Only applicable to automated
+   * agents.
+   *
+   * @param string $studyId
+   */
+  public function setStudyId($studyId)
+  {
+    $this->studyId = $studyId;
+  }
+  /**
+   * @return string
+   */
+  public function getStudyId()
+  {
+    return $this->studyId;
   }
   /**
    * A user-specified string representing the agent's team. Deprecated in favor

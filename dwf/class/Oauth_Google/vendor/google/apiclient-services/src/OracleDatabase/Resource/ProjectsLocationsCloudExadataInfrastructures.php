@@ -18,6 +18,7 @@
 namespace Google\Service\OracleDatabase\Resource;
 
 use Google\Service\OracleDatabase\CloudExadataInfrastructure;
+use Google\Service\OracleDatabase\ConfigureExascaleCloudExadataInfrastructureRequest;
 use Google\Service\OracleDatabase\ListCloudExadataInfrastructuresResponse;
 use Google\Service\OracleDatabase\Operation;
 
@@ -31,6 +32,24 @@ use Google\Service\OracleDatabase\Operation;
  */
 class ProjectsLocationsCloudExadataInfrastructures extends \Google\Service\Resource
 {
+  /**
+   * Configures Exascale for a single Exadata Infrastructure.
+   * (cloudExadataInfrastructures.configureExascale)
+   *
+   * @param string $name Required. The name of the Cloud Exadata Infrastructure in
+   * the following format: projects/{project}/locations/{location}/cloudExadataInf
+   * rastructures/{cloud_exadata_infrastructure}.
+   * @param ConfigureExascaleCloudExadataInfrastructureRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function configureExascale($name, ConfigureExascaleCloudExadataInfrastructureRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('configureExascale', [$params], Operation::class);
+  }
   /**
    * Creates a new Exadata Infrastructure in a given project and location.
    * (cloudExadataInfrastructures.create)
@@ -131,6 +150,40 @@ class ProjectsLocationsCloudExadataInfrastructures extends \Google\Service\Resou
     $params = ['parent' => $parent];
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], ListCloudExadataInfrastructuresResponse::class);
+  }
+  /**
+   * Updates the parameters of a single Exadata Infrastructure.
+   * (cloudExadataInfrastructures.patch)
+   *
+   * @param string $name Identifier. The name of the Exadata Infrastructure
+   * resource with the format: projects/{project}/locations/{region}/cloudExadataI
+   * nfrastructures/{cloud_exadata_infrastructure}
+   * @param CloudExadataInfrastructure $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId Optional. An optional ID to identify the request.
+   * This value is used to identify duplicate requests. If you make a request with
+   * the same request ID and the original request is still in progress or
+   * completed, the server ignores the second request. This prevents clients from
+   * accidentally creating duplicate commitments. The request ID must be a valid
+   * UUID with the exception that zero UUID is not supported
+   * (00000000-0000-0000-0000-000000000000).
+   * @opt_param string updateMask Optional. Field mask is used to specify the
+   * fields to be overwritten in the Exadata resource by the update. The fields
+   * specified in the `update_mask` are relative to the resource, not the full
+   * request. A field will be overwritten if it is in the mask. If the user does
+   * not provide a mask then the service treats this as an implied field mask
+   * equivalent to all fields that are populated (have a non-empty value). To
+   * clear or unset a field, the field must be explicitly specified in the
+   * `update_mask`.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function patch($name, CloudExadataInfrastructure $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', [$params], Operation::class);
   }
 }
 

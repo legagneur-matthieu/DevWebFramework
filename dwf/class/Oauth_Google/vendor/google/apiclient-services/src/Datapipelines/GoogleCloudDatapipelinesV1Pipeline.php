@@ -111,8 +111,9 @@ class GoogleCloudDatapipelinesV1Pipeline extends \Google\Model
    */
   public $name;
   /**
-   * Immutable. The sources of the pipeline (for example, Dataplex). The keys
-   * and values are set by the corresponding sources during pipeline creation.
+   * Immutable. The sources of the pipeline (for example, Knowledge Catalog).
+   * The keys and values are set by the corresponding sources during pipeline
+   * creation.
    *
    * @var string[]
    */
@@ -241,8 +242,9 @@ class GoogleCloudDatapipelinesV1Pipeline extends \Google\Model
     return $this->name;
   }
   /**
-   * Immutable. The sources of the pipeline (for example, Dataplex). The keys
-   * and values are set by the corresponding sources during pipeline creation.
+   * Immutable. The sources of the pipeline (for example, Knowledge Catalog).
+   * The keys and values are set by the corresponding sources during pipeline
+   * creation.
    *
    * @param string[] $pipelineSources
    */

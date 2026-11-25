@@ -56,6 +56,18 @@ class ExadbVmCluster extends \Google\Model
    * @var string
    */
   public $gcpOracleZone;
+  protected $identityConnectorType = IdentityConnector::class;
+  protected $identityConnectorDataType = '';
+  /**
+   * Optional. Input only. Immutable. If set to true, disables the automatic
+   * provisioning of the Workload Identity Connector during creation. If set to
+   * false or omitted, the Workload Identity Connector will be automatically
+   * provisioned by default. Note: Provisioning the Workload Identity Connector
+   * is a prerequisite for enabling Google Cloud CMEK.
+   *
+   * @var bool
+   */
+  public $identityConnectorDisabled;
   /**
    * Optional. The labels or tags associated with the ExadbVmCluster.
    *
@@ -177,6 +189,43 @@ class ExadbVmCluster extends \Google\Model
   public function getGcpOracleZone()
   {
     return $this->gcpOracleZone;
+  }
+  /**
+   * Output only. The identity connector details which will allow OCI to
+   * securely access the resources in the customer project.
+   *
+   * @param IdentityConnector $identityConnector
+   */
+  public function setIdentityConnector(IdentityConnector $identityConnector)
+  {
+    $this->identityConnector = $identityConnector;
+  }
+  /**
+   * @return IdentityConnector
+   */
+  public function getIdentityConnector()
+  {
+    return $this->identityConnector;
+  }
+  /**
+   * Optional. Input only. Immutable. If set to true, disables the automatic
+   * provisioning of the Workload Identity Connector during creation. If set to
+   * false or omitted, the Workload Identity Connector will be automatically
+   * provisioned by default. Note: Provisioning the Workload Identity Connector
+   * is a prerequisite for enabling Google Cloud CMEK.
+   *
+   * @param bool $identityConnectorDisabled
+   */
+  public function setIdentityConnectorDisabled($identityConnectorDisabled)
+  {
+    $this->identityConnectorDisabled = $identityConnectorDisabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getIdentityConnectorDisabled()
+  {
+    return $this->identityConnectorDisabled;
   }
   /**
    * Optional. The labels or tags associated with the ExadbVmCluster.

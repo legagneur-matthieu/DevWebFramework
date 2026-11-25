@@ -36,6 +36,8 @@ class RunAggregationQueryRequest extends \Google\Model
   protected $partitionIdDataType = '';
   protected $readOptionsType = ReadOptions::class;
   protected $readOptionsDataType = '';
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
 
   /**
    * The query to run.
@@ -136,6 +138,22 @@ class RunAggregationQueryRequest extends \Google\Model
   public function getReadOptions()
   {
     return $this->readOptions;
+  }
+  /**
+   * Optional. The options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
 }
 

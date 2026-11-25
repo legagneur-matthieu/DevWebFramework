@@ -32,13 +32,13 @@ class CloudLocation extends \Google\Model
    */
   public const CLOUD_LOCATION_TYPE_CLOUD_LOCATION_TYPE_ZONE = 'CLOUD_LOCATION_TYPE_ZONE';
   /**
-   * CloudLocation type for region extension.
-   */
-  public const CLOUD_LOCATION_TYPE_CLOUD_LOCATION_TYPE_REGION_EXTENSION = 'CLOUD_LOCATION_TYPE_REGION_EXTENSION';
-  /**
    * CloudLocation type for Google Distributed Cloud Connected Zone.
    */
   public const CLOUD_LOCATION_TYPE_CLOUD_LOCATION_TYPE_GDCC_ZONE = 'CLOUD_LOCATION_TYPE_GDCC_ZONE';
+  /**
+   * CloudLocation type for global.
+   */
+  public const CLOUD_LOCATION_TYPE_CLOUD_LOCATION_TYPE_GLOBAL = 'CLOUD_LOCATION_TYPE_GLOBAL';
   /**
    * Unspecified type.
    */
@@ -99,6 +99,8 @@ class CloudLocation extends \Google\Model
    * @var string
    */
   public $displayName;
+  protected $gcpAttributesType = GcpAttributes::class;
+  protected $gcpAttributesDataType = '';
   /**
    * Identifier. Name of the cloud location. Unique name of the cloud location
    * including project and location using the form: `projects/{project_id}/locat
@@ -142,7 +144,7 @@ class CloudLocation extends \Google\Model
    *
    * Accepted values: CLOUD_LOCATION_TYPE_UNSPECIFIED,
    * CLOUD_LOCATION_TYPE_REGION, CLOUD_LOCATION_TYPE_ZONE,
-   * CLOUD_LOCATION_TYPE_REGION_EXTENSION, CLOUD_LOCATION_TYPE_GDCC_ZONE
+   * CLOUD_LOCATION_TYPE_GDCC_ZONE, CLOUD_LOCATION_TYPE_GLOBAL
    *
    * @param self::CLOUD_LOCATION_TYPE_* $cloudLocationType
    */
@@ -211,6 +213,22 @@ class CloudLocation extends \Google\Model
   public function getDisplayName()
   {
     return $this->displayName;
+  }
+  /**
+   * Optional. GCP-specific attributes.
+   *
+   * @param GcpAttributes $gcpAttributes
+   */
+  public function setGcpAttributes(GcpAttributes $gcpAttributes)
+  {
+    $this->gcpAttributes = $gcpAttributes;
+  }
+  /**
+   * @return GcpAttributes
+   */
+  public function getGcpAttributes()
+  {
+    return $this->gcpAttributes;
   }
   /**
    * Identifier. Name of the cloud location. Unique name of the cloud location

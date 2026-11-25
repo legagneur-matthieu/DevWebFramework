@@ -32,6 +32,21 @@ class InstanceProperties extends \Google\Collection
    */
   public const KEY_REVOCATION_ACTION_TYPE_STOP = 'STOP';
   /**
+   * The given VM will opt-in for using ephemeral key for encryption of Local
+   * SSDs. The Local SSDs will not be able to recover data in case of VM crash.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_EPHEMERAL_KEY_ENCRYPTION = 'EPHEMERAL_KEY_ENCRYPTION';
+  /**
+   * The given VM will be encrypted using keys managed by the cloud
+   * infrastructure and the keys will be deleted when the VM is deleted.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED = 'LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED';
+  /**
+   * The given VM will be encrypted using keys managed by the cloud
+   * infrastructure and the keys will be deleted when the VM is deleted.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_STANDARD_ENCRYPTION = 'STANDARD_ENCRYPTION';
+  /**
    * Bidirectional private IPv6 access to/from Google services. If specified,
    * the subnetwork who is attached to the instance's default network interface
    * will be assigned an internal IPv6 prefix if it doesn't have before.
@@ -90,6 +105,13 @@ class InstanceProperties extends \Google\Collection
    */
   public $labels;
   /**
+   * Specifies which method should be used for encrypting the Local SSDs
+   * attached to the VM.
+   *
+   * @var string
+   */
+  public $localSsdEncryptionMode;
+  /**
    * The machine type to use for instances that are created from these
    * properties. This field only accepts a machine type name, for example
    * `n2-standard-4`. If you use the machine type full or partial URL, for
@@ -127,10 +149,12 @@ class InstanceProperties extends \Google\Collection
   protected $reservationAffinityType = ReservationAffinity::class;
   protected $reservationAffinityDataType = '';
   /**
-   * Resource manager tags to be bound to the instance. Tag keys and values have
-   * the same definition as resource manager tags. Keys must be in the format
-   * `tagKeys/{tag_key_id}`, and values are in the format `tagValues/456`. The
-   * field is ignored (both PUT & PATCH) when empty.
+   * Input only. Resource manager tags to be bound to the instance. Tag keys and
+   * values have the same definition as resource manager tags. Keys and values
+   * can be either in numeric format, such as `tagKeys/{tag_key_id}` and
+   * `tagValues/{tag_value_id}` or in namespaced format such as
+   * `{org_id|project_id}/{tag_key_short_name}` and `{tag_value_short_name}`.
+   * The field is ignored (both PUT & PATCH) when empty.
    *
    * @var string[]
    */
@@ -150,6 +174,8 @@ class InstanceProperties extends \Google\Collection
   protected $shieldedInstanceConfigDataType = '';
   protected $tagsType = Tags::class;
   protected $tagsDataType = '';
+  protected $workloadIdentityConfigType = WorkloadIdentityConfig::class;
+  protected $workloadIdentityConfigDataType = '';
 
   /**
    * Controls for advanced machine-related behavior features. Note that for
@@ -293,6 +319,26 @@ class InstanceProperties extends \Google\Collection
     return $this->labels;
   }
   /**
+   * Specifies which method should be used for encrypting the Local SSDs
+   * attached to the VM.
+   *
+   * Accepted values: EPHEMERAL_KEY_ENCRYPTION,
+   * LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED, STANDARD_ENCRYPTION
+   *
+   * @param self::LOCAL_SSD_ENCRYPTION_MODE_* $localSsdEncryptionMode
+   */
+  public function setLocalSsdEncryptionMode($localSsdEncryptionMode)
+  {
+    $this->localSsdEncryptionMode = $localSsdEncryptionMode;
+  }
+  /**
+   * @return self::LOCAL_SSD_ENCRYPTION_MODE_*
+   */
+  public function getLocalSsdEncryptionMode()
+  {
+    return $this->localSsdEncryptionMode;
+  }
+  /**
    * The machine type to use for instances that are created from these
    * properties. This field only accepts a machine type name, for example
    * `n2-standard-4`. If you use the machine type full or partial URL, for
@@ -422,10 +468,12 @@ class InstanceProperties extends \Google\Collection
     return $this->reservationAffinity;
   }
   /**
-   * Resource manager tags to be bound to the instance. Tag keys and values have
-   * the same definition as resource manager tags. Keys must be in the format
-   * `tagKeys/{tag_key_id}`, and values are in the format `tagValues/456`. The
-   * field is ignored (both PUT & PATCH) when empty.
+   * Input only. Resource manager tags to be bound to the instance. Tag keys and
+   * values have the same definition as resource manager tags. Keys and values
+   * can be either in numeric format, such as `tagKeys/{tag_key_id}` and
+   * `tagValues/{tag_value_id}` or in namespaced format such as
+   * `{org_id|project_id}/{tag_key_short_name}` and `{tag_value_short_name}`.
+   * The field is ignored (both PUT & PATCH) when empty.
    *
    * @param string[] $resourceManagerTags
    */
@@ -527,6 +575,20 @@ class InstanceProperties extends \Google\Collection
   public function getTags()
   {
     return $this->tags;
+  }
+  /**
+   * @param WorkloadIdentityConfig $workloadIdentityConfig
+   */
+  public function setWorkloadIdentityConfig(WorkloadIdentityConfig $workloadIdentityConfig)
+  {
+    $this->workloadIdentityConfig = $workloadIdentityConfig;
+  }
+  /**
+   * @return WorkloadIdentityConfig
+   */
+  public function getWorkloadIdentityConfig()
+  {
+    return $this->workloadIdentityConfig;
   }
 }
 

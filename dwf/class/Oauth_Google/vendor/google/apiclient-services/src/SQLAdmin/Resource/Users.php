@@ -40,6 +40,7 @@ class Users extends \Google\Service\Resource
    * @param array $optParams Optional parameters.
    *
    * @opt_param string host Host of the user in the instance.
+   * @opt_param string location Optional. Region of the Cloud SQL instance.
    * @opt_param string name Name of the user in the instance.
    * @return Operation
    * @throws \Google\Service\Exception
@@ -60,6 +61,7 @@ class Users extends \Google\Service\Resource
    * @param array $optParams Optional parameters.
    *
    * @opt_param string host Host of a user of the instance.
+   * @opt_param string location Optional. Region of the Cloud SQL instance.
    * @return User
    * @throws \Google\Service\Exception
    */
@@ -77,6 +79,8 @@ class Users extends \Google\Service\Resource
    * project ID.
    * @param User $postBody
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string location Optional. Region of the Cloud SQL instance.
    * @return Operation
    * @throws \Google\Service\Exception
    */
@@ -93,6 +97,8 @@ class Users extends \Google\Service\Resource
    * @param string $instance Database instance ID. This does not include the
    * project ID.
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string location Optional. Region of the Cloud SQL instance.
    * @return UsersListResponse
    * @throws \Google\Service\Exception
    */
@@ -114,7 +120,20 @@ class Users extends \Google\Service\Resource
    * @opt_param string databaseRoles Optional. List of database roles to grant to
    * the user. body.database_roles will be ignored for update request.
    * @opt_param string host Optional. Host of the user in the instance.
+   * @opt_param string location Optional. Region of the Cloud SQL instance.
    * @opt_param string name Name of the user in the instance.
+   * @opt_param bool revokeExistingRoles Optional. Specifies whether to revoke
+   * existing roles that are not present in the `database_roles` field. If `false`
+   * or unset, the database roles specified in `database_roles` are added to the
+   * user's existing roles.
+   * @opt_param bool revokeExistingServerRoles Optional. Specifies whether to
+   * revoke existing roles that are not present in the `server_roles` field. If
+   * `false` or unset, the server roles specified in `server_roles` are added to
+   * the user's existing server roles.
+   * @opt_param string serverRoles Optional. The server roles to grant to the SQL
+   * Server login. Existing server roles will not be revoked if
+   * revoke_existing_roles is false. body.server_roles will be ignored for update
+   * request.
    * @return Operation
    * @throws \Google\Service\Exception
    */

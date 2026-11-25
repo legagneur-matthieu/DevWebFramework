@@ -46,8 +46,8 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
   protected $configType = GooglePrivacyDlpV2StoredInfoTypeConfig::class;
   protected $configDataType = '';
   /**
-   * Create timestamp of the version. Read-only, determined by the system when
-   * the version is created.
+   * Output only. Create timestamp of the version. Read-only, determined by the
+   * system when the version is created.
    *
    * @var string
    */
@@ -55,8 +55,8 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
   protected $errorsType = GooglePrivacyDlpV2Error::class;
   protected $errorsDataType = 'array';
   /**
-   * Stored info type version state. Read-only, updated by the system during
-   * dictionary creation.
+   * Output only. Stored info type version state. Read-only, updated by the
+   * system during dictionary creation.
    *
    * @var string
    */
@@ -81,8 +81,8 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
     return $this->config;
   }
   /**
-   * Create timestamp of the version. Read-only, determined by the system when
-   * the version is created.
+   * Output only. Create timestamp of the version. Read-only, determined by the
+   * system when the version is created.
    *
    * @param string $createTime
    */
@@ -98,14 +98,14 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
     return $this->createTime;
   }
   /**
-   * Errors that occurred when creating this storedInfoType version, or
-   * anomalies detected in the storedInfoType data that render it unusable. Only
-   * the five most recent errors will be displayed, with the most recent error
-   * appearing first. For example, some of the data for stored custom
-   * dictionaries is put in the user's Cloud Storage bucket, and if this data is
-   * modified or deleted by the user or another system, the dictionary becomes
-   * invalid. If any errors occur, fix the problem indicated by the error
-   * message and use the UpdateStoredInfoType API method to create another
+   * Output only. Errors that occurred when creating this storedInfoType
+   * version, or anomalies detected in the storedInfoType data that render it
+   * unusable. Only the five most recent errors will be displayed, with the most
+   * recent error appearing first. For example, some of the data for stored
+   * custom dictionaries is put in the user's Cloud Storage bucket, and if this
+   * data is modified or deleted by the user or another system, the dictionary
+   * becomes invalid. If any errors occur, fix the problem indicated by the
+   * error message and use the UpdateStoredInfoType API method to create another
    * version of the storedInfoType to continue using it, reusing the same
    * `config` if it was not the source of the error.
    *
@@ -123,8 +123,8 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
     return $this->errors;
   }
   /**
-   * Stored info type version state. Read-only, updated by the system during
-   * dictionary creation.
+   * Output only. Stored info type version state. Read-only, updated by the
+   * system during dictionary creation.
    *
    * Accepted values: STORED_INFO_TYPE_STATE_UNSPECIFIED, PENDING, READY,
    * FAILED, INVALID
@@ -143,7 +143,7 @@ class GooglePrivacyDlpV2StoredInfoTypeVersion extends \Google\Collection
     return $this->state;
   }
   /**
-   * Statistics about this storedInfoType version.
+   * Output only. Statistics about this storedInfoType version.
    *
    * @param GooglePrivacyDlpV2StoredInfoTypeStats $stats
    */

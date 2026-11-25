@@ -17,14 +17,17 @@
 
 namespace Google\Service\FirebaseDataConnect;
 
-class Service extends \Google\Model
+class Service extends \Google\Collection
 {
+  protected $collection_key = 'schemas';
   /**
    * Optional. Stores small amounts of arbitrary data.
    *
    * @var string[]
    */
   public $annotations;
+  protected $connectorsType = Connector::class;
+  protected $connectorsDataType = 'array';
   /**
    * Output only. [Output only] Create time stamp.
    *
@@ -46,6 +49,8 @@ class Service extends \Google\Model
    * @var string
    */
   public $etag;
+  protected $graphqlSourceType = Source::class;
+  protected $graphqlSourceDataType = '';
   /**
    * Optional. Labels as key value pairs.
    *
@@ -53,10 +58,10 @@ class Service extends \Google\Model
    */
   public $labels;
   /**
-   * Identifier. The relative resource name of the Firebase Data Connect
-   * service, in the format: ```
+   * Identifier. The relative resource name of the Firebase SQL Connect service,
+   * in the format: ```
    * projects/{project}/locations/{location}/services/{service} ``` Note that
-   * the service ID is specific to Firebase Data Connect and does not correspond
+   * the service ID is specific to Firebase SQL Connect and does not correspond
    * to any of the instance IDs of the underlying data source connections.
    *
    * @var string
@@ -69,6 +74,12 @@ class Service extends \Google\Model
    * @var bool
    */
   public $reconciling;
+  protected $schemasType = Schema::class;
+  protected $schemasDataType = 'array';
+  protected $sourceType = Source::class;
+  protected $sourceDataType = '';
+  protected $sqlSourceType = Source::class;
+  protected $sqlSourceDataType = '';
   /**
    * Output only. System-assigned, unique identifier.
    *
@@ -97,6 +108,25 @@ class Service extends \Google\Model
   public function getAnnotations()
   {
     return $this->annotations;
+  }
+  /**
+   * Output only. The list of connectors in this service. Connectors returned in
+   * this collection are a summary view. Authoritative lifecycle metadata and
+   * entity tags are omitted from embedded representations. Call `GetConnector`
+   * to retrieve the complete resource.
+   *
+   * @param Connector[] $connectors
+   */
+  public function setConnectors($connectors)
+  {
+    $this->connectors = $connectors;
+  }
+  /**
+   * @return Connector[]
+   */
+  public function getConnectors()
+  {
+    return $this->connectors;
   }
   /**
    * Output only. [Output only] Create time stamp.
@@ -150,6 +180,23 @@ class Service extends \Google\Model
     return $this->etag;
   }
   /**
+   * Optional. Input only. The GraphQL source files like `dataconnect.yaml` and
+   * `*.gql`.
+   *
+   * @param Source $graphqlSource
+   */
+  public function setGraphqlSource(Source $graphqlSource)
+  {
+    $this->graphqlSource = $graphqlSource;
+  }
+  /**
+   * @return Source
+   */
+  public function getGraphqlSource()
+  {
+    return $this->graphqlSource;
+  }
+  /**
    * Optional. Labels as key value pairs.
    *
    * @param string[] $labels
@@ -166,10 +213,10 @@ class Service extends \Google\Model
     return $this->labels;
   }
   /**
-   * Identifier. The relative resource name of the Firebase Data Connect
-   * service, in the format: ```
+   * Identifier. The relative resource name of the Firebase SQL Connect service,
+   * in the format: ```
    * projects/{project}/locations/{location}/services/{service} ``` Note that
-   * the service ID is specific to Firebase Data Connect and does not correspond
+   * the service ID is specific to Firebase SQL Connect and does not correspond
    * to any of the instance IDs of the underlying data source connections.
    *
    * @param string $name
@@ -201,6 +248,61 @@ class Service extends \Google\Model
   public function getReconciling()
   {
     return $this->reconciling;
+  }
+  /**
+   * Optional. The list of schemas in this service. Schemas returned in this
+   * collection are a summary view. Authoritative lifecycle metadata and entity
+   * tags are omitted from embedded representations. Call `GetSchema` to
+   * retrieve the complete resource.
+   *
+   * @param Schema[] $schemas
+   */
+  public function setSchemas($schemas)
+  {
+    $this->schemas = $schemas;
+  }
+  /**
+   * @return Schema[]
+   */
+  public function getSchemas()
+  {
+    return $this->schemas;
+  }
+  /**
+   * Optional. Input only. Deprecated: Use `sql_source` or `graphql_source`
+   * instead. The source files for service, schemas, and connectors.
+   *
+   * @deprecated
+   * @param Source $source
+   */
+  public function setSource(Source $source)
+  {
+    $this->source = $source;
+  }
+  /**
+   * @deprecated
+   * @return Source
+   */
+  public function getSource()
+  {
+    return $this->source;
+  }
+  /**
+   * Optional. Input only. The SQL source files like `*.sql` for deploying a
+   * PostgREST service.
+   *
+   * @param Source $sqlSource
+   */
+  public function setSqlSource(Source $sqlSource)
+  {
+    $this->sqlSource = $sqlSource;
+  }
+  /**
+   * @return Source
+   */
+  public function getSqlSource()
+  {
+    return $this->sqlSource;
   }
   /**
    * Output only. System-assigned, unique identifier.

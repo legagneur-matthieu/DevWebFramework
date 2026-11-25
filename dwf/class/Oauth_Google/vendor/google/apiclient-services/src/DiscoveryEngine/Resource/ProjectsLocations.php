@@ -20,6 +20,7 @@ namespace Google\Service\DiscoveryEngine\Resource;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1AclConfig;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1CmekConfig;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1DataConnector;
+use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1ProvisionProjectRequest;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1SetUpDataConnectorRequest;
 use Google\Service\DiscoveryEngine\GoogleLongrunningOperation;
 
@@ -68,6 +69,25 @@ class ProjectsLocations extends \Google\Service\Resource
     return $this->call('getCmekConfig', [$params], GoogleCloudDiscoveryengineV1CmekConfig::class);
   }
   /**
+   * Provisions the project resource. During the process, related systems will get
+   * prepared and initialized. Caller must read the [Terms for data
+   * use](https://cloud.google.com/retail/data-use-terms), and optionally specify
+   * in request to provide consent to that service terms. (locations.provision)
+   *
+   * @param string $name Required. Full resource name of a Project, such as
+   * `projects/{project_id_or_number}`.
+   * @param GoogleCloudDiscoveryengineV1ProvisionProjectRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function provision($name, GoogleCloudDiscoveryengineV1ProvisionProjectRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('provision', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
    * Creates a Collection and sets up the DataConnector for it. To stop a
    * DataConnector after setup, use the CollectionService.DeleteCollection method.
    * (locations.setUpDataConnector)
@@ -102,9 +122,9 @@ class ProjectsLocations extends \Google\Service\Resource
    * which will become the final component of the Collection's resource name. A
    * new Collection is created as part of the DataConnector setup. DataConnector
    * is a singleton resource under Collection, managing all DataStores of the
-   * Collection. This field must conform to
-   * [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit
-   * of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+   * Collection. Should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034)
+   * standard with a length limit of 63 characters. Otherwise, an
+   * `INVALID_ARGUMENT` error is returned.
    * @return GoogleLongrunningOperation
    * @throws \Google\Service\Exception
    */

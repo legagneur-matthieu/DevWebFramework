@@ -20,7 +20,7 @@ namespace Google\Service\Document;
 class GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId extends \Google\Model
 {
   /**
-   * Id of the document (indexed) managed by Content Warehouse.
+   * ID of the document (indexed) managed by Content Warehouse.
    *
    * @deprecated
    * @var string
@@ -34,7 +34,7 @@ class GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId extends \Google
   public $gcsUri;
 
   /**
-   * Id of the document (indexed) managed by Content Warehouse.
+   * ID of the document (indexed) managed by Content Warehouse.
    *
    * @deprecated
    * @param string $cwDocId

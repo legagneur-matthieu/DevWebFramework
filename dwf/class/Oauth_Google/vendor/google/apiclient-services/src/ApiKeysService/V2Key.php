@@ -49,23 +49,24 @@ class V2Key extends \Google\Model
    */
   public $displayName;
   /**
-   * Output only. A checksum computed by the server based on the current value
-   * of the Key resource. This may be sent on update and delete requests to
-   * ensure the client has an up-to-date value before proceeding. See
+   * A checksum computed by the server based on the current value of the Key
+   * resource. This may be sent on update and delete requests to ensure the
+   * client has an up-to-date value before proceeding. See
    * https://google.aip.dev/154.
    *
    * @var string
    */
   public $etag;
   /**
-   * Output only. An encrypted and signed value held by this key. This field can
-   * be accessed only through the `GetKeyString` method.
+   * Output only. An encrypted and signed value held by this key. This field is
+   * returned upon initial key creation (`CreateKey`) and can afterward be
+   * accessed only through the `GetKeyString` method.
    *
    * @var string
    */
   public $keyString;
   /**
-   * Output only. The resource name of the key. The `name` has the form:
+   * Identifier. The resource name of the key. The `name` has the form:
    * `projects//locations/global/keys/`. For example: `projects/123456867718/loc
    * ations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a
    * global resource; hence the only supported value for location is `global`.
@@ -166,9 +167,9 @@ class V2Key extends \Google\Model
     return $this->displayName;
   }
   /**
-   * Output only. A checksum computed by the server based on the current value
-   * of the Key resource. This may be sent on update and delete requests to
-   * ensure the client has an up-to-date value before proceeding. See
+   * A checksum computed by the server based on the current value of the Key
+   * resource. This may be sent on update and delete requests to ensure the
+   * client has an up-to-date value before proceeding. See
    * https://google.aip.dev/154.
    *
    * @param string $etag
@@ -185,8 +186,9 @@ class V2Key extends \Google\Model
     return $this->etag;
   }
   /**
-   * Output only. An encrypted and signed value held by this key. This field can
-   * be accessed only through the `GetKeyString` method.
+   * Output only. An encrypted and signed value held by this key. This field is
+   * returned upon initial key creation (`CreateKey`) and can afterward be
+   * accessed only through the `GetKeyString` method.
    *
    * @param string $keyString
    */
@@ -202,7 +204,7 @@ class V2Key extends \Google\Model
     return $this->keyString;
   }
   /**
-   * Output only. The resource name of the key. The `name` has the form:
+   * Identifier. The resource name of the key. The `name` has the form:
    * `projects//locations/global/keys/`. For example: `projects/123456867718/loc
    * ations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a
    * global resource; hence the only supported value for location is `global`.

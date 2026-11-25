@@ -20,6 +20,18 @@ namespace Google\Service\CloudRun;
 class GoogleCloudRunV2Service extends \Google\Collection
 {
   /**
+   * Specifies that the functional type is unspecified.
+   */
+  public const FUNCTIONAL_TYPE_FUNCTIONAL_TYPE_UNSPECIFIED = 'FUNCTIONAL_TYPE_UNSPECIFIED';
+  /**
+   * Represents an AGENT functional type.
+   */
+  public const FUNCTIONAL_TYPE_FUNCTIONAL_TYPE_AGENT = 'FUNCTIONAL_TYPE_AGENT';
+  /**
+   * Represents an MCP_SERVER functional type.
+   */
+  public const FUNCTIONAL_TYPE_FUNCTIONAL_TYPE_MCP_SERVER = 'FUNCTIONAL_TYPE_MCP_SERVER';
+  /**
    * Unspecified
    */
   public const INGRESS_INGRESS_TRAFFIC_UNSPECIFIED = 'INGRESS_TRAFFIC_UNSPECIFIED';
@@ -181,6 +193,12 @@ class GoogleCloudRunV2Service extends \Google\Collection
    */
   public $expireTime;
   /**
+   * Optional. The functional type of the Service.
+   *
+   * @var string
+   */
+  public $functionalType;
+  /**
    * Output only. A number that monotonically increases every time the user
    * modifies the desired state. Please note that unlike v1, this is an int64
    * value. As with most Google APIs, its JSON representation will be a `string`
@@ -312,6 +330,12 @@ class GoogleCloudRunV2Service extends \Google\Collection
   public $satisfiesPzs;
   protected $scalingType = GoogleCloudRunV2ServiceScaling::class;
   protected $scalingDataType = '';
+  /**
+   * Optional. Enables SSH access to the Service.
+   *
+   * @var bool
+   */
+  public $sshEnabled;
   protected $templateType = GoogleCloudRunV2RevisionTemplate::class;
   protected $templateDataType = '';
   protected $terminalConditionType = GoogleCloudRunV2Condition::class;
@@ -595,6 +619,25 @@ class GoogleCloudRunV2Service extends \Google\Collection
   public function getExpireTime()
   {
     return $this->expireTime;
+  }
+  /**
+   * Optional. The functional type of the Service.
+   *
+   * Accepted values: FUNCTIONAL_TYPE_UNSPECIFIED, FUNCTIONAL_TYPE_AGENT,
+   * FUNCTIONAL_TYPE_MCP_SERVER
+   *
+   * @param self::FUNCTIONAL_TYPE_* $functionalType
+   */
+  public function setFunctionalType($functionalType)
+  {
+    $this->functionalType = $functionalType;
+  }
+  /**
+   * @return self::FUNCTIONAL_TYPE_*
+   */
+  public function getFunctionalType()
+  {
+    return $this->functionalType;
   }
   /**
    * Output only. A number that monotonically increases every time the user
@@ -892,6 +935,22 @@ class GoogleCloudRunV2Service extends \Google\Collection
   public function getScaling()
   {
     return $this->scaling;
+  }
+  /**
+   * Optional. Enables SSH access to the Service.
+   *
+   * @param bool $sshEnabled
+   */
+  public function setSshEnabled($sshEnabled)
+  {
+    $this->sshEnabled = $sshEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getSshEnabled()
+  {
+    return $this->sshEnabled;
   }
   /**
    * Required. The template used to create revisions for this Service.

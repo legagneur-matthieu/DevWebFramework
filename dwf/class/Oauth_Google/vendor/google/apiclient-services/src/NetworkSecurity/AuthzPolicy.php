@@ -35,21 +35,49 @@ class AuthzPolicy extends \Google\Collection
    * Delegate the authorization decision to an external authorization engine.
    */
   public const ACTION_CUSTOM = 'CUSTOM';
-  protected $collection_key = 'httpRules';
   /**
-   * Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is
-   * `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`,
-   * only requests matching the policy will be allowed. When the action is
-   * `DENY`, only requests matching the policy will be denied. When a request
-   * arrives, the policies are evaluated in the following order: 1. If there is
-   * a `CUSTOM` policy that matches the request, the `CUSTOM` policy is
-   * evaluated using the custom authorization providers and the request is
-   * denied if the provider rejects the request. 2. If there are any `DENY`
-   * policies that match the request, the request is denied. 3. If there are no
-   * `ALLOW` policies for the resource or if any of the `ALLOW` policies match
-   * the request, the request is allowed. 4. Else the request is denied by
-   * default if none of the configured AuthzPolicies with `ALLOW` action match
-   * the request.
+   * Establishes a secure-by-default posture by denying any request not
+   * explicitly matched by any `ALLOW`, `DENY`, or `CUSTOM` policy. This action
+   * serves as a universal fallback: if no other policies match or are
+   * configured, the request is denied.
+   */
+  public const ACTION_DENY_BY_DEFAULT = 'DENY_BY_DEFAULT';
+  /**
+   * Unspecified policy profile.
+   */
+  public const POLICY_PROFILE_POLICY_PROFILE_UNSPECIFIED = 'POLICY_PROFILE_UNSPECIFIED';
+  /**
+   * Applies to request authorization. `CUSTOM` authorization policies with
+   * Authz extensions will be allowed with `EXT_AUTHZ_GRPC` or `EXT_PROC_GRPC`
+   * protocols. Extensions are invoked only for request header events.
+   */
+  public const POLICY_PROFILE_REQUEST_AUTHZ = 'REQUEST_AUTHZ';
+  /**
+   * Applies to content security, sanitization, etc. Only `CUSTOM` action is
+   * allowed in this policy profile. AuthzExtensions in the custom provider must
+   * support `EXT_PROC_GRPC` protocol only and be capable of receiving all
+   * `EXT_PROC_GRPC` events (REQUEST_HEADERS, REQUEST_BODY, REQUEST_TRAILERS,
+   * RESPONSE_HEADERS, RESPONSE_BODY, RESPONSE_TRAILERS) with
+   * `FULL_DUPLEX_STREAMED` body send mode.
+   */
+  public const POLICY_PROFILE_CONTENT_AUTHZ = 'CONTENT_AUTHZ';
+  protected $collection_key = 'networkRules';
+  /**
+   * Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`, `DENY_BY_DEFAULT`. When
+   * the action is `CUSTOM`, `customProvider` must be specified. When the action
+   * is `ALLOW`, only requests matching the policy will be allowed. When the
+   * action is `DENY`, only requests matching the policy will be denied. When
+   * the action is `DENY_BY_DEFAULT`, no `http_rules` or `network_rules` can be
+   * specified. When a request arrives, the policies are evaluated in the
+   * following order: 1. If there is a `CUSTOM` policy that matches the request,
+   * the `CUSTOM` policy is evaluated using the custom authorization providers
+   * and the request is denied if the provider rejects the request. 2. If there
+   * are any `DENY` policies that match the request, the request is denied. 3.
+   * If any of the `ALLOW` policies match the request, the request is allowed.
+   * 4. If a `DENY_BY_DEFAULT` policy is applied to the resource, the request is
+   * denied (unless it was explicitly allowed by a `CUSTOM` or `ALLOW` policy).
+   * 5. Else, the request is allowed by default if no other policies are
+   * configured.
    *
    * @var string
    */
@@ -86,6 +114,16 @@ class AuthzPolicy extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $networkRulesType = AuthzPolicyAuthzRule::class;
+  protected $networkRulesDataType = 'array';
+  /**
+   * Optional. Immutable. Defines the type of authorization being performed. If
+   * not specified, `REQUEST_AUTHZ` is applied. This field cannot be changed
+   * once AuthzPolicy is created.
+   *
+   * @var string
+   */
+  public $policyProfile;
   protected $targetType = AuthzPolicyTarget::class;
   protected $targetDataType = '';
   /**
@@ -96,21 +134,24 @@ class AuthzPolicy extends \Google\Collection
   public $updateTime;
 
   /**
-   * Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is
-   * `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`,
-   * only requests matching the policy will be allowed. When the action is
-   * `DENY`, only requests matching the policy will be denied. When a request
-   * arrives, the policies are evaluated in the following order: 1. If there is
-   * a `CUSTOM` policy that matches the request, the `CUSTOM` policy is
-   * evaluated using the custom authorization providers and the request is
-   * denied if the provider rejects the request. 2. If there are any `DENY`
-   * policies that match the request, the request is denied. 3. If there are no
-   * `ALLOW` policies for the resource or if any of the `ALLOW` policies match
-   * the request, the request is allowed. 4. Else the request is denied by
-   * default if none of the configured AuthzPolicies with `ALLOW` action match
-   * the request.
+   * Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`, `DENY_BY_DEFAULT`. When
+   * the action is `CUSTOM`, `customProvider` must be specified. When the action
+   * is `ALLOW`, only requests matching the policy will be allowed. When the
+   * action is `DENY`, only requests matching the policy will be denied. When
+   * the action is `DENY_BY_DEFAULT`, no `http_rules` or `network_rules` can be
+   * specified. When a request arrives, the policies are evaluated in the
+   * following order: 1. If there is a `CUSTOM` policy that matches the request,
+   * the `CUSTOM` policy is evaluated using the custom authorization providers
+   * and the request is denied if the provider rejects the request. 2. If there
+   * are any `DENY` policies that match the request, the request is denied. 3.
+   * If any of the `ALLOW` policies match the request, the request is allowed.
+   * 4. If a `DENY_BY_DEFAULT` policy is applied to the resource, the request is
+   * denied (unless it was explicitly allowed by a `CUSTOM` or `ALLOW` policy).
+   * 5. Else, the request is allowed by default if no other policies are
+   * configured.
    *
-   * Accepted values: AUTHZ_ACTION_UNSPECIFIED, ALLOW, DENY, CUSTOM
+   * Accepted values: AUTHZ_ACTION_UNSPECIFIED, ALLOW, DENY, CUSTOM,
+   * DENY_BY_DEFAULT
    *
    * @param self::ACTION_* $action
    */
@@ -229,6 +270,46 @@ class AuthzPolicy extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. A list of authorization network rules to match against the
+   * incoming request. A policy match occurs when at least one network rule
+   * matches the request. At least one network rule is required for Allow or
+   * Deny Action if no HTTP rules are provided. Network rules are mutually
+   * exclusive with HTTP rules. Limited to 5 rules.
+   *
+   * @param AuthzPolicyAuthzRule[] $networkRules
+   */
+  public function setNetworkRules($networkRules)
+  {
+    $this->networkRules = $networkRules;
+  }
+  /**
+   * @return AuthzPolicyAuthzRule[]
+   */
+  public function getNetworkRules()
+  {
+    return $this->networkRules;
+  }
+  /**
+   * Optional. Immutable. Defines the type of authorization being performed. If
+   * not specified, `REQUEST_AUTHZ` is applied. This field cannot be changed
+   * once AuthzPolicy is created.
+   *
+   * Accepted values: POLICY_PROFILE_UNSPECIFIED, REQUEST_AUTHZ, CONTENT_AUTHZ
+   *
+   * @param self::POLICY_PROFILE_* $policyProfile
+   */
+  public function setPolicyProfile($policyProfile)
+  {
+    $this->policyProfile = $policyProfile;
+  }
+  /**
+   * @return self::POLICY_PROFILE_*
+   */
+  public function getPolicyProfile()
+  {
+    return $this->policyProfile;
   }
   /**
    * Required. Specifies the set of resources to which this policy should be

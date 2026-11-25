@@ -53,8 +53,28 @@ class ComputeInstanceBackupProperties extends \Google\Collection
   public $description;
   protected $diskType = AttachedDisk::class;
   protected $diskDataType = 'array';
+  /**
+   * Optional. List of disks excluded from the backup.
+   *
+   * @var string[]
+   */
+  public $excludedDisks;
   protected $guestAcceleratorType = AcceleratorConfig::class;
   protected $guestAcceleratorDataType = 'array';
+  /**
+   * Optional. Indicates whether to perform a guest flush operation before
+   * taking a compute backup. When set to false, the system will create crash-
+   * consistent backups. Default value is false.
+   *
+   * @var bool
+   */
+  public $guestFlush;
+  /**
+   * Optional. List of disks included in the backup.
+   *
+   * @var string[]
+   */
+  public $includedDisks;
   /**
    * KeyRevocationActionType of the instance. Supported options are "STOP" and
    * "NONE". The default value is "NONE" if it is not specified.
@@ -162,6 +182,22 @@ class ComputeInstanceBackupProperties extends \Google\Collection
     return $this->disk;
   }
   /**
+   * Optional. List of disks excluded from the backup.
+   *
+   * @param string[] $excludedDisks
+   */
+  public function setExcludedDisks($excludedDisks)
+  {
+    $this->excludedDisks = $excludedDisks;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExcludedDisks()
+  {
+    return $this->excludedDisks;
+  }
+  /**
    * A list of guest accelerator cards' type and count to use for instances
    * created from these properties.
    *
@@ -177,6 +213,40 @@ class ComputeInstanceBackupProperties extends \Google\Collection
   public function getGuestAccelerator()
   {
     return $this->guestAccelerator;
+  }
+  /**
+   * Optional. Indicates whether to perform a guest flush operation before
+   * taking a compute backup. When set to false, the system will create crash-
+   * consistent backups. Default value is false.
+   *
+   * @param bool $guestFlush
+   */
+  public function setGuestFlush($guestFlush)
+  {
+    $this->guestFlush = $guestFlush;
+  }
+  /**
+   * @return bool
+   */
+  public function getGuestFlush()
+  {
+    return $this->guestFlush;
+  }
+  /**
+   * Optional. List of disks included in the backup.
+   *
+   * @param string[] $includedDisks
+   */
+  public function setIncludedDisks($includedDisks)
+  {
+    $this->includedDisks = $includedDisks;
+  }
+  /**
+   * @return string[]
+   */
+  public function getIncludedDisks()
+  {
+    return $this->includedDisks;
   }
   /**
    * KeyRevocationActionType of the instance. Supported options are "STOP" and

@@ -19,6 +19,9 @@ namespace Google\Service\SaaSServiceManagement;
 
 class Unit extends \Google\Collection
 {
+  /**
+   * Unspecified management mode.
+   */
   public const MANAGEMENT_MODE_MANAGEMENT_MODE_UNSPECIFIED = 'MANAGEMENT_MODE_UNSPECIFIED';
   /**
    * Unit's lifecycle is managed by the user.
@@ -60,6 +63,9 @@ class Unit extends \Google\Collection
    * Unit has error, when it is not ready and some error operation
    */
   public const STATE_UNIT_STATE_ERROR = 'UNIT_STATE_ERROR';
+  /**
+   * Unspecified system managed state.
+   */
   public const SYSTEM_MANAGED_STATE_SYSTEM_MANAGED_STATE_UNSPECIFIED = 'SYSTEM_MANAGED_STATE_UNSPECIFIED';
   /**
    * Unit has dependents attached.
@@ -83,6 +89,14 @@ class Unit extends \Google\Collection
    * @var string[]
    */
   public $annotations;
+  /**
+   * Optional. Reference to the AppHub Application this unit belongs to. All
+   * resources deployed in this Unit will be associated with the specified
+   * Application.
+   *
+   * @var string
+   */
+  public $application;
   protected $conditionsType = UnitCondition::class;
   protected $conditionsDataType = 'array';
   /**
@@ -151,6 +165,19 @@ class Unit extends \Google\Collection
    * @var string
    */
   public $release;
+  /**
+   * Output only. Reserved for future use.
+   *
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * Output only. Indicates whether the resource location satisfies Zone
+   * Separation constraints. This is false by default.
+   *
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * Optional. Output only. List of scheduled UnitOperations for this unit.
    *
@@ -229,6 +256,24 @@ class Unit extends \Google\Collection
   public function getAnnotations()
   {
     return $this->annotations;
+  }
+  /**
+   * Optional. Reference to the AppHub Application this unit belongs to. All
+   * resources deployed in this Unit will be associated with the specified
+   * Application.
+   *
+   * @param string $application
+   */
+  public function setApplication($application)
+  {
+    $this->application = $application;
+  }
+  /**
+   * @return string
+   */
+  public function getApplication()
+  {
+    return $this->application;
   }
   /**
    * Optional. Output only. A set of conditions which indicate the various
@@ -425,8 +470,8 @@ class Unit extends \Google\Collection
   /**
    * Optional. Output only. Set of key/value pairs corresponding to output
    * variables from execution of actuation templates. The variables are declared
-   * in actuation configs (e.g in helm chart or terraform) and the values are
-   * fetched and returned by the actuation engine upon completion of execution.
+   * in actuation configs (in Terraform for example) and the values are fetched
+   * and returned by the actuation engine upon completion of execution.
    *
    * @param UnitVariable[] $outputVariables
    */
@@ -473,6 +518,39 @@ class Unit extends \Google\Collection
   public function getRelease()
   {
     return $this->release;
+  }
+  /**
+   * Output only. Reserved for future use.
+   *
+   * @param bool $satisfiesPzi
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * Output only. Indicates whether the resource location satisfies Zone
+   * Separation constraints. This is false by default.
+   *
+   * @param bool $satisfiesPzs
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * Optional. Output only. List of scheduled UnitOperations for this unit.

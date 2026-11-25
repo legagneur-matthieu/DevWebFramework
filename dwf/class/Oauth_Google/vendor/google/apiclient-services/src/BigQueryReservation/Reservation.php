@@ -17,7 +17,7 @@
 
 namespace Google\Service\BigQueryReservation;
 
-class Reservation extends \Google\Model
+class Reservation extends \Google\Collection
 {
   /**
    * Default value, which will be treated as ENTERPRISE.
@@ -61,7 +61,7 @@ class Reservation extends \Google\Model
    * available in other reservations, the reservation will scale up to 1000
    * slots with 200 baseline and 800 idle slots. 2. if there are 500 idle slots
    * available in other reservations, the reservation will scale up to 700 slots
-   * with 200 baseline and 300 idle slots. Please note, in this mode, the
+   * with 200 baseline and 500 idle slots. Please note, in this mode, the
    * reservation might not be able to scale up to max_slots. Please note, in
    * this mode, the ignore_idle_slots field must be set to false. Otherwise the
    * request will be rejected with error code
@@ -84,6 +84,7 @@ class Reservation extends \Google\Model
    * rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
    */
   public const SCALING_MODE_ALL_SLOTS = 'ALL_SLOTS';
+  protected $collection_key = 'reservationGroupPath';
   protected $autoscaleType = Autoscale::class;
   protected $autoscaleDataType = '';
   /**
@@ -215,6 +216,16 @@ class Reservation extends \Google\Model
    * @var string
    */
   public $reservationGroup;
+  /**
+   * Output only. The reservation group path of the reservation from root to
+   * leaf. The order of elements matters: the first element is the top level
+   * group and the last element is the direct parent reservation group. For
+   * example, if a reservation is under group-1 -> group-2 -> group-3, then the
+   * reservation group path is ["group-1", "group-2", "group-3"].
+   *
+   * @var string[]
+   */
+  public $reservationGroupPath;
   /**
    * Optional. The scaling mode for the reservation. If the field is present but
    * max_slots is not present, requests will be rejected with error code
@@ -537,6 +548,26 @@ class Reservation extends \Google\Model
   public function getReservationGroup()
   {
     return $this->reservationGroup;
+  }
+  /**
+   * Output only. The reservation group path of the reservation from root to
+   * leaf. The order of elements matters: the first element is the top level
+   * group and the last element is the direct parent reservation group. For
+   * example, if a reservation is under group-1 -> group-2 -> group-3, then the
+   * reservation group path is ["group-1", "group-2", "group-3"].
+   *
+   * @param string[] $reservationGroupPath
+   */
+  public function setReservationGroupPath($reservationGroupPath)
+  {
+    $this->reservationGroupPath = $reservationGroupPath;
+  }
+  /**
+   * @return string[]
+   */
+  public function getReservationGroupPath()
+  {
+    return $this->reservationGroupPath;
   }
   /**
    * Optional. The scaling mode for the reservation. If the field is present but

@@ -53,6 +53,8 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
   public $name;
   protected $testingOptionsType = GoogleCloudRecaptchaenterpriseV1TestingOptions::class;
   protected $testingOptionsDataType = '';
+  protected $universalSettingsType = GoogleCloudRecaptchaenterpriseV1UniversalKeySettings::class;
+  protected $universalSettingsDataType = '';
   protected $wafSettingsType = GoogleCloudRecaptchaenterpriseV1WafSettings::class;
   protected $wafSettingsDataType = '';
   protected $webSettingsType = GoogleCloudRecaptchaenterpriseV1WebKeySettings::class;
@@ -187,6 +189,22 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
   public function getTestingOptions()
   {
     return $this->testingOptions;
+  }
+  /**
+   * Settings for keys that are configured through their Policy.
+   *
+   * @param GoogleCloudRecaptchaenterpriseV1UniversalKeySettings $universalSettings
+   */
+  public function setUniversalSettings(GoogleCloudRecaptchaenterpriseV1UniversalKeySettings $universalSettings)
+  {
+    $this->universalSettings = $universalSettings;
+  }
+  /**
+   * @return GoogleCloudRecaptchaenterpriseV1UniversalKeySettings
+   */
+  public function getUniversalSettings()
+  {
+    return $this->universalSettings;
   }
   /**
    * Optional. Settings for Web Application Firewall (WAF).

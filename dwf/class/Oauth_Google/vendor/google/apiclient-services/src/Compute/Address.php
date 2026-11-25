@@ -74,13 +74,25 @@ class Address extends \Google\Collection
    * the VPC network and its peering networks. After the VLAN attachment is
    * created with the reserved IP address range, when creating a new VPN
    * gateway, its interface IP address is allocated from the associated VLAN
-   * attachment’s IP address range.
+   * attachment's IP address range.
    */
   public const PURPOSE_IPSEC_INTERCONNECT = 'IPSEC_INTERCONNECT';
   /**
    * External IP automatically reserved for Cloud NAT.
    */
   public const PURPOSE_NAT_AUTO = 'NAT_AUTO';
+  /**
+   * The global external address can only be assigned to Global External
+   * Passthrough Network Load Balancer forwarding rules, as an Availability
+   * Group 0 address.
+   */
+  public const PURPOSE_PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 = 'PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0';
+  /**
+   * The global external address can only be assigned to Global External
+   * Passthrough Network Load Balancer forwarding rules, as an Availability
+   * Group 1 address.
+   */
+  public const PURPOSE_PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 = 'PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1';
   /**
    * A private network IP address that can be used to configure Private Service
    * Connect. This purpose can be specified only forGLOBAL addresses of Type
@@ -147,16 +159,27 @@ class Address extends \Google\Collection
    */
   public $id;
   /**
-   * Reference to the source of external IPv4 addresses, like a
-   * PublicDelegatedPrefix (PDP) for BYOIP. The PDP must support enhanced IPv4
-   * allocations.
+   * Reference to the source of IP addresses.
    *
-   * Use one of the following formats to specify a PDP when reserving an
-   * external IPv4 address using BYOIP.        -     Full resource URL, as inhtt
-   * ps://www.googleapis.com/compute/v1/projects/projectId/regions/region/public
-   * DelegatedPrefixes/pdp-name    -     Partial URL, as in
-   * - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
-   * - regions/region/publicDelegatedPrefixes/pdp-name
+   * It supports the following cases:        -       Case 1:
+   * PublicDelegatedPrefix (PDP) for BYOIP external      addresses. If an IPv4
+   * PDP is used, the PDP must support enhanced IPv4      allocations. If an
+   * IPv6 PDP is used, the PDP must be in
+   * EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.    -       Case 2: Internal
+   * Range for global internal addresses.
+   *
+   * Use one of the following formats to specify the resource:
+   *
+   * For a Public Delegated Prefix:        -     Full resource URL:https://www.g
+   * oogleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedP
+   * refixes/pdp    - Partial URL:       -
+   * projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name       -
+   * regions/region/publicDelegatedPrefixes/pdp-name
+   *
+   * For an Internal Range:        - Full URL:https://networkconnectivity.google
+   * apis.com/v1/projects/project/locations/global/internalRanges/internal-range
+   * - Partial URL:projects/project/locations/global/internalRanges/internal-
+   * range
    *
    * @var string
    */
@@ -224,6 +247,14 @@ class Address extends \Google\Collection
    */
   public $network;
   /**
+   * Optional. The URL of the network attachment that this address comes from in
+   * the following format: projects/{project}/regions/{region_name}/networkAttac
+   * hments/{network_attachment_name}.
+   *
+   * @var string
+   */
+  public $networkAttachment;
+  /**
    * This signifies the networking tier used for configuring this address and
    * can only take the following values: PREMIUM orSTANDARD. Internal IP
    * addresses are always Premium Tier; global external IP addresses are always
@@ -257,7 +288,13 @@ class Address extends \Google\Collection
    * - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned
    * to multiple internal forwarding rules.      - `PRIVATE_SERVICE_CONNECT` for
    * a private network address that is      used to configure Private Service
-   * Connect. Only global internal addresses      can use this purpose.
+   * Connect. Only global internal addresses      can use this purpose.      -
+   * `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0` for addresses      that can
+   * only be assigned to global external Passthrough Network Load      Balancer
+   * forwarding rules, as an Availability Group 0 address.      -
+   * `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1` for addresses that      can
+   * only be assigned to global external Passthrough Network Load Balancer
+   * forwarding rules, as an Availability Group 1 address.
    *
    * @var string
    */
@@ -277,6 +314,15 @@ class Address extends \Google\Collection
    * @var string
    */
   public $selfLink;
+  /**
+   * Optional. Producer Service's Service class ID for the region of this
+   * address. Can only be used with network_attachment. It is not possible to
+   * use on its own; however, network_attachment can be used without
+   * service_class_id.
+   *
+   * @var string
+   */
+  public $serviceClassId;
   /**
    * Output only. [Output Only] The status of the address, which can be one
    * ofRESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently
@@ -388,16 +434,27 @@ class Address extends \Google\Collection
     return $this->id;
   }
   /**
-   * Reference to the source of external IPv4 addresses, like a
-   * PublicDelegatedPrefix (PDP) for BYOIP. The PDP must support enhanced IPv4
-   * allocations.
+   * Reference to the source of IP addresses.
    *
-   * Use one of the following formats to specify a PDP when reserving an
-   * external IPv4 address using BYOIP.        -     Full resource URL, as inhtt
-   * ps://www.googleapis.com/compute/v1/projects/projectId/regions/region/public
-   * DelegatedPrefixes/pdp-name    -     Partial URL, as in
-   * - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
-   * - regions/region/publicDelegatedPrefixes/pdp-name
+   * It supports the following cases:        -       Case 1:
+   * PublicDelegatedPrefix (PDP) for BYOIP external      addresses. If an IPv4
+   * PDP is used, the PDP must support enhanced IPv4      allocations. If an
+   * IPv6 PDP is used, the PDP must be in
+   * EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.    -       Case 2: Internal
+   * Range for global internal addresses.
+   *
+   * Use one of the following formats to specify the resource:
+   *
+   * For a Public Delegated Prefix:        -     Full resource URL:https://www.g
+   * oogleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedP
+   * refixes/pdp    - Partial URL:       -
+   * projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name       -
+   * regions/region/publicDelegatedPrefixes/pdp-name
+   *
+   * For an Internal Range:        - Full URL:https://networkconnectivity.google
+   * apis.com/v1/projects/project/locations/global/internalRanges/internal-range
+   * - Partial URL:projects/project/locations/global/internalRanges/internal-
+   * range
    *
    * @param string $ipCollection
    */
@@ -549,6 +606,24 @@ class Address extends \Google\Collection
     return $this->network;
   }
   /**
+   * Optional. The URL of the network attachment that this address comes from in
+   * the following format: projects/{project}/regions/{region_name}/networkAttac
+   * hments/{network_attachment_name}.
+   *
+   * @param string $networkAttachment
+   */
+  public function setNetworkAttachment($networkAttachment)
+  {
+    $this->networkAttachment = $networkAttachment;
+  }
+  /**
+   * @return string
+   */
+  public function getNetworkAttachment()
+  {
+    return $this->networkAttachment;
+  }
+  /**
    * This signifies the networking tier used for configuring this address and
    * can only take the following values: PREMIUM orSTANDARD. Internal IP
    * addresses are always Premium Tier; global external IP addresses are always
@@ -605,10 +680,18 @@ class Address extends \Google\Collection
    * - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned
    * to multiple internal forwarding rules.      - `PRIVATE_SERVICE_CONNECT` for
    * a private network address that is      used to configure Private Service
-   * Connect. Only global internal addresses      can use this purpose.
+   * Connect. Only global internal addresses      can use this purpose.      -
+   * `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0` for addresses      that can
+   * only be assigned to global external Passthrough Network Load      Balancer
+   * forwarding rules, as an Availability Group 0 address.      -
+   * `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1` for addresses that      can
+   * only be assigned to global external Passthrough Network Load Balancer
+   * forwarding rules, as an Availability Group 1 address.
    *
    * Accepted values: DNS_RESOLVER, GCE_ENDPOINT, IPSEC_INTERCONNECT, NAT_AUTO,
-   * PRIVATE_SERVICE_CONNECT, SERVERLESS, SHARED_LOADBALANCER_VIP, VPC_PEERING
+   * PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0,
+   * PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1, PRIVATE_SERVICE_CONNECT,
+   * SERVERLESS, SHARED_LOADBALANCER_VIP, VPC_PEERING
    *
    * @param self::PURPOSE_* $purpose
    */
@@ -657,6 +740,25 @@ class Address extends \Google\Collection
   public function getSelfLink()
   {
     return $this->selfLink;
+  }
+  /**
+   * Optional. Producer Service's Service class ID for the region of this
+   * address. Can only be used with network_attachment. It is not possible to
+   * use on its own; however, network_attachment can be used without
+   * service_class_id.
+   *
+   * @param string $serviceClassId
+   */
+  public function setServiceClassId($serviceClassId)
+  {
+    $this->serviceClassId = $serviceClassId;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceClassId()
+  {
+    return $this->serviceClassId;
   }
   /**
    * Output only. [Output Only] The status of the address, which can be one

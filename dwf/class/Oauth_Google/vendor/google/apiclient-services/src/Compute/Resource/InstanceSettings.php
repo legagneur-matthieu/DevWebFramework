@@ -30,6 +30,8 @@ use Google\Service\Compute\Operation;
  */
 class InstanceSettings extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Get Instance settings. (instanceSettings.get)
    *

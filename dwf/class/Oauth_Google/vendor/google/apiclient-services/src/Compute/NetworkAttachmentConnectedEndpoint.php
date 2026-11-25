@@ -40,6 +40,10 @@ class NetworkAttachmentConnectedEndpoint extends \Google\Collection
    * The consumer prohibits traffic from the producer to reach its VPC.
    */
   public const STATUS_REJECTED = 'REJECTED';
+  /**
+   * There is no traffic flowing in this state, only the address is reserved.
+   */
+  public const STATUS_RESERVED = 'RESERVED';
   public const STATUS_STATUS_UNSPECIFIED = 'STATUS_UNSPECIFIED';
   protected $collection_key = 'secondaryIpCidrRanges';
   /**
@@ -69,6 +73,12 @@ class NetworkAttachmentConnectedEndpoint extends \Google\Collection
    * @var string[]
    */
   public $secondaryIpCidrRanges;
+  /**
+   * The service class id of the producer service to which the IP was assigned.
+   *
+   * @var string
+   */
+  public $serviceClassId;
   /**
    * The status of a connected endpoint to this network attachment.
    *
@@ -158,10 +168,26 @@ class NetworkAttachmentConnectedEndpoint extends \Google\Collection
     return $this->secondaryIpCidrRanges;
   }
   /**
+   * The service class id of the producer service to which the IP was assigned.
+   *
+   * @param string $serviceClassId
+   */
+  public function setServiceClassId($serviceClassId)
+  {
+    $this->serviceClassId = $serviceClassId;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceClassId()
+  {
+    return $this->serviceClassId;
+  }
+  /**
    * The status of a connected endpoint to this network attachment.
    *
    * Accepted values: ACCEPTED, CLOSED, NEEDS_ATTENTION, PENDING, REJECTED,
-   * STATUS_UNSPECIFIED
+   * RESERVED, STATUS_UNSPECIFIED
    *
    * @param self::STATUS_* $status
    */

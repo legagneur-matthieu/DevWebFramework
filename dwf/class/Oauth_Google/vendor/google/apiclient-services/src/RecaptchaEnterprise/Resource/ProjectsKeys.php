@@ -24,6 +24,7 @@ use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1ListIpOve
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1ListKeysResponse;
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1Metrics;
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest;
+use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1Policy;
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1RemoveIpOverrideRequest;
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1RemoveIpOverrideResponse;
 use Google\Service\RecaptchaEnterprise\GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse;
@@ -119,6 +120,21 @@ class ProjectsKeys extends \Google\Service\Resource
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('getMetrics', [$params], GoogleCloudRecaptchaenterpriseV1Metrics::class);
+  }
+  /**
+   * Get the policy for a key. (keys.getPolicy)
+   *
+   * @param string $name Required. The name of the policy to get, in the format
+   * `projects/{project}/keys/{key}/policy`.
+   * @param array $optParams Optional parameters.
+   * @return GoogleCloudRecaptchaenterpriseV1Policy
+   * @throws \Google\Service\Exception
+   */
+  public function getPolicy($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getPolicy', [$params], GoogleCloudRecaptchaenterpriseV1Policy::class);
   }
   /**
    * Returns the list of all keys that belong to a project.
@@ -237,6 +253,25 @@ class ProjectsKeys extends \Google\Service\Resource
     $params = ['key' => $key];
     $params = array_merge($params, $optParams);
     return $this->call('retrieveLegacySecretKey', [$params], GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse::class);
+  }
+  /**
+   * Updates the policy for a key. (keys.updatePolicy)
+   *
+   * @param string $name Identifier. Resource name for this policy. Format:
+   * "projects/{project}/keys/{key}/policy" for a policy under a key.
+   * @param GoogleCloudRecaptchaenterpriseV1Policy $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Optional. The mask to control which fields of
+   * the policy get updated. If the mask is not present, all fields are updated.
+   * @return GoogleCloudRecaptchaenterpriseV1Policy
+   * @throws \Google\Service\Exception
+   */
+  public function updatePolicy($name, GoogleCloudRecaptchaenterpriseV1Policy $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updatePolicy', [$params], GoogleCloudRecaptchaenterpriseV1Policy::class);
   }
 }
 

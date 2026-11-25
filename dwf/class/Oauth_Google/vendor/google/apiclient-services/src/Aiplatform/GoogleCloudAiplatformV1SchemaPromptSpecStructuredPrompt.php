@@ -22,6 +22,8 @@ class GoogleCloudAiplatformV1SchemaPromptSpecStructuredPrompt extends \Google\Co
   protected $collection_key = 'predictionInputs';
   protected $appBuilderDataType = GoogleCloudAiplatformV1SchemaPromptSpecAppBuilderData::class;
   protected $appBuilderDataDataType = '';
+  protected $contentMetadataType = GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata::class;
+  protected $contentMetadataDataType = 'array';
   protected $contextType = GoogleCloudAiplatformV1Content::class;
   protected $contextDataType = '';
   protected $examplesType = GoogleCloudAiplatformV1SchemaPromptSpecPartList::class;
@@ -44,6 +46,8 @@ class GoogleCloudAiplatformV1SchemaPromptSpecStructuredPrompt extends \Google\Co
    * @var string[]
    */
   public $inputPrefixes;
+  protected $interactionDataType = GoogleCloudAiplatformV1SchemaPromptSpecInteractionData::class;
+  protected $interactionDataDataType = '';
   /**
    * Preamble: The output prefixes before each example output.
    *
@@ -70,6 +74,25 @@ class GoogleCloudAiplatformV1SchemaPromptSpecStructuredPrompt extends \Google\Co
   public function getAppBuilderData()
   {
     return $this->appBuilderData;
+  }
+  /**
+   * Optional. Metadata the model returned with each of
+   * `prompt_message.contents`, such as citations and grounding sources. This
+   * maps 1:1 to PromptMessage.contents; an entry is empty when its content has
+   * no metadata.
+   *
+   * @param GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata[] $contentMetadata
+   */
+  public function setContentMetadata($contentMetadata)
+  {
+    $this->contentMetadata = $contentMetadata;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata[]
+   */
+  public function getContentMetadata()
+  {
+    return $this->contentMetadata;
   }
   /**
    * Preamble: The context of the prompt.
@@ -150,6 +173,22 @@ class GoogleCloudAiplatformV1SchemaPromptSpecStructuredPrompt extends \Google\Co
   public function getInputPrefixes()
   {
     return $this->inputPrefixes;
+  }
+  /**
+   * Data for interaction use case.
+   *
+   * @param GoogleCloudAiplatformV1SchemaPromptSpecInteractionData $interactionData
+   */
+  public function setInteractionData(GoogleCloudAiplatformV1SchemaPromptSpecInteractionData $interactionData)
+  {
+    $this->interactionData = $interactionData;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1SchemaPromptSpecInteractionData
+   */
+  public function getInteractionData()
+  {
+    return $this->interactionData;
   }
   /**
    * Preamble: The output prefixes before each example output.

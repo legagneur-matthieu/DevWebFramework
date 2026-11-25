@@ -26,6 +26,13 @@ class InitiatePushTransferRequest extends \Google\Model
    * @var string
    */
   public $tag;
+  /**
+   * Optional. If set, validates the request without actually initiating the
+   * transfer.
+   *
+   * @var bool
+   */
+  public $validateOnly;
 
   /**
    * Required. The Tag of the new registrar. Can be found at [List of
@@ -43,6 +50,23 @@ class InitiatePushTransferRequest extends \Google\Model
   public function getTag()
   {
     return $this->tag;
+  }
+  /**
+   * Optional. If set, validates the request without actually initiating the
+   * transfer.
+   *
+   * @param bool $validateOnly
+   */
+  public function setValidateOnly($validateOnly)
+  {
+    $this->validateOnly = $validateOnly;
+  }
+  /**
+   * @return bool
+   */
+  public function getValidateOnly()
+  {
+    return $this->validateOnly;
   }
 }
 

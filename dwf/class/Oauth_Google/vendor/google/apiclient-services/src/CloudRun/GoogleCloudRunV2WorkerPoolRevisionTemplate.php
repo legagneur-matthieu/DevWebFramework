@@ -45,6 +45,18 @@ class GoogleCloudRunV2WorkerPoolRevisionTemplate extends \Google\Collection
    * @var string[]
    */
   public $annotations;
+  /**
+   * Optional. Arbitrary identifier for the API client.
+   *
+   * @var string
+   */
+  public $client;
+  /**
+   * Optional. Arbitrary version identifier for the API client.
+   *
+   * @var string
+   */
+  public $clientVersion;
   protected $containersType = GoogleCloudRunV2Container::class;
   protected $containersDataType = 'array';
   /**
@@ -98,6 +110,8 @@ class GoogleCloudRunV2WorkerPoolRevisionTemplate extends \Google\Collection
    * @var string
    */
   public $revision;
+  protected $sandboxesType = GoogleCloudRunV2SandboxConfiguration::class;
+  protected $sandboxesDataType = '';
   /**
    * Optional. Email address of the IAM service account associated with the
    * revision of the service. The service account represents the identity of the
@@ -136,6 +150,38 @@ class GoogleCloudRunV2WorkerPoolRevisionTemplate extends \Google\Collection
   public function getAnnotations()
   {
     return $this->annotations;
+  }
+  /**
+   * Optional. Arbitrary identifier for the API client.
+   *
+   * @param string $client
+   */
+  public function setClient($client)
+  {
+    $this->client = $client;
+  }
+  /**
+   * @return string
+   */
+  public function getClient()
+  {
+    return $this->client;
+  }
+  /**
+   * Optional. Arbitrary version identifier for the API client.
+   *
+   * @param string $clientVersion
+   */
+  public function setClientVersion($clientVersion)
+  {
+    $this->clientVersion = $clientVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getClientVersion()
+  {
+    return $this->clientVersion;
   }
   /**
    * Holds list of the containers that defines the unit of execution for this
@@ -281,6 +327,22 @@ class GoogleCloudRunV2WorkerPoolRevisionTemplate extends \Google\Collection
   public function getRevision()
   {
     return $this->revision;
+  }
+  /**
+   * Optional. Configuration for sandboxes.
+   *
+   * @param GoogleCloudRunV2SandboxConfiguration $sandboxes
+   */
+  public function setSandboxes(GoogleCloudRunV2SandboxConfiguration $sandboxes)
+  {
+    $this->sandboxes = $sandboxes;
+  }
+  /**
+   * @return GoogleCloudRunV2SandboxConfiguration
+   */
+  public function getSandboxes()
+  {
+    return $this->sandboxes;
   }
   /**
    * Optional. Email address of the IAM service account associated with the

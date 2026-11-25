@@ -46,7 +46,8 @@ class Location extends \Google\Collection
   protected $moreHoursType = MoreHours::class;
   protected $moreHoursDataType = 'array';
   /**
-   * Google identifier for this location in the form: `locations/{location_id}`.
+   * Identifier. Google identifier for this location in the form:
+   * `locations/{location_id}`.
    *
    * @var string
    */
@@ -223,7 +224,8 @@ class Location extends \Google\Collection
     return $this->moreHours;
   }
   /**
-   * Google identifier for this location in the form: `locations/{location_id}`.
+   * Identifier. Google identifier for this location in the form:
+   * `locations/{location_id}`.
    *
    * @param string $name
    */
@@ -275,7 +277,7 @@ class Location extends \Google\Collection
   /**
    * Optional. Describes your business in your own voice and shares with users
    * the unique story of your business and offerings. This field is required for
-   * all categories except lodging categories (e.g. hotels, motels, inns).
+   * all categories except lodging categories (e.g., hotels, motels, inns).
    *
    * @param Profile $profile
    */

@@ -17,10 +17,13 @@
 
 namespace Google\Service\NetAppFiles\Resource;
 
+use Google\Service\NetAppFiles\EstablishVolumePeeringRequest;
 use Google\Service\NetAppFiles\ListVolumesResponse;
 use Google\Service\NetAppFiles\Operation;
 use Google\Service\NetAppFiles\RestoreBackupFilesRequest;
 use Google\Service\NetAppFiles\RevertVolumeRequest;
+use Google\Service\NetAppFiles\SplitStatus;
+use Google\Service\NetAppFiles\StartSplitRequest;
 use Google\Service\NetAppFiles\Volume;
 
 /**
@@ -72,6 +75,23 @@ class ProjectsLocationsVolumes extends \Google\Service\Resource
     return $this->call('delete', [$params], Operation::class);
   }
   /**
+   * Establish volume peering. This is used to establish cluster and svm peerings
+   * between the GCNV and OnPrem clusters. (volumes.establishPeering)
+   *
+   * @param string $name Required. The volume resource name, in the format
+   * `projects/{project_id}/locations/{location}/volumes/{volume_id}`
+   * @param EstablishVolumePeeringRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function establishPeering($name, EstablishVolumePeeringRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('establishPeering', [$params], Operation::class);
+  }
+  /**
    * Gets details of a single Volume. (volumes.get)
    *
    * @param string $name Required. Name of the volume
@@ -84,6 +104,23 @@ class ProjectsLocationsVolumes extends \Google\Service\Resource
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('get', [$params], Volume::class);
+  }
+  /**
+   * Retrieves the current state, progress, and details of a split operation for a
+   * volume. This method is relevant when the volume is a clone. For volumes that
+   * are not clones, this method will return an error. (volumes.getSplitStatus)
+   *
+   * @param string $name Required. The full name of the volume. Format:
+   * projects/{project_number}/locations/{location}/volumes/{volume_id}
+   * @param array $optParams Optional parameters.
+   * @return SplitStatus
+   * @throws \Google\Service\Exception
+   */
+  public function getSplitStatus($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getSplitStatus', [$params], SplitStatus::class);
   }
   /**
    * Lists Volumes in a given project. (volumes.listProjectsLocationsVolumes)
@@ -160,6 +197,25 @@ class ProjectsLocationsVolumes extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('revert', [$params], Operation::class);
+  }
+  /**
+   * Splits a clone volume from its source volume. This operation will only work
+   * for volumes which have clone_details set(clones). For volumes that are not
+   * clones, this operation will return an error. (volumes.startSplit)
+   *
+   * @param string $name Required. The full name of the clone volume to be split
+   * from its source. Format:
+   * projects/{project_number}/locations/{location}/volumes/{volume_id}
+   * @param StartSplitRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function startSplit($name, StartSplitRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('startSplit', [$params], Operation::class);
   }
 }
 

@@ -19,9 +19,27 @@ namespace Google\Service\PagespeedInsights;
 
 class LighthouseCategoryV5 extends \Google\Collection
 {
+  /**
+   * Default UNDEFINED category.
+   */
+  public const CATEGORY_SCORE_DISPLAY_MODE_CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED = 'CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED';
+  /**
+   * Display the score as a standard circular gauge (default)
+   */
+  public const CATEGORY_SCORE_DISPLAY_MODE_GAUGE = 'GAUGE';
+  /**
+   * Display the score as a fraction, e.g. "3/5"
+   */
+  public const CATEGORY_SCORE_DISPLAY_MODE_FRACTION = 'FRACTION';
   protected $collection_key = 'auditRefs';
   protected $auditRefsType = AuditRefs::class;
   protected $auditRefsDataType = 'array';
+  /**
+   * Optional. How the category score should be displayed (e.g. as a fraction).
+   *
+   * @var string
+   */
+  public $categoryScoreDisplayMode;
   /**
    * A more detailed description of the category and its importance.
    *
@@ -69,6 +87,24 @@ class LighthouseCategoryV5 extends \Google\Collection
   public function getAuditRefs()
   {
     return $this->auditRefs;
+  }
+  /**
+   * Optional. How the category score should be displayed (e.g. as a fraction).
+   *
+   * Accepted values: CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED, GAUGE, FRACTION
+   *
+   * @param self::CATEGORY_SCORE_DISPLAY_MODE_* $categoryScoreDisplayMode
+   */
+  public function setCategoryScoreDisplayMode($categoryScoreDisplayMode)
+  {
+    $this->categoryScoreDisplayMode = $categoryScoreDisplayMode;
+  }
+  /**
+   * @return self::CATEGORY_SCORE_DISPLAY_MODE_*
+   */
+  public function getCategoryScoreDisplayMode()
+  {
+    return $this->categoryScoreDisplayMode;
   }
   /**
    * A more detailed description of the category and its importance.

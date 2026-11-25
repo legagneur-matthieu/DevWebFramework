@@ -17,6 +17,7 @@
 
 namespace Google\Service\CloudResourceManager\Resource;
 
+use Google\Service\CloudResourceManager\BoundaryConfig;
 use Google\Service\CloudResourceManager\Folder;
 use Google\Service\CloudResourceManager\GetIamPolicyRequest;
 use Google\Service\CloudResourceManager\ListFoldersResponse;
@@ -108,6 +109,23 @@ class Folders extends \Google\Service\Resource
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('get', [$params], Folder::class);
+  }
+  /**
+   * Retrieves the BoundaryConfig identified by the specified `name` (for example,
+   * `folders/123456789/boundaryConfig`). (folders.getBoundaryConfig)
+   *
+   * @param string $name Required. The name of the BoundaryConfig to retrieve.
+   * Format: `organizations/{organization}/boundaryConfig` or
+   * `folders/{folder}/boundaryConfig` Example: `folders/123456789/boundaryConfig`
+   * @param array $optParams Optional parameters.
+   * @return BoundaryConfig
+   * @throws \Google\Service\Exception
+   */
+  public function getBoundaryConfig($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getBoundaryConfig', [$params], BoundaryConfig::class);
   }
   /**
    * Gets the access control policy for a folder. The returned policy may be empty
@@ -222,7 +240,7 @@ class Folders extends \Google\Service\Resource
     return $this->call('patch', [$params], Operation::class);
   }
   /**
-   * Search for folders that match specific filter criteria. `search()` provides
+   * Searches for folders that match specific filter criteria. `search()` provides
    * an eventually consistent view of the folders a user has access to which meet
    * the specified filter criteria. This will only return folders on which the
    * caller has the permission `resourcemanager.folders.get`. (folders.search)
@@ -327,6 +345,26 @@ class Folders extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('undelete', [$params], Operation::class);
+  }
+  /**
+   * Updates the BoundaryConfig identified by the specified `name` (for example,
+   * `folders/123456789/boundaryConfig`). (folders.updateBoundaryConfig)
+   *
+   * @param string $name Identifier. The unique resource name of the
+   * BoundaryConfig. Format: - `organizations/{organization}/boundaryConfig` -
+   * `folders/{folder}/boundaryConfig` Example: `folders/123456789/boundaryConfig`
+   * @param BoundaryConfig $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Optional. The list of fields to update.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function updateBoundaryConfig($name, BoundaryConfig $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updateBoundaryConfig', [$params], Operation::class);
   }
 }
 

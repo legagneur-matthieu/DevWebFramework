@@ -49,6 +49,8 @@ class CommitRequest extends \Google\Collection
   public $mode;
   protected $mutationsType = Mutation::class;
   protected $mutationsDataType = 'array';
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
   protected $singleUseTransactionType = TransactionOptions::class;
   protected $singleUseTransactionDataType = '';
   /**
@@ -114,6 +116,22 @@ class CommitRequest extends \Google\Collection
   public function getMutations()
   {
     return $this->mutations;
+  }
+  /**
+   * Optional. The options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
   /**
    * Options for beginning a new transaction for this request. The transaction

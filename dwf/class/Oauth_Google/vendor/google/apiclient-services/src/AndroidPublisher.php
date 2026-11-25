@@ -42,7 +42,12 @@ class AndroidPublisher extends \Google\Service
 
   public $applications;
   public $applications_deviceTierConfigs;
+  public $applications_tracks_releases;
   public $apprecovery;
+  public $appsigning;
+  public $appstoreappsreview;
+  public $appstorecatalog_recentappviews;
+  public $appstorecatalog_recentupdateevents;
   public $edits;
   public $edits_apks;
   public $edits_bundles;
@@ -171,6 +176,26 @@ class AndroidPublisher extends \Google\Service
           ]
         ]
     );
+    $this->applications_tracks_releases = new AndroidPublisher\Resource\ApplicationsTracksReleases(
+        $this,
+        $this->serviceName,
+        'releases',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'androidpublisher/v3/{+parent}/releases',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->apprecovery = new AndroidPublisher\Resource\Apprecovery(
         $this,
         $this->serviceName,
@@ -250,6 +275,187 @@ class AndroidPublisher extends \Google\Service
           ]
         ]
     );
+    $this->appsigning = new AndroidPublisher\Resource\Appsigning(
+        $this,
+        $this->serviceName,
+        'appsigning',
+        [
+          'methods' => [
+            'enrollApp' => [
+              'path' => 'androidpublisher/v3/applications/{name}/appSigning:enrollApp',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'rotateAppSigningKey' => [
+              'path' => 'androidpublisher/v3/applications/{name}/appSigning:rotateAppSigningKey',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->appstoreappsreview = new AndroidPublisher\Resource\Appstoreappsreview(
+        $this,
+        $this->serviceName,
+        'appstoreappsreview',
+        [
+          'methods' => [
+            'createappstorehostedapp' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps:create',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'updateappstorehostedapp' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps:update',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'updateappstorehostedapppublishstatus' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}:updateAppStoreHostedAppPublishStatus',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'uploadapk' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/apks:upload',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'uploadappstoreapppolicydeclarationfile' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/policyDeclarationFiles:upload',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'uploadimage' => [
+              'path' => 'androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/images:upload',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->appstorecatalog_recentappviews = new AndroidPublisher\Resource\AppstorecatalogRecentappviews(
+        $this,
+        $this->serviceName,
+        'recentappviews',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentAppViews/{playAppPackageName}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'playAppPackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->appstorecatalog_recentupdateevents = new AndroidPublisher\Resource\AppstorecatalogRecentupdateevents(
+        $this,
+        $this->serviceName,
+        'recentupdateevents',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentUpdateEvents',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'appStorePackageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'endTime' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'startTime' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->edits = new AndroidPublisher\Resource\Edits(
         $this,
         $this->serviceName,
@@ -269,6 +475,10 @@ class AndroidPublisher extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'changesInReviewBehavior' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'changesNotSentForReview' => [
                   'location' => 'query',
@@ -776,6 +986,10 @@ class AndroidPublisher extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'aiGeneratedState' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -2374,6 +2588,21 @@ class AndroidPublisher extends \Google\Service
                   'type' => 'boolean',
                 ],
               ],
+            ],'reviewrefund' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/orders/{orderId}:reviewrefund',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'orderId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -2539,66 +2768,6 @@ class AndroidPublisher extends \Google\Service
                   'required' => true,
                 ],
               ],
-            ],'get' => [
-              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}',
-              'httpMethod' => 'GET',
-              'parameters' => [
-                'packageName' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'subscriptionId' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'token' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
-            ],'refund' => [
-              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:refund',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'packageName' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'subscriptionId' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'token' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
-            ],'revoke' => [
-              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:revoke',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'packageName' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'subscriptionId' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'token' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
             ],
           ]
         ]
@@ -2609,8 +2778,68 @@ class AndroidPublisher extends \Google\Service
         'subscriptionsv2',
         [
           'methods' => [
-            'cancel' => [
+            'activateoffertargeting' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{purchaseToken}:activateOfferTargeting',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'purchaseToken' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'cancel' => [
               'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'token' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'cancelplantransition' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:cancelPlanTransition',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'token' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'deactivateoffertargeting' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{purchaseToken}:deactivateOfferTargeting',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'purchaseToken' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'defer' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:defer',
               'httpMethod' => 'POST',
               'parameters' => [
                 'packageName' => [
@@ -2641,6 +2870,21 @@ class AndroidPublisher extends \Google\Service
               ],
             ],'revoke' => [
               'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'packageName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'token' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'scheduleplantransition' => [
+              'path' => 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:schedulePlanTransition',
               'httpMethod' => 'POST',
               'parameters' => [
                 'packageName' => [

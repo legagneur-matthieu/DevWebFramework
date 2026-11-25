@@ -108,21 +108,22 @@ class GoogleCloudRetailV2Product extends \Google\Collection
    */
   public $brands;
   /**
-   * Product categories. This field is repeated for supporting one product
-   * belonging to several parallel categories. Strongly recommended using the
-   * full path for better search / recommendation quality. To represent full
-   * path of category, use '>' sign to separate different hierarchies. If '>' is
-   * part of the category name, replace it with other character(s). For example,
-   * if a shoes product belongs to both ["Shoes & Accessories" -> "Shoes"] and
-   * ["Sports & Fitness" -> "Athletic Clothing" -> "Shoes"], it could be
-   * represented as: "categories": [ "Shoes & Accessories > Shoes", "Sports &
-   * Fitness > Athletic Clothing > Shoes" ] Must be set for Type.PRIMARY Product
-   * otherwise an INVALID_ARGUMENT error is returned. At most 250 values are
-   * allowed per Product unless overridden through the Google Cloud console.
-   * Empty values are not allowed. Each value must be a UTF-8 encoded string
-   * with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT
-   * error is returned. Corresponding properties: Google Merchant Center
-   * property google_product_category. Schema.org property [Product.category]
+   * Optional. Product categories. This field is repeated for supporting one
+   * product belonging to several parallel categories. Strongly recommended
+   * using the full path for better search / recommendation quality. To
+   * represent the full path of category, use the '>' sign, with one space on
+   * each side, to separate different hierarchies. If '>' is part of the
+   * category name, replace it with other character(s). For example, if a shoes
+   * product belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports &
+   * Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented as:
+   * "categories": [ "Shoes & Accessories > Shoes", "Sports & Fitness > Athletic
+   * Clothing > Shoes" ] Must be set for Type.PRIMARY Product otherwise an
+   * INVALID_ARGUMENT error is returned. At most 250 values are allowed per
+   * Product unless overridden through the Google Cloud console. Empty values
+   * are not allowed. Each value must be a UTF-8 encoded string with a length
+   * limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is
+   * returned. Corresponding properties: Google Merchant Center property
+   * google_product_category. Schema.org property [Product.category]
    * (https://schema.org/category). [mc_google_product_category]:
    * https://support.google.com/merchants/answer/6324436
    *
@@ -165,6 +166,10 @@ class GoogleCloudRetailV2Product extends \Google\Collection
    */
   public $description;
   /**
+   * The timestamp when this product becomes unavailable for
+   * SearchService.Search. If it is set, the Product is not available for
+   * SearchService.Search after expire_time. However, the product can still be
+   * retrieved by ProductService.GetProduct and ProductService.ListProducts.
    * Note that this field is applied in the following ways: * If the Product is
    * already expired when it is uploaded, this product is not indexed for
    * search. * If the Product is not expired when it is uploaded, only the
@@ -314,8 +319,9 @@ class GoogleCloudRetailV2Product extends \Google\Collection
    * size type; "M" represents size value. In "GIRLS:27", size system is empty;
    * "GIRLS" represents size type; "27" represents size value. In "32 inches",
    * both size system and size type are empty, while size value is "32 inches".
-   * A maximum of 20 values are allowed per Product. Each value must be a UTF-8
-   * encoded string with a length limit of 128 characters. Otherwise, an
+   * A maximum of 20 values are allowed per Product by default. This limit can
+   * be increased using dynamic override configurations. Each value must be a
+   * UTF-8 encoded string with a length limit of 128 characters. Otherwise, an
    * INVALID_ARGUMENT error is returned. Corresponding properties: Google
    * Merchant Center property
    * [size](https://support.google.com/merchants/answer/6324492),
@@ -520,21 +526,22 @@ class GoogleCloudRetailV2Product extends \Google\Collection
     return $this->brands;
   }
   /**
-   * Product categories. This field is repeated for supporting one product
-   * belonging to several parallel categories. Strongly recommended using the
-   * full path for better search / recommendation quality. To represent full
-   * path of category, use '>' sign to separate different hierarchies. If '>' is
-   * part of the category name, replace it with other character(s). For example,
-   * if a shoes product belongs to both ["Shoes & Accessories" -> "Shoes"] and
-   * ["Sports & Fitness" -> "Athletic Clothing" -> "Shoes"], it could be
-   * represented as: "categories": [ "Shoes & Accessories > Shoes", "Sports &
-   * Fitness > Athletic Clothing > Shoes" ] Must be set for Type.PRIMARY Product
-   * otherwise an INVALID_ARGUMENT error is returned. At most 250 values are
-   * allowed per Product unless overridden through the Google Cloud console.
-   * Empty values are not allowed. Each value must be a UTF-8 encoded string
-   * with a length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT
-   * error is returned. Corresponding properties: Google Merchant Center
-   * property google_product_category. Schema.org property [Product.category]
+   * Optional. Product categories. This field is repeated for supporting one
+   * product belonging to several parallel categories. Strongly recommended
+   * using the full path for better search / recommendation quality. To
+   * represent the full path of category, use the '>' sign, with one space on
+   * each side, to separate different hierarchies. If '>' is part of the
+   * category name, replace it with other character(s). For example, if a shoes
+   * product belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports &
+   * Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented as:
+   * "categories": [ "Shoes & Accessories > Shoes", "Sports & Fitness > Athletic
+   * Clothing > Shoes" ] Must be set for Type.PRIMARY Product otherwise an
+   * INVALID_ARGUMENT error is returned. At most 250 values are allowed per
+   * Product unless overridden through the Google Cloud console. Empty values
+   * are not allowed. Each value must be a UTF-8 encoded string with a length
+   * limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is
+   * returned. Corresponding properties: Google Merchant Center property
+   * google_product_category. Schema.org property [Product.category]
    * (https://schema.org/category). [mc_google_product_category]:
    * https://support.google.com/merchants/answer/6324436
    *
@@ -633,6 +640,10 @@ class GoogleCloudRetailV2Product extends \Google\Collection
     return $this->description;
   }
   /**
+   * The timestamp when this product becomes unavailable for
+   * SearchService.Search. If it is set, the Product is not available for
+   * SearchService.Search after expire_time. However, the product can still be
+   * retrieved by ProductService.GetProduct and ProductService.ListProducts.
    * Note that this field is applied in the following ways: * If the Product is
    * already expired when it is uploaded, this product is not indexed for
    * search. * If the Product is not expired when it is uploaded, only the
@@ -981,8 +992,9 @@ class GoogleCloudRetailV2Product extends \Google\Collection
    * size type; "M" represents size value. In "GIRLS:27", size system is empty;
    * "GIRLS" represents size type; "27" represents size value. In "32 inches",
    * both size system and size type are empty, while size value is "32 inches".
-   * A maximum of 20 values are allowed per Product. Each value must be a UTF-8
-   * encoded string with a length limit of 128 characters. Otherwise, an
+   * A maximum of 20 values are allowed per Product by default. This limit can
+   * be increased using dynamic override configurations. Each value must be a
+   * UTF-8 encoded string with a length limit of 128 characters. Otherwise, an
    * INVALID_ARGUMENT error is returned. Corresponding properties: Google
    * Merchant Center property
    * [size](https://support.google.com/merchants/answer/6324492),

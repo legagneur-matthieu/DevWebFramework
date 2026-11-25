@@ -19,6 +19,33 @@ namespace Google\Service\SecretManager;
 
 class Secret extends \Google\Collection
 {
+  /**
+   * Applicable to all secrets which do not have any restriction on the
+   * SecretVersions.
+   */
+  public const SECRET_TYPE_SECRET_TYPE_UNSPECIFIED = 'SECRET_TYPE_UNSPECIFIED';
+  /**
+   * Applicable to secrets which are used for the managed rotation feature for
+   * Cloud SQL Single User.
+   */
+  public const SECRET_TYPE_CLOUD_SQL_DB_CREDENTIALS = 'CLOUD_SQL_DB_CREDENTIALS';
+  /**
+   * Applicable to secrets where the payload contains an access key.
+   */
+  public const SECRET_TYPE_ACCESS_KEY = 'ACCESS_KEY';
+  /**
+   * Applicable to secrets where the payload contains a certificate.
+   */
+  public const SECRET_TYPE_CERTIFICATE = 'CERTIFICATE';
+  /**
+   * Applicable to secrets where the payload contains database credentials.
+   */
+  public const SECRET_TYPE_OTHER_DB_CREDENTIALS = 'OTHER_DB_CREDENTIALS';
+  /**
+   * Applicable to secrets whose type doesn't belong to any of the above defined
+   * types.
+   */
+  public const SECRET_TYPE_OTHER = 'OTHER';
   protected $collection_key = 'topics';
   /**
    * Optional. Custom metadata about the secret. Annotations are distinct from
@@ -73,10 +100,20 @@ class Secret extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $policyMemberType = ResourcePolicyMember::class;
+  protected $policyMemberDataType = '';
   protected $replicationType = Replication::class;
   protected $replicationDataType = '';
   protected $rotationType = Rotation::class;
   protected $rotationDataType = '';
+  /**
+   * Optional. Immutable. This defines the type of the secret. Enforces certain
+   * structural requirements on the SecretVersions. For secret of type
+   * UNSPECIFIED, the SecretVersions can be of any type.
+   *
+   * @var string
+   */
+  public $secretType;
   /**
    * Optional. Input only. Immutable. Mapping of Tag keys/values directly bound
    * to this resource. For example: "123/environment": "production",
@@ -250,6 +287,24 @@ class Secret extends \Google\Collection
     return $this->name;
   }
   /**
+   * Output only. Defines the policy member for the secret. This will be used to
+   * check if the caller has the permission to perform certain operations on the
+   * typed secret.
+   *
+   * @param ResourcePolicyMember $policyMember
+   */
+  public function setPolicyMember(ResourcePolicyMember $policyMember)
+  {
+    $this->policyMember = $policyMember;
+  }
+  /**
+   * @return ResourcePolicyMember
+   */
+  public function getPolicyMember()
+  {
+    return $this->policyMember;
+  }
+  /**
    * Optional. Immutable. The replication policy of the secret data attached to
    * the Secret. The replication policy cannot be changed after the Secret has
    * been created.
@@ -283,6 +338,27 @@ class Secret extends \Google\Collection
   public function getRotation()
   {
     return $this->rotation;
+  }
+  /**
+   * Optional. Immutable. This defines the type of the secret. Enforces certain
+   * structural requirements on the SecretVersions. For secret of type
+   * UNSPECIFIED, the SecretVersions can be of any type.
+   *
+   * Accepted values: SECRET_TYPE_UNSPECIFIED, CLOUD_SQL_DB_CREDENTIALS,
+   * ACCESS_KEY, CERTIFICATE, OTHER_DB_CREDENTIALS, OTHER
+   *
+   * @param self::SECRET_TYPE_* $secretType
+   */
+  public function setSecretType($secretType)
+  {
+    $this->secretType = $secretType;
+  }
+  /**
+   * @return self::SECRET_TYPE_*
+   */
+  public function getSecretType()
+  {
+    return $this->secretType;
   }
   /**
    * Optional. Input only. Immutable. Mapping of Tag keys/values directly bound

@@ -34,6 +34,8 @@ class GoogleCloudRunV2Container extends \Google\Collection
    * @var string
    */
   public $baseImageUri;
+  protected $buildConfigType = GoogleCloudRunV2BuildConfiguration::class;
+  protected $buildConfigDataType = '';
   protected $buildInfoType = GoogleCloudRunV2BuildInfo::class;
   protected $buildInfoDataType = '';
   /**
@@ -69,8 +71,17 @@ class GoogleCloudRunV2Container extends \Google\Collection
   public $name;
   protected $portsType = GoogleCloudRunV2ContainerPort::class;
   protected $portsDataType = 'array';
+  protected $readinessProbeType = GoogleCloudRunV2Probe::class;
+  protected $readinessProbeDataType = '';
   protected $resourcesType = GoogleCloudRunV2ResourceRequirements::class;
   protected $resourcesDataType = '';
+  /**
+   * Optional. Indicates that this container can act as a sandbox supervisor and
+   * launch sandboxes.
+   *
+   * @var bool
+   */
+  public $sandboxLauncher;
   protected $sourceCodeType = GoogleCloudRunV2SourceCode::class;
   protected $sourceCodeDataType = '';
   protected $startupProbeType = GoogleCloudRunV2Probe::class;
@@ -118,6 +129,22 @@ class GoogleCloudRunV2Container extends \Google\Collection
   public function getBaseImageUri()
   {
     return $this->baseImageUri;
+  }
+  /**
+   * Optional. The build configuration for the container image.
+   *
+   * @param GoogleCloudRunV2BuildConfiguration $buildConfig
+   */
+  public function setBuildConfig(GoogleCloudRunV2BuildConfiguration $buildConfig)
+  {
+    $this->buildConfig = $buildConfig;
+  }
+  /**
+   * @return GoogleCloudRunV2BuildConfiguration
+   */
+  public function getBuildConfig()
+  {
+    return $this->buildConfig;
   }
   /**
    * Output only. The build info of the container image.
@@ -256,6 +283,22 @@ class GoogleCloudRunV2Container extends \Google\Collection
     return $this->ports;
   }
   /**
+   * Readiness probe to be used for health checks.
+   *
+   * @param GoogleCloudRunV2Probe $readinessProbe
+   */
+  public function setReadinessProbe(GoogleCloudRunV2Probe $readinessProbe)
+  {
+    $this->readinessProbe = $readinessProbe;
+  }
+  /**
+   * @return GoogleCloudRunV2Probe
+   */
+  public function getReadinessProbe()
+  {
+    return $this->readinessProbe;
+  }
+  /**
    * Compute Resource requirements by this container.
    *
    * @param GoogleCloudRunV2ResourceRequirements $resources
@@ -272,7 +315,25 @@ class GoogleCloudRunV2Container extends \Google\Collection
     return $this->resources;
   }
   /**
-   * Optional. Location of the source.
+   * Optional. Indicates that this container can act as a sandbox supervisor and
+   * launch sandboxes.
+   *
+   * @param bool $sandboxLauncher
+   */
+  public function setSandboxLauncher($sandboxLauncher)
+  {
+    $this->sandboxLauncher = $sandboxLauncher;
+  }
+  /**
+   * @return bool
+   */
+  public function getSandboxLauncher()
+  {
+    return $this->sandboxLauncher;
+  }
+  /**
+   * Optional. Location of the source. This field is only supported in Cloud Run
+   * Service.
    *
    * @param GoogleCloudRunV2SourceCode $sourceCode
    */

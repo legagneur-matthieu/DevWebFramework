@@ -90,6 +90,8 @@ class InternalResourceMetadata extends \Google\Model
     return $this->isDeletionProtectionEnabled;
   }
   /**
+   * The product this resource represents.
+   *
    * @param Product $product
    */
   public function setProduct(Product $product)

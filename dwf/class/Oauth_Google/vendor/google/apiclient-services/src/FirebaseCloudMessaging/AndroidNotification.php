@@ -113,8 +113,8 @@ class AndroidNotification extends \Google\Collection
    */
   public $bodyLocKey;
   /**
-   * If set, display notifications delivered to the device will be handled by
-   * the app instead of the proxy.
+   * Optional. If set, display notifications delivered to the device will be
+   * handled by the app instead of the proxy.
    *
    * @deprecated
    * @var bool
@@ -216,7 +216,7 @@ class AndroidNotification extends \Google\Collection
   public $localOnly;
   /**
    * Sets the number of items this notification represents. May be displayed as
-   * a badge count for launchers that support badging.See [Notification
+   * a badge count for launchers that support badging. See [Notification
    * Badge](https://developer.android.com/training/notify-user/badges). For
    * example, this might be useful if you're using just one notification to
    * represent multiple new messages but you want the count here to represent
@@ -232,12 +232,15 @@ class AndroidNotification extends \Google\Collection
    * of how much of the user's attention should be consumed by this
    * notification. Low-priority notifications may be hidden from the user in
    * certain situations, while the user might be interrupted for a higher-
-   * priority notification. The effect of setting the same priorities may differ
-   * slightly on different platforms. Note this priority differs from
-   * `AndroidMessagePriority`. This priority is processed by the client after
-   * the message has been delivered, whereas [AndroidMessagePriority](https://fi
-   * rebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidmessa
-   * gepriority) is an FCM concept that controls when the message is delivered.
+   * priority notification. This parameter affects notification priority only on
+   * devices running Android 7.1 (API level 25) and lower. On Android 8.0 (API
+   * level 26) and higher, priority is ignored in favor of channel [importance](
+   * https://developer.android.com/develop/ui/views/notifications/channels#impor
+   * tance). Note this priority differs from `AndroidMessagePriority`. This
+   * priority is processed by the client after the message has been delivered,
+   * whereas [AndroidMessagePriority](https://firebase.google.com/docs/reference
+   * /fcm/rest/v1/projects.messages#androidmessagepriority) is an FCM concept
+   * that controls when the message is delivered.
    *
    * @var string
    */
@@ -382,8 +385,8 @@ class AndroidNotification extends \Google\Collection
     return $this->bodyLocKey;
   }
   /**
-   * If set, display notifications delivered to the device will be handled by
-   * the app instead of the proxy.
+   * Optional. If set, display notifications delivered to the device will be
+   * handled by the app instead of the proxy.
    *
    * @deprecated
    * @param bool $bypassProxyNotification
@@ -612,7 +615,7 @@ class AndroidNotification extends \Google\Collection
   }
   /**
    * Sets the number of items this notification represents. May be displayed as
-   * a badge count for launchers that support badging.See [Notification
+   * a badge count for launchers that support badging. See [Notification
    * Badge](https://developer.android.com/training/notify-user/badges). For
    * example, this might be useful if you're using just one notification to
    * represent multiple new messages but you want the count here to represent
@@ -638,12 +641,15 @@ class AndroidNotification extends \Google\Collection
    * of how much of the user's attention should be consumed by this
    * notification. Low-priority notifications may be hidden from the user in
    * certain situations, while the user might be interrupted for a higher-
-   * priority notification. The effect of setting the same priorities may differ
-   * slightly on different platforms. Note this priority differs from
-   * `AndroidMessagePriority`. This priority is processed by the client after
-   * the message has been delivered, whereas [AndroidMessagePriority](https://fi
-   * rebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidmessa
-   * gepriority) is an FCM concept that controls when the message is delivered.
+   * priority notification. This parameter affects notification priority only on
+   * devices running Android 7.1 (API level 25) and lower. On Android 8.0 (API
+   * level 26) and higher, priority is ignored in favor of channel [importance](
+   * https://developer.android.com/develop/ui/views/notifications/channels#impor
+   * tance). Note this priority differs from `AndroidMessagePriority`. This
+   * priority is processed by the client after the message has been delivered,
+   * whereas [AndroidMessagePriority](https://firebase.google.com/docs/reference
+   * /fcm/rest/v1/projects.messages#androidmessagepriority) is an FCM concept
+   * that controls when the message is delivered.
    *
    * Accepted values: PRIORITY_UNSPECIFIED, PRIORITY_MIN, PRIORITY_LOW,
    * PRIORITY_DEFAULT, PRIORITY_HIGH, PRIORITY_MAX

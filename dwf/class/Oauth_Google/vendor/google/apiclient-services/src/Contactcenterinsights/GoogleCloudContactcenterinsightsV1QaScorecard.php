@@ -33,6 +33,12 @@ class GoogleCloudContactcenterinsightsV1QaScorecard extends \Google\Model
    */
   public const SOURCE_QA_SCORECARD_SOURCE_DISCOVERY_ENGINE = 'QA_SCORECARD_SOURCE_DISCOVERY_ENGINE';
   /**
+   * The scorecard is derived from the custom intent taxonomy. Customers can
+   * edit question content, but cannot delete the scorecard or add/remove
+   * questions.
+   */
+  public const SOURCE_QA_SCORECARD_SOURCE_INTENT_TAXONOMY = 'QA_SCORECARD_SOURCE_INTENT_TAXONOMY';
+  /**
    * Output only. The time at which this scorecard was created.
    *
    * @var string
@@ -65,6 +71,18 @@ class GoogleCloudContactcenterinsightsV1QaScorecard extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * Output only. The source of the scorecard.
    *
@@ -162,10 +180,43 @@ class GoogleCloudContactcenterinsightsV1QaScorecard extends \Google\Model
     return $this->name;
   }
   /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @param bool $satisfiesPzi
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @param bool $satisfiesPzs
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
    * Output only. The source of the scorecard.
    *
    * Accepted values: QA_SCORECARD_SOURCE_UNSPECIFIED,
-   * QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE
+   * QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE,
+   * QA_SCORECARD_SOURCE_INTENT_TAXONOMY
    *
    * @param self::SOURCE_* $source
    */

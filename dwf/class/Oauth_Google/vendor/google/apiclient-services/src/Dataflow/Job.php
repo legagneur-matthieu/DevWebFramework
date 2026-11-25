@@ -102,11 +102,18 @@ class Job extends \Google\Collection
    */
   public const CURRENT_STATE_JOB_STATE_RESOURCE_CLEANING_UP = 'JOB_STATE_RESOURCE_CLEANING_UP';
   /**
-   * `JOB_STATE_PAUSING` is not implemented yet.
+   * `JOB_STATE_PAUSING` indicates that the job is in the process of pausing. A
+   * pausing job will stop processing, archive in-flight Shuffle data, and
+   * transition to `JOB_STATE_PAUSED`. Jobs in this state can transition to
+   * `JOB_STATE_CANCELLING` if cancellation is requested, or can transition back
+   * to `JOB_STATE_RUNNING` if the pause fails to complete.
    */
   public const CURRENT_STATE_JOB_STATE_PAUSING = 'JOB_STATE_PAUSING';
   /**
-   * `JOB_STATE_PAUSED` is not implemented yet.
+   * `JOB_STATE_PAUSED` indicates that the job is not currently processing. Jobs
+   * in this state can transition back to `JOB_STATE_RUNNING` to continue
+   * processing where they left off, or can transition to `JOB_STATE_CANCELLING`
+   * if cancellation is requested.
    */
   public const CURRENT_STATE_JOB_STATE_PAUSED = 'JOB_STATE_PAUSED';
   /**
@@ -192,11 +199,18 @@ class Job extends \Google\Collection
    */
   public const REQUESTED_STATE_JOB_STATE_RESOURCE_CLEANING_UP = 'JOB_STATE_RESOURCE_CLEANING_UP';
   /**
-   * `JOB_STATE_PAUSING` is not implemented yet.
+   * `JOB_STATE_PAUSING` indicates that the job is in the process of pausing. A
+   * pausing job will stop processing, archive in-flight Shuffle data, and
+   * transition to `JOB_STATE_PAUSED`. Jobs in this state can transition to
+   * `JOB_STATE_CANCELLING` if cancellation is requested, or can transition back
+   * to `JOB_STATE_RUNNING` if the pause fails to complete.
    */
   public const REQUESTED_STATE_JOB_STATE_PAUSING = 'JOB_STATE_PAUSING';
   /**
-   * `JOB_STATE_PAUSED` is not implemented yet.
+   * `JOB_STATE_PAUSED` indicates that the job is not currently processing. Jobs
+   * in this state can transition back to `JOB_STATE_RUNNING` to continue
+   * processing where they left off, or can transition to `JOB_STATE_CANCELLING`
+   * if cancellation is requested.
    */
   public const REQUESTED_STATE_JOB_STATE_PAUSED = 'JOB_STATE_PAUSED';
   /**
@@ -214,6 +228,16 @@ class Job extends \Google\Collection
    */
   public const TYPE_JOB_TYPE_STREAMING = 'JOB_TYPE_STREAMING';
   protected $collection_key = 'tempFiles';
+  /**
+   * Output only. Indicates whether [Auto VM
+   * Selection](https://cloud.google.com/dataflow/docs/guides/auto-vm-selection)
+   * is enabled for the job. Set to `true` on a best-effort basis once any
+   * worker pool of the job was created with Auto VM Selection. Populated for
+   * `ListJobs` and all `GetJob` views `SUMMARY` and higher.
+   *
+   * @var bool
+   */
+  public $autoVmSelectionEnabled;
   /**
    * The client's unique identifier of the job, re-used across retried attempts.
    * If this field is set, the service will ensure its uniqueness. The request
@@ -298,6 +322,12 @@ class Job extends \Google\Collection
    * @var string
    */
   public $name;
+  /**
+   * Output only. Indicates whether the job can be paused.
+   *
+   * @var bool
+   */
+  public $pausable;
   protected $pipelineDescriptionType = PipelineDescription::class;
   protected $pipelineDescriptionDataType = '';
   /**
@@ -397,6 +427,26 @@ class Job extends \Google\Collection
    */
   public $type;
 
+  /**
+   * Output only. Indicates whether [Auto VM
+   * Selection](https://cloud.google.com/dataflow/docs/guides/auto-vm-selection)
+   * is enabled for the job. Set to `true` on a best-effort basis once any
+   * worker pool of the job was created with Auto VM Selection. Populated for
+   * `ListJobs` and all `GetJob` views `SUMMARY` and higher.
+   *
+   * @param bool $autoVmSelectionEnabled
+   */
+  public function setAutoVmSelectionEnabled($autoVmSelectionEnabled)
+  {
+    $this->autoVmSelectionEnabled = $autoVmSelectionEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getAutoVmSelectionEnabled()
+  {
+    return $this->autoVmSelectionEnabled;
+  }
   /**
    * The client's unique identifier of the job, re-used across retried attempts.
    * If this field is set, the service will ensure its uniqueness. The request
@@ -546,8 +596,8 @@ class Job extends \Google\Collection
   }
   /**
    * This field is populated by the Dataflow service to support filtering jobs
-   * by the metadata values provided here. Populated for ListJobs and all GetJob
-   * views SUMMARY and higher.
+   * by the metadata values provided here. Populated for `ListJobs` and all
+   * `GetJob` views `SUMMARY` and higher.
    *
    * @param JobMetadata $jobMetadata
    */
@@ -622,10 +672,26 @@ class Job extends \Google\Collection
     return $this->name;
   }
   /**
+   * Output only. Indicates whether the job can be paused.
+   *
+   * @param bool $pausable
+   */
+  public function setPausable($pausable)
+  {
+    $this->pausable = $pausable;
+  }
+  /**
+   * @return bool
+   */
+  public function getPausable()
+  {
+    return $this->pausable;
+  }
+  /**
    * Preliminary field: The format of this data may change at any time. A
    * description of the user pipeline and stages through which it is executed.
-   * Created by Cloud Dataflow service. Only retrieved with JOB_VIEW_DESCRIPTION
-   * or JOB_VIEW_ALL.
+   * Created by Cloud Dataflow service. Only retrieved with
+   * `JOB_VIEW_DESCRIPTION` or `JOB_VIEW_ALL`.
    *
    * @param PipelineDescription $pipelineDescription
    */
@@ -828,7 +894,7 @@ class Job extends \Google\Collection
   }
   /**
    * Exactly one of step or steps_location should be specified. The top-level
-   * steps that constitute the entire job. Only retrieved with JOB_VIEW_ALL.
+   * steps that constitute the entire job. Only retrieved with `JOB_VIEW_ALL`.
    *
    * @param Step[] $steps
    */

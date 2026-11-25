@@ -47,6 +47,10 @@ class GoogleDevtoolsCloudbuildV1Results extends \Google\Collection
    * @var string[]
    */
   public $buildStepOutputs;
+  protected $buildStepResultsType = GoogleDevtoolsCloudbuildV1BuildStepResults::class;
+  protected $buildStepResultsDataType = 'map';
+  protected $genericArtifactsType = GoogleDevtoolsCloudbuildV1UploadedGenericArtifact::class;
+  protected $genericArtifactsDataType = 'array';
   protected $goModulesType = GoogleDevtoolsCloudbuildV1UploadedGoModule::class;
   protected $goModulesDataType = 'array';
   protected $imagesType = GoogleDevtoolsCloudbuildV1BuiltImage::class;
@@ -64,6 +68,8 @@ class GoogleDevtoolsCloudbuildV1Results extends \Google\Collection
   public $numArtifacts;
   protected $pythonPackagesType = GoogleDevtoolsCloudbuildV1UploadedPythonPackage::class;
   protected $pythonPackagesDataType = 'array';
+  protected $resourceUsageType = GoogleDevtoolsCloudbuildV1BuildResourceUsage::class;
+  protected $resourceUsageDataType = '';
 
   /**
    * Path to the artifact manifest for non-container artifacts uploaded to Cloud
@@ -135,6 +141,39 @@ class GoogleDevtoolsCloudbuildV1Results extends \Google\Collection
   public function getBuildStepOutputs()
   {
     return $this->buildStepOutputs;
+  }
+  /**
+   * Results for build steps. step_id ->
+   *
+   * @param GoogleDevtoolsCloudbuildV1BuildStepResults[] $buildStepResults
+   */
+  public function setBuildStepResults($buildStepResults)
+  {
+    $this->buildStepResults = $buildStepResults;
+  }
+  /**
+   * @return GoogleDevtoolsCloudbuildV1BuildStepResults[]
+   */
+  public function getBuildStepResults()
+  {
+    return $this->buildStepResults;
+  }
+  /**
+   * Output only. Generic artifacts uploaded to Artifact Registry at the end of
+   * the build.
+   *
+   * @param GoogleDevtoolsCloudbuildV1UploadedGenericArtifact[] $genericArtifacts
+   */
+  public function setGenericArtifacts($genericArtifacts)
+  {
+    $this->genericArtifacts = $genericArtifacts;
+  }
+  /**
+   * @return GoogleDevtoolsCloudbuildV1UploadedGenericArtifact[]
+   */
+  public function getGenericArtifacts()
+  {
+    return $this->genericArtifacts;
   }
   /**
    * Optional. Go module artifacts uploaded to Artifact Registry at the end of
@@ -233,6 +272,22 @@ class GoogleDevtoolsCloudbuildV1Results extends \Google\Collection
   public function getPythonPackages()
   {
     return $this->pythonPackages;
+  }
+  /**
+   * Output only. Aggregated metrics for the build.
+   *
+   * @param GoogleDevtoolsCloudbuildV1BuildResourceUsage $resourceUsage
+   */
+  public function setResourceUsage(GoogleDevtoolsCloudbuildV1BuildResourceUsage $resourceUsage)
+  {
+    $this->resourceUsage = $resourceUsage;
+  }
+  /**
+   * @return GoogleDevtoolsCloudbuildV1BuildResourceUsage
+   */
+  public function getResourceUsage()
+  {
+    return $this->resourceUsage;
   }
 }
 

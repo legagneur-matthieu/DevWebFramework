@@ -39,6 +39,15 @@ class GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest extends 
    * @var string
    */
   public $parent;
+  /**
+   * Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator`
+   * instead. If true, the labeling rules will be re-evaluated for the
+   * conversations.
+   *
+   * @deprecated
+   * @var bool
+   */
+  public $relabel;
 
   /**
    * Required. Percentage of selected conversation to analyze, between [0, 100].
@@ -104,6 +113,26 @@ class GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest extends 
   public function getParent()
   {
     return $this->parent;
+  }
+  /**
+   * Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator`
+   * instead. If true, the labeling rules will be re-evaluated for the
+   * conversations.
+   *
+   * @deprecated
+   * @param bool $relabel
+   */
+  public function setRelabel($relabel)
+  {
+    $this->relabel = $relabel;
+  }
+  /**
+   * @deprecated
+   * @return bool
+   */
+  public function getRelabel()
+  {
+    return $this->relabel;
   }
 }
 

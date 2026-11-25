@@ -83,6 +83,35 @@ class Policy extends \Google\Collection
    */
   public const AUTO_DATE_AND_TIME_ZONE_AUTO_DATE_AND_TIME_ZONE_ENFORCED = 'AUTO_DATE_AND_TIME_ZONE_ENFORCED';
   /**
+   * Defaults to AUTOFILL_USER_CHOICE.
+   */
+  public const AUTOFILL_POLICY_AUTOFILL_POLICY_UNSPECIFIED = 'AUTOFILL_POLICY_UNSPECIFIED';
+  /**
+   * The user can choose and use an autofill service.
+   */
+  public const AUTOFILL_POLICY_AUTOFILL_USER_CHOICE = 'AUTOFILL_USER_CHOICE';
+  /**
+   * Autofill is disabled and the user is not allowed to change this setting.
+   * This is supported only on Android 8 and above.
+   */
+  public const AUTOFILL_POLICY_AUTOFILL_DISABLED = 'AUTOFILL_DISABLED';
+  /**
+   * Unspecified. Defaults to BACKUP_SERVICE_DISABLED.
+   */
+  public const BACKUP_SERVICE_BACKUP_SERVICE_UNSPECIFIED = 'BACKUP_SERVICE_UNSPECIFIED';
+  /**
+   * Backup service is disabled. The user is not allowed to change this setting.
+   * A NonComplianceDetail with API_LEVEL is reported if the Android version is
+   * less than 8 on a fully managed device.
+   */
+  public const BACKUP_SERVICE_BACKUP_SERVICE_DISABLED = 'BACKUP_SERVICE_DISABLED';
+  /**
+   * The user can enable or disable the backup service. A NonComplianceDetail
+   * with API_LEVEL is reported if the Android version is less than 8 on a fully
+   * managed device.
+   */
+  public const BACKUP_SERVICE_BACKUP_SERVICE_USER_CHOICE = 'BACKUP_SERVICE_USER_CHOICE';
+  /**
    * If camera_disabled is true, this is equivalent to CAMERA_ACCESS_DISABLED.
    * Otherwise, this is equivalent to CAMERA_ACCESS_USER_CHOICE.
    */
@@ -129,6 +158,11 @@ class Policy extends \Google\Collection
    */
   public const CREDENTIAL_PROVIDER_POLICY_DEFAULT_CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM = 'CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM';
   /**
+   * Apps with credentialProviderPolicy unspecified are allowed to act as a
+   * credential provider.
+   */
+  public const CREDENTIAL_PROVIDER_POLICY_DEFAULT_CREDENTIAL_PROVIDER_DEFAULT_ALLOWED = 'CREDENTIAL_PROVIDER_DEFAULT_ALLOWED';
+  /**
    * Policy not specified. If no policy is specified for a permission at any
    * level, then the PROMPT behavior is used by default.
    */
@@ -171,9 +205,7 @@ class Policy extends \Google\Collection
    */
   public const ENCRYPTION_POLICY_ENABLED_WITH_PASSWORD = 'ENABLED_WITH_PASSWORD';
   /**
-   * Unspecified. Defaults to displaying the enterprise name that's set at the
-   * time of device setup. In future, this will default to
-   * ENTERPRISE_DISPLAY_NAME_VISIBLE.
+   * Unspecified. Defaults to ENTERPRISE_DISPLAY_NAME_VISIBLE.
    */
   public const ENTERPRISE_DISPLAY_NAME_VISIBILITY_ENTERPRISE_DISPLAY_NAME_VISIBILITY_UNSPECIFIED = 'ENTERPRISE_DISPLAY_NAME_VISIBILITY_UNSPECIFIED';
   /**
@@ -391,10 +423,20 @@ class Policy extends \Google\Collection
    */
   public $autoTimeRequired;
   /**
-   * Whether applications other than the ones configured in applications are
-   * blocked from being installed. When set, applications that were installed
-   * under a previous policy but no longer appear in the policy are
-   * automatically uninstalled.
+   * Optional. The policy for the autofill service.
+   *
+   * @var string
+   */
+  public $autofillPolicy;
+  /**
+   * Optional. Controls whether the backup service is disabled. Supported only
+   * on fully managed devices running Android 8 and above.
+   *
+   * @var string
+   */
+  public $backupService;
+  /**
+   * This field has no effect.
    *
    * @deprecated
    * @var bool
@@ -456,8 +498,8 @@ class Policy extends \Google\Collection
    */
   public $createWindowsDisabled;
   /**
-   * Controls which apps are allowed to act as credential providers on Android
-   * 14 and above. These apps store credentials, see this
+   * Optional. Controls which apps are allowed to act as credential providers on
+   * Android 14 and above. These apps store credentials, see this
    * (https://developer.android.com/training/sign-in/passkeys) and this (https:/
    * /developer.android.com/reference/androidx/credentials/CredentialManager)
    * for details. See also credentialProviderPolicy.
@@ -471,6 +513,8 @@ class Policy extends \Google\Collection
    * @var bool
    */
   public $credentialsConfigDisabled;
+  protected $crossDevicePoliciesType = CrossDevicePolicies::class;
+  protected $crossDevicePoliciesDataType = '';
   protected $crossProfilePoliciesType = CrossProfilePolicies::class;
   protected $crossProfilePoliciesDataType = '';
   /**
@@ -500,6 +544,8 @@ class Policy extends \Google\Collection
   protected $deviceOwnerLockScreenInfoDataType = '';
   protected $deviceRadioStateType = DeviceRadioState::class;
   protected $deviceRadioStateDataType = '';
+  protected $deviceWidePoliciesType = DeviceWidePolicies::class;
+  protected $deviceWidePoliciesDataType = '';
   protected $displaySettingsType = DisplaySettings::class;
   protected $displaySettingsDataType = '';
   /**
@@ -606,7 +652,9 @@ class Policy extends \Google\Collection
    */
   public $microphoneAccess;
   /**
-   * The minimum allowed Android API level.
+   * The minimum allowed Android API level. A NonComplianceDetail with
+   * OS_NOT_PERMITTED is reported if the Android API level of the device is
+   * lower than this value.
    *
    * @var int
    */
@@ -654,7 +702,9 @@ class Policy extends \Google\Collection
    */
   public $networkEscapeHatchEnabled;
   /**
-   * Whether resetting network settings is disabled.
+   * Whether resetting network settings is disabled. This applies only on fully
+   * managed devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
+   * other management modes.
    *
    * @var bool
    */
@@ -749,7 +799,8 @@ class Policy extends \Google\Collection
    */
   public $safeBootDisabled;
   /**
-   * Whether screen capture is disabled.
+   * Whether screen capture is disabled. This also blocks Circle to Search
+   * (https://support.google.com/android/answer/14508957).
    *
    * @var bool
    */
@@ -822,6 +873,8 @@ class Policy extends \Google\Collection
    * @var bool
    */
   public $tetheringConfigDisabled;
+  protected $unifiedUpdatePolicyType = UnifiedUpdatePolicy::class;
+  protected $unifiedUpdatePolicyDataType = '';
   /**
    * Whether user uninstallation of applications is disabled. This prevents apps
    * from being uninstalled, even those removed using applications
@@ -958,7 +1011,8 @@ class Policy extends \Google\Collection
     return $this->adjustVolumeDisabled;
   }
   /**
-   * Advanced security settings. In most cases, setting these is not needed.
+   * Optional. Advanced security settings. In most cases, setting these is not
+   * needed.
    *
    * @param AdvancedSecurityOverrides $advancedSecurityOverrides
    */
@@ -1132,10 +1186,46 @@ class Policy extends \Google\Collection
     return $this->autoTimeRequired;
   }
   /**
-   * Whether applications other than the ones configured in applications are
-   * blocked from being installed. When set, applications that were installed
-   * under a previous policy but no longer appear in the policy are
-   * automatically uninstalled.
+   * Optional. The policy for the autofill service.
+   *
+   * Accepted values: AUTOFILL_POLICY_UNSPECIFIED, AUTOFILL_USER_CHOICE,
+   * AUTOFILL_DISABLED
+   *
+   * @param self::AUTOFILL_POLICY_* $autofillPolicy
+   */
+  public function setAutofillPolicy($autofillPolicy)
+  {
+    $this->autofillPolicy = $autofillPolicy;
+  }
+  /**
+   * @return self::AUTOFILL_POLICY_*
+   */
+  public function getAutofillPolicy()
+  {
+    return $this->autofillPolicy;
+  }
+  /**
+   * Optional. Controls whether the backup service is disabled. Supported only
+   * on fully managed devices running Android 8 and above.
+   *
+   * Accepted values: BACKUP_SERVICE_UNSPECIFIED, BACKUP_SERVICE_DISABLED,
+   * BACKUP_SERVICE_USER_CHOICE
+   *
+   * @param self::BACKUP_SERVICE_* $backupService
+   */
+  public function setBackupService($backupService)
+  {
+    $this->backupService = $backupService;
+  }
+  /**
+   * @return self::BACKUP_SERVICE_*
+   */
+  public function getBackupService()
+  {
+    return $this->backupService;
+  }
+  /**
+   * This field has no effect.
    *
    * @deprecated
    * @param bool $blockApplicationsEnabled
@@ -1317,15 +1407,16 @@ class Policy extends \Google\Collection
     return $this->createWindowsDisabled;
   }
   /**
-   * Controls which apps are allowed to act as credential providers on Android
-   * 14 and above. These apps store credentials, see this
+   * Optional. Controls which apps are allowed to act as credential providers on
+   * Android 14 and above. These apps store credentials, see this
    * (https://developer.android.com/training/sign-in/passkeys) and this (https:/
    * /developer.android.com/reference/androidx/credentials/CredentialManager)
    * for details. See also credentialProviderPolicy.
    *
    * Accepted values: CREDENTIAL_PROVIDER_POLICY_DEFAULT_UNSPECIFIED,
    * CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED,
-   * CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM
+   * CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM,
+   * CREDENTIAL_PROVIDER_DEFAULT_ALLOWED
    *
    * @param self::CREDENTIAL_PROVIDER_POLICY_DEFAULT_* $credentialProviderPolicyDefault
    */
@@ -1357,7 +1448,23 @@ class Policy extends \Google\Collection
     return $this->credentialsConfigDisabled;
   }
   /**
-   * Cross-profile policies applied on the device.
+   * Optional. Policies controlling cross-device communication.
+   *
+   * @param CrossDevicePolicies $crossDevicePolicies
+   */
+  public function setCrossDevicePolicies(CrossDevicePolicies $crossDevicePolicies)
+  {
+    $this->crossDevicePolicies = $crossDevicePolicies;
+  }
+  /**
+   * @return CrossDevicePolicies
+   */
+  public function getCrossDevicePolicies()
+  {
+    return $this->crossDevicePolicies;
+  }
+  /**
+   * Optional. Cross-profile policies applied on the device.
    *
    * @param CrossProfilePolicies $crossProfilePolicies
    */
@@ -1411,7 +1518,10 @@ class Policy extends \Google\Collection
    * default application is successfully set for at least one app type on a
    * profile, users are prevented from changing any default applications on that
    * profile.Only one DefaultApplicationSetting is allowed for each
-   * DefaultApplicationType.See Default application settings
+   * DefaultApplicationType.Warning: Do not configure this and
+   * persistent_preferred_activities for the same intent domain, such as web
+   * browsing. Setting both for the same intent domain can lead to unpredictable
+   * behavior.See Default application settings
    * (https://developers.google.com/android/management/default-application-
    * settings) guide for more details.
    *
@@ -1447,8 +1557,8 @@ class Policy extends \Google\Collection
     return $this->defaultPermissionPolicy;
   }
   /**
-   * Covers controls for device connectivity such as Wi-Fi, USB data access,
-   * keyboard/mouse connections, and more.
+   * Optional. Covers controls for device connectivity such as Wi-Fi, USB data
+   * access, keyboard/mouse connections, and more.
    *
    * @param DeviceConnectivityManagement $deviceConnectivityManagement
    */
@@ -1464,7 +1574,7 @@ class Policy extends \Google\Collection
     return $this->deviceConnectivityManagement;
   }
   /**
-   * The device owner information to be shown on the lock screen.
+   * Optional. The device owner information to be shown on the lock screen.
    *
    * @param UserFacingMessage $deviceOwnerLockScreenInfo
    */
@@ -1480,7 +1590,8 @@ class Policy extends \Google\Collection
     return $this->deviceOwnerLockScreenInfo;
   }
   /**
-   * Covers controls for radio state such as Wi-Fi, bluetooth, and more.
+   * Optional. Covers controls for radio state such as Wi-Fi, bluetooth, and
+   * more.
    *
    * @param DeviceRadioState $deviceRadioState
    */
@@ -1494,6 +1605,22 @@ class Policy extends \Google\Collection
   public function getDeviceRadioState()
   {
     return $this->deviceRadioState;
+  }
+  /**
+   * Optional. Policies controlling the device on company-owned devices.
+   *
+   * @param DeviceWidePolicies $deviceWidePolicies
+   */
+  public function setDeviceWidePolicies(DeviceWidePolicies $deviceWidePolicies)
+  {
+    $this->deviceWidePolicies = $deviceWidePolicies;
+  }
+  /**
+   * @return DeviceWidePolicies
+   */
+  public function getDeviceWidePolicies()
+  {
+    return $this->deviceWidePolicies;
   }
   /**
    * Optional. Controls for the display settings.
@@ -1709,9 +1836,9 @@ class Policy extends \Google\Collection
     return $this->kioskCustomLauncherEnabled;
   }
   /**
-   * Settings controlling the behavior of a device in kiosk mode. To enable
-   * kiosk mode, set kioskCustomLauncherEnabled to true or specify an app in the
-   * policy with installType KIOSK.
+   * Optional. Settings controlling the behavior of a device in kiosk mode. To
+   * enable kiosk mode, set kioskCustomLauncherEnabled to true or specify an app
+   * in the policy with the KIOSK role.
    *
    * @param KioskCustomization $kioskCustomization
    */
@@ -1802,7 +1929,9 @@ class Policy extends \Google\Collection
     return $this->microphoneAccess;
   }
   /**
-   * The minimum allowed Android API level.
+   * The minimum allowed Android API level. A NonComplianceDetail with
+   * OS_NOT_PERMITTED is reported if the Android API level of the device is
+   * lower than this value.
    *
    * @param int $minimumApiLevel
    */
@@ -1910,7 +2039,9 @@ class Policy extends \Google\Collection
     return $this->networkEscapeHatchEnabled;
   }
   /**
-   * Whether resetting network settings is disabled.
+   * Whether resetting network settings is disabled. This applies only on fully
+   * managed devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
+   * other management modes.
    *
    * @param bool $networkResetDisabled
    */
@@ -1991,9 +2122,9 @@ class Policy extends \Google\Collection
     return $this->outgoingCallsDisabled;
   }
   /**
-   * Password requirement policies. Different policies can be set for work
-   * profile or fully managed devices by setting the password_scope field in the
-   * policy.
+   * Optional. Password requirement policies. Different policies can be set for
+   * work profile or fully managed devices by setting the password_scope field
+   * in the policy.
    *
    * @param PasswordRequirements[] $passwordPolicies
    */
@@ -2088,7 +2219,10 @@ class Policy extends \Google\Collection
     return $this->permittedInputMethods;
   }
   /**
-   * Default intent handler activities.
+   * Default intent handler activities.Warning: Do not configure this and
+   * default_application_settings for the same intent domain, such as web
+   * browsing. Setting both for the same intent domain can lead to unpredictable
+   * behavior.
    *
    * @param PersistentPreferredActivity[] $persistentPreferredActivities
    */
@@ -2276,7 +2410,8 @@ class Policy extends \Google\Collection
     return $this->safeBootDisabled;
   }
   /**
-   * Whether screen capture is disabled.
+   * Whether screen capture is disabled. This also blocks Circle to Search
+   * (https://support.google.com/android/answer/14508957).
    *
    * @param bool $screenCaptureDisabled
    */
@@ -2472,7 +2607,9 @@ class Policy extends \Google\Collection
    * Mainline updates) are automatically downloaded and require a device reboot
    * to be installed. Refer to the mainline section in Manage system updates
    * (https://developer.android.com/work/dpc/system-updates#mainline) for
-   * further details.
+   * further details.If this policy is set, it takes precedence over
+   * unifiedUpdatePolicy for OEM OS updates. For more information, see
+   * unifiedUpdatePolicy.
    *
    * @param SystemUpdate $systemUpdate
    */
@@ -2506,6 +2643,29 @@ class Policy extends \Google\Collection
   public function getTetheringConfigDisabled()
   {
     return $this->tetheringConfigDisabled;
+  }
+  /**
+   * Optional. The Unified Update Control policy, for controlling updates of
+   * software components on the device. Supported only on company-owned
+   * devices.The targets OS_UPDATE_WITH_API_LEVEL_CHANGE and
+   * OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are supported only on devices where the
+   * OEM has integrated with Unified Update Controls, and are ignored otherwise.
+   * If systemUpdate is set, then that policy takes precedence and the targets
+   * OS_UPDATE_WITH_API_LEVEL_CHANGE and OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are
+   * ignored here.
+   *
+   * @param UnifiedUpdatePolicy $unifiedUpdatePolicy
+   */
+  public function setUnifiedUpdatePolicy(UnifiedUpdatePolicy $unifiedUpdatePolicy)
+  {
+    $this->unifiedUpdatePolicy = $unifiedUpdatePolicy;
+  }
+  /**
+   * @return UnifiedUpdatePolicy
+   */
+  public function getUnifiedUpdatePolicy()
+  {
+    return $this->unifiedUpdatePolicy;
   }
   /**
    * Whether user uninstallation of applications is disabled. This prevents apps
@@ -2547,7 +2707,7 @@ class Policy extends \Google\Collection
     return $this->unmuteMicrophoneDisabled;
   }
   /**
-   * Configuration of device activity logging.
+   * Optional. Configuration of device activity logging.
    *
    * @param UsageLog $usageLog
    */

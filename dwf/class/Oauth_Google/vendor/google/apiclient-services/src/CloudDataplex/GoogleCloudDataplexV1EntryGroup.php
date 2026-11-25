@@ -35,6 +35,8 @@ class GoogleCloudDataplexV1EntryGroup extends \Google\Model
    * resource can only be updated from Dataplex API.
    */
   public const TRANSFER_STATUS_TRANSFER_STATUS_TRANSFERRED = 'TRANSFER_STATUS_TRANSFERRED';
+  protected $changeRequestConfigType = GoogleCloudDataplexV1EntryGroupChangeRequestConfig::class;
+  protected $changeRequestConfigDataType = '';
   /**
    * Output only. The time when the EntryGroup was created.
    *
@@ -83,6 +85,14 @@ class GoogleCloudDataplexV1EntryGroup extends \Google\Model
    */
   public $transferStatus;
   /**
+   * Optional. Immutable. The type of this EntryGroup. The default value is an
+   * empty string. Recognised values include: * context-set: EntryGroup
+   * containing context set data assets.
+   *
+   * @var string
+   */
+  public $type;
+  /**
    * Output only. System generated globally unique ID for the EntryGroup. If you
    * delete and recreate the EntryGroup with the same name, this ID will be
    * different.
@@ -97,6 +107,23 @@ class GoogleCloudDataplexV1EntryGroup extends \Google\Model
    */
   public $updateTime;
 
+  /**
+   * Optional. Specifies the configuration for requesting changes in the
+   * metadata belonging to the Entry Group.
+   *
+   * @param GoogleCloudDataplexV1EntryGroupChangeRequestConfig $changeRequestConfig
+   */
+  public function setChangeRequestConfig(GoogleCloudDataplexV1EntryGroupChangeRequestConfig $changeRequestConfig)
+  {
+    $this->changeRequestConfig = $changeRequestConfig;
+  }
+  /**
+   * @return GoogleCloudDataplexV1EntryGroupChangeRequestConfig
+   */
+  public function getChangeRequestConfig()
+  {
+    return $this->changeRequestConfig;
+  }
   /**
    * Output only. The time when the EntryGroup was created.
    *
@@ -216,6 +243,24 @@ class GoogleCloudDataplexV1EntryGroup extends \Google\Model
   public function getTransferStatus()
   {
     return $this->transferStatus;
+  }
+  /**
+   * Optional. Immutable. The type of this EntryGroup. The default value is an
+   * empty string. Recognised values include: * context-set: EntryGroup
+   * containing context set data assets.
+   *
+   * @param string $type
+   */
+  public function setType($type)
+  {
+    $this->type = $type;
+  }
+  /**
+   * @return string
+   */
+  public function getType()
+  {
+    return $this->type;
   }
   /**
    * Output only. System generated globally unique ID for the EntryGroup. If you

@@ -19,159 +19,58 @@ namespace Google\Service\SecurityCommandCenter;
 
 class Finding extends \Google\Collection
 {
-  /**
-   * Unspecified finding class.
-   */
   public const FINDING_CLASS_FINDING_CLASS_UNSPECIFIED = 'FINDING_CLASS_UNSPECIFIED';
-  /**
-   * Describes unwanted or malicious activity.
-   */
   public const FINDING_CLASS_THREAT = 'THREAT';
-  /**
-   * Describes a potential weakness in software that increases risk to
-   * Confidentiality & Integrity & Availability.
-   */
   public const FINDING_CLASS_VULNERABILITY = 'VULNERABILITY';
-  /**
-   * Describes a potential weakness in cloud resource/asset configuration that
-   * increases risk.
-   */
   public const FINDING_CLASS_MISCONFIGURATION = 'MISCONFIGURATION';
-  /**
-   * Describes a security observation that is for informational purposes.
-   */
   public const FINDING_CLASS_OBSERVATION = 'OBSERVATION';
-  /**
-   * Describes an error that prevents some SCC functionality.
-   */
   public const FINDING_CLASS_SCC_ERROR = 'SCC_ERROR';
-  /**
-   * Describes a potential security risk due to a change in the security
-   * posture.
-   */
   public const FINDING_CLASS_POSTURE_VIOLATION = 'POSTURE_VIOLATION';
-  /**
-   * Describes a group of security issues that, when the issues occur together,
-   * represent a greater risk than when the issues occur independently. A group
-   * of such issues is referred to as a toxic combination.
-   */
   public const FINDING_CLASS_TOXIC_COMBINATION = 'TOXIC_COMBINATION';
-  /**
-   * Describes a potential security risk to data assets that contain sensitive
-   * data.
-   */
   public const FINDING_CLASS_SENSITIVE_DATA_RISK = 'SENSITIVE_DATA_RISK';
-  /**
-   * Describes a resource or resource group where high risk attack paths
-   * converge, based on attack path simulations (APS).
-   */
   public const FINDING_CLASS_CHOKEPOINT = 'CHOKEPOINT';
-  /**
-   * Unspecified.
-   */
+  public const FINDING_CLASS_EXTERNAL_EXPOSURE = 'EXTERNAL_EXPOSURE';
+  public const FINDING_CLASS_SECRET = 'SECRET';
   public const MUTE_MUTE_UNSPECIFIED = 'MUTE_UNSPECIFIED';
-  /**
-   * Finding has been muted.
-   */
   public const MUTE_MUTED = 'MUTED';
-  /**
-   * Finding has been unmuted.
-   */
   public const MUTE_UNMUTED = 'UNMUTED';
-  /**
-   * Finding has never been muted/unmuted.
-   */
   public const MUTE_UNDEFINED = 'UNDEFINED';
-  /**
-   * This value is used for findings when a source doesn't write a severity
-   * value.
-   */
   public const SEVERITY_SEVERITY_UNSPECIFIED = 'SEVERITY_UNSPECIFIED';
-  /**
-   * Vulnerability: A critical vulnerability is easily discoverable by an
-   * external actor, exploitable, and results in the direct ability to execute
-   * arbitrary code, exfiltrate data, and otherwise gain additional access and
-   * privileges to cloud resources and workloads. Examples include publicly
-   * accessible unprotected user data and public SSH access with weak or no
-   * passwords. Threat: Indicates a threat that is able to access, modify, or
-   * delete data or execute unauthorized code within existing resources.
-   */
   public const SEVERITY_CRITICAL = 'CRITICAL';
-  /**
-   * Vulnerability: A high risk vulnerability can be easily discovered and
-   * exploited in combination with other vulnerabilities in order to gain direct
-   * access and the ability to execute arbitrary code, exfiltrate data, and
-   * otherwise gain additional access and privileges to cloud resources and
-   * workloads. An example is a database with weak or no passwords that is only
-   * accessible internally. This database could easily be compromised by an
-   * actor that had access to the internal network. Threat: Indicates a threat
-   * that is able to create new computational resources in an environment but
-   * not able to access data or execute code in existing resources.
-   */
   public const SEVERITY_HIGH = 'HIGH';
-  /**
-   * Vulnerability: A medium risk vulnerability could be used by an actor to
-   * gain access to resources or privileges that enable them to eventually
-   * (through multiple steps or a complex exploit) gain access and the ability
-   * to execute arbitrary code or exfiltrate data. An example is a service
-   * account with access to more projects than it should have. If an actor gains
-   * access to the service account, they could potentially use that access to
-   * manipulate a project the service account was not intended to. Threat:
-   * Indicates a threat that is able to cause operational impact but may not
-   * access data or execute unauthorized code.
-   */
   public const SEVERITY_MEDIUM = 'MEDIUM';
-  /**
-   * Vulnerability: A low risk vulnerability hampers a security organization's
-   * ability to detect vulnerabilities or active threats in their deployment, or
-   * prevents the root cause investigation of security issues. An example is
-   * monitoring and logs being disabled for resource configurations and access.
-   * Threat: Indicates a threat that has obtained minimal access to an
-   * environment but is not able to access data, execute code, or create
-   * resources.
-   */
   public const SEVERITY_LOW = 'LOW';
-  /**
-   * Unspecified state.
-   */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
-  /**
-   * The finding requires attention and has not been addressed yet.
-   */
   public const STATE_ACTIVE = 'ACTIVE';
-  /**
-   * The finding has been fixed, triaged as a non-issue or otherwise addressed
-   * and is no longer active.
-   */
   public const STATE_INACTIVE = 'INACTIVE';
   protected $collection_key = 'processes';
   protected $accessType = Access::class;
   protected $accessDataType = '';
   protected $affectedResourcesType = AffectedResources::class;
   protected $affectedResourcesDataType = '';
+  protected $agentType = Agent::class;
+  protected $agentDataType = '';
+  protected $agentAnomalyType = AgentAnomaly::class;
+  protected $agentAnomalyDataType = '';
+  protected $agentDataAccessEventsType = AgentDataAccessEvent::class;
+  protected $agentDataAccessEventsDataType = 'array';
+  protected $agentSessionsType = AgentSession::class;
+  protected $agentSessionsDataType = 'array';
   protected $aiModelType = AiModel::class;
   protected $aiModelDataType = '';
   protected $applicationType = Application::class;
   protected $applicationDataType = '';
+  protected $artifactGuardPoliciesType = ArtifactGuardPolicies::class;
+  protected $artifactGuardPoliciesDataType = '';
   protected $attackExposureType = AttackExposure::class;
   protected $attackExposureDataType = '';
   protected $backupDisasterRecoveryType = BackupDisasterRecovery::class;
   protected $backupDisasterRecoveryDataType = '';
   /**
-   * The canonical name of the finding. It's either "organizations/{organization
-   * _id}/sources/{source_id}/findings/{finding_id}",
-   * "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
-   * "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
-   * depending on the closest CRM ancestor of the resource associated with the
-   * finding.
-   *
    * @var string
    */
   public $canonicalName;
   /**
-   * The additional taxonomy group within findings from a given source. This
-   * field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-   *
    * @var string
    */
   public $category;
@@ -183,6 +82,8 @@ class Finding extends \Google\Collection
   protected $cloudDlpDataProfileDataType = '';
   protected $cloudDlpInspectionType = CloudDlpInspection::class;
   protected $cloudDlpInspectionDataType = '';
+  protected $cloudRunType = CloudRun::class;
+  protected $cloudRunDataType = '';
   protected $complianceDetailsType = ComplianceDetails::class;
   protected $complianceDetailsDataType = '';
   protected $compliancesType = Compliance::class;
@@ -194,8 +95,6 @@ class Finding extends \Google\Collection
   protected $containersType = Container::class;
   protected $containersDataType = 'array';
   /**
-   * The time at which the finding was created in Security Command Center.
-   *
    * @var string
    */
   public $createTime;
@@ -208,42 +107,30 @@ class Finding extends \Google\Collection
   protected $databaseType = Database::class;
   protected $databaseDataType = '';
   /**
-   * Contains more details about the finding.
-   *
    * @var string
    */
   public $description;
+  protected $discoveredWorkloadType = DiscoveredWorkload::class;
+  protected $discoveredWorkloadDataType = '';
   protected $diskType = Disk::class;
   protected $diskDataType = '';
   /**
-   * The time the finding was first detected. If an existing finding is updated,
-   * then this is the time the update occurred. For example, if the finding
-   * represents an open firewall, this property captures the time the detector
-   * believes the firewall became open. The accuracy is determined by the
-   * detector. If the finding is later resolved, then this time reflects when
-   * the finding was resolved. This must not be set to a value greater than the
-   * current timestamp.
-   *
    * @var string
    */
   public $eventTime;
   protected $exfiltrationType = Exfiltration::class;
   protected $exfiltrationDataType = '';
+  protected $externalExposureType = ExternalExposure::class;
+  protected $externalExposureDataType = '';
   protected $externalSystemsType = GoogleCloudSecuritycenterV1ExternalSystem::class;
   protected $externalSystemsDataType = 'map';
   /**
-   * The URI that, if available, points to a web page outside of Security
-   * Command Center where additional information about the finding can be found.
-   * This field is guaranteed to be either empty or a well formed URL.
-   *
    * @var string
    */
   public $externalUri;
   protected $filesType = SecuritycenterFile::class;
   protected $filesDataType = 'array';
   /**
-   * The class of the finding.
-   *
    * @var string
    */
   public $findingClass;
@@ -251,6 +138,8 @@ class Finding extends \Google\Collection
   protected $groupMembershipsDataType = 'array';
   protected $iamBindingsType = IamBinding::class;
   protected $iamBindingsDataType = 'array';
+  protected $iamDetailsType = GoogleCloudSecuritycenterV1IamDetails::class;
+  protected $iamDetailsDataType = '';
   protected $indicatorType = Indicator::class;
   protected $indicatorDataType = '';
   protected $ipRulesType = IpRules::class;
@@ -268,52 +157,30 @@ class Finding extends \Google\Collection
   protected $mitreAttackType = MitreAttack::class;
   protected $mitreAttackDataType = '';
   /**
-   * Unique identifier of the module which generated the finding. Example: folde
-   * rs/598186756061/securityHealthAnalyticsSettings/customModules/5679944116188
-   * 5
-   *
    * @var string
    */
   public $moduleName;
   /**
-   * Indicates the mute state of a finding (either muted, unmuted or undefined).
-   * Unlike other attributes of a finding, a finding provider shouldn't set the
-   * value of mute.
-   *
    * @var string
    */
   public $mute;
   protected $muteInfoType = MuteInfo::class;
   protected $muteInfoDataType = '';
   /**
-   * Records additional information about the mute operation, for example, the
-   * [mute configuration](/security-command-center/docs/how-to-mute-findings)
-   * that muted the finding and the user who muted the finding.
-   *
    * @var string
    */
   public $muteInitiator;
   /**
-   * Output only. The most recent time this finding was muted or unmuted.
-   *
    * @var string
    */
   public $muteUpdateTime;
   /**
-   * The [relative resource name](https://cloud.google.com/apis/design/resource_
-   * names#relative_resource_name) of the finding. Example: "organizations/{orga
-   * nization_id}/sources/{source_id}/findings/{finding_id}",
-   * "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-   * "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
-   *
    * @var string
    */
   public $name;
   protected $networksType = Network::class;
   protected $networksDataType = 'array';
   /**
-   * Steps to address the finding.
-   *
    * @var string
    */
   public $nextSteps;
@@ -322,57 +189,36 @@ class Finding extends \Google\Collection
   protected $orgPoliciesType = OrgPolicy::class;
   protected $orgPoliciesDataType = 'array';
   /**
-   * The relative resource name of the source the finding belongs to. See:
-   * https://cloud.google.com/apis/design/resource_names#relative_resource_name
-   * This field is immutable after creation time. For example:
-   * "organizations/{organization_id}/sources/{source_id}"
-   *
    * @var string
    */
   public $parent;
   /**
-   * Output only. The human readable display name of the finding source such as
-   * "Event Threat Detection" or "Security Health Analytics".
-   *
    * @var string
    */
   public $parentDisplayName;
+  protected $policyViolationSummaryType = PolicyViolationSummary::class;
+  protected $policyViolationSummaryDataType = '';
   protected $processesType = Process::class;
   protected $processesDataType = 'array';
   /**
-   * For findings on Google Cloud resources, the full resource name of the
-   * Google Cloud resource this finding is for. See:
-   * https://cloud.google.com/apis/design/resource_names#full_resource_name When
-   * the finding is for a non-Google Cloud resource, the resourceName can be a
-   * customer or partner defined string. This field is immutable after creation
-   * time.
-   *
    * @var string
    */
   public $resourceName;
+  protected $secretType = Secret::class;
+  protected $secretDataType = '';
   protected $securityMarksType = SecurityMarks::class;
   protected $securityMarksDataType = '';
   protected $securityPostureType = SecurityPosture::class;
   protected $securityPostureDataType = '';
   /**
-   * The severity of the finding. This field is managed by the source that
-   * writes the finding.
-   *
    * @var string
    */
   public $severity;
   /**
-   * Source specific properties. These properties are managed by the source that
-   * writes the finding. The key names in the source_properties map must be
-   * between 1 and 255 characters, and must start with a letter and contain
-   * alphanumeric characters or underscores only.
-   *
    * @var array[]
    */
   public $sourceProperties;
   /**
-   * The state of the finding.
-   *
    * @var string
    */
   public $state;
@@ -384,9 +230,6 @@ class Finding extends \Google\Collection
   protected $vulnerabilityDataType = '';
 
   /**
-   * Access details associated with the finding, such as more information on the
-   * caller, which method was accessed, and from where.
-   *
    * @param Access $access
    */
   public function setAccess(Access $access)
@@ -401,8 +244,6 @@ class Finding extends \Google\Collection
     return $this->access;
   }
   /**
-   * AffectedResources associated with the finding.
-   *
    * @param AffectedResources $affectedResources
    */
   public function setAffectedResources(AffectedResources $affectedResources)
@@ -417,8 +258,62 @@ class Finding extends \Google\Collection
     return $this->affectedResources;
   }
   /**
-   * The AI model associated with the finding.
-   *
+   * @param Agent $agent
+   */
+  public function setAgent(Agent $agent)
+  {
+    $this->agent = $agent;
+  }
+  /**
+   * @return Agent
+   */
+  public function getAgent()
+  {
+    return $this->agent;
+  }
+  /**
+   * @param AgentAnomaly $agentAnomaly
+   */
+  public function setAgentAnomaly(AgentAnomaly $agentAnomaly)
+  {
+    $this->agentAnomaly = $agentAnomaly;
+  }
+  /**
+   * @return AgentAnomaly
+   */
+  public function getAgentAnomaly()
+  {
+    return $this->agentAnomaly;
+  }
+  /**
+   * @param AgentDataAccessEvent[] $agentDataAccessEvents
+   */
+  public function setAgentDataAccessEvents($agentDataAccessEvents)
+  {
+    $this->agentDataAccessEvents = $agentDataAccessEvents;
+  }
+  /**
+   * @return AgentDataAccessEvent[]
+   */
+  public function getAgentDataAccessEvents()
+  {
+    return $this->agentDataAccessEvents;
+  }
+  /**
+   * @param AgentSession[] $agentSessions
+   */
+  public function setAgentSessions($agentSessions)
+  {
+    $this->agentSessions = $agentSessions;
+  }
+  /**
+   * @return AgentSession[]
+   */
+  public function getAgentSessions()
+  {
+    return $this->agentSessions;
+  }
+  /**
    * @param AiModel $aiModel
    */
   public function setAiModel(AiModel $aiModel)
@@ -433,8 +328,6 @@ class Finding extends \Google\Collection
     return $this->aiModel;
   }
   /**
-   * Represents an application associated with the finding.
-   *
    * @param Application $application
    */
   public function setApplication(Application $application)
@@ -449,8 +342,20 @@ class Finding extends \Google\Collection
     return $this->application;
   }
   /**
-   * The results of an attack path simulation relevant to this finding.
-   *
+   * @param ArtifactGuardPolicies $artifactGuardPolicies
+   */
+  public function setArtifactGuardPolicies(ArtifactGuardPolicies $artifactGuardPolicies)
+  {
+    $this->artifactGuardPolicies = $artifactGuardPolicies;
+  }
+  /**
+   * @return ArtifactGuardPolicies
+   */
+  public function getArtifactGuardPolicies()
+  {
+    return $this->artifactGuardPolicies;
+  }
+  /**
    * @param AttackExposure $attackExposure
    */
   public function setAttackExposure(AttackExposure $attackExposure)
@@ -465,8 +370,6 @@ class Finding extends \Google\Collection
     return $this->attackExposure;
   }
   /**
-   * Fields related to Backup and DR findings.
-   *
    * @param BackupDisasterRecovery $backupDisasterRecovery
    */
   public function setBackupDisasterRecovery(BackupDisasterRecovery $backupDisasterRecovery)
@@ -481,13 +384,6 @@ class Finding extends \Google\Collection
     return $this->backupDisasterRecovery;
   }
   /**
-   * The canonical name of the finding. It's either "organizations/{organization
-   * _id}/sources/{source_id}/findings/{finding_id}",
-   * "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
-   * "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
-   * depending on the closest CRM ancestor of the resource associated with the
-   * finding.
-   *
    * @param string $canonicalName
    */
   public function setCanonicalName($canonicalName)
@@ -502,9 +398,6 @@ class Finding extends \Google\Collection
     return $this->canonicalName;
   }
   /**
-   * The additional taxonomy group within findings from a given source. This
-   * field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-   *
    * @param string $category
    */
   public function setCategory($category)
@@ -519,12 +412,6 @@ class Finding extends \Google\Collection
     return $this->category;
   }
   /**
-   * Contains details about a chokepoint, which is a resource or resource group
-   * where high-risk attack paths converge, based on [attack path simulations]
-   * (https://cloud.google.com/security-command-center/docs/attack-exposure-
-   * learn#attack_path_simulations). This field cannot be updated. Its value is
-   * ignored in all update requests.
-   *
    * @param Chokepoint $chokepoint
    */
   public function setChokepoint(Chokepoint $chokepoint)
@@ -539,8 +426,6 @@ class Finding extends \Google\Collection
     return $this->chokepoint;
   }
   /**
-   * Fields related to Cloud Armor findings.
-   *
    * @param CloudArmor $cloudArmor
    */
   public function setCloudArmor(CloudArmor $cloudArmor)
@@ -555,8 +440,6 @@ class Finding extends \Google\Collection
     return $this->cloudArmor;
   }
   /**
-   * Cloud DLP data profile that is associated with the finding.
-   *
    * @param CloudDlpDataProfile $cloudDlpDataProfile
    */
   public function setCloudDlpDataProfile(CloudDlpDataProfile $cloudDlpDataProfile)
@@ -571,9 +454,6 @@ class Finding extends \Google\Collection
     return $this->cloudDlpDataProfile;
   }
   /**
-   * Cloud Data Loss Prevention (Cloud DLP) inspection results that are
-   * associated with the finding.
-   *
    * @param CloudDlpInspection $cloudDlpInspection
    */
   public function setCloudDlpInspection(CloudDlpInspection $cloudDlpInspection)
@@ -588,8 +468,20 @@ class Finding extends \Google\Collection
     return $this->cloudDlpInspection;
   }
   /**
-   * Details about the compliance implications of the finding.
-   *
+   * @param CloudRun $cloudRun
+   */
+  public function setCloudRun(CloudRun $cloudRun)
+  {
+    $this->cloudRun = $cloudRun;
+  }
+  /**
+   * @return CloudRun
+   */
+  public function getCloudRun()
+  {
+    return $this->cloudRun;
+  }
+  /**
    * @param ComplianceDetails $complianceDetails
    */
   public function setComplianceDetails(ComplianceDetails $complianceDetails)
@@ -604,9 +496,6 @@ class Finding extends \Google\Collection
     return $this->complianceDetails;
   }
   /**
-   * Contains compliance information for security standards associated to the
-   * finding.
-   *
    * @param Compliance[] $compliances
    */
   public function setCompliances($compliances)
@@ -621,8 +510,6 @@ class Finding extends \Google\Collection
     return $this->compliances;
   }
   /**
-   * Contains information about the IP connection associated with the finding.
-   *
    * @param Connection[] $connections
    */
   public function setConnections($connections)
@@ -637,13 +524,6 @@ class Finding extends \Google\Collection
     return $this->connections;
   }
   /**
-   * Output only. Map containing the points of contact for the given finding.
-   * The key represents the type of contact, while the value contains a list of
-   * all the contacts that pertain. Please refer to:
-   * https://cloud.google.com/resource-manager/docs/managing-notification-
-   * contacts#notification-categories { "security": { "contacts": [ { "email":
-   * "person1@company.com" }, { "email": "person2@company.com" } ] } }
-   *
    * @param ContactDetails[] $contacts
    */
   public function setContacts($contacts)
@@ -658,9 +538,6 @@ class Finding extends \Google\Collection
     return $this->contacts;
   }
   /**
-   * Containers associated with the finding. This field provides information for
-   * both Kubernetes and non-Kubernetes containers.
-   *
    * @param Container[] $containers
    */
   public function setContainers($containers)
@@ -675,8 +552,6 @@ class Finding extends \Google\Collection
     return $this->containers;
   }
   /**
-   * The time at which the finding was created in Security Command Center.
-   *
    * @param string $createTime
    */
   public function setCreateTime($createTime)
@@ -691,8 +566,6 @@ class Finding extends \Google\Collection
     return $this->createTime;
   }
   /**
-   * Data access events associated with the finding.
-   *
    * @param DataAccessEvent[] $dataAccessEvents
    */
   public function setDataAccessEvents($dataAccessEvents)
@@ -707,8 +580,6 @@ class Finding extends \Google\Collection
     return $this->dataAccessEvents;
   }
   /**
-   * Data flow events associated with the finding.
-   *
    * @param DataFlowEvent[] $dataFlowEvents
    */
   public function setDataFlowEvents($dataFlowEvents)
@@ -723,8 +594,6 @@ class Finding extends \Google\Collection
     return $this->dataFlowEvents;
   }
   /**
-   * Data retention deletion events associated with the finding.
-   *
    * @param DataRetentionDeletionEvent[] $dataRetentionDeletionEvents
    */
   public function setDataRetentionDeletionEvents($dataRetentionDeletionEvents)
@@ -739,8 +608,6 @@ class Finding extends \Google\Collection
     return $this->dataRetentionDeletionEvents;
   }
   /**
-   * Database associated with the finding.
-   *
    * @param Database $database
    */
   public function setDatabase(Database $database)
@@ -755,8 +622,6 @@ class Finding extends \Google\Collection
     return $this->database;
   }
   /**
-   * Contains more details about the finding.
-   *
    * @param string $description
    */
   public function setDescription($description)
@@ -771,8 +636,20 @@ class Finding extends \Google\Collection
     return $this->description;
   }
   /**
-   * Disk associated with the finding.
-   *
+   * @param DiscoveredWorkload $discoveredWorkload
+   */
+  public function setDiscoveredWorkload(DiscoveredWorkload $discoveredWorkload)
+  {
+    $this->discoveredWorkload = $discoveredWorkload;
+  }
+  /**
+   * @return DiscoveredWorkload
+   */
+  public function getDiscoveredWorkload()
+  {
+    return $this->discoveredWorkload;
+  }
+  /**
    * @param Disk $disk
    */
   public function setDisk(Disk $disk)
@@ -787,14 +664,6 @@ class Finding extends \Google\Collection
     return $this->disk;
   }
   /**
-   * The time the finding was first detected. If an existing finding is updated,
-   * then this is the time the update occurred. For example, if the finding
-   * represents an open firewall, this property captures the time the detector
-   * believes the firewall became open. The accuracy is determined by the
-   * detector. If the finding is later resolved, then this time reflects when
-   * the finding was resolved. This must not be set to a value greater than the
-   * current timestamp.
-   *
    * @param string $eventTime
    */
   public function setEventTime($eventTime)
@@ -809,8 +678,6 @@ class Finding extends \Google\Collection
     return $this->eventTime;
   }
   /**
-   * Represents exfiltrations associated with the finding.
-   *
    * @param Exfiltration $exfiltration
    */
   public function setExfiltration(Exfiltration $exfiltration)
@@ -825,9 +692,20 @@ class Finding extends \Google\Collection
     return $this->exfiltration;
   }
   /**
-   * Output only. Third party SIEM/SOAR fields within SCC, contains external
-   * system information and external system finding fields.
-   *
+   * @param ExternalExposure $externalExposure
+   */
+  public function setExternalExposure(ExternalExposure $externalExposure)
+  {
+    $this->externalExposure = $externalExposure;
+  }
+  /**
+   * @return ExternalExposure
+   */
+  public function getExternalExposure()
+  {
+    return $this->externalExposure;
+  }
+  /**
    * @param GoogleCloudSecuritycenterV1ExternalSystem[] $externalSystems
    */
   public function setExternalSystems($externalSystems)
@@ -842,10 +720,6 @@ class Finding extends \Google\Collection
     return $this->externalSystems;
   }
   /**
-   * The URI that, if available, points to a web page outside of Security
-   * Command Center where additional information about the finding can be found.
-   * This field is guaranteed to be either empty or a well formed URL.
-   *
    * @param string $externalUri
    */
   public function setExternalUri($externalUri)
@@ -860,8 +734,6 @@ class Finding extends \Google\Collection
     return $this->externalUri;
   }
   /**
-   * File associated with the finding.
-   *
    * @param SecuritycenterFile[] $files
    */
   public function setFiles($files)
@@ -876,12 +748,6 @@ class Finding extends \Google\Collection
     return $this->files;
   }
   /**
-   * The class of the finding.
-   *
-   * Accepted values: FINDING_CLASS_UNSPECIFIED, THREAT, VULNERABILITY,
-   * MISCONFIGURATION, OBSERVATION, SCC_ERROR, POSTURE_VIOLATION,
-   * TOXIC_COMBINATION, SENSITIVE_DATA_RISK, CHOKEPOINT
-   *
    * @param self::FINDING_CLASS_* $findingClass
    */
   public function setFindingClass($findingClass)
@@ -896,10 +762,6 @@ class Finding extends \Google\Collection
     return $this->findingClass;
   }
   /**
-   * Contains details about groups of which this finding is a member. A group is
-   * a collection of findings that are related in some way. This field cannot be
-   * updated. Its value is ignored in all update requests.
-   *
    * @param GroupMembership[] $groupMemberships
    */
   public function setGroupMemberships($groupMemberships)
@@ -914,8 +776,6 @@ class Finding extends \Google\Collection
     return $this->groupMemberships;
   }
   /**
-   * Represents IAM bindings associated with the finding.
-   *
    * @param IamBinding[] $iamBindings
    */
   public function setIamBindings($iamBindings)
@@ -930,12 +790,20 @@ class Finding extends \Google\Collection
     return $this->iamBindings;
   }
   /**
-   * Represents what's commonly known as an *indicator of compromise* (IoC) in
-   * computer forensics. This is an artifact observed on a network or in an
-   * operating system that, with high confidence, indicates a computer
-   * intrusion. For more information, see [Indicator of
-   * compromise](https://en.wikipedia.org/wiki/Indicator_of_compromise).
-   *
+   * @param GoogleCloudSecuritycenterV1IamDetails $iamDetails
+   */
+  public function setIamDetails(GoogleCloudSecuritycenterV1IamDetails $iamDetails)
+  {
+    $this->iamDetails = $iamDetails;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV1IamDetails
+   */
+  public function getIamDetails()
+  {
+    return $this->iamDetails;
+  }
+  /**
    * @param Indicator $indicator
    */
   public function setIndicator(Indicator $indicator)
@@ -950,8 +818,6 @@ class Finding extends \Google\Collection
     return $this->indicator;
   }
   /**
-   * IP rules associated with the finding.
-   *
    * @param IpRules $ipRules
    */
   public function setIpRules(IpRules $ipRules)
@@ -966,8 +832,6 @@ class Finding extends \Google\Collection
     return $this->ipRules;
   }
   /**
-   * Job associated with the finding.
-   *
    * @param Job $job
    */
   public function setJob(Job $job)
@@ -982,8 +846,6 @@ class Finding extends \Google\Collection
     return $this->job;
   }
   /**
-   * Signature of the kernel rootkit.
-   *
    * @param KernelRootkit $kernelRootkit
    */
   public function setKernelRootkit(KernelRootkit $kernelRootkit)
@@ -998,8 +860,6 @@ class Finding extends \Google\Collection
     return $this->kernelRootkit;
   }
   /**
-   * Kubernetes resources associated with the finding.
-   *
    * @param Kubernetes $kubernetes
    */
   public function setKubernetes(Kubernetes $kubernetes)
@@ -1014,8 +874,6 @@ class Finding extends \Google\Collection
     return $this->kubernetes;
   }
   /**
-   * The load balancers associated with the finding.
-   *
    * @param LoadBalancer[] $loadBalancers
    */
   public function setLoadBalancers($loadBalancers)
@@ -1030,8 +888,6 @@ class Finding extends \Google\Collection
     return $this->loadBalancers;
   }
   /**
-   * Log entries that are relevant to the finding.
-   *
    * @param LogEntry[] $logEntries
    */
   public function setLogEntries($logEntries)
@@ -1046,9 +902,6 @@ class Finding extends \Google\Collection
     return $this->logEntries;
   }
   /**
-   * MITRE ATT&CK tactics and techniques related to this finding. See:
-   * https://attack.mitre.org
-   *
    * @param MitreAttack $mitreAttack
    */
   public function setMitreAttack(MitreAttack $mitreAttack)
@@ -1063,10 +916,6 @@ class Finding extends \Google\Collection
     return $this->mitreAttack;
   }
   /**
-   * Unique identifier of the module which generated the finding. Example: folde
-   * rs/598186756061/securityHealthAnalyticsSettings/customModules/5679944116188
-   * 5
-   *
    * @param string $moduleName
    */
   public function setModuleName($moduleName)
@@ -1081,12 +930,6 @@ class Finding extends \Google\Collection
     return $this->moduleName;
   }
   /**
-   * Indicates the mute state of a finding (either muted, unmuted or undefined).
-   * Unlike other attributes of a finding, a finding provider shouldn't set the
-   * value of mute.
-   *
-   * Accepted values: MUTE_UNSPECIFIED, MUTED, UNMUTED, UNDEFINED
-   *
    * @param self::MUTE_* $mute
    */
   public function setMute($mute)
@@ -1101,8 +944,6 @@ class Finding extends \Google\Collection
     return $this->mute;
   }
   /**
-   * Output only. The mute information regarding this finding.
-   *
    * @param MuteInfo $muteInfo
    */
   public function setMuteInfo(MuteInfo $muteInfo)
@@ -1117,10 +958,6 @@ class Finding extends \Google\Collection
     return $this->muteInfo;
   }
   /**
-   * Records additional information about the mute operation, for example, the
-   * [mute configuration](/security-command-center/docs/how-to-mute-findings)
-   * that muted the finding and the user who muted the finding.
-   *
    * @param string $muteInitiator
    */
   public function setMuteInitiator($muteInitiator)
@@ -1135,8 +972,6 @@ class Finding extends \Google\Collection
     return $this->muteInitiator;
   }
   /**
-   * Output only. The most recent time this finding was muted or unmuted.
-   *
    * @param string $muteUpdateTime
    */
   public function setMuteUpdateTime($muteUpdateTime)
@@ -1151,12 +986,6 @@ class Finding extends \Google\Collection
     return $this->muteUpdateTime;
   }
   /**
-   * The [relative resource name](https://cloud.google.com/apis/design/resource_
-   * names#relative_resource_name) of the finding. Example: "organizations/{orga
-   * nization_id}/sources/{source_id}/findings/{finding_id}",
-   * "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-   * "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
-   *
    * @param string $name
    */
   public function setName($name)
@@ -1171,8 +1000,6 @@ class Finding extends \Google\Collection
     return $this->name;
   }
   /**
-   * Represents the VPC networks that the resource is attached to.
-   *
    * @param Network[] $networks
    */
   public function setNetworks($networks)
@@ -1187,8 +1014,6 @@ class Finding extends \Google\Collection
     return $this->networks;
   }
   /**
-   * Steps to address the finding.
-   *
    * @param string $nextSteps
    */
   public function setNextSteps($nextSteps)
@@ -1203,8 +1028,6 @@ class Finding extends \Google\Collection
     return $this->nextSteps;
   }
   /**
-   * Notebook associated with the finding.
-   *
    * @param Notebook $notebook
    */
   public function setNotebook(Notebook $notebook)
@@ -1219,8 +1042,6 @@ class Finding extends \Google\Collection
     return $this->notebook;
   }
   /**
-   * Contains information about the org policies associated with the finding.
-   *
    * @param OrgPolicy[] $orgPolicies
    */
   public function setOrgPolicies($orgPolicies)
@@ -1235,11 +1056,6 @@ class Finding extends \Google\Collection
     return $this->orgPolicies;
   }
   /**
-   * The relative resource name of the source the finding belongs to. See:
-   * https://cloud.google.com/apis/design/resource_names#relative_resource_name
-   * This field is immutable after creation time. For example:
-   * "organizations/{organization_id}/sources/{source_id}"
-   *
    * @param string $parent
    */
   public function setParent($parent)
@@ -1254,9 +1070,6 @@ class Finding extends \Google\Collection
     return $this->parent;
   }
   /**
-   * Output only. The human readable display name of the finding source such as
-   * "Event Threat Detection" or "Security Health Analytics".
-   *
    * @param string $parentDisplayName
    */
   public function setParentDisplayName($parentDisplayName)
@@ -1271,8 +1084,20 @@ class Finding extends \Google\Collection
     return $this->parentDisplayName;
   }
   /**
-   * Represents operating system processes associated with the Finding.
-   *
+   * @param PolicyViolationSummary $policyViolationSummary
+   */
+  public function setPolicyViolationSummary(PolicyViolationSummary $policyViolationSummary)
+  {
+    $this->policyViolationSummary = $policyViolationSummary;
+  }
+  /**
+   * @return PolicyViolationSummary
+   */
+  public function getPolicyViolationSummary()
+  {
+    return $this->policyViolationSummary;
+  }
+  /**
    * @param Process[] $processes
    */
   public function setProcesses($processes)
@@ -1287,13 +1112,6 @@ class Finding extends \Google\Collection
     return $this->processes;
   }
   /**
-   * For findings on Google Cloud resources, the full resource name of the
-   * Google Cloud resource this finding is for. See:
-   * https://cloud.google.com/apis/design/resource_names#full_resource_name When
-   * the finding is for a non-Google Cloud resource, the resourceName can be a
-   * customer or partner defined string. This field is immutable after creation
-   * time.
-   *
    * @param string $resourceName
    */
   public function setResourceName($resourceName)
@@ -1308,10 +1126,20 @@ class Finding extends \Google\Collection
     return $this->resourceName;
   }
   /**
-   * Output only. User specified security marks. These marks are entirely
-   * managed by the user and come from the SecurityMarks resource that belongs
-   * to the finding.
-   *
+   * @param Secret $secret
+   */
+  public function setSecret(Secret $secret)
+  {
+    $this->secret = $secret;
+  }
+  /**
+   * @return Secret
+   */
+  public function getSecret()
+  {
+    return $this->secret;
+  }
+  /**
    * @param SecurityMarks $securityMarks
    */
   public function setSecurityMarks(SecurityMarks $securityMarks)
@@ -1326,8 +1154,6 @@ class Finding extends \Google\Collection
     return $this->securityMarks;
   }
   /**
-   * The security posture associated with the finding.
-   *
    * @param SecurityPosture $securityPosture
    */
   public function setSecurityPosture(SecurityPosture $securityPosture)
@@ -1342,11 +1168,6 @@ class Finding extends \Google\Collection
     return $this->securityPosture;
   }
   /**
-   * The severity of the finding. This field is managed by the source that
-   * writes the finding.
-   *
-   * Accepted values: SEVERITY_UNSPECIFIED, CRITICAL, HIGH, MEDIUM, LOW
-   *
    * @param self::SEVERITY_* $severity
    */
   public function setSeverity($severity)
@@ -1361,11 +1182,6 @@ class Finding extends \Google\Collection
     return $this->severity;
   }
   /**
-   * Source specific properties. These properties are managed by the source that
-   * writes the finding. The key names in the source_properties map must be
-   * between 1 and 255 characters, and must start with a letter and contain
-   * alphanumeric characters or underscores only.
-   *
    * @param array[] $sourceProperties
    */
   public function setSourceProperties($sourceProperties)
@@ -1380,10 +1196,6 @@ class Finding extends \Google\Collection
     return $this->sourceProperties;
   }
   /**
-   * The state of the finding.
-   *
-   * Accepted values: STATE_UNSPECIFIED, ACTIVE, INACTIVE
-   *
    * @param self::STATE_* $state
    */
   public function setState($state)
@@ -1398,12 +1210,6 @@ class Finding extends \Google\Collection
     return $this->state;
   }
   /**
-   * Contains details about a group of security issues that, when the issues
-   * occur together, represent a greater risk than when the issues occur
-   * independently. A group of such issues is referred to as a toxic
-   * combination. This field cannot be updated. Its value is ignored in all
-   * update requests.
-   *
    * @param ToxicCombination $toxicCombination
    */
   public function setToxicCombination(ToxicCombination $toxicCombination)
@@ -1418,8 +1224,6 @@ class Finding extends \Google\Collection
     return $this->toxicCombination;
   }
   /**
-   * VertexAi associated with the finding.
-   *
    * @param VertexAi $vertexAi
    */
   public function setVertexAi(VertexAi $vertexAi)
@@ -1434,10 +1238,6 @@ class Finding extends \Google\Collection
     return $this->vertexAi;
   }
   /**
-   * Represents vulnerability-specific fields like CVE and CVSS scores. CVE
-   * stands for Common Vulnerabilities and Exposures
-   * (https://cve.mitre.org/about/)
-   *
    * @param Vulnerability $vulnerability
    */
   public function setVulnerability(Vulnerability $vulnerability)

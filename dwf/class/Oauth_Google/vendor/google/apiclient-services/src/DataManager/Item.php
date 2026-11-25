@@ -19,41 +19,39 @@ namespace Google\Service\DataManager;
 
 class Item extends \Google\Collection
 {
-  protected $collection_key = 'additionalItemParameters';
+  protected $collection_key = 'customVariables';
   protected $additionalItemParametersType = ItemParameter::class;
   protected $additionalItemParametersDataType = 'array';
+  public $conversionValue;
+  protected $customVariablesType = ItemCustomVariable::class;
+  protected $customVariablesDataType = 'array';
   /**
-   * Optional. A unique identifier to reference the item.
-   *
    * @var string
    */
   public $itemId;
   /**
-   * Optional. The product ID within the Merchant Center account.
-   *
+   * @var string
+   */
+  public $merchantFeedLabel;
+  /**
+   * @var string
+   */
+  public $merchantFeedLanguageCode;
+  /**
+   * @var string
+   */
+  public $merchantId;
+  /**
    * @var string
    */
   public $merchantProductId;
   /**
-   * Optional. The number of this item associated with the event.
-   *
    * @var string
    */
   public $quantity;
-  /**
-   * Optional. The unit price excluding tax, shipping, and any transaction level
-   * discounts.
-   *
-   * @var 
-   */
   public $unitPrice;
 
   /**
-   * Optional. A bucket of any [event parameters related to an item](https://dev
-   * elopers.google.com/analytics/devguides/collection/protocol/ga4/reference/ev
-   * ents) to be included within the event that were not already specified using
-   * other structured fields.
-   *
    * @param ItemParameter[] $additionalItemParameters
    */
   public function setAdditionalItemParameters($additionalItemParameters)
@@ -67,9 +65,29 @@ class Item extends \Google\Collection
   {
     return $this->additionalItemParameters;
   }
+  public function setConversionValue($conversionValue)
+  {
+    $this->conversionValue = $conversionValue;
+  }
+  public function getConversionValue()
+  {
+    return $this->conversionValue;
+  }
   /**
-   * Optional. A unique identifier to reference the item.
-   *
+   * @param ItemCustomVariable[] $customVariables
+   */
+  public function setCustomVariables($customVariables)
+  {
+    $this->customVariables = $customVariables;
+  }
+  /**
+   * @return ItemCustomVariable[]
+   */
+  public function getCustomVariables()
+  {
+    return $this->customVariables;
+  }
+  /**
    * @param string $itemId
    */
   public function setItemId($itemId)
@@ -84,8 +102,48 @@ class Item extends \Google\Collection
     return $this->itemId;
   }
   /**
-   * Optional. The product ID within the Merchant Center account.
-   *
+   * @param string $merchantFeedLabel
+   */
+  public function setMerchantFeedLabel($merchantFeedLabel)
+  {
+    $this->merchantFeedLabel = $merchantFeedLabel;
+  }
+  /**
+   * @return string
+   */
+  public function getMerchantFeedLabel()
+  {
+    return $this->merchantFeedLabel;
+  }
+  /**
+   * @param string $merchantFeedLanguageCode
+   */
+  public function setMerchantFeedLanguageCode($merchantFeedLanguageCode)
+  {
+    $this->merchantFeedLanguageCode = $merchantFeedLanguageCode;
+  }
+  /**
+   * @return string
+   */
+  public function getMerchantFeedLanguageCode()
+  {
+    return $this->merchantFeedLanguageCode;
+  }
+  /**
+   * @param string $merchantId
+   */
+  public function setMerchantId($merchantId)
+  {
+    $this->merchantId = $merchantId;
+  }
+  /**
+   * @return string
+   */
+  public function getMerchantId()
+  {
+    return $this->merchantId;
+  }
+  /**
    * @param string $merchantProductId
    */
   public function setMerchantProductId($merchantProductId)
@@ -100,8 +158,6 @@ class Item extends \Google\Collection
     return $this->merchantProductId;
   }
   /**
-   * Optional. The number of this item associated with the event.
-   *
    * @param string $quantity
    */
   public function setQuantity($quantity)

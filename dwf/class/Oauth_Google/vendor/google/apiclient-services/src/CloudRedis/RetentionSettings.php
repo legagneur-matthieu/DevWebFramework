@@ -48,6 +48,8 @@ class RetentionSettings extends \Google\Model
    */
   public $durationBasedRetention;
   /**
+   * Quantity based retention period i.e. 7 backups
+   *
    * @var int
    */
   public $quantityBasedRetention;
@@ -59,6 +61,8 @@ class RetentionSettings extends \Google\Model
    */
   public $retentionUnit;
   /**
+   * Duration based retention period i.e. 172800 seconds (2 days)
+   *
    * @deprecated
    * @var string
    */
@@ -87,6 +91,8 @@ class RetentionSettings extends \Google\Model
     return $this->durationBasedRetention;
   }
   /**
+   * Quantity based retention period i.e. 7 backups
+   *
    * @param int $quantityBasedRetention
    */
   public function setQuantityBasedRetention($quantityBasedRetention)
@@ -122,6 +128,8 @@ class RetentionSettings extends \Google\Model
     return $this->retentionUnit;
   }
   /**
+   * Duration based retention period i.e. 172800 seconds (2 days)
+   *
    * @deprecated
    * @param string $timeBasedRetention
    */

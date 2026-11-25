@@ -31,16 +31,39 @@ class GoogleCloudDiscoveryengineV1AssistAnswerCustomerPolicyEnforcementResult ex
    * Processing was blocked by the customer policy.
    */
   public const VERDICT_BLOCK = 'BLOCK';
+  /**
+   * Unknown value.
+   */
+  public const VIOLATION_SOURCE_VIOLATION_SOURCE_UNSPECIFIED = 'VIOLATION_SOURCE_UNSPECIFIED';
+  /**
+   * Violation found in the system response.
+   */
+  public const VIOLATION_SOURCE_SYSTEM = 'SYSTEM';
+  /**
+   * Violation found in the user prompt.
+   */
+  public const VIOLATION_SOURCE_PROMPT = 'PROMPT';
+  /**
+   * Violation found in the user attachment.
+   */
+  public const VIOLATION_SOURCE_ATTACHMENT = 'ATTACHMENT';
   protected $collection_key = 'policyResults';
   protected $policyResultsType = GoogleCloudDiscoveryengineV1AssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult::class;
   protected $policyResultsDataType = 'array';
   /**
-   * Final verdict of the customer policy enforcement. If only one policy
-   * blocked the processing, the verdict is BLOCK.
+   * Final verdict of the customer policy enforcement. If at least one policy
+   * blocked the processing, the verdict is BLOCK. If no policy blocked the
+   * processing but at least one flagged it, the verdict is FLAG.
    *
    * @var string
    */
   public $verdict;
+  /**
+   * Output only. The source of the violation.
+   *
+   * @var string
+   */
+  public $violationSource;
 
   /**
    * Customer policy enforcement results. Populated only if the assist call was
@@ -61,8 +84,9 @@ class GoogleCloudDiscoveryengineV1AssistAnswerCustomerPolicyEnforcementResult ex
     return $this->policyResults;
   }
   /**
-   * Final verdict of the customer policy enforcement. If only one policy
-   * blocked the processing, the verdict is BLOCK.
+   * Final verdict of the customer policy enforcement. If at least one policy
+   * blocked the processing, the verdict is BLOCK. If no policy blocked the
+   * processing but at least one flagged it, the verdict is FLAG.
    *
    * Accepted values: UNSPECIFIED, ALLOW, BLOCK
    *
@@ -78,6 +102,24 @@ class GoogleCloudDiscoveryengineV1AssistAnswerCustomerPolicyEnforcementResult ex
   public function getVerdict()
   {
     return $this->verdict;
+  }
+  /**
+   * Output only. The source of the violation.
+   *
+   * Accepted values: VIOLATION_SOURCE_UNSPECIFIED, SYSTEM, PROMPT, ATTACHMENT
+   *
+   * @param self::VIOLATION_SOURCE_* $violationSource
+   */
+  public function setViolationSource($violationSource)
+  {
+    $this->violationSource = $violationSource;
+  }
+  /**
+   * @return self::VIOLATION_SOURCE_*
+   */
+  public function getViolationSource()
+  {
+    return $this->violationSource;
   }
 }
 

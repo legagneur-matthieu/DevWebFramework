@@ -23,6 +23,8 @@ class CorpusQuery extends \Google\Model
   protected $calendarQueryDataType = '';
   protected $driveQueryType = HeldDriveQuery::class;
   protected $driveQueryDataType = '';
+  protected $geminiQueryType = HeldGeminiQuery::class;
+  protected $geminiQueryDataType = '';
   protected $groupsQueryType = HeldGroupsQuery::class;
   protected $groupsQueryDataType = '';
   protected $hangoutsChatQueryType = HeldHangoutsChatQuery::class;
@@ -65,6 +67,23 @@ class CorpusQuery extends \Google\Model
   public function getDriveQuery()
   {
     return $this->driveQuery;
+  }
+  /**
+   * Service-specific options for Gemini app holds. If set, **CorpusType** must
+   * be **GEMINI**.
+   *
+   * @param HeldGeminiQuery $geminiQuery
+   */
+  public function setGeminiQuery(HeldGeminiQuery $geminiQuery)
+  {
+    $this->geminiQuery = $geminiQuery;
+  }
+  /**
+   * @return HeldGeminiQuery
+   */
+  public function getGeminiQuery()
+  {
+    return $this->geminiQuery;
   }
   /**
    * Service-specific options for Groups holds. If set, **CorpusType** must be

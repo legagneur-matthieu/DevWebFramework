@@ -44,6 +44,15 @@ class TenantResource extends \Google\Model
    */
   public const STATUS_DELETED = 'DELETED';
   /**
+   * Output only. The newly created regional resource name of the tenant project
+   * that has been migrated from a global service. This field is only set for
+   * migrated tenant projects. Format: `services//{collection_id}/{RESOURCE_ID}/
+   * locations/{LOCATION}/tenantProjects/{TENANT_ID}`.
+   *
+   * @var string
+   */
+  public $migratedTenantProject;
+  /**
    * Output only. @OutputOnly Identifier of the tenant resource. For cloud
    * projects, it is in the form 'projects/{number}'. For example
    * 'projects/123456'.
@@ -51,6 +60,15 @@ class TenantResource extends \Google\Model
    * @var string
    */
   public $resource;
+  /**
+   * Output only. The resource name of the tenant project from which this active
+   * regional tenant project was migrated. This field is only set for active
+   * regional migrated mapping tenant projects. Format: `services//{collection_i
+   * d}/{RESOURCE_ID}/locations/{LOCATION}/tenantProjects/{TENANT_ID}`.
+   *
+   * @var string
+   */
+  public $sourceTenantProject;
   /**
    * Status of tenant resource.
    *
@@ -64,6 +82,25 @@ class TenantResource extends \Google\Model
    */
   public $tag;
 
+  /**
+   * Output only. The newly created regional resource name of the tenant project
+   * that has been migrated from a global service. This field is only set for
+   * migrated tenant projects. Format: `services//{collection_id}/{RESOURCE_ID}/
+   * locations/{LOCATION}/tenantProjects/{TENANT_ID}`.
+   *
+   * @param string $migratedTenantProject
+   */
+  public function setMigratedTenantProject($migratedTenantProject)
+  {
+    $this->migratedTenantProject = $migratedTenantProject;
+  }
+  /**
+   * @return string
+   */
+  public function getMigratedTenantProject()
+  {
+    return $this->migratedTenantProject;
+  }
   /**
    * Output only. @OutputOnly Identifier of the tenant resource. For cloud
    * projects, it is in the form 'projects/{number}'. For example
@@ -81,6 +118,25 @@ class TenantResource extends \Google\Model
   public function getResource()
   {
     return $this->resource;
+  }
+  /**
+   * Output only. The resource name of the tenant project from which this active
+   * regional tenant project was migrated. This field is only set for active
+   * regional migrated mapping tenant projects. Format: `services//{collection_i
+   * d}/{RESOURCE_ID}/locations/{LOCATION}/tenantProjects/{TENANT_ID}`.
+   *
+   * @param string $sourceTenantProject
+   */
+  public function setSourceTenantProject($sourceTenantProject)
+  {
+    $this->sourceTenantProject = $sourceTenantProject;
+  }
+  /**
+   * @return string
+   */
+  public function getSourceTenantProject()
+  {
+    return $this->sourceTenantProject;
   }
   /**
    * Status of tenant resource.

@@ -29,7 +29,7 @@ use Google\Client;
  *
  * <p>
  * For more information about this service, see the API
- * <a href="https://developers.google.com/cloud-search/docs/guides/" target="_blank">Documentation</a>
+ * <a href="https://developers.google.com/workspace/cloud-search/docs/guides/" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -504,6 +504,10 @@ class CloudSearch extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'returnPartialSuccess' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],
           ]
@@ -515,11 +519,7 @@ class CloudSearch extends \Google\Service
         'query',
         [
           'methods' => [
-            'debugSearch' => [
-              'path' => 'v1/query:debugSearch',
-              'httpMethod' => 'POST',
-              'parameters' => [],
-            ],'removeActivity' => [
+            'removeActivity' => [
               'path' => 'v1/query:removeActivity',
               'httpMethod' => 'POST',
               'parameters' => [],
@@ -549,11 +549,23 @@ class CloudSearch extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'requestOptions.clientDisplayLanguageCode' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestOptions.countryCode' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'requestOptions.debugOptions.enableDebugging' => [
                   'location' => 'query',
                   'type' => 'boolean',
                 ],
                 'requestOptions.languageCode' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestOptions.queryLanguageCode' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

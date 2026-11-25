@@ -96,6 +96,7 @@ class Dfareporting extends \Google\Service
   public $regions;
   public $remarketingListShares;
   public $remarketingLists;
+  public $reportData;
   public $reports;
   public $reports_compatibleFields;
   public $reports_files;
@@ -3457,6 +3458,18 @@ class Dfareporting extends \Google\Service
                   'type' => 'string',
                   'repeated' => true,
                 ],
+                'tagProperties.dcDbmMacroIncluded' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'tagProperties.gppMacrosIncluded' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'tagProperties.tcfGdprMacrosIncluded' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],'get' => [
               'path' => 'userprofiles/{+profileId}/placements/{+id}',
@@ -3854,6 +3867,26 @@ class Dfareporting extends \Google\Service
             ],'update' => [
               'path' => 'userprofiles/{+profileId}/remarketingLists',
               'httpMethod' => 'PUT',
+              'parameters' => [
+                'profileId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->reportData = new Dfareporting\Resource\ReportData(
+        $this,
+        $this->serviceName,
+        'reportData',
+        [
+          'methods' => [
+            'query' => [
+              'path' => 'userprofiles/{profileId}/reportdata/query',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'profileId' => [
                   'location' => 'path',
@@ -4585,6 +4618,14 @@ class Dfareporting extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'countryDartId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'tvDataProvider' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],
           ]
@@ -4609,7 +4650,15 @@ class Dfareporting extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'countryDartId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'name' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'tvDataProvider' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

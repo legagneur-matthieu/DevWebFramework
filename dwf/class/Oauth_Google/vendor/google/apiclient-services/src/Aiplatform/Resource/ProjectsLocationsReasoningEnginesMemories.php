@@ -18,6 +18,7 @@
 namespace Google\Service\Aiplatform\Resource;
 
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateMemoriesRequest;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1IngestEventsRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1ListMemoriesResponse;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1Memory;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1PurgeMemoriesRequest;
@@ -44,6 +45,12 @@ class ProjectsLocationsReasoningEnginesMemories extends \Google\Service\Resource
    * `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`
    * @param GoogleCloudAiplatformV1Memory $postBody
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string memoryId Optional. The user defined ID to use for memory,
+   * which will become the final component of the memory resource name. If not
+   * provided, Vertex AI will generate a value for this ID. This value may be up
+   * to 63 characters, and valid characters are `[a-z0-9-]`. The first character
+   * must be a letter, and the last character must be a letter or number.
    * @return GoogleLongrunningOperation
    * @throws \Google\Service\Exception
    */
@@ -103,6 +110,23 @@ class ProjectsLocationsReasoningEnginesMemories extends \Google\Service\Resource
     return $this->call('get', [$params], GoogleCloudAiplatformV1Memory::class);
   }
   /**
+   * Ingests events for a Memory Bank. (memories.ingestEvents)
+   *
+   * @param string $parent Required. The resource name of the ReasoningEngine to
+   * ingest events to. Format:
+   * `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`
+   * @param GoogleCloudAiplatformV1IngestEventsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function ingestEvents($parent, GoogleCloudAiplatformV1IngestEventsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('ingestEvents', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
    * List Memories. (memories.listProjectsLocationsReasoningEnginesMemories)
    *
    * @param string $parent Required. The resource name of the ReasoningEngine to
@@ -134,14 +158,14 @@ class ProjectsLocationsReasoningEnginesMemories extends \Google\Service\Resource
   /**
    * Update a Memory. (memories.patch)
    *
-   * @param string $name Identifier. The resource name of the Memory. Format: `pro
-   * jects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memo
-   * ries/{memory}`
+   * @param string $name Identifier. Represents the resource name of the Memory.
+   * Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_
+   * engine}/memories/{memory}`
    * @param GoogleCloudAiplatformV1Memory $postBody
    * @param array $optParams Optional parameters.
    *
    * @opt_param string updateMask Optional. Mask specifying which fields to
-   * update. Supported fields: * `display_name` * `description` * `fact`
+   * update. The following fields are immutable: * `scope` * `memory_type`
    * @return GoogleLongrunningOperation
    * @throws \Google\Service\Exception
    */

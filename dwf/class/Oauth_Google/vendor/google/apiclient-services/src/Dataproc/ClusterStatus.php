@@ -84,12 +84,12 @@ class ClusterStatus extends \Google\Model
    */
   public const SUBSTATE_UNHEALTHY = 'UNHEALTHY';
   /**
-   * The agent-reported status is out of date (may occur if Dataproc loses
-   * communication with Agent).Applies to RUNNING state.
+   * The agent-reported status is out of date (may occur if the service loses
+   * communication with the Agent).Applies to RUNNING state.
    */
   public const SUBSTATE_STALE_STATUS = 'STALE_STATUS';
   /**
-   * Optional. Output only. Details of cluster's state.
+   * Optional. Details of cluster's state.
    *
    * @var string
    */
@@ -117,7 +117,7 @@ class ClusterStatus extends \Google\Model
   public $substate;
 
   /**
-   * Optional. Output only. Details of cluster's state.
+   * Optional. Details of cluster's state.
    *
    * @param string $detail
    */

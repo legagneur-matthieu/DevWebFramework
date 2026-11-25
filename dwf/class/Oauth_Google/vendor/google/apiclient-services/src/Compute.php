@@ -69,14 +69,18 @@ class Compute extends \Google\Service
   public $futureReservations;
   public $globalAddresses;
   public $globalForwardingRules;
+  public $globalFrontendSettings;
   public $globalNetworkEndpointGroups;
   public $globalOperations;
   public $globalOrganizationOperations;
   public $globalPublicDelegatedPrefixes;
+  public $globalVmExtensionPolicies;
   public $healthChecks;
+  public $hosts;
   public $httpHealthChecks;
   public $httpsHealthChecks;
   public $imageFamilyViews;
+  public $imageViews;
   public $images;
   public $instanceGroupManagerResizeRequests;
   public $instanceGroupManagers;
@@ -84,6 +88,7 @@ class Compute extends \Google\Service
   public $instanceSettings;
   public $instanceTemplates;
   public $instances;
+  public $instantSnapshotGroups;
   public $instantSnapshots;
   public $interconnectAttachmentGroups;
   public $interconnectAttachments;
@@ -95,6 +100,7 @@ class Compute extends \Google\Service
   public $licenses;
   public $machineImages;
   public $machineTypes;
+  public $managedRulesets;
   public $networkAttachments;
   public $networkEdgeSecurityServices;
   public $networkEndpointGroups;
@@ -107,26 +113,35 @@ class Compute extends \Google\Service
   public $organizationSecurityPolicies;
   public $packetMirrorings;
   public $previewFeatures;
+  public $projectViews;
   public $projects;
   public $publicAdvertisedPrefixes;
   public $publicDelegatedPrefixes;
   public $regionAutoscalers;
+  public $regionBackendBuckets;
   public $regionBackendServices;
   public $regionCommitments;
+  public $regionCompositeHealthChecks;
   public $regionDiskTypes;
   public $regionDisks;
+  public $regionHealthAggregationPolicies;
   public $regionHealthCheckServices;
   public $regionHealthChecks;
+  public $regionHealthSources;
+  public $regionInstanceGroupManagerResizeRequests;
   public $regionInstanceGroupManagers;
   public $regionInstanceGroups;
   public $regionInstanceTemplates;
   public $regionInstances;
+  public $regionInstantSnapshotGroups;
   public $regionInstantSnapshots;
   public $regionNetworkEndpointGroups;
   public $regionNetworkFirewallPolicies;
   public $regionNotificationEndpoints;
   public $regionOperations;
   public $regionSecurityPolicies;
+  public $regionSnapshotSettings;
+  public $regionSnapshots;
   public $regionSslCertificates;
   public $regionSslPolicies;
   public $regionTargetHttpProxies;
@@ -135,10 +150,14 @@ class Compute extends \Google\Service
   public $regionUrlMaps;
   public $regionZones;
   public $regions;
+  public $reliabilityRisks;
   public $reservationBlocks;
+  public $reservationSlots;
   public $reservationSubBlocks;
   public $reservations;
   public $resourcePolicies;
+  public $rolloutPlans;
+  public $rollouts;
   public $routers;
   public $routes;
   public $securityPolicies;
@@ -163,6 +182,7 @@ class Compute extends \Google\Service
   public $vpnTunnels;
   public $wireGroups;
   public $zoneOperations;
+  public $zoneVmExtensionPolicies;
   public $zones;
   public $rootUrlTemplate;
 
@@ -217,10 +237,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -277,10 +293,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -320,10 +332,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -422,10 +430,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'move' => [
@@ -521,6 +525,36 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'capacity' => [
+              'path' => 'projects/{project}/regions/{region}/advice/capacity',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'capacityHistory' => [
+              'path' => 'projects/{project}/regions/{region}/advice/capacityHistory',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -559,10 +593,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -662,10 +692,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/zones/{zone}/autoscalers',
@@ -688,6 +714,26 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/zones/{zone}/autoscalers/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'update' => [
@@ -738,6 +784,40 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/backendBuckets',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -858,9 +938,31 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
+              ],
+            ],'listUsable' => [
+              'path' => 'projects/{project}/global/backendBuckets/listUsable',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
                   'location' => 'query',
-                  'type' => 'boolean',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'patch' => [
@@ -1007,10 +1109,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -1163,10 +1261,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listUsable' => [
               'path' => 'projects/{project}/global/backendServices/listUsable',
@@ -1192,10 +1286,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -1391,10 +1481,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/crossSiteNetworks/{crossSiteNetwork}',
@@ -1462,10 +1548,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -1520,10 +1602,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -1588,10 +1666,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -1788,10 +1862,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'removeResourcePolicies' => [
@@ -2006,6 +2076,30 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'updateKmsKey' => [
+              'path' => 'projects/{project}/zones/{zone}/disks/{disk}/updateKmsKey',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'disk' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],
           ]
         ]
@@ -2088,10 +2182,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setLabels' => [
@@ -2287,15 +2377,15 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listAssociations' => [
               'path' => 'locations/global/firewallPolicies/listAssociations',
               'httpMethod' => 'GET',
               'parameters' => [
+                'includeInheritedPolicies' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'targetResource' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -2490,10 +2580,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/firewalls/{firewall}',
@@ -2587,10 +2673,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -2638,6 +2720,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'view' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'insert' => [
@@ -2688,10 +2774,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -2804,10 +2886,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -2931,10 +3009,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'update' => [
               'path' => 'projects/{project}/zones/{zone}/futureReservations/{futureReservation}',
@@ -3047,10 +3121,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'move' => [
               'path' => 'projects/{project}/global/addresses/{address}/move',
@@ -3144,6 +3214,10 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'view' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'insert' => [
               'path' => 'projects/{project}/global/forwardingRules',
@@ -3183,10 +3257,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -3238,6 +3308,44 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->globalFrontendSettings = new Compute\Resource\GlobalFrontendSettings(
+        $this,
+        $this->serviceName,
+        'globalFrontendSettings',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/global/globalFrontendSettings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/global/globalFrontendSettings',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -3363,10 +3471,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listNetworkEndpoints' => [
               'path' => 'projects/{project}/global/networkEndpointGroups/{networkEndpointGroup}/listNetworkEndpoints',
@@ -3397,10 +3501,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -3441,10 +3541,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -3505,10 +3601,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'wait' => [
@@ -3587,10 +3679,6 @@ class Compute extends \Google\Service
                 'parentId' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -3676,10 +3764,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/publicDelegatedPrefixes/{publicDelegatedPrefix}',
@@ -3691,6 +3775,143 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'publicDelegatedPrefix' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->globalVmExtensionPolicies = new Compute\Resource\GlobalVmExtensionPolicies(
+        $this,
+        $this->serviceName,
+        'globalVmExtensionPolicies',
+        [
+          'methods' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/vmExtensionPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/global/vmExtensionPolicies/{globalVmExtensionPolicy}/delete',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'globalVmExtensionPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/global/vmExtensionPolicies/{globalVmExtensionPolicy}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'globalVmExtensionPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/global/vmExtensionPolicies',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/global/vmExtensionPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'update' => [
+              'path' => 'projects/{project}/global/vmExtensionPolicies/{globalVmExtensionPolicy}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'globalVmExtensionPolicy' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
@@ -3738,10 +3959,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -3821,10 +4038,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/healthChecks/{healthCheck}',
@@ -3845,6 +4058,21 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/healthChecks/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'update' => [
               'path' => 'projects/{project}/global/healthChecks/{healthCheck}',
               'httpMethod' => 'PUT',
@@ -3860,6 +4088,106 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->hosts = new Compute\Resource\Hosts(
+        $this,
+        $this->serviceName,
+        'hosts',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/zones/{zone}/{association}/hosts/{host}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'association' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'host' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getVersion' => [
+              'path' => 'projects/{project}/zones/{zone}/{association}/hosts/{host}/getVersion',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'association' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'host' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/zones/{zone}/{association}/hosts',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'association' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -3947,10 +4275,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/httpHealthChecks/{httpHealthCheck}',
@@ -3969,6 +4293,21 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/httpHealthChecks/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'update' => [
@@ -4073,10 +4412,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/httpsHealthChecks/{httpsHealthCheck}',
@@ -4095,6 +4430,21 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/httpsHealthChecks/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'update' => [
@@ -4144,6 +4494,67 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->imageViews = new Compute\Resource\ImageViews(
+        $this,
+        $this->serviceName,
+        'imageViews',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/regions/{region}/imageViews/{resourceId}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resourceId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/imageViews',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -4285,10 +4696,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -4507,10 +4914,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -4574,10 +4977,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -4647,6 +5046,10 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -4670,6 +5073,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -4765,10 +5172,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listErrors' => [
               'path' => 'projects/{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listErrors',
@@ -4804,10 +5207,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'listManagedInstances' => [
@@ -4845,10 +5244,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listPerInstanceConfigs' => [
               'path' => 'projects/{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listPerInstanceConfigs',
@@ -4884,10 +5279,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -4956,6 +5347,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -5106,6 +5501,10 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -5222,10 +5621,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -5324,10 +5719,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listInstances' => [
               'path' => 'projects/{project}/zones/{zone}/instanceGroups/{instanceGroup}/listInstances',
@@ -5363,10 +5754,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'removeInstances' => [
@@ -5524,10 +5911,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -5624,10 +6007,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setIamPolicy' => [
@@ -5776,10 +6155,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -5850,6 +6225,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -6170,10 +6549,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listReferrers' => [
               'path' => 'projects/{project}/zones/{zone}/instances/{instance}/referrers',
@@ -6209,10 +6584,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'performMaintenance' => [
@@ -6800,6 +7171,10 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'boolean',
                 ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -6871,6 +7246,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'discardLocalSsd' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'minimalAction' => [
                   'location' => 'query',
@@ -6995,6 +7374,178 @@ class Compute extends \Google\Service
           ]
         ]
     );
+    $this->instantSnapshotGroups = new Compute\Resource\InstantSnapshotGroups(
+        $this,
+        $this->serviceName,
+        'instantSnapshotGroups',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups/{instantSnapshotGroup}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instantSnapshotGroup' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups/{instantSnapshotGroup}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instantSnapshotGroup' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'sourceConsistencyGroup' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->instantSnapshots = new Compute\Resource\InstantSnapshots(
         $this,
         $this->serviceName,
@@ -7029,10 +7580,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -7155,10 +7702,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setIamPolicy' => [
@@ -7342,10 +7885,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/interconnectAttachmentGroups/{interconnectAttachmentGroup}',
@@ -7438,10 +7977,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -7544,10 +8079,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -7730,10 +8261,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/interconnectGroups/{interconnectGroup}',
@@ -7838,10 +8365,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -7892,10 +8415,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -8011,10 +8530,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/interconnects/{interconnect}',
@@ -8050,6 +8565,25 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'setName' => [
+              'path' => 'projects/{project}/global/interconnects/{interconnect}/setName',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'interconnect' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],
           ]
         ]
@@ -8070,6 +8604,40 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'licenseCode' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/global/licenseCodes/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/global/licenseCodes/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
@@ -8191,10 +8759,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setIamPolicy' => [
@@ -8356,10 +8920,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setIamPolicy' => [
               'path' => 'projects/{project}/global/machineImages/{resource}/setIamPolicy',
@@ -8445,10 +9005,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -8504,9 +9060,56 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->managedRulesets = new Compute\Resource\ManagedRulesets(
+        $this,
+        $this->serviceName,
+        'managedRulesets',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/global/managedRulesets/{managedRuleset}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'managedRuleset' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/global/managedRulesets',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
                   'location' => 'query',
-                  'type' => 'boolean',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -8547,10 +9150,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -8674,10 +9273,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/networkAttachments/{networkAttachment}',
@@ -8781,10 +9376,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -8929,10 +9520,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -9080,10 +9667,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listNetworkEndpoints' => [
               'path' => 'projects/{project}/zones/{zone}/networkEndpointGroups/{networkEndpointGroup}/listNetworkEndpoints',
@@ -9119,10 +9702,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'testIamPermissions' => [
@@ -9260,10 +9839,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -9441,10 +10016,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -9661,10 +10232,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -9678,6 +10245,25 @@ class Compute extends \Google\Service
           'methods' => [
             'addPeering' => [
               'path' => 'projects/{project}/global/networks/{network}/addPeering',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'network' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'cancelRequestRemovePeering' => [
+              'path' => 'projects/{project}/global/networks/{network}/cancelRequestRemovePeering',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -9783,10 +10369,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listPeeringRoutes' => [
               'path' => 'projects/{project}/global/networks/{network}/listPeeringRoutes',
@@ -9829,10 +10411,6 @@ class Compute extends \Google\Service
                 'region' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -9993,10 +10571,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -10148,10 +10722,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listNodes' => [
               'path' => 'projects/{project}/zones/{zone}/nodeGroups/{nodeGroup}/listNodes',
@@ -10187,10 +10757,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -10368,10 +10934,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -10494,10 +11056,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setIamPolicy' => [
               'path' => 'projects/{project}/regions/{region}/nodeTemplates/{resource}/setIamPolicy',
@@ -10578,10 +11136,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -10636,10 +11190,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -10791,10 +11341,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listAssociations' => [
               'path' => 'locations/global/securityPolicies/listAssociations',
@@ -10828,10 +11374,6 @@ class Compute extends \Google\Service
                 'parentId' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'move' => [
@@ -10959,10 +11501,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -11061,10 +11599,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/packetMirrorings/{packetMirroring}',
@@ -11160,10 +11694,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'update' => [
               'path' => 'projects/{project}/global/previewFeatures/{previewFeature}',
@@ -11182,6 +11712,31 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projectViews = new Compute\Resource\ProjectViews(
+        $this,
+        $this->serviceName,
+        'projectViews',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/regions/{region}/projectViews',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -11295,10 +11850,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listXpnHosts' => [
               'path' => 'projects/{project}/listXpnHosts',
@@ -11324,10 +11875,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'moveDisk' => [
@@ -11516,10 +12063,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}',
@@ -11597,10 +12140,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -11723,10 +12262,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -11880,10 +12415,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/autoscalers',
@@ -11908,6 +12439,26 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/autoscalers/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'update' => [
               'path' => 'projects/{project}/regions/{region}/autoscalers',
               'httpMethod' => 'PUT',
@@ -11929,6 +12480,229 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionBackendBuckets = new Compute\Resource\RegionBackendBuckets(
+        $this,
+        $this->serviceName,
+        'regionBackendBuckets',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{backendBucket}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'backendBucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{backendBucket}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'backendBucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'listUsable' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/listUsable',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{backendBucket}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'backendBucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/backendBuckets/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -12078,10 +12852,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listUsable' => [
               'path' => 'projects/{project}/regions/{region}/backendServices/listUsable',
@@ -12112,10 +12882,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -12269,10 +13035,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -12347,10 +13109,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'update' => [
               'path' => 'projects/{project}/regions/{region}/commitments/{commitment}',
@@ -12383,6 +13141,208 @@ class Compute extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionCompositeHealthChecks = new Compute\Resource\RegionCompositeHealthChecks(
+        $this,
+        $this->serviceName,
+        'regionCompositeHealthChecks',
+        [
+          'methods' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/compositeHealthChecks',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks/{compositeHealthCheck}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'compositeHealthCheck' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks/{compositeHealthCheck}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'compositeHealthCheck' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getHealth' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks/{compositeHealthCheck}/getHealth',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'compositeHealthCheck' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks/{compositeHealthCheck}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'compositeHealthCheck' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/compositeHealthChecks/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -12444,10 +13404,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -12647,10 +13603,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'removeResourcePolicies' => [
@@ -12865,6 +13817,212 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'updateKmsKey' => [
+              'path' => 'projects/{project}/regions/{region}/disks/{disk}/updateKmsKey',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'disk' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionHealthAggregationPolicies = new Compute\Resource\RegionHealthAggregationPolicies(
+        $this,
+        $this->serviceName,
+        'regionHealthAggregationPolicies',
+        [
+          'methods' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/healthAggregationPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies/{healthAggregationPolicy}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthAggregationPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies/{healthAggregationPolicy}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthAggregationPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies/{healthAggregationPolicy}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthAggregationPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/healthAggregationPolicies/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -12875,7 +14033,41 @@ class Compute extends \Google\Service
         'regionHealthCheckServices',
         [
           'methods' => [
-            'delete' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/healthCheckServices',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
               'path' => 'projects/{project}/regions/{region}/healthCheckServices/{healthCheckService}',
               'httpMethod' => 'DELETE',
               'parameters' => [
@@ -12968,10 +14160,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/healthCheckServices/{healthCheckService}',
@@ -12995,6 +14183,26 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/healthCheckServices/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -13100,10 +14308,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/healthChecks/{healthCheck}',
@@ -13129,6 +14333,26 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/healthChecks/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'update' => [
               'path' => 'projects/{project}/regions/{region}/healthChecks/{healthCheck}',
               'httpMethod' => 'PUT',
@@ -13149,6 +14373,361 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
                 'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionHealthSources = new Compute\Resource\RegionHealthSources(
+        $this,
+        $this->serviceName,
+        'regionHealthSources',
+        [
+          'methods' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/healthSources',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources/{healthSource}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthSource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources/{healthSource}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthSource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getHealth' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources/{healthSource}/getHealth',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthSource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources/{healthSource}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'healthSource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/healthSources/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionInstanceGroupManagerResizeRequests = new Compute\Resource\RegionInstanceGroupManagerResizeRequests(
+        $this,
+        $this->serviceName,
+        'regionInstanceGroupManagerResizeRequests',
+        [
+          'methods' => [
+            'cancel' => [
+              'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resizeRequests/{resizeRequest}/cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instanceGroupManager' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resizeRequest' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resizeRequests/{resizeRequest}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instanceGroupManager' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resizeRequest' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resizeRequests/{resizeRequest}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instanceGroupManager' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resizeRequest' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resizeRequests',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instanceGroupManager' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resizeRequests',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instanceGroupManager' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -13250,6 +14829,10 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -13273,6 +14856,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -13368,10 +14955,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listErrors' => [
               'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/listErrors',
@@ -13407,10 +14990,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'listManagedInstances' => [
@@ -13448,10 +15027,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listPerInstanceConfigs' => [
               'path' => 'projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/listPerInstanceConfigs',
@@ -13487,10 +15062,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -13559,6 +15130,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -13709,6 +15284,10 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'noGracefulShutdown' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -13822,10 +15401,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listInstances' => [
               'path' => 'projects/{project}/regions/{region}/instanceGroups/{instanceGroup}/listInstances',
@@ -13861,10 +15436,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setNamedPorts' => [
@@ -14014,10 +15585,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -14046,6 +15613,178 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionInstantSnapshotGroups = new Compute\Resource\RegionInstantSnapshotGroups(
+        $this,
+        $this->serviceName,
+        'regionInstantSnapshotGroups',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups/{instantSnapshotGroup}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instantSnapshotGroup' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups/{instantSnapshotGroup}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instantSnapshotGroup' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'sourceConsistencyGroup' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/instantSnapshotGroups/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -14174,10 +15913,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setIamPolicy' => [
@@ -14395,10 +16130,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listNetworkEndpoints' => [
               'path' => 'projects/{project}/regions/{region}/networkEndpointGroups/{networkEndpointGroup}/listNetworkEndpoints',
@@ -14435,10 +16166,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -14468,6 +16195,10 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'associatedPolicyToBeReplaced' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'replaceExistingAssociation' => [
                   'location' => 'query',
@@ -14723,14 +16454,34 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/firewallPolicies/{firewallPolicy}',
               'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'firewallPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patchAssociation' => [
+              'path' => 'projects/{project}/regions/{region}/firewallPolicies/{firewallPolicy}/patchAssociation',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
                   'location' => 'path',
@@ -14886,7 +16637,41 @@ class Compute extends \Google\Service
         'regionNotificationEndpoints',
         [
           'methods' => [
-            'delete' => [
+            'aggregatedList' => [
+              'path' => 'projects/{project}/aggregated/notificationEndpoints',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'includeAllScopes' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceProjectNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
               'path' => 'projects/{project}/regions/{region}/notificationEndpoints/{notificationEndpoint}',
               'httpMethod' => 'DELETE',
               'parameters' => [
@@ -14979,9 +16764,25 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/notificationEndpoints/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -15063,10 +16864,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'wait' => [
@@ -15244,10 +17041,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/securityPolicies/{securityPolicy}',
@@ -15361,6 +17154,270 @@ class Compute extends \Google\Service
           ]
         ]
     );
+    $this->regionSnapshotSettings = new Compute\Resource\RegionSnapshotSettings(
+        $this,
+        $this->serviceName,
+        'regionSnapshotSettings',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/regions/{region}/snapshotSettings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'projects/{project}/regions/{region}/snapshotSettings',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->regionSnapshots = new Compute\Resource\RegionSnapshots(
+        $this,
+        $this->serviceName,
+        'regionSnapshots',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{snapshot}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'snapshot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{snapshot}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'snapshot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'setLabels' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{resource}/setLabels',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'updateKmsKey' => [
+              'path' => 'projects/{project}/regions/{region}/snapshots/{snapshot}/updateKmsKey',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'snapshot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->regionSslCertificates = new Compute\Resource\RegionSslCertificates(
         $this,
         $this->serviceName,
@@ -15460,10 +17517,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -15519,6 +17572,30 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/sslPolicies/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
             ],'insert' => [
               'path' => 'projects/{project}/regions/{region}/sslPolicies',
               'httpMethod' => 'POST',
@@ -15568,10 +17645,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listAvailableFeatures' => [
               'path' => 'projects/{project}/regions/{region}/sslPolicies/listAvailableFeatures',
@@ -15603,10 +17676,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/sslPolicies/{sslPolicy}',
@@ -15630,6 +17699,46 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/regions/{region}/sslPolicies/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/regions/{region}/sslPolicies/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -15734,10 +17843,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setUrlMap' => [
@@ -15866,10 +17971,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -16047,10 +18148,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -16154,10 +18251,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -16268,10 +18361,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -16323,9 +18412,56 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->reliabilityRisks = new Compute\Resource\ReliabilityRisks(
+        $this,
+        $this->serviceName,
+        'reliabilityRisks',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/global/reliabilityRisks/{reliabilityRisk}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'reliabilityRisk' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/global/reliabilityRisks',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
                   'location' => 'query',
-                  'type' => 'boolean',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -16431,10 +18567,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'performMaintenance' => [
               'path' => 'projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservationBlock}/performMaintenance',
@@ -16519,14 +18651,14 @@ class Compute extends \Google\Service
           ]
         ]
     );
-    $this->reservationSubBlocks = new Compute\Resource\ReservationSubBlocks(
+    $this->reservationSlots = new Compute\Resource\ReservationSlots(
         $this,
         $this->serviceName,
-        'reservationSubBlocks',
+        'reservationSlots',
         [
           'methods' => [
             'get' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}',
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'project' => [
@@ -16544,19 +18676,15 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
-                'reservationSubBlock' => [
+                'reservationSlot' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
                 ],
-                'view' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
               ],
-            ],'getIamPolicy' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentResource}/reservationSubBlocks/{resource}/getIamPolicy',
-              'httpMethod' => 'GET',
+            ],'getHealth' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}/getHealth',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
                   'location' => 'path',
@@ -16568,23 +18696,52 @@ class Compute extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
-                'parentResource' => [
+                'parentName' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
                 ],
-                'resource' => [
+                'reservationSlot' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
                 ],
-                'optionsRequestedPolicyVersion' => [
+                'requestId' => [
                   'location' => 'query',
-                  'type' => 'integer',
+                  'type' => 'string',
+                ],
+              ],
+            ],'getVersion' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}/getVersion',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'reservationSlot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'list' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks',
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSlots',
               'httpMethod' => 'GET',
               'parameters' => [
                 'project' => [
@@ -16618,13 +18775,171 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
+              ],
+            ],'update' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'reservationSlot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
                   'location' => 'query',
-                  'type' => 'boolean',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->reservationSubBlocks = new Compute\Resource\ReservationSubBlocks(
+        $this,
+        $this->serviceName,
+        'reservationSubBlocks',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'reservationSubBlock' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'view' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentResource}/reservationSubBlocks/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentResource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'getVersion' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/getVersion',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'reservationSubBlock' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parentName' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'performMaintenance' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/performMaintenance',
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/performMaintenance',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -16653,7 +18968,7 @@ class Compute extends \Google\Service
                 ],
               ],
             ],'reportFaulty' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/reportFaulty',
+              'path' => 'projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/reportFaulty',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -16682,7 +18997,7 @@ class Compute extends \Google\Service
                 ],
               ],
             ],'setIamPolicy' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentResource}/reservationSubBlocks/{resource}/setIamPolicy',
+              'path' => 'projects/{project}/zones/{zone}/{+parentResource}/reservationSubBlocks/{resource}/setIamPolicy',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -16707,7 +19022,7 @@ class Compute extends \Google\Service
                 ],
               ],
             ],'testIamPermissions' => [
-              'path' => 'projects/{project}/zones/{zone}/{parentResource}/reservationSubBlocks/{resource}/testIamPermissions',
+              'path' => 'projects/{project}/zones/{zone}/{+parentResource}/reservationSubBlocks/{resource}/testIamPermissions',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -16769,10 +19084,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -16895,10 +19206,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'performMaintenance' => [
@@ -17061,10 +19368,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -17187,10 +19490,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/resourcePolicies/{resourcePolicy}',
@@ -17264,6 +19563,252 @@ class Compute extends \Google\Service
           ]
         ]
     );
+    $this->rolloutPlans = new Compute\Resource\RolloutPlans(
+        $this,
+        $this->serviceName,
+        'rolloutPlans',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/global/rolloutPlans/{rolloutPlan}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rolloutPlan' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/global/rolloutPlans/{rolloutPlan}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rolloutPlan' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/global/rolloutPlans',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/global/rolloutPlans',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->rollouts = new Compute\Resource\Rollouts(
+        $this,
+        $this->serviceName,
+        'rollouts',
+        [
+          'methods' => [
+            'advance' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}/advance',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'currentWaveNumber' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'cancel' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'rollback' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/global/rollouts',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'pause' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}/pause',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'etag' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'resume' => [
+              'path' => 'projects/{project}/global/rollouts/{rollout}/resume',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rollout' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'etag' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->routers = new Compute\Resource\Routers(
         $this,
         $this->serviceName,
@@ -17299,10 +19844,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -17326,6 +19867,34 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'deleteNamedSet' => [
+              'path' => 'projects/{project}/regions/{region}/routers/{router}/deleteNamedSet',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'router' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'namedSet' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -17378,6 +19947,30 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'getNamedSet' => [
+              'path' => 'projects/{project}/regions/{region}/routers/{router}/getNamedSet',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'router' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'namedSet' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'getNatIpInfo' => [
@@ -17442,10 +20035,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'getRoutePolicy' => [
@@ -17541,10 +20130,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listBgpRoutes' => [
               'path' => 'projects/{project}/regions/{region}/routers/{router}/listBgpRoutes',
@@ -17597,11 +20182,43 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'boolean',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'routeType' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'listNamedSets' => [
+              'path' => 'projects/{project}/regions/{region}/routers/{router}/listNamedSets',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'router' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -17641,14 +20258,34 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/regions/{region}/routers/{router}',
               'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'router' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patchNamedSet' => [
+              'path' => 'projects/{project}/regions/{region}/routers/{router}/patchNamedSet',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
                   'location' => 'path',
@@ -17717,6 +20354,30 @@ class Compute extends \Google\Service
             ],'update' => [
               'path' => 'projects/{project}/regions/{region}/routers/{router}',
               'httpMethod' => 'PUT',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'region' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'router' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'updateNamedSet' => [
+              'path' => 'projects/{project}/regions/{region}/routers/{router}/updateNamedSet',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
                   'location' => 'path',
@@ -17845,9 +20506,20 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/routes/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -17907,10 +20579,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -18013,10 +20681,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listPreconfiguredExpressionSets' => [
               'path' => 'projects/{project}/global/securityPolicies/listPreconfiguredExpressionSets',
@@ -18042,10 +20706,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -18170,10 +20830,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -18300,10 +20956,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -18510,10 +21162,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setIamPolicy' => [
               'path' => 'projects/{project}/global/snapshots/{resource}/setIamPolicy',
@@ -18560,6 +21208,25 @@ class Compute extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'updateKmsKey' => [
+              'path' => 'projects/{project}/global/snapshots/{snapshot}/updateKmsKey',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'snapshot' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],
           ]
         ]
@@ -18598,10 +21265,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -18680,10 +21343,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -18725,10 +21384,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -18766,6 +21421,25 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'getIamPolicy' => [
+              'path' => 'projects/{project}/global/sslPolicies/{resource}/getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'optionsRequestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
                 ],
               ],
             ],'insert' => [
@@ -18807,10 +21481,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listAvailableFeatures' => [
               'path' => 'projects/{project}/global/sslPolicies/listAvailableFeatures',
@@ -18837,10 +21507,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/sslPolicies/{sslPolicy}',
@@ -18859,6 +21525,36 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'projects/{project}/global/sslPolicies/{resource}/setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/sslPolicies/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -18899,10 +21595,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -18959,10 +21651,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],
           ]
@@ -19002,10 +21690,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -19129,10 +21813,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'listDisks' => [
               'path' => 'projects/{project}/zones/{zone}/storagePools/{storagePool}/listDisks',
@@ -19168,10 +21848,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setIamPolicy' => [
@@ -19280,10 +21956,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -19441,10 +22113,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'views' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -19475,10 +22143,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProject' => [
                   'location' => 'query',
@@ -19660,10 +22324,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/targetGrpcProxies/{targetGrpcProxy}',
@@ -19722,10 +22382,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -19804,10 +22460,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -19887,10 +22539,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -19968,10 +22616,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'patch' => [
@@ -20127,10 +22771,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -20228,10 +22868,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setSecurityPolicy' => [
@@ -20365,10 +23001,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -20486,10 +23118,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'removeHealthCheck' => [
@@ -20695,10 +23323,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setBackendService' => [
               'path' => 'projects/{project}/global/targetSslProxies/{targetSslProxy}/setBackendService',
@@ -20795,6 +23419,21 @@ class Compute extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/targetSslProxies/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -20833,10 +23472,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -20916,10 +23551,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setBackendService' => [
               'path' => 'projects/{project}/global/targetTcpProxies/{targetTcpProxy}/setBackendService',
@@ -20957,6 +23588,21 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/targetTcpProxies/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],
@@ -20998,10 +23644,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -21099,10 +23741,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setLabels' => [
@@ -21167,10 +23805,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -21269,10 +23903,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/urlMaps/{urlMap}',
@@ -21291,6 +23921,21 @@ class Compute extends \Google\Service
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'projects/{project}/global/urlMaps/{resource}/testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'update' => [
@@ -21365,10 +24010,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -21488,10 +24129,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'setLabels' => [
               'path' => 'projects/{project}/regions/{region}/vpnGateways/{resource}/setLabels',
@@ -21575,10 +24212,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
                 'serviceProjectNumber' => [
                   'location' => 'query',
@@ -21677,10 +24310,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],'setLabels' => [
@@ -21814,10 +24443,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'patch' => [
               'path' => 'projects/{project}/global/crossSiteNetworks/{crossSiteNetwork}/wireGroups/{wireGroup}',
@@ -21931,10 +24556,6 @@ class Compute extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
               ],
             ],'wait' => [
               'path' => 'projects/{project}/zones/{zone}/operations/{operation}/wait',
@@ -21954,6 +24575,134 @@ class Compute extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->zoneVmExtensionPolicies = new Compute\Resource\ZoneVmExtensionPolicies(
+        $this,
+        $this->serviceName,
+        'zoneVmExtensionPolicies',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'projects/{project}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'vmExtensionPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'projects/{project}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'vmExtensionPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'projects/{project}/zones/{zone}/vmExtensionPolicies',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'list' => [
+              'path' => 'projects/{project}/zones/{zone}/vmExtensionPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'maxResults' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'update' => [
+              'path' => 'projects/{project}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'zone' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'vmExtensionPolicy' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -22005,10 +24754,6 @@ class Compute extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'returnPartialSuccess' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],

@@ -19,6 +19,10 @@ namespace Google\Service\AnalyticsHub;
 
 class MessageTransform extends \Google\Model
 {
+  protected $aiInferenceType = AIInference::class;
+  protected $aiInferenceDataType = '';
+  protected $compressionType = Compression::class;
+  protected $compressionDataType = '';
   /**
    * Optional. If true, the transform is disabled and will not be applied to
    * messages. Defaults to `false`.
@@ -37,6 +41,40 @@ class MessageTransform extends \Google\Model
   protected $javascriptUdfType = JavaScriptUDF::class;
   protected $javascriptUdfDataType = '';
 
+  /**
+   * Optional. AI Inference. Specifies the Vertex AI endpoint that inference
+   * requests built from the Pub/Sub message data and provided parameters will
+   * be sent to.
+   *
+   * @param AIInference $aiInference
+   */
+  public function setAiInference(AIInference $aiInference)
+  {
+    $this->aiInference = $aiInference;
+  }
+  /**
+   * @return AIInference
+   */
+  public function getAiInference()
+  {
+    return $this->aiInference;
+  }
+  /**
+   * Optional. Compression/Decompression.
+   *
+   * @param Compression $compression
+   */
+  public function setCompression(Compression $compression)
+  {
+    $this->compression = $compression;
+  }
+  /**
+   * @return Compression
+   */
+  public function getCompression()
+  {
+    return $this->compression;
+  }
   /**
    * Optional. If true, the transform is disabled and will not be applied to
    * messages. Defaults to `false`.

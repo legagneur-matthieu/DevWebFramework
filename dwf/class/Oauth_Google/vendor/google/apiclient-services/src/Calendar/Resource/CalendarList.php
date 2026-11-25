@@ -99,6 +99,9 @@ class CalendarList extends \Google\Service\Resource
    * in the result. Optional. The default is False.
    * @opt_param bool showHidden Whether to show hidden entries. Optional. The
    * default is False.
+   * @opt_param bool showOwnOrganizationOnly Whether to show only entries for
+   * calendars from the organization. This parameter is only applicable to Google
+   * Workspace users. Optional. The default is False.
    * @opt_param string syncToken Token obtained from the nextSyncToken field
    * returned on the last page of results from the previous list request. It makes
    * the result of this list request contain only entries that have changed since
@@ -106,11 +109,12 @@ class CalendarList extends \Google\Service\Resource
    * changed, the entry won't be returned. All entries deleted and hidden since
    * the previous list request will always be in the result set and it is not
    * allowed to set showDeleted neither showHidden to False. To ensure client
-   * state consistency minAccessRole query parameter cannot be specified together
-   * with nextSyncToken. If the syncToken expires, the server will respond with a
-   * 410 GONE response code and the client should clear its storage and perform a
-   * full synchronization without any syncToken. Learn more about incremental
-   * synchronization. Optional. The default is to return all entries.
+   * state consistency minAccessRole and showOwnOrganizationOnly query parameters
+   * cannot be specified together with nextSyncToken. If the syncToken expires,
+   * the server will respond with a 410 GONE response code and the client should
+   * clear its storage and perform a full synchronization without any syncToken.
+   * Learn more about incremental synchronization. Optional. The default is to
+   * return all entries.
    * @return CalendarListModel
    * @throws \Google\Service\Exception
    */
@@ -183,6 +187,9 @@ class CalendarList extends \Google\Service\Resource
    * in the result. Optional. The default is False.
    * @opt_param bool showHidden Whether to show hidden entries. Optional. The
    * default is False.
+   * @opt_param bool showOwnOrganizationOnly Whether to show only entries for
+   * calendars from the organization. This parameter is only applicable to Google
+   * Workspace users. Optional. The default is False.
    * @opt_param string syncToken Token obtained from the nextSyncToken field
    * returned on the last page of results from the previous list request. It makes
    * the result of this list request contain only entries that have changed since
@@ -190,11 +197,12 @@ class CalendarList extends \Google\Service\Resource
    * changed, the entry won't be returned. All entries deleted and hidden since
    * the previous list request will always be in the result set and it is not
    * allowed to set showDeleted neither showHidden to False. To ensure client
-   * state consistency minAccessRole query parameter cannot be specified together
-   * with nextSyncToken. If the syncToken expires, the server will respond with a
-   * 410 GONE response code and the client should clear its storage and perform a
-   * full synchronization without any syncToken. Learn more about incremental
-   * synchronization. Optional. The default is to return all entries.
+   * state consistency minAccessRole and showOwnOrganizationOnly query parameters
+   * cannot be specified together with nextSyncToken. If the syncToken expires,
+   * the server will respond with a 410 GONE response code and the client should
+   * clear its storage and perform a full synchronization without any syncToken.
+   * Learn more about incremental synchronization. Optional. The default is to
+   * return all entries.
    * @return Channel
    * @throws \Google\Service\Exception
    */

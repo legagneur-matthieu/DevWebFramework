@@ -81,6 +81,14 @@ class CertificateIssuanceConfig extends \Google\Model
    */
   public $rotationWindowPercentage;
   /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @var string[]
+   */
+  public $tags;
+  /**
    * Output only. The last update timestamp of a CertificateIssuanceConfig.
    *
    * @var string
@@ -222,6 +230,24 @@ class CertificateIssuanceConfig extends \Google\Model
   public function getRotationWindowPercentage()
   {
     return $this->rotationWindowPercentage;
+  }
+  /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @param string[] $tags
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
   /**
    * Output only. The last update timestamp of a CertificateIssuanceConfig.

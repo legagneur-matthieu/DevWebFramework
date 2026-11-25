@@ -19,7 +19,7 @@ namespace Google\Service\DiscoveryEngine;
 
 class GoogleCloudDiscoveryengineV1StreamAssistResponse extends \Google\Collection
 {
-  protected $collection_key = 'invocationTools';
+  protected $collection_key = 'invokedSkills';
   protected $answerType = GoogleCloudDiscoveryengineV1AssistAnswer::class;
   protected $answerDataType = '';
   /**
@@ -29,12 +29,16 @@ class GoogleCloudDiscoveryengineV1StreamAssistResponse extends \Google\Collectio
    * @var string
    */
   public $assistToken;
+  protected $connectorAuthErrorsType = GoogleCloudDiscoveryengineV1StreamAssistResponseConnectorAuthError::class;
+  protected $connectorAuthErrorsDataType = 'array';
   /**
    * The tool names of the tools that were invoked.
    *
    * @var string[]
    */
   public $invocationTools;
+  protected $invokedSkillsType = GoogleCloudDiscoveryengineV1StreamAssistResponseInvokedSkill::class;
+  protected $invokedSkillsDataType = 'array';
   protected $sessionInfoType = GoogleCloudDiscoveryengineV1StreamAssistResponseSessionInfo::class;
   protected $sessionInfoDataType = '';
 
@@ -80,6 +84,24 @@ class GoogleCloudDiscoveryengineV1StreamAssistResponse extends \Google\Collectio
     return $this->assistToken;
   }
   /**
+   * Per-connector authentication errors encountered during the request. Present
+   * when one or more connectors failed authentication but the request proceeded
+   * with the remaining connectors.
+   *
+   * @param GoogleCloudDiscoveryengineV1StreamAssistResponseConnectorAuthError[] $connectorAuthErrors
+   */
+  public function setConnectorAuthErrors($connectorAuthErrors)
+  {
+    $this->connectorAuthErrors = $connectorAuthErrors;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1StreamAssistResponseConnectorAuthError[]
+   */
+  public function getConnectorAuthErrors()
+  {
+    return $this->connectorAuthErrors;
+  }
+  /**
    * The tool names of the tools that were invoked.
    *
    * @param string[] $invocationTools
@@ -94,6 +116,22 @@ class GoogleCloudDiscoveryengineV1StreamAssistResponse extends \Google\Collectio
   public function getInvocationTools()
   {
     return $this->invocationTools;
+  }
+  /**
+   * The skills executed during the turn.
+   *
+   * @param GoogleCloudDiscoveryengineV1StreamAssistResponseInvokedSkill[] $invokedSkills
+   */
+  public function setInvokedSkills($invokedSkills)
+  {
+    $this->invokedSkills = $invokedSkills;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1StreamAssistResponseInvokedSkill[]
+   */
+  public function getInvokedSkills()
+  {
+    return $this->invokedSkills;
   }
   /**
    * Session information. Only included in the final StreamAssistResponse of the

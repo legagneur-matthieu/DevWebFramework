@@ -23,13 +23,19 @@ use Google\Client;
  * Service definition for BigLakeService (v1).
  *
  * <p>
- * The BigLake API provides access to BigLake Metastore, a serverless, fully
- * managed, and highly available metastore for open-source data that can be used
- * for querying Apache Iceberg tables in BigQuery.</p>
+ * The Lakehouse API (formerly BigLake API) provides access to a serverless,
+ * fully managed, and highly available metastore that provides a single source
+ * of truth for your data lakehouse. It lets multiple engines—including Apache
+ * Spark, Google Managed Spark, Apache Flink, Trino and BigQuery—share tables
+ * and metadata for key open formats (Apache Iceberg, Apache Hive), and query
+ * the same copy of data. Plus, through the Lakehouse runtime catalog federation
+ * seamlessly unite your lakehouse ecosystem, letting Iceberg compatible engines
+ * on Google Cloud (BigQuery, Google Managed Spark) discover and analyze
+ * enterprise data across Snowflake, Databricks, and AWS Glue.</p>
  *
  * <p>
  * For more information about this service, see the API
- * <a href="https://cloud.google.com/bigquery/" target="_blank">Documentation</a>
+ * <a href="https://cloud.google.com/products/lakehouse" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -45,6 +51,8 @@ class BigLakeService extends \Google\Service
 
   public $projects_catalogs;
   public $projects_catalogs_namespaces;
+  public $projects_catalogs_namespaces_tables;
+  public $projects_catalogs_namespaces_views;
   public $projects_locations_catalogs;
   public $projects_locations_catalogs_databases;
   public $projects_locations_catalogs_databases_tables;
@@ -97,6 +105,16 @@ class BigLakeService extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'testIamPermissions' => [
+              'path' => 'v1/{+resource}:testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -123,6 +141,104 @@ class BigLakeService extends \Google\Service
               ],
             ],'setIamPolicy' => [
               'path' => 'v1/{+resource}:setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'v1/{+resource}:testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_catalogs_namespaces_tables = new BigLakeService\Resource\ProjectsCatalogsNamespacesTables(
+        $this,
+        $this->serviceName,
+        'tables',
+        [
+          'methods' => [
+            'getIamPolicy' => [
+              'path' => 'v1/{+resource}:getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'options.requestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'v1/{+resource}:setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'v1/{+resource}:testIamPermissions',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_catalogs_namespaces_views = new BigLakeService\Resource\ProjectsCatalogsNamespacesViews(
+        $this,
+        $this->serviceName,
+        'views',
+        [
+          'methods' => [
+            'getIamPolicy' => [
+              'path' => 'v1/{+resource}:getIamPolicy',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'options.requestedPolicyVersion' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+              ],
+            ],'setIamPolicy' => [
+              'path' => 'v1/{+resource}:setIamPolicy',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'resource' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'testIamPermissions' => [
+              'path' => 'v1/{+resource}:testIamPermissions',
               'httpMethod' => 'POST',
               'parameters' => [
                 'resource' => [

@@ -37,6 +37,29 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    */
   public const CONFIGURABLE_BILLING_APPROACH_CONFIGURABLE_BILLING_APPROACH_ENABLED = 'CONFIGURABLE_BILLING_APPROACH_ENABLED';
   /**
+   * Unspecified feature toggle state. Treated as `GENERAL`.
+   */
+  public const GLOBAL_FEATURE_TOGGLE_STATE_GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED = 'GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED';
+  /**
+   * Gets features and models 4 weeks post GA. Features will be ON at the 4
+   * weeks mark post GA.
+   */
+  public const GLOBAL_FEATURE_TOGGLE_STATE_DELAYED = 'DELAYED';
+  /**
+   * Gets features and models 2 weeks post GA. Features will be ON at the 2
+   * weeks mark post GA.
+   */
+  public const GLOBAL_FEATURE_TOGGLE_STATE_SCHEDULED = 'SCHEDULED';
+  /**
+   * Gets features and models at GA. Features will be ON at GA.
+   */
+  public const GLOBAL_FEATURE_TOGGLE_STATE_GENERAL = 'GENERAL';
+  /**
+   * Gets features and models at EAP (if in EAP). Features will only be ON if
+   * the project is allowlisted.
+   */
+  public const GLOBAL_FEATURE_TOGGLE_STATE_EARLY = 'EARLY';
+  /**
    * Value used when unset.
    */
   public const INDUSTRY_VERTICAL_INDUSTRY_VERTICAL_UNSPECIFIED = 'INDUSTRY_VERTICAL_UNSPECIFIED';
@@ -53,6 +76,31 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * The healthcare FHIR vertical.
    */
   public const INDUSTRY_VERTICAL_HEALTHCARE_FHIR = 'HEALTHCARE_FHIR';
+  /**
+   * Defaults to `MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED`.
+   */
+  public const MARKETPLACE_AGENT_VISIBILITY_MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED = 'MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED';
+  /**
+   * Only agents that are currently available for use by the user are visible.
+   */
+  public const MARKETPLACE_AGENT_VISIBILITY_SHOW_AVAILABLE_AGENTS_ONLY = 'SHOW_AVAILABLE_AGENTS_ONLY';
+  /**
+   * Show marketplace agents that the user does not yet have access to but are
+   * integrated into the engine. This level also includes all agents visible
+   * with `SHOW_AVAILABLE_AGENTS_ONLY`.
+   */
+  public const MARKETPLACE_AGENT_VISIBILITY_SHOW_AGENTS_ALREADY_INTEGRATED = 'SHOW_AGENTS_ALREADY_INTEGRATED';
+  /**
+   * Show all agents visible with `SHOW_AGENTS_ALREADY_INTEGRATED`, plus agents
+   * that have already been purchased by the project/organization, even if they
+   * are not currently integrated into the engine.
+   */
+  public const MARKETPLACE_AGENT_VISIBILITY_SHOW_AGENTS_ALREADY_PURCHASED = 'SHOW_AGENTS_ALREADY_PURCHASED';
+  /**
+   * All agents in the marketplace are visible, regardless of access or purchase
+   * status. This level encompasses all agents shown in the previous levels.
+   */
+  public const MARKETPLACE_AGENT_VISIBILITY_SHOW_ALL_AGENTS = 'SHOW_ALL_AGENTS';
   /**
    * Default value.
    */
@@ -75,7 +123,13 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * `SOLUTION_TYPE_CHAT` solution.
    */
   public const SOLUTION_TYPE_SOLUTION_TYPE_GENERATIVE_CHAT = 'SOLUTION_TYPE_GENERATIVE_CHAT';
-  protected $collection_key = 'dataStoreIds';
+  /**
+   * Used for AI Mode.
+   */
+  public const SOLUTION_TYPE_SOLUTION_TYPE_AI_MODE = 'SOLUTION_TYPE_AI_MODE';
+  protected $collection_key = 'procurementContactEmails';
+  protected $agentGatewaySettingType = GoogleCloudDiscoveryengineV1AgentGatewaySetting::class;
+  protected $agentGatewaySettingDataType = '';
   /**
    * Optional. Immutable. This the application type which this engine resource
    * represents. NOTE: this is a new concept independ of existing industry
@@ -84,6 +138,14 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * @var string
    */
   public $appType;
+  /**
+   * Output only. The Agent registry containing the agents, MCP servers and
+   * tools associated with this engine. Derived server-side from the linked
+   * Agent Gateway's registry.
+   *
+   * @var string
+   */
+  public $associatedAgentRegistry;
   protected $chatEngineConfigType = GoogleCloudDiscoveryengineV1EngineChatEngineConfig::class;
   protected $chatEngineConfigDataType = '';
   protected $chatEngineMetadataType = GoogleCloudDiscoveryengineV1EngineChatEngineMetadata::class;
@@ -98,6 +160,14 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * @var string
    */
   public $configurableBillingApproach;
+  /**
+   * Optional. Maps a connector ID (e.g., "hybrid-github", "shopify") to tenant-
+   * specific information required for that connector. The structure of the
+   * tenant information string is connector-dependent.
+   *
+   * @var string[]
+   */
+  public $connectorTenantInfo;
   /**
    * Output only. Timestamp the Recommendation Engine was created at.
    *
@@ -117,6 +187,13 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    */
   public $dataStoreIds;
   /**
+   * Output only. Whether the project is allowed to set
+   * `global_feature_toggle_state` to `DELAYED`.
+   *
+   * @var bool
+   */
+  public $delayedGlobalFeatureToggleStateAllowed;
+  /**
    * Optional. Whether to disable analytics for searches performed on this
    * engine.
    *
@@ -131,18 +208,45 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    */
   public $displayName;
   /**
+   * Output only. The complete, server-resolved state of every known feature
+   * toggle. Unlike `features`, which stores only explicit admin overrides, this
+   * map always contains an entry for every toggle. Clients should read toggle
+   * state from this field.
+   *
+   * @var string[]
+   */
+  public $effectiveFeatures;
+  protected $featurePoliciesType = GoogleCloudDiscoveryengineV1EngineFeaturePolicy::class;
+  protected $featurePoliciesDataType = 'map';
+  /**
    * Optional. Feature config for the engine to opt in or opt out of features.
    * Supported keys: * `*`: all features, if it's present, all other feature
    * state settings are ignored. * `agent-gallery` * `no-code-agent-builder` *
    * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
-   * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-
-   * sharing` * `personalization-memory` * `disable-agent-sharing` * `disable-
-   * image-generation` * `disable-video-generation` * `disable-onedrive-upload`
-   * * `disable-talk-to-content` * `disable-google-drive-upload`
+   * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` *
+   * `feedback` * `session-sharing` * `personalization-memory` *
+   * `personalization-suggested-highlights` * `mobile-app-access` * `disable-
+   * agent-sharing` * `disable-image-generation` * `disable-video-generation` *
+   * `music-generation` * `speech-generation` * `disable-onedrive-upload` *
+   * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-
+   * welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-
+   * builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-
+   * approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-
+   * end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-
+   * agent-orchestration` * `cross-product-intelligence` * `workflow-agents` *
+   * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-
+   * badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+   * `preview-agents` * `plugins`
    *
    * @var string[]
    */
   public $features;
+  /**
+   * Optional. Controls the global feature toggle state for the engine.
+   *
+   * @var string
+   */
+  public $globalFeatureToggleState;
   /**
    * Optional. The industry vertical that the engine registers. The restriction
    * of the Engine industry vertical is based on DataStore: Vertical on Engine
@@ -151,6 +255,14 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * @var string
    */
   public $industryVertical;
+  protected $knowledgeGraphConfigType = GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig::class;
+  protected $knowledgeGraphConfigDataType = '';
+  /**
+   * Optional. The visibility of marketplace agents in the agent gallery.
+   *
+   * @var string
+   */
+  public $marketplaceAgentVisibility;
   protected $mediaRecommendationEngineConfigType = GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig::class;
   protected $mediaRecommendationEngineConfigDataType = '';
   /**
@@ -175,8 +287,18 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $observabilityConfigType = GoogleCloudDiscoveryengineV1ObservabilityConfig::class;
+  protected $observabilityConfigDataType = '';
+  /**
+   * Optional. The emails of the procurement contacts.
+   *
+   * @var string[]
+   */
+  public $procurementContactEmails;
   protected $searchEngineConfigType = GoogleCloudDiscoveryengineV1EngineSearchEngineConfig::class;
   protected $searchEngineConfigDataType = '';
+  protected $sessionConfigType = GoogleCloudDiscoveryengineV1SessionConfig::class;
+  protected $sessionConfigDataType = '';
   /**
    * Required. The solutions of the engine.
    *
@@ -190,6 +312,22 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * Optional. The agent gateway setting for the engine.
+   *
+   * @param GoogleCloudDiscoveryengineV1AgentGatewaySetting $agentGatewaySetting
+   */
+  public function setAgentGatewaySetting(GoogleCloudDiscoveryengineV1AgentGatewaySetting $agentGatewaySetting)
+  {
+    $this->agentGatewaySetting = $agentGatewaySetting;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1AgentGatewaySetting
+   */
+  public function getAgentGatewaySetting()
+  {
+    return $this->agentGatewaySetting;
+  }
   /**
    * Optional. Immutable. This the application type which this engine resource
    * represents. NOTE: this is a new concept independ of existing industry
@@ -209,6 +347,24 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
   public function getAppType()
   {
     return $this->appType;
+  }
+  /**
+   * Output only. The Agent registry containing the agents, MCP servers and
+   * tools associated with this engine. Derived server-side from the linked
+   * Agent Gateway's registry.
+   *
+   * @param string $associatedAgentRegistry
+   */
+  public function setAssociatedAgentRegistry($associatedAgentRegistry)
+  {
+    $this->associatedAgentRegistry = $associatedAgentRegistry;
+  }
+  /**
+   * @return string
+   */
+  public function getAssociatedAgentRegistry()
+  {
+    return $this->associatedAgentRegistry;
   }
   /**
    * Configurations for the Chat Engine. Only applicable if solution_type is
@@ -296,6 +452,24 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
     return $this->configurableBillingApproach;
   }
   /**
+   * Optional. Maps a connector ID (e.g., "hybrid-github", "shopify") to tenant-
+   * specific information required for that connector. The structure of the
+   * tenant information string is connector-dependent.
+   *
+   * @param string[] $connectorTenantInfo
+   */
+  public function setConnectorTenantInfo($connectorTenantInfo)
+  {
+    $this->connectorTenantInfo = $connectorTenantInfo;
+  }
+  /**
+   * @return string[]
+   */
+  public function getConnectorTenantInfo()
+  {
+    return $this->connectorTenantInfo;
+  }
+  /**
    * Output only. Timestamp the Recommendation Engine was created at.
    *
    * @param string $createTime
@@ -334,6 +508,23 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
     return $this->dataStoreIds;
   }
   /**
+   * Output only. Whether the project is allowed to set
+   * `global_feature_toggle_state` to `DELAYED`.
+   *
+   * @param bool $delayedGlobalFeatureToggleStateAllowed
+   */
+  public function setDelayedGlobalFeatureToggleStateAllowed($delayedGlobalFeatureToggleStateAllowed)
+  {
+    $this->delayedGlobalFeatureToggleStateAllowed = $delayedGlobalFeatureToggleStateAllowed;
+  }
+  /**
+   * @return bool
+   */
+  public function getDelayedGlobalFeatureToggleStateAllowed()
+  {
+    return $this->delayedGlobalFeatureToggleStateAllowed;
+  }
+  /**
    * Optional. Whether to disable analytics for searches performed on this
    * engine.
    *
@@ -368,14 +559,61 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
     return $this->displayName;
   }
   /**
+   * Output only. The complete, server-resolved state of every known feature
+   * toggle. Unlike `features`, which stores only explicit admin overrides, this
+   * map always contains an entry for every toggle. Clients should read toggle
+   * state from this field.
+   *
+   * @param string[] $effectiveFeatures
+   */
+  public function setEffectiveFeatures($effectiveFeatures)
+  {
+    $this->effectiveFeatures = $effectiveFeatures;
+  }
+  /**
+   * @return string[]
+   */
+  public function getEffectiveFeatures()
+  {
+    return $this->effectiveFeatures;
+  }
+  /**
+   * Optional. Per-feature access policies, keyed by feature toggle name (see
+   * `features`). A feature with no entry is available to every user when it is
+   * on. Only features that support access policies are accepted.
+   *
+   * @param GoogleCloudDiscoveryengineV1EngineFeaturePolicy[] $featurePolicies
+   */
+  public function setFeaturePolicies($featurePolicies)
+  {
+    $this->featurePolicies = $featurePolicies;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1EngineFeaturePolicy[]
+   */
+  public function getFeaturePolicies()
+  {
+    return $this->featurePolicies;
+  }
+  /**
    * Optional. Feature config for the engine to opt in or opt out of features.
    * Supported keys: * `*`: all features, if it's present, all other feature
    * state settings are ignored. * `agent-gallery` * `no-code-agent-builder` *
    * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
-   * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-
-   * sharing` * `personalization-memory` * `disable-agent-sharing` * `disable-
-   * image-generation` * `disable-video-generation` * `disable-onedrive-upload`
-   * * `disable-talk-to-content` * `disable-google-drive-upload`
+   * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` *
+   * `feedback` * `session-sharing` * `personalization-memory` *
+   * `personalization-suggested-highlights` * `mobile-app-access` * `disable-
+   * agent-sharing` * `disable-image-generation` * `disable-video-generation` *
+   * `music-generation` * `speech-generation` * `disable-onedrive-upload` *
+   * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-
+   * welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-
+   * builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-
+   * approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-
+   * end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-
+   * agent-orchestration` * `cross-product-intelligence` * `workflow-agents` *
+   * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-
+   * badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+   * `preview-agents` * `plugins`
    *
    * @param string[] $features
    */
@@ -389,6 +627,25 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
   public function getFeatures()
   {
     return $this->features;
+  }
+  /**
+   * Optional. Controls the global feature toggle state for the engine.
+   *
+   * Accepted values: GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED, DELAYED,
+   * SCHEDULED, GENERAL, EARLY
+   *
+   * @param self::GLOBAL_FEATURE_TOGGLE_STATE_* $globalFeatureToggleState
+   */
+  public function setGlobalFeatureToggleState($globalFeatureToggleState)
+  {
+    $this->globalFeatureToggleState = $globalFeatureToggleState;
+  }
+  /**
+   * @return self::GLOBAL_FEATURE_TOGGLE_STATE_*
+   */
+  public function getGlobalFeatureToggleState()
+  {
+    return $this->globalFeatureToggleState;
   }
   /**
    * Optional. The industry vertical that the engine registers. The restriction
@@ -410,6 +667,43 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
   public function getIndustryVertical()
   {
     return $this->industryVertical;
+  }
+  /**
+   * Optional. Configurations for the Knowledge Graph. Only applicable if
+   * solution_type is SOLUTION_TYPE_SEARCH.
+   *
+   * @param GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig $knowledgeGraphConfig
+   */
+  public function setKnowledgeGraphConfig(GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig $knowledgeGraphConfig)
+  {
+    $this->knowledgeGraphConfig = $knowledgeGraphConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig
+   */
+  public function getKnowledgeGraphConfig()
+  {
+    return $this->knowledgeGraphConfig;
+  }
+  /**
+   * Optional. The visibility of marketplace agents in the agent gallery.
+   *
+   * Accepted values: MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED,
+   * SHOW_AVAILABLE_AGENTS_ONLY, SHOW_AGENTS_ALREADY_INTEGRATED,
+   * SHOW_AGENTS_ALREADY_PURCHASED, SHOW_ALL_AGENTS
+   *
+   * @param self::MARKETPLACE_AGENT_VISIBILITY_* $marketplaceAgentVisibility
+   */
+  public function setMarketplaceAgentVisibility($marketplaceAgentVisibility)
+  {
+    $this->marketplaceAgentVisibility = $marketplaceAgentVisibility;
+  }
+  /**
+   * @return self::MARKETPLACE_AGENT_VISIBILITY_*
+   */
+  public function getMarketplaceAgentVisibility()
+  {
+    return $this->marketplaceAgentVisibility;
   }
   /**
    * Configurations for the Media Engine. Only applicable on the data stores
@@ -472,6 +766,38 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
     return $this->name;
   }
   /**
+   * Optional. Observability config for the engine.
+   *
+   * @param GoogleCloudDiscoveryengineV1ObservabilityConfig $observabilityConfig
+   */
+  public function setObservabilityConfig(GoogleCloudDiscoveryengineV1ObservabilityConfig $observabilityConfig)
+  {
+    $this->observabilityConfig = $observabilityConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1ObservabilityConfig
+   */
+  public function getObservabilityConfig()
+  {
+    return $this->observabilityConfig;
+  }
+  /**
+   * Optional. The emails of the procurement contacts.
+   *
+   * @param string[] $procurementContactEmails
+   */
+  public function setProcurementContactEmails($procurementContactEmails)
+  {
+    $this->procurementContactEmails = $procurementContactEmails;
+  }
+  /**
+   * @return string[]
+   */
+  public function getProcurementContactEmails()
+  {
+    return $this->procurementContactEmails;
+  }
+  /**
    * Configurations for the Search Engine. Only applicable if solution_type is
    * SOLUTION_TYPE_SEARCH.
    *
@@ -489,10 +815,27 @@ class GoogleCloudDiscoveryengineV1Engine extends \Google\Collection
     return $this->searchEngineConfig;
   }
   /**
+   * Optional. Non-empty default. Session config for the engine.
+   *
+   * @param GoogleCloudDiscoveryengineV1SessionConfig $sessionConfig
+   */
+  public function setSessionConfig(GoogleCloudDiscoveryengineV1SessionConfig $sessionConfig)
+  {
+    $this->sessionConfig = $sessionConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1SessionConfig
+   */
+  public function getSessionConfig()
+  {
+    return $this->sessionConfig;
+  }
+  /**
    * Required. The solutions of the engine.
    *
    * Accepted values: SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION,
-   * SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT
+   * SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT,
+   * SOLUTION_TYPE_AI_MODE
    *
    * @param self::SOLUTION_TYPE_* $solutionType
    */

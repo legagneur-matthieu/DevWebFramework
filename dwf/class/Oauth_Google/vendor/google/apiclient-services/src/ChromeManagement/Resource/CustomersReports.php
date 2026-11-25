@@ -23,6 +23,7 @@ use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeCrashEven
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse;
+use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeProfileVersionsResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountChromeVersionsResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountDevicesPerBootTypeResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse;
@@ -31,6 +32,10 @@ use Google\Service\ChromeManagement\GoogleChromeManagementV1CountPrintJobsByPrin
 use Google\Service\ChromeManagement\GoogleChromeManagementV1CountPrintJobsByUserResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1EnumeratePrintJobsResponse;
 use Google\Service\ChromeManagement\GoogleChromeManagementV1FindInstalledAppDevicesResponse;
+use Google\Service\ChromeManagement\GoogleChromeManagementV1FindInstalledAppProfilesResponse;
+use Google\Service\ChromeManagement\GoogleChromeManagementV1FindSaasUsageBrowsersResponse;
+use Google\Service\ChromeManagement\GoogleChromeManagementV1FindSaasUsageProfilesResponse;
+use Google\Service\ChromeManagement\GoogleChromeManagementV1FindSaasUsageReportsResponse;
 
 /**
  * The "reports" collection of methods.
@@ -184,6 +189,32 @@ class CustomersReports extends \Google\Service\Resource
     $params = ['customer' => $customer];
     $params = array_merge($params, $optParams);
     return $this->call('countChromeHardwareFleetDevices', [$params], GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse::class);
+  }
+  /**
+   * Generate report of installed Chrome versions on managed profiles.
+   * (reports.countChromeProfileVersions)
+   *
+   * @param string $customer Required. Customer id or "my_customer" to use the
+   * customer associated to the account making the request.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string filter Optional. Query string to filter results, AND-
+   * separated fields in EBNF syntax. Note: OR operations are not supported in
+   * this filter. Supported filter fields: * last_active_date
+   * @opt_param string orgUnitId The ID of the organizational unit. If omitted,
+   * all data will be returned.
+   * @opt_param int pageSize Optional. Maximum number of results to return.
+   * Maximum and default are 100.
+   * @opt_param string pageToken Optional. Token to specify the page of the
+   * request to be returned.
+   * @return GoogleChromeManagementV1CountChromeProfileVersionsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function countChromeProfileVersions($customer, $optParams = [])
+  {
+    $params = ['customer' => $customer];
+    $params = array_merge($params, $optParams);
+    return $this->call('countChromeProfileVersions', [$params], GoogleChromeManagementV1CountChromeProfileVersionsResponse::class);
   }
   /**
    * Generate report of installed Chrome versions. (reports.countChromeVersions)
@@ -416,6 +447,147 @@ class CustomersReports extends \Google\Service\Resource
     $params = ['customer' => $customer];
     $params = array_merge($params, $optParams);
     return $this->call('findInstalledAppDevices', [$params], GoogleChromeManagementV1FindInstalledAppDevicesResponse::class);
+  }
+  /**
+   * Generate report of managed Chrome profiles that have a specified app
+   * installed. (reports.findInstalledAppProfiles)
+   *
+   * @param string $customer Required. Customer id or "my_customer" to use the
+   * customer associated to the account making the request.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string appId Required. Unique identifier of the app. For Chrome
+   * apps and extensions, the 32-character id (e.g.
+   * ehoadneljpdggcbbknedodolkkjodefl). For Android apps, the package name (e.g.
+   * com.evernote).
+   * @opt_param string appType Type of the app. Optional. If not provided, an app
+   * type will be inferred from the format of the app ID.
+   * @opt_param string filter Optional. Query string to filter results, AND-
+   * separated fields in EBNF syntax. Note: OR operations are not supported in
+   * this filter. Supported filter fields: * last_active_date
+   * @opt_param string orderBy Optional. Field used to order results. Supported
+   * order by fields: * email * profile_id * profile_permanent_id
+   * @opt_param string orgUnitId Optional. The ID of the organizational unit.
+   * @opt_param int pageSize Optional. Maximum number of results to return.
+   * Maximum and default are 100.
+   * @opt_param string pageToken Optional. Token to specify the page of the
+   * request to be returned.
+   * @return GoogleChromeManagementV1FindInstalledAppProfilesResponse
+   * @throws \Google\Service\Exception
+   */
+  public function findInstalledAppProfiles($customer, $optParams = [])
+  {
+    $params = ['customer' => $customer];
+    $params = array_merge($params, $optParams);
+    return $this->call('findInstalledAppProfiles', [$params], GoogleChromeManagementV1FindInstalledAppProfilesResponse::class);
+  }
+  /**
+   * Find SaaS usage reports of a customer based on the given search and sorting
+   * criteria. (reports.findSaasUsage)
+   *
+   * @param string $customer Required. Obfuscated customer ID prefixed with
+   * "customers/C" or "customers/my_customer".
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string filter Optional. The filter expression to narrow down the
+   * SaaS reports to return. Supported operators are: =, !=, <, <=, >, >=, :.
+   * Logical operators AND, OR, and NOT are supported. Supported fields: * app *
+   * org_unit_id * first_navigation_time * last_navigation_time * category *
+   * organization * founded_year * headquarters * primary_domain * domains *
+   * encryption_protocols * visits_count * distinct_users_count *
+   * distinct_browsers_count * content_transfer_count Example:
+   * `(first_navigation_time < "2026-01-31T00:00:00Z" AND last_navigation_time >
+   * "2026-01-01T00:00:00Z") AND visits_count > 100`
+   * @opt_param string orderBy Optional. The order by expression to sort the SaaS
+   * reports. Supported fields: * app * category * organization * founded_year *
+   * headquarters * primary_domain * visits_count * distinct_users_count *
+   * distinct_browsers_count * content_transfer_count Default order is ascending.
+   * To specify descending order for a field, append " desc". Example:
+   * `visits_count desc`
+   * @opt_param int pageSize Optional. The maximum number of reports to return.
+   * The service may return fewer than this value. If unspecified, at most 100
+   * reports will be returned. The maximum value is 200; values above 200 will be
+   * coerced to 200.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * `FindSaasUsageReports` call. Provide this to retrieve the subsequent page.
+   * When paginating, all other parameters provided to `FindSaasUsageReports` must
+   * match the call that provided the page token.
+   * @return GoogleChromeManagementV1FindSaasUsageReportsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function findSaasUsage($customer, $optParams = [])
+  {
+    $params = ['customer' => $customer];
+    $params = array_merge($params, $optParams);
+    return $this->call('findSaasUsage', [$params], GoogleChromeManagementV1FindSaasUsageReportsResponse::class);
+  }
+  /**
+   * Find SaaS usage reports of a customer grouped by browsers based on the given
+   * search and sorting criteria. (reports.findSaasUsageBrowsers)
+   *
+   * @param string $customer Required. Obfuscated customer ID prefixed with
+   * "customers/C" or "customers/my_customer".
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string app Required. The name of the SaaS application (e.g.,
+   * `ChatGPT`, `Gemini`).
+   * @opt_param string filter Optional. The filter expression to narrow down the
+   * SaaS browser reports to return. Supported operators are: =, !=, <, <=, >, >=,
+   * :. Logical operators AND, OR, and NOT are supported. Supported fields: *
+   * machine * os_platform * first_navigation_time * last_navigation_time *
+   * org_unit_id
+   * @opt_param string orderBy Optional. The order by expression to sort the SaaS
+   * browser reports. Supported fields: * machine * os_platform *
+   * first_navigation_time * last_navigation_time Default order is ascending. To
+   * specify descending order for a field, append " desc".
+   * @opt_param int pageSize Optional. The maximum number of browsers to return.
+   * The service may return fewer than this value. If unspecified, at most 100
+   * browsers will be returned. The maximum value is 200; values above 200 will be
+   * coerced to 200.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * `FindSaasUsageBrowsers` call. Provide this to retrieve the subsequent page.
+   * @return GoogleChromeManagementV1FindSaasUsageBrowsersResponse
+   * @throws \Google\Service\Exception
+   */
+  public function findSaasUsageBrowsers($customer, $optParams = [])
+  {
+    $params = ['customer' => $customer];
+    $params = array_merge($params, $optParams);
+    return $this->call('findSaasUsageBrowsers', [$params], GoogleChromeManagementV1FindSaasUsageBrowsersResponse::class);
+  }
+  /**
+   * Find SaaS usage reports of a customer grouped by profiles based on the given
+   * search and sorting criteria. (reports.findSaasUsageProfiles)
+   *
+   * @param string $customer Required. Obfuscated customer ID prefixed with
+   * "customers/C" or "customers/my_customer".
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string app Required. The name of the SaaS application (e.g.,
+   * `ChatGPT`, `Gemini`).
+   * @opt_param string filter Optional. The filter expression to narrow down the
+   * SaaS profile reports to return. Supported operators are: =, !=, <, <=, >, >=,
+   * :. Logical operators AND, OR, and NOT are supported. Supported fields: *
+   * email * org_unit_id * os_platform * first_navigation_time *
+   * last_navigation_time
+   * @opt_param string orderBy Optional. The order by expression to sort the SaaS
+   * profile reports. Supported fields: * email * os_platform *
+   * first_navigation_time * last_navigation_time Default order is ascending. To
+   * specify descending order for a field, append " desc".
+   * @opt_param int pageSize Optional. The maximum number of reports to return.
+   * The service may return fewer than this value. If unspecified, at most 100
+   * reports will be returned. The maximum value is 200; values above 200 will be
+   * coerced to 200.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * `FindSaasUsageProfiles` call. Provide this to retrieve the subsequent page.
+   * @return GoogleChromeManagementV1FindSaasUsageProfilesResponse
+   * @throws \Google\Service\Exception
+   */
+  public function findSaasUsageProfiles($customer, $optParams = [])
+  {
+    $params = ['customer' => $customer];
+    $params = array_merge($params, $optParams);
+    return $this->call('findSaasUsageProfiles', [$params], GoogleChromeManagementV1FindSaasUsageProfilesResponse::class);
   }
 }
 

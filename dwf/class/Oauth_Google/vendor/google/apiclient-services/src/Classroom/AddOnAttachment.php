@@ -33,6 +33,15 @@ class AddOnAttachment extends \Google\Collection
   protected $dueTimeType = TimeOfDay::class;
   protected $dueTimeDataType = '';
   /**
+   * Output only. Whether changes to `pointsEarned` values on this attachment's
+   * student submissions will be copied to the `pointsEarned` field on the
+   * students' CourseWork submissions. This field can be `true` for at most one
+   * add-on attachment per stream item.
+   *
+   * @var bool
+   */
+  public $gradeSyncEnabled;
+  /**
    * Immutable. Classroom-assigned identifier for this attachment, unique per
    * post.
    *
@@ -148,6 +157,25 @@ class AddOnAttachment extends \Google\Collection
     return $this->dueTime;
   }
   /**
+   * Output only. Whether changes to `pointsEarned` values on this attachment's
+   * student submissions will be copied to the `pointsEarned` field on the
+   * students' CourseWork submissions. This field can be `true` for at most one
+   * add-on attachment per stream item.
+   *
+   * @param bool $gradeSyncEnabled
+   */
+  public function setGradeSyncEnabled($gradeSyncEnabled)
+  {
+    $this->gradeSyncEnabled = $gradeSyncEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getGradeSyncEnabled()
+  {
+    return $this->gradeSyncEnabled;
+  }
+  /**
    * Immutable. Classroom-assigned identifier for this attachment, unique per
    * post.
    *
@@ -231,9 +259,9 @@ class AddOnAttachment extends \Google\Collection
    * The URI will be opened in an iframe with the `courseId`, `itemId`,
    * `itemType`, `attachmentId`, and `submissionId` query parameters set. This
    * is the same `submissionId` returned in the [`AddOnContext.studentContext`](
-   * //devsite.google.com/classroom/reference/rest/v1/AddOnContext#StudentContex
-   * t) field when a student views the attachment. If the URI is omitted or
-   * removed, `max_points` will also be discarded.
+   * /workspace/classroom/reference/rest/v1/AddOnContext#StudentContext) field
+   * when a student views the attachment. If the URI is omitted or removed,
+   * `max_points` will also be discarded.
    *
    * @param EmbedUri $studentWorkReviewUri
    */

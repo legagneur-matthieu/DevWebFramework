@@ -36,6 +36,8 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
    * @var string
    */
   public $createTime;
+  protected $diagnosticMetricConfigType = GoogleCloudContactcenterinsightsV1SettingsDiagnosticMetricConfig::class;
+  protected $diagnosticMetricConfigDataType = '';
   /**
    * A language code to be applied to each transcript segment unless the segment
    * already specifies a language code. Language code defaults to "en-US" if it
@@ -74,6 +76,18 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
   protected $redactionConfigType = GoogleCloudContactcenterinsightsV1RedactionConfig::class;
   protected $redactionConfigDataType = '';
   /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzs;
+  /**
    * Optional. The path to a Cloud Storage bucket containing conversation screen
    * recordings. If provided, Insights will search in the bucket for a screen
    * recording file matching the conversation data source object name prefix. If
@@ -85,6 +99,16 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
   public $screenRecordingBucketUri;
   protected $speechConfigType = GoogleCloudContactcenterinsightsV1SpeechConfig::class;
   protected $speechConfigDataType = '';
+  /**
+   * Optional. The time zone applied to the project. This is a string
+   * representation of the time zone, for example, "America/New_York". This
+   * field follows the IANA TZ database format. See https://www.iana.org/time-
+   * zones for a list of valid values. If no value is set the user time zone
+   * will be used.
+   *
+   * @var string
+   */
+  public $timeZone;
   /**
    * Output only. The time at which the settings were last updated.
    *
@@ -142,6 +166,22 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * Optional. Configuration for diagnostic metrics.
+   *
+   * @param GoogleCloudContactcenterinsightsV1SettingsDiagnosticMetricConfig $diagnosticMetricConfig
+   */
+  public function setDiagnosticMetricConfig(GoogleCloudContactcenterinsightsV1SettingsDiagnosticMetricConfig $diagnosticMetricConfig)
+  {
+    $this->diagnosticMetricConfig = $diagnosticMetricConfig;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1SettingsDiagnosticMetricConfig
+   */
+  public function getDiagnosticMetricConfig()
+  {
+    return $this->diagnosticMetricConfig;
   }
   /**
    * A language code to be applied to each transcript segment unless the segment
@@ -228,6 +268,38 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
     return $this->redactionConfig;
   }
   /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @param bool $satisfiesPzi
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @param bool $satisfiesPzs
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
    * Optional. The path to a Cloud Storage bucket containing conversation screen
    * recordings. If provided, Insights will search in the bucket for a screen
    * recording file matching the conversation data source object name prefix. If
@@ -266,6 +338,26 @@ class GoogleCloudContactcenterinsightsV1Settings extends \Google\Model
   public function getSpeechConfig()
   {
     return $this->speechConfig;
+  }
+  /**
+   * Optional. The time zone applied to the project. This is a string
+   * representation of the time zone, for example, "America/New_York". This
+   * field follows the IANA TZ database format. See https://www.iana.org/time-
+   * zones for a list of valid values. If no value is set the user time zone
+   * will be used.
+   *
+   * @param string $timeZone
+   */
+  public function setTimeZone($timeZone)
+  {
+    $this->timeZone = $timeZone;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeZone()
+  {
+    return $this->timeZone;
   }
   /**
    * Output only. The time at which the settings were last updated.

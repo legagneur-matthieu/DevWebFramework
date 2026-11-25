@@ -19,6 +19,8 @@ namespace Google\Service\DLP;
 
 class GooglePrivacyDlpV2ContentLocation extends \Google\Model
 {
+  protected $batchContentLocationType = GooglePrivacyDlpV2BatchContentLocation::class;
+  protected $batchContentLocationDataType = '';
   /**
    * Name of the container where the finding is located. The top level name is
    * the source file name or table name. Names of some common storage containers
@@ -46,6 +48,8 @@ class GooglePrivacyDlpV2ContentLocation extends \Google\Model
    * @var string
    */
   public $containerVersion;
+  protected $conversationLocationType = GooglePrivacyDlpV2ConversationLocation::class;
+  protected $conversationLocationDataType = '';
   protected $documentLocationType = GooglePrivacyDlpV2DocumentLocation::class;
   protected $documentLocationDataType = '';
   protected $imageLocationType = GooglePrivacyDlpV2ImageLocation::class;
@@ -55,6 +59,22 @@ class GooglePrivacyDlpV2ContentLocation extends \Google\Model
   protected $recordLocationType = GooglePrivacyDlpV2RecordLocation::class;
   protected $recordLocationDataType = '';
 
+  /**
+   * Location within a batch of content.
+   *
+   * @param GooglePrivacyDlpV2BatchContentLocation $batchContentLocation
+   */
+  public function setBatchContentLocation(GooglePrivacyDlpV2BatchContentLocation $batchContentLocation)
+  {
+    $this->batchContentLocation = $batchContentLocation;
+  }
+  /**
+   * @return GooglePrivacyDlpV2BatchContentLocation
+   */
+  public function getBatchContentLocation()
+  {
+    return $this->batchContentLocation;
+  }
   /**
    * Name of the container where the finding is located. The top level name is
    * the source file name or table name. Names of some common storage containers
@@ -111,6 +131,22 @@ class GooglePrivacyDlpV2ContentLocation extends \Google\Model
   public function getContainerVersion()
   {
     return $this->containerVersion;
+  }
+  /**
+   * Location within a conversation.
+   *
+   * @param GooglePrivacyDlpV2ConversationLocation $conversationLocation
+   */
+  public function setConversationLocation(GooglePrivacyDlpV2ConversationLocation $conversationLocation)
+  {
+    $this->conversationLocation = $conversationLocation;
+  }
+  /**
+   * @return GooglePrivacyDlpV2ConversationLocation
+   */
+  public function getConversationLocation()
+  {
+    return $this->conversationLocation;
   }
   /**
    * Location data for document files.

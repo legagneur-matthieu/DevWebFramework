@@ -49,6 +49,14 @@ class CertificateMap extends \Google\Collection
    */
   public $name;
   /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @var string[]
+   */
+  public $tags;
+  /**
    * Output only. The update timestamp of a Certificate Map.
    *
    * @var string
@@ -137,6 +145,24 @@ class CertificateMap extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @param string[] $tags
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
   /**
    * Output only. The update timestamp of a Certificate Map.

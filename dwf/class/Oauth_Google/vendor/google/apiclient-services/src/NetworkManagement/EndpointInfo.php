@@ -26,7 +26,8 @@ class EndpointInfo extends \Google\Model
    */
   public $destinationIp;
   /**
-   * URI of the network where this packet is sent to.
+   * URI of the network where this packet is sent to. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @var string
    */
@@ -56,7 +57,8 @@ class EndpointInfo extends \Google\Model
    */
   public $sourceIp;
   /**
-   * URI of the network where this packet originates from.
+   * URI of the network where this packet originates from. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @var string
    */
@@ -85,7 +87,8 @@ class EndpointInfo extends \Google\Model
     return $this->destinationIp;
   }
   /**
-   * URI of the network where this packet is sent to.
+   * URI of the network where this packet is sent to. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @param string $destinationNetworkUri
    */
@@ -165,7 +168,8 @@ class EndpointInfo extends \Google\Model
     return $this->sourceIp;
   }
   /**
-   * URI of the network where this packet originates from.
+   * URI of the network where this packet originates from. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @param string $sourceNetworkUri
    */

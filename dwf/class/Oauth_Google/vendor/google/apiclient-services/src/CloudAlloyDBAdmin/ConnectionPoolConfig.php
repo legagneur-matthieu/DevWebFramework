@@ -20,6 +20,52 @@ namespace Google\Service\CloudAlloyDBAdmin;
 class ConnectionPoolConfig extends \Google\Model
 {
   /**
+   * The scaling type is not specified.
+   */
+  public const AUTHPROXY_POOLER_SCALING_TYPE_POOLER_SCALING_TYPE_UNSPECIFIED = 'POOLER_SCALING_TYPE_UNSPECIFIED';
+  /**
+   * No pooler is enabled.
+   */
+  public const AUTHPROXY_POOLER_SCALING_TYPE_POOLER_NONE = 'POOLER_NONE';
+  /**
+   * The number of poolers is automatically determined by the service based on
+   * the VM size.
+   */
+  public const AUTHPROXY_POOLER_SCALING_TYPE_POOLER_MACHINE_SIZED = 'POOLER_MACHINE_SIZED';
+  /**
+   * The number of poolers is kept unchanged no matter the machine size.
+   */
+  public const AUTHPROXY_POOLER_SCALING_TYPE_POOLER_MANUAL_OVERRIDE = 'POOLER_MANUAL_OVERRIDE';
+  /**
+   * The scaling type is not specified.
+   */
+  public const POOLER_SCALING_TYPE_POOLER_SCALING_TYPE_UNSPECIFIED = 'POOLER_SCALING_TYPE_UNSPECIFIED';
+  /**
+   * No pooler is enabled.
+   */
+  public const POOLER_SCALING_TYPE_POOLER_NONE = 'POOLER_NONE';
+  /**
+   * The number of poolers is automatically determined by the service based on
+   * the VM size.
+   */
+  public const POOLER_SCALING_TYPE_POOLER_MACHINE_SIZED = 'POOLER_MACHINE_SIZED';
+  /**
+   * The number of poolers is kept unchanged no matter the machine size.
+   */
+  public const POOLER_SCALING_TYPE_POOLER_MANUAL_OVERRIDE = 'POOLER_MANUAL_OVERRIDE';
+  /**
+   * Output only. The number of running AuthProxy poolers per instance.
+   *
+   * @var int
+   */
+  public $authproxyPoolerCount;
+  /**
+   * Optional. The scaling type of the AuthProxy pooler.
+   *
+   * @var string
+   */
+  public $authproxyPoolerScalingType;
+  /**
    * Optional. Whether to enable Managed Connection Pool (MCP).
    *
    * @var bool
@@ -37,7 +83,48 @@ class ConnectionPoolConfig extends \Google\Model
    * @var int
    */
   public $poolerCount;
+  /**
+   * Optional. The scaling type of the regular pooler.
+   *
+   * @var string
+   */
+  public $poolerScalingType;
 
+  /**
+   * Output only. The number of running AuthProxy poolers per instance.
+   *
+   * @param int $authproxyPoolerCount
+   */
+  public function setAuthproxyPoolerCount($authproxyPoolerCount)
+  {
+    $this->authproxyPoolerCount = $authproxyPoolerCount;
+  }
+  /**
+   * @return int
+   */
+  public function getAuthproxyPoolerCount()
+  {
+    return $this->authproxyPoolerCount;
+  }
+  /**
+   * Optional. The scaling type of the AuthProxy pooler.
+   *
+   * Accepted values: POOLER_SCALING_TYPE_UNSPECIFIED, POOLER_NONE,
+   * POOLER_MACHINE_SIZED, POOLER_MANUAL_OVERRIDE
+   *
+   * @param self::AUTHPROXY_POOLER_SCALING_TYPE_* $authproxyPoolerScalingType
+   */
+  public function setAuthproxyPoolerScalingType($authproxyPoolerScalingType)
+  {
+    $this->authproxyPoolerScalingType = $authproxyPoolerScalingType;
+  }
+  /**
+   * @return self::AUTHPROXY_POOLER_SCALING_TYPE_*
+   */
+  public function getAuthproxyPoolerScalingType()
+  {
+    return $this->authproxyPoolerScalingType;
+  }
   /**
    * Optional. Whether to enable Managed Connection Pool (MCP).
    *
@@ -85,6 +172,25 @@ class ConnectionPoolConfig extends \Google\Model
   public function getPoolerCount()
   {
     return $this->poolerCount;
+  }
+  /**
+   * Optional. The scaling type of the regular pooler.
+   *
+   * Accepted values: POOLER_SCALING_TYPE_UNSPECIFIED, POOLER_NONE,
+   * POOLER_MACHINE_SIZED, POOLER_MANUAL_OVERRIDE
+   *
+   * @param self::POOLER_SCALING_TYPE_* $poolerScalingType
+   */
+  public function setPoolerScalingType($poolerScalingType)
+  {
+    $this->poolerScalingType = $poolerScalingType;
+  }
+  /**
+   * @return self::POOLER_SCALING_TYPE_*
+   */
+  public function getPoolerScalingType()
+  {
+    return $this->poolerScalingType;
   }
 }
 

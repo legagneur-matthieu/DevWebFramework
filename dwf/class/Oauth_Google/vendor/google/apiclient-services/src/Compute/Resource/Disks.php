@@ -22,6 +22,7 @@ use Google\Service\Compute\BulkZoneSetLabelsRequest;
 use Google\Service\Compute\Disk;
 use Google\Service\Compute\DiskAggregatedList;
 use Google\Service\Compute\DiskList;
+use Google\Service\Compute\DiskUpdateKmsKeyRequest;
 use Google\Service\Compute\DisksAddResourcePoliciesRequest;
 use Google\Service\Compute\DisksRemoveResourcePoliciesRequest;
 use Google\Service\Compute\DisksResizeRequest;
@@ -45,6 +46,8 @@ use Google\Service\Compute\ZoneSetPolicyRequest;
  */
 class Disks extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Adds existing resource policies to a disk. You can only add one policy which
    * will be applied to this disk for scheduling snapshot creation.
@@ -155,13 +158,6 @@ class Disks extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @opt_param string serviceProjectNumber The Shared VPC service project id or
    * service project number for which aggregated list request is invoked for
    * subnetworks list-usable api.
@@ -441,13 +437,6 @@ class Disks extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return DiskList
    * @throws \Google\Service\Exception
    */
@@ -680,8 +669,8 @@ class Disks extends \Google\Service\Resource
   }
   /**
    * Updates the specified disk with the data included in the request. The update
-   * is performed only on selected fields included as part of update-mask. Only
-   * the following fields can be modified: user_license. (disks.update)
+   * is performed only on selected fields included as part of update-mask.
+   * (disks.update)
    *
    * @param string $project Project ID for this request.
    * @param string $zone The name of the zone for this request.
@@ -712,6 +701,37 @@ class Disks extends \Google\Service\Resource
     $params = ['project' => $project, 'zone' => $zone, 'disk' => $disk, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('update', [$params], Operation::class);
+  }
+  /**
+   * Rotates the customer-managed encryption key to the latest version for the
+   * specified persistent disk. (disks.updateKmsKey)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $disk Name of the Disk resource, should conform to RFC1035.
+   * @param DiskUpdateKmsKeyRequest $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function updateKmsKey($project, $zone, $disk, DiskUpdateKmsKeyRequest $postBody, $optParams = [])
+  {
+    $params = ['project' => $project, 'zone' => $zone, 'disk' => $disk, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updateKmsKey', [$params], Operation::class);
   }
 }
 

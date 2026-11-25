@@ -37,6 +37,12 @@ class Dataproc extends \Google\Service
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
+  /** See, edit, configure, and delete your Google Cloud Dataproc data and see the email address for your Google Account. */
+  const DATAPROC =
+      "https://www.googleapis.com/auth/dataproc";
+  /** See your Google Cloud Dataproc data and the email address of your Google Account. */
+  const DATAPROC_READ_ONLY =
+      "https://www.googleapis.com/auth/dataproc.read-only";
 
   public $projects_locations_autoscalingPolicies;
   public $projects_locations_batches;
@@ -305,6 +311,38 @@ class Dataproc extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'accessNativeBuildInfo' => [
+              'path' => 'v1/{+name}:accessNativeBuildInfo',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'accessNativeSqlQuery' => [
+              'path' => 'v1/{+name}:accessNativeSqlQuery',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'executionId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],'accessSqlPlan' => [
               'path' => 'v1/{+name}:accessSqlPlan',
               'httpMethod' => 'GET',
@@ -389,6 +427,28 @@ class Dataproc extends \Google\Service
                   'type' => 'string',
                 ],
                 'stageId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'computeTuningConfig' => [
+              'path' => 'v1/{+name}:computeTuningConfig',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'executionId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'semanticQueryId' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -499,6 +559,28 @@ class Dataproc extends \Google\Service
                 'jobStatus' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'searchNativeSqlQueries' => [
+              'path' => 'v1/{+name}:searchNativeSqlQueries',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -993,6 +1075,38 @@ class Dataproc extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'accessNativeBuildInfo' => [
+              'path' => 'v1/{+name}:accessNativeBuildInfo',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'accessNativeSqlQuery' => [
+              'path' => 'v1/{+name}:accessNativeSqlQuery',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'executionId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],'accessSqlPlan' => [
               'path' => 'v1/{+name}:accessSqlPlan',
               'httpMethod' => 'GET',
@@ -1192,6 +1306,28 @@ class Dataproc extends \Google\Service
                 'jobStatus' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'parent' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'searchNativeSqlQueries' => [
+              'path' => 'v1/{+name}:searchNativeSqlQueries',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
                 'pageSize' => [
                   'location' => 'query',

@@ -19,11 +19,13 @@ namespace Google\Service\CloudAsset;
 
 class GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices extends \Google\Collection
 {
-  protected $collection_key = 'allowedServices';
+  protected $collection_key = 'servicePatternsEnforcementScopes';
+  protected $allowedServicePatternsType = GoogleIdentityAccesscontextmanagerV1ServicePattern::class;
+  protected $allowedServicePatternsDataType = 'array';
   /**
    * The list of APIs usable within the Service Perimeter. Must be empty unless
-   * 'enable_restriction' is True. You can specify a list of individual
-   * services, as well as include the 'RESTRICTED-SERVICES' value, which
+   * `enable_restriction` is `true`. You can specify a list of individual
+   * services, as well as include the `'RESTRICTED-SERVICES'` value, which
    * automatically includes all of the services protected by the perimeter.
    *
    * @var string[]
@@ -31,16 +33,39 @@ class GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices extends \Google\
   public $allowedServices;
   /**
    * Whether to restrict API calls within the Service Perimeter to the list of
-   * APIs specified in 'allowed_services'.
+   * APIs specified in `allowed_services`.
    *
    * @var bool
    */
   public $enableRestriction;
+  /**
+   * Defines the enforcement scopes of service patterns.
+   *
+   * @var string[]
+   */
+  public $servicePatternsEnforcementScopes;
 
   /**
+   * Specifies which Google services are allowed to be accessed from VPC
+   * networks in the service perimeter.
+   *
+   * @param GoogleIdentityAccesscontextmanagerV1ServicePattern[] $allowedServicePatterns
+   */
+  public function setAllowedServicePatterns($allowedServicePatterns)
+  {
+    $this->allowedServicePatterns = $allowedServicePatterns;
+  }
+  /**
+   * @return GoogleIdentityAccesscontextmanagerV1ServicePattern[]
+   */
+  public function getAllowedServicePatterns()
+  {
+    return $this->allowedServicePatterns;
+  }
+  /**
    * The list of APIs usable within the Service Perimeter. Must be empty unless
-   * 'enable_restriction' is True. You can specify a list of individual
-   * services, as well as include the 'RESTRICTED-SERVICES' value, which
+   * `enable_restriction` is `true`. You can specify a list of individual
+   * services, as well as include the `'RESTRICTED-SERVICES'` value, which
    * automatically includes all of the services protected by the perimeter.
    *
    * @param string[] $allowedServices
@@ -58,7 +83,7 @@ class GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices extends \Google\
   }
   /**
    * Whether to restrict API calls within the Service Perimeter to the list of
-   * APIs specified in 'allowed_services'.
+   * APIs specified in `allowed_services`.
    *
    * @param bool $enableRestriction
    */
@@ -72,6 +97,22 @@ class GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices extends \Google\
   public function getEnableRestriction()
   {
     return $this->enableRestriction;
+  }
+  /**
+   * Defines the enforcement scopes of service patterns.
+   *
+   * @param string[] $servicePatternsEnforcementScopes
+   */
+  public function setServicePatternsEnforcementScopes($servicePatternsEnforcementScopes)
+  {
+    $this->servicePatternsEnforcementScopes = $servicePatternsEnforcementScopes;
+  }
+  /**
+   * @return string[]
+   */
+  public function getServicePatternsEnforcementScopes()
+  {
+    return $this->servicePatternsEnforcementScopes;
   }
 }
 

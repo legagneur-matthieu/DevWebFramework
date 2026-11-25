@@ -82,18 +82,18 @@ class Deployment extends \Google\Collection
    */
   public const LOCK_STATE_UNLOCK_FAILED = 'UNLOCK_FAILED';
   /**
-   * The default value. QuotaValidation on terraform configuration files will be
-   * disabled in this case.
+   * The default value. QuotaValidation on configuration files will be disabled
+   * in this case.
    */
   public const QUOTA_VALIDATION_QUOTA_VALIDATION_UNSPECIFIED = 'QUOTA_VALIDATION_UNSPECIFIED';
   /**
-   * Enable computing quotas for resources in terraform configuration files to
-   * get visibility on resources with insufficient quotas.
+   * Enable computing quotas for resources in configuration files to get
+   * visibility on resources with insufficient quotas.
    */
   public const QUOTA_VALIDATION_ENABLED = 'ENABLED';
   /**
    * Enforce quota checks so deployment fails if there isn't sufficient quotas
-   * available to deploy resources in terraform configuration files.
+   * available to deploy resources in configuration files.
    */
   public const QUOTA_VALIDATION_ENFORCED = 'ENFORCED';
   /**
@@ -140,8 +140,8 @@ class Deployment extends \Google\Collection
    */
   public $annotations;
   /**
-   * Optional. User-defined location of Cloud Build logs and artifacts in Google
-   * Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
+   * User-defined location of Cloud Build logs and artifacts in Google Cloud
+   * Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
    * bootstrapped if the field is not set or empty. Default bucket format:
    * `gs://--blueprint-config` Constraints: - The bucket needs to be in the same
    * project as the deployment - The path cannot be within the path of
@@ -179,17 +179,17 @@ class Deployment extends \Google\Collection
    */
   public $errorCode;
   /**
-   * Output only. Location of Terraform error logs in Google Cloud Storage.
-   * Format: `gs://{bucket}/{object}`.
+   * Output only. Location of actuation engine error logs in Google Cloud
+   * Storage. Format: `gs://{bucket}/{object}`.
    *
    * @var string
    */
   public $errorLogs;
   /**
-   * By default, Infra Manager will return a failure when Terraform encounters a
-   * 409 code (resource conflict error) during actuation. If this flag is set to
-   * true, Infra Manager will instead attempt to automatically import the
-   * resource into the Terraform state (for supported resource types) and
+   * By default, Infra Manager will return a failure when the actuation engine
+   * encounters a 409 code (resource conflict error) during actuation. If this
+   * flag is set to true, Infra Manager will instead attempt to automatically
+   * import the resource into the state (for supported resource types) and
    * continue actuation. Not all resource types are supported, refer to
    * documentation.
    *
@@ -226,9 +226,8 @@ class Deployment extends \Google\Collection
   protected $providerConfigType = ProviderConfig::class;
   protected $providerConfigDataType = '';
   /**
-   * Optional. Input to control quota checks for resources in terraform
-   * configuration files. There are limited resources on which quota validation
-   * applies.
+   * Optional. Input to control quota checks for resources in configuration
+   * files. There are limited resources on which quota validation applies.
    *
    * @var string
    */
@@ -265,8 +264,7 @@ class Deployment extends \Google\Collection
    */
   public $tfVersion;
   /**
-   * Optional. The user-specified Terraform version constraint. Example:
-   * "=1.3.10".
+   * The user-specified Terraform version constraint. Example: "=1.3.10".
    *
    * @var string
    */
@@ -278,8 +276,8 @@ class Deployment extends \Google\Collection
    */
   public $updateTime;
   /**
-   * Optional. The user-specified Cloud Build worker pool resource in which the
-   * Cloud Build job will execute. Format:
+   * The user-specified Cloud Build worker pool resource in which the Cloud
+   * Build job will execute. Format:
    * `projects/{project}/locations/{location}/workerPools/{workerPoolId}`. If
    * this field is unspecified, the default Cloud Build worker pool will be
    * used.
@@ -308,8 +306,8 @@ class Deployment extends \Google\Collection
     return $this->annotations;
   }
   /**
-   * Optional. User-defined location of Cloud Build logs and artifacts in Google
-   * Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
+   * User-defined location of Cloud Build logs and artifacts in Google Cloud
+   * Storage. Format: `gs://{bucket}/{folder}` A default bucket will be
    * bootstrapped if the field is not set or empty. Default bucket format:
    * `gs://--blueprint-config` Constraints: - The bucket needs to be in the same
    * project as the deployment - The path cannot be within the path of
@@ -416,8 +414,8 @@ class Deployment extends \Google\Collection
     return $this->errorCode;
   }
   /**
-   * Output only. Location of Terraform error logs in Google Cloud Storage.
-   * Format: `gs://{bucket}/{object}`.
+   * Output only. Location of actuation engine error logs in Google Cloud
+   * Storage. Format: `gs://{bucket}/{object}`.
    *
    * @param string $errorLogs
    */
@@ -433,10 +431,10 @@ class Deployment extends \Google\Collection
     return $this->errorLogs;
   }
   /**
-   * By default, Infra Manager will return a failure when Terraform encounters a
-   * 409 code (resource conflict error) during actuation. If this flag is set to
-   * true, Infra Manager will instead attempt to automatically import the
-   * resource into the Terraform state (for supported resource types) and
+   * By default, Infra Manager will return a failure when the actuation engine
+   * encounters a 409 code (resource conflict error) during actuation. If this
+   * flag is set to true, Infra Manager will instead attempt to automatically
+   * import the resource into the state (for supported resource types) and
    * continue actuation. Not all resource types are supported, refer to
    * documentation.
    *
@@ -540,9 +538,8 @@ class Deployment extends \Google\Collection
     return $this->providerConfig;
   }
   /**
-   * Optional. Input to control quota checks for resources in terraform
-   * configuration files. There are limited resources on which quota validation
-   * applies.
+   * Optional. Input to control quota checks for resources in configuration
+   * files. There are limited resources on which quota validation applies.
    *
    * Accepted values: QUOTA_VALIDATION_UNSPECIFIED, ENABLED, ENFORCED
    *
@@ -665,8 +662,7 @@ class Deployment extends \Google\Collection
     return $this->tfVersion;
   }
   /**
-   * Optional. The user-specified Terraform version constraint. Example:
-   * "=1.3.10".
+   * The user-specified Terraform version constraint. Example: "=1.3.10".
    *
    * @param string $tfVersionConstraint
    */
@@ -698,8 +694,8 @@ class Deployment extends \Google\Collection
     return $this->updateTime;
   }
   /**
-   * Optional. The user-specified Cloud Build worker pool resource in which the
-   * Cloud Build job will execute. Format:
+   * The user-specified Cloud Build worker pool resource in which the Cloud
+   * Build job will execute. Format:
    * `projects/{project}/locations/{location}/workerPools/{workerPoolId}`. If
    * this field is unspecified, the default Cloud Build worker pool will be
    * used.

@@ -32,7 +32,8 @@ class NetworkInfo extends \Google\Model
    */
   public $matchedIpRange;
   /**
-   * URI of the subnet matching the source IP address of the test.
+   * URI of the subnet matching the source IP address of the test in format
+   * "projects/{project}/regions/{region}/subnetworks/{subnetwork}"
    *
    * @var string
    */
@@ -44,7 +45,8 @@ class NetworkInfo extends \Google\Model
    */
   public $region;
   /**
-   * URI of a Compute Engine network.
+   * URI of a Compute Engine network in format
+   * "projects/{project}/global/networks/{network}"
    *
    * @var string
    */
@@ -83,7 +85,8 @@ class NetworkInfo extends \Google\Model
     return $this->matchedIpRange;
   }
   /**
-   * URI of the subnet matching the source IP address of the test.
+   * URI of the subnet matching the source IP address of the test in format
+   * "projects/{project}/regions/{region}/subnetworks/{subnetwork}"
    *
    * @param string $matchedSubnetUri
    */
@@ -115,7 +118,8 @@ class NetworkInfo extends \Google\Model
     return $this->region;
   }
   /**
-   * URI of a Compute Engine network.
+   * URI of a Compute Engine network in format
+   * "projects/{project}/global/networks/{network}"
    *
    * @param string $uri
    */

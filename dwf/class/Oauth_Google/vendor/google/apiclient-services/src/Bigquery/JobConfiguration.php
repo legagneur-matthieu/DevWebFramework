@@ -81,6 +81,9 @@ class JobConfiguration extends \Google\Model
    * determined based on the rules defined by the reservation assignments. The
    * expected format is
    * `projects/{project}/locations/{location}/reservations/{reservation}`.
+   * Forces the query to use on-demand billing when set to `none`, which
+   * requires the project or organization to have `reservation_override_mode`
+   * set to `ALLOW_ANY_OVERRIDE`.
    *
    * @var string
    */
@@ -254,6 +257,9 @@ class JobConfiguration extends \Google\Model
    * determined based on the rules defined by the reservation assignments. The
    * expected format is
    * `projects/{project}/locations/{location}/reservations/{reservation}`.
+   * Forces the query to use on-demand billing when set to `none`, which
+   * requires the project or organization to have `reservation_override_mode`
+   * set to `ALLOW_ANY_OVERRIDE`.
    *
    * @param string $reservation
    */

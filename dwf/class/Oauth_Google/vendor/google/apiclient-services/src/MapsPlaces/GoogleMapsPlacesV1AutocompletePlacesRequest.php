@@ -21,6 +21,13 @@ class GoogleMapsPlacesV1AutocompletePlacesRequest extends \Google\Collection
 {
   protected $collection_key = 'includedRegionCodes';
   /**
+   * Optional. If true, include businesses that are not yet open but will open
+   * in the future.
+   *
+   * @var bool
+   */
+  public $includeFutureOpeningBusinesses;
+  /**
    * Optional. Include pure service area businesses if the field is set to true.
    * Pure service area business is a business that visits or delivers to
    * customers directly but does not serve customers at their business address.
@@ -41,11 +48,11 @@ class GoogleMapsPlacesV1AutocompletePlacesRequest extends \Google\Collection
   public $includeQueryPredictions;
   /**
    * Optional. Included primary Place type (for example, "restaurant" or
-   * "gas_station") in Place Types
-   * (https://developers.google.com/maps/documentation/places/web-service/place-
-   * types), or only `(regions)`, or only `(cities)`. A Place is only returned
-   * if its primary type is included in this list. Up to 5 values can be
-   * specified. If no types are specified, all Place types are returned.
+   * "gas_station") in [Place
+   * Types](https://developers.google.com/maps/documentation/places/web-
+   * service/place-types), or only `(regions)`, or only `(cities)`. A Place is
+   * only returned if its primary type is included in this list. Up to 5 values
+   * can be specified. If no types are specified, all Place types are returned.
    *
    * @var string[]
    */
@@ -124,6 +131,23 @@ class GoogleMapsPlacesV1AutocompletePlacesRequest extends \Google\Collection
   public $sessionToken;
 
   /**
+   * Optional. If true, include businesses that are not yet open but will open
+   * in the future.
+   *
+   * @param bool $includeFutureOpeningBusinesses
+   */
+  public function setIncludeFutureOpeningBusinesses($includeFutureOpeningBusinesses)
+  {
+    $this->includeFutureOpeningBusinesses = $includeFutureOpeningBusinesses;
+  }
+  /**
+   * @return bool
+   */
+  public function getIncludeFutureOpeningBusinesses()
+  {
+    return $this->includeFutureOpeningBusinesses;
+  }
+  /**
    * Optional. Include pure service area businesses if the field is set to true.
    * Pure service area business is a business that visits or delivers to
    * customers directly but does not serve customers at their business address.
@@ -164,11 +188,11 @@ class GoogleMapsPlacesV1AutocompletePlacesRequest extends \Google\Collection
   }
   /**
    * Optional. Included primary Place type (for example, "restaurant" or
-   * "gas_station") in Place Types
-   * (https://developers.google.com/maps/documentation/places/web-service/place-
-   * types), or only `(regions)`, or only `(cities)`. A Place is only returned
-   * if its primary type is included in this list. Up to 5 values can be
-   * specified. If no types are specified, all Place types are returned.
+   * "gas_station") in [Place
+   * Types](https://developers.google.com/maps/documentation/places/web-
+   * service/place-types), or only `(regions)`, or only `(cities)`. A Place is
+   * only returned if its primary type is included in this list. Up to 5 values
+   * can be specified. If no types are specified, all Place types are returned.
    *
    * @param string[] $includedPrimaryTypes
    */

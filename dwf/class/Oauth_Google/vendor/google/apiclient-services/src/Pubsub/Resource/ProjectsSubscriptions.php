@@ -66,13 +66,13 @@ class ProjectsSubscriptions extends \Google\Service\Resource
     return $this->call('acknowledge', [$params], PubsubEmpty::class);
   }
   /**
-   * Creates a subscription to a given topic. See the [resource name rules]
-   * (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the
+   * Creates a subscription to a given topic. See the [resource name rules](
+   * https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the
    * subscription already exists, returns `ALREADY_EXISTS`. If the corresponding
    * topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the
    * request, the server will assign a random name for this subscription on the
-   * same project as the topic, conforming to the [resource name format]
-   * (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
+   * same project as the topic, conforming to the [resource name format](
+   * https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
    * generated name is populated in the returned Subscription object. Note that
    * for REST API requests, you must specify a name in the request.
    * (subscriptions.create)
@@ -101,8 +101,8 @@ class ProjectsSubscriptions extends \Google\Service\Resource
    * the same name, but the new one has no association with the old subscription
    * or its topic unless the same topic is specified. (subscriptions.delete)
    *
-   * @param string $subscription Required. Identifier. The subscription to delete.
-   * Format is `projects/{project}/subscriptions/{sub}`.
+   * @param string $subscription Required. The subscription to delete. Format is
+   * `projects/{project}/subscriptions/{sub}`.
    * @param array $optParams Optional parameters.
    * @return PubsubEmpty
    * @throws \Google\Service\Exception
@@ -134,8 +134,8 @@ class ProjectsSubscriptions extends \Google\Service\Resource
   /**
    * Gets the configuration details of a subscription. (subscriptions.get)
    *
-   * @param string $subscription Required. Identifier. The name of the
-   * subscription to get. Format is `projects/{project}/subscriptions/{sub}`.
+   * @param string $subscription Required. The name of the subscription to get.
+   * Format is `projects/{project}/subscriptions/{sub}`.
    * @param array $optParams Optional parameters.
    * @return Subscription
    * @throws \Google\Service\Exception
@@ -180,8 +180,8 @@ class ProjectsSubscriptions extends \Google\Service\Resource
   /**
    * Lists matching subscriptions. (subscriptions.listProjectsSubscriptions)
    *
-   * @param string $project Required. Identifier. The name of the project in which
-   * to list subscriptions. Format is `projects/{project-id}`.
+   * @param string $project Required. The name of the project in which to list
+   * subscriptions. Format is `projects/{project-id}`.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int pageSize Optional. Maximum number of subscriptions to return.
@@ -280,9 +280,9 @@ class ProjectsSubscriptions extends \Google\Service\Resource
   }
   /**
    * Seeks an existing subscription to a point in time or to a given snapshot,
-   * whichever is provided in the request. Snapshots are used in [Seek]
-   * (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
-   * allow you to manage message acknowledgments in bulk. That is, you can set the
+   * whichever is provided in the request. Snapshots are used in [Seek](
+   * https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow
+   * you to manage message acknowledgments in bulk. That is, you can set the
    * acknowledgment state of messages in an existing subscription to the state
    * captured by a snapshot. Note that both the subscription and the snapshot must
    * be on the same topic. (subscriptions.seek)

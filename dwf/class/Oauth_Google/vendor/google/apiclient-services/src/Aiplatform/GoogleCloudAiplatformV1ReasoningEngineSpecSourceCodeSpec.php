@@ -19,13 +19,35 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpec extends \Google\Model
 {
+  protected $agentConfigSourceType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecAgentConfigSource::class;
+  protected $agentConfigSourceDataType = '';
   protected $developerConnectSourceType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecDeveloperConnectSource::class;
   protected $developerConnectSourceDataType = '';
+  protected $gitSourceType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecGitSource::class;
+  protected $gitSourceDataType = '';
+  protected $imageSpecType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecImageSpec::class;
+  protected $imageSpecDataType = '';
   protected $inlineSourceType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecInlineSource::class;
   protected $inlineSourceDataType = '';
   protected $pythonSpecType = GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecPythonSpec::class;
   protected $pythonSpecDataType = '';
 
+  /**
+   * Source code is generated from the agent config.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecAgentConfigSource $agentConfigSource
+   */
+  public function setAgentConfigSource(GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecAgentConfigSource $agentConfigSource)
+  {
+    $this->agentConfigSource = $agentConfigSource;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecAgentConfigSource
+   */
+  public function getAgentConfigSource()
+  {
+    return $this->agentConfigSource;
+  }
   /**
    * Source code is in a Git repository managed by Developer Connect.
    *
@@ -41,6 +63,38 @@ class GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpec extends \Google\M
   public function getDeveloperConnectSource()
   {
     return $this->developerConnectSource;
+  }
+  /**
+   * Source code is in a public Git repository.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecGitSource $gitSource
+   */
+  public function setGitSource(GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecGitSource $gitSource)
+  {
+    $this->gitSource = $gitSource;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecGitSource
+   */
+  public function getGitSource()
+  {
+    return $this->gitSource;
+  }
+  /**
+   * Optional. Configuration for building an image with custom config file.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecImageSpec $imageSpec
+   */
+  public function setImageSpec(GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecImageSpec $imageSpec)
+  {
+    $this->imageSpec = $imageSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecSourceCodeSpecImageSpec
+   */
+  public function getImageSpec()
+  {
+    return $this->imageSpec;
   }
   /**
    * Source code is provided directly in the request.

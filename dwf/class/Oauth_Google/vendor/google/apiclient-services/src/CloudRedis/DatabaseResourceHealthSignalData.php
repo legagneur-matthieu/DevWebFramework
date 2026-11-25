@@ -19,6 +19,9 @@ namespace Google\Service\CloudRedis;
 
 class DatabaseResourceHealthSignalData extends \Google\Collection
 {
+  /**
+   * Unspecified provider.
+   */
   public const PROVIDER_PROVIDER_UNSPECIFIED = 'PROVIDER_UNSPECIFIED';
   /**
    * Google cloud platform provider
@@ -328,6 +331,8 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
   /**
    * Represents if the cross_db_ownership_chaining database flag for a Cloud SQL
    * for SQL Server instance is not set to off.
+   *
+   * @deprecated
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING = 'SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING';
   /**
@@ -543,6 +548,8 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
   public const SIGNAL_TYPE_SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED = 'SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED';
   /**
    * High number of idle connections.
+   *
+   * @deprecated
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_MANY_IDLE_CONNECTIONS = 'SIGNAL_TYPE_MANY_IDLE_CONNECTIONS';
   /**
@@ -569,6 +576,26 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
    * Resource version is in extended support.
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_EXTENDED_SUPPORT = 'SIGNAL_TYPE_EXTENDED_SUPPORT';
+  /**
+   * Change in performance KPIs.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE = 'SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE';
+  /**
+   * Database version nearing end of life.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE = 'SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE';
+  /**
+   * Indicates a high risk of maintenance downtime.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK = 'SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK';
+  /**
+   * Indicates both a low cache hit rate and a risk of maintenance downtime.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME = 'SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME';
+  /**
+   * Indicates that the resource is missing enhanced protection.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION = 'SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION';
   /**
    * Unspecified state.
    */
@@ -682,6 +709,8 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
    */
   public $signalType;
   /**
+   * Required. The state of the signal, such as if it's ACTIVE or RESOLVED.
+   *
    * @var string
    */
   public $state;
@@ -998,7 +1027,12 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
    * SIGNAL_TYPE_MANY_IDLE_CONNECTIONS, SIGNAL_TYPE_REPLICATION_LAG,
    * SIGNAL_TYPE_OUTDATED_VERSION, SIGNAL_TYPE_OUTDATED_CLIENT,
    * SIGNAL_TYPE_DATABOOST_DISABLED,
-   * SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES, SIGNAL_TYPE_EXTENDED_SUPPORT
+   * SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES, SIGNAL_TYPE_EXTENDED_SUPPORT,
+   * SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE,
+   * SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE,
+   * SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK,
+   * SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME,
+   * SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION
    *
    * @param self::SIGNAL_TYPE_* $signalType
    */
@@ -1014,6 +1048,10 @@ class DatabaseResourceHealthSignalData extends \Google\Collection
     return $this->signalType;
   }
   /**
+   * Required. The state of the signal, such as if it's ACTIVE or RESOLVED.
+   *
+   * Accepted values: STATE_UNSPECIFIED, ACTIVE, RESOLVED, MUTED
+   *
    * @param self::STATE_* $state
    */
   public function setState($state)

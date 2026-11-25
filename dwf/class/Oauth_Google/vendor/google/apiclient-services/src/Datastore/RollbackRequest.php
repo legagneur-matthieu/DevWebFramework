@@ -26,6 +26,8 @@ class RollbackRequest extends \Google\Model
    * @var string
    */
   public $databaseId;
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
   /**
    * Required. The transaction identifier, returned by a call to
    * Datastore.BeginTransaction.
@@ -50,6 +52,22 @@ class RollbackRequest extends \Google\Model
   public function getDatabaseId()
   {
     return $this->databaseId;
+  }
+  /**
+   * Optional. The options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
   /**
    * Required. The transaction identifier, returned by a call to

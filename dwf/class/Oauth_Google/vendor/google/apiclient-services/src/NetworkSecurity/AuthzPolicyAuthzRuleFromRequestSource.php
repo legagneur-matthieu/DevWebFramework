@@ -55,8 +55,8 @@ class AuthzPolicyAuthzRuleFromRequestSource extends \Google\Collection
    * the rule. Limited to 50 principals per Authorization Policy for regional
    * internal Application Load Balancers, regional external Application Load
    * Balancers, cross-region internal Application Load Balancers, and Cloud
-   * Service Mesh. This field is not supported for global external Application
-   * Load Balancers.
+   * Service Mesh while 25 principals per Authorization Policy for global
+   * external Application Load Balancers.
    *
    * @param AuthzPolicyAuthzRulePrincipal[] $principals
    */

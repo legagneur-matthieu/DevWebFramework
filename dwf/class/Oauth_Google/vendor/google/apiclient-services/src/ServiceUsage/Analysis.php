@@ -31,11 +31,8 @@ class Analysis extends \Google\Model
    * The analysis of service resource usage.
    */
   public const ANALYSIS_TYPE_ANALYSIS_TYPE_RESOURCE_USAGE = 'ANALYSIS_TYPE_RESOURCE_USAGE';
-  /**
-   * The analysis of service resource existence.
-   */
-  public const ANALYSIS_TYPE_ANALYSIS_TYPE_RESOURCE_EXISTENCE = 'ANALYSIS_TYPE_RESOURCE_EXISTENCE';
-  protected $analysisDataType = '';
+  protected $analysisResultType = AnalysisResult::class;
+  protected $analysisResultDataType = '';
   /**
    * Output only. The type of analysis.
    *
@@ -60,24 +57,24 @@ class Analysis extends \Google\Model
   /**
    * Output only. Analysis result of updating a policy.
    *
-   * @param AnalysisResult $analysis
+   * @param AnalysisResult $analysisResult
    */
-  public function setAnalysis(AnalysisResult $analysis)
+  public function setAnalysisResult(AnalysisResult $analysisResult)
   {
-    $this->analysis = $analysis;
+    $this->analysisResult = $analysisResult;
   }
   /**
    * @return AnalysisResult
    */
-  public function getAnalysis()
+  public function getAnalysisResult()
   {
-    return $this->analysis;
+    return $this->analysisResult;
   }
   /**
    * Output only. The type of analysis.
    *
    * Accepted values: ANALYSIS_TYPE_UNSPECIFIED, ANALYSIS_TYPE_DEPENDENCY,
-   * ANALYSIS_TYPE_RESOURCE_USAGE, ANALYSIS_TYPE_RESOURCE_EXISTENCE
+   * ANALYSIS_TYPE_RESOURCE_USAGE
    *
    * @param self::ANALYSIS_TYPE_* $analysisType
    */

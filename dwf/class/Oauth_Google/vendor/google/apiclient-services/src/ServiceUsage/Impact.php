@@ -22,18 +22,13 @@ class Impact extends \Google\Model
   /**
    * Reserved Blocks (Block n contains codes from 100n to 100(n+1) -1 Block 0 -
    * Special/Admin codes Block 1 - Impact Type of ANALYSIS_TYPE_DEPENDENCY Block
-   * 2 - Impact Type of ANALYSIS_TYPE_RESOURCE_USAGE Block 3 - Impact Type of
-   * ANALYSIS_TYPE_RESOURCE_EXISTENCE ...
+   * 2 - Impact Type of ANALYSIS_TYPE_RESOURCE_USAGE ...
    */
   public const IMPACT_TYPE_IMPACT_TYPE_UNSPECIFIED = 'IMPACT_TYPE_UNSPECIFIED';
   /**
    * Block 1 - Impact Type of ANALYSIS_TYPE_DEPENDENCY
    */
   public const IMPACT_TYPE_DEPENDENCY_MISSING_DEPENDENCIES = 'DEPENDENCY_MISSING_DEPENDENCIES';
-  /**
-   * Block 3 - Impact Type of ANALYSIS_TYPE_RESOURCE_EXISTENCE
-   */
-  public const IMPACT_TYPE_RESOURCE_EXISTENCE_PROJECT = 'RESOURCE_EXISTENCE_PROJECT';
   /**
    * Output only. User friendly impact detail in a free form message.
    *
@@ -47,20 +42,14 @@ class Impact extends \Google\Model
    */
   public $impactType;
   /**
-   * The parent resource that the analysis is based on and the service name that
-   * the analysis is for. Example:
-   * `projects/100/services/compute.googleapis.com`,
-   * folders/101/services/compute.googleapis.com` and
-   * `organizations/102/services/compute.googleapis.com`. Usually, the parent
-   * resource here is same as the parent resource of the analyzed policy.
-   * However, for some analysis types, the parent can be different. For example,
-   * for resource existence analysis, if the parent resource of the analyzed
-   * policy is a folder or an organization, the parent resource here can still
-   * be the project that contains the resources.
+   * Output only. This field will be populated only for the
+   * `DEPENDENCY_MISSING_DEPENDENCIES` impact type. Example:
+   * `services/compute.googleapis.com`. Impact.detail will be in format :
+   * `missing service dependency: {missing_dependency}.`
    *
    * @var string
    */
-  public $parent;
+  public $missingDependency;
 
   /**
    * Output only. User friendly impact detail in a free form message.
@@ -81,8 +70,7 @@ class Impact extends \Google\Model
   /**
    * Output only. The type of impact.
    *
-   * Accepted values: IMPACT_TYPE_UNSPECIFIED, DEPENDENCY_MISSING_DEPENDENCIES,
-   * RESOURCE_EXISTENCE_PROJECT
+   * Accepted values: IMPACT_TYPE_UNSPECIFIED, DEPENDENCY_MISSING_DEPENDENCIES
    *
    * @param self::IMPACT_TYPE_* $impactType
    */
@@ -98,29 +86,23 @@ class Impact extends \Google\Model
     return $this->impactType;
   }
   /**
-   * The parent resource that the analysis is based on and the service name that
-   * the analysis is for. Example:
-   * `projects/100/services/compute.googleapis.com`,
-   * folders/101/services/compute.googleapis.com` and
-   * `organizations/102/services/compute.googleapis.com`. Usually, the parent
-   * resource here is same as the parent resource of the analyzed policy.
-   * However, for some analysis types, the parent can be different. For example,
-   * for resource existence analysis, if the parent resource of the analyzed
-   * policy is a folder or an organization, the parent resource here can still
-   * be the project that contains the resources.
+   * Output only. This field will be populated only for the
+   * `DEPENDENCY_MISSING_DEPENDENCIES` impact type. Example:
+   * `services/compute.googleapis.com`. Impact.detail will be in format :
+   * `missing service dependency: {missing_dependency}.`
    *
-   * @param string $parent
+   * @param string $missingDependency
    */
-  public function setParent($parent)
+  public function setMissingDependency($missingDependency)
   {
-    $this->parent = $parent;
+    $this->missingDependency = $missingDependency;
   }
   /**
    * @return string
    */
-  public function getParent()
+  public function getMissingDependency()
   {
-    return $this->parent;
+    return $this->missingDependency;
   }
 }
 

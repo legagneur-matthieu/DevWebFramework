@@ -17,7 +17,7 @@
 
 namespace Google\Service\Aiplatform;
 
-class GoogleCloudAiplatformV1GenerateMemoriesRequest extends \Google\Model
+class GoogleCloudAiplatformV1GenerateMemoriesRequest extends \Google\Collection
 {
   /**
    * Unspecified metadata merge strategy. If unspecified, the default behavior
@@ -39,6 +39,9 @@ class GoogleCloudAiplatformV1GenerateMemoriesRequest extends \Google\Model
    * for consolidation.
    */
   public const METADATA_MERGE_STRATEGY_REQUIRE_EXACT_MATCH = 'REQUIRE_EXACT_MATCH';
+  protected $collection_key = 'allowedTopics';
+  protected $allowedTopicsType = GoogleCloudAiplatformV1MemoryTopicId::class;
+  protected $allowedTopicsDataType = 'array';
   protected $directContentsSourceType = GoogleCloudAiplatformV1GenerateMemoriesRequestDirectContentsSource::class;
   protected $directContentsSourceDataType = '';
   protected $directMemoriesSourceType = GoogleCloudAiplatformV1GenerateMemoriesRequestDirectMemoriesSource::class;
@@ -97,9 +100,34 @@ class GoogleCloudAiplatformV1GenerateMemoriesRequest extends \Google\Model
    * @var string[]
    */
   public $scope;
+  /**
+   * Optional. The time zone of the conversation or caller, used as the baseline
+   * for resolving relative time expressions (e.g., "yesterday") and formatting
+   * timestamps. If not set, "UTC" is used. Must be a valid IANA Time Zone
+   * Database name, e.g. "America/New_York".
+   *
+   * @var string
+   */
+  public $timeZone;
   protected $vertexSessionSourceType = GoogleCloudAiplatformV1GenerateMemoriesRequestVertexSessionSource::class;
   protected $vertexSessionSourceDataType = '';
 
+  /**
+   * Optional. Restricts memory generation to a subset of memory topics.
+   *
+   * @param GoogleCloudAiplatformV1MemoryTopicId[] $allowedTopics
+   */
+  public function setAllowedTopics($allowedTopics)
+  {
+    $this->allowedTopics = $allowedTopics;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1MemoryTopicId[]
+   */
+  public function getAllowedTopics()
+  {
+    return $this->allowedTopics;
+  }
   /**
    * Defines a direct source of content as the source content from which to
    * generate memories.
@@ -276,6 +304,25 @@ class GoogleCloudAiplatformV1GenerateMemoriesRequest extends \Google\Model
   public function getScope()
   {
     return $this->scope;
+  }
+  /**
+   * Optional. The time zone of the conversation or caller, used as the baseline
+   * for resolving relative time expressions (e.g., "yesterday") and formatting
+   * timestamps. If not set, "UTC" is used. Must be a valid IANA Time Zone
+   * Database name, e.g. "America/New_York".
+   *
+   * @param string $timeZone
+   */
+  public function setTimeZone($timeZone)
+  {
+    $this->timeZone = $timeZone;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeZone()
+  {
+    return $this->timeZone;
   }
   /**
    * Defines a Vertex Session as the source content from which to generate

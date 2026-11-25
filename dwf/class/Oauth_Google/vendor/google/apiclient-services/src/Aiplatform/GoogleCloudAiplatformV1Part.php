@@ -19,6 +19,8 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1Part extends \Google\Model
 {
+  protected $audioTranscriptionType = GoogleCloudAiplatformV1AudioTranscription::class;
+  protected $audioTranscriptionDataType = '';
   protected $codeExecutionResultType = GoogleCloudAiplatformV1CodeExecutionResult::class;
   protected $codeExecutionResultDataType = '';
   protected $executableCodeType = GoogleCloudAiplatformV1ExecutableCode::class;
@@ -33,8 +35,13 @@ class GoogleCloudAiplatformV1Part extends \Google\Model
   protected $inlineDataDataType = '';
   protected $mediaResolutionType = GoogleCloudAiplatformV1PartMediaResolution::class;
   protected $mediaResolutionDataType = '';
+  protected $speechMetadataType = GoogleCloudAiplatformV1SpeechMetadata::class;
+  protected $speechMetadataDataType = '';
   /**
-   * Optional. The text content of the part.
+   * Optional. The text content of the part. When sent from the VSCode Gemini
+   * Code Assist extension, references to @mentioned items will be converted to
+   * markdown boldface text. For example `@my-repo` will be converted to and
+   * sent as `**my-repo**` by the IDE agent.
    *
    * @var string
    */
@@ -53,9 +60,30 @@ class GoogleCloudAiplatformV1Part extends \Google\Model
    * @var string
    */
   public $thoughtSignature;
+  protected $toolCallType = GoogleCloudAiplatformV1PartToolCall::class;
+  protected $toolCallDataType = '';
+  protected $toolResponseType = GoogleCloudAiplatformV1PartToolResponse::class;
+  protected $toolResponseDataType = '';
   protected $videoMetadataType = GoogleCloudAiplatformV1VideoMetadata::class;
   protected $videoMetadataDataType = '';
 
+  /**
+   * Optional. Audio (input or output) transcription. This is only set when this
+   * `Part` contains audio data.
+   *
+   * @param GoogleCloudAiplatformV1AudioTranscription $audioTranscription
+   */
+  public function setAudioTranscription(GoogleCloudAiplatformV1AudioTranscription $audioTranscription)
+  {
+    $this->audioTranscription = $audioTranscription;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1AudioTranscription
+   */
+  public function getAudioTranscription()
+  {
+    return $this->audioTranscription;
+  }
   /**
    * Optional. The result of executing the ExecutableCode.
    *
@@ -173,7 +201,28 @@ class GoogleCloudAiplatformV1Part extends \Google\Model
     return $this->mediaResolution;
   }
   /**
-   * Optional. The text content of the part.
+   * Optional. Turn-level metadata for speech generation (e.g. Daikon
+   * speaker/style). May be set alongside `text` to attach speaker and style
+   * information to a text part.
+   *
+   * @param GoogleCloudAiplatformV1SpeechMetadata $speechMetadata
+   */
+  public function setSpeechMetadata(GoogleCloudAiplatformV1SpeechMetadata $speechMetadata)
+  {
+    $this->speechMetadata = $speechMetadata;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1SpeechMetadata
+   */
+  public function getSpeechMetadata()
+  {
+    return $this->speechMetadata;
+  }
+  /**
+   * Optional. The text content of the part. When sent from the VSCode Gemini
+   * Code Assist extension, references to @mentioned items will be converted to
+   * markdown boldface text. For example `@my-repo` will be converted to and
+   * sent as `**my-repo**` by the IDE agent.
    *
    * @param string $text
    */
@@ -221,6 +270,42 @@ class GoogleCloudAiplatformV1Part extends \Google\Model
   public function getThoughtSignature()
   {
     return $this->thoughtSignature;
+  }
+  /**
+   * Optional. Server-side tool call. This field is populated when the model
+   * predicts a tool invocation that should be executed on the server. The
+   * client is expected to echo this message back to the API.
+   *
+   * @param GoogleCloudAiplatformV1PartToolCall $toolCall
+   */
+  public function setToolCall(GoogleCloudAiplatformV1PartToolCall $toolCall)
+  {
+    $this->toolCall = $toolCall;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1PartToolCall
+   */
+  public function getToolCall()
+  {
+    return $this->toolCall;
+  }
+  /**
+   * Optional. The output from a server-side `ToolCall` execution. This field is
+   * populated by the client with the results of executing the corresponding
+   * `ToolCall`.
+   *
+   * @param GoogleCloudAiplatformV1PartToolResponse $toolResponse
+   */
+  public function setToolResponse(GoogleCloudAiplatformV1PartToolResponse $toolResponse)
+  {
+    $this->toolResponse = $toolResponse;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1PartToolResponse
+   */
+  public function getToolResponse()
+  {
+    return $this->toolResponse;
   }
   /**
    * Optional. Video metadata. The metadata should only be specified while the

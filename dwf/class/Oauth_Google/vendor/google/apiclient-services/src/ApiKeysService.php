@@ -34,6 +34,12 @@ use Google\Client;
  */
 class ApiKeysService extends \Google\Service
 {
+  /** See, edit, configure, and delete your Google Cloud API Keys data and see the email address for your Google Account. */
+  const APIKEYS =
+      "https://www.googleapis.com/auth/apikeys";
+  /** See your Google Cloud API Keys data and the email address of your Google Account. */
+  const APIKEYS_READONLY =
+      "https://www.googleapis.com/auth/apikeys.readonly";
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
@@ -131,6 +137,10 @@ class ApiKeysService extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'checkExistingUsage' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'etag' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -186,6 +196,10 @@ class ApiKeysService extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'checkExistingUsage' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'updateMask' => [
                   'location' => 'query',

@@ -36,7 +36,7 @@ class Parameter extends \Google\Model
    */
   public const FORMAT_JSON = 'JSON';
   /**
-   * Output only. [Output only] Create time stamp
+   * Output only. Create time stamp
    *
    * @var string
    */
@@ -63,7 +63,7 @@ class Parameter extends \Google\Model
    */
   public $labels;
   /**
-   * Identifier. [Output only] The resource name of the Parameter in the format
+   * Identifier. The resource name of the Parameter in the format
    * `projects/locations/parameters`.
    *
    * @var string
@@ -72,14 +72,25 @@ class Parameter extends \Google\Model
   protected $policyMemberType = ResourcePolicyMember::class;
   protected $policyMemberDataType = '';
   /**
-   * Output only. [Output only] Update time stamp
+   * Optional. Input only. Immutable. Tag keys and tag values that are bound to
+   * this Parameter. You must represent each item in the map as: `"" : ""`. For
+   * example, a single resource can have the following tags: ```
+   * "123/environment": "production", "123/costCenter": "marketing", ``` Tags
+   * are used to organize and group resources. Tags can be used to control
+   * policy evaluation for the resource.
+   *
+   * @var string[]
+   */
+  public $tags;
+  /**
+   * Output only. Update time stamp
    *
    * @var string
    */
   public $updateTime;
 
   /**
-   * Output only. [Output only] Create time stamp
+   * Output only. Create time stamp
    *
    * @param string $createTime
    */
@@ -148,7 +159,7 @@ class Parameter extends \Google\Model
     return $this->labels;
   }
   /**
-   * Identifier. [Output only] The resource name of the Parameter in the format
+   * Identifier. The resource name of the Parameter in the format
    * `projects/locations/parameters`.
    *
    * @param string $name
@@ -165,8 +176,7 @@ class Parameter extends \Google\Model
     return $this->name;
   }
   /**
-   * Output only. [Output-only] policy member strings of a Google Cloud
-   * resource.
+   * Output only. Policy member strings of a Google Cloud resource.
    *
    * @param ResourcePolicyMember $policyMember
    */
@@ -182,7 +192,28 @@ class Parameter extends \Google\Model
     return $this->policyMember;
   }
   /**
-   * Output only. [Output only] Update time stamp
+   * Optional. Input only. Immutable. Tag keys and tag values that are bound to
+   * this Parameter. You must represent each item in the map as: `"" : ""`. For
+   * example, a single resource can have the following tags: ```
+   * "123/environment": "production", "123/costCenter": "marketing", ``` Tags
+   * are used to organize and group resources. Tags can be used to control
+   * policy evaluation for the resource.
+   *
+   * @param string[] $tags
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
+  }
+  /**
+   * Output only. Update time stamp
    *
    * @param string $updateTime
    */

@@ -38,10 +38,22 @@ class DataManager extends \Google\Service
   /** See, edit, create, import, or delete your customer data in Google Ads, Google Marketing Platform (Campaign Manager 360, Search Ads 360, Display & Video 360), and Google Analytics. */
   const DATAMANAGER =
       "https://www.googleapis.com/auth/datamanager";
+  /** View, create, or delete your partner links in Google Ads, Marketing Platform (Campaign Manager 360, Search Ads 360, Display & Video 360), and Analytics. */
+  const DATAMANAGER_PARTNERLINK =
+      "https://www.googleapis.com/auth/datamanager.partnerlink";
 
+  public $accountTypes_accounts_insights;
+  public $accountTypes_accounts_partnerLinks;
+  public $accountTypes_accounts_reports;
+  public $accountTypes_accounts_userListDirectLicenses;
+  public $accountTypes_accounts_userListGlobalLicenses;
+  public $accountTypes_accounts_userListGlobalLicenses_userListGlobalLicenseCustomerInfos;
+  public $accountTypes_accounts_userLists;
+  public $adEvents;
   public $audienceMembers;
   public $events;
   public $requestStatus;
+  public $users;
   public $rootUrlTemplate;
 
   /**
@@ -61,6 +73,388 @@ class DataManager extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'datamanager';
 
+    $this->accountTypes_accounts_insights = new DataManager\Resource\AccountTypesAccountsInsights(
+        $this,
+        $this->serviceName,
+        'insights',
+        [
+          'methods' => [
+            'retrieve' => [
+              'path' => 'v1/{+parent}/insights:retrieve',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_partnerLinks = new DataManager\Resource\AccountTypesAccountsPartnerLinks(
+        $this,
+        $this->serviceName,
+        'partnerLinks',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/partnerLinks',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'search' => [
+              'path' => 'v1/{+parent}/partnerLinks:search',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_reports = new DataManager\Resource\AccountTypesAccountsReports(
+        $this,
+        $this->serviceName,
+        'reports',
+        [
+          'methods' => [
+            'retrievePartnerMatchReport' => [
+              'path' => 'v1/{+parent}/reports:retrievePartnerMatchReport',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'currencyCode' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'endDate' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'startDate' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_userListDirectLicenses = new DataManager\Resource\AccountTypesAccountsUserListDirectLicenses(
+        $this,
+        $this->serviceName,
+        'userListDirectLicenses',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/userListDirectLicenses',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/userListDirectLicenses',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_userListGlobalLicenses = new DataManager\Resource\AccountTypesAccountsUserListGlobalLicenses(
+        $this,
+        $this->serviceName,
+        'userListGlobalLicenses',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/userListGlobalLicenses',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/userListGlobalLicenses',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_userListGlobalLicenses_userListGlobalLicenseCustomerInfos = new DataManager\Resource\AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfos(
+        $this,
+        $this->serviceName,
+        'userListGlobalLicenseCustomerInfos',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v1/{+parent}/userListGlobalLicenseCustomerInfos',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->accountTypes_accounts_userLists = new DataManager\Resource\AccountTypesAccountsUserLists(
+        $this,
+        $this->serviceName,
+        'userLists',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/userLists',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/userLists',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->adEvents = new DataManager\Resource\AdEvents(
+        $this,
+        $this->serviceName,
+        'adEvents',
+        [
+          'methods' => [
+            'ingest' => [
+              'path' => 'v1/adEvents:ingest',
+              'httpMethod' => 'POST',
+              'parameters' => [],
+            ],
+          ]
+        ]
+    );
     $this->audienceMembers = new DataManager\Resource\AudienceMembers(
         $this,
         $this->serviceName,
@@ -73,6 +467,10 @@ class DataManager extends \Google\Service
               'parameters' => [],
             ],'remove' => [
               'path' => 'v1/audienceMembers:remove',
+              'httpMethod' => 'POST',
+              'parameters' => [],
+            ],'removeAll' => [
+              'path' => 'v1/audienceMembers:removeAll',
               'httpMethod' => 'POST',
               'parameters' => [],
             ],
@@ -108,6 +506,24 @@ class DataManager extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],
+          ]
+        ]
+    );
+    $this->users = new DataManager\Resource\Users(
+        $this,
+        $this->serviceName,
+        'users',
+        [
+          'methods' => [
+            'ingest' => [
+              'path' => 'v1/users:ingest',
+              'httpMethod' => 'POST',
+              'parameters' => [],
+            ],'remove' => [
+              'path' => 'v1/users:remove',
+              'httpMethod' => 'POST',
+              'parameters' => [],
             ],
           ]
         ]

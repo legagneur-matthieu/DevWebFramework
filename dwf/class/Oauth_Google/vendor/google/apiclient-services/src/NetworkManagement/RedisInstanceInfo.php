@@ -26,7 +26,8 @@ class RedisInstanceInfo extends \Google\Model
    */
   public $displayName;
   /**
-   * URI of a Cloud Redis Instance network.
+   * URI of a Cloud Redis Instance network in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @var string
    */
@@ -50,7 +51,8 @@ class RedisInstanceInfo extends \Google\Model
    */
   public $region;
   /**
-   * URI of a Cloud Redis Instance.
+   * URI of a Cloud Redis Instance in format
+   * "projects/{project}/locations/{location}/instances/{instance}"
    *
    * @var string
    */
@@ -73,7 +75,8 @@ class RedisInstanceInfo extends \Google\Model
     return $this->displayName;
   }
   /**
-   * URI of a Cloud Redis Instance network.
+   * URI of a Cloud Redis Instance network in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @param string $networkUri
    */
@@ -137,7 +140,8 @@ class RedisInstanceInfo extends \Google\Model
     return $this->region;
   }
   /**
-   * URI of a Cloud Redis Instance.
+   * URI of a Cloud Redis Instance in format
+   * "projects/{project}/locations/{location}/instances/{instance}"
    *
    * @param string $uri
    */

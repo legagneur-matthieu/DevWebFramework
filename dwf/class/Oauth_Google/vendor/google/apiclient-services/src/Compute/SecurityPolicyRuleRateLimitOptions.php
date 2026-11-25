@@ -20,6 +20,7 @@ namespace Google\Service\Compute;
 class SecurityPolicyRuleRateLimitOptions extends \Google\Collection
 {
   public const ENFORCE_ON_KEY_ALL = 'ALL';
+  public const ENFORCE_ON_KEY_ASN = 'ASN';
   public const ENFORCE_ON_KEY_HTTP_COOKIE = 'HTTP_COOKIE';
   public const ENFORCE_ON_KEY_HTTP_HEADER = 'HTTP_HEADER';
   public const ENFORCE_ON_KEY_HTTP_PATH = 'HTTP_PATH';
@@ -75,10 +76,12 @@ class SecurityPolicyRuleRateLimitOptions extends \Google\Collection
    * to ALL.     - USER_IP: The IP address of the originating client,    which
    * is resolved based on "userIpRequestHeaders" configured with the    security
    * policy. If there is no "userIpRequestHeaders" configuration or    an IP
-   * address cannot be resolved from it, the key type defaults toIP.
+   * address cannot be resolved from it, the key type defaults toIP.     - ASN:
+   * The autonomous system number of the originating    client. If not
+   * available, the key type defaults toALL.    - TLS_JA4_FINGERPRINT: JA4
+   * TLS/SSL fingerprint if the    client connects using HTTPS, HTTP/2 or
+   * HTTP/3. If not available, the    key type defaults to ALL.
    *
-   * - TLS_JA4_FINGERPRINT: JA4 TLS/SSL fingerprint if the client connects using
-   * HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL.
    * For "fairshare" action, this value is limited to ALL i.e. a single rate
    * limit threshold is enforced for all the requests matching the rule.
    *
@@ -193,15 +196,17 @@ class SecurityPolicyRuleRateLimitOptions extends \Google\Collection
    * to ALL.     - USER_IP: The IP address of the originating client,    which
    * is resolved based on "userIpRequestHeaders" configured with the    security
    * policy. If there is no "userIpRequestHeaders" configuration or    an IP
-   * address cannot be resolved from it, the key type defaults toIP.
+   * address cannot be resolved from it, the key type defaults toIP.     - ASN:
+   * The autonomous system number of the originating    client. If not
+   * available, the key type defaults toALL.    - TLS_JA4_FINGERPRINT: JA4
+   * TLS/SSL fingerprint if the    client connects using HTTPS, HTTP/2 or
+   * HTTP/3. If not available, the    key type defaults to ALL.
    *
-   * - TLS_JA4_FINGERPRINT: JA4 TLS/SSL fingerprint if the client connects using
-   * HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL.
    * For "fairshare" action, this value is limited to ALL i.e. a single rate
    * limit threshold is enforced for all the requests matching the rule.
    *
-   * Accepted values: ALL, HTTP_COOKIE, HTTP_HEADER, HTTP_PATH, IP, REGION_CODE,
-   * SNI, TLS_JA3_FINGERPRINT, TLS_JA4_FINGERPRINT, USER_IP, XFF_IP
+   * Accepted values: ALL, ASN, HTTP_COOKIE, HTTP_HEADER, HTTP_PATH, IP,
+   * REGION_CODE, SNI, TLS_JA3_FINGERPRINT, TLS_JA4_FINGERPRINT, USER_IP, XFF_IP
    *
    * @param self::ENFORCE_ON_KEY_* $enforceOnKey
    */

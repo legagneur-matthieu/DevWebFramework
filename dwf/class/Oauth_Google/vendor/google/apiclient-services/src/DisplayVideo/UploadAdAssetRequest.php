@@ -32,6 +32,18 @@ class UploadAdAssetRequest extends \Google\Model
    */
   public const AD_ASSET_TYPE_AD_ASSET_TYPE_YOUTUBE_VIDEO = 'AD_ASSET_TYPE_YOUTUBE_VIDEO';
   /**
+   * No attestation has been provided.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED = 'SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED';
+  /**
+   * Attested as not created or edited using AI.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_NOT_SYNTHETIC = 'NOT_SYNTHETIC';
+  /**
+   * Attested as created or edited using AI.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_IS_SYNTHETIC = 'IS_SYNTHETIC';
+  /**
    * Required. The type of the ad asset. Only `AD_ASSET_TYPE_IMAGE` is
    * supported.
    *
@@ -45,6 +57,13 @@ class UploadAdAssetRequest extends \Google\Model
    * @var string
    */
   public $filename;
+  /**
+   * Optional. Whether to add a label to the asset as created or edited using AI
+   * when served in regions with local AI labeling regulations.
+   *
+   * @var string
+   */
+  public $syntheticContentAttestationStatus;
 
   /**
    * Required. The type of the ad asset. Only `AD_ASSET_TYPE_IMAGE` is
@@ -82,6 +101,26 @@ class UploadAdAssetRequest extends \Google\Model
   public function getFilename()
   {
     return $this->filename;
+  }
+  /**
+   * Optional. Whether to add a label to the asset as created or edited using AI
+   * when served in regions with local AI labeling regulations.
+   *
+   * Accepted values: SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED,
+   * NOT_SYNTHETIC, IS_SYNTHETIC
+   *
+   * @param self::SYNTHETIC_CONTENT_ATTESTATION_STATUS_* $syntheticContentAttestationStatus
+   */
+  public function setSyntheticContentAttestationStatus($syntheticContentAttestationStatus)
+  {
+    $this->syntheticContentAttestationStatus = $syntheticContentAttestationStatus;
+  }
+  /**
+   * @return self::SYNTHETIC_CONTENT_ATTESTATION_STATUS_*
+   */
+  public function getSyntheticContentAttestationStatus()
+  {
+    return $this->syntheticContentAttestationStatus;
   }
 }
 

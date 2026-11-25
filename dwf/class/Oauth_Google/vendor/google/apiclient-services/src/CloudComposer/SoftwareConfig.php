@@ -17,8 +17,20 @@
 
 namespace Google\Service\CloudComposer;
 
-class SoftwareConfig extends \Google\Model
+class SoftwareConfig extends \Google\Collection
 {
+  /**
+   * The user's choice of logs replication mode is unspecified.
+   */
+  public const AUDIT_LOGS_REPLICATION_MODE_AUDIT_LOGS_REPLICATION_MODE_UNSPECIFIED = 'AUDIT_LOGS_REPLICATION_MODE_UNSPECIFIED';
+  /**
+   * The user opted out of audit logs replication.
+   */
+  public const AUDIT_LOGS_REPLICATION_MODE_AUDIT_LOGS_REPLICATION_DISABLED = 'AUDIT_LOGS_REPLICATION_DISABLED';
+  /**
+   * The user opted in to audit logs replication.
+   */
+  public const AUDIT_LOGS_REPLICATION_MODE_AUDIT_LOGS_REPLICATION_ENABLED = 'AUDIT_LOGS_REPLICATION_ENABLED';
   /**
    * Default mode.
    */
@@ -31,6 +43,7 @@ class SoftwareConfig extends \Google\Model
    * Web server plugins are supported.
    */
   public const WEB_SERVER_PLUGINS_MODE_PLUGINS_ENABLED = 'PLUGINS_ENABLED';
+  protected $collection_key = 'imageVersionRollbackTargets';
   /**
    * Optional. Apache Airflow configuration properties to override. Property
    * keys contain the section and property names, separated by a hyphen, for
@@ -48,6 +61,14 @@ class SoftwareConfig extends \Google\Model
    * @var string[]
    */
   public $airflowConfigOverrides;
+  /**
+   * Optional. The selected mode of audit logs replication. This field is
+   * supported for Cloud Composer environments in versions
+   * composer-3-airflow-*.*.*-build.* and newer.
+   *
+   * @var string
+   */
+  public $auditLogsReplicationMode;
   protected $cloudDataLineageIntegrationType = CloudDataLineageIntegration::class;
   protected $cloudDataLineageIntegrationDataType = '';
   /**
@@ -88,6 +109,8 @@ class SoftwareConfig extends \Google\Model
    * @var string
    */
   public $imageVersion;
+  protected $imageVersionRollbackTargetsType = ImageVersionRollbackTarget::class;
+  protected $imageVersionRollbackTargetsDataType = 'array';
   /**
    * Optional. Custom Python Package Index (PyPI) packages to be installed in
    * the environment. Keys refer to the lowercase package name such as "numpy"
@@ -153,6 +176,27 @@ class SoftwareConfig extends \Google\Model
   public function getAirflowConfigOverrides()
   {
     return $this->airflowConfigOverrides;
+  }
+  /**
+   * Optional. The selected mode of audit logs replication. This field is
+   * supported for Cloud Composer environments in versions
+   * composer-3-airflow-*.*.*-build.* and newer.
+   *
+   * Accepted values: AUDIT_LOGS_REPLICATION_MODE_UNSPECIFIED,
+   * AUDIT_LOGS_REPLICATION_DISABLED, AUDIT_LOGS_REPLICATION_ENABLED
+   *
+   * @param self::AUDIT_LOGS_REPLICATION_MODE_* $auditLogsReplicationMode
+   */
+  public function setAuditLogsReplicationMode($auditLogsReplicationMode)
+  {
+    $this->auditLogsReplicationMode = $auditLogsReplicationMode;
+  }
+  /**
+   * @return self::AUDIT_LOGS_REPLICATION_MODE_*
+   */
+  public function getAuditLogsReplicationMode()
+  {
+    return $this->auditLogsReplicationMode;
   }
   /**
    * Optional. The configuration for Cloud Data Lineage integration.
@@ -227,6 +271,25 @@ class SoftwareConfig extends \Google\Model
   public function getImageVersion()
   {
     return $this->imageVersion;
+  }
+  /**
+   * Output only. The list of image versions the environment can be rolled back
+   * to, sorted by last_active_time in descending order (most recent first).
+   * This field is supported for Cloud Composer environments in versions
+   * composer-3-airflow-*.*.*-build.* and newer.
+   *
+   * @param ImageVersionRollbackTarget[] $imageVersionRollbackTargets
+   */
+  public function setImageVersionRollbackTargets($imageVersionRollbackTargets)
+  {
+    $this->imageVersionRollbackTargets = $imageVersionRollbackTargets;
+  }
+  /**
+   * @return ImageVersionRollbackTarget[]
+   */
+  public function getImageVersionRollbackTargets()
+  {
+    return $this->imageVersionRollbackTargets;
   }
   /**
    * Optional. Custom Python Package Index (PyPI) packages to be installed in

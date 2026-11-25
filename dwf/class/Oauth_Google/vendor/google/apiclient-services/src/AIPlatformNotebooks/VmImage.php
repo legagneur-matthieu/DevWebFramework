@@ -27,6 +27,23 @@ class VmImage extends \Google\Model
    */
   public $family;
   /**
+   * Output only. A human-readable description of the image running on the
+   * instance (for example, "Debian 11, Python 3.10"), derived at read time from
+   * the image release configuration (the source of truth). Set to "Custom" for
+   * unrecognized boot-disk images.
+   *
+   * @var string
+   */
+  public $imageDescription;
+  /**
+   * Output only. The ID of the specific Compute Engine VM image the instance is
+   * currently running (for example, "workbench-
+   * instances-2603-20260918-2130-rc0").
+   *
+   * @var string
+   */
+  public $imageId;
+  /**
    * Optional. Use VM image name to find the image.
    *
    * @var string
@@ -56,6 +73,43 @@ class VmImage extends \Google\Model
   public function getFamily()
   {
     return $this->family;
+  }
+  /**
+   * Output only. A human-readable description of the image running on the
+   * instance (for example, "Debian 11, Python 3.10"), derived at read time from
+   * the image release configuration (the source of truth). Set to "Custom" for
+   * unrecognized boot-disk images.
+   *
+   * @param string $imageDescription
+   */
+  public function setImageDescription($imageDescription)
+  {
+    $this->imageDescription = $imageDescription;
+  }
+  /**
+   * @return string
+   */
+  public function getImageDescription()
+  {
+    return $this->imageDescription;
+  }
+  /**
+   * Output only. The ID of the specific Compute Engine VM image the instance is
+   * currently running (for example, "workbench-
+   * instances-2603-20260918-2130-rc0").
+   *
+   * @param string $imageId
+   */
+  public function setImageId($imageId)
+  {
+    $this->imageId = $imageId;
+  }
+  /**
+   * @return string
+   */
+  public function getImageId()
+  {
+    return $this->imageId;
   }
   /**
    * Optional. Use VM image name to find the image.

@@ -44,8 +44,8 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
    * after the dry-run specifications for all the service perimeters have been
    * committed. If a commit fails, it causes the long-running operation to return
    * an error response and the entire commit operation is cancelled. When
-   * successful, the Operation.response field contains
-   * CommitServicePerimetersResponse. The `dry_run` and the `spec` fields are
+   * successful, the `Operation.response` field contains
+   * `CommitServicePerimetersResponse`. The `dry_run` and the `spec` fields are
    * cleared after a successful commit operation. (servicePerimeters.commit)
    *
    * @param string $parent Required. Resource name for the parent Access Policy
@@ -102,9 +102,11 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
    * Gets a service perimeter based on the resource name. (servicePerimeters.get)
    *
    * @param string $name Required. Resource name for the Service Perimeter.
-   * Format:
-   * `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`
+   * Format: `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string deletedPrincipalSyntax Optional. If true, the response will
+   * contain the deleted principal syntax for identities that support it.
    * @return ServicePerimeter
    * @throws \Google\Service\Exception
    */
@@ -122,6 +124,8 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
    * Service Perimeters from. Format: `accessPolicies/{policy_id}`
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string deletedPrincipalSyntax Optional. If true, the response will
+   * contain the deleted principal syntax for identities that support it.
    * @opt_param int pageSize Number of Service Perimeters to include in the list.
    * Default 100.
    * @opt_param string pageToken Next page token for the next batch of Service
@@ -150,6 +154,9 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
    * @param ServicePerimeter $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string deletedPrincipalSyntax Optional. If true, the response will
+   * contain the deleted principal syntax for identities that support it and the
+   * request can contain identities with deleted principal syntax.
    * @opt_param string updateMask Required. Mask to control which fields get
    * updated. Must be non-empty.
    * @return Operation
@@ -162,13 +169,14 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
     return $this->call('patch', [$params], Operation::class);
   }
   /**
-   * Replace all existing service perimeters in an access policy with the service
+   * Replaces all existing service perimeters in an access policy with the service
    * perimeters provided. This is done atomically. The long-running operation from
    * this RPC has a successful status after all replacements propagate to long-
    * lasting storage. Replacements containing errors result in an error response
-   * for the first error encountered. Upon an error, replacement are cancelled and
-   * existing service perimeters are not affected. The Operation.response field
-   * contains ReplaceServicePerimetersResponse. (servicePerimeters.replaceAll)
+   * for the first error encountered. Upon an error, replacements are cancelled
+   * and existing service perimeters are not affected. The `Operation.response`
+   * field contains `ReplaceServicePerimetersResponse`.
+   * (servicePerimeters.replaceAll)
    *
    * @param string $parent Required. Resource name for the access policy which
    * owns these Service Perimeters. Format: `accessPolicies/{policy_id}`
@@ -186,7 +194,9 @@ class AccessPoliciesServicePerimeters extends \Google\Service\Resource
   /**
    * Returns the IAM permissions that the caller has on the specified Access
    * Context Manager resource. The resource can be an AccessPolicy, AccessLevel,
-   * or ServicePerimeter. This method does not support other resources.
+   * or ServicePerimeter. This method does not support other resources. **IAM
+   * Permissions**: No specific IAM permission is required to call this method. It
+   * returns the subset of the requested permissions that the caller possesses.
    * (servicePerimeters.testIamPermissions)
    *
    * @param string $resource REQUIRED: The resource for which the policy detail is

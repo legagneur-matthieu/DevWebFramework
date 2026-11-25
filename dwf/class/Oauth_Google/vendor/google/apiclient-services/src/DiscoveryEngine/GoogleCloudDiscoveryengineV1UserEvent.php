@@ -87,6 +87,16 @@ class GoogleCloudDiscoveryengineV1UserEvent extends \Google\Collection
    */
   public $engine;
   /**
+   * Optional. Represents the entity for customers that may run multiple
+   * different entities, domains, sites or regions, for example, `Google US`,
+   * `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. We recommend that
+   * you set `entity` to get better per-entity search, completion, and
+   * prediction results.
+   *
+   * @var string
+   */
+  public $entity;
+  /**
    * Only required for UserEventService.ImportUserEvents method. Timestamp of
    * when the user event happened.
    *
@@ -108,6 +118,8 @@ class GoogleCloudDiscoveryengineV1UserEvent extends \Google\Collection
    * @var string
    */
   public $eventType;
+  protected $feedbackType = GoogleCloudDiscoveryengineV1Feedback::class;
+  protected $feedbackDataType = '';
   /**
    * Optional. The filter syntax consists of an expression language for
    * constructing a predicate from one or more fields of the documents being
@@ -181,8 +193,8 @@ class GoogleCloudDiscoveryengineV1UserEvent extends \Google\Collection
   public $userPseudoId;
 
   /**
-   * Extra user event features to include in the recommendation model. These
-   * attributes must NOT contain data that needs to be parsed or processed
+   * Optional. Extra user event features to include in the recommendation model.
+   * These attributes must NOT contain data that needs to be parsed or processed
    * further, e.g. JSON or other encodings. If you provide custom attributes for
    * ingested user events, also include them in the user events that you
    * associate with prediction requests. Custom attribute formatting must be
@@ -365,6 +377,26 @@ class GoogleCloudDiscoveryengineV1UserEvent extends \Google\Collection
     return $this->engine;
   }
   /**
+   * Optional. Represents the entity for customers that may run multiple
+   * different entities, domains, sites or regions, for example, `Google US`,
+   * `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. We recommend that
+   * you set `entity` to get better per-entity search, completion, and
+   * prediction results.
+   *
+   * @param string $entity
+   */
+  public function setEntity($entity)
+  {
+    $this->entity = $entity;
+  }
+  /**
+   * @return string
+   */
+  public function getEntity()
+  {
+    return $this->entity;
+  }
+  /**
    * Only required for UserEventService.ImportUserEvents method. Timestamp of
    * when the user event happened.
    *
@@ -405,6 +437,22 @@ class GoogleCloudDiscoveryengineV1UserEvent extends \Google\Collection
   public function getEventType()
   {
     return $this->eventType;
+  }
+  /**
+   * Optional. This field is optional except for the `add-feedback` event types.
+   *
+   * @param GoogleCloudDiscoveryengineV1Feedback $feedback
+   */
+  public function setFeedback(GoogleCloudDiscoveryengineV1Feedback $feedback)
+  {
+    $this->feedback = $feedback;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1Feedback
+   */
+  public function getFeedback()
+  {
+    return $this->feedback;
   }
   /**
    * Optional. The filter syntax consists of an expression language for

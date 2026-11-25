@@ -52,6 +52,14 @@ class GoogleCloudApihubV1Plugin extends \Google\Collection
    */
   public const GATEWAY_TYPE_OTHERS = 'OTHERS';
   /**
+   * The gateway type is AWS API Gateway.
+   */
+  public const GATEWAY_TYPE_AWS_API_GATEWAY = 'AWS_API_GATEWAY';
+  /**
+   * The gateway type is Azure API Management.
+   */
+  public const GATEWAY_TYPE_AZURE_API_MANAGEMENT = 'AZURE_API_MANAGEMENT';
+  /**
    * Default unspecified type.
    */
   public const OWNERSHIP_TYPE_OWNERSHIP_TYPE_UNSPECIFIED = 'OWNERSHIP_TYPE_UNSPECIFIED';
@@ -102,14 +110,14 @@ class GoogleCloudApihubV1Plugin extends \Google\Collection
    */
   public $createTime;
   /**
-   * Optional. The plugin description. Max length is 2000 characters (Unicode
+   * Optional. The plugin description. Max length is 500000 characters (Unicode
    * code points).
    *
    * @var string
    */
   public $description;
   /**
-   * Required. The display name of the plugin. Max length is 50 characters
+   * Required. The display name of the plugin. Max length is 500 characters
    * (Unicode code points).
    *
    * @var string
@@ -214,7 +222,7 @@ class GoogleCloudApihubV1Plugin extends \Google\Collection
     return $this->createTime;
   }
   /**
-   * Optional. The plugin description. Max length is 2000 characters (Unicode
+   * Optional. The plugin description. Max length is 500000 characters (Unicode
    * code points).
    *
    * @param string $description
@@ -231,7 +239,7 @@ class GoogleCloudApihubV1Plugin extends \Google\Collection
     return $this->description;
   }
   /**
-   * Required. The display name of the plugin. Max length is 50 characters
+   * Required. The display name of the plugin. Max length is 500 characters
    * (Unicode code points).
    *
    * @param string $displayName
@@ -269,7 +277,8 @@ class GoogleCloudApihubV1Plugin extends \Google\Collection
    *
    * Accepted values: GATEWAY_TYPE_UNSPECIFIED, APIGEE_X_AND_HYBRID,
    * APIGEE_EDGE_PUBLIC_CLOUD, APIGEE_EDGE_PRIVATE_CLOUD, CLOUD_API_GATEWAY,
-   * CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS
+   * CLOUD_ENDPOINTS, API_DISCOVERY, OTHERS, AWS_API_GATEWAY,
+   * AZURE_API_MANAGEMENT
    *
    * @param self::GATEWAY_TYPE_* $gatewayType
    */

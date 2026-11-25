@@ -46,7 +46,7 @@ class AdUnit extends \Google\Collection
   public $adTypes;
   /**
    * The externally visible ID of the ad unit which can be used to integrate
-   * with the AdMob SDK. This is a read only property. Example: ca-app-
+   * with AdMob. This is a read only property. Example: ca-app-
    * pub-9876543210987654/0123456789
    *
    * @var string
@@ -121,7 +121,7 @@ class AdUnit extends \Google\Collection
   }
   /**
    * The externally visible ID of the ad unit which can be used to integrate
-   * with the AdMob SDK. This is a read only property. Example: ca-app-
+   * with AdMob. This is a read only property. Example: ca-app-
    * pub-9876543210987654/0123456789
    *
    * @param string $adUnitId

@@ -38,6 +38,19 @@ class DatabaseInstance extends \Google\Collection
    */
   public const BACKEND_TYPE_EXTERNAL = 'EXTERNAL';
   /**
+   * Default value. The integration state is unspecified. When unspecified,
+   * Database Center integration is enabled by default.
+   */
+  public const DATABASE_CENTER_INTEGRATION_DATABASE_CENTER_INTEGRATION_UNSPECIFIED = 'DATABASE_CENTER_INTEGRATION_UNSPECIFIED';
+  /**
+   * Database Center integration is enabled.
+   */
+  public const DATABASE_CENTER_INTEGRATION_ENABLED = 'ENABLED';
+  /**
+   * Database Center integration is disabled.
+   */
+  public const DATABASE_CENTER_INTEGRATION_DISABLED = 'DISABLED';
+  /**
    * This is an unknown database version.
    */
   public const DATABASE_VERSION_SQL_DATABASE_VERSION_UNSPECIFIED = 'SQL_DATABASE_VERSION_UNSPECIFIED';
@@ -156,6 +169,10 @@ class DatabaseInstance extends \Google\Collection
    */
   public const DATABASE_VERSION_MYSQL_8_4 = 'MYSQL_8_4';
   /**
+   * The database version is MySQL 9.7.
+   */
+  public const DATABASE_VERSION_MYSQL_9_7 = 'MYSQL_9_7';
+  /**
    * The database version is SQL Server 2017 Standard.
    */
   public const DATABASE_VERSION_SQLSERVER_2017_STANDARD = 'SQLSERVER_2017_STANDARD';
@@ -212,6 +229,14 @@ class DatabaseInstance extends \Google\Collection
    */
   public const DATABASE_VERSION_POSTGRES_18 = 'POSTGRES_18';
   /**
+   * The database version is PostgreSQL 19.
+   */
+  public const DATABASE_VERSION_POSTGRES_19 = 'POSTGRES_19';
+  /**
+   * The database version is PostgreSQL 20.
+   */
+  public const DATABASE_VERSION_POSTGRES_20 = 'POSTGRES_20';
+  /**
    * The database version is SQL Server 2019 Standard.
    */
   public const DATABASE_VERSION_SQLSERVER_2019_STANDARD = 'SQLSERVER_2019_STANDARD';
@@ -244,6 +269,18 @@ class DatabaseInstance extends \Google\Collection
    */
   public const DATABASE_VERSION_SQLSERVER_2022_WEB = 'SQLSERVER_2022_WEB';
   /**
+   * The database version is SQL Server 2025 Standard.
+   */
+  public const DATABASE_VERSION_SQLSERVER_2025_STANDARD = 'SQLSERVER_2025_STANDARD';
+  /**
+   * The database version is SQL Server 2025 Enterprise.
+   */
+  public const DATABASE_VERSION_SQLSERVER_2025_ENTERPRISE = 'SQLSERVER_2025_ENTERPRISE';
+  /**
+   * The database version is SQL Server 2025 Express.
+   */
+  public const DATABASE_VERSION_SQLSERVER_2025_EXPRESS = 'SQLSERVER_2025_EXPRESS';
+  /**
    * This is an unknown Cloud SQL instance type.
    */
   public const INSTANCE_TYPE_SQL_INSTANCE_TYPE_UNSPECIFIED = 'SQL_INSTANCE_TYPE_UNSPECIFIED';
@@ -265,6 +302,11 @@ class DatabaseInstance extends \Google\Collection
    * A Cloud SQL read pool.
    */
   public const INSTANCE_TYPE_READ_POOL_INSTANCE = 'READ_POOL_INSTANCE';
+  /**
+   * A Cloud SQL instance acting as a Blue-Green deployment target primary.
+   * (MySQL only)
+   */
+  public const INSTANCE_TYPE_GREEN_INSTANCE = 'GREEN_INSTANCE';
   public const SQL_NETWORK_ARCHITECTURE_SQL_NETWORK_ARCHITECTURE_UNSPECIFIED = 'SQL_NETWORK_ARCHITECTURE_UNSPECIFIED';
   /**
    * The instance uses the new network architecture.
@@ -356,6 +398,20 @@ class DatabaseInstance extends \Google\Collection
    */
   public $currentDiskSize;
   /**
+   * Optional. State of the Database Center integration for this instance. When
+   * unspecified, Database Center integration is enabled by default.
+   *
+   * @var string
+   */
+  public $databaseCenterIntegration;
+  /**
+   * Optional. If true, instance metadata is sent to the Database Center. If
+   * false, instance metadata is not sent to the Database Center.
+   *
+   * @var bool
+   */
+  public $databaseCenterIntegrationEnabled;
+  /**
    * Output only. Stores the current database version running on the instance
    * including minor version such as `MYSQL_8_0_18`.
    *
@@ -369,6 +425,8 @@ class DatabaseInstance extends \Google\Collection
    * @var string
    */
   public $databaseVersion;
+  protected $deploymentInfoType = BlueGreenDeploymentInfo::class;
+  protected $deploymentInfoDataType = '';
   protected $diskEncryptionConfigurationType = DiskEncryptionConfiguration::class;
   protected $diskEncryptionConfigurationDataType = '';
   protected $diskEncryptionStatusType = DiskEncryptionStatus::class;
@@ -558,6 +616,13 @@ class DatabaseInstance extends \Google\Collection
   protected $settingsType = Settings::class;
   protected $settingsDataType = '';
   /**
+   * Optional. Input only. Determines whether the precheck step is skipped
+   * during a major version upgrade.
+   *
+   * @var bool
+   */
+  public $skipPrecheck;
+  /**
    * @var string
    */
   public $sqlNetworkArchitecture;
@@ -695,6 +760,42 @@ class DatabaseInstance extends \Google\Collection
     return $this->currentDiskSize;
   }
   /**
+   * Optional. State of the Database Center integration for this instance. When
+   * unspecified, Database Center integration is enabled by default.
+   *
+   * Accepted values: DATABASE_CENTER_INTEGRATION_UNSPECIFIED, ENABLED, DISABLED
+   *
+   * @param self::DATABASE_CENTER_INTEGRATION_* $databaseCenterIntegration
+   */
+  public function setDatabaseCenterIntegration($databaseCenterIntegration)
+  {
+    $this->databaseCenterIntegration = $databaseCenterIntegration;
+  }
+  /**
+   * @return self::DATABASE_CENTER_INTEGRATION_*
+   */
+  public function getDatabaseCenterIntegration()
+  {
+    return $this->databaseCenterIntegration;
+  }
+  /**
+   * Optional. If true, instance metadata is sent to the Database Center. If
+   * false, instance metadata is not sent to the Database Center.
+   *
+   * @param bool $databaseCenterIntegrationEnabled
+   */
+  public function setDatabaseCenterIntegrationEnabled($databaseCenterIntegrationEnabled)
+  {
+    $this->databaseCenterIntegrationEnabled = $databaseCenterIntegrationEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getDatabaseCenterIntegrationEnabled()
+  {
+    return $this->databaseCenterIntegrationEnabled;
+  }
+  /**
    * Output only. Stores the current database version running on the instance
    * including minor version such as `MYSQL_8_0_18`.
    *
@@ -720,13 +821,15 @@ class DatabaseInstance extends \Google\Collection
    * MYSQL_8_0_28, MYSQL_8_0_29, MYSQL_8_0_30, MYSQL_8_0_31, MYSQL_8_0_32,
    * MYSQL_8_0_33, MYSQL_8_0_34, MYSQL_8_0_35, MYSQL_8_0_36, MYSQL_8_0_37,
    * MYSQL_8_0_39, MYSQL_8_0_40, MYSQL_8_0_41, MYSQL_8_0_42, MYSQL_8_0_43,
-   * MYSQL_8_0_44, MYSQL_8_0_45, MYSQL_8_0_46, MYSQL_8_4,
+   * MYSQL_8_0_44, MYSQL_8_0_45, MYSQL_8_0_46, MYSQL_8_4, MYSQL_9_7,
    * SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS,
    * SQLSERVER_2017_WEB, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12,
    * POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17,
-   * POSTGRES_18, SQLSERVER_2019_STANDARD, SQLSERVER_2019_ENTERPRISE,
-   * SQLSERVER_2019_EXPRESS, SQLSERVER_2019_WEB, SQLSERVER_2022_STANDARD,
-   * SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS, SQLSERVER_2022_WEB
+   * POSTGRES_18, POSTGRES_19, POSTGRES_20, SQLSERVER_2019_STANDARD,
+   * SQLSERVER_2019_ENTERPRISE, SQLSERVER_2019_EXPRESS, SQLSERVER_2019_WEB,
+   * SQLSERVER_2022_STANDARD, SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS,
+   * SQLSERVER_2022_WEB, SQLSERVER_2025_STANDARD, SQLSERVER_2025_ENTERPRISE,
+   * SQLSERVER_2025_EXPRESS
    *
    * @param self::DATABASE_VERSION_* $databaseVersion
    */
@@ -740,6 +843,23 @@ class DatabaseInstance extends \Google\Collection
   public function getDatabaseVersion()
   {
     return $this->databaseVersion;
+  }
+  /**
+   * Output only. Deployment info for the instance. This is set if the instance
+   * is currently part of any blue-green setup.
+   *
+   * @param BlueGreenDeploymentInfo $deploymentInfo
+   */
+  public function setDeploymentInfo(BlueGreenDeploymentInfo $deploymentInfo)
+  {
+    $this->deploymentInfo = $deploymentInfo;
+  }
+  /**
+   * @return BlueGreenDeploymentInfo
+   */
+  public function getDeploymentInfo()
+  {
+    return $this->deploymentInfo;
   }
   /**
    * Disk encryption configuration specific to an instance.
@@ -895,7 +1015,8 @@ class DatabaseInstance extends \Google\Collection
    * The instance type.
    *
    * Accepted values: SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE,
-   * ON_PREMISES_INSTANCE, READ_REPLICA_INSTANCE, READ_POOL_INSTANCE
+   * ON_PREMISES_INSTANCE, READ_REPLICA_INSTANCE, READ_POOL_INSTANCE,
+   * GREEN_INSTANCE
    *
    * @param self::INSTANCE_TYPE_* $instanceType
    */
@@ -1366,6 +1487,23 @@ class DatabaseInstance extends \Google\Collection
   public function getSettings()
   {
     return $this->settings;
+  }
+  /**
+   * Optional. Input only. Determines whether the precheck step is skipped
+   * during a major version upgrade.
+   *
+   * @param bool $skipPrecheck
+   */
+  public function setSkipPrecheck($skipPrecheck)
+  {
+    $this->skipPrecheck = $skipPrecheck;
+  }
+  /**
+   * @return bool
+   */
+  public function getSkipPrecheck()
+  {
+    return $this->skipPrecheck;
   }
   /**
    * @param self::SQL_NETWORK_ARCHITECTURE_* $sqlNetworkArchitecture

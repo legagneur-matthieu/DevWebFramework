@@ -20,6 +20,8 @@ namespace Google\Service\Compute\Resource;
 use Google\Service\Compute\HttpsHealthCheck;
 use Google\Service\Compute\HttpsHealthCheckList;
 use Google\Service\Compute\Operation;
+use Google\Service\Compute\TestPermissionsRequest;
+use Google\Service\Compute\TestPermissionsResponse;
 
 /**
  * The "httpsHealthChecks" collection of methods.
@@ -31,6 +33,8 @@ use Google\Service\Compute\Operation;
  */
 class HttpsHealthChecks extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Deletes the specified HttpsHealthCheck resource. (httpsHealthChecks.delete)
    *
@@ -174,13 +178,6 @@ class HttpsHealthChecks extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return HttpsHealthCheckList
    * @throws \Google\Service\Exception
    */
@@ -221,6 +218,23 @@ class HttpsHealthChecks extends \Google\Service\Resource
     $params = ['project' => $project, 'httpsHealthCheck' => $httpsHealthCheck, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Operation::class);
+  }
+  /**
+   * Returns permissions that a caller has on the specified resource.
+   * (httpsHealthChecks.testIamPermissions)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param TestPermissionsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return TestPermissionsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function testIamPermissions($project, $resource, TestPermissionsRequest $postBody, $optParams = [])
+  {
+    $params = ['project' => $project, 'resource' => $resource, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('testIamPermissions', [$params], TestPermissionsResponse::class);
   }
   /**
    * Updates a HttpsHealthCheck resource in the specified project using the data

@@ -19,16 +19,52 @@ namespace Google\Service\DataManager;
 
 class IngestAudienceMembersStatus extends \Google\Model
 {
+  protected $compositeDataIngestionStatusType = IngestCompositeDataStatus::class;
+  protected $compositeDataIngestionStatusDataType = '';
+  protected $googleUserIdDataIngestionStatusType = IngestGoogleUserIdDataStatus::class;
+  protected $googleUserIdDataIngestionStatusDataType = '';
   protected $mobileDataIngestionStatusType = IngestMobileDataStatus::class;
   protected $mobileDataIngestionStatusDataType = '';
   protected $pairDataIngestionStatusType = IngestPairDataStatus::class;
   protected $pairDataIngestionStatusDataType = '';
+  protected $partnerProvidedIdDataIngestionStatusType = IngestPartnerProvidedIdDataStatus::class;
+  protected $partnerProvidedIdDataIngestionStatusDataType = '';
+  protected $ppidDataIngestionStatusType = IngestPpidDataStatus::class;
+  protected $ppidDataIngestionStatusDataType = '';
   protected $userDataIngestionStatusType = IngestUserDataStatus::class;
   protected $userDataIngestionStatusDataType = '';
+  protected $userIdDataIngestionStatusType = IngestUserIdDataStatus::class;
+  protected $userIdDataIngestionStatusDataType = '';
 
   /**
-   * The status of the mobile data ingestion to the destination.
-   *
+   * @param IngestCompositeDataStatus $compositeDataIngestionStatus
+   */
+  public function setCompositeDataIngestionStatus(IngestCompositeDataStatus $compositeDataIngestionStatus)
+  {
+    $this->compositeDataIngestionStatus = $compositeDataIngestionStatus;
+  }
+  /**
+   * @return IngestCompositeDataStatus
+   */
+  public function getCompositeDataIngestionStatus()
+  {
+    return $this->compositeDataIngestionStatus;
+  }
+  /**
+   * @param IngestGoogleUserIdDataStatus $googleUserIdDataIngestionStatus
+   */
+  public function setGoogleUserIdDataIngestionStatus(IngestGoogleUserIdDataStatus $googleUserIdDataIngestionStatus)
+  {
+    $this->googleUserIdDataIngestionStatus = $googleUserIdDataIngestionStatus;
+  }
+  /**
+   * @return IngestGoogleUserIdDataStatus
+   */
+  public function getGoogleUserIdDataIngestionStatus()
+  {
+    return $this->googleUserIdDataIngestionStatus;
+  }
+  /**
    * @param IngestMobileDataStatus $mobileDataIngestionStatus
    */
   public function setMobileDataIngestionStatus(IngestMobileDataStatus $mobileDataIngestionStatus)
@@ -43,8 +79,6 @@ class IngestAudienceMembersStatus extends \Google\Model
     return $this->mobileDataIngestionStatus;
   }
   /**
-   * The status of the pair data ingestion to the destination.
-   *
    * @param IngestPairDataStatus $pairDataIngestionStatus
    */
   public function setPairDataIngestionStatus(IngestPairDataStatus $pairDataIngestionStatus)
@@ -59,8 +93,34 @@ class IngestAudienceMembersStatus extends \Google\Model
     return $this->pairDataIngestionStatus;
   }
   /**
-   * The status of the user data ingestion to the destination.
-   *
+   * @param IngestPartnerProvidedIdDataStatus $partnerProvidedIdDataIngestionStatus
+   */
+  public function setPartnerProvidedIdDataIngestionStatus(IngestPartnerProvidedIdDataStatus $partnerProvidedIdDataIngestionStatus)
+  {
+    $this->partnerProvidedIdDataIngestionStatus = $partnerProvidedIdDataIngestionStatus;
+  }
+  /**
+   * @return IngestPartnerProvidedIdDataStatus
+   */
+  public function getPartnerProvidedIdDataIngestionStatus()
+  {
+    return $this->partnerProvidedIdDataIngestionStatus;
+  }
+  /**
+   * @param IngestPpidDataStatus $ppidDataIngestionStatus
+   */
+  public function setPpidDataIngestionStatus(IngestPpidDataStatus $ppidDataIngestionStatus)
+  {
+    $this->ppidDataIngestionStatus = $ppidDataIngestionStatus;
+  }
+  /**
+   * @return IngestPpidDataStatus
+   */
+  public function getPpidDataIngestionStatus()
+  {
+    return $this->ppidDataIngestionStatus;
+  }
+  /**
    * @param IngestUserDataStatus $userDataIngestionStatus
    */
   public function setUserDataIngestionStatus(IngestUserDataStatus $userDataIngestionStatus)
@@ -73,6 +133,20 @@ class IngestAudienceMembersStatus extends \Google\Model
   public function getUserDataIngestionStatus()
   {
     return $this->userDataIngestionStatus;
+  }
+  /**
+   * @param IngestUserIdDataStatus $userIdDataIngestionStatus
+   */
+  public function setUserIdDataIngestionStatus(IngestUserIdDataStatus $userIdDataIngestionStatus)
+  {
+    $this->userIdDataIngestionStatus = $userIdDataIngestionStatus;
+  }
+  /**
+   * @return IngestUserIdDataStatus
+   */
+  public function getUserIdDataIngestionStatus()
+  {
+    return $this->userIdDataIngestionStatus;
   }
 }
 

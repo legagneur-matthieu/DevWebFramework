@@ -41,6 +41,12 @@ class User extends \Google\Collection
    */
   public $aliases;
   /**
+   * Output only. User's account archival time. (Read-only)
+   *
+   * @var string
+   */
+  public $archivalTime;
+  /**
    * Indicates if user is archived.
    *
    * @var bool
@@ -337,6 +343,12 @@ class User extends \Google\Collection
    */
   public $suspensionReason;
   /**
+   * Output only. User's account suspension time. (Read-only)
+   *
+   * @var string
+   */
+  public $suspensionTime;
+  /**
    * Output only. ETag of the user's photo (Read-only)
    *
    * @var string
@@ -405,6 +417,22 @@ class User extends \Google\Collection
   public function getAliases()
   {
     return $this->aliases;
+  }
+  /**
+   * Output only. User's account archival time. (Read-only)
+   *
+   * @param string $archivalTime
+   */
+  public function setArchivalTime($archivalTime)
+  {
+    $this->archivalTime = $archivalTime;
+  }
+  /**
+   * @return string
+   */
+  public function getArchivalTime()
+  {
+    return $this->archivalTime;
   }
   /**
    * Indicates if user is archived.
@@ -1136,6 +1164,22 @@ class User extends \Google\Collection
   public function getSuspensionReason()
   {
     return $this->suspensionReason;
+  }
+  /**
+   * Output only. User's account suspension time. (Read-only)
+   *
+   * @param string $suspensionTime
+   */
+  public function setSuspensionTime($suspensionTime)
+  {
+    $this->suspensionTime = $suspensionTime;
+  }
+  /**
+   * @return string
+   */
+  public function getSuspensionTime()
+  {
+    return $this->suspensionTime;
   }
   /**
    * Output only. ETag of the user's photo (Read-only)

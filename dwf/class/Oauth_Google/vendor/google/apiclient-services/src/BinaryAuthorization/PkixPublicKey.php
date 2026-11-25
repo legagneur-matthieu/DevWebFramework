@@ -96,6 +96,10 @@ class PkixPublicKey extends \Google\Model
    */
   public const SIGNATURE_ALGORITHM_EC_SIGN_P521_SHA512 = 'EC_SIGN_P521_SHA512';
   /**
+   * ML-DSA-65 Post-Quantum Cryptography signature algorithm.
+   */
+  public const SIGNATURE_ALGORITHM_ML_DSA_65 = 'ML_DSA_65';
+  /**
    * Optional. The ID of this public key. Signatures verified by Binary
    * Authorization must include the ID of the public key that can be used to
    * verify them. The ID must match exactly contents of the `key_id` field
@@ -184,7 +188,7 @@ class PkixPublicKey extends \Google\Model
    * RSA_SIGN_PKCS1_3072_SHA256, RSA_SIGN_PKCS1_4096_SHA256,
    * RSA_SIGN_PKCS1_4096_SHA512, ECDSA_P256_SHA256, EC_SIGN_P256_SHA256,
    * ECDSA_P384_SHA384, EC_SIGN_P384_SHA384, ECDSA_P521_SHA512,
-   * EC_SIGN_P521_SHA512
+   * EC_SIGN_P521_SHA512, ML_DSA_65
    *
    * @param self::SIGNATURE_ALGORITHM_* $signatureAlgorithm
    */

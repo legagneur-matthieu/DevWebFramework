@@ -66,12 +66,22 @@ class JobConfigurationExtract extends \Google\Collection
   protected $modelExtractOptionsType = ModelExtractOptions::class;
   protected $modelExtractOptionsDataType = '';
   /**
+   * Optional. Applicable to formats: PARQUET. If enabled, BigQuery to Parquet
+   * export will write the native Parquet Geography type instead of the default
+   * GeoParquet type.
+   *
+   * @var bool
+   */
+  public $nativeGeographyExportEnabled;
+  /**
    * Optional. Whether to print out a header row in the results. Default is
    * true. Not applicable when extracting models.
    *
    * @var bool
    */
   public $printHeader;
+  protected $secureContextType = SecureContext::class;
+  protected $secureContextDataType = '';
   protected $sourceModelType = ModelReference::class;
   protected $sourceModelDataType = '';
   protected $sourceTableType = TableReference::class;
@@ -194,6 +204,24 @@ class JobConfigurationExtract extends \Google\Collection
     return $this->modelExtractOptions;
   }
   /**
+   * Optional. Applicable to formats: PARQUET. If enabled, BigQuery to Parquet
+   * export will write the native Parquet Geography type instead of the default
+   * GeoParquet type.
+   *
+   * @param bool $nativeGeographyExportEnabled
+   */
+  public function setNativeGeographyExportEnabled($nativeGeographyExportEnabled)
+  {
+    $this->nativeGeographyExportEnabled = $nativeGeographyExportEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getNativeGeographyExportEnabled()
+  {
+    return $this->nativeGeographyExportEnabled;
+  }
+  /**
    * Optional. Whether to print out a header row in the results. Default is
    * true. Not applicable when extracting models.
    *
@@ -209,6 +237,25 @@ class JobConfigurationExtract extends \Google\Collection
   public function getPrintHeader()
   {
     return $this->printHeader;
+  }
+  /**
+   * Optional. A set of key-value pairs representing the secure context. This
+   * can be used to pass sensitive or context-specific information. They can be
+   * retrieved via the SECURE_CONTEXT() function and used to modify the run-time
+   * behavior of an extract job on tables with row access policies.
+   *
+   * @param SecureContext $secureContext
+   */
+  public function setSecureContext(SecureContext $secureContext)
+  {
+    $this->secureContext = $secureContext;
+  }
+  /**
+   * @return SecureContext
+   */
+  public function getSecureContext()
+  {
+    return $this->secureContext;
   }
   /**
    * A reference to the model being exported.

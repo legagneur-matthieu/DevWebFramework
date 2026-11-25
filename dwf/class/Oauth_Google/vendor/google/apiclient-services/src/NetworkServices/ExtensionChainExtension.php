@@ -85,6 +85,19 @@ class ExtensionChainExtension extends \Google\Collection
    */
   public $failOpen;
   /**
+   * Optional. List of the Envoy attributes to forward to the extension server.
+   * The attributes provided here are included as part of the
+   * `ProcessingRequest.attributes` field (of type `map`), where the keys are
+   * the attribute names. Refer to the
+   * [documentation](https://cloud.google.com/service-extensions/docs/cel-
+   * matcher-language-reference#attributes) for the names of attributes that can
+   * be forwarded. If omitted, no attributes are sent. Each element is a string
+   * indicating the attribute name.
+   *
+   * @var string[]
+   */
+  public $forwardAttributes;
+  /**
    * Optional. List of the HTTP headers to forward to the extension (from the
    * client or backend). If omitted, all headers are sent. Each element is a
    * string indicating the header name.
@@ -127,15 +140,11 @@ class ExtensionChainExtension extends \Google\Collection
    */
   public $name;
   /**
-   * Optional. When set to `TRUE`, enables `observability_mode` on the
-   * `ext_proc` filter. This makes `ext_proc` calls asynchronous. Envoy doesn't
-   * check for the response from `ext_proc` calls. For more information about
-   * the filter, see: https://www.envoyproxy.io/docs/envoy/v1.32.3/api-
-   * v3/extensions/filters/http/ext_proc/v3/ext_proc.proto#extensions-filters-
-   * http-ext-proc-v3-externalprocessor This field is helpful when you want to
-   * try out the extension in async log-only mode. Supported by regional
-   * `LbTrafficExtension` and `LbRouteExtension` resources. Only `STREAMED`
-   * (default) body processing mode is supported.
+   * Optional. When set to `true`, the calls to the extension backend are
+   * performed asynchronously, without pausing the processing of the ongoing
+   * request. In this mode, only `STREAMED` (default) body processing is
+   * supported. Responses, if any, are ignored. Supported by regional
+   * `LbTrafficExtension` and `LbRouteExtension` resources.
    *
    * @var bool
    */
@@ -170,7 +179,7 @@ class ExtensionChainExtension extends \Google\Collection
   public $responseBodySendMode;
   /**
    * Required. The reference to the service that runs the extension. To
-   * configure a callout extension, `service` must be a fully-qualified
+   * configure a callout extension, `service` must be a fully qualified
    * reference to a [backend service](https://cloud.google.com/compute/docs/refe
    * rence/rest/v1/backendServices) in the format: `https://www.googleapis.com/c
    * ompute/v1/projects/{project}/regions/{region}/backendServices/{backendServi
@@ -181,9 +190,9 @@ class ExtensionChainExtension extends \Google\Collection
    * extensions/docs/reference/rest/v1beta1/projects.locations.wasmPlugins) in
    * the format: `projects/{project}/locations/{location}/wasmPlugins/{plugin}`
    * or `//networkservices.googleapis.com/projects/{project}/locations/{location
-   * }/wasmPlugins/{wasmPlugin}`. Plugin extensions are currently supported for
-   * the `LbTrafficExtension`, the `LbRouteExtension`, and the `LbEdgeExtension`
-   * resources.
+   * }/wasmPlugins/{wasmPlugin}`. Supports plugin extensions for
+   * `LbTrafficExtension`, `LbRouteExtension`, `LbEdgeExtension`, and
+   * `CdnEdgeExtension` resources.
    *
    * @var string
    */
@@ -196,7 +205,9 @@ class ExtensionChainExtension extends \Google\Collection
    * `LbEdgeExtension` resource, this field is required and must only contain
    * `REQUEST_HEADERS` event. For the `AuthzExtension` resource, this field is
    * optional. `REQUEST_HEADERS` is the only supported event. If unspecified,
-   * `REQUEST_HEADERS` event is assumed as supported.
+   * `REQUEST_HEADERS` event is assumed as supported. For the `CdnEdgeExtension`
+   * resource, this field is optional. Eligible values are `REQUEST_HEADERS` and
+   * `RESPONSE_HEADERS`. If unspecified, both are assumed as supported.
    *
    * @var string[]
    */
@@ -252,6 +263,29 @@ class ExtensionChainExtension extends \Google\Collection
   public function getFailOpen()
   {
     return $this->failOpen;
+  }
+  /**
+   * Optional. List of the Envoy attributes to forward to the extension server.
+   * The attributes provided here are included as part of the
+   * `ProcessingRequest.attributes` field (of type `map`), where the keys are
+   * the attribute names. Refer to the
+   * [documentation](https://cloud.google.com/service-extensions/docs/cel-
+   * matcher-language-reference#attributes) for the names of attributes that can
+   * be forwarded. If omitted, no attributes are sent. Each element is a string
+   * indicating the attribute name.
+   *
+   * @param string[] $forwardAttributes
+   */
+  public function setForwardAttributes($forwardAttributes)
+  {
+    $this->forwardAttributes = $forwardAttributes;
+  }
+  /**
+   * @return string[]
+   */
+  public function getForwardAttributes()
+  {
+    return $this->forwardAttributes;
   }
   /**
    * Optional. List of the HTTP headers to forward to the extension (from the
@@ -326,15 +360,11 @@ class ExtensionChainExtension extends \Google\Collection
     return $this->name;
   }
   /**
-   * Optional. When set to `TRUE`, enables `observability_mode` on the
-   * `ext_proc` filter. This makes `ext_proc` calls asynchronous. Envoy doesn't
-   * check for the response from `ext_proc` calls. For more information about
-   * the filter, see: https://www.envoyproxy.io/docs/envoy/v1.32.3/api-
-   * v3/extensions/filters/http/ext_proc/v3/ext_proc.proto#extensions-filters-
-   * http-ext-proc-v3-externalprocessor This field is helpful when you want to
-   * try out the extension in async log-only mode. Supported by regional
-   * `LbTrafficExtension` and `LbRouteExtension` resources. Only `STREAMED`
-   * (default) body processing mode is supported.
+   * Optional. When set to `true`, the calls to the extension backend are
+   * performed asynchronously, without pausing the processing of the ongoing
+   * request. In this mode, only `STREAMED` (default) body processing is
+   * supported. Responses, if any, are ignored. Supported by regional
+   * `LbTrafficExtension` and `LbRouteExtension` resources.
    *
    * @param bool $observabilityMode
    */
@@ -405,7 +435,7 @@ class ExtensionChainExtension extends \Google\Collection
   }
   /**
    * Required. The reference to the service that runs the extension. To
-   * configure a callout extension, `service` must be a fully-qualified
+   * configure a callout extension, `service` must be a fully qualified
    * reference to a [backend service](https://cloud.google.com/compute/docs/refe
    * rence/rest/v1/backendServices) in the format: `https://www.googleapis.com/c
    * ompute/v1/projects/{project}/regions/{region}/backendServices/{backendServi
@@ -416,9 +446,9 @@ class ExtensionChainExtension extends \Google\Collection
    * extensions/docs/reference/rest/v1beta1/projects.locations.wasmPlugins) in
    * the format: `projects/{project}/locations/{location}/wasmPlugins/{plugin}`
    * or `//networkservices.googleapis.com/projects/{project}/locations/{location
-   * }/wasmPlugins/{wasmPlugin}`. Plugin extensions are currently supported for
-   * the `LbTrafficExtension`, the `LbRouteExtension`, and the `LbEdgeExtension`
-   * resources.
+   * }/wasmPlugins/{wasmPlugin}`. Supports plugin extensions for
+   * `LbTrafficExtension`, `LbRouteExtension`, `LbEdgeExtension`, and
+   * `CdnEdgeExtension` resources.
    *
    * @param string $service
    */
@@ -441,7 +471,9 @@ class ExtensionChainExtension extends \Google\Collection
    * `LbEdgeExtension` resource, this field is required and must only contain
    * `REQUEST_HEADERS` event. For the `AuthzExtension` resource, this field is
    * optional. `REQUEST_HEADERS` is the only supported event. If unspecified,
-   * `REQUEST_HEADERS` event is assumed as supported.
+   * `REQUEST_HEADERS` event is assumed as supported. For the `CdnEdgeExtension`
+   * resource, this field is optional. Eligible values are `REQUEST_HEADERS` and
+   * `RESPONSE_HEADERS`. If unspecified, both are assumed as supported.
    *
    * @param string[] $supportedEvents
    */

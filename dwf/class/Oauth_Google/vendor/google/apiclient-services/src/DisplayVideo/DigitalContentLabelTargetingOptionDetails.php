@@ -29,25 +29,40 @@ class DigitalContentLabelTargetingOptionDetails extends \Google\Model
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_UNRATED = 'CONTENT_RATING_TIER_UNRATED';
   /**
-   * Content suitable for general audiences.
+   * Deprecated: This content rating tier is no longer supported. Content
+   * suitable for general audiences.
+   *
+   * @deprecated
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_GENERAL = 'CONTENT_RATING_TIER_GENERAL';
   /**
-   * Content suitable for most audiences with parental guidance.
+   * Deprecated: This content rating tier is no longer supported. Content
+   * suitable for most audiences with parental guidance.
+   *
+   * @deprecated
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_PARENTAL_GUIDANCE = 'CONTENT_RATING_TIER_PARENTAL_GUIDANCE';
   /**
-   * Content suitable for teen and older audiences.
+   * Deprecated: This content rating tier is no longer supported. Content
+   * suitable for teen and older audiences.
+   *
+   * @deprecated
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_TEENS = 'CONTENT_RATING_TIER_TEENS';
   /**
-   * Content suitable only for mature audiences.
+   * Deprecated: This content rating tier is no longer supported. Content
+   * suitable only for mature audiences.
+   *
+   * @deprecated
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_MATURE = 'CONTENT_RATING_TIER_MATURE';
   /**
-   * Content suitable for family audiences. It is a subset of
+   * Deprecated: This content rating tier is no longer supported. Content
+   * suitable for family audiences. It is a subset of
    * CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and Partners line
    * items.
+   *
+   * @deprecated
    */
   public const CONTENT_RATING_TIER_CONTENT_RATING_TIER_FAMILIES = 'CONTENT_RATING_TIER_FAMILIES';
   /**

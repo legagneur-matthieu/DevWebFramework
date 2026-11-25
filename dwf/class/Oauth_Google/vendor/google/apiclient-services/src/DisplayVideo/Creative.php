@@ -207,6 +207,18 @@ class Creative extends \Google\Collection
    * Create and update methods are **not** supported for this hosting type.
    */
   public const HOSTING_SOURCE_HOSTING_SOURCE_RICH_MEDIA = 'HOSTING_SOURCE_RICH_MEDIA';
+  /**
+   * No attestation has been provided.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED = 'SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED';
+  /**
+   * Attested as not created or edited using AI.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_NOT_SYNTHETIC = 'NOT_SYNTHETIC';
+  /**
+   * Attested as created or edited using AI.
+   */
+  public const SYNTHETIC_CONTENT_ATTESTATION_STATUS_IS_SYNTHETIC = 'IS_SYNTHETIC';
   protected $collection_key = 'transcodes';
   protected $additionalDimensionsType = Dimensions::class;
   protected $additionalDimensionsDataType = 'array';
@@ -461,6 +473,13 @@ class Creative extends \Google\Collection
    * @var bool
    */
   public $skippable;
+  /**
+   * Optional. Whether to add a label to the creative as created or edited using
+   * AI when served in regions with local AI labeling regulations.
+   *
+   * @var string
+   */
+  public $syntheticContentAttestationStatus;
   /**
    * Optional. The original third-party tag used for the creative. Required and
    * only valid for third-party tag creatives. Third-party tag creatives are
@@ -1243,6 +1262,26 @@ class Creative extends \Google\Collection
   public function getSkippable()
   {
     return $this->skippable;
+  }
+  /**
+   * Optional. Whether to add a label to the creative as created or edited using
+   * AI when served in regions with local AI labeling regulations.
+   *
+   * Accepted values: SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED,
+   * NOT_SYNTHETIC, IS_SYNTHETIC
+   *
+   * @param self::SYNTHETIC_CONTENT_ATTESTATION_STATUS_* $syntheticContentAttestationStatus
+   */
+  public function setSyntheticContentAttestationStatus($syntheticContentAttestationStatus)
+  {
+    $this->syntheticContentAttestationStatus = $syntheticContentAttestationStatus;
+  }
+  /**
+   * @return self::SYNTHETIC_CONTENT_ATTESTATION_STATUS_*
+   */
+  public function getSyntheticContentAttestationStatus()
+  {
+    return $this->syntheticContentAttestationStatus;
   }
   /**
    * Optional. The original third-party tag used for the creative. Required and

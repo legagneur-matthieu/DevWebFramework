@@ -29,6 +29,12 @@ class GoogleFirebaseAppdistroV1ListReleasesResponse extends \Google\Collection
   public $nextPageToken;
   protected $releasesType = GoogleFirebaseAppdistroV1Release::class;
   protected $releasesDataType = 'array';
+  /**
+   * The total number of releases.
+   *
+   * @var int
+   */
+  public $totalSize;
 
   /**
    * A short-lived token, which can be sent as `pageToken` to retrieve the next
@@ -62,6 +68,22 @@ class GoogleFirebaseAppdistroV1ListReleasesResponse extends \Google\Collection
   public function getReleases()
   {
     return $this->releases;
+  }
+  /**
+   * The total number of releases.
+   *
+   * @param int $totalSize
+   */
+  public function setTotalSize($totalSize)
+  {
+    $this->totalSize = $totalSize;
+  }
+  /**
+   * @return int
+   */
+  public function getTotalSize()
+  {
+    return $this->totalSize;
   }
 }
 

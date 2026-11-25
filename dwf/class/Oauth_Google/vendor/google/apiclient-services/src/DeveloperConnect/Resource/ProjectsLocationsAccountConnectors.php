@@ -18,6 +18,7 @@
 namespace Google\Service\DeveloperConnect\Resource;
 
 use Google\Service\DeveloperConnect\AccountConnector;
+use Google\Service\DeveloperConnect\FetchUserRepositoriesResponse;
 use Google\Service\DeveloperConnect\ListAccountConnectorsResponse;
 use Google\Service\DeveloperConnect\Operation;
 
@@ -103,6 +104,29 @@ class ProjectsLocationsAccountConnectors extends \Google\Service\Resource
     return $this->call('delete', [$params], Operation::class);
   }
   /**
+   * FetchUserRepositories returns a list of UserRepos that are available for an
+   * account connector resource. (accountConnectors.fetchUserRepositories)
+   *
+   * @param string $accountConnector Required. The name of the Account Connector
+   * resource in the format: `projects/locations/accountConnectors`.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param int pageSize Optional. Number of results to return in the list.
+   * Defaults to 20.
+   * @opt_param string pageToken Optional. Page start.
+   * @opt_param string repository Optional. The name of the repository. When
+   * specified, only the UserRepository with this name will be returned if the
+   * repository is accessible under this Account Connector for the calling user.
+   * @return FetchUserRepositoriesResponse
+   * @throws \Google\Service\Exception
+   */
+  public function fetchUserRepositories($accountConnector, $optParams = [])
+  {
+    $params = ['accountConnector' => $accountConnector];
+    $params = array_merge($params, $optParams);
+    return $this->call('fetchUserRepositories', [$params], FetchUserRepositoriesResponse::class);
+  }
+  /**
    * Gets details of a single AccountConnector. (accountConnectors.get)
    *
    * @param string $name Required. Name of the resource
@@ -123,8 +147,8 @@ class ProjectsLocationsAccountConnectors extends \Google\Service\Resource
    * @param string $parent Required. Parent value for ListAccountConnectorsRequest
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string filter Optional. Filtering results
-   * @opt_param string orderBy Optional. Hint for how to order the results
+   * @opt_param string filter Optional. Filtering results.
+   * @opt_param string orderBy Optional. Hint for how to order the results.
    * @opt_param int pageSize Optional. Requested page size. Server may return
    * fewer items than requested. If unspecified, server will pick an appropriate
    * default.

@@ -66,9 +66,9 @@ class NodePool extends \Google\Collection
   protected $configType = NodeConfig::class;
   protected $configDataType = '';
   /**
-   * This checksum is computed by the server based on the value of node pool
-   * fields, and may be sent on update requests to ensure the client has an up-
-   * to-date value before proceeding.
+   * Output only. This checksum is computed by the server based on the value of
+   * node pool fields, and may be sent on update requests to ensure the client
+   * has an up-to-date value before proceeding.
    *
    * @var string
    */
@@ -92,6 +92,8 @@ class NodePool extends \Google\Collection
    * @var string[]
    */
   public $instanceGroupUrls;
+  protected $kubeletCertInfoType = KubeletCertInfo::class;
+  protected $kubeletCertInfoDataType = '';
   /**
    * The list of Google Compute Engine
    * [zones](https://cloud.google.com/compute/docs/zones#available) in which the
@@ -105,6 +107,8 @@ class NodePool extends \Google\Collection
    * @var string[]
    */
   public $locations;
+  protected $maintenancePolicyType = NodePoolMaintenancePolicy::class;
+  protected $maintenancePolicyDataType = '';
   protected $managementType = NodeManagement::class;
   protected $managementDataType = '';
   protected $maxPodsConstraintType = MaxPodsConstraint::class;
@@ -213,7 +217,7 @@ class NodePool extends \Google\Collection
     return $this->bestEffortProvisioning;
   }
   /**
-   * Which conditions caused the current node pool state.
+   * Output only. Which conditions caused the current node pool state.
    *
    * @param StatusCondition[] $conditions
    */
@@ -245,9 +249,9 @@ class NodePool extends \Google\Collection
     return $this->config;
   }
   /**
-   * This checksum is computed by the server based on the value of node pool
-   * fields, and may be sent on update requests to ensure the client has an up-
-   * to-date value before proceeding.
+   * Output only. This checksum is computed by the server based on the value of
+   * node pool fields, and may be sent on update requests to ensure the client
+   * has an up-to-date value before proceeding.
    *
    * @param string $etag
    */
@@ -302,6 +306,22 @@ class NodePool extends \Google\Collection
     return $this->instanceGroupUrls;
   }
   /**
+   * Output only. Contains expiry information about the kubelet certificate.
+   *
+   * @param KubeletCertInfo $kubeletCertInfo
+   */
+  public function setKubeletCertInfo(KubeletCertInfo $kubeletCertInfo)
+  {
+    $this->kubeletCertInfo = $kubeletCertInfo;
+  }
+  /**
+   * @return KubeletCertInfo
+   */
+  public function getKubeletCertInfo()
+  {
+    return $this->kubeletCertInfo;
+  }
+  /**
    * The list of Google Compute Engine
    * [zones](https://cloud.google.com/compute/docs/zones#available) in which the
    * NodePool's nodes should be located. If this value is unspecified during
@@ -323,6 +343,22 @@ class NodePool extends \Google\Collection
   public function getLocations()
   {
     return $this->locations;
+  }
+  /**
+   * Optional. Specifies the maintenance policy for the node pool.
+   *
+   * @param NodePoolMaintenancePolicy $maintenancePolicy
+   */
+  public function setMaintenancePolicy(NodePoolMaintenancePolicy $maintenancePolicy)
+  {
+    $this->maintenancePolicy = $maintenancePolicy;
+  }
+  /**
+   * @return NodePoolMaintenancePolicy
+   */
+  public function getMaintenancePolicy()
+  {
+    return $this->maintenancePolicy;
   }
   /**
    * NodeManagement configuration for this NodePool.

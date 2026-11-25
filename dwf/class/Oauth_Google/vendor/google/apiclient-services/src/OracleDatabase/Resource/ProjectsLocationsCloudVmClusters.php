@@ -18,6 +18,8 @@
 namespace Google\Service\OracleDatabase\Resource;
 
 use Google\Service\OracleDatabase\CloudVmCluster;
+use Google\Service\OracleDatabase\DisableCloudVmClusterIdentityConnectorRequest;
+use Google\Service\OracleDatabase\EnableCloudVmClusterIdentityConnectorRequest;
 use Google\Service\OracleDatabase\ListCloudVmClustersResponse;
 use Google\Service\OracleDatabase\Operation;
 
@@ -88,6 +90,42 @@ class ProjectsLocationsCloudVmClusters extends \Google\Service\Resource
     return $this->call('delete', [$params], Operation::class);
   }
   /**
+   * Disables the Workload Identity Connector for a Cloud VM Cluster.
+   * (cloudVmClusters.disableIdentityConnector)
+   *
+   * @param string $name Required. The name of the Cloud VM Cluster in the
+   * following format:
+   * projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+   * @param DisableCloudVmClusterIdentityConnectorRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function disableIdentityConnector($name, DisableCloudVmClusterIdentityConnectorRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('disableIdentityConnector', [$params], Operation::class);
+  }
+  /**
+   * Enables the Workload Identity Connector for a Cloud VM Cluster.
+   * (cloudVmClusters.enableIdentityConnector)
+   *
+   * @param string $name Required. The name of the Cloud VM Cluster in the
+   * following format:
+   * projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+   * @param EnableCloudVmClusterIdentityConnectorRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function enableIdentityConnector($name, EnableCloudVmClusterIdentityConnectorRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('enableIdentityConnector', [$params], Operation::class);
+  }
+  /**
    * Gets details of a single VM Cluster. (cloudVmClusters.get)
    *
    * @param string $name Required. The name of the Cloud VM Cluster in the
@@ -126,6 +164,37 @@ class ProjectsLocationsCloudVmClusters extends \Google\Service\Resource
     $params = ['parent' => $parent];
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], ListCloudVmClustersResponse::class);
+  }
+  /**
+   * Updates the parameters of a single Vm Cluster. (cloudVmClusters.patch)
+   *
+   * @param string $name Identifier. The name of the VM Cluster resource with the
+   * format:
+   * projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
+   * @param CloudVmCluster $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId Optional. An optional ID to identify the request.
+   * This value is used to identify duplicate requests. If you make a request with
+   * the same request ID and the original request is still in progress or
+   * completed, the server ignores the second request. This prevents clients from
+   * accidentally creating duplicate commitments. The request ID must be a valid
+   * UUID with the exception that zero UUID is not supported
+   * (00000000-0000-0000-0000-000000000000).
+   * @opt_param string updateMask Optional. A mask specifying which fields in the
+   * VM Cluster should be updated. A field specified in the mask is overwritten.
+   * If a mask isn't provided, the service treats this as an implied field mask
+   * equivalent to all fields that are populated (have a non-empty value). To
+   * clear or unset a field, the field must be explicitly specified in the
+   * `update_mask`.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function patch($name, CloudVmCluster $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', [$params], Operation::class);
   }
 }
 

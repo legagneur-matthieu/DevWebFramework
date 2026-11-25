@@ -143,6 +143,8 @@ class Backup extends \Google\Collection
    * @var string
    */
   public $expireTime;
+  protected $filestoreInstanceBackupPropertiesType = FilestoreInstanceBackupProperties::class;
+  protected $filestoreInstanceBackupPropertiesDataType = '';
   protected $gcpBackupPlanInfoType = GCPBackupPlanInfo::class;
   protected $gcpBackupPlanInfoDataType = '';
   protected $gcpResourceType = BackupGcpResource::class;
@@ -170,6 +172,8 @@ class Backup extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $netappVolumeBackupPropertiesType = NetAppVolumeBackupProperties::class;
+  protected $netappVolumeBackupPropertiesDataType = '';
   /**
    * Output only. source resource size in bytes at the time of the backup.
    *
@@ -202,6 +206,8 @@ class Backup extends \Google\Collection
    * @var string
    */
   public $updateTime;
+  protected $verificationSummaryType = VerificationSummary::class;
+  protected $verificationSummaryDataType = '';
 
   /**
    * Output only. AlloyDB specific backup properties.
@@ -438,6 +444,22 @@ class Backup extends \Google\Collection
     return $this->expireTime;
   }
   /**
+   * Output only. Filestore specific backup properties.
+   *
+   * @param FilestoreInstanceBackupProperties $filestoreInstanceBackupProperties
+   */
+  public function setFilestoreInstanceBackupProperties(FilestoreInstanceBackupProperties $filestoreInstanceBackupProperties)
+  {
+    $this->filestoreInstanceBackupProperties = $filestoreInstanceBackupProperties;
+  }
+  /**
+   * @return FilestoreInstanceBackupProperties
+   */
+  public function getFilestoreInstanceBackupProperties()
+  {
+    return $this->filestoreInstanceBackupProperties;
+  }
+  /**
    * Output only. Configuration for a Google Cloud resource.
    *
    * @param GCPBackupPlanInfo $gcpBackupPlanInfo
@@ -521,6 +543,22 @@ class Backup extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Output only. NetApp Volume specific backup properties.
+   *
+   * @param NetAppVolumeBackupProperties $netappVolumeBackupProperties
+   */
+  public function setNetappVolumeBackupProperties(NetAppVolumeBackupProperties $netappVolumeBackupProperties)
+  {
+    $this->netappVolumeBackupProperties = $netappVolumeBackupProperties;
+  }
+  /**
+   * @return NetAppVolumeBackupProperties
+   */
+  public function getNetappVolumeBackupProperties()
+  {
+    return $this->netappVolumeBackupProperties;
   }
   /**
    * Output only. source resource size in bytes at the time of the backup.
@@ -621,6 +659,22 @@ class Backup extends \Google\Collection
   public function getUpdateTime()
   {
     return $this->updateTime;
+  }
+  /**
+   * Output only. The restore verification status of the backup.
+   *
+   * @param VerificationSummary $verificationSummary
+   */
+  public function setVerificationSummary(VerificationSummary $verificationSummary)
+  {
+    $this->verificationSummary = $verificationSummary;
+  }
+  /**
+   * @return VerificationSummary
+   */
+  public function getVerificationSummary()
+  {
+    return $this->verificationSummary;
   }
 }
 

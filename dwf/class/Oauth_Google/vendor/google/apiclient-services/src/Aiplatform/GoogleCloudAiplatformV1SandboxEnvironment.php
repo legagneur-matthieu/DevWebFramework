@@ -43,6 +43,22 @@ class GoogleCloudAiplatformV1SandboxEnvironment extends \Google\Model
    * Sandbox runtime has been deleted.
    */
   public const STATE_STATE_DELETED = 'STATE_DELETED';
+  /**
+   * Sandbox runtime is paused.
+   */
+  public const STATE_STATE_PAUSED = 'STATE_PAUSED';
+  /**
+   * Sandbox runtime is pausing.
+   */
+  public const STATE_STATE_PAUSING = 'STATE_PAUSING';
+  /**
+   * Sandbox runtime is resuming.
+   */
+  public const STATE_STATE_RESUMING = 'STATE_RESUMING';
+  /**
+   * Sandbox runtime is stopping.
+   */
+  public const STATE_STATE_STOPPING = 'STATE_STOPPING';
   protected $connectionInfoType = GoogleCloudAiplatformV1SandboxEnvironmentConnectionInfo::class;
   protected $connectionInfoDataType = '';
   /**
@@ -66,11 +82,42 @@ class GoogleCloudAiplatformV1SandboxEnvironment extends \Google\Model
    */
   public $expireTime;
   /**
+   * Output only. The resource name of the latest snapshot taken for this
+   * SandboxEnvironment.
+   *
+   * @var string
+   */
+  public $latestSandboxEnvironmentSnapshot;
+  /**
    * Identifier. The name of the SandboxEnvironment.
    *
    * @var string
    */
   public $name;
+  /**
+   * Optional. Owner information for this sandbox environment. A Sandbox can
+   * only be restored from a snapshot that belongs to the same owner. If not
+   * set, sandbox will be created as the default owner.
+   *
+   * @var string
+   */
+  public $owner;
+  /**
+   * Optional. The resource name of the SandboxEnvironmentSnapshot to use for
+   * creating this SandboxEnvironment. Format: `projects/{project}/locations/{lo
+   * cation}/reasoningEngines/{reasoning_engine}/sandboxEnvironmentSnapshots/{sa
+   * ndbox_environment_snapshot}`
+   *
+   * @var string
+   */
+  public $sandboxEnvironmentSnapshot;
+  /**
+   * Optional. The name of the SandboxEnvironmentTemplate specified in the
+   * parent Agent Engine resource that this SandboxEnvironment is created from.
+   *
+   * @var string
+   */
+  public $sandboxEnvironmentTemplate;
   protected $specType = GoogleCloudAiplatformV1SandboxEnvironmentSpec::class;
   protected $specDataType = '';
   /**
@@ -161,6 +208,23 @@ class GoogleCloudAiplatformV1SandboxEnvironment extends \Google\Model
     return $this->expireTime;
   }
   /**
+   * Output only. The resource name of the latest snapshot taken for this
+   * SandboxEnvironment.
+   *
+   * @param string $latestSandboxEnvironmentSnapshot
+   */
+  public function setLatestSandboxEnvironmentSnapshot($latestSandboxEnvironmentSnapshot)
+  {
+    $this->latestSandboxEnvironmentSnapshot = $latestSandboxEnvironmentSnapshot;
+  }
+  /**
+   * @return string
+   */
+  public function getLatestSandboxEnvironmentSnapshot()
+  {
+    return $this->latestSandboxEnvironmentSnapshot;
+  }
+  /**
    * Identifier. The name of the SandboxEnvironment.
    *
    * @param string $name
@@ -175,6 +239,60 @@ class GoogleCloudAiplatformV1SandboxEnvironment extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Optional. Owner information for this sandbox environment. A Sandbox can
+   * only be restored from a snapshot that belongs to the same owner. If not
+   * set, sandbox will be created as the default owner.
+   *
+   * @param string $owner
+   */
+  public function setOwner($owner)
+  {
+    $this->owner = $owner;
+  }
+  /**
+   * @return string
+   */
+  public function getOwner()
+  {
+    return $this->owner;
+  }
+  /**
+   * Optional. The resource name of the SandboxEnvironmentSnapshot to use for
+   * creating this SandboxEnvironment. Format: `projects/{project}/locations/{lo
+   * cation}/reasoningEngines/{reasoning_engine}/sandboxEnvironmentSnapshots/{sa
+   * ndbox_environment_snapshot}`
+   *
+   * @param string $sandboxEnvironmentSnapshot
+   */
+  public function setSandboxEnvironmentSnapshot($sandboxEnvironmentSnapshot)
+  {
+    $this->sandboxEnvironmentSnapshot = $sandboxEnvironmentSnapshot;
+  }
+  /**
+   * @return string
+   */
+  public function getSandboxEnvironmentSnapshot()
+  {
+    return $this->sandboxEnvironmentSnapshot;
+  }
+  /**
+   * Optional. The name of the SandboxEnvironmentTemplate specified in the
+   * parent Agent Engine resource that this SandboxEnvironment is created from.
+   *
+   * @param string $sandboxEnvironmentTemplate
+   */
+  public function setSandboxEnvironmentTemplate($sandboxEnvironmentTemplate)
+  {
+    $this->sandboxEnvironmentTemplate = $sandboxEnvironmentTemplate;
+  }
+  /**
+   * @return string
+   */
+  public function getSandboxEnvironmentTemplate()
+  {
+    return $this->sandboxEnvironmentTemplate;
   }
   /**
    * Optional. The configuration of the SandboxEnvironment.
@@ -196,7 +314,8 @@ class GoogleCloudAiplatformV1SandboxEnvironment extends \Google\Model
    * Output only. The runtime state of the SandboxEnvironment.
    *
    * Accepted values: STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING,
-   * STATE_DEPROVISIONING, STATE_TERMINATED, STATE_DELETED
+   * STATE_DEPROVISIONING, STATE_TERMINATED, STATE_DELETED, STATE_PAUSED,
+   * STATE_PAUSING, STATE_RESUMING, STATE_STOPPING
    *
    * @param self::STATE_* $state
    */

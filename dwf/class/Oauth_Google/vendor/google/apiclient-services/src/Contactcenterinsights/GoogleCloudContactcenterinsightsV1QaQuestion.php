@@ -74,6 +74,8 @@ class GoogleCloudContactcenterinsightsV1QaQuestion extends \Google\Collection
   public $order;
   protected $predefinedQuestionConfigType = GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig::class;
   protected $predefinedQuestionConfigDataType = '';
+  protected $qaQuestionDataOptionsType = GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions::class;
+  protected $qaQuestionDataOptionsDataType = '';
   /**
    * Question text. E.g., "Did the agent greet the customer?"
    *
@@ -86,6 +88,18 @@ class GoogleCloudContactcenterinsightsV1QaQuestion extends \Google\Collection
    * @var string
    */
   public $questionType;
+  /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * Questions are tagged for categorization and scoring. Tags can either be: -
    * Default Tags: These are predefined categories. They are identified by their
@@ -244,6 +258,22 @@ class GoogleCloudContactcenterinsightsV1QaQuestion extends \Google\Collection
     return $this->predefinedQuestionConfig;
   }
   /**
+   * Options for configuring the data used to generate the QA question.
+   *
+   * @param GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions $qaQuestionDataOptions
+   */
+  public function setQaQuestionDataOptions(GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions $qaQuestionDataOptions)
+  {
+    $this->qaQuestionDataOptions = $qaQuestionDataOptions;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions
+   */
+  public function getQaQuestionDataOptions()
+  {
+    return $this->qaQuestionDataOptions;
+  }
+  /**
    * Question text. E.g., "Did the agent greet the customer?"
    *
    * @param string $questionBody
@@ -276,6 +306,38 @@ class GoogleCloudContactcenterinsightsV1QaQuestion extends \Google\Collection
   public function getQuestionType()
   {
     return $this->questionType;
+  }
+  /**
+   * Output only. Whether this resource is zone isolated.
+   *
+   * @param bool $satisfiesPzi
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * Output only. Whether this resource is zone separated.
+   *
+   * @param bool $satisfiesPzs
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * Questions are tagged for categorization and scoring. Tags can either be: -

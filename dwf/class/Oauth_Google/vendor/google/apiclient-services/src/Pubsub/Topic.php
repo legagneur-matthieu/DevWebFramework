@@ -45,8 +45,8 @@ class Topic extends \Google\Collection
    */
   public $kmsKeyName;
   /**
-   * Optional. See [Creating and managing labels]
-   * (https://cloud.google.com/pubsub/docs/labels).
+   * Optional. See [Creating and managing labels](
+   * https://cloud.google.com/pubsub/docs/labels).
    *
    * @var string[]
    */
@@ -98,7 +98,9 @@ class Topic extends \Google\Collection
   /**
    * Optional. Input only. Immutable. Tag keys/values directly bound to this
    * resource. For example: "123/environment": "production", "123/costCenter":
-   * "marketing"
+   * "marketing" See
+   * https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+   * for more information on using tags with Pub/Sub resources.
    *
    * @var string[]
    */
@@ -139,8 +141,8 @@ class Topic extends \Google\Collection
     return $this->kmsKeyName;
   }
   /**
-   * Optional. See [Creating and managing labels]
-   * (https://cloud.google.com/pubsub/docs/labels).
+   * Optional. See [Creating and managing labels](
+   * https://cloud.google.com/pubsub/docs/labels).
    *
    * @param string[] $labels
    */
@@ -289,7 +291,9 @@ class Topic extends \Google\Collection
   /**
    * Optional. Input only. Immutable. Tag keys/values directly bound to this
    * resource. For example: "123/environment": "production", "123/costCenter":
-   * "marketing"
+   * "marketing" See
+   * https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+   * for more information on using tags with Pub/Sub resources.
    *
    * @param string[] $tags
    */

@@ -95,6 +95,10 @@ class ManagedInstance extends \Google\Collection
    */
   public const INSTANCE_STATUS_PENDING = 'PENDING';
   /**
+   * The instance is gracefully shutting down.
+   */
+  public const INSTANCE_STATUS_PENDING_STOP = 'PENDING_STOP';
+  /**
    * Resources are being allocated for the instance.
    */
   public const INSTANCE_STATUS_PROVISIONING = 'PROVISIONING';
@@ -131,6 +135,31 @@ class ManagedInstance extends \Google\Collection
    * The instance has stopped (either by explicit action or underlying failure).
    */
   public const INSTANCE_STATUS_TERMINATED = 'TERMINATED';
+  /**
+   * The managed instance will eventually be ABANDONED, i.e. dissociated from
+   * the managed instance group.
+   */
+  public const TARGET_STATUS_ABANDONED = 'ABANDONED';
+  /**
+   * The managed instance will eventually be DELETED.
+   */
+  public const TARGET_STATUS_DELETED = 'DELETED';
+  /**
+   * Only present to map the STATUS_INVALID value.
+   */
+  public const TARGET_STATUS_INVALID = 'INVALID';
+  /**
+   * The managed instance will eventually reach status RUNNING.
+   */
+  public const TARGET_STATUS_RUNNING = 'RUNNING';
+  /**
+   * The managed instance will eventually reach status TERMINATED.
+   */
+  public const TARGET_STATUS_STOPPED = 'STOPPED';
+  /**
+   * The managed instance will eventually reach status SUSPENDED.
+   */
+  public const TARGET_STATUS_SUSPENDED = 'SUSPENDED';
   protected $collection_key = 'instanceHealth';
   /**
    * Output only. [Output Only] The current action that the managed instance
@@ -195,6 +224,18 @@ class ManagedInstance extends \Google\Collection
   protected $preservedStateFromPolicyDataType = '';
   protected $propertiesFromFlexibilityPolicyType = ManagedInstancePropertiesFromFlexibilityPolicy::class;
   protected $propertiesFromFlexibilityPolicyDataType = '';
+  protected $schedulingType = ManagedInstanceScheduling::class;
+  protected $schedulingDataType = '';
+  protected $shutdownDetailsType = ManagedInstanceShutdownDetails::class;
+  protected $shutdownDetailsDataType = '';
+  /**
+   * Output only. The eventual status of the instance. The instance group
+   * manager will not be identified as stable till each managed instance reaches
+   * its targetStatus.
+   *
+   * @var string
+   */
+  public $targetStatus;
   protected $versionType = ManagedInstanceVersion::class;
   protected $versionDataType = '';
 
@@ -291,8 +332,9 @@ class ManagedInstance extends \Google\Collection
    * Output only. [Output Only] The status of the instance. This field is empty
    * when the instance does not exist.
    *
-   * Accepted values: DEPROVISIONING, PENDING, PROVISIONING, REPAIRING, RUNNING,
-   * STAGING, STOPPED, STOPPING, SUSPENDED, SUSPENDING, TERMINATED
+   * Accepted values: DEPROVISIONING, PENDING, PENDING_STOP, PROVISIONING,
+   * REPAIRING, RUNNING, STAGING, STOPPED, STOPPING, SUSPENDED, SUSPENDING,
+   * TERMINATED
    *
    * @param self::INSTANCE_STATUS_* $instanceStatus
    */
@@ -391,6 +433,60 @@ class ManagedInstance extends \Google\Collection
   public function getPropertiesFromFlexibilityPolicy()
   {
     return $this->propertiesFromFlexibilityPolicy;
+  }
+  /**
+   * Output only. Information about the termination timestamp of the instance,
+   * if applicable.
+   *
+   * @param ManagedInstanceScheduling $scheduling
+   */
+  public function setScheduling(ManagedInstanceScheduling $scheduling)
+  {
+    $this->scheduling = $scheduling;
+  }
+  /**
+   * @return ManagedInstanceScheduling
+   */
+  public function getScheduling()
+  {
+    return $this->scheduling;
+  }
+  /**
+   * Output only. Specifies the graceful shutdown details if the instance is in
+   * `PENDING_STOP` state or there is a programmed stop scheduled.
+   *
+   * @param ManagedInstanceShutdownDetails $shutdownDetails
+   */
+  public function setShutdownDetails(ManagedInstanceShutdownDetails $shutdownDetails)
+  {
+    $this->shutdownDetails = $shutdownDetails;
+  }
+  /**
+   * @return ManagedInstanceShutdownDetails
+   */
+  public function getShutdownDetails()
+  {
+    return $this->shutdownDetails;
+  }
+  /**
+   * Output only. The eventual status of the instance. The instance group
+   * manager will not be identified as stable till each managed instance reaches
+   * its targetStatus.
+   *
+   * Accepted values: ABANDONED, DELETED, INVALID, RUNNING, STOPPED, SUSPENDED
+   *
+   * @param self::TARGET_STATUS_* $targetStatus
+   */
+  public function setTargetStatus($targetStatus)
+  {
+    $this->targetStatus = $targetStatus;
+  }
+  /**
+   * @return self::TARGET_STATUS_*
+   */
+  public function getTargetStatus()
+  {
+    return $this->targetStatus;
   }
   /**
    * Output only. [Output Only] Intended version of this instance.

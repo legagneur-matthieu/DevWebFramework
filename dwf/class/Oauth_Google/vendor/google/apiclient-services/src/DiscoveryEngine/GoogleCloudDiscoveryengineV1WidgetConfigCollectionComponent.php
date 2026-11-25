@@ -20,6 +20,8 @@ namespace Google\Service\DiscoveryEngine;
 class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Google\Collection
 {
   protected $collection_key = 'dataStoreComponents';
+  protected $connectorAuthStateType = GoogleCloudDiscoveryengineV1WidgetConfigConnectorAuthState::class;
+  protected $connectorAuthStateDataType = '';
   /**
    * Output only. The icon link of the connector source.
    *
@@ -39,6 +41,21 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
    * @var string
    */
   public $dataSourceDisplayName;
+  /**
+   * Output only. The end-user-facing display name of the data source, sourced
+   * from `ConnectorSource.end_user_display_name`. When unset, clients fall back
+   * to `data_source_display_name`.
+   *
+   * @var string
+   */
+  public $dataSourceEndUserDisplayName;
+  /**
+   * Output only. The version of the connector definition backing this
+   * collection, mirroring `DataConnector.data_source_version`.
+   *
+   * @var 
+   */
+  public $dataSourceVersion;
   protected $dataStoreComponentsType = GoogleCloudDiscoveryengineV1WidgetConfigDataStoreComponent::class;
   protected $dataStoreComponentsDataType = 'array';
   /**
@@ -50,21 +67,68 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
   /**
    * Output only. the identifier of the collection, used for widget service. For
    * now it refers to collection_id, in the future we will migrate the field to
-   * encrypted collection name UUID.
+   * encrypted collection name UUID. For synthetic placeholder entries (see
+   * message-level comment) this is a synthetic placeholder id, not a real
+   * collection_id.
    *
    * @var string
    */
   public $id;
   /**
+   * Output only. Whether this is a first-party (Google-owned) connector, as
+   * opposed to a third-party connector.
+   *
+   * @var bool
+   */
+  public $isFirstParty;
+  protected $metadataType = GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata::class;
+  protected $metadataDataType = '';
+  /**
    * The name of the collection. It should be collection resource name. Format:
    * `projects/{project}/locations/{location}/collections/{collection_id}`. For
-   * APIs under WidgetService, such as WidgetService.LookUpWidgetConfig, the
-   * project number and location part is erased in this field.
+   * APIs under WidgetService, such as WidgetService.LookupWidgetConfig, the
+   * project number and location part is erased in this field. For synthetic
+   * placeholder entries (see message-level comment) this carries a synthetic
+   * placeholder collection id that does not correspond to a real collection.
+   * Callers must not attempt to resolve / GET this resource until the user
+   * authorizes the connector.
    *
    * @var string
    */
   public $name;
+  /**
+   * Output only. The version-independent label of the connector backing this
+   * collection, mirroring `DataConnector.tag`. Unlike the version-pinned data
+   * store id it survives a connector version upgrade, so an upgraded connector
+   * keeps the same tag. Not a unique key. As `DataConnector.tag` documents,
+   * several connectors may share a tag under the same (project, location,
+   * collection, data_source), and tag-based lookup resolves to the one with the
+   * greatest create_time. Clients must not treat this as a connector
+   * identifier. Empty when the connector was created before the tag-write
+   * launch, and for synthetic placeholder entries, which have no underlying
+   * `DataConnector`. Populated only when
+   * `ConnectorsFeature.enable_connector_tag` is on.
+   *
+   * @var string
+   */
+  public $tag;
 
+  /**
+   * Output only. The auth uri of the connector source.
+   *
+   * @param GoogleCloudDiscoveryengineV1WidgetConfigConnectorAuthState $connectorAuthState
+   */
+  public function setConnectorAuthState(GoogleCloudDiscoveryengineV1WidgetConfigConnectorAuthState $connectorAuthState)
+  {
+    $this->connectorAuthState = $connectorAuthState;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1WidgetConfigConnectorAuthState
+   */
+  public function getConnectorAuthState()
+  {
+    return $this->connectorAuthState;
+  }
   /**
    * Output only. The icon link of the connector source.
    *
@@ -115,6 +179,32 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
     return $this->dataSourceDisplayName;
   }
   /**
+   * Output only. The end-user-facing display name of the data source, sourced
+   * from `ConnectorSource.end_user_display_name`. When unset, clients fall back
+   * to `data_source_display_name`.
+   *
+   * @param string $dataSourceEndUserDisplayName
+   */
+  public function setDataSourceEndUserDisplayName($dataSourceEndUserDisplayName)
+  {
+    $this->dataSourceEndUserDisplayName = $dataSourceEndUserDisplayName;
+  }
+  /**
+   * @return string
+   */
+  public function getDataSourceEndUserDisplayName()
+  {
+    return $this->dataSourceEndUserDisplayName;
+  }
+  public function setDataSourceVersion($dataSourceVersion)
+  {
+    $this->dataSourceVersion = $dataSourceVersion;
+  }
+  public function getDataSourceVersion()
+  {
+    return $this->dataSourceVersion;
+  }
+  /**
    * For the data store collection, list of the children data stores.
    *
    * @param GoogleCloudDiscoveryengineV1WidgetConfigDataStoreComponent[] $dataStoreComponents
@@ -149,7 +239,9 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
   /**
    * Output only. the identifier of the collection, used for widget service. For
    * now it refers to collection_id, in the future we will migrate the field to
-   * encrypted collection name UUID.
+   * encrypted collection name UUID. For synthetic placeholder entries (see
+   * message-level comment) this is a synthetic placeholder id, not a real
+   * collection_id.
    *
    * @param string $id
    */
@@ -165,10 +257,50 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
     return $this->id;
   }
   /**
+   * Output only. Whether this is a first-party (Google-owned) connector, as
+   * opposed to a third-party connector.
+   *
+   * @param bool $isFirstParty
+   */
+  public function setIsFirstParty($isFirstParty)
+  {
+    $this->isFirstParty = $isFirstParty;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsFirstParty()
+  {
+    return $this->isFirstParty;
+  }
+  /**
+   * Output only. User-facing connector metadata (`title`, `description`,
+   * `short_description`, `author`, `note`), retrieved from the registry
+   * `ConnectorSource.metadata` (joined by data source). Shown on the connector
+   * detail page.
+   *
+   * @param GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata $metadata
+   */
+  public function setMetadata(GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata $metadata)
+  {
+    $this->metadata = $metadata;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata
+   */
+  public function getMetadata()
+  {
+    return $this->metadata;
+  }
+  /**
    * The name of the collection. It should be collection resource name. Format:
    * `projects/{project}/locations/{location}/collections/{collection_id}`. For
-   * APIs under WidgetService, such as WidgetService.LookUpWidgetConfig, the
-   * project number and location part is erased in this field.
+   * APIs under WidgetService, such as WidgetService.LookupWidgetConfig, the
+   * project number and location part is erased in this field. For synthetic
+   * placeholder entries (see message-level comment) this carries a synthetic
+   * placeholder collection id that does not correspond to a real collection.
+   * Callers must not attempt to resolve / GET this resource until the user
+   * authorizes the connector.
    *
    * @param string $name
    */
@@ -182,6 +314,32 @@ class GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent extends \Googl
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Output only. The version-independent label of the connector backing this
+   * collection, mirroring `DataConnector.tag`. Unlike the version-pinned data
+   * store id it survives a connector version upgrade, so an upgraded connector
+   * keeps the same tag. Not a unique key. As `DataConnector.tag` documents,
+   * several connectors may share a tag under the same (project, location,
+   * collection, data_source), and tag-based lookup resolves to the one with the
+   * greatest create_time. Clients must not treat this as a connector
+   * identifier. Empty when the connector was created before the tag-write
+   * launch, and for synthetic placeholder entries, which have no underlying
+   * `DataConnector`. Populated only when
+   * `ConnectorsFeature.enable_connector_tag` is on.
+   *
+   * @param string $tag
+   */
+  public function setTag($tag)
+  {
+    $this->tag = $tag;
+  }
+  /**
+   * @return string
+   */
+  public function getTag()
+  {
+    return $this->tag;
   }
 }
 

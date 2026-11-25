@@ -19,11 +19,55 @@ namespace Google\Service\CloudRedis;
 
 class ResourceMaintenanceInfo extends \Google\Collection
 {
-  protected $collection_key = 'denyMaintenanceSchedules';
+  /**
+   * Unspecified state.
+   */
+  public const MAINTENANCE_STATE_MAINTENANCE_STATE_UNSPECIFIED = 'MAINTENANCE_STATE_UNSPECIFIED';
+  /**
+   * Database resource is being created.
+   */
+  public const MAINTENANCE_STATE_CREATING = 'CREATING';
+  /**
+   * Database resource has been created and is ready to use.
+   */
+  public const MAINTENANCE_STATE_READY = 'READY';
+  /**
+   * Database resource is being updated.
+   */
+  public const MAINTENANCE_STATE_UPDATING = 'UPDATING';
+  /**
+   * Database resource is unheathy and under repair.
+   */
+  public const MAINTENANCE_STATE_REPAIRING = 'REPAIRING';
+  /**
+   * Database resource is being deleted.
+   */
+  public const MAINTENANCE_STATE_DELETING = 'DELETING';
+  /**
+   * Database resource encountered an error and is in indeterministic state.
+   */
+  public const MAINTENANCE_STATE_ERROR = 'ERROR';
+  protected $collection_key = 'nextAvailableMaintenanceVersions';
+  protected $currentVersionReleaseDateType = Date::class;
+  protected $currentVersionReleaseDateDataType = '';
   protected $denyMaintenanceSchedulesType = ResourceMaintenanceDenySchedule::class;
   protected $denyMaintenanceSchedulesDataType = 'array';
+  /**
+   * Optional. Whether the instance is in stopped state. This information is
+   * temporarily being captured in maintenanceInfo, till STOPPED state is
+   * supported by DB Center.
+   *
+   * @var bool
+   */
+  public $isInstanceStopped;
   protected $maintenanceScheduleType = ResourceMaintenanceSchedule::class;
   protected $maintenanceScheduleDataType = '';
+  /**
+   * Output only. Current state of maintenance on the database resource.
+   *
+   * @var string
+   */
+  public $maintenanceState;
   /**
    * Optional. Current Maintenance version of the database resource. Example:
    * "MYSQL_8_0_41.R20250531.01_15"
@@ -31,7 +75,31 @@ class ResourceMaintenanceInfo extends \Google\Collection
    * @var string
    */
   public $maintenanceVersion;
+  /**
+   * Optional. List of next available maintenance versions.
+   *
+   * @var string[]
+   */
+  public $nextAvailableMaintenanceVersions;
+  protected $upcomingMaintenanceType = UpcomingMaintenance::class;
+  protected $upcomingMaintenanceDataType = '';
 
+  /**
+   * Optional. The date when the current maintenance version was released.
+   *
+   * @param Date $currentVersionReleaseDate
+   */
+  public function setCurrentVersionReleaseDate(Date $currentVersionReleaseDate)
+  {
+    $this->currentVersionReleaseDate = $currentVersionReleaseDate;
+  }
+  /**
+   * @return Date
+   */
+  public function getCurrentVersionReleaseDate()
+  {
+    return $this->currentVersionReleaseDate;
+  }
   /**
    * Optional. List of Deny maintenance period for the database resource.
    *
@@ -47,6 +115,24 @@ class ResourceMaintenanceInfo extends \Google\Collection
   public function getDenyMaintenanceSchedules()
   {
     return $this->denyMaintenanceSchedules;
+  }
+  /**
+   * Optional. Whether the instance is in stopped state. This information is
+   * temporarily being captured in maintenanceInfo, till STOPPED state is
+   * supported by DB Center.
+   *
+   * @param bool $isInstanceStopped
+   */
+  public function setIsInstanceStopped($isInstanceStopped)
+  {
+    $this->isInstanceStopped = $isInstanceStopped;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsInstanceStopped()
+  {
+    return $this->isInstanceStopped;
   }
   /**
    * Optional. Maintenance window for the database resource.
@@ -65,6 +151,25 @@ class ResourceMaintenanceInfo extends \Google\Collection
     return $this->maintenanceSchedule;
   }
   /**
+   * Output only. Current state of maintenance on the database resource.
+   *
+   * Accepted values: MAINTENANCE_STATE_UNSPECIFIED, CREATING, READY, UPDATING,
+   * REPAIRING, DELETING, ERROR
+   *
+   * @param self::MAINTENANCE_STATE_* $maintenanceState
+   */
+  public function setMaintenanceState($maintenanceState)
+  {
+    $this->maintenanceState = $maintenanceState;
+  }
+  /**
+   * @return self::MAINTENANCE_STATE_*
+   */
+  public function getMaintenanceState()
+  {
+    return $this->maintenanceState;
+  }
+  /**
    * Optional. Current Maintenance version of the database resource. Example:
    * "MYSQL_8_0_41.R20250531.01_15"
    *
@@ -80,6 +185,39 @@ class ResourceMaintenanceInfo extends \Google\Collection
   public function getMaintenanceVersion()
   {
     return $this->maintenanceVersion;
+  }
+  /**
+   * Optional. List of next available maintenance versions.
+   *
+   * @param string[] $nextAvailableMaintenanceVersions
+   */
+  public function setNextAvailableMaintenanceVersions($nextAvailableMaintenanceVersions)
+  {
+    $this->nextAvailableMaintenanceVersions = $nextAvailableMaintenanceVersions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getNextAvailableMaintenanceVersions()
+  {
+    return $this->nextAvailableMaintenanceVersions;
+  }
+  /**
+   * Optional. Upcoming maintenance for the database resource. This field is
+   * populated once SLM generates and publishes upcoming maintenance window.
+   *
+   * @param UpcomingMaintenance $upcomingMaintenance
+   */
+  public function setUpcomingMaintenance(UpcomingMaintenance $upcomingMaintenance)
+  {
+    $this->upcomingMaintenance = $upcomingMaintenance;
+  }
+  /**
+   * @return UpcomingMaintenance
+   */
+  public function getUpcomingMaintenance()
+  {
+    return $this->upcomingMaintenance;
   }
 }
 

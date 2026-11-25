@@ -34,6 +34,8 @@ use Google\Service\Compute\RegionNetworkEndpointGroupsDetachEndpointsRequest;
  */
 class RegionNetworkEndpointGroups extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Attach a list of network endpoints to the specified network endpoint group.
    * (regionNetworkEndpointGroups.attachNetworkEndpoints)
@@ -156,7 +158,13 @@ class RegionNetworkEndpointGroups extends \Google\Service\Resource
   /**
    * Creates a network endpoint group in the specified project using the
    * parameters that are included in the request.
-   * (regionNetworkEndpointGroups.insert)
+   *
+   * Note: Use the following APIs to manage network endpoint groups:        -
+   * To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+   * NEGs): zonal    API    -     To manage NEGs with regional scope (such as
+   * regional internet NEGs,    serverless NEGs, Private Service Connect NEGs):
+   * regional    API    -     To manage NEGs with global scope (such as global
+   * internet NEGs):global    API (regionNetworkEndpointGroups.insert)
    *
    * @param string $project Project ID for this request.
    * @param string $region The name of the region where you want to create the
@@ -257,13 +265,6 @@ class RegionNetworkEndpointGroups extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return NetworkEndpointGroupList
    * @throws \Google\Service\Exception
    */
@@ -347,13 +348,6 @@ class RegionNetworkEndpointGroups extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return NetworkEndpointGroupsListNetworkEndpoints
    * @throws \Google\Service\Exception
    */

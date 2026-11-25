@@ -19,6 +19,23 @@ namespace Google\Service\HangoutsChat;
 
 class Message extends \Google\Collection
 {
+  /**
+   * Represents the unspecified value.
+   */
+  public const MARKUP_SYNTAX_MARKUP_SYNTAX_UNSPECIFIED = 'MARKUP_SYNTAX_UNSPECIFIED';
+  /**
+   * Uses Google Chat's markup syntax. See
+   * https://developers.google.com/workspace/chat/format-messages#format-texts
+   * for more information.
+   */
+  public const MARKUP_SYNTAX_MARKUP_SYNTAX_CHAT = 'MARKUP_SYNTAX_CHAT';
+  /**
+   * Uses Markdown syntax. This syntax is based on the
+   * [CommonMark](https://commonmark.org/help/) specification, with additional
+   * extensions. See https://developers.google.com/workspace/chat/format-
+   * messages#format-texts for more information.
+   */
+  public const MARKUP_SYNTAX_MARKUP_SYNTAX_MARKDOWN = 'MARKUP_SYNTAX_MARKDOWN';
   protected $collection_key = 'emojiReactionSummaries';
   protected $accessoryWidgetsType = AccessoryWidget::class;
   protected $accessoryWidgetsDataType = 'array';
@@ -72,6 +89,8 @@ class Message extends \Google\Collection
   public $deleteTime;
   protected $deletionMetadataType = DeletionMetadata::class;
   protected $deletionMetadataDataType = '';
+  protected $elementsType = Elements::class;
+  protected $elementsDataType = '';
   protected $emojiReactionSummariesType = EmojiReactionSummary::class;
   protected $emojiReactionSummariesDataType = 'array';
   /**
@@ -86,8 +105,9 @@ class Message extends \Google\Collection
    * formatting. This field might not capture all formatting visible in the UI,
    * but includes the following: * [Markup
    * syntax](https://developers.google.com/workspace/chat/format-messages) for
-   * bold, italic, strikethrough, monospace, monospace block, and bulleted list.
-   * * [User mentions](https://developers.google.com/workspace/chat/format-
+   * bold, italic, strikethrough, monospace, monospace block, bulleted list, and
+   * block quote. * [User
+   * mentions](https://developers.google.com/workspace/chat/format-
    * messages#messages-@mention) using the format ``. * Custom hyperlinks using
    * the format `<{url}|{rendered_text}>` where the first string is the URL and
    * the second is the rendered text—for example, ``. * Custom emoji using the
@@ -108,6 +128,16 @@ class Message extends \Google\Collection
    * @var string
    */
   public $lastUpdateTime;
+  /**
+   * Optional. Specifies how the server interprets the message `text` field
+   * content when creating a message or updating the `text` field of a message.
+   * When calling `UpdateMessage`, set `markup_syntax` and `text` on the
+   * `Message` resource and include `text` (not `markup_syntax`) in
+   * `update_mask`.
+   *
+   * @var string
+   */
+  public $markupSyntax;
   protected $matchedUrlType = MatchedUrl::class;
   protected $matchedUrlDataType = '';
   /**
@@ -132,6 +162,13 @@ class Message extends \Google\Collection
   protected $quotedMessageMetadataDataType = '';
   protected $senderType = User::class;
   protected $senderDataType = '';
+  /**
+   * Output only. Whether this is a silent message. Silent messages are messages
+   * where Chat suppresses push notifications for recipients.
+   *
+   * @var bool
+   */
+  public $silent;
   protected $slashCommandType = SlashCommand::class;
   protected $slashCommandDataType = '';
   protected $spaceType = Space::class;
@@ -293,11 +330,15 @@ class Message extends \Google\Collection
   }
   /**
    * Optional. An array of [cards](https://developers.google.com/workspace/chat/
-   * api/reference/rest/v1/cards). Only Chat apps can create cards. If your Chat
-   * app [authenticates as a
+   * api/reference/rest/v1/cards). Chat apps can create cards with [app
+   * authentication](https://developers.google.com/workspace/chat/authenticate-
+   * authorize-chat-app). As part of the [Developer Preview
+   * Program](https://developers.google.com/workspace/preview), if your Chat app
+   * [authenticates as a
    * user](https://developers.google.com/workspace/chat/authenticate-authorize-
-   * chat-user), the messages can't contain cards. To learn how to create a
-   * message that contains cards, see [Send a
+   * chat-user), it can create card messages. If your Chat app is not part of
+   * Developer Preview Program, it can't create cards with user authentication.
+   * To learn how to create a message that contains cards, see [Send a
    * message](https://developers.google.com/workspace/chat/create-messages).
    * [Card builder](https://addons.gsuite.google.com/uikit/builder)
    *
@@ -391,6 +432,32 @@ class Message extends \Google\Collection
     return $this->deletionMetadata;
   }
   /**
+   * Optional. Additional message components, including inline `citations`
+   * (where each citation is associated with a specific portion of the message
+   * text) and `cited_sources` (which are general references used to generate
+   * the response and are not directly linked to specific segments of the text).
+   * On input, provide `elements` when creating or updating a message. On
+   * output, both `citations` and `cited_sources` are populated when reading a
+   * message that contains them. Callers can read structured citation metadata
+   * from `elements`, while `formatted_text` also includes inline citation tags
+   * or source links depending on `markup_syntax`. These differ from
+   * `annotations`, which are output-only and offer supplementary information
+   * tied to message fragments or the entire message text.
+   *
+   * @param Elements $elements
+   */
+  public function setElements(Elements $elements)
+  {
+    $this->elements = $elements;
+  }
+  /**
+   * @return Elements
+   */
+  public function getElements()
+  {
+    return $this->elements;
+  }
+  /**
    * Output only. The list of emoji reaction summaries on the message.
    *
    * @param EmojiReactionSummary[] $emojiReactionSummaries
@@ -428,8 +495,9 @@ class Message extends \Google\Collection
    * formatting. This field might not capture all formatting visible in the UI,
    * but includes the following: * [Markup
    * syntax](https://developers.google.com/workspace/chat/format-messages) for
-   * bold, italic, strikethrough, monospace, monospace block, and bulleted list.
-   * * [User mentions](https://developers.google.com/workspace/chat/format-
+   * bold, italic, strikethrough, monospace, monospace block, bulleted list, and
+   * block quote. * [User
+   * mentions](https://developers.google.com/workspace/chat/format-
    * messages#messages-@mention) using the format ``. * Custom hyperlinks using
    * the format `<{url}|{rendered_text}>` where the first string is the URL and
    * the second is the rendered text—for example, ``. * Custom emoji using the
@@ -471,8 +539,31 @@ class Message extends \Google\Collection
     return $this->lastUpdateTime;
   }
   /**
-   * Output only. A URL in `spaces.messages.text` that matches a link preview
-   * pattern. For more information, see [Preview
+   * Optional. Specifies how the server interprets the message `text` field
+   * content when creating a message or updating the `text` field of a message.
+   * When calling `UpdateMessage`, set `markup_syntax` and `text` on the
+   * `Message` resource and include `text` (not `markup_syntax`) in
+   * `update_mask`.
+   *
+   * Accepted values: MARKUP_SYNTAX_UNSPECIFIED, MARKUP_SYNTAX_CHAT,
+   * MARKUP_SYNTAX_MARKDOWN
+   *
+   * @param self::MARKUP_SYNTAX_* $markupSyntax
+   */
+  public function setMarkupSyntax($markupSyntax)
+  {
+    $this->markupSyntax = $markupSyntax;
+  }
+  /**
+   * @return self::MARKUP_SYNTAX_*
+   */
+  public function getMarkupSyntax()
+  {
+    return $this->markupSyntax;
+  }
+  /**
+   * Output only. A URL in the Chat message `text` field that matches a link
+   * preview pattern. For more information, see [Preview
    * links](https://developers.google.com/workspace/chat/preview-links).
    *
    * @param MatchedUrl $matchedUrl
@@ -522,9 +613,7 @@ class Message extends \Google\Collection
    * authentication](https://developers.google.com/workspace/chat/authenticate-
    * authorize-chat-app) and omit the following: * [Attachments](https://develop
    * ers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.attachm
-   * ents) * [Accessory widgets](https://developers.google.com/workspace/chat/ap
-   * i/reference/rest/v1/spaces.messages#Message.AccessoryWidget) For details,
-   * see [Send a message
+   * ents) For details, see [Send a message
    * privately](https://developers.google.com/workspace/chat/create-
    * messages#private).
    *
@@ -568,8 +657,11 @@ class Message extends \Google\Collection
    * Output only. The user who created the message. If your Chat app
    * [authenticates as a
    * user](https://developers.google.com/workspace/chat/authenticate-authorize-
-   * chat-user), the output populates the [user](https://developers.google.com/w
-   * orkspace/chat/api/reference/rest/v1/User) `name` and `type`.
+   * chat-user), the output only populates the [user](https://developers.google.
+   * com/workspace/chat/api/reference/rest/v1/User) `name` and `type` fields for
+   * both internal and external users, unless they are members of the space or
+   * have a prior affinity, like a direct message (DM) conversation, with the
+   * calling user.
    *
    * @param User $sender
    */
@@ -583,6 +675,23 @@ class Message extends \Google\Collection
   public function getSender()
   {
     return $this->sender;
+  }
+  /**
+   * Output only. Whether this is a silent message. Silent messages are messages
+   * where Chat suppresses push notifications for recipients.
+   *
+   * @param bool $silent
+   */
+  public function setSilent($silent)
+  {
+    $this->silent = $silent;
+  }
+  /**
+   * @return bool
+   */
+  public function getSilent()
+  {
+    return $this->silent;
   }
   /**
    * Output only. Slash command information, if applicable.

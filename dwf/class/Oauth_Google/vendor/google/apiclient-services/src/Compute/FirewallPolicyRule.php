@@ -21,12 +21,16 @@ class FirewallPolicyRule extends \Google\Collection
 {
   public const DIRECTION_EGRESS = 'EGRESS';
   public const DIRECTION_INGRESS = 'INGRESS';
+  public const TARGET_TYPE_INSTANCES = 'INSTANCES';
+  public const TARGET_TYPE_INTERNAL_MANAGED_LB = 'INTERNAL_MANAGED_LB';
   protected $collection_key = 'targetServiceAccounts';
   /**
    * The Action to perform when the client connection triggers the rule. Valid
    * actions for firewall rules are: "allow", "deny",
-   * "apply_security_profile_group" and "goto_next". Valid actions for packet
-   * mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
+   * "apply_security_profile_group" and "goto_next" (
+   * "apply_security_profile_group" can be specified only for global network
+   * firewall policies or hierarchical firewall policies). Valid actions for
+   * packet mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
    *
    * @var string
    */
@@ -94,15 +98,29 @@ class FirewallPolicyRule extends \Google\Collection
    */
   public $ruleTupleCount;
   /**
-   * A fully-qualified URL of a SecurityProfile resource instance. Example: http
-   * s://networksecurity.googleapis.com/v1/projects/{project}/locations/{locatio
-   * n}/securityProfileGroups/my-security-profile-group Must be specified if
+   * A fully-qualified URL of a SecurityProfileGroup resource instance. Example:
+   * https://networksecurity.googleapis.com/v1/projects/{project}/locations/{loc
+   * ation}/securityProfileGroups/my-security-profile-group Must be specified if
    * action is one of 'apply_security_profile_group' or 'mirror'. Cannot be
-   * specified for other actions.
+   * specified for other actions. Can be specified only for global network
+   * firewall policies or hierarchical firewall policies.
    *
    * @var string
    */
   public $securityProfileGroup;
+  /**
+   * A list of forwarding rules to which this rule applies. This field allows
+   * you to control which load balancers get this rule. For example, the
+   * following are valid values:              - https://www.googleapis.com/compu
+   * te/v1/projects/project/global/forwardingRules/forwardingRule      - https:/
+   * /www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRu
+   * les/forwardingRule      - projects/project/global/
+   * forwardingRules/forwardingRule      -
+   * projects/project/regions/region/forwardingRules/      forwardingRule
+   *
+   * @var string[]
+   */
+  public $targetForwardingRules;
   /**
    * A list of network resource URLs to which this rule applies.  This field
    * allows you to control which network's VMs get this rule.  If this field is
@@ -121,6 +139,12 @@ class FirewallPolicyRule extends \Google\Collection
    */
   public $targetServiceAccounts;
   /**
+   * Target types of the firewall policy rule. Default value is INSTANCES.
+   *
+   * @var string
+   */
+  public $targetType;
+  /**
    * Boolean flag indicating if the traffic should be TLS decrypted. Can be set
    * only if action = 'apply_security_profile_group' and cannot be set for other
    * actions.
@@ -132,8 +156,10 @@ class FirewallPolicyRule extends \Google\Collection
   /**
    * The Action to perform when the client connection triggers the rule. Valid
    * actions for firewall rules are: "allow", "deny",
-   * "apply_security_profile_group" and "goto_next". Valid actions for packet
-   * mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
+   * "apply_security_profile_group" and "goto_next" (
+   * "apply_security_profile_group" can be specified only for global network
+   * firewall policies or hierarchical firewall policies). Valid actions for
+   * packet mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
    *
    * @param string $action
    */
@@ -308,11 +334,12 @@ class FirewallPolicyRule extends \Google\Collection
     return $this->ruleTupleCount;
   }
   /**
-   * A fully-qualified URL of a SecurityProfile resource instance. Example: http
-   * s://networksecurity.googleapis.com/v1/projects/{project}/locations/{locatio
-   * n}/securityProfileGroups/my-security-profile-group Must be specified if
+   * A fully-qualified URL of a SecurityProfileGroup resource instance. Example:
+   * https://networksecurity.googleapis.com/v1/projects/{project}/locations/{loc
+   * ation}/securityProfileGroups/my-security-profile-group Must be specified if
    * action is one of 'apply_security_profile_group' or 'mirror'. Cannot be
-   * specified for other actions.
+   * specified for other actions. Can be specified only for global network
+   * firewall policies or hierarchical firewall policies.
    *
    * @param string $securityProfileGroup
    */
@@ -326,6 +353,29 @@ class FirewallPolicyRule extends \Google\Collection
   public function getSecurityProfileGroup()
   {
     return $this->securityProfileGroup;
+  }
+  /**
+   * A list of forwarding rules to which this rule applies. This field allows
+   * you to control which load balancers get this rule. For example, the
+   * following are valid values:              - https://www.googleapis.com/compu
+   * te/v1/projects/project/global/forwardingRules/forwardingRule      - https:/
+   * /www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRu
+   * les/forwardingRule      - projects/project/global/
+   * forwardingRules/forwardingRule      -
+   * projects/project/regions/region/forwardingRules/      forwardingRule
+   *
+   * @param string[] $targetForwardingRules
+   */
+  public function setTargetForwardingRules($targetForwardingRules)
+  {
+    $this->targetForwardingRules = $targetForwardingRules;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTargetForwardingRules()
+  {
+    return $this->targetForwardingRules;
   }
   /**
    * A list of network resource URLs to which this rule applies.  This field
@@ -385,6 +435,24 @@ class FirewallPolicyRule extends \Google\Collection
   public function getTargetServiceAccounts()
   {
     return $this->targetServiceAccounts;
+  }
+  /**
+   * Target types of the firewall policy rule. Default value is INSTANCES.
+   *
+   * Accepted values: INSTANCES, INTERNAL_MANAGED_LB
+   *
+   * @param self::TARGET_TYPE_* $targetType
+   */
+  public function setTargetType($targetType)
+  {
+    $this->targetType = $targetType;
+  }
+  /**
+   * @return self::TARGET_TYPE_*
+   */
+  public function getTargetType()
+  {
+    return $this->targetType;
   }
   /**
    * Boolean flag indicating if the traffic should be TLS decrypted. Can be set

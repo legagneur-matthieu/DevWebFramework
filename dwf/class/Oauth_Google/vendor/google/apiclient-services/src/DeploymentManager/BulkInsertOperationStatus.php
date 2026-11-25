@@ -33,6 +33,10 @@ class BulkInsertOperationStatus extends \Google\Model
    */
   public const STATUS_DONE = 'DONE';
   /**
+   * Pending - waiting until the capacity is available.
+   */
+  public const STATUS_PENDING = 'PENDING';
+  /**
    * [Output Only] Count of VMs successfully created so far.
    *
    * @var int
@@ -44,6 +48,16 @@ class BulkInsertOperationStatus extends \Google\Model
    * @var int
    */
   public $deletedVmCount;
+  /**
+   * Output only. [Output Only] The time when the scheduler expects capacity for
+   * this location. The field is set only while the status is PENDING. The value
+   * 9999-12-31T23:59:59.999999999Z means that the scheduler expects no
+   * capacity. The field is absent when the scheduler gives no estimate, and it
+   * is cleared when the status changes.
+   *
+   * @var string
+   */
+  public $estimatedAvailabilityTime;
   /**
    * [Output Only] Count of VMs that started creating but encountered an error.
    *
@@ -97,6 +111,26 @@ class BulkInsertOperationStatus extends \Google\Model
     return $this->deletedVmCount;
   }
   /**
+   * Output only. [Output Only] The time when the scheduler expects capacity for
+   * this location. The field is set only while the status is PENDING. The value
+   * 9999-12-31T23:59:59.999999999Z means that the scheduler expects no
+   * capacity. The field is absent when the scheduler gives no estimate, and it
+   * is cleared when the status changes.
+   *
+   * @param string $estimatedAvailabilityTime
+   */
+  public function setEstimatedAvailabilityTime($estimatedAvailabilityTime)
+  {
+    $this->estimatedAvailabilityTime = $estimatedAvailabilityTime;
+  }
+  /**
+   * @return string
+   */
+  public function getEstimatedAvailabilityTime()
+  {
+    return $this->estimatedAvailabilityTime;
+  }
+  /**
    * [Output Only] Count of VMs that started creating but encountered an error.
    *
    * @param int $failedToCreateVmCount
@@ -116,7 +150,7 @@ class BulkInsertOperationStatus extends \Google\Model
    * [Output Only] Creation status of BulkInsert operation - information if the
    * flow is rolling forward or rolling back.
    *
-   * Accepted values: STATUS_UNSPECIFIED, CREATING, ROLLING_BACK, DONE
+   * Accepted values: STATUS_UNSPECIFIED, CREATING, ROLLING_BACK, DONE, PENDING
    *
    * @param self::STATUS_* $status
    */

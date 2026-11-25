@@ -25,7 +25,7 @@ class GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMov
   protected $statusDataType = '';
 
   /**
-   * The document id of the document.
+   * The document ID of the document.
    *
    * @param GoogleCloudDocumentaiUiv1beta3DocumentId $documentId
    */

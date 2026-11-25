@@ -20,15 +20,15 @@ namespace Google\Service\Dataproc;
 class ClusterConfig extends \Google\Collection
 {
   /**
-   * Not set. Works the same as CLUSTER_TIER_STANDARD.
+   * Uses standard tier if unspecified.
    */
   public const CLUSTER_TIER_CLUSTER_TIER_UNSPECIFIED = 'CLUSTER_TIER_UNSPECIFIED';
   /**
-   * Standard Dataproc cluster.
+   * Standard cluster tier.
    */
   public const CLUSTER_TIER_CLUSTER_TIER_STANDARD = 'CLUSTER_TIER_STANDARD';
   /**
-   * Premium Dataproc cluster.
+   * Premium cluster tier.
    */
   public const CLUSTER_TIER_CLUSTER_TIER_PREMIUM = 'CLUSTER_TIER_PREMIUM';
   /**
@@ -49,6 +49,19 @@ class ClusterConfig extends \Google\Collection
    * secondary worker nodes.
    */
   public const CLUSTER_TYPE_ZERO_SCALE = 'ZERO_SCALE';
+  /**
+   * The engine is not specified. Works the same as ENGINE_DEFAULT.
+   */
+  public const ENGINE_ENGINE_UNSPECIFIED = 'ENGINE_UNSPECIFIED';
+  /**
+   * The cluster is a default engine cluster.
+   */
+  public const ENGINE_DEFAULT = 'DEFAULT';
+  /**
+   * The cluster is a Lightning Engine
+   * (https://cloud.google.com/dataproc/docs/guides/lightning-engine) cluster.
+   */
+  public const ENGINE_LIGHTNING = 'LIGHTNING';
   protected $collection_key = 'initializationActions';
   protected $autoscalingConfigType = AutoscalingConfig::class;
   protected $autoscalingConfigDataType = '';
@@ -69,10 +82,10 @@ class ClusterConfig extends \Google\Collection
   /**
    * Optional. A Cloud Storage bucket used to stage job dependencies, config
    * files, and job driver console output. If you do not specify a staging
-   * bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA,
-   * or EU) for your cluster's staging bucket according to the Compute Engine
-   * zone where your cluster is deployed, and then create and manage this
-   * project-level, per-location bucket (see Dataproc staging and temp buckets
+   * bucket, the service will determine a Cloud Storage location (US, ASIA, or
+   * EU) for your cluster's staging bucket according to the Compute Engine zone
+   * where your cluster is deployed, and then create and manage this project-
+   * level, per-location bucket (see staging and temp buckets
    * (https://cloud.google.com/dataproc/docs/concepts/configuring-
    * clusters/staging-bucket)). This field requires a Cloud Storage bucket name,
    * not a gs://... URI to a Cloud Storage bucket.
@@ -86,9 +99,9 @@ class ClusterConfig extends \Google\Collection
    * Optional. A Cloud Storage bucket used to collect checkpoint diagnostic data
    * (https://cloud.google.com/dataproc/docs/support/diagnose-
    * clusters#checkpoint_diagnostic_data). If you do not specify a diagnostic
-   * bucket, Cloud Dataproc will use the Dataproc temp bucket to collect the
-   * checkpoint diagnostic data. This field requires a Cloud Storage bucket
-   * name, not a gs://... URI to a Cloud Storage bucket.
+   * bucket, The service will use the temp bucket to collect the checkpoint
+   * diagnostic data. This field requires a Cloud Storage bucket name, not a
+   * gs://... URI to a Cloud Storage bucket.
    *
    * @var string
    */
@@ -97,6 +110,12 @@ class ClusterConfig extends \Google\Collection
   protected $encryptionConfigDataType = '';
   protected $endpointConfigType = EndpointConfig::class;
   protected $endpointConfigDataType = '';
+  /**
+   * Optional. The cluster engine.
+   *
+   * @var string
+   */
+  public $engine;
   protected $gceClusterConfigType = GceClusterConfig::class;
   protected $gceClusterConfigDataType = '';
   protected $gkeClusterConfigType = GkeClusterConfig::class;
@@ -107,10 +126,16 @@ class ClusterConfig extends \Google\Collection
   protected $lifecycleConfigDataType = '';
   protected $masterConfigType = InstanceGroupConfig::class;
   protected $masterConfigDataType = '';
+  protected $masterFlexibleConfigType = FlexibleInstanceGroupConfig::class;
+  protected $masterFlexibleConfigDataType = '';
   protected $metastoreConfigType = MetastoreConfig::class;
   protected $metastoreConfigDataType = '';
+  protected $schedulingConfigType = SchedulingConfig::class;
+  protected $schedulingConfigDataType = '';
   protected $secondaryWorkerConfigType = InstanceGroupConfig::class;
   protected $secondaryWorkerConfigDataType = '';
+  protected $secondaryWorkerFlexibleConfigType = FlexibleInstanceGroupConfig::class;
+  protected $secondaryWorkerFlexibleConfigDataType = '';
   protected $securityConfigType = SecurityConfig::class;
   protected $securityConfigDataType = '';
   protected $softwareConfigType = SoftwareConfig::class;
@@ -118,13 +143,12 @@ class ClusterConfig extends \Google\Collection
   /**
    * Optional. A Cloud Storage bucket used to store ephemeral cluster and jobs
    * data, such as Spark and MapReduce history files. If you do not specify a
-   * temp bucket, Dataproc will determine a Cloud Storage location (US, ASIA, or
-   * EU) for your cluster's temp bucket according to the Compute Engine zone
+   * temp bucket, the service will determine a Cloud Storage location (US, ASIA,
+   * or EU) for your cluster's temp bucket according to the Compute Engine zone
    * where your cluster is deployed, and then create and manage this project-
    * level, per-location bucket. The default bucket has a TTL of 90 days, but
-   * you can use any TTL (or none) if you specify a bucket (see Dataproc staging
-   * and temp buckets
-   * (https://cloud.google.com/dataproc/docs/concepts/configuring-
+   * you can use any TTL (or none) if you specify a bucket (see staging and temp
+   * buckets (https://cloud.google.com/dataproc/docs/concepts/configuring-
    * clusters/staging-bucket)). This field requires a Cloud Storage bucket name,
    * not a gs://... URI to a Cloud Storage bucket.
    *
@@ -133,6 +157,8 @@ class ClusterConfig extends \Google\Collection
   public $tempBucket;
   protected $workerConfigType = InstanceGroupConfig::class;
   protected $workerConfigDataType = '';
+  protected $workerFlexibleConfigType = FlexibleInstanceGroupConfig::class;
+  protected $workerFlexibleConfigDataType = '';
 
   /**
    * Optional. Autoscaling config for the policy associated with the cluster.
@@ -208,10 +234,10 @@ class ClusterConfig extends \Google\Collection
   /**
    * Optional. A Cloud Storage bucket used to stage job dependencies, config
    * files, and job driver console output. If you do not specify a staging
-   * bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA,
-   * or EU) for your cluster's staging bucket according to the Compute Engine
-   * zone where your cluster is deployed, and then create and manage this
-   * project-level, per-location bucket (see Dataproc staging and temp buckets
+   * bucket, the service will determine a Cloud Storage location (US, ASIA, or
+   * EU) for your cluster's staging bucket according to the Compute Engine zone
+   * where your cluster is deployed, and then create and manage this project-
+   * level, per-location bucket (see staging and temp buckets
    * (https://cloud.google.com/dataproc/docs/concepts/configuring-
    * clusters/staging-bucket)). This field requires a Cloud Storage bucket name,
    * not a gs://... URI to a Cloud Storage bucket.
@@ -230,7 +256,7 @@ class ClusterConfig extends \Google\Collection
     return $this->configBucket;
   }
   /**
-   * Optional. The config for Dataproc metrics.
+   * Optional. The config for metrics.
    *
    * @param DataprocMetricConfig $dataprocMetricConfig
    */
@@ -249,9 +275,9 @@ class ClusterConfig extends \Google\Collection
    * Optional. A Cloud Storage bucket used to collect checkpoint diagnostic data
    * (https://cloud.google.com/dataproc/docs/support/diagnose-
    * clusters#checkpoint_diagnostic_data). If you do not specify a diagnostic
-   * bucket, Cloud Dataproc will use the Dataproc temp bucket to collect the
-   * checkpoint diagnostic data. This field requires a Cloud Storage bucket
-   * name, not a gs://... URI to a Cloud Storage bucket.
+   * bucket, The service will use the temp bucket to collect the checkpoint
+   * diagnostic data. This field requires a Cloud Storage bucket name, not a
+   * gs://... URI to a Cloud Storage bucket.
    *
    * @param string $diagnosticBucket
    */
@@ -299,6 +325,24 @@ class ClusterConfig extends \Google\Collection
     return $this->endpointConfig;
   }
   /**
+   * Optional. The cluster engine.
+   *
+   * Accepted values: ENGINE_UNSPECIFIED, DEFAULT, LIGHTNING
+   *
+   * @param self::ENGINE_* $engine
+   */
+  public function setEngine($engine)
+  {
+    $this->engine = $engine;
+  }
+  /**
+   * @return self::ENGINE_*
+   */
+  public function getEngine()
+  {
+    return $this->engine;
+  }
+  /**
    * Optional. The shared Compute Engine config settings for all instances in a
    * cluster.
    *
@@ -316,8 +360,7 @@ class ClusterConfig extends \Google\Collection
     return $this->gceClusterConfig;
   }
   /**
-   * Optional. BETA. The Kubernetes Engine config for Dataproc clusters deployed
-   * to The Kubernetes Engine config for Dataproc clusters deployed to
+   * Optional. BETA. The Kubernetes Engine config for clusters deployed to
    * Kubernetes. These config settings are mutually exclusive with Compute
    * Engine-based options, such as gce_cluster_config, master_config,
    * worker_config, secondary_worker_config, and autoscaling_config.
@@ -394,6 +437,29 @@ class ClusterConfig extends \Google\Collection
     return $this->masterConfig;
   }
   /**
+   * Optional. The High Obtainability (HO) config settings for the cluster's
+   * master instances.In High Obtainability (HO) mode, flexible configs are the
+   * single source of truth for desired cluster configuration across node
+   * groups: * For single-node clusters: master_flexible_config must be
+   * specified, and no worker configs should be set. * For multi-node (standard)
+   * clusters: both master_flexible_config and worker_flexible_config must be
+   * specified. Mixing standard and flexible configs across node groups is not
+   * allowed.Only one of master_config or master_flexible_config can be set.
+   *
+   * @param FlexibleInstanceGroupConfig $masterFlexibleConfig
+   */
+  public function setMasterFlexibleConfig(FlexibleInstanceGroupConfig $masterFlexibleConfig)
+  {
+    $this->masterFlexibleConfig = $masterFlexibleConfig;
+  }
+  /**
+   * @return FlexibleInstanceGroupConfig
+   */
+  public function getMasterFlexibleConfig()
+  {
+    return $this->masterFlexibleConfig;
+  }
+  /**
    * Optional. Metastore configuration.
    *
    * @param MetastoreConfig $metastoreConfig
@@ -408,6 +474,23 @@ class ClusterConfig extends \Google\Collection
   public function getMetastoreConfig()
   {
     return $this->metastoreConfig;
+  }
+  /**
+   * Optional. Config for scheduling the resources to be allocated when
+   * available.
+   *
+   * @param SchedulingConfig $schedulingConfig
+   */
+  public function setSchedulingConfig(SchedulingConfig $schedulingConfig)
+  {
+    $this->schedulingConfig = $schedulingConfig;
+  }
+  /**
+   * @return SchedulingConfig
+   */
+  public function getSchedulingConfig()
+  {
+    return $this->schedulingConfig;
   }
   /**
    * Optional. The Compute Engine config settings for a cluster's secondary
@@ -425,6 +508,30 @@ class ClusterConfig extends \Google\Collection
   public function getSecondaryWorkerConfig()
   {
     return $this->secondaryWorkerConfig;
+  }
+  /**
+   * Optional. The High Obtainability (HO) config settings for a cluster's
+   * secondary worker instances.In High Obtainability (HO) mode, flexible
+   * configs are the single source of truth for desired cluster configuration.
+   * num_instances represents the desired capacity of the secondary worker group
+   * and is mutable via cluster updates and autoscaling.Only one of
+   * secondary_worker_config or secondary_worker_flexible_config can be set.In
+   * High Obtainability (HO) mode, secondary workers are optional. If secondary
+   * workers are used in an HO cluster, they must be configured using
+   * secondary_worker_flexible_config (not secondary_worker_config).
+   *
+   * @param FlexibleInstanceGroupConfig $secondaryWorkerFlexibleConfig
+   */
+  public function setSecondaryWorkerFlexibleConfig(FlexibleInstanceGroupConfig $secondaryWorkerFlexibleConfig)
+  {
+    $this->secondaryWorkerFlexibleConfig = $secondaryWorkerFlexibleConfig;
+  }
+  /**
+   * @return FlexibleInstanceGroupConfig
+   */
+  public function getSecondaryWorkerFlexibleConfig()
+  {
+    return $this->secondaryWorkerFlexibleConfig;
   }
   /**
    * Optional. Security settings for the cluster.
@@ -461,13 +568,12 @@ class ClusterConfig extends \Google\Collection
   /**
    * Optional. A Cloud Storage bucket used to store ephemeral cluster and jobs
    * data, such as Spark and MapReduce history files. If you do not specify a
-   * temp bucket, Dataproc will determine a Cloud Storage location (US, ASIA, or
-   * EU) for your cluster's temp bucket according to the Compute Engine zone
+   * temp bucket, the service will determine a Cloud Storage location (US, ASIA,
+   * or EU) for your cluster's temp bucket according to the Compute Engine zone
    * where your cluster is deployed, and then create and manage this project-
    * level, per-location bucket. The default bucket has a TTL of 90 days, but
-   * you can use any TTL (or none) if you specify a bucket (see Dataproc staging
-   * and temp buckets
-   * (https://cloud.google.com/dataproc/docs/concepts/configuring-
+   * you can use any TTL (or none) if you specify a bucket (see staging and temp
+   * buckets (https://cloud.google.com/dataproc/docs/concepts/configuring-
    * clusters/staging-bucket)). This field requires a Cloud Storage bucket name,
    * not a gs://... URI to a Cloud Storage bucket.
    *
@@ -500,6 +606,31 @@ class ClusterConfig extends \Google\Collection
   public function getWorkerConfig()
   {
     return $this->workerConfig;
+  }
+  /**
+   * Optional. The High Obtainability (HO) config settings for the cluster's
+   * worker instances.In High Obtainability (HO) mode, flexible configs are the
+   * single source of truth for desired cluster configuration. num_instances
+   * represents the desired capacity of the worker group and is mutable via
+   * cluster updates and autoscaling.Only one of worker_config or
+   * worker_flexible_config can be set.In High Obtainability (HO) mode, for
+   * multi-node (standard) clusters, both master_flexible_config and
+   * worker_flexible_config must be specified. Mixing standard and flexible
+   * configs across node groups is not allowed. Single-node clusters do not
+   * specify worker configs.
+   *
+   * @param FlexibleInstanceGroupConfig $workerFlexibleConfig
+   */
+  public function setWorkerFlexibleConfig(FlexibleInstanceGroupConfig $workerFlexibleConfig)
+  {
+    $this->workerFlexibleConfig = $workerFlexibleConfig;
+  }
+  /**
+   * @return FlexibleInstanceGroupConfig
+   */
+  public function getWorkerFlexibleConfig()
+  {
+    return $this->workerFlexibleConfig;
   }
 }
 

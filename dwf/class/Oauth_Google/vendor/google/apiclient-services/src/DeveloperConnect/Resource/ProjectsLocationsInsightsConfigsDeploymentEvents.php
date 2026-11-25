@@ -57,6 +57,13 @@ class ProjectsLocationsInsightsConfigsDeploymentEvents extends \Google\Service\R
    *
    * @opt_param string filter Optional. Filter expression that matches a subset of
    * the DeploymentEvents. https://google.aip.dev/160.
+   * @opt_param string orderBy Optional. Field to use to order the list of
+   * DeploymentEvents. Expects AIP-132 format "field_name asc" or "field_name
+   * desc", e.g. "deploy_time desc" Supported fields for ordering are:
+   * deploy_time, update_time. Currently, only sorting by a single field is
+   * supported. If this field is not provided, the list will be sorted by
+   * "deploy_time desc". For more details on the ordering syntax, see
+   * https://google.aip.dev/132#ordering.
    * @opt_param int pageSize Optional. The maximum number of deployment events to
    * return. The service may return fewer than this value. If unspecified, at most
    * 50 deployment events will be returned. The maximum value is 1000; values

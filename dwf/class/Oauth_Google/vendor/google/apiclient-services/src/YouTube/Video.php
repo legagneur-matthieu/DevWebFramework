@@ -21,6 +21,8 @@ class Video extends \Google\Model
 {
   protected $ageGatingType = VideoAgeGating::class;
   protected $ageGatingDataType = '';
+  protected $brandPartnerType = BrandPartner::class;
+  protected $brandPartnerDataType = '';
   protected $contentDetailsType = VideoContentDetails::class;
   protected $contentDetailsDataType = '';
   /**
@@ -87,6 +89,20 @@ class Video extends \Google\Model
   public function getAgeGating()
   {
     return $this->ageGating;
+  }
+  /**
+   * @param BrandPartner $brandPartner
+   */
+  public function setBrandPartner(BrandPartner $brandPartner)
+  {
+    $this->brandPartner = $brandPartner;
+  }
+  /**
+   * @return BrandPartner
+   */
+  public function getBrandPartner()
+  {
+    return $this->brandPartner;
   }
   /**
    * The contentDetails object contains information about the video content,
@@ -382,8 +398,8 @@ class Video extends \Google\Model
     return $this->suggestions;
   }
   /**
-   * The topicDetails object encapsulates information about Freebase topics
-   * associated with the video.
+   * The topicDetails object encapsulates information about
+   * [Freebase](http://www.freebase.com) topics associated with the video.
    *
    * @param VideoTopicDetails $topicDetails
    */

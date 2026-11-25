@@ -21,14 +21,21 @@ class ConfigManagementGitConfig extends \Google\Model
 {
   /**
    * Optional. The Google Cloud Service Account Email used for auth when
-   * secret_type is gcpServiceAccount.
+   * secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync`
+   * controller's Kubernetes Service Account.
    *
    * @var string
    */
   public $gcpServiceAccountEmail;
   /**
    * Optional. URL for the HTTPS proxy to be used when communicating with the
-   * Git repo.
+   * Git repo. Defines an HTTPS_PROXY environment variable and only accepts
+   * `https` or unadorned URLs. For example,
+   * `https://proxy.internal.business.co:443` or
+   * `proxy.internal.business.co:443`. If using an unadorned URL, make sure the
+   * communication between your proxy server and Git host is secure. Rejects
+   * `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or
+   * `none`.
    *
    * @var string
    */
@@ -42,8 +49,8 @@ class ConfigManagementGitConfig extends \Google\Model
   public $policyDir;
   /**
    * Required. Type of secret configured for access to the Git repo. Must be one
-   * of ssh, cookiefile, gcenode, token, gcpserviceaccount, githubapp or none.
-   * The validation of this is case-sensitive.
+   * of `ssh`, `cookiefile`, `gcenode`, `token`, `gcpserviceaccount`,
+   * `githubapp` or `none`. The validation of this is case-sensitive.
    *
    * @var string
    */
@@ -61,7 +68,9 @@ class ConfigManagementGitConfig extends \Google\Model
    */
   public $syncRepo;
   /**
-   * Optional. Git revision (tag or hash) to check out. Default HEAD.
+   * Optional. Git revision (tag or hash) or branch to sync from. Default
+   * `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field. When
+   * using a hash, must be a full hash, and not an abbreviated form.
    *
    * @var string
    */
@@ -75,7 +84,8 @@ class ConfigManagementGitConfig extends \Google\Model
 
   /**
    * Optional. The Google Cloud Service Account Email used for auth when
-   * secret_type is gcpServiceAccount.
+   * secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync`
+   * controller's Kubernetes Service Account.
    *
    * @param string $gcpServiceAccountEmail
    */
@@ -92,7 +102,13 @@ class ConfigManagementGitConfig extends \Google\Model
   }
   /**
    * Optional. URL for the HTTPS proxy to be used when communicating with the
-   * Git repo.
+   * Git repo. Defines an HTTPS_PROXY environment variable and only accepts
+   * `https` or unadorned URLs. For example,
+   * `https://proxy.internal.business.co:443` or
+   * `proxy.internal.business.co:443`. If using an unadorned URL, make sure the
+   * communication between your proxy server and Git host is secure. Rejects
+   * `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or
+   * `none`.
    *
    * @param string $httpsProxy
    */
@@ -126,8 +142,8 @@ class ConfigManagementGitConfig extends \Google\Model
   }
   /**
    * Required. Type of secret configured for access to the Git repo. Must be one
-   * of ssh, cookiefile, gcenode, token, gcpserviceaccount, githubapp or none.
-   * The validation of this is case-sensitive.
+   * of `ssh`, `cookiefile`, `gcenode`, `token`, `gcpserviceaccount`,
+   * `githubapp` or `none`. The validation of this is case-sensitive.
    *
    * @param string $secretType
    */
@@ -175,7 +191,9 @@ class ConfigManagementGitConfig extends \Google\Model
     return $this->syncRepo;
   }
   /**
-   * Optional. Git revision (tag or hash) to check out. Default HEAD.
+   * Optional. Git revision (tag or hash) or branch to sync from. Default
+   * `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field. When
+   * using a hash, must be a full hash, and not an abbreviated form.
    *
    * @param string $syncRev
    */

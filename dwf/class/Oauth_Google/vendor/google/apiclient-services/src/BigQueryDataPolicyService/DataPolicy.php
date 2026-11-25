@@ -51,6 +51,8 @@ class DataPolicy extends \Google\Collection
    */
   public const VERSION_V2 = 'V2';
   protected $collection_key = 'grantees';
+  protected $dataGovernanceTagType = DataGovernanceTag::class;
+  protected $dataGovernanceTagDataType = '';
   protected $dataMaskingPolicyType = DataMaskingPolicy::class;
   protected $dataMaskingPolicyDataType = '';
   /**
@@ -88,6 +90,16 @@ class DataPolicy extends \Google\Collection
    */
   public $grantees;
   /**
+   * Optional. Matching condition specified as a SQL expression string. Data
+   * Governance Tag matcher functions are: `COLUMN_HAS_TAG_KEY(keyName STRING)
+   * -> BOOL` `COLUMN_MATCH_TAG(keyName STRING, valueShortName STRING) -> BOOL`
+   * For example: `COLUMN_HAS_TAG_KEY('project-id/pii') AND
+   * COLUMN_MATCH_TAG('project-id/pii', 'ssn')`
+   *
+   * @var string
+   */
+  public $matchingCondition;
+  /**
    * Identifier. Resource name of this data policy, in the format of `projects/{
    * project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`.
    *
@@ -109,6 +121,22 @@ class DataPolicy extends \Google\Collection
    */
   public $version;
 
+  /**
+   * Optional. Data Governance tag bound to the Data Policy.
+   *
+   * @param DataGovernanceTag $dataGovernanceTag
+   */
+  public function setDataGovernanceTag(DataGovernanceTag $dataGovernanceTag)
+  {
+    $this->dataGovernanceTag = $dataGovernanceTag;
+  }
+  /**
+   * @return DataGovernanceTag
+   */
+  public function getDataGovernanceTag()
+  {
+    return $this->dataGovernanceTag;
+  }
   /**
    * Optional. The data masking policy that specifies the data masking rule to
    * use. It must be set if the data policy type is DATA_MASKING_POLICY.
@@ -202,6 +230,26 @@ class DataPolicy extends \Google\Collection
   public function getGrantees()
   {
     return $this->grantees;
+  }
+  /**
+   * Optional. Matching condition specified as a SQL expression string. Data
+   * Governance Tag matcher functions are: `COLUMN_HAS_TAG_KEY(keyName STRING)
+   * -> BOOL` `COLUMN_MATCH_TAG(keyName STRING, valueShortName STRING) -> BOOL`
+   * For example: `COLUMN_HAS_TAG_KEY('project-id/pii') AND
+   * COLUMN_MATCH_TAG('project-id/pii', 'ssn')`
+   *
+   * @param string $matchingCondition
+   */
+  public function setMatchingCondition($matchingCondition)
+  {
+    $this->matchingCondition = $matchingCondition;
+  }
+  /**
+   * @return string
+   */
+  public function getMatchingCondition()
+  {
+    return $this->matchingCondition;
   }
   /**
    * Identifier. Resource name of this data policy, in the format of `projects/{

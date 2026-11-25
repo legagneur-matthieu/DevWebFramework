@@ -236,6 +236,16 @@ class Apigee extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'getMcpServerConfig' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'getProjectMapping' => [
               'path' => 'v1/{+name}:getProjectMapping',
               'httpMethod' => 'GET',
@@ -5242,6 +5252,10 @@ class Apigee extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'riskAssessmentType' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'get' => [
               'path' => 'v1/{+name}',
@@ -5251,6 +5265,10 @@ class Apigee extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'riskAssessmentType' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'list' => [
@@ -5271,6 +5289,10 @@ class Apigee extends \Google\Service
                   'type' => 'integer',
                 ],
                 'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'riskAssessmentType' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

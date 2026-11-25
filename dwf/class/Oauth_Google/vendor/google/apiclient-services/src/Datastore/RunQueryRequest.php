@@ -38,6 +38,8 @@ class RunQueryRequest extends \Google\Model
   protected $queryDataType = '';
   protected $readOptionsType = ReadOptions::class;
   protected $readOptionsDataType = '';
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
 
   /**
    * The ID of the database against which to make the request. '(default)' is
@@ -155,6 +157,22 @@ class RunQueryRequest extends \Google\Model
   public function getReadOptions()
   {
     return $this->readOptions;
+  }
+  /**
+   * Optional. The options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
 }
 

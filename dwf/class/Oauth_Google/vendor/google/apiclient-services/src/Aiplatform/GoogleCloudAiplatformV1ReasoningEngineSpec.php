@@ -44,6 +44,8 @@ class GoogleCloudAiplatformV1ReasoningEngineSpec extends \Google\Collection
    * @var string
    */
   public $agentFramework;
+  protected $buildSpecType = GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec::class;
+  protected $buildSpecDataType = '';
   /**
    * Optional. Declarations for object class methods in OpenAPI specification
    * format.
@@ -51,6 +53,8 @@ class GoogleCloudAiplatformV1ReasoningEngineSpec extends \Google\Collection
    * @var array[]
    */
   public $classMethods;
+  protected $containerSpecType = GoogleCloudAiplatformV1ReasoningEngineSpecContainerSpec::class;
+  protected $containerSpecDataType = '';
   protected $deploymentSpecType = GoogleCloudAiplatformV1ReasoningEngineSpecDeploymentSpec::class;
   protected $deploymentSpecDataType = '';
   /**
@@ -108,6 +112,22 @@ class GoogleCloudAiplatformV1ReasoningEngineSpec extends \Google\Collection
     return $this->agentFramework;
   }
   /**
+   * Optional. Configuration for building container image.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec $buildSpec
+   */
+  public function setBuildSpec(GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec $buildSpec)
+  {
+    $this->buildSpec = $buildSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec
+   */
+  public function getBuildSpec()
+  {
+    return $this->buildSpec;
+  }
+  /**
    * Optional. Declarations for object class methods in OpenAPI specification
    * format.
    *
@@ -123,6 +143,22 @@ class GoogleCloudAiplatformV1ReasoningEngineSpec extends \Google\Collection
   public function getClassMethods()
   {
     return $this->classMethods;
+  }
+  /**
+   * Deploy from a container image with a defined entrypoint and commands.
+   *
+   * @param GoogleCloudAiplatformV1ReasoningEngineSpecContainerSpec $containerSpec
+   */
+  public function setContainerSpec(GoogleCloudAiplatformV1ReasoningEngineSpecContainerSpec $containerSpec)
+  {
+    $this->containerSpec = $containerSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ReasoningEngineSpecContainerSpec
+   */
+  public function getContainerSpec()
+  {
+    return $this->containerSpec;
   }
   /**
    * Optional. The specification of a Reasoning Engine deployment.

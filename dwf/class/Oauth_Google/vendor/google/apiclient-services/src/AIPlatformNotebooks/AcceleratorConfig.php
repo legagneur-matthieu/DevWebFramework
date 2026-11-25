@@ -24,7 +24,11 @@ class AcceleratorConfig extends \Google\Model
    */
   public const TYPE_ACCELERATOR_TYPE_UNSPECIFIED = 'ACCELERATOR_TYPE_UNSPECIFIED';
   /**
-   * Accelerator type is Nvidia Tesla P100.
+   * Deprecated: Use `NVIDIA_TESLA_T4` (N1) or `NVIDIA_L4` (G2) instead. The
+   * NVIDIA Tesla P100 GPU is being decommissioned fleet-wide by Compute Engine
+   * and is no longer available for new instances.
+   *
+   * @deprecated
    */
   public const TYPE_NVIDIA_TESLA_P100 = 'NVIDIA_TESLA_P100';
   /**
@@ -68,7 +72,11 @@ class AcceleratorConfig extends \Google\Model
    */
   public const TYPE_NVIDIA_TESLA_T4_VWS = 'NVIDIA_TESLA_T4_VWS';
   /**
-   * Accelerator type is NVIDIA Tesla P100 Virtual Workstations.
+   * Deprecated: Use `NVIDIA_TESLA_T4_VWS` instead. The NVIDIA Tesla P100 GPU
+   * (Virtual Workstations) is being decommissioned fleet-wide by Compute Engine
+   * and is no longer available for new instances.
+   *
+   * @deprecated
    */
   public const TYPE_NVIDIA_TESLA_P100_VWS = 'NVIDIA_TESLA_P100_VWS';
   /**
@@ -79,6 +87,10 @@ class AcceleratorConfig extends \Google\Model
    * Accelerator type is NVIDIA B200.
    */
   public const TYPE_NVIDIA_B200 = 'NVIDIA_B200';
+  /**
+   * NVIDIA RTX 6000.
+   */
+  public const TYPE_NVIDIA_RTX6000 = 'NVIDIA_RTX6000';
   /**
    * Optional. Count of cores of this accelerator.
    *
@@ -115,7 +127,7 @@ class AcceleratorConfig extends \Google\Model
    * NVIDIA_TESLA_V100, NVIDIA_TESLA_P4, NVIDIA_TESLA_T4, NVIDIA_TESLA_A100,
    * NVIDIA_A100_80GB, NVIDIA_L4, NVIDIA_H100_80GB, NVIDIA_H100_MEGA_80GB,
    * NVIDIA_H200_141GB, NVIDIA_TESLA_T4_VWS, NVIDIA_TESLA_P100_VWS,
-   * NVIDIA_TESLA_P4_VWS, NVIDIA_B200
+   * NVIDIA_TESLA_P4_VWS, NVIDIA_B200, NVIDIA_RTX6000
    *
    * @param self::TYPE_* $type
    */

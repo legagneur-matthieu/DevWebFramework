@@ -32,6 +32,21 @@ class Instance extends \Google\Collection
    */
   public const KEY_REVOCATION_ACTION_TYPE_STOP = 'STOP';
   /**
+   * The given VM will opt-in for using ephemeral key for encryption of Local
+   * SSDs. The Local SSDs will not be able to recover data in case of VM crash.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_EPHEMERAL_KEY_ENCRYPTION = 'EPHEMERAL_KEY_ENCRYPTION';
+  /**
+   * The given VM will be encrypted using keys managed by the cloud
+   * infrastructure and the keys will be deleted when the VM is deleted.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED = 'LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED';
+  /**
+   * The given VM will be encrypted using keys managed by the cloud
+   * infrastructure and the keys will be deleted when the VM is deleted.
+   */
+  public const LOCAL_SSD_ENCRYPTION_MODE_STANDARD_ENCRYPTION = 'STANDARD_ENCRYPTION';
+  /**
    * Bidirectional private IPv6 access to/from Google services. If specified,
    * the subnetwork who is attached to the instance's default network interface
    * will be assigned an internal IPv6 prefix if it doesn't have before.
@@ -59,6 +74,10 @@ class Instance extends \Google\Collection
    * Dynamic Workload Scheduler (DWS).
    */
   public const STATUS_PENDING = 'PENDING';
+  /**
+   * The instance is gracefully shutting down.
+   */
+  public const STATUS_PENDING_STOP = 'PENDING_STOP';
   /**
    * Resources are being allocated for the instance.
    */
@@ -223,6 +242,13 @@ class Instance extends \Google\Collection
    */
   public $lastSuspendedTimestamp;
   /**
+   * Specifies which method should be used for encrypting the Local SSDs
+   * attached to the VM.
+   *
+   * @var string
+   */
+  public $localSsdEncryptionMode;
+  /**
    * Full or partial URL of the machine type resource to use for this instance,
    * in the format:zones/zone/machineTypes/machine-type. This is provided by the
    * client when the instance is created. For example, the following is a valid
@@ -238,8 +264,10 @@ class Instance extends \Google\Collection
    *
    * zones/zone/machineTypes/custom-CPUS-MEMORY
    *
-   * For example: zones/us-central1-f/machineTypes/custom-4-5120 For a full list
-   * of restrictions, read theSpecifications for custom machine types.
+   * For example: zones/us-central1-f/machineTypes/custom-4-5120
+   *
+   * For a full list of restrictions, read theSpecifications for custom machine
+   * types.
    *
    * @var string
    */
@@ -348,6 +376,8 @@ class Instance extends \Google\Collection
   public $statusMessage;
   protected $tagsType = Tags::class;
   protected $tagsDataType = '';
+  protected $workloadIdentityConfigType = WorkloadIdentityConfig::class;
+  protected $workloadIdentityConfigDataType = '';
   /**
    * Output only. [Output Only] URL of the zone where the instance resides. You
    * must specify this field as part of the HTTP request URL. It is not settable
@@ -726,6 +756,26 @@ class Instance extends \Google\Collection
     return $this->lastSuspendedTimestamp;
   }
   /**
+   * Specifies which method should be used for encrypting the Local SSDs
+   * attached to the VM.
+   *
+   * Accepted values: EPHEMERAL_KEY_ENCRYPTION,
+   * LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED, STANDARD_ENCRYPTION
+   *
+   * @param self::LOCAL_SSD_ENCRYPTION_MODE_* $localSsdEncryptionMode
+   */
+  public function setLocalSsdEncryptionMode($localSsdEncryptionMode)
+  {
+    $this->localSsdEncryptionMode = $localSsdEncryptionMode;
+  }
+  /**
+   * @return self::LOCAL_SSD_ENCRYPTION_MODE_*
+   */
+  public function getLocalSsdEncryptionMode()
+  {
+    return $this->localSsdEncryptionMode;
+  }
+  /**
    * Full or partial URL of the machine type resource to use for this instance,
    * in the format:zones/zone/machineTypes/machine-type. This is provided by the
    * client when the instance is created. For example, the following is a valid
@@ -741,8 +791,10 @@ class Instance extends \Google\Collection
    *
    * zones/zone/machineTypes/custom-CPUS-MEMORY
    *
-   * For example: zones/us-central1-f/machineTypes/custom-4-5120 For a full list
-   * of restrictions, read theSpecifications for custom machine types.
+   * For example: zones/us-central1-f/machineTypes/custom-4-5120
+   *
+   * For a full list of restrictions, read theSpecifications for custom machine
+   * types.
    *
    * @param string $machineType
    */
@@ -1102,8 +1154,9 @@ class Instance extends \Google\Collection
    * REPAIRING, andTERMINATED. For more information about the status of the
    * instance, see  Instance life cycle.
    *
-   * Accepted values: DEPROVISIONING, PENDING, PROVISIONING, REPAIRING, RUNNING,
-   * STAGING, STOPPED, STOPPING, SUSPENDED, SUSPENDING, TERMINATED
+   * Accepted values: DEPROVISIONING, PENDING, PENDING_STOP, PROVISIONING,
+   * REPAIRING, RUNNING, STAGING, STOPPED, STOPPING, SUSPENDED, SUSPENDING,
+   * TERMINATED
    *
    * @param self::STATUS_* $status
    */
@@ -1154,6 +1207,20 @@ class Instance extends \Google\Collection
   public function getTags()
   {
     return $this->tags;
+  }
+  /**
+   * @param WorkloadIdentityConfig $workloadIdentityConfig
+   */
+  public function setWorkloadIdentityConfig(WorkloadIdentityConfig $workloadIdentityConfig)
+  {
+    $this->workloadIdentityConfig = $workloadIdentityConfig;
+  }
+  /**
+   * @return WorkloadIdentityConfig
+   */
+  public function getWorkloadIdentityConfig()
+  {
+    return $this->workloadIdentityConfig;
   }
   /**
    * Output only. [Output Only] URL of the zone where the instance resides. You

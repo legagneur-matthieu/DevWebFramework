@@ -18,6 +18,7 @@
 namespace Google\Service\Aiplatform\Resource;
 
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1AppendEventResponse;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1CompactSessionRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1ListSessionsResponse;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1Session;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1SessionEvent;
@@ -51,6 +52,27 @@ class ProjectsLocationsReasoningEnginesSessions extends \Google\Service\Resource
     return $this->call('appendEvent', [$params], GoogleCloudAiplatformV1AppendEventResponse::class);
   }
   /**
+   * Compacts the event history of a given Session, which may run an LLM
+   * summarization call and rewrite the full event history. Compaction is a
+   * storage-side rewrite that can apply a stackable pipeline of rules (event-
+   * horizon preservation, tool-response truncation, thought stripping, and LLM
+   * summarization etc.) (sessions.compact)
+   *
+   * @param string $name Required. The resource name of the session to compact.
+   * Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_
+   * engine}/sessions/{session}`
+   * @param GoogleCloudAiplatformV1CompactSessionRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function compact($name, GoogleCloudAiplatformV1CompactSessionRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('compact', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
    * Creates a new Session. (sessions.create)
    *
    * @param string $parent Required. The resource name of the location to create
@@ -58,6 +80,16 @@ class ProjectsLocationsReasoningEnginesSessions extends \Google\Service\Resource
    * `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`
    * @param GoogleCloudAiplatformV1Session $postBody
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string sessionId Optional. The user defined ID to use for session,
+   * which will become the final component of the session resource name. If not
+   * provided, Vertex AI will generate a value for this ID. This value may be up
+   * to 63 characters, and valid characters are `[a-z0-9-]`. The first and last
+   * characters must be a letter or number. Prefer an ID that contains at least
+   * one letter. An ID made up only of digits cannot be reused by a new session
+   * until the original session has been permanently deleted, which happens some
+   * time after you delete it. An ID containing a letter becomes available again
+   * as soon as the session is deleted.
    * @return GoogleLongrunningOperation
    * @throws \Google\Service\Exception
    */
@@ -116,8 +148,8 @@ class ProjectsLocationsReasoningEnginesSessions extends \Google\Service\Resource
    * Supported fields: * `create_time` * `update_time` Example: `create_time
    * desc`.
    * @opt_param int pageSize Optional. The maximum number of sessions to return.
-   * The service may return fewer than this value. If unspecified, at most 100
-   * sessions will be returned.
+   * The service may return fewer than this value. If unspecified, the default
+   * page size is 100. Values greater than 100 will be capped at 100.
    * @opt_param string pageToken Optional. The next_page_token value returned from
    * a previous list SessionService.ListSessions call.
    * @return GoogleCloudAiplatformV1ListSessionsResponse

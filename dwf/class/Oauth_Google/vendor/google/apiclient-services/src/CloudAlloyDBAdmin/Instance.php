@@ -44,6 +44,21 @@ class Instance extends \Google\Collection
    */
   public const AVAILABILITY_TYPE_REGIONAL = 'REGIONAL';
   /**
+   * DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES is a default value that
+   * allows Google internal services like AlloyDB Studio to access the instance.
+   */
+  public const DATA_API_ACCESS_DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES = 'DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES';
+  /**
+   * Data API access is disabled for this instance.
+   */
+  public const DATA_API_ACCESS_DISABLED = 'DISABLED';
+  /**
+   * Data API access is enabled for this instance. For private IP instances,
+   * this allows authorized users to access the instance from the public
+   * internet using the ExecuteSql API.
+   */
+  public const DATA_API_ACCESS_ENABLED = 'ENABLED';
+  /**
    * The type of the instance is unknown.
    */
   public const INSTANCE_TYPE_INSTANCE_TYPE_UNSPECIFIED = 'INSTANCE_TYPE_UNSPECIFIED';
@@ -107,6 +122,14 @@ class Instance extends \Google\Collection
    * restricted while the instance is in this state.
    */
   public const STATE_SWITCHOVER = 'SWITCHOVER';
+  /**
+   * The instance is being stopped.
+   */
+  public const STATE_STOPPING = 'STOPPING';
+  /**
+   * The instance is being started.
+   */
+  public const STATE_STARTING = 'STARTING';
   protected $collection_key = 'outboundPublicIpAddresses';
   /**
    * Optional. Specifies whether an instance needs to spin up. Once the instance
@@ -147,6 +170,17 @@ class Instance extends \Google\Collection
    * @var string
    */
   public $createTime;
+  /**
+   * Optional. Controls whether the Data API is enabled for this instance. When
+   * enabled, this allows authorized users to connect to the instance from the
+   * public internet using the `executeSql` API, even for private IP instances.
+   * If this is not specified, the data API is enabled by default for Google
+   * internal services like AlloyDB Studio. Disable it explicitly to disallow
+   * Google internal services as well.
+   *
+   * @var string
+   */
+  public $dataApiAccess;
   /**
    * Database flags. Set at the instance level. They are copied from the primary
    * instance on secondary instance creation. Flags that have restrictions
@@ -240,6 +274,8 @@ class Instance extends \Google\Collection
   protected $nodesDataType = 'array';
   protected $observabilityConfigType = ObservabilityInstanceConfig::class;
   protected $observabilityConfigDataType = '';
+  protected $observabilityInstanceInfoType = ObservabilityInstanceInfo::class;
+  protected $observabilityInstanceInfoDataType = '';
   /**
    * Output only. All outbound public IP addresses configured for the instance.
    *
@@ -248,16 +284,22 @@ class Instance extends \Google\Collection
   public $outboundPublicIpAddresses;
   protected $pscInstanceConfigType = PscInstanceConfig::class;
   protected $pscInstanceConfigDataType = '';
+  protected $pscInstanceInfoType = PscInstanceInfo::class;
+  protected $pscInstanceInfoDataType = '';
   /**
-   * Output only. The public IP addresses for the Instance. This is available
-   * ONLY when enable_public_ip is set. This is the connection endpoint for an
-   * end-user application.
+   * Output only. The public IP address for the Instance. This is available ONLY
+   * when `enable_public_ip` is set or when you have upgraded from an Express
+   * Instance that has public DNS enabled. This field is not available for
+   * Express Instances. This is the connection endpoint for an end-user
+   * application.
    *
    * @var string
    */
   public $publicIpAddress;
   protected $queryInsightsConfigType = QueryInsightsInstanceConfig::class;
   protected $queryInsightsConfigDataType = '';
+  protected $queryInsightsInfoType = QueryInsightsInstanceInfo::class;
+  protected $queryInsightsInfoDataType = '';
   protected $readPoolConfigType = ReadPoolConfig::class;
   protected $readPoolConfigDataType = '';
   /**
@@ -408,6 +450,30 @@ class Instance extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * Optional. Controls whether the Data API is enabled for this instance. When
+   * enabled, this allows authorized users to connect to the instance from the
+   * public internet using the `executeSql` API, even for private IP instances.
+   * If this is not specified, the data API is enabled by default for Google
+   * internal services like AlloyDB Studio. Disable it explicitly to disallow
+   * Google internal services as well.
+   *
+   * Accepted values: DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES,
+   * DISABLED, ENABLED
+   *
+   * @param self::DATA_API_ACCESS_* $dataApiAccess
+   */
+  public function setDataApiAccess($dataApiAccess)
+  {
+    $this->dataApiAccess = $dataApiAccess;
+  }
+  /**
+   * @return self::DATA_API_ACCESS_*
+   */
+  public function getDataApiAccess()
+  {
+    return $this->dataApiAccess;
   }
   /**
    * Database flags. Set at the instance level. They are copied from the primary
@@ -662,6 +728,25 @@ class Instance extends \Google\Collection
     return $this->observabilityConfig;
   }
   /**
+   * Output only. Instance level observability information, contains the
+   * effective values of observability settings for this instance, by merging
+   * customer's provided `ObservabilityInstanceConfig` with the Observability
+   * defaults.
+   *
+   * @param ObservabilityInstanceInfo $observabilityInstanceInfo
+   */
+  public function setObservabilityInstanceInfo(ObservabilityInstanceInfo $observabilityInstanceInfo)
+  {
+    $this->observabilityInstanceInfo = $observabilityInstanceInfo;
+  }
+  /**
+   * @return ObservabilityInstanceInfo
+   */
+  public function getObservabilityInstanceInfo()
+  {
+    return $this->observabilityInstanceInfo;
+  }
+  /**
    * Output only. All outbound public IP addresses configured for the instance.
    *
    * @param string[] $outboundPublicIpAddresses
@@ -695,9 +780,28 @@ class Instance extends \Google\Collection
     return $this->pscInstanceConfig;
   }
   /**
-   * Output only. The public IP addresses for the Instance. This is available
-   * ONLY when enable_public_ip is set. This is the connection endpoint for an
-   * end-user application.
+   * Output only. Information about the Private Service Connect (PSC) for the
+   * instance.
+   *
+   * @param PscInstanceInfo $pscInstanceInfo
+   */
+  public function setPscInstanceInfo(PscInstanceInfo $pscInstanceInfo)
+  {
+    $this->pscInstanceInfo = $pscInstanceInfo;
+  }
+  /**
+   * @return PscInstanceInfo
+   */
+  public function getPscInstanceInfo()
+  {
+    return $this->pscInstanceInfo;
+  }
+  /**
+   * Output only. The public IP address for the Instance. This is available ONLY
+   * when `enable_public_ip` is set or when you have upgraded from an Express
+   * Instance that has public DNS enabled. This field is not available for
+   * Express Instances. This is the connection endpoint for an end-user
+   * application.
    *
    * @param string $publicIpAddress
    */
@@ -727,6 +831,25 @@ class Instance extends \Google\Collection
   public function getQueryInsightsConfig()
   {
     return $this->queryInsightsConfig;
+  }
+  /**
+   * Output only. Instance level Query Insights information, which is read-only
+   * and available in the output only. Contains the effective query insights
+   * settings for this instance, by merging customer's provided
+   * `QueryInsightsInstanceConfig` with the Query Insights defaults.
+   *
+   * @param QueryInsightsInstanceInfo $queryInsightsInfo
+   */
+  public function setQueryInsightsInfo(QueryInsightsInstanceInfo $queryInsightsInfo)
+  {
+    $this->queryInsightsInfo = $queryInsightsInfo;
+  }
+  /**
+   * @return QueryInsightsInstanceInfo
+   */
+  public function getQueryInsightsInfo()
+  {
+    return $this->queryInsightsInfo;
   }
   /**
    * Read pool instance configuration. This is required if the value of
@@ -785,7 +908,8 @@ class Instance extends \Google\Collection
    * Output only. The current serving state of the instance.
    *
    * Accepted values: STATE_UNSPECIFIED, READY, STOPPED, CREATING, DELETING,
-   * MAINTENANCE, FAILED, BOOTSTRAPPING, PROMOTING, SWITCHOVER
+   * MAINTENANCE, FAILED, BOOTSTRAPPING, PROMOTING, SWITCHOVER, STOPPING,
+   * STARTING
    *
    * @param self::STATE_* $state
    */

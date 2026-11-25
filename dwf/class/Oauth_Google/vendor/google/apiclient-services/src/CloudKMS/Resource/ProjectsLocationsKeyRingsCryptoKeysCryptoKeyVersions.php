@@ -25,12 +25,15 @@ use Google\Service\CloudKMS\CryptoKeyVersion;
 use Google\Service\CloudKMS\DecapsulateRequest;
 use Google\Service\CloudKMS\DecapsulateResponse;
 use Google\Service\CloudKMS\DestroyCryptoKeyVersionRequest;
+use Google\Service\CloudKMS\ExportTrustedKeyWrappedCryptoKeyVersionResponse;
 use Google\Service\CloudKMS\ImportCryptoKeyVersionRequest;
+use Google\Service\CloudKMS\ImportTrustedKeyWrappedCryptoKeyVersionRequest;
 use Google\Service\CloudKMS\ListCryptoKeyVersionsResponse;
 use Google\Service\CloudKMS\MacSignRequest;
 use Google\Service\CloudKMS\MacSignResponse;
 use Google\Service\CloudKMS\MacVerifyRequest;
 use Google\Service\CloudKMS\MacVerifyResponse;
+use Google\Service\CloudKMS\Operation;
 use Google\Service\CloudKMS\PublicKey;
 use Google\Service\CloudKMS\RawDecryptRequest;
 use Google\Service\CloudKMS\RawDecryptResponse;
@@ -121,6 +124,25 @@ class ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersions extends \Google\Servi
     return $this->call('decapsulate', [$params], DecapsulateResponse::class);
   }
   /**
+   * Permanently deletes the given CryptoKeyVersion. Only possible if the version
+   * has not been previously imported and if its state is one of DESTROYED,
+   * IMPORT_FAILED, or GENERATION_FAILED. Successfully imported CryptoKeyVersions
+   * cannot be deleted at this time. The specified version will be immediately and
+   * permanently deleted upon calling this method. This action cannot be undone.
+   * (cryptoKeyVersions.delete)
+   *
+   * @param string $name Required. The name of the CryptoKeyVersion to delete.
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function delete($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('delete', [$params], Operation::class);
+  }
+  /**
    * Schedule a CryptoKeyVersion for destruction. Upon calling this method,
    * CryptoKeyVersion.state will be set to DESTROY_SCHEDULED, and destroy_time
    * will be set to the time destroy_scheduled_duration in the future. At that
@@ -141,6 +163,29 @@ class ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersions extends \Google\Servi
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('destroy', [$params], CryptoKeyVersion::class);
+  }
+  /**
+   * Exports a CryptoKeyVersion with a trusted key. The CryptoKeyVersion must have
+   * trusted_wrapping_enabled set to true. The CryptoKeyVersion of the
+   * [wrapping_key] must have the AES_WRAPPING purpose. The [wrapping_key] must
+   * have the AES_256_KWP algorithm.
+   * (cryptoKeyVersions.exportTrustedKeyWrappedCryptoKeyVersion)
+   *
+   * @param string $name Required. The name of the CryptoKeyVersion to export. The
+   * CryptoKeyVersion must have trusted_wrapping_enabled set to true.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string wrappingKey Required. The name of the CryptoKeyVersion to
+   * use as a wrapping key. The CryptoKeyVersion must have hsm_trusted set to
+   * true.
+   * @return ExportTrustedKeyWrappedCryptoKeyVersionResponse
+   * @throws \Google\Service\Exception
+   */
+  public function exportTrustedKeyWrappedCryptoKeyVersion($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('exportTrustedKeyWrappedCryptoKeyVersion', [$params], ExportTrustedKeyWrappedCryptoKeyVersionResponse::class);
   }
   /**
    * Returns metadata for a given CryptoKeyVersion. (cryptoKeyVersions.get)
@@ -199,6 +244,28 @@ class ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersions extends \Google\Servi
     $params = ['parent' => $parent, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('import', [$params], CryptoKeyVersion::class);
+  }
+  /**
+   * Import wrapped key material into a CryptoKeyVersion with a trusted key. All
+   * requests must specify a CryptoKey. If a CryptoKeyVersion is additionally
+   * specified in the request, key material will be reimported into that version.
+   * Otherwise, a new version will be created, and will be assigned the next
+   * sequential id within the CryptoKey. The CryptoKeyVersion will have
+   * trusted_wrapping_enabled set to true.
+   * (cryptoKeyVersions.importTrustedKeyWrappedCryptoKeyVersion)
+   *
+   * @param string $parent Required. The name of the CryptoKey to be imported
+   * into.
+   * @param ImportTrustedKeyWrappedCryptoKeyVersionRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return CryptoKeyVersion
+   * @throws \Google\Service\Exception
+   */
+  public function importTrustedKeyWrappedCryptoKeyVersion($parent, ImportTrustedKeyWrappedCryptoKeyVersionRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('importTrustedKeyWrappedCryptoKeyVersion', [$params], CryptoKeyVersion::class);
   }
   /**
    * Lists CryptoKeyVersions.

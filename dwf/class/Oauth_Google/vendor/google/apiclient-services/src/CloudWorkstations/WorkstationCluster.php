@@ -29,6 +29,17 @@ class WorkstationCluster extends \Google\Collection
   protected $conditionsType = Status::class;
   protected $conditionsDataType = 'array';
   /**
+   * Optional. Specifies a custom base URL for the Google Cloud Console. This
+   * field is intended to be user-configurable to support data residency for
+   * Cloud Workstations users. This will be used generally for user journeys
+   * where users need to go to the Cloud Console from Code OSS. When the Auth
+   * and Launch URLs are unset, this will be used as the base URL for those
+   * endpoints if set.
+   *
+   * @var string
+   */
+  public $consoleBaseUrl;
+  /**
    * Output only. The private IP address of the control plane for this
    * workstation cluster. Workstation VMs need access to this IP address to work
    * with the service, so make sure that your firewall rules allow egress from
@@ -135,6 +146,29 @@ class WorkstationCluster extends \Google\Collection
    * @var string
    */
   public $updateTime;
+  /**
+   * Optional. Specifies the redirect URL for unauthorized requests received by
+   * workstation VMs in this cluster. Redirects to this endpoint will send a
+   * base64 encoded `state` query param containing the target workstation name
+   * and original request hostname. The endpoint is responsible for retrieving a
+   * token using `GenerateAccessToken` and redirecting back to the original
+   * hostname with the token.
+   *
+   * @var string
+   */
+  public $workstationAuthorizationUrl;
+  /**
+   * Optional. Specifies the launch URL for workstations in this cluster.
+   * Requests sent to unstarted workstations will be redirected to this URL.
+   * Requests redirected to the launch endpoint will be sent with a
+   * `workstation` and `project` query parameter containing the full workstation
+   * resource name and project ID, respectively. The launch endpoint is
+   * responsible for starting the workstation, polling it until it reaches
+   * `STATE_RUNNING`, and then issuing a redirect to the workstation's host URL.
+   *
+   * @var string
+   */
+  public $workstationLaunchUrl;
 
   /**
    * Optional. Client-specified annotations.
@@ -168,6 +202,27 @@ class WorkstationCluster extends \Google\Collection
   public function getConditions()
   {
     return $this->conditions;
+  }
+  /**
+   * Optional. Specifies a custom base URL for the Google Cloud Console. This
+   * field is intended to be user-configurable to support data residency for
+   * Cloud Workstations users. This will be used generally for user journeys
+   * where users need to go to the Cloud Console from Code OSS. When the Auth
+   * and Launch URLs are unset, this will be used as the base URL for those
+   * endpoints if set.
+   *
+   * @param string $consoleBaseUrl
+   */
+  public function setConsoleBaseUrl($consoleBaseUrl)
+  {
+    $this->consoleBaseUrl = $consoleBaseUrl;
+  }
+  /**
+   * @return string
+   */
+  public function getConsoleBaseUrl()
+  {
+    return $this->consoleBaseUrl;
   }
   /**
    * Output only. The private IP address of the control plane for this
@@ -457,6 +512,49 @@ class WorkstationCluster extends \Google\Collection
   public function getUpdateTime()
   {
     return $this->updateTime;
+  }
+  /**
+   * Optional. Specifies the redirect URL for unauthorized requests received by
+   * workstation VMs in this cluster. Redirects to this endpoint will send a
+   * base64 encoded `state` query param containing the target workstation name
+   * and original request hostname. The endpoint is responsible for retrieving a
+   * token using `GenerateAccessToken` and redirecting back to the original
+   * hostname with the token.
+   *
+   * @param string $workstationAuthorizationUrl
+   */
+  public function setWorkstationAuthorizationUrl($workstationAuthorizationUrl)
+  {
+    $this->workstationAuthorizationUrl = $workstationAuthorizationUrl;
+  }
+  /**
+   * @return string
+   */
+  public function getWorkstationAuthorizationUrl()
+  {
+    return $this->workstationAuthorizationUrl;
+  }
+  /**
+   * Optional. Specifies the launch URL for workstations in this cluster.
+   * Requests sent to unstarted workstations will be redirected to this URL.
+   * Requests redirected to the launch endpoint will be sent with a
+   * `workstation` and `project` query parameter containing the full workstation
+   * resource name and project ID, respectively. The launch endpoint is
+   * responsible for starting the workstation, polling it until it reaches
+   * `STATE_RUNNING`, and then issuing a redirect to the workstation's host URL.
+   *
+   * @param string $workstationLaunchUrl
+   */
+  public function setWorkstationLaunchUrl($workstationLaunchUrl)
+  {
+    $this->workstationLaunchUrl = $workstationLaunchUrl;
+  }
+  /**
+   * @return string
+   */
+  public function getWorkstationLaunchUrl()
+  {
+    return $this->workstationLaunchUrl;
   }
 }
 

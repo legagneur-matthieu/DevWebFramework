@@ -39,7 +39,7 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
   public const DENSITY_DENSITY_UNSPECIFIED = 'DENSITY_UNSPECIFIED';
   /**
    * An index entry will only exist if ALL fields are present in the document.
-   * This is both the default and only allowed value for Standard Edition
+   * This is both the default and only allowed value for Standard edition
    * databases (for both Cloud Firestore `ANY_API` and Cloud Datastore
    * `DATASTORE_MODE_API`). Take for example the following document: ``` {
    * "__name__": "...", "a": 1, "b": 2, "c": 3 } ``` an index on `(a ASC, b ASC,
@@ -53,7 +53,7 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
   public const DENSITY_SPARSE_ALL = 'SPARSE_ALL';
   /**
    * An index entry will exist if ANY field are present in the document. This is
-   * used as the definition of a sparse index for Enterprise Edition databases.
+   * used as the definition of a sparse index for Enterprise edition databases.
    * Take for example the following document: ``` { "__name__": "...", "a": 1,
    * "b": 2, "c": 3 } ``` an index on `(a ASC, d ASC)` will generate an index
    * entry for this document since `a` is present, and will fill in an `unset`
@@ -65,7 +65,7 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
   public const DENSITY_SPARSE_ANY = 'SPARSE_ANY';
   /**
    * An index entry will exist regardless of if the fields are present or not.
-   * This is the default density for an Enterprise Edition database. The index
+   * This is the default density for an Enterprise edition database. The index
    * will store `unset` values for fields that are not present in the document.
    */
   public const DENSITY_DENSE = 'DENSE';
@@ -142,10 +142,11 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
    */
   public $multikey;
   /**
-   * Output only. A server defined name for this index. The form of this name
-   * for composite indexes will be: `projects/{project_id}/databases/{database_i
-   * d}/collectionGroups/{collection_id}/indexes/{composite_index_id}` For
-   * single field indexes, this field will be empty.
+   * A server-defined name for this index. Output only. When used in the
+   * google.firestore.admin.v1.Index resource, the value is of the form: `projec
+   * ts/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/in
+   * dexes/{index_id}` When used in the google.firestore.admin.v1.Field
+   * resource, the value is empty.
    *
    * @var string
    */
@@ -161,8 +162,49 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
    * @var string
    */
   public $queryScope;
+  protected $searchIndexOptionsType = GoogleFirestoreAdminV1SearchIndexOptions::class;
+  protected $searchIndexOptionsDataType = '';
   /**
-   * Optional. The number of shards for the index.
+   * Optional. The number of physical shards for the index. In Cloud Firestore,
+   * data and index entries are stored in contiguous, ordered key ranges called
+   * splits. While document keys within a collection are hashed to distribute
+   * write traffic across splits, secondary index entries are ordered
+   * lexicographically by their indexed field values. When an index contains
+   * fields with sequential or monotonically increasing or decreasing values
+   * (such as timestamps or auto-incrementing IDs), every incoming index write
+   * targets the boundary of the index keyspace on a single split. Because
+   * sequential writes continuously advance to the newest split at the edge of
+   * the range, automatic load-based splitting cannot divide the write traffic
+   * across storage servers. Under high write rates, this concentration creates
+   * an append hotspot on that single split, resulting in elevated write
+   * latency, contention errors, and transaction aborts. Sharded indexes solve
+   * this write bottleneck by hash partitioning the secondary index keyspace.
+   * When `shard_count` is configured to N, Firestore automatically prepends a
+   * virtual computed shard field (with values from 0 to N-1) as the leading
+   * field of the index. This splits a single sequential key range into N
+   * independent key ranges, uniformly scattering adjacent writes across
+   * distinct splits and storage servers to enable linear write scaling. Query
+   * trade-offs: Hash partitioning trades query performance for write
+   * throughput. Because matching index entries are scattered across all shards,
+   * queries executing against a sharded index cannot read from a single
+   * contiguous range. The query engine must fan out parallel seeks across all N
+   * shards and merge the ordered results. Even index point lookups and queries
+   * with `LIMIT 1` must seek across all N shards. Sizing and best practices: -
+   * Indexes cannot be updated in-place. `shard_count` is immutable once an
+   * index is created; to "reshard" an index, create a new index with the
+   * desired `shard_count` and delete the original index. - Use sharded indexes
+   * only for indexes experiencing write bottlenecks (typically exceeding
+   * 500-1,000 writes/sec) on sequential or timestamp fields. - Do not shard
+   * indexes on uniformly distributed fields (such as UUIDs or hash tokens),
+   * where writes naturally spread across splits without sharding. Sharding
+   * uniform indexes adds query overhead without improving write throughput. -
+   * Do not shard read-heavy or low-write collections. - Size `shard_count`
+   * based on expected peak write throughput. Because a single split sustains
+   * roughly 500-1,000 writes/sec on sequential keys, estimate `shard_count ≈
+   * ceil(peak_write_qps / 500)`. - e.g., 4 for up to ~2,000-4,000 writes/sec,
+   * 16 for up to ~10,000+ writes/sec. - Setting an excessively high shard count
+   * produces diminishing write returns while needlessly increasing read latency
+   * and seek costs. If <= 1, the index is unsharded (1 physical shard).
    *
    * @var int
    */
@@ -218,15 +260,13 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
     return $this->density;
   }
   /**
-   * The fields supported by this index. For composite indexes, this requires a
-   * minimum of 2 and a maximum of 100 fields. The last field entry is always
-   * for the field path `__name__`. If, on creation, `__name__` was not
-   * specified as the last field, it will be added automatically with the same
-   * direction as that of the last field defined. If the final field in a
-   * composite index is not directional, the `__name__` will be ordered
-   * ASCENDING (unless explicitly specified). For single field indexes, this
-   * will always be exactly one entry with a field path equal to the field path
-   * of the associated field.
+   * The fields supported by this index. At most 100 fields may be specified. In
+   * Standard edition databases only: - At least 2 fields must be specified. -
+   * The last field entry is always for the field path `__name__`. If, on
+   * creation, `__name__` was not specified as the last field, it will be added
+   * automatically with the same direction as that of the last field defined. If
+   * the final field in the index is not directional, the `__name__` will be
+   * ordered ASCENDING (unless explicitly specified).
    *
    * @param GoogleFirestoreAdminV1IndexField[] $fields
    */
@@ -264,10 +304,11 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
     return $this->multikey;
   }
   /**
-   * Output only. A server defined name for this index. The form of this name
-   * for composite indexes will be: `projects/{project_id}/databases/{database_i
-   * d}/collectionGroups/{collection_id}/indexes/{composite_index_id}` For
-   * single field indexes, this field will be empty.
+   * A server-defined name for this index. Output only. When used in the
+   * google.firestore.admin.v1.Index resource, the value is of the form: `projec
+   * ts/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/in
+   * dexes/{index_id}` When used in the google.firestore.admin.v1.Field
+   * resource, the value is empty.
    *
    * @param string $name
    */
@@ -307,7 +348,64 @@ class GoogleFirestoreAdminV1Index extends \Google\Collection
     return $this->queryScope;
   }
   /**
-   * Optional. The number of shards for the index.
+   * Optional. Options for search indexes that are at the index definition
+   * level. This field is only currently supported for indexes with
+   * MONGODB_COMPATIBLE_API ApiScope.
+   *
+   * @param GoogleFirestoreAdminV1SearchIndexOptions $searchIndexOptions
+   */
+  public function setSearchIndexOptions(GoogleFirestoreAdminV1SearchIndexOptions $searchIndexOptions)
+  {
+    $this->searchIndexOptions = $searchIndexOptions;
+  }
+  /**
+   * @return GoogleFirestoreAdminV1SearchIndexOptions
+   */
+  public function getSearchIndexOptions()
+  {
+    return $this->searchIndexOptions;
+  }
+  /**
+   * Optional. The number of physical shards for the index. In Cloud Firestore,
+   * data and index entries are stored in contiguous, ordered key ranges called
+   * splits. While document keys within a collection are hashed to distribute
+   * write traffic across splits, secondary index entries are ordered
+   * lexicographically by their indexed field values. When an index contains
+   * fields with sequential or monotonically increasing or decreasing values
+   * (such as timestamps or auto-incrementing IDs), every incoming index write
+   * targets the boundary of the index keyspace on a single split. Because
+   * sequential writes continuously advance to the newest split at the edge of
+   * the range, automatic load-based splitting cannot divide the write traffic
+   * across storage servers. Under high write rates, this concentration creates
+   * an append hotspot on that single split, resulting in elevated write
+   * latency, contention errors, and transaction aborts. Sharded indexes solve
+   * this write bottleneck by hash partitioning the secondary index keyspace.
+   * When `shard_count` is configured to N, Firestore automatically prepends a
+   * virtual computed shard field (with values from 0 to N-1) as the leading
+   * field of the index. This splits a single sequential key range into N
+   * independent key ranges, uniformly scattering adjacent writes across
+   * distinct splits and storage servers to enable linear write scaling. Query
+   * trade-offs: Hash partitioning trades query performance for write
+   * throughput. Because matching index entries are scattered across all shards,
+   * queries executing against a sharded index cannot read from a single
+   * contiguous range. The query engine must fan out parallel seeks across all N
+   * shards and merge the ordered results. Even index point lookups and queries
+   * with `LIMIT 1` must seek across all N shards. Sizing and best practices: -
+   * Indexes cannot be updated in-place. `shard_count` is immutable once an
+   * index is created; to "reshard" an index, create a new index with the
+   * desired `shard_count` and delete the original index. - Use sharded indexes
+   * only for indexes experiencing write bottlenecks (typically exceeding
+   * 500-1,000 writes/sec) on sequential or timestamp fields. - Do not shard
+   * indexes on uniformly distributed fields (such as UUIDs or hash tokens),
+   * where writes naturally spread across splits without sharding. Sharding
+   * uniform indexes adds query overhead without improving write throughput. -
+   * Do not shard read-heavy or low-write collections. - Size `shard_count`
+   * based on expected peak write throughput. Because a single split sustains
+   * roughly 500-1,000 writes/sec on sequential keys, estimate `shard_count ≈
+   * ceil(peak_write_qps / 500)`. - e.g., 4 for up to ~2,000-4,000 writes/sec,
+   * 16 for up to ~10,000+ writes/sec. - Setting an excessively high shard count
+   * produces diminishing write returns while needlessly increasing read latency
+   * and seek costs. If <= 1, the index is unsharded (1 physical shard).
    *
    * @param int $shardCount
    */

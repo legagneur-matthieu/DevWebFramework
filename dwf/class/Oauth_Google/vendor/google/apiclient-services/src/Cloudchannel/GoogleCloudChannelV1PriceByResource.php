@@ -54,6 +54,10 @@ class GoogleCloudChannelV1PriceByResource extends \Google\Collection
    * For Google Cloud subscriptions like Anthos or SAP.
    */
   public const RESOURCE_TYPE_SUBSCRIPTION = 'SUBSCRIPTION';
+  /**
+   * As of June 2026, this field is mapped to WS Credits on commerce side.
+   */
+  public const RESOURCE_TYPE_AI_CREDITS = 'AI_CREDITS';
   protected $collection_key = 'pricePhases';
   protected $priceType = GoogleCloudChannelV1Price::class;
   protected $priceDataType = '';
@@ -102,7 +106,7 @@ class GoogleCloudChannelV1PriceByResource extends \Google\Collection
    * Resource Type. Example: SEAT
    *
    * Accepted values: RESOURCE_TYPE_UNSPECIFIED, SEAT, MAU, GB, LICENSED_USER,
-   * MINUTES, IAAS_USAGE, SUBSCRIPTION
+   * MINUTES, IAAS_USAGE, SUBSCRIPTION, AI_CREDITS
    *
    * @param self::RESOURCE_TYPE_* $resourceType
    */

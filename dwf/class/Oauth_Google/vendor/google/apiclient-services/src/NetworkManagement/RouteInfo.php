@@ -146,7 +146,8 @@ class RouteInfo extends \Google\Collection
   public $advertisedRouteNextHopUri;
   /**
    * For ADVERTISED dynamic routes, the URI of the Cloud Router that advertised
-   * the corresponding IP prefix.
+   * the corresponding IP prefix in format
+   * "projects/{project}/regions/{region}/routers/{router}".
    *
    * @var string
    */
@@ -177,27 +178,34 @@ class RouteInfo extends \Google\Collection
   public $instanceTags;
   /**
    * For PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC
-   * Hub, the URI of the corresponding route in NCC Hub's routing table.
+   * Hub, the URI of the corresponding route in NCC Hub's routing table. Format:
+   * `projects/{project}/locations/global/hubs/{hub}/routeTables/{route_table}/r
+   * outes/{route}`
    *
    * @var string
    */
   public $nccHubRouteUri;
   /**
-   * URI of the NCC Hub the route is advertised by. PEERING_SUBNET and
+   * URI of the NCC Hub the route is advertised by in format
+   * "projects/{project}/locations/global/hubs/{hub}". PEERING_SUBNET and
    * PEERING_DYNAMIC routes that are advertised by NCC Hub only.
    *
    * @var string
    */
   public $nccHubUri;
   /**
-   * URI of the destination NCC Spoke. PEERING_SUBNET and PEERING_DYNAMIC routes
-   * that are advertised by NCC Hub only.
+   * URI of the destination NCC Spoke in format
+   * "projects/{project}/locations/{location}/spokes/{spoke}" (regional) or
+   * "projects/{project}/locations/global/spokes/{spoke}" (global).
+   * PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub
+   * only.
    *
    * @var string
    */
   public $nccSpokeUri;
   /**
-   * URI of a VPC network where route is located.
+   * URI of a VPC network where route is located in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @var string
    */
@@ -212,7 +220,8 @@ class RouteInfo extends \Google\Collection
    */
   public $nextHop;
   /**
-   * URI of a VPC network where the next hop resource is located.
+   * URI of a VPC network where the next hop resource is located in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @var string
    */
@@ -238,7 +247,7 @@ class RouteInfo extends \Google\Collection
   public $originatingRouteDisplayName;
   /**
    * For PEERING_SUBNET and PEERING_STATIC routes, the URI of the originating
-   * SUBNET/STATIC route.
+   * SUBNET/STATIC route. Format: `projects/{project}/global/routes/{route}`
    *
    * @var string
    */
@@ -258,7 +267,9 @@ class RouteInfo extends \Google\Collection
   /**
    * Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED and ADVERTISED
    * routes only. If set for POLICY_BASED route, this is a region of VLAN
-   * attachments for Cloud Interconnect the route applies to.
+   * attachments for Cloud Interconnect the route applies to. If set to "all"
+   * for POLICY_BASED route, the route applies to VLAN attachments of Cloud
+   * Interconnect in all regions.
    *
    * @var string
    */
@@ -290,8 +301,11 @@ class RouteInfo extends \Google\Collection
    */
   public $srcPortRanges;
   /**
-   * URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for peering network)
-   * and POLICY_BASED routes only.
+   * For SUBNET, STATIC and PEERING_SUBNET (only for peering network) URI of a
+   * route in format "projects/{project}/global/routes/{route}". For
+   * POLICY_BASED routes URI of a route in format
+   * "projects/{project}/locations/{location}/policyBasedRoutes/{route}". Not
+   * set for other route types.
    *
    * @var string
    */
@@ -321,7 +335,8 @@ class RouteInfo extends \Google\Collection
   }
   /**
    * For ADVERTISED dynamic routes, the URI of the Cloud Router that advertised
-   * the corresponding IP prefix.
+   * the corresponding IP prefix in format
+   * "projects/{project}/regions/{region}/routers/{router}".
    *
    * @param string $advertisedRouteSourceRouterUri
    */
@@ -402,7 +417,9 @@ class RouteInfo extends \Google\Collection
   }
   /**
    * For PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC
-   * Hub, the URI of the corresponding route in NCC Hub's routing table.
+   * Hub, the URI of the corresponding route in NCC Hub's routing table. Format:
+   * `projects/{project}/locations/global/hubs/{hub}/routeTables/{route_table}/r
+   * outes/{route}`
    *
    * @param string $nccHubRouteUri
    */
@@ -418,7 +435,8 @@ class RouteInfo extends \Google\Collection
     return $this->nccHubRouteUri;
   }
   /**
-   * URI of the NCC Hub the route is advertised by. PEERING_SUBNET and
+   * URI of the NCC Hub the route is advertised by in format
+   * "projects/{project}/locations/global/hubs/{hub}". PEERING_SUBNET and
    * PEERING_DYNAMIC routes that are advertised by NCC Hub only.
    *
    * @param string $nccHubUri
@@ -435,8 +453,11 @@ class RouteInfo extends \Google\Collection
     return $this->nccHubUri;
   }
   /**
-   * URI of the destination NCC Spoke. PEERING_SUBNET and PEERING_DYNAMIC routes
-   * that are advertised by NCC Hub only.
+   * URI of the destination NCC Spoke in format
+   * "projects/{project}/locations/{location}/spokes/{spoke}" (regional) or
+   * "projects/{project}/locations/global/spokes/{spoke}" (global).
+   * PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub
+   * only.
    *
    * @param string $nccSpokeUri
    */
@@ -452,7 +473,8 @@ class RouteInfo extends \Google\Collection
     return $this->nccSpokeUri;
   }
   /**
-   * URI of a VPC network where route is located.
+   * URI of a VPC network where route is located in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @param string $networkUri
    */
@@ -488,7 +510,8 @@ class RouteInfo extends \Google\Collection
     return $this->nextHop;
   }
   /**
-   * URI of a VPC network where the next hop resource is located.
+   * URI of a VPC network where the next hop resource is located in format
+   * "projects/{project}/global/networks/{network}".
    *
    * @param string $nextHopNetworkUri
    */
@@ -560,7 +583,7 @@ class RouteInfo extends \Google\Collection
   }
   /**
    * For PEERING_SUBNET and PEERING_STATIC routes, the URI of the originating
-   * SUBNET/STATIC route.
+   * SUBNET/STATIC route. Format: `projects/{project}/global/routes/{route}`
    *
    * @param string $originatingRouteUri
    */
@@ -610,7 +633,9 @@ class RouteInfo extends \Google\Collection
   /**
    * Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED and ADVERTISED
    * routes only. If set for POLICY_BASED route, this is a region of VLAN
-   * attachments for Cloud Interconnect the route applies to.
+   * attachments for Cloud Interconnect the route applies to. If set to "all"
+   * for POLICY_BASED route, the route applies to VLAN attachments of Cloud
+   * Interconnect in all regions.
    *
    * @param string $region
    */
@@ -698,8 +723,11 @@ class RouteInfo extends \Google\Collection
     return $this->srcPortRanges;
   }
   /**
-   * URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for peering network)
-   * and POLICY_BASED routes only.
+   * For SUBNET, STATIC and PEERING_SUBNET (only for peering network) URI of a
+   * route in format "projects/{project}/global/routes/{route}". For
+   * POLICY_BASED routes URI of a route in format
+   * "projects/{project}/locations/{location}/policyBasedRoutes/{route}". Not
+   * set for other route types.
    *
    * @param string $uri
    */

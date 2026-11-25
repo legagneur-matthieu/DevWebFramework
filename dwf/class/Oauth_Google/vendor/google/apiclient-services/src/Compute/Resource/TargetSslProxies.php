@@ -25,6 +25,8 @@ use Google\Service\Compute\TargetSslProxiesSetProxyHeaderRequest;
 use Google\Service\Compute\TargetSslProxiesSetSslCertificatesRequest;
 use Google\Service\Compute\TargetSslProxy;
 use Google\Service\Compute\TargetSslProxyList;
+use Google\Service\Compute\TestPermissionsRequest;
+use Google\Service\Compute\TestPermissionsResponse;
 
 /**
  * The "targetSslProxies" collection of methods.
@@ -36,6 +38,8 @@ use Google\Service\Compute\TargetSslProxyList;
  */
 class TargetSslProxies extends \Google\Service\Resource
 {
+  protected $apiVersion = '2026-11-01';
+
   /**
    * Deletes the specified TargetSslProxy resource. (targetSslProxies.delete)
    *
@@ -177,13 +181,6 @@ class TargetSslProxies extends \Google\Service\Resource
    * @opt_param string pageToken Specifies a page token to use. Set `pageToken` to
    * the `nextPageToken` returned by a previous list request to get the next page
    * of results.
-   * @opt_param bool returnPartialSuccess Opt-in for partial success behavior
-   * which provides partial results in case of failure. The default value is
-   * false.
-   *
-   * For example, when partial success behavior is enabled, aggregatedList for a
-   * single zone scope either returns all resources in the zone or no resources,
-   * with an error code.
    * @return TargetSslProxyList
    * @throws \Google\Service\Exception
    */
@@ -351,6 +348,23 @@ class TargetSslProxies extends \Google\Service\Resource
     $params = ['project' => $project, 'targetSslProxy' => $targetSslProxy, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('setSslPolicy', [$params], Operation::class);
+  }
+  /**
+   * Returns permissions that a caller has on the specified resource.
+   * (targetSslProxies.testIamPermissions)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param TestPermissionsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return TestPermissionsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function testIamPermissions($project, $resource, TestPermissionsRequest $postBody, $optParams = [])
+  {
+    $params = ['project' => $project, 'resource' => $resource, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('testIamPermissions', [$params], TestPermissionsResponse::class);
   }
 }
 

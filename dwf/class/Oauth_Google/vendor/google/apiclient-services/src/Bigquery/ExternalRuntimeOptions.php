@@ -17,8 +17,9 @@
 
 namespace Google\Service\Bigquery;
 
-class ExternalRuntimeOptions extends \Google\Model
+class ExternalRuntimeOptions extends \Google\Collection
 {
+  protected $collection_key = 'volumeMounts';
   /**
    * Optional. Amount of CPU provisioned for a Python UDF container instance.
    * For more information, see [Configure container limits for Python
@@ -39,6 +40,16 @@ class ExternalRuntimeOptions extends \Google\Model
    * @var string
    */
   public $containerMemory;
+  /**
+   * Optional. Maximum number of requests that a Python UDF instance can handle
+   * concurrently. If absent or if `0`, the default concurrency value is used.
+   * For more information, see [Configure container limits for Python
+   * UDFs](https://cloud.google.com/bigquery/docs/user-defined-functions-
+   * python#configure-container-limits).
+   *
+   * @var string
+   */
+  public $containerRequestConcurrency;
   /**
    * Optional. Maximum number of rows in each batch sent to the external
    * runtime. If absent or if 0, BigQuery dynamically decides the number of rows
@@ -61,6 +72,8 @@ class ExternalRuntimeOptions extends \Google\Model
    * @var string
    */
   public $runtimeVersion;
+  protected $volumeMountsType = ExternalVolumeMount::class;
+  protected $volumeMountsDataType = 'array';
 
   public function setContainerCpu($containerCpu)
   {
@@ -90,6 +103,26 @@ class ExternalRuntimeOptions extends \Google\Model
   public function getContainerMemory()
   {
     return $this->containerMemory;
+  }
+  /**
+   * Optional. Maximum number of requests that a Python UDF instance can handle
+   * concurrently. If absent or if `0`, the default concurrency value is used.
+   * For more information, see [Configure container limits for Python
+   * UDFs](https://cloud.google.com/bigquery/docs/user-defined-functions-
+   * python#configure-container-limits).
+   *
+   * @param string $containerRequestConcurrency
+   */
+  public function setContainerRequestConcurrency($containerRequestConcurrency)
+  {
+    $this->containerRequestConcurrency = $containerRequestConcurrency;
+  }
+  /**
+   * @return string
+   */
+  public function getContainerRequestConcurrency()
+  {
+    return $this->containerRequestConcurrency;
   }
   /**
    * Optional. Maximum number of rows in each batch sent to the external
@@ -142,6 +175,23 @@ class ExternalRuntimeOptions extends \Google\Model
   public function getRuntimeVersion()
   {
     return $this->runtimeVersion;
+  }
+  /**
+   * Optional. List of volume mounts for the Python UDF container that executes
+   * the managed function.
+   *
+   * @param ExternalVolumeMount[] $volumeMounts
+   */
+  public function setVolumeMounts($volumeMounts)
+  {
+    $this->volumeMounts = $volumeMounts;
+  }
+  /**
+   * @return ExternalVolumeMount[]
+   */
+  public function getVolumeMounts()
+  {
+    return $this->volumeMounts;
   }
 }
 

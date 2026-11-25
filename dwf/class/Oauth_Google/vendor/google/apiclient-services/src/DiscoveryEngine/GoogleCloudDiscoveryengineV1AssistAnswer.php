@@ -39,6 +39,11 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
    * Assist operation has been skipped.
    */
   public const STATE_SKIPPED = 'SKIPPED';
+  /**
+   * Assist operation has been cancelled (e.g. client closed the stream). May
+   * contain a partial response.
+   */
+  public const STATE_CANCELLED = 'CANCELLED';
   protected $collection_key = 'replies';
   /**
    * Reasons for not answering the assist call.
@@ -46,6 +51,17 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
    * @var string[]
    */
   public $assistSkippedReasons;
+  /**
+   * Output only. Maps an internal connector agent name (the machine identifier
+   * embedded in tool names, e.g. `custom_mcp__agent`) to the connector's human-
+   * readable display name. Populated at serving time for custom MCP / agent
+   * gateway connectors so user-facing surfaces (e.g. the tool-call chip) can
+   * show the connector name instead of its internal identifier. Empty when
+   * there are no such connectors.
+   *
+   * @var string[]
+   */
+  public $connectorDisplayNames;
   protected $customerPolicyEnforcementResultType = GoogleCloudDiscoveryengineV1AssistAnswerCustomerPolicyEnforcementResult::class;
   protected $customerPolicyEnforcementResultDataType = '';
   /**
@@ -65,6 +81,17 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
    * @var string
    */
   public $state;
+  /**
+   * Output only. Maps a tool name (for example, `Internal-KB-Search` or
+   * `custom_mcp__agent__Internal-KB-Search`) to its human-readable display
+   * title (for example, `@Internal-KB Search`), populated from MCP tool `title`
+   * or `annotations.title` metadata so user-facing surfaces can display the
+   * tool title instead of the raw function declaration identifier. Empty when
+   * no tool display titles are present.
+   *
+   * @var string[]
+   */
+  public $toolDisplayNames;
 
   /**
    * Reasons for not answering the assist call.
@@ -81,6 +108,27 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
   public function getAssistSkippedReasons()
   {
     return $this->assistSkippedReasons;
+  }
+  /**
+   * Output only. Maps an internal connector agent name (the machine identifier
+   * embedded in tool names, e.g. `custom_mcp__agent`) to the connector's human-
+   * readable display name. Populated at serving time for custom MCP / agent
+   * gateway connectors so user-facing surfaces (e.g. the tool-call chip) can
+   * show the connector name instead of its internal identifier. Empty when
+   * there are no such connectors.
+   *
+   * @param string[] $connectorDisplayNames
+   */
+  public function setConnectorDisplayNames($connectorDisplayNames)
+  {
+    $this->connectorDisplayNames = $connectorDisplayNames;
+  }
+  /**
+   * @return string[]
+   */
+  public function getConnectorDisplayNames()
+  {
+    return $this->connectorDisplayNames;
   }
   /**
    * Optional. The field contains information about the various policy checks'
@@ -138,7 +186,8 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
   /**
    * State of the answer generation.
    *
-   * Accepted values: STATE_UNSPECIFIED, IN_PROGRESS, FAILED, SUCCEEDED, SKIPPED
+   * Accepted values: STATE_UNSPECIFIED, IN_PROGRESS, FAILED, SUCCEEDED,
+   * SKIPPED, CANCELLED
    *
    * @param self::STATE_* $state
    */
@@ -152,6 +201,27 @@ class GoogleCloudDiscoveryengineV1AssistAnswer extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * Output only. Maps a tool name (for example, `Internal-KB-Search` or
+   * `custom_mcp__agent__Internal-KB-Search`) to its human-readable display
+   * title (for example, `@Internal-KB Search`), populated from MCP tool `title`
+   * or `annotations.title` metadata so user-facing surfaces can display the
+   * tool title instead of the raw function declaration identifier. Empty when
+   * no tool display titles are present.
+   *
+   * @param string[] $toolDisplayNames
+   */
+  public function setToolDisplayNames($toolDisplayNames)
+  {
+    $this->toolDisplayNames = $toolDisplayNames;
+  }
+  /**
+   * @return string[]
+   */
+  public function getToolDisplayNames()
+  {
+    return $this->toolDisplayNames;
   }
 }
 

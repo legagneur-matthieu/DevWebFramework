@@ -144,6 +144,14 @@ class GoogleCloudDatacatalogV1Entry extends \Google\Model
    * An entry type for a graph.
    */
   public const TYPE_GRAPH = 'GRAPH';
+  /**
+   * An entry type for a graph node.
+   */
+  public const TYPE_NODE = 'NODE';
+  /**
+   * An entry type for a graph edge.
+   */
+  public const TYPE_EDGE = 'EDGE';
   protected $bigqueryDateShardedSpecType = GoogleCloudDatacatalogV1BigQueryDateShardedSpec::class;
   protected $bigqueryDateShardedSpecDataType = '';
   protected $bigqueryTableSpecType = GoogleCloudDatacatalogV1BigQueryTableSpec::class;
@@ -248,6 +256,8 @@ class GoogleCloudDatacatalogV1Entry extends \Google\Model
   protected $serviceSpecDataType = '';
   protected $sourceSystemTimestampsType = GoogleCloudDatacatalogV1SystemTimestamps::class;
   protected $sourceSystemTimestampsDataType = '';
+  protected $spannerTableSpecType = GoogleCloudDatacatalogV1SpannerTableSpec::class;
+  protected $spannerTableSpecDataType = '';
   protected $sqlDatabaseSystemSpecType = GoogleCloudDatacatalogV1SqlDatabaseSystemSpec::class;
   protected $sqlDatabaseSystemSpecDataType = '';
   /**
@@ -742,6 +752,22 @@ class GoogleCloudDatacatalogV1Entry extends \Google\Model
     return $this->sourceSystemTimestamps;
   }
   /**
+   * Specification of a Spanner table.
+   *
+   * @param GoogleCloudDatacatalogV1SpannerTableSpec $spannerTableSpec
+   */
+  public function setSpannerTableSpec(GoogleCloudDatacatalogV1SpannerTableSpec $spannerTableSpec)
+  {
+    $this->spannerTableSpec = $spannerTableSpec;
+  }
+  /**
+   * @return GoogleCloudDatacatalogV1SpannerTableSpec
+   */
+  public function getSpannerTableSpec()
+  {
+    return $this->spannerTableSpec;
+  }
+  /**
    * Specification that applies to a relational database system. Only settable
    * when `user_specified_system` is equal to `SQL_DATABASE`
    *
@@ -764,7 +790,7 @@ class GoogleCloudDatacatalogV1Entry extends \Google\Model
    * Accepted values: ENTRY_TYPE_UNSPECIFIED, TABLE, MODEL, DATA_STREAM,
    * FILESET, CLUSTER, DATABASE, DATA_SOURCE_CONNECTION, ROUTINE, LAKE, ZONE,
    * SERVICE, DATABASE_SCHEMA, DASHBOARD, EXPLORE, LOOK, FEATURE_ONLINE_STORE,
-   * FEATURE_VIEW, FEATURE_GROUP, GRAPH
+   * FEATURE_VIEW, FEATURE_GROUP, GRAPH, NODE, EDGE
    *
    * @param self::TYPE_* $type
    */

@@ -40,6 +40,10 @@ class OsConstraint extends \Google\Model
    */
   public const OS_TYPE_DESKTOP_CHROME_OS = 'DESKTOP_CHROME_OS';
   /**
+   * A Googlebook operating system.
+   */
+  public const OS_TYPE_GOOGLEBOOK_OS = 'GOOGLEBOOK_OS';
+  /**
    * An Android operating system.
    */
   public const OS_TYPE_ANDROID = 'ANDROID';
@@ -62,8 +66,8 @@ class OsConstraint extends \Google\Model
    */
   public $osType;
   /**
-   * Only allows requests from devices with a verified Chrome OS. Verifications
-   * includes requirements that the device is enterprise-managed, conformant to
+   * Only allows requests from devices with a verified Chrome OS. Verification
+   * includes requirements that the device is enterprise-managed, conforms to
    * domain policies, and the caller has permission to call the API targeted by
    * the request.
    *
@@ -93,7 +97,7 @@ class OsConstraint extends \Google\Model
    * Required. The allowed OS type.
    *
    * Accepted values: OS_UNSPECIFIED, DESKTOP_MAC, DESKTOP_WINDOWS,
-   * DESKTOP_LINUX, DESKTOP_CHROME_OS, ANDROID, IOS
+   * DESKTOP_LINUX, DESKTOP_CHROME_OS, GOOGLEBOOK_OS, ANDROID, IOS
    *
    * @param self::OS_TYPE_* $osType
    */
@@ -109,8 +113,8 @@ class OsConstraint extends \Google\Model
     return $this->osType;
   }
   /**
-   * Only allows requests from devices with a verified Chrome OS. Verifications
-   * includes requirements that the device is enterprise-managed, conformant to
+   * Only allows requests from devices with a verified Chrome OS. Verification
+   * includes requirements that the device is enterprise-managed, conforms to
    * domain policies, and the caller has permission to call the API targeted by
    * the request.
    *

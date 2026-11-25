@@ -20,37 +20,61 @@ namespace Google\Service\CloudAlloyDBAdmin;
 class StorageDatabasecenterPartnerapiV1mainMachineConfiguration extends \Google\Model
 {
   /**
-   * The number of CPUs. Deprecated. Use vcpu_count instead. TODO(b/342344482)
-   * add proto validations again after bug fix.
+   * Optional. Disable validation warnings
+   *
+   * @var string
+   */
+  public $baselineSlots;
+  /**
+   * Disable validation warnings
    *
    * @deprecated
    * @var int
    */
   public $cpuCount;
   /**
-   * Memory size in bytes. TODO(b/342344482) add proto validations again after
-   * bug fix.
+   * Optional. Disable validation warnings
+   *
+   * @var string
+   */
+  public $maxReservationSlots;
+  /**
+   * Disable validation warnings
    *
    * @var string
    */
   public $memorySizeInBytes;
   /**
-   * Optional. Number of shards (if applicable).
+   * Optional. Disable validation warnings
    *
    * @var int
    */
   public $shardCount;
   /**
-   * Optional. The number of vCPUs. TODO(b/342344482) add proto validations
-   * again after bug fix.
+   * Optional. Disable validation warnings
    *
    * @var 
    */
   public $vcpuCount;
 
   /**
-   * The number of CPUs. Deprecated. Use vcpu_count instead. TODO(b/342344482)
-   * add proto validations again after bug fix.
+   * Optional. Disable validation warnings
+   *
+   * @param string $baselineSlots
+   */
+  public function setBaselineSlots($baselineSlots)
+  {
+    $this->baselineSlots = $baselineSlots;
+  }
+  /**
+   * @return string
+   */
+  public function getBaselineSlots()
+  {
+    return $this->baselineSlots;
+  }
+  /**
+   * Disable validation warnings
    *
    * @deprecated
    * @param int $cpuCount
@@ -68,8 +92,23 @@ class StorageDatabasecenterPartnerapiV1mainMachineConfiguration extends \Google\
     return $this->cpuCount;
   }
   /**
-   * Memory size in bytes. TODO(b/342344482) add proto validations again after
-   * bug fix.
+   * Optional. Disable validation warnings
+   *
+   * @param string $maxReservationSlots
+   */
+  public function setMaxReservationSlots($maxReservationSlots)
+  {
+    $this->maxReservationSlots = $maxReservationSlots;
+  }
+  /**
+   * @return string
+   */
+  public function getMaxReservationSlots()
+  {
+    return $this->maxReservationSlots;
+  }
+  /**
+   * Disable validation warnings
    *
    * @param string $memorySizeInBytes
    */
@@ -85,7 +124,7 @@ class StorageDatabasecenterPartnerapiV1mainMachineConfiguration extends \Google\
     return $this->memorySizeInBytes;
   }
   /**
-   * Optional. Number of shards (if applicable).
+   * Optional. Disable validation warnings
    *
    * @param int $shardCount
    */

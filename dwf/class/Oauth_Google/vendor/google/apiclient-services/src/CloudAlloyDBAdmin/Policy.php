@@ -19,23 +19,55 @@ namespace Google\Service\CloudAlloyDBAdmin;
 
 class Policy extends \Google\Model
 {
+  protected $connectionsCountType = ConnectionsCount::class;
+  protected $connectionsCountDataType = '';
   /**
+   * The period of time in seconds after a new node is created before the
+   * autoscaler will incorporate its resource usage (e.g. CPU utilization) into
+   * the autoscaling recommendation algorithm.
+   *
    * @var string
    */
   public $coolDownPeriodSec;
   protected $cpuUtilizationType = CpuUtilization::class;
   protected $cpuUtilizationDataType = '';
   /**
+   * If true, autoscaling is enabled for the instance. If not set, the default
+   * value is false.
+   *
    * @var bool
    */
   public $enabled;
   /**
+   * Maximum number of nodes for the autoscaler.
+   *
    * @var string
    */
   public $maxNodeCount;
 
   /**
-   * @param string
+   * Optional. Connections count policy for the autoscaler. If not set, the
+   * autoscaler will not use connection count for scaling.
+   *
+   * @param ConnectionsCount $connectionsCount
+   */
+  public function setConnectionsCount(ConnectionsCount $connectionsCount)
+  {
+    $this->connectionsCount = $connectionsCount;
+  }
+  /**
+   * @return ConnectionsCount
+   */
+  public function getConnectionsCount()
+  {
+    return $this->connectionsCount;
+  }
+  /**
+   * The period of time in seconds after a new node is created before the
+   * autoscaler will incorporate its resource usage (e.g. CPU utilization) into
+   * the autoscaling recommendation algorithm.
+   *
+   * @param string $coolDownPeriodSec
    */
   public function setCoolDownPeriodSec($coolDownPeriodSec)
   {
@@ -49,7 +81,9 @@ class Policy extends \Google\Model
     return $this->coolDownPeriodSec;
   }
   /**
-   * @param CpuUtilization
+   * CPU utilization policy for the autoscaler.
+   *
+   * @param CpuUtilization $cpuUtilization
    */
   public function setCpuUtilization(CpuUtilization $cpuUtilization)
   {
@@ -63,7 +97,10 @@ class Policy extends \Google\Model
     return $this->cpuUtilization;
   }
   /**
-   * @param bool
+   * If true, autoscaling is enabled for the instance. If not set, the default
+   * value is false.
+   *
+   * @param bool $enabled
    */
   public function setEnabled($enabled)
   {
@@ -77,7 +114,9 @@ class Policy extends \Google\Model
     return $this->enabled;
   }
   /**
-   * @param string
+   * Maximum number of nodes for the autoscaler.
+   *
+   * @param string $maxNodeCount
    */
   public function setMaxNodeCount($maxNodeCount)
   {

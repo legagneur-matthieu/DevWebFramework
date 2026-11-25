@@ -20,7 +20,10 @@ namespace Google\Service\Container;
 class ReleaseChannel extends \Google\Model
 {
   /**
-   * No channel specified.
+   * Deprecated: No channel specified. it will be removed in the future, use
+   * RAPID, REGULAR, STABLE or EXTENDED instead.
+   *
+   * @deprecated
    */
   public const CHANNEL_UNSPECIFIED = 'UNSPECIFIED';
   /**

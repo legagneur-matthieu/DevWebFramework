@@ -109,7 +109,8 @@ class Attributes extends \Google\Collection
   public $description;
   /**
    * The list of destinations to exclude for this target (corresponds to
-   * unchecked check boxes in Merchant Center).
+   * unchecked check boxes in Merchant Center). Supported values are: -
+   * `css_ads_experiences` - `css_organic_experiences`
    *
    * @var string[]
    */
@@ -187,7 +188,8 @@ class Attributes extends \Google\Collection
   /**
    * The list of destinations to include for this target (corresponds to checked
    * check boxes in Merchant Center). Default destinations are always included
-   * unless provided in `excludedDestinations`.
+   * unless provided in `excluded_destinations`. Supported values are: -
+   * `css_ads_experiences` - `css_organic_experiences`
    *
    * @var string[]
    */
@@ -213,6 +215,18 @@ class Attributes extends \Google\Collection
    * @var string
    */
   public $material;
+  /**
+   * Maximum rating score of the product. Required if `rating` is provided.
+   *
+   * @var string
+   */
+  public $maxRating;
+  /**
+   * Minimum rating score of the product. Required if `rating` is provided.
+   *
+   * @var string
+   */
+  public $minRating;
   /**
    * Manufacturer Part Number
    * ([MPN](https://support.google.com/merchants/answer/188494#mpn)) of the
@@ -269,6 +283,22 @@ class Attributes extends \Google\Collection
   protected $productWidthType = ProductDimension::class;
   protected $productWidthDataType = '';
   /**
+   * Average rating score of the product. The value must be within the range of
+   * [`min_rating`, `max_rating`], inclusive. When displayed on the product
+   * page, this rating is normalized to a scale of [1, 5] with one decimal
+   * place. If provided, `review_count`, `min_rating`, and `max_rating` are also
+   * required.
+   *
+   * @var 
+   */
+  public $rating;
+  /**
+   * Number of reviews of the product. Required if `rating` is provided.
+   *
+   * @var string
+   */
+  public $reviewCount;
+  /**
    * Size of the item. Only one value is allowed. For variants with different
    * sizes, insert a separate product for each size with the same `itemGroupId`
    * value (see [https://support.google.com/merchants/answer/6324492](size
@@ -285,8 +315,8 @@ class Attributes extends \Google\Collection
   public $sizeSystem;
   /**
    * The cut of the item. It can be used to represent combined size types for
-   * apparel items. Maximum two of size types can be provided (see
-   * [https://support.google.com/merchants/answer/6324497](size type)).
+   * apparel items. Maximum two of size types can be provided (see [size
+   * type](https://support.google.com/merchants/answer/6324497).
    *
    * @var string[]
    */
@@ -541,7 +571,8 @@ class Attributes extends \Google\Collection
   }
   /**
    * The list of destinations to exclude for this target (corresponds to
-   * unchecked check boxes in Merchant Center).
+   * unchecked check boxes in Merchant Center). Supported values are: -
+   * `css_ads_experiences` - `css_organic_experiences`
    *
    * @param string[] $excludedDestinations
    */
@@ -780,7 +811,8 @@ class Attributes extends \Google\Collection
   /**
    * The list of destinations to include for this target (corresponds to checked
    * check boxes in Merchant Center). Default destinations are always included
-   * unless provided in `excludedDestinations`.
+   * unless provided in `excluded_destinations`. Supported values are: -
+   * `css_ads_experiences` - `css_organic_experiences`
    *
    * @param string[] $includedDestinations
    */
@@ -859,6 +891,38 @@ class Attributes extends \Google\Collection
   public function getMaterial()
   {
     return $this->material;
+  }
+  /**
+   * Maximum rating score of the product. Required if `rating` is provided.
+   *
+   * @param string $maxRating
+   */
+  public function setMaxRating($maxRating)
+  {
+    $this->maxRating = $maxRating;
+  }
+  /**
+   * @return string
+   */
+  public function getMaxRating()
+  {
+    return $this->maxRating;
+  }
+  /**
+   * Minimum rating score of the product. Required if `rating` is provided.
+   *
+   * @param string $minRating
+   */
+  public function setMinRating($minRating)
+  {
+    $this->minRating = $minRating;
+  }
+  /**
+   * @return string
+   */
+  public function getMinRating()
+  {
+    return $this->minRating;
   }
   /**
    * Manufacturer Part Number
@@ -1059,6 +1123,30 @@ class Attributes extends \Google\Collection
   {
     return $this->productWidth;
   }
+  public function setRating($rating)
+  {
+    $this->rating = $rating;
+  }
+  public function getRating()
+  {
+    return $this->rating;
+  }
+  /**
+   * Number of reviews of the product. Required if `rating` is provided.
+   *
+   * @param string $reviewCount
+   */
+  public function setReviewCount($reviewCount)
+  {
+    $this->reviewCount = $reviewCount;
+  }
+  /**
+   * @return string
+   */
+  public function getReviewCount()
+  {
+    return $this->reviewCount;
+  }
   /**
    * Size of the item. Only one value is allowed. For variants with different
    * sizes, insert a separate product for each size with the same `itemGroupId`
@@ -1096,8 +1184,8 @@ class Attributes extends \Google\Collection
   }
   /**
    * The cut of the item. It can be used to represent combined size types for
-   * apparel items. Maximum two of size types can be provided (see
-   * [https://support.google.com/merchants/answer/6324497](size type)).
+   * apparel items. Maximum two of size types can be provided (see [size
+   * type](https://support.google.com/merchants/answer/6324497).
    *
    * @param string[] $sizeTypes
    */

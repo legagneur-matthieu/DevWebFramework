@@ -35,7 +35,23 @@ class QueryRequest extends \Google\Collection
    * be used, which is the default.
    */
   public const JOB_CREATION_MODE_JOB_CREATION_OPTIONAL = 'JOB_CREATION_OPTIONAL';
+  /**
+   * If unspecified it will default to struct `QueryResponse.rows`
+   * (`STRUCT_ENCODING`)
+   */
+  public const QUERY_RESULTS_FORMAT_QUERY_RESULTS_FORMAT_UNSPECIFIED = 'QUERY_RESULTS_FORMAT_UNSPECIFIED';
+  /**
+   * Default encoding of results as struct in `QueryResponse.rows`
+   */
+  public const QUERY_RESULTS_FORMAT_STRUCT_ENCODING = 'STRUCT_ENCODING';
+  /**
+   * Arrow is a standard open source column-based message format. See the Apache
+   * Arrow documentation for more details.
+   */
+  public const QUERY_RESULTS_FORMAT_ARROW = 'ARROW';
   protected $collection_key = 'queryParameters';
+  protected $arrowSerializationOptionsType = ArrowSerializationOptions::class;
+  protected $arrowSerializationOptionsDataType = '';
   protected $connectionPropertiesType = ConnectionProperty::class;
   protected $connectionPropertiesDataType = 'array';
   /**
@@ -167,6 +183,19 @@ class QueryRequest extends \Google\Collection
   protected $queryParametersType = QueryParameter::class;
   protected $queryParametersDataType = 'array';
   /**
+   * Optional. The query results format. If the value is anything other than
+   * `STRUCT_ENCODING` or unspecified: * The schema of the results is provided
+   * in the `QueryResponse.results_schema` field. * The results of the first
+   * page are provided in the `QueryResponse.results` field. * The
+   * `QueryResponse.rows` is not populated. * The `QueryResponse.schema` for
+   * `QueryResponse.rows` is not populated since it is the schema of the
+   * `QueryResponse.rows`. [Preview](https://cloud.google.com/products/#product-
+   * launch-stages)
+   *
+   * @var string
+   */
+  public $queryResultsFormat;
+  /**
    * Optional. A unique user provided identifier to ensure idempotent behavior
    * for queries. Note that this is different from the job_id. It has the
    * following properties: 1. It is case-sensitive, limited to up to 36 ASCII
@@ -194,10 +223,15 @@ class QueryRequest extends \Google\Collection
    * Optional. The reservation that jobs.query request would use. User can
    * specify a reservation to execute the job.query. The expected format is
    * `projects/{project}/locations/{location}/reservations/{reservation}`.
+   * Forces the query to use on-demand billing when set to `none`. This requires
+   * the project or organization to have `reservation_override_mode` set to
+   * `ALLOW_ANY_OVERRIDE`.
    *
    * @var string
    */
   public $reservation;
+  protected $secureContextType = SecureContext::class;
+  protected $secureContextDataType = '';
   /**
    * Optional. Optional: Specifies the maximum amount of time, in milliseconds,
    * that the client is willing to wait for the query to complete. By default,
@@ -216,10 +250,10 @@ class QueryRequest extends \Google\Collection
   public $timeoutMs;
   /**
    * Specifies whether to use BigQuery's legacy SQL dialect for this query. The
-   * default value is true. If set to false, the query will use BigQuery's
-   * GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ When
-   * useLegacySql is set to false, the value of flattenResults is ignored; query
-   * will be run as if flattenResults is false.
+   * default value is true. If set to false, the query uses BigQuery's
+   * [GoogleSQL](https://docs.cloud.google.com/bigquery/docs/introduction-sql).
+   * When useLegacySql is set to false, the value of flattenResults is ignored;
+   * query will be run as if flattenResults is false.
    *
    * @var bool
    */
@@ -242,6 +276,22 @@ class QueryRequest extends \Google\Collection
    */
   public $writeIncrementalResults;
 
+  /**
+   * Optional. Options specific to the Apache Arrow output format.
+   *
+   * @param ArrowSerializationOptions $arrowSerializationOptions
+   */
+  public function setArrowSerializationOptions(ArrowSerializationOptions $arrowSerializationOptions)
+  {
+    $this->arrowSerializationOptions = $arrowSerializationOptions;
+  }
+  /**
+   * @return ArrowSerializationOptions
+   */
+  public function getArrowSerializationOptions()
+  {
+    return $this->arrowSerializationOptions;
+  }
   /**
    * Optional. Connection properties which can modify the query behavior.
    *
@@ -589,6 +639,31 @@ class QueryRequest extends \Google\Collection
     return $this->queryParameters;
   }
   /**
+   * Optional. The query results format. If the value is anything other than
+   * `STRUCT_ENCODING` or unspecified: * The schema of the results is provided
+   * in the `QueryResponse.results_schema` field. * The results of the first
+   * page are provided in the `QueryResponse.results` field. * The
+   * `QueryResponse.rows` is not populated. * The `QueryResponse.schema` for
+   * `QueryResponse.rows` is not populated since it is the schema of the
+   * `QueryResponse.rows`. [Preview](https://cloud.google.com/products/#product-
+   * launch-stages)
+   *
+   * Accepted values: QUERY_RESULTS_FORMAT_UNSPECIFIED, STRUCT_ENCODING, ARROW
+   *
+   * @param self::QUERY_RESULTS_FORMAT_* $queryResultsFormat
+   */
+  public function setQueryResultsFormat($queryResultsFormat)
+  {
+    $this->queryResultsFormat = $queryResultsFormat;
+  }
+  /**
+   * @return self::QUERY_RESULTS_FORMAT_*
+   */
+  public function getQueryResultsFormat()
+  {
+    return $this->queryResultsFormat;
+  }
+  /**
    * Optional. A unique user provided identifier to ensure idempotent behavior
    * for queries. Note that this is different from the job_id. It has the
    * following properties: 1. It is case-sensitive, limited to up to 36 ASCII
@@ -626,6 +701,9 @@ class QueryRequest extends \Google\Collection
    * Optional. The reservation that jobs.query request would use. User can
    * specify a reservation to execute the job.query. The expected format is
    * `projects/{project}/locations/{location}/reservations/{reservation}`.
+   * Forces the query to use on-demand billing when set to `none`. This requires
+   * the project or organization to have `reservation_override_mode` set to
+   * `ALLOW_ANY_OVERRIDE`.
    *
    * @param string $reservation
    */
@@ -639,6 +717,25 @@ class QueryRequest extends \Google\Collection
   public function getReservation()
   {
     return $this->reservation;
+  }
+  /**
+   * Optional. A set of key-value pairs representing the secure context. This
+   * can be used to pass sensitive or context-specific information. They can be
+   * retrieved via the SECURE_CONTEXT() function and used to modify the run-time
+   * behavior of a query.
+   *
+   * @param SecureContext $secureContext
+   */
+  public function setSecureContext(SecureContext $secureContext)
+  {
+    $this->secureContext = $secureContext;
+  }
+  /**
+   * @return SecureContext
+   */
+  public function getSecureContext()
+  {
+    return $this->secureContext;
   }
   /**
    * Optional. Optional: Specifies the maximum amount of time, in milliseconds,
@@ -668,10 +765,10 @@ class QueryRequest extends \Google\Collection
   }
   /**
    * Specifies whether to use BigQuery's legacy SQL dialect for this query. The
-   * default value is true. If set to false, the query will use BigQuery's
-   * GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ When
-   * useLegacySql is set to false, the value of flattenResults is ignored; query
-   * will be run as if flattenResults is false.
+   * default value is true. If set to false, the query uses BigQuery's
+   * [GoogleSQL](https://docs.cloud.google.com/bigquery/docs/introduction-sql).
+   * When useLegacySql is set to false, the value of flattenResults is ignored;
+   * query will be run as if flattenResults is false.
    *
    * @param bool $useLegacySql
    */

@@ -26,8 +26,11 @@ class Metadata extends \Google\Model
    */
   public $canDelete;
   /**
-   * Output only. Indicates if the listing is eligible for business calls.
+   * Output only. Deprecated: Relates to the Call Tracking feature which is no
+   * longer supported. Indicates whether the location is eligible for business
+   * calls.
    *
+   * @deprecated
    * @var bool
    */
   public $canHaveBusinessCalls;
@@ -50,8 +53,8 @@ class Metadata extends \Google\Model
    */
   public $canOperateHealthData;
   /**
-   * Output only. Indicates if the listing can manage local posts. Deprecated:
-   * This field is no longer populated and will be removed in a future version.
+   * Output only. Deprecated: This field is no longer populated and will be
+   * removed in a future version.
    *
    * @deprecated
    * @var bool
@@ -72,7 +75,7 @@ class Metadata extends \Google\Model
   /**
    * Output only. Indicates whether the place ID associated with this location
    * has updates that need to be updated or rejected by the client. If this
-   * boolean is set, you should call the `getGoogleUpdated` method to lookup
+   * boolean is set, you should call the `getGoogleUpdated` method to look up
    * information that's needs to be verified.
    *
    * @var bool
@@ -94,7 +97,10 @@ class Metadata extends \Google\Model
    */
   public $hasVoiceOfMerchant;
   /**
-   * Output only.
+   * Output only. Indicates whether the location is classified as a particularly
+   * personal place. This means there are restrictions on Location History
+   * features. If you believe this was a mistake, see the [help center
+   * article](https://support.google.com/business/answer/3480441).
    *
    * @var bool
    */
@@ -113,7 +119,7 @@ class Metadata extends \Google\Model
    */
   public $newReviewUri;
   /**
-   * Output only. If this locationappears on Google Maps, this field is
+   * Output only. If this location appears on Google Maps, this field is
    * populated with the place ID for the location. This ID can be used in
    * various Places APIs. This field can be set during Create calls, but not for
    * Update.
@@ -139,8 +145,11 @@ class Metadata extends \Google\Model
     return $this->canDelete;
   }
   /**
-   * Output only. Indicates if the listing is eligible for business calls.
+   * Output only. Deprecated: Relates to the Call Tracking feature which is no
+   * longer supported. Indicates whether the location is eligible for business
+   * calls.
    *
+   * @deprecated
    * @param bool $canHaveBusinessCalls
    */
   public function setCanHaveBusinessCalls($canHaveBusinessCalls)
@@ -148,6 +157,7 @@ class Metadata extends \Google\Model
     $this->canHaveBusinessCalls = $canHaveBusinessCalls;
   }
   /**
+   * @deprecated
    * @return bool
    */
   public function getCanHaveBusinessCalls()
@@ -203,8 +213,8 @@ class Metadata extends \Google\Model
     return $this->canOperateHealthData;
   }
   /**
-   * Output only. Indicates if the listing can manage local posts. Deprecated:
-   * This field is no longer populated and will be removed in a future version.
+   * Output only. Deprecated: This field is no longer populated and will be
+   * removed in a future version.
    *
    * @deprecated
    * @param bool $canOperateLocalPost
@@ -256,7 +266,7 @@ class Metadata extends \Google\Model
   /**
    * Output only. Indicates whether the place ID associated with this location
    * has updates that need to be updated or rejected by the client. If this
-   * boolean is set, you should call the `getGoogleUpdated` method to lookup
+   * boolean is set, you should call the `getGoogleUpdated` method to look up
    * information that's needs to be verified.
    *
    * @param bool $hasGoogleUpdated
@@ -308,7 +318,10 @@ class Metadata extends \Google\Model
     return $this->hasVoiceOfMerchant;
   }
   /**
-   * Output only.
+   * Output only. Indicates whether the location is classified as a particularly
+   * personal place. This means there are restrictions on Location History
+   * features. If you believe this was a mistake, see the [help center
+   * article](https://support.google.com/business/answer/3480441).
    *
    * @param bool $isParticularlyPersonalPlace
    */
@@ -357,7 +370,7 @@ class Metadata extends \Google\Model
     return $this->newReviewUri;
   }
   /**
-   * Output only. If this locationappears on Google Maps, this field is
+   * Output only. If this location appears on Google Maps, this field is
    * populated with the place ID for the location. This ID can be used in
    * various Places APIs. This field can be set during Create calls, but not for
    * Update.

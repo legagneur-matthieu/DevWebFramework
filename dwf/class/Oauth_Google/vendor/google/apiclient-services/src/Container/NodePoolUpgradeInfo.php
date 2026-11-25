@@ -26,14 +26,16 @@ class NodePoolUpgradeInfo extends \Google\Collection
    * @var string[]
    */
   public $autoUpgradeStatus;
+  protected $customImageInfoType = CustomImageInfo::class;
+  protected $customImageInfoDataType = '';
   /**
-   * The nodepool's current minor version's end of extended support timestamp.
+   * The node pool's current minor version's end of extended support timestamp.
    *
    * @var string
    */
   public $endOfExtendedSupportTimestamp;
   /**
-   * The nodepool's current minor version's end of standard support timestamp.
+   * The node pool's current minor version's end of standard support timestamp.
    *
    * @var string
    */
@@ -76,7 +78,24 @@ class NodePoolUpgradeInfo extends \Google\Collection
     return $this->autoUpgradeStatus;
   }
   /**
-   * The nodepool's current minor version's end of extended support timestamp.
+   * Output only. Upgrade info for the node pool specific to the usage of custom
+   * images.
+   *
+   * @param CustomImageInfo $customImageInfo
+   */
+  public function setCustomImageInfo(CustomImageInfo $customImageInfo)
+  {
+    $this->customImageInfo = $customImageInfo;
+  }
+  /**
+   * @return CustomImageInfo
+   */
+  public function getCustomImageInfo()
+  {
+    return $this->customImageInfo;
+  }
+  /**
+   * The node pool's current minor version's end of extended support timestamp.
    *
    * @param string $endOfExtendedSupportTimestamp
    */
@@ -92,7 +111,7 @@ class NodePoolUpgradeInfo extends \Google\Collection
     return $this->endOfExtendedSupportTimestamp;
   }
   /**
-   * The nodepool's current minor version's end of standard support timestamp.
+   * The node pool's current minor version's end of standard support timestamp.
    *
    * @param string $endOfStandardSupportTimestamp
    */

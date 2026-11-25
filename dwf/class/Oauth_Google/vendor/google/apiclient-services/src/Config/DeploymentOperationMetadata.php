@@ -72,8 +72,34 @@ class DeploymentOperationMetadata extends \Google\Model
    * Running quota validation
    */
   public const STEP_RUNNING_QUOTA_VALIDATION = 'RUNNING_QUOTA_VALIDATION';
+  /**
+   * Initializing the actuation engine.
+   */
+  public const STEP_RUNNING_ENGINE_INIT = 'RUNNING_ENGINE_INIT';
+  /**
+   * Generating an execution plan using the actuation engine.
+   */
+  public const STEP_RUNNING_ENGINE_PLAN = 'RUNNING_ENGINE_PLAN';
+  /**
+   * Actuating resources using the actuation engine.
+   */
+  public const STEP_RUNNING_ENGINE_APPLY = 'RUNNING_ENGINE_APPLY';
+  /**
+   * Destroying resources using the actuation engine.
+   */
+  public const STEP_RUNNING_ENGINE_DESTROY = 'RUNNING_ENGINE_DESTROY';
+  /**
+   * Validating the uploaded state file when unlocking a deployment.
+   */
+  public const STEP_RUNNING_ENGINE_VALIDATE = 'RUNNING_ENGINE_VALIDATE';
   protected $applyResultsType = ApplyResults::class;
   protected $applyResultsDataType = '';
+  /**
+   * Output only. Indicating if early apply results are available.
+   *
+   * @var bool
+   */
+  public $applyResultsAvailable;
   /**
    * Output only. Cloud Build instance UUID associated with this operation.
    *
@@ -109,6 +135,22 @@ class DeploymentOperationMetadata extends \Google\Model
   public function getApplyResults()
   {
     return $this->applyResults;
+  }
+  /**
+   * Output only. Indicating if early apply results are available.
+   *
+   * @param bool $applyResultsAvailable
+   */
+  public function setApplyResultsAvailable($applyResultsAvailable)
+  {
+    $this->applyResultsAvailable = $applyResultsAvailable;
+  }
+  /**
+   * @return bool
+   */
+  public function getApplyResultsAvailable()
+  {
+    return $this->applyResultsAvailable;
   }
   /**
    * Output only. Cloud Build instance UUID associated with this operation.
@@ -149,7 +191,9 @@ class DeploymentOperationMetadata extends \Google\Model
    * Accepted values: DEPLOYMENT_STEP_UNSPECIFIED, PREPARING_STORAGE_BUCKET,
    * DOWNLOADING_BLUEPRINT, RUNNING_TF_INIT, RUNNING_TF_PLAN, RUNNING_TF_APPLY,
    * RUNNING_TF_DESTROY, RUNNING_TF_VALIDATE, UNLOCKING_DEPLOYMENT, SUCCEEDED,
-   * FAILED, VALIDATING_REPOSITORY, RUNNING_QUOTA_VALIDATION
+   * FAILED, VALIDATING_REPOSITORY, RUNNING_QUOTA_VALIDATION,
+   * RUNNING_ENGINE_INIT, RUNNING_ENGINE_PLAN, RUNNING_ENGINE_APPLY,
+   * RUNNING_ENGINE_DESTROY, RUNNING_ENGINE_VALIDATE
    *
    * @param self::STEP_* $step
    */

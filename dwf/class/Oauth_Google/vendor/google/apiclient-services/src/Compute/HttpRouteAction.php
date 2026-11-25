@@ -20,10 +20,16 @@ namespace Google\Service\Compute;
 class HttpRouteAction extends \Google\Collection
 {
   protected $collection_key = 'weightedBackendServices';
+  protected $cachePolicyType = CachePolicy::class;
+  protected $cachePolicyDataType = '';
   protected $corsPolicyType = CorsPolicy::class;
   protected $corsPolicyDataType = '';
+  protected $dynamicCompressionPolicyType = DynamicCompressionPolicy::class;
+  protected $dynamicCompressionPolicyDataType = '';
   protected $faultInjectionPolicyType = HttpFaultInjection::class;
   protected $faultInjectionPolicyDataType = '';
+  protected $imageOptimizationPolicyType = ImageOptimizationPolicy::class;
+  protected $imageOptimizationPolicyDataType = '';
   protected $maxStreamDurationType = Duration::class;
   protected $maxStreamDurationDataType = '';
   protected $requestMirrorPolicyType = RequestMirrorPolicy::class;
@@ -37,6 +43,25 @@ class HttpRouteAction extends \Google\Collection
   protected $weightedBackendServicesType = WeightedBackendService::class;
   protected $weightedBackendServicesDataType = 'array';
 
+  /**
+   * Specifies the cache policy configuration for matched traffic. Available
+   * only for Global `EXTERNAL_MANAGED` load balancer schemes. At least one
+   * property must be specified. This policy cannot be specified if any target
+   * backend has Identity-Aware Proxy enabled.
+   *
+   * @param CachePolicy $cachePolicy
+   */
+  public function setCachePolicy(CachePolicy $cachePolicy)
+  {
+    $this->cachePolicy = $cachePolicy;
+  }
+  /**
+   * @return CachePolicy
+   */
+  public function getCachePolicy()
+  {
+    return $this->cachePolicy;
+  }
   /**
    * The specification for allowing client-side cross-origin requests. For more
    * information about the W3C recommendation for cross-origin resource sharing
@@ -56,6 +81,23 @@ class HttpRouteAction extends \Google\Collection
   public function getCorsPolicy()
   {
     return $this->corsPolicy;
+  }
+  /**
+   * Dynamic compression policy for this URL Map's route. Available only for
+   * Global EXTERNAL_MANAGED load balancer schemes.
+   *
+   * @param DynamicCompressionPolicy $dynamicCompressionPolicy
+   */
+  public function setDynamicCompressionPolicy(DynamicCompressionPolicy $dynamicCompressionPolicy)
+  {
+    $this->dynamicCompressionPolicy = $dynamicCompressionPolicy;
+  }
+  /**
+   * @return DynamicCompressionPolicy
+   */
+  public function getDynamicCompressionPolicy()
+  {
+    return $this->dynamicCompressionPolicy;
   }
   /**
    * The specification for fault injection introduced into traffic to test the
@@ -83,6 +125,25 @@ class HttpRouteAction extends \Google\Collection
   public function getFaultInjectionPolicy()
   {
     return $this->faultInjectionPolicy;
+  }
+  /**
+   * Image optimization policy for this URL Map's route. Available only for
+   * Global EXTERNAL_MANAGED load balancer schemes. Either Cloud CDN must be
+   * enabled on the backend service or backend bucket serving the route, or
+   * cache policy must be configured on the same route
+   *
+   * @param ImageOptimizationPolicy $imageOptimizationPolicy
+   */
+  public function setImageOptimizationPolicy(ImageOptimizationPolicy $imageOptimizationPolicy)
+  {
+    $this->imageOptimizationPolicy = $imageOptimizationPolicy;
+  }
+  /**
+   * @return ImageOptimizationPolicy
+   */
+  public function getImageOptimizationPolicy()
+  {
+    return $this->imageOptimizationPolicy;
   }
   /**
    * Specifies the maximum duration (timeout) for streams on the selected route.

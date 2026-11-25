@@ -41,13 +41,13 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   /**
    * Use optimistic concurrency control by default. This mode is available for
    * Cloud Firestore databases. This is the default setting for Cloud Firestore
-   * Enterprise Edition databases.
+   * Enterprise edition databases.
    */
   public const CONCURRENCY_MODE_OPTIMISTIC = 'OPTIMISTIC';
   /**
    * Use pessimistic concurrency control by default. This mode is available for
    * Cloud Firestore databases. This is the default setting for Cloud Firestore
-   * Standard Edition databases.
+   * Standard edition databases.
    */
   public const CONCURRENCY_MODE_PESSIMISTIC = 'PESSIMISTIC';
   /**
@@ -155,9 +155,14 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   protected $cmekConfigType = GoogleFirestoreAdminV1CmekConfig::class;
   protected $cmekConfigDataType = '';
   /**
-   * The concurrency control mode to use for this database. If unspecified in a
-   * CreateDatabase request, this will default based on the database edition:
-   * Optimistic for Enterprise and Pessimistic for all other databases.
+   * The default concurrency control mode to use for this database. If
+   * unspecified in a CreateDatabase request, this will default based on the
+   * database edition: Optimistic for Enterprise and Pessimistic for all other
+   * databases. While transactions can explicitly specify their own concurrency
+   * mode, this setting defines the default behavior when left unspecified.
+   * Important: This database-level setting is not respected for Firestore with
+   * MongoDB compatibility. All transactions through the MongoDB compatibility
+   * layer will use optimistic concurrency control, regardless of this setting.
    *
    * @var string
    */
@@ -211,8 +216,8 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   /**
    * Optional. The Firestore API data access mode to use for this database. If
    * not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for
-   * Enterprise Edition. - the default value is DATA_ACCESS_MODE_ENABLED for
-   * Standard Edition.
+   * Enterprise edition. - the default value is DATA_ACCESS_MODE_ENABLED for
+   * Standard edition.
    *
    * @var string
    */
@@ -241,7 +246,7 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
    */
   public $keyPrefix;
   /**
-   * The location of the database. Available locations are listed at
+   * Required. The location of the database. Available locations are listed at
    * https://cloud.google.com/firestore/docs/locations.
    *
    * @var string
@@ -250,8 +255,8 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   /**
    * Optional. The MongoDB compatible API data access mode to use for this
    * database. If not set on write, the default value is
-   * DATA_ACCESS_MODE_ENABLED for Enterprise Edition. The value is always
-   * DATA_ACCESS_MODE_DISABLED for Standard Edition.
+   * DATA_ACCESS_MODE_ENABLED for Enterprise edition. The value is always
+   * DATA_ACCESS_MODE_DISABLED for Standard edition.
    *
    * @var string
    */
@@ -293,7 +298,7 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
    */
   public $tags;
   /**
-   * The type of the database. See
+   * Required. The type of the database. See
    * https://cloud.google.com/datastore/docs/firestore-or-datastore for
    * information about how to choose.
    *
@@ -360,9 +365,14 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
     return $this->cmekConfig;
   }
   /**
-   * The concurrency control mode to use for this database. If unspecified in a
-   * CreateDatabase request, this will default based on the database edition:
-   * Optimistic for Enterprise and Pessimistic for all other databases.
+   * The default concurrency control mode to use for this database. If
+   * unspecified in a CreateDatabase request, this will default based on the
+   * database edition: Optimistic for Enterprise and Pessimistic for all other
+   * databases. While transactions can explicitly specify their own concurrency
+   * mode, this setting defines the default behavior when left unspecified.
+   * Important: This database-level setting is not respected for Firestore with
+   * MongoDB compatibility. All transactions through the MongoDB compatibility
+   * layer will use optimistic concurrency control, regardless of this setting.
    *
    * Accepted values: CONCURRENCY_MODE_UNSPECIFIED, OPTIMISTIC, PESSIMISTIC,
    * OPTIMISTIC_WITH_ENTITY_GROUPS
@@ -494,8 +504,8 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   /**
    * Optional. The Firestore API data access mode to use for this database. If
    * not set on write: - the default value is DATA_ACCESS_MODE_DISABLED for
-   * Enterprise Edition. - the default value is DATA_ACCESS_MODE_ENABLED for
-   * Standard Edition.
+   * Enterprise edition. - the default value is DATA_ACCESS_MODE_ENABLED for
+   * Standard edition.
    *
    * Accepted values: DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED,
    * DATA_ACCESS_MODE_DISABLED
@@ -557,7 +567,7 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
     return $this->keyPrefix;
   }
   /**
-   * The location of the database. Available locations are listed at
+   * Required. The location of the database. Available locations are listed at
    * https://cloud.google.com/firestore/docs/locations.
    *
    * @param string $locationId
@@ -576,8 +586,8 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
   /**
    * Optional. The MongoDB compatible API data access mode to use for this
    * database. If not set on write, the default value is
-   * DATA_ACCESS_MODE_ENABLED for Enterprise Edition. The value is always
-   * DATA_ACCESS_MODE_DISABLED for Standard Edition.
+   * DATA_ACCESS_MODE_ENABLED for Enterprise edition. The value is always
+   * DATA_ACCESS_MODE_DISABLED for Standard edition.
    *
    * Accepted values: DATA_ACCESS_MODE_UNSPECIFIED, DATA_ACCESS_MODE_ENABLED,
    * DATA_ACCESS_MODE_DISABLED
@@ -702,7 +712,7 @@ class GoogleFirestoreAdminV1Database extends \Google\Model
     return $this->tags;
   }
   /**
-   * The type of the database. See
+   * Required. The type of the database. See
    * https://cloud.google.com/datastore/docs/firestore-or-datastore for
    * information about how to choose.
    *

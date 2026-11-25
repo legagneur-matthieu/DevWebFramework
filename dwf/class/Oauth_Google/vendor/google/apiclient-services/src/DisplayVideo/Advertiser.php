@@ -83,6 +83,23 @@ class Advertiser extends \Google\Model
   protected $dataAccessConfigType = AdvertiserDataAccessConfig::class;
   protected $dataAccessConfigDataType = '';
   /**
+   * Optional. The default business name for the advertiser. This is the value
+   * used by YouTube and Demand Gen ads under this advertiser if a business name
+   * is not provided.
+   *
+   * @var string
+   */
+  public $defaultBusinessName;
+  /**
+   * Optional. The asset ID of the default logo image for the advertiser. This
+   * is the asset ID that will be used by YouTube and Demand ads under this
+   * advertiser if a logo asset is not provided. You must use
+   * advertisers.adAssets.upload to upload this asset using the API.
+   *
+   * @var string
+   */
+  public $defaultLogoAssetId;
+  /**
    * Required. The display name of the advertiser. Must be UTF-8 encoded with a
    * maximum size of 240 bytes.
    *
@@ -243,6 +260,43 @@ class Advertiser extends \Google\Model
   public function getDataAccessConfig()
   {
     return $this->dataAccessConfig;
+  }
+  /**
+   * Optional. The default business name for the advertiser. This is the value
+   * used by YouTube and Demand Gen ads under this advertiser if a business name
+   * is not provided.
+   *
+   * @param string $defaultBusinessName
+   */
+  public function setDefaultBusinessName($defaultBusinessName)
+  {
+    $this->defaultBusinessName = $defaultBusinessName;
+  }
+  /**
+   * @return string
+   */
+  public function getDefaultBusinessName()
+  {
+    return $this->defaultBusinessName;
+  }
+  /**
+   * Optional. The asset ID of the default logo image for the advertiser. This
+   * is the asset ID that will be used by YouTube and Demand ads under this
+   * advertiser if a logo asset is not provided. You must use
+   * advertisers.adAssets.upload to upload this asset using the API.
+   *
+   * @param string $defaultLogoAssetId
+   */
+  public function setDefaultLogoAssetId($defaultLogoAssetId)
+  {
+    $this->defaultLogoAssetId = $defaultLogoAssetId;
+  }
+  /**
+   * @return string
+   */
+  public function getDefaultLogoAssetId()
+  {
+    return $this->defaultLogoAssetId;
   }
   /**
    * Required. The display name of the advertiser. Must be UTF-8 encoded with a

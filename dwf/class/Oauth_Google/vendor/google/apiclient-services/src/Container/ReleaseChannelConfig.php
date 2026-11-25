@@ -20,7 +20,10 @@ namespace Google\Service\Container;
 class ReleaseChannelConfig extends \Google\Collection
 {
   /**
-   * No channel specified.
+   * Deprecated: No channel specified. it will be removed in the future, use
+   * RAPID, REGULAR, STABLE or EXTENDED instead.
+   *
+   * @deprecated
    */
   public const CHANNEL_UNSPECIFIED = 'UNSPECIFIED';
   /**
@@ -54,11 +57,23 @@ class ReleaseChannelConfig extends \Google\Collection
    */
   public $channel;
   /**
+   * Output only. List of custom versions for the channel.
+   *
+   * @var string[]
+   */
+  public $customVersions;
+  /**
    * The default version for newly created clusters on the channel.
    *
    * @var string
    */
   public $defaultVersion;
+  /**
+   * Output only. List of preview versions for the channel.
+   *
+   * @var string[]
+   */
+  public $previewVersions;
   /**
    * The auto upgrade target version for clusters on the channel.
    *
@@ -91,6 +106,22 @@ class ReleaseChannelConfig extends \Google\Collection
     return $this->channel;
   }
   /**
+   * Output only. List of custom versions for the channel.
+   *
+   * @param string[] $customVersions
+   */
+  public function setCustomVersions($customVersions)
+  {
+    $this->customVersions = $customVersions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getCustomVersions()
+  {
+    return $this->customVersions;
+  }
+  /**
    * The default version for newly created clusters on the channel.
    *
    * @param string $defaultVersion
@@ -105,6 +136,22 @@ class ReleaseChannelConfig extends \Google\Collection
   public function getDefaultVersion()
   {
     return $this->defaultVersion;
+  }
+  /**
+   * Output only. List of preview versions for the channel.
+   *
+   * @param string[] $previewVersions
+   */
+  public function setPreviewVersions($previewVersions)
+  {
+    $this->previewVersions = $previewVersions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getPreviewVersions()
+  {
+    return $this->previewVersions;
   }
   /**
    * The auto upgrade target version for clusters on the channel.

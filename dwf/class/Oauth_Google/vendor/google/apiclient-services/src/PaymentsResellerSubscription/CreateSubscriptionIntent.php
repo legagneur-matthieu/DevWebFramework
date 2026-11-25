@@ -22,8 +22,11 @@ class CreateSubscriptionIntent extends \Google\Model
   protected $cycleOptionsType = CycleOptions::class;
   protected $cycleOptionsDataType = '';
   /**
-   * Required. The parent resource name, which is the identifier of the partner.
+   * Optional. Deprecated: Use the `parent` field in
+   * `GenerateUserSessionRequest` instead. The parent resource name, which is
+   * the identifier of the partner.
    *
+   * @deprecated
    * @var string
    */
   public $parent;
@@ -56,8 +59,11 @@ class CreateSubscriptionIntent extends \Google\Model
     return $this->cycleOptions;
   }
   /**
-   * Required. The parent resource name, which is the identifier of the partner.
+   * Optional. Deprecated: Use the `parent` field in
+   * `GenerateUserSessionRequest` instead. The parent resource name, which is
+   * the identifier of the partner.
    *
+   * @deprecated
    * @param string $parent
    */
   public function setParent($parent)
@@ -65,6 +71,7 @@ class CreateSubscriptionIntent extends \Google\Model
     $this->parent = $parent;
   }
   /**
+   * @deprecated
    * @return string
    */
   public function getParent()

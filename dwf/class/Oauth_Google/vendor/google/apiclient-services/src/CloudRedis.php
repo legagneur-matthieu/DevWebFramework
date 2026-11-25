@@ -37,11 +37,21 @@ class CloudRedis extends \Google\Service
   /** See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.. */
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
+  /** See your Google Cloud Memorystore for Redis data and the email address of your Google Account. */
+  const REDIS_READ_ONLY =
+      "https://www.googleapis.com/auth/redis.read-only";
+  /** See, edit, configure, and delete your Google Cloud Memorystore for Redis data and see the email address for your Google Account. */
+  const REDIS_READ_WRITE =
+      "https://www.googleapis.com/auth/redis.read-write";
 
   public $projects_locations;
+  public $projects_locations_aclPolicies;
+  public $projects_locations_aclPolicies_revisions;
   public $projects_locations_backupCollections;
   public $projects_locations_backupCollections_backups;
   public $projects_locations_clusters;
+  public $projects_locations_clusters_tokenAuthUsers;
+  public $projects_locations_clusters_tokenAuthUsers_authTokens;
   public $projects_locations_instances;
   public $projects_locations_operations;
   public $rootUrlTemplate;
@@ -79,6 +89,16 @@ class CloudRedis extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getSharedRegionalCertificateAuthority' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'list' => [
               'path' => 'v1/{+name}/locations',
               'httpMethod' => 'GET',
@@ -96,6 +116,136 @@ class CloudRedis extends \Google\Service
                 'filter' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_aclPolicies = new CloudRedis\Resource\ProjectsLocationsAclPolicies(
+        $this,
+        $this->serviceName,
+        'aclPolicies',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/aclPolicies',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'aclPolicyId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'etag' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/aclPolicies',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_aclPolicies_revisions = new CloudRedis\Resource\ProjectsLocationsAclPoliciesRevisions(
+        $this,
+        $this->serviceName,
+        'revisions',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/revisions',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -216,7 +366,17 @@ class CloudRedis extends \Google\Service
         'clusters',
         [
           'methods' => [
-            'backup' => [
+            'addTokenAuthUser' => [
+              'path' => 'v1/{+cluster}:addTokenAuthUser',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'cluster' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'backup' => [
               'path' => 'v1/{+name}:backup',
               'httpMethod' => 'POST',
               'parameters' => [
@@ -322,6 +482,136 @@ class CloudRedis extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_clusters_tokenAuthUsers = new CloudRedis\Resource\ProjectsLocationsClustersTokenAuthUsers(
+        $this,
+        $this->serviceName,
+        'tokenAuthUsers',
+        [
+          'methods' => [
+            'addAuthToken' => [
+              'path' => 'v1/{+tokenAuthUser}:addAuthToken',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'tokenAuthUser' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'force' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/tokenAuthUsers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_clusters_tokenAuthUsers_authTokens = new CloudRedis\Resource\ProjectsLocationsClustersTokenAuthUsersAuthTokens(
+        $this,
+        $this->serviceName,
+        'authTokens',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/authTokens',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],

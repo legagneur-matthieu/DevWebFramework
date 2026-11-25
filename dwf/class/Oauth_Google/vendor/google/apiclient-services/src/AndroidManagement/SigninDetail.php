@@ -80,6 +80,8 @@ class SigninDetail extends \Google\Model
    * @var string
    */
   public $defaultStatus;
+  protected $googleAuthenticationOptionsType = SigninDetailGoogleAuthenticationOptions::class;
+  protected $googleAuthenticationOptionsDataType = '';
   /**
    * A JSON string whose UTF-8 representation can be used to generate a QR code
    * to enroll a device with this enrollment token. To enroll a device using
@@ -166,6 +168,22 @@ class SigninDetail extends \Google\Model
   public function getDefaultStatus()
   {
     return $this->defaultStatus;
+  }
+  /**
+   * Optional. Options related to Google authentication during the enrollment.
+   *
+   * @param SigninDetailGoogleAuthenticationOptions $googleAuthenticationOptions
+   */
+  public function setGoogleAuthenticationOptions(SigninDetailGoogleAuthenticationOptions $googleAuthenticationOptions)
+  {
+    $this->googleAuthenticationOptions = $googleAuthenticationOptions;
+  }
+  /**
+   * @return SigninDetailGoogleAuthenticationOptions
+   */
+  public function getGoogleAuthenticationOptions()
+  {
+    return $this->googleAuthenticationOptions;
   }
   /**
    * A JSON string whose UTF-8 representation can be used to generate a QR code

@@ -122,8 +122,10 @@ class ProjectsLocationsParametersVersions extends \Google\Service\Resource
    * @opt_param int pageSize Optional. Requested page size. Server may return
    * fewer items than requested. If unspecified, server will pick an appropriate
    * default.
-   * @opt_param string pageToken Optional. A token identifying a page of results
-   * the server should return.
+   * @opt_param string pageToken Optional. A page token, received from a previous
+   * `ListParameterVersions` call. Provide this to retrieve the subsequent page.
+   * When paginating, all other parameters provided to `ListParameterVersions`
+   * must match the call that provided the page token.
    * @return ListParameterVersionsResponse
    * @throws \Google\Service\Exception
    */
@@ -136,8 +138,8 @@ class ProjectsLocationsParametersVersions extends \Google\Service\Resource
   /**
    * Updates a single ParameterVersion. (versions.patch)
    *
-   * @param string $name Identifier. [Output only] The resource name of the
-   * ParameterVersion in the format `projects/locations/parameters/versions`.
+   * @param string $name Identifier. The resource name of the ParameterVersion in
+   * the format `projects/locations/parameters/versions`.
    * @param ParameterVersion $postBody
    * @param array $optParams Optional parameters.
    *

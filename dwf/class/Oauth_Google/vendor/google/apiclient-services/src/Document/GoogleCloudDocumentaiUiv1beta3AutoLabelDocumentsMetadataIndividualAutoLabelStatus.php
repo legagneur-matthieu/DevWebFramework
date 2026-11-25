@@ -25,7 +25,7 @@ class GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabe
   protected $statusDataType = '';
 
   /**
-   * The document id of the auto-labeled document. This will replace the
+   * The document ID of the auto-labeled document. This will replace the
    * gcs_uri.
    *
    * @param GoogleCloudDocumentaiUiv1beta3DocumentId $documentId

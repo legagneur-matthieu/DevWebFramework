@@ -57,6 +57,14 @@ class TrustConfig extends \Google\Collection
   public $name;
   protected $spiffeTrustStoresType = TrustStore::class;
   protected $spiffeTrustStoresDataType = 'map';
+  /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @var string[]
+   */
+  public $tags;
   protected $trustStoresType = TrustStore::class;
   protected $trustStoresDataType = 'array';
   /**
@@ -184,6 +192,24 @@ class TrustConfig extends \Google\Collection
   public function getSpiffeTrustStores()
   {
     return $this->spiffeTrustStores;
+  }
+  /**
+   * Optional. Input only. Immutable. Tag keys/values directly bound to this
+   * resource. For example: "123/environment": "production", "123/costCenter":
+   * "marketing"
+   *
+   * @param string[] $tags
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
   /**
    * Optional. Set of trust stores to perform validation against. This field is

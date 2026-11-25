@@ -275,6 +275,8 @@ class DatabaseResourceRecommendationSignalData extends \Google\Model
   /**
    * Represents if the cross_db_ownership_chaining database flag for a Cloud SQL
    * for SQL Server instance is not set to off.
+   *
+   * @deprecated
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING = 'SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING';
   /**
@@ -490,6 +492,8 @@ class DatabaseResourceRecommendationSignalData extends \Google\Model
   public const SIGNAL_TYPE_SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED = 'SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED';
   /**
    * High number of idle connections.
+   *
+   * @deprecated
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_MANY_IDLE_CONNECTIONS = 'SIGNAL_TYPE_MANY_IDLE_CONNECTIONS';
   /**
@@ -516,6 +520,26 @@ class DatabaseResourceRecommendationSignalData extends \Google\Model
    * Resource version is in extended support.
    */
   public const SIGNAL_TYPE_SIGNAL_TYPE_EXTENDED_SUPPORT = 'SIGNAL_TYPE_EXTENDED_SUPPORT';
+  /**
+   * Change in performance KPIs.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE = 'SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE';
+  /**
+   * Database version nearing end of life.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE = 'SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE';
+  /**
+   * Indicates a high risk of maintenance downtime.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK = 'SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK';
+  /**
+   * Indicates both a low cache hit rate and a risk of maintenance downtime.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME = 'SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME';
+  /**
+   * Indicates that the resource is missing enhanced protection.
+   */
+  public const SIGNAL_TYPE_SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION = 'SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION';
   /**
    * Optional. Any other additional metadata specific to recommendation
    *
@@ -782,7 +806,12 @@ class DatabaseResourceRecommendationSignalData extends \Google\Model
    * SIGNAL_TYPE_MANY_IDLE_CONNECTIONS, SIGNAL_TYPE_REPLICATION_LAG,
    * SIGNAL_TYPE_OUTDATED_VERSION, SIGNAL_TYPE_OUTDATED_CLIENT,
    * SIGNAL_TYPE_DATABOOST_DISABLED,
-   * SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES, SIGNAL_TYPE_EXTENDED_SUPPORT
+   * SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES, SIGNAL_TYPE_EXTENDED_SUPPORT,
+   * SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE,
+   * SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE,
+   * SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK,
+   * SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME,
+   * SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION
    *
    * @param self::SIGNAL_TYPE_* $signalType
    */

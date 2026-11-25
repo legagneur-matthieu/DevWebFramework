@@ -69,6 +69,8 @@ class QueryTemplate extends \Google\Model
    * @var string
    */
   public $documentation;
+  protected $encryptionConfigurationType = EncryptionConfig::class;
+  protected $encryptionConfigurationDataType = '';
   /**
    * Output only. The resource name of the QueryTemplate. e.g.
    * `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`
@@ -84,9 +86,10 @@ class QueryTemplate extends \Google\Model
    */
   public $primaryContact;
   /**
-   * Optional. Will be deprecated. Email or URL of the primary point of contact
-   * of the QueryTemplate. Max Length: 1000 bytes.
+   * Optional. Deprecated: Use `primary_contact` instead. Email or URL of the
+   * primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
    *
+   * @deprecated
    * @var string
    */
   public $proposer;
@@ -176,6 +179,24 @@ class QueryTemplate extends \Google\Model
     return $this->documentation;
   }
   /**
+   * Optional. Encryption configuration for the query template. If set, the
+   * customer-managed KMS key is used to encrypt the query template definition
+   * body.
+   *
+   * @param EncryptionConfig $encryptionConfiguration
+   */
+  public function setEncryptionConfiguration(EncryptionConfig $encryptionConfiguration)
+  {
+    $this->encryptionConfiguration = $encryptionConfiguration;
+  }
+  /**
+   * @return EncryptionConfig
+   */
+  public function getEncryptionConfiguration()
+  {
+    return $this->encryptionConfiguration;
+  }
+  /**
    * Output only. The resource name of the QueryTemplate. e.g.
    * `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`
    *
@@ -210,9 +231,10 @@ class QueryTemplate extends \Google\Model
     return $this->primaryContact;
   }
   /**
-   * Optional. Will be deprecated. Email or URL of the primary point of contact
-   * of the QueryTemplate. Max Length: 1000 bytes.
+   * Optional. Deprecated: Use `primary_contact` instead. Email or URL of the
+   * primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
    *
+   * @deprecated
    * @param string $proposer
    */
   public function setProposer($proposer)
@@ -220,6 +242,7 @@ class QueryTemplate extends \Google\Model
     $this->proposer = $proposer;
   }
   /**
+   * @deprecated
    * @return string
    */
   public function getProposer()

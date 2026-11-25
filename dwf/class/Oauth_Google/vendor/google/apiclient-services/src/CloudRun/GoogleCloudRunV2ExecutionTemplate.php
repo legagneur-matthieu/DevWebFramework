@@ -32,6 +32,25 @@ class GoogleCloudRunV2ExecutionTemplate extends \Google\Model
    */
   public $annotations;
   /**
+   * Optional. Arbitrary identifier for the API client.
+   *
+   * @var string
+   */
+  public $client;
+  /**
+   * Optional. Arbitrary version identifier for the API client.
+   *
+   * @var string
+   */
+  public $clientVersion;
+  /**
+   * Optional. If true, the system will start the execution within the next 12
+   * hours depending on available capacity.
+   *
+   * @var bool
+   */
+  public $delayExecution;
+  /**
    * Unstructured key value map that can be used to organize and categorize
    * objects. User-provided labels are shared with Google's billing system, so
    * they can be used to filter, or break down billing charges by team,
@@ -89,6 +108,55 @@ class GoogleCloudRunV2ExecutionTemplate extends \Google\Model
   public function getAnnotations()
   {
     return $this->annotations;
+  }
+  /**
+   * Optional. Arbitrary identifier for the API client.
+   *
+   * @param string $client
+   */
+  public function setClient($client)
+  {
+    $this->client = $client;
+  }
+  /**
+   * @return string
+   */
+  public function getClient()
+  {
+    return $this->client;
+  }
+  /**
+   * Optional. Arbitrary version identifier for the API client.
+   *
+   * @param string $clientVersion
+   */
+  public function setClientVersion($clientVersion)
+  {
+    $this->clientVersion = $clientVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getClientVersion()
+  {
+    return $this->clientVersion;
+  }
+  /**
+   * Optional. If true, the system will start the execution within the next 12
+   * hours depending on available capacity.
+   *
+   * @param bool $delayExecution
+   */
+  public function setDelayExecution($delayExecution)
+  {
+    $this->delayExecution = $delayExecution;
+  }
+  /**
+   * @return bool
+   */
+  public function getDelayExecution()
+  {
+    return $this->delayExecution;
   }
   /**
    * Unstructured key value map that can be used to organize and categorize

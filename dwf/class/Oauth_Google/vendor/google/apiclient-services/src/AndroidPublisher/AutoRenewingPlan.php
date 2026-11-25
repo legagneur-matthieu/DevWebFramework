@@ -28,6 +28,8 @@ class AutoRenewingPlan extends \Google\Model
   public $autoRenewEnabled;
   protected $installmentDetailsType = InstallmentPlan::class;
   protected $installmentDetailsDataType = '';
+  protected $planTransitionDetailsType = PlanTransitionDetails::class;
+  protected $planTransitionDetailsDataType = '';
   protected $priceChangeDetailsType = SubscriptionItemPriceChangeDetails::class;
   protected $priceChangeDetailsDataType = '';
   protected $priceStepUpConsentDetailsType = PriceStepUpConsentDetails::class;
@@ -70,6 +72,24 @@ class AutoRenewingPlan extends \Google\Model
     return $this->installmentDetails;
   }
   /**
+   * The information of the associated plan transition. Will be present only if
+   * this plan has a transition plan associated with it and will only include
+   * the latest transition details associated with the item.
+   *
+   * @param PlanTransitionDetails $planTransitionDetails
+   */
+  public function setPlanTransitionDetails(PlanTransitionDetails $planTransitionDetails)
+  {
+    $this->planTransitionDetails = $planTransitionDetails;
+  }
+  /**
+   * @return PlanTransitionDetails
+   */
+  public function getPlanTransitionDetails()
+  {
+    return $this->planTransitionDetails;
+  }
+  /**
    * The information of the last price change for the item since subscription
    * signup.
    *
@@ -104,7 +124,7 @@ class AutoRenewingPlan extends \Google\Model
   }
   /**
    * The current recurring price of the auto renewing plan. Note that the price
-   * does not take into account discounts and does not include taxes for tax-
+   * does not take into account discounts and does not include taxes. For tax-
    * exclusive pricing, please call orders.get API instead if transaction
    * details are needed.
    *

@@ -44,20 +44,19 @@ class OneTimeProductOfferRegionalPricingAndAvailabilityConfig extends \Google\Mo
   protected $noOverrideDataType = '';
   /**
    * Required. Region code this configuration applies to, as defined by ISO
-   * 3166-2, e.g., "US".
+   * 3166-1 alpha-2, e.g., "US".
    *
    * @var string
    */
   public $regionCode;
   /**
-   * The fraction of the purchase option price that the user pays for this
-   * offer. For example, if the purchase option price for this region is $12,
-   * then a 50% discount would correspond to a price of $6. The discount must be
-   * specified as a fraction strictly larger than 0 and strictly smaller than 1.
-   * The resulting price will be rounded to the nearest billable unit (e.g.
-   * cents for USD). The relative discount is considered invalid if the
-   * discounted price ends up being smaller than the minimum price allowed in
-   * this region.
+   * The percentage discount subtracted from the purchase option price,
+   * specified as a fraction strictly larger than `0` and strictly smaller than
+   * `1`. For example, a value of `0.8` represents an 80% discount, meaning that
+   * if the purchase option price is $100, the offer price will be $20. The
+   * resulting price will be rounded to the nearest billable unit (e.g. cents
+   * for USD). The relative discount is considered invalid if the discounted
+   * price ends up being smaller than the minimum price allowed in this region.
    *
    * @var 
    */
@@ -116,7 +115,7 @@ class OneTimeProductOfferRegionalPricingAndAvailabilityConfig extends \Google\Mo
   }
   /**
    * Required. Region code this configuration applies to, as defined by ISO
-   * 3166-2, e.g., "US".
+   * 3166-1 alpha-2, e.g., "US".
    *
    * @param string $regionCode
    */

@@ -20,8 +20,8 @@ namespace Google\Service\OrgPolicyAPI;
 class GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition extends \Google\Collection
 {
   /**
-   * This is only used for distinguishing unset values and should never be used.
-   * Results in an error.
+   * This is only used for distinguishing unset values, and results in an error
+   * if used.
    */
   public const ACTION_TYPE_ACTION_TYPE_UNSPECIFIED = 'ACTION_TYPE_UNSPECIFIED';
   /**
@@ -43,7 +43,7 @@ class GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition extends \Google
    * Org policy condition/expression. For example:
    * `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")` or,
    * `resource.management.auto_upgrade == true` The max length of the condition
-   * is 1000 characters.
+   * is 1,500 characters.
    *
    * @var string
    */
@@ -57,8 +57,8 @@ class GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition extends \Google
   protected $parametersType = GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter::class;
   protected $parametersDataType = 'map';
   /**
-   * The resource instance type on which this policy applies. Format will be of
-   * the form : `/` Example: * `compute.googleapis.com/Instance`.
+   * The resource instance type that this policy applies to, in the format `/`.
+   * Example: * `compute.googleapis.com/Instance`.
    *
    * @var string[]
    */
@@ -86,7 +86,7 @@ class GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition extends \Google
    * Org policy condition/expression. For example:
    * `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")` or,
    * `resource.management.auto_upgrade == true` The max length of the condition
-   * is 1000 characters.
+   * is 1,500 characters.
    *
    * @param string $condition
    */
@@ -135,8 +135,8 @@ class GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition extends \Google
     return $this->parameters;
   }
   /**
-   * The resource instance type on which this policy applies. Format will be of
-   * the form : `/` Example: * `compute.googleapis.com/Instance`.
+   * The resource instance type that this policy applies to, in the format `/`.
+   * Example: * `compute.googleapis.com/Instance`.
    *
    * @param string[] $resourceTypes
    */

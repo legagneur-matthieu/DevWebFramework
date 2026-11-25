@@ -53,7 +53,7 @@ class InstanceGroupManagersApplyUpdatesRequest extends \Google\Collection
   public const MOST_DISRUPTIVE_ALLOWED_ACTION_RESTART = 'RESTART';
   protected $collection_key = 'instances';
   /**
-   * Flag to update all instances instead of specified list of “instances”. If
+   * Flag to update all instances instead of specified list of "instances". If
    * the flag is set to true then the instances may not be specified in the
    * request.
    *
@@ -98,7 +98,7 @@ class InstanceGroupManagersApplyUpdatesRequest extends \Google\Collection
   public $mostDisruptiveAllowedAction;
 
   /**
-   * Flag to update all instances instead of specified list of “instances”. If
+   * Flag to update all instances instead of specified list of "instances". If
    * the flag is set to true then the instances may not be specified in the
    * request.
    *

@@ -36,47 +36,36 @@ class ProviderOAuthConfig extends \Google\Collection
    */
   public const SYSTEM_PROVIDER_ID_GITLAB = 'GITLAB';
   /**
-   * Deprecated: This provider is no longer supported. Google provider.
-   * Recommended scopes: "https://www.googleapis.com/auth/drive.readonly",
+   * Google provider. Recommended scopes:
+   * "https://www.googleapis.com/auth/drive.readonly",
    * "https://www.googleapis.com/auth/documents.readonly"
-   *
-   * @deprecated
    */
   public const SYSTEM_PROVIDER_ID_GOOGLE = 'GOOGLE';
   /**
-   * Deprecated: This provider is no longer supported. Sentry provider. Scopes
-   * can be found at https://docs.sentry.io/api/permissions/
-   *
-   * @deprecated
+   * Sentry provider. Scopes can be found at
+   * https://docs.sentry.io/api/permissions/
    */
   public const SYSTEM_PROVIDER_ID_SENTRY = 'SENTRY';
   /**
-   * Deprecated: This provider is no longer supported. Rovo provider. Must
-   * select the "rovo" scope.
-   *
-   * @deprecated
+   * Rovo provider. Must select the "rovo" scope.
    */
   public const SYSTEM_PROVIDER_ID_ROVO = 'ROVO';
   /**
-   * Deprecated: This provider is no longer supported. New Relic provider. No
-   * scopes are allowed.
-   *
-   * @deprecated
+   * New Relic provider. No scopes are allowed.
    */
   public const SYSTEM_PROVIDER_ID_NEW_RELIC = 'NEW_RELIC';
   /**
-   * Deprecated: This provider is no longer supported. Datastax provider. No
-   * scopes are allowed.
-   *
-   * @deprecated
+   * Datastax provider. No scopes are allowed.
    */
   public const SYSTEM_PROVIDER_ID_DATASTAX = 'DATASTAX';
   /**
-   * Deprecated: This provider is no longer supported. Dynatrace provider.
-   *
-   * @deprecated
+   * Dynatrace provider.
    */
   public const SYSTEM_PROVIDER_ID_DYNATRACE = 'DYNATRACE';
+  /**
+   * Bitbucket Cloud provider.
+   */
+  public const SYSTEM_PROVIDER_ID_BITBUCKET_CLOUD = 'BITBUCKET_CLOUD';
   protected $collection_key = 'scopes';
   /**
    * Required. User selected scopes to apply to the Oauth config In the event of
@@ -87,7 +76,7 @@ class ProviderOAuthConfig extends \Google\Collection
    */
   public $scopes;
   /**
-   * Immutable. Developer Connect provided OAuth.
+   * Optional. Immutable. Developer Connect provided OAuth.
    *
    * @var string
    */
@@ -112,10 +101,10 @@ class ProviderOAuthConfig extends \Google\Collection
     return $this->scopes;
   }
   /**
-   * Immutable. Developer Connect provided OAuth.
+   * Optional. Immutable. Developer Connect provided OAuth.
    *
    * Accepted values: SYSTEM_PROVIDER_UNSPECIFIED, GITHUB, GITLAB, GOOGLE,
-   * SENTRY, ROVO, NEW_RELIC, DATASTAX, DYNATRACE
+   * SENTRY, ROVO, NEW_RELIC, DATASTAX, DYNATRACE, BITBUCKET_CLOUD
    *
    * @param self::SYSTEM_PROVIDER_ID_* $systemProviderId
    */

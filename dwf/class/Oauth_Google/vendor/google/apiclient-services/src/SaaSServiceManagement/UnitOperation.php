@@ -44,6 +44,9 @@ class UnitOperation extends \Google\Collection
    * budget
    */
   public const ERROR_CATEGORY_STANDARD = 'STANDARD';
+  /**
+   * Unit operation state is unknown.
+   */
   public const STATE_UNIT_OPERATION_STATE_UNKNOWN = 'UNIT_OPERATION_STATE_UNKNOWN';
   /**
    * Unit operation is accepted but not ready to run.
@@ -94,8 +97,17 @@ class UnitOperation extends \Google\Collection
    * @var string
    */
   public $createTime;
+  /**
+   * Output only. The timestamp when the resource was marked for deletion
+   * (deletion is an asynchronous operation).
+   *
+   * @var string
+   */
+  public $deleteTime;
   protected $deprovisionType = Deprovision::class;
   protected $deprovisionDataType = '';
+  protected $durationLimitsType = DurationLimits::class;
+  protected $durationLimitsDataType = '';
   /**
    * Optional. Output only. The engine state for on-going deployment engine
    * operation(s). This field is opaque for external usage.
@@ -259,6 +271,25 @@ class UnitOperation extends \Google\Collection
     return $this->createTime;
   }
   /**
+   * Output only. The timestamp when the resource was marked for deletion
+   * (deletion is an asynchronous operation).
+   *
+   * @param string $deleteTime
+   */
+  public function setDeleteTime($deleteTime)
+  {
+    $this->deleteTime = $deleteTime;
+  }
+  /**
+   * @return string
+   */
+  public function getDeleteTime()
+  {
+    return $this->deleteTime;
+  }
+  /**
+   * Optional. Deprovision operation.
+   *
    * @param Deprovision $deprovision
    */
   public function setDeprovision(Deprovision $deprovision)
@@ -271,6 +302,26 @@ class UnitOperation extends \Google\Collection
   public function getDeprovision()
   {
     return $this->deprovision;
+  }
+  /**
+   * Optional. Defines the duration limits for this specific UnitOperation
+   * instance. These settings override any default duration limits set on the
+   * UnitKind. See the DurationLimits message definition for details on the
+   * constraints like minimum, maximum, and system default values for
+   * unit_operation_timeout.
+   *
+   * @param DurationLimits $durationLimits
+   */
+  public function setDurationLimits(DurationLimits $durationLimits)
+  {
+    $this->durationLimits = $durationLimits;
+  }
+  /**
+   * @return DurationLimits
+   */
+  public function getDurationLimits()
+  {
+    return $this->durationLimits;
   }
   /**
    * Optional. Output only. The engine state for on-going deployment engine
@@ -382,6 +433,8 @@ class UnitOperation extends \Google\Collection
     return $this->parentUnitOperation;
   }
   /**
+   * Optional. Provision operation.
+   *
    * @param Provision $provision
    */
   public function setProvision(Provision $provision)
@@ -507,6 +560,8 @@ class UnitOperation extends \Google\Collection
     return $this->updateTime;
   }
   /**
+   * Optional. Upgrade operation.
+   *
    * @param Upgrade $upgrade
    */
   public function setUpgrade(Upgrade $upgrade)

@@ -123,6 +123,8 @@ class StoragePool extends \Google\Model
    * @var string
    */
   public $name;
+  protected $paramsType = StoragePoolParams::class;
+  protected $paramsDataType = '';
   /**
    * Provisioning type of the performance-related parameters of the pool, such
    * as throughput and IOPS.
@@ -167,6 +169,8 @@ class StoragePool extends \Google\Model
    * @var string
    */
   public $selfLinkWithId;
+  protected $shareSettingsType = StoragePoolShareSettings::class;
+  protected $shareSettingsDataType = '';
   /**
    * Output only. [Output Only] The status of storage pool creation.
    * - CREATING: Storage pool is provisioning.      storagePool.      - FAILED:
@@ -245,8 +249,7 @@ class StoragePool extends \Google\Model
     return $this->description;
   }
   /**
-   * Output only. [Output Only] Provisioned capacities for each SKU for this
-   * Exapool in GiB
+   * Provisioned capacities for each SKU for this Exapool in GiB
    *
    * @param StoragePoolExapoolProvisionedCapacityGb $exapoolProvisionedCapacityGb
    */
@@ -357,6 +360,23 @@ class StoragePool extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * Input only. Additional params passed with the request, but not persisted as
+   * part of resource payload.
+   *
+   * @param StoragePoolParams $params
+   */
+  public function setParams(StoragePoolParams $params)
+  {
+    $this->params = $params;
+  }
+  /**
+   * @return StoragePoolParams
+   */
+  public function getParams()
+  {
+    return $this->params;
   }
   /**
    * Provisioning type of the performance-related parameters of the pool, such
@@ -478,6 +498,22 @@ class StoragePool extends \Google\Model
   public function getSelfLinkWithId()
   {
     return $this->selfLinkWithId;
+  }
+  /**
+   * Share settings for the storage pool.
+   *
+   * @param StoragePoolShareSettings $shareSettings
+   */
+  public function setShareSettings(StoragePoolShareSettings $shareSettings)
+  {
+    $this->shareSettings = $shareSettings;
+  }
+  /**
+   * @return StoragePoolShareSettings
+   */
+  public function getShareSettings()
+  {
+    return $this->shareSettings;
   }
   /**
    * Output only. [Output Only] The status of storage pool creation.

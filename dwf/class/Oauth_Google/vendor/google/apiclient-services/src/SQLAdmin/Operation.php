@@ -100,7 +100,8 @@ class Operation extends \Google\Model
    */
   public const OPERATION_TYPE_DELETE_USER = 'DELETE_USER';
   /**
-   * Updates an existing user in a Cloud SQL instance.
+   * Updates an existing user in a Cloud SQL instance. If a user with the
+   * specified username doesn't exist, a new user is created.
    */
   public const OPERATION_TYPE_UPDATE_USER = 'UPDATE_USER';
   /**
@@ -250,6 +251,28 @@ class Operation extends \Google\Model
    */
   public const OPERATION_TYPE_CREATE_READ_POOL = 'CREATE_READ_POOL';
   /**
+   * Pre-checks the major version upgrade operation.
+   */
+  public const OPERATION_TYPE_PRE_CHECK_MAJOR_VERSION_UPGRADE = 'PRE_CHECK_MAJOR_VERSION_UPGRADE';
+  /**
+   * This operation type represents individual steps in a multi-step setup
+   * migration workflow: including configuration, replication, switchover/back,
+   * and data reseeding, as defined by operation's intent.
+   */
+  public const OPERATION_TYPE_SETUP_MIGRATION = 'SETUP_MIGRATION';
+  /**
+   * Creates a new Blue-Green deployment.
+   */
+  public const OPERATION_TYPE_CREATE_BLUE_GREEN_DEPLOYMENT = 'CREATE_BLUE_GREEN_DEPLOYMENT';
+  /**
+   * Switches over a Blue-Green deployment.
+   */
+  public const OPERATION_TYPE_SWITCHOVER_BLUE_GREEN_DEPLOYMENT = 'SWITCHOVER_BLUE_GREEN_DEPLOYMENT';
+  /**
+   * Deletes a Blue-Green deployment.
+   */
+  public const OPERATION_TYPE_DELETE_BLUE_GREEN_DEPLOYMENT = 'DELETE_BLUE_GREEN_DEPLOYMENT';
+  /**
    * The state of the operation is unknown.
    */
   public const STATUS_SQL_OPERATION_STATUS_UNSPECIFIED = 'SQL_OPERATION_STATUS_UNSPECIFIED';
@@ -332,12 +355,20 @@ class Operation extends \Google\Model
    * @var string
    */
   public $startTime;
+  protected $startWorkloadCaptureContextType = StartWorkloadCaptureContext::class;
+  protected $startWorkloadCaptureContextDataType = '';
+  protected $startWorkloadReplayContextType = StartWorkloadReplayContext::class;
+  protected $startWorkloadReplayContextDataType = '';
   /**
    * The status of an operation.
    *
    * @var string
    */
   public $status;
+  protected $stopWorkloadCaptureContextType = StopWorkloadCaptureContext::class;
+  protected $stopWorkloadCaptureContextDataType = '';
+  protected $stopWorkloadReplayContextType = StopWorkloadReplayContext::class;
+  protected $stopWorkloadReplayContextDataType = '';
   protected $subOperationTypeType = SqlSubOperationType::class;
   protected $subOperationTypeDataType = '';
   /**
@@ -547,7 +578,10 @@ class Operation extends \Google\Model
    * UPDATE_BACKUP, ACQUIRE_SSRS_LEASE, RELEASE_SSRS_LEASE,
    * RECONFIGURE_OLD_PRIMARY, CLUSTER_MAINTENANCE, SELF_SERVICE_MAINTENANCE,
    * SWITCHOVER_TO_REPLICA, MAJOR_VERSION_UPGRADE, ADVANCED_BACKUP,
-   * MANAGE_BACKUP, ENHANCED_BACKUP, REPAIR_READ_POOL, CREATE_READ_POOL
+   * MANAGE_BACKUP, ENHANCED_BACKUP, REPAIR_READ_POOL, CREATE_READ_POOL,
+   * PRE_CHECK_MAJOR_VERSION_UPGRADE, SETUP_MIGRATION,
+   * CREATE_BLUE_GREEN_DEPLOYMENT, SWITCHOVER_BLUE_GREEN_DEPLOYMENT,
+   * DELETE_BLUE_GREEN_DEPLOYMENT
    *
    * @param self::OPERATION_TYPE_* $operationType
    */
@@ -617,6 +651,43 @@ class Operation extends \Google\Model
     return $this->startTime;
   }
   /**
+   * The context for the `StartWorkloadCapture` operation, which contains
+   * details to start recording the workload (SQL queries) on a Cloud SQL
+   * instance.
+   *
+   * @param StartWorkloadCaptureContext $startWorkloadCaptureContext
+   */
+  public function setStartWorkloadCaptureContext(StartWorkloadCaptureContext $startWorkloadCaptureContext)
+  {
+    $this->startWorkloadCaptureContext = $startWorkloadCaptureContext;
+  }
+  /**
+   * @return StartWorkloadCaptureContext
+   */
+  public function getStartWorkloadCaptureContext()
+  {
+    return $this->startWorkloadCaptureContext;
+  }
+  /**
+   * The context for the `StartWorkloadReplay` operation, which contains details
+   * about starting the execution of a captured workload (recorded read and
+   * write SQL queries) on a replay instance (the Cloud SQL instance where the
+   * recorded SQL queries are executed).
+   *
+   * @param StartWorkloadReplayContext $startWorkloadReplayContext
+   */
+  public function setStartWorkloadReplayContext(StartWorkloadReplayContext $startWorkloadReplayContext)
+  {
+    $this->startWorkloadReplayContext = $startWorkloadReplayContext;
+  }
+  /**
+   * @return StartWorkloadReplayContext
+   */
+  public function getStartWorkloadReplayContext()
+  {
+    return $this->startWorkloadReplayContext;
+  }
+  /**
    * The status of an operation.
    *
    * Accepted values: SQL_OPERATION_STATUS_UNSPECIFIED, PENDING, RUNNING, DONE
@@ -633,6 +704,41 @@ class Operation extends \Google\Model
   public function getStatus()
   {
     return $this->status;
+  }
+  /**
+   * The context for the `StopWorkloadCapture` operation, which contains details
+   * to stop recording the workload (SQL queries) on a Cloud SQL instance.
+   *
+   * @param StopWorkloadCaptureContext $stopWorkloadCaptureContext
+   */
+  public function setStopWorkloadCaptureContext(StopWorkloadCaptureContext $stopWorkloadCaptureContext)
+  {
+    $this->stopWorkloadCaptureContext = $stopWorkloadCaptureContext;
+  }
+  /**
+   * @return StopWorkloadCaptureContext
+   */
+  public function getStopWorkloadCaptureContext()
+  {
+    return $this->stopWorkloadCaptureContext;
+  }
+  /**
+   * The context for the `StopWorkloadReplay` operation, which contains details
+   * about stopping the execution of a captured workload (recorded read and
+   * write SQL queries) on a replay instance.
+   *
+   * @param StopWorkloadReplayContext $stopWorkloadReplayContext
+   */
+  public function setStopWorkloadReplayContext(StopWorkloadReplayContext $stopWorkloadReplayContext)
+  {
+    $this->stopWorkloadReplayContext = $stopWorkloadReplayContext;
+  }
+  /**
+   * @return StopWorkloadReplayContext
+   */
+  public function getStopWorkloadReplayContext()
+  {
+    return $this->stopWorkloadReplayContext;
   }
   /**
    * Optional. The sub operation based on the operation type.

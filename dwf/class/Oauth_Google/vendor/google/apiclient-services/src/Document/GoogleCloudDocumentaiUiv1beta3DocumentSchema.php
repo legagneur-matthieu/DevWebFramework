@@ -27,13 +27,13 @@ class GoogleCloudDocumentaiUiv1beta3DocumentSchema extends \Google\Collection
    */
   public $description;
   /**
-   * Display name to show to users.
+   * Display name to show users.
    *
    * @var string
    */
   public $displayName;
   /**
-   * Optional. Document level prompt provided by the user. This custom text is
+   * Optional. Document-level prompt provided by the user. This custom text is
    * injected into the AI model's prompt to provide extra, document-wide
    * guidance for processing.
    *
@@ -62,7 +62,7 @@ class GoogleCloudDocumentaiUiv1beta3DocumentSchema extends \Google\Collection
     return $this->description;
   }
   /**
-   * Display name to show to users.
+   * Display name to show users.
    *
    * @param string $displayName
    */
@@ -78,7 +78,7 @@ class GoogleCloudDocumentaiUiv1beta3DocumentSchema extends \Google\Collection
     return $this->displayName;
   }
   /**
-   * Optional. Document level prompt provided by the user. This custom text is
+   * Optional. Document-level prompt provided by the user. This custom text is
    * injected into the AI model's prompt to provide extra, document-wide
    * guidance for processing.
    *

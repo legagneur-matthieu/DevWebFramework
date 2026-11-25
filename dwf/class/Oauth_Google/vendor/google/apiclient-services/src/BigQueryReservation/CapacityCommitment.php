@@ -41,9 +41,12 @@ class CapacityCommitment extends \Google\Model
    */
   public const PLAN_COMMITMENT_PLAN_UNSPECIFIED = 'COMMITMENT_PLAN_UNSPECIFIED';
   /**
-   * Flex commitments have committed period of 1 minute after becoming ACTIVE.
-   * After that, they are not in a committed period anymore and can be removed
-   * any time.
+   * Deprecated: Flex commitments are deprecated. Please use Edition-based
+   * capacity commitments. Flex commitments have committed period of 1 minute
+   * after becoming ACTIVE. After that, they are not in a committed period
+   * anymore and can be removed any time.
+   *
+   * @deprecated
    */
   public const PLAN_FLEX = 'FLEX';
   /**
@@ -109,9 +112,12 @@ class CapacityCommitment extends \Google\Model
    */
   public const RENEWAL_PLAN_COMMITMENT_PLAN_UNSPECIFIED = 'COMMITMENT_PLAN_UNSPECIFIED';
   /**
-   * Flex commitments have committed period of 1 minute after becoming ACTIVE.
-   * After that, they are not in a committed period anymore and can be removed
-   * any time.
+   * Deprecated: Flex commitments are deprecated. Please use Edition-based
+   * capacity commitments. Flex commitments have committed period of 1 minute
+   * after becoming ACTIVE. After that, they are not in a committed period
+   * anymore and can be removed any time.
+   *
+   * @deprecated
    */
   public const RENEWAL_PLAN_FLEX = 'FLEX';
   /**

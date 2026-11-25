@@ -31,6 +31,13 @@ class JobStatistics5 extends \Google\Model
    * @var string
    */
   public $copiedRows;
+  /**
+   * Output only. Destination region for a cross-region copy job. Not set for
+   * in-region copy jobs.
+   *
+   * @var string
+   */
+  public $remoteDestinationRegion;
 
   /**
    * Output only. Number of logical bytes copied to the destination table.
@@ -63,6 +70,23 @@ class JobStatistics5 extends \Google\Model
   public function getCopiedRows()
   {
     return $this->copiedRows;
+  }
+  /**
+   * Output only. Destination region for a cross-region copy job. Not set for
+   * in-region copy jobs.
+   *
+   * @param string $remoteDestinationRegion
+   */
+  public function setRemoteDestinationRegion($remoteDestinationRegion)
+  {
+    $this->remoteDestinationRegion = $remoteDestinationRegion;
+  }
+  /**
+   * @return string
+   */
+  public function getRemoteDestinationRegion()
+  {
+    return $this->remoteDestinationRegion;
   }
 }
 

@@ -19,6 +19,18 @@ namespace Google\Service\SaaSServiceManagement;
 
 class UnitKind extends \Google\Collection
 {
+  /**
+   * Unspecified boundary type.
+   */
+  public const BOUNDARY_TYPE_BOUNDARY_TYPE_UNSPECIFIED = 'BOUNDARY_TYPE_UNSPECIFIED';
+  /**
+   * Tenant project boundary.
+   */
+  public const BOUNDARY_TYPE_BOUNDARY_TYPE_TENANT_PROJECT = 'BOUNDARY_TYPE_TENANT_PROJECT';
+  /**
+   * Managed project boundary.
+   */
+  public const BOUNDARY_TYPE_BOUNDARY_TYPE_MANAGED_PROJECT = 'BOUNDARY_TYPE_MANAGED_PROJECT';
   protected $collection_key = 'outputVariableMappings';
   /**
    * Optional. Annotations is an unstructured key-value map stored with a
@@ -29,6 +41,17 @@ class UnitKind extends \Google\Collection
    * @var string[]
    */
   public $annotations;
+  protected $appParamsType = AppParams::class;
+  protected $appParamsDataType = '';
+  protected $applicationTemplateComponentType = ComponentRef::class;
+  protected $applicationTemplateComponentDataType = '';
+  /**
+   * Optional. Output only. BoundaryType describes the type of boundary the Unit
+   * Kind represents.
+   *
+   * @var string
+   */
+  public $boundaryType;
   /**
    * Output only. The timestamp when the resource was created.
    *
@@ -43,8 +66,17 @@ class UnitKind extends \Google\Collection
    * @var string
    */
   public $defaultRelease;
+  /**
+   * Output only. The timestamp when the resource was marked for deletion
+   * (deletion is an asynchronous operation).
+   *
+   * @var string
+   */
+  public $deleteTime;
   protected $dependenciesType = Dependency::class;
   protected $dependenciesDataType = 'array';
+  protected $durationLimitsType = DurationLimits::class;
+  protected $durationLimitsDataType = '';
   /**
    * Output only. An opaque value that uniquely identifies a version or
    * generation of a resource. It can be used to confirm that the client and
@@ -74,8 +106,9 @@ class UnitKind extends \Google\Collection
   protected $outputVariableMappingsDataType = 'array';
   /**
    * Required. Immutable. A reference to the Saas that defines the product
-   * (managed service) that the producer wants to manage with SaaS Runtime. Part
-   * of the SaaS Runtime common data model. Immutable once set.
+   * (managed service) that the producer wants to manage with App Lifecycle
+   * Manager. Part of the App Lifecycle Manager common data model. Immutable
+   * once set.
    *
    * @var string
    */
@@ -119,6 +152,60 @@ class UnitKind extends \Google\Collection
     return $this->annotations;
   }
   /**
+   * Optional. AppParams contains the parameters for creating an AppHub
+   * Application.
+   *
+   * @param AppParams $appParams
+   */
+  public function setAppParams(AppParams $appParams)
+  {
+    $this->appParams = $appParams;
+  }
+  /**
+   * @return AppParams
+   */
+  public function getAppParams()
+  {
+    return $this->appParams;
+  }
+  /**
+   * Optional. Reference to component and revision in a composite
+   * ApplicationTemplate.
+   *
+   * @param ComponentRef $applicationTemplateComponent
+   */
+  public function setApplicationTemplateComponent(ComponentRef $applicationTemplateComponent)
+  {
+    $this->applicationTemplateComponent = $applicationTemplateComponent;
+  }
+  /**
+   * @return ComponentRef
+   */
+  public function getApplicationTemplateComponent()
+  {
+    return $this->applicationTemplateComponent;
+  }
+  /**
+   * Optional. Output only. BoundaryType describes the type of boundary the Unit
+   * Kind represents.
+   *
+   * Accepted values: BOUNDARY_TYPE_UNSPECIFIED, BOUNDARY_TYPE_TENANT_PROJECT,
+   * BOUNDARY_TYPE_MANAGED_PROJECT
+   *
+   * @param self::BOUNDARY_TYPE_* $boundaryType
+   */
+  public function setBoundaryType($boundaryType)
+  {
+    $this->boundaryType = $boundaryType;
+  }
+  /**
+   * @return self::BOUNDARY_TYPE_*
+   */
+  public function getBoundaryType()
+  {
+    return $this->boundaryType;
+  }
+  /**
    * Output only. The timestamp when the resource was created.
    *
    * @param string $createTime
@@ -153,6 +240,23 @@ class UnitKind extends \Google\Collection
     return $this->defaultRelease;
   }
   /**
+   * Output only. The timestamp when the resource was marked for deletion
+   * (deletion is an asynchronous operation).
+   *
+   * @param string $deleteTime
+   */
+  public function setDeleteTime($deleteTime)
+  {
+    $this->deleteTime = $deleteTime;
+  }
+  /**
+   * @return string
+   */
+  public function getDeleteTime()
+  {
+    return $this->deleteTime;
+  }
+  /**
    * Optional. Immutable. List of other unit kinds that this release will depend
    * on. Dependencies will be automatically provisioned if not found. Maximum
    * 10.
@@ -169,6 +273,29 @@ class UnitKind extends \Google\Collection
   public function getDependencies()
   {
     return $this->dependencies;
+  }
+  /**
+   * Optional. Defines the default duration limits for UnitOperations created
+   * from this UnitKind. These settings provide a baseline for execution time
+   * constraints. The limits specified here can be overridden by more specific
+   * settings on an individual UnitOperation resource. See the DurationLimits
+   * message definition for details on the constraints like minimum, maximum,
+   * and system default values for unit_operation_timeout. If not set,
+   * UnitOperations will use the system default duration limits unless
+   * overridden on the UnitOperation.
+   *
+   * @param DurationLimits $durationLimits
+   */
+  public function setDurationLimits(DurationLimits $durationLimits)
+  {
+    $this->durationLimits = $durationLimits;
+  }
+  /**
+   * @return DurationLimits
+   */
+  public function getDurationLimits()
+  {
+    return $this->durationLimits;
   }
   /**
    * Output only. An opaque value that uniquely identifies a version or
@@ -190,8 +317,8 @@ class UnitKind extends \Google\Collection
   }
   /**
    * Optional. List of inputVariables for this release that will either be
-   * retrieved from a dependency’s outputVariables, or will be passed on to a
-   * dependency’s inputVariables. Maximum 100.
+   * retrieved from a dependency's outputVariables, or will be passed on to a
+   * dependency's inputVariables. Maximum 100.
    *
    * @param VariableMapping[] $inputVariableMappings
    */
@@ -260,8 +387,9 @@ class UnitKind extends \Google\Collection
   }
   /**
    * Required. Immutable. A reference to the Saas that defines the product
-   * (managed service) that the producer wants to manage with SaaS Runtime. Part
-   * of the SaaS Runtime common data model. Immutable once set.
+   * (managed service) that the producer wants to manage with App Lifecycle
+   * Manager. Part of the App Lifecycle Manager common data model. Immutable
+   * once set.
    *
    * @param string $saas
    */

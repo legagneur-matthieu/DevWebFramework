@@ -19,8 +19,12 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1EvaluationInstance extends \Google\Model
 {
-  protected $agentDataType = GoogleCloudAiplatformV1EvaluationInstanceAgentData::class;
+  protected $agentDataType = GoogleCloudAiplatformV1EvaluationInstanceDeprecatedAgentData::class;
   protected $agentDataDataType = '';
+  protected $agentEvalDataType = GoogleCloudAiplatformV1AgentData::class;
+  protected $agentEvalDataDataType = '';
+  protected $interactionsDataSourceType = GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource::class;
+  protected $interactionsDataSourceDataType = '';
   protected $otherDataType = GoogleCloudAiplatformV1EvaluationInstanceMapInstance::class;
   protected $otherDataDataType = '';
   protected $promptType = GoogleCloudAiplatformV1EvaluationInstanceInstanceData::class;
@@ -33,23 +37,64 @@ class GoogleCloudAiplatformV1EvaluationInstance extends \Google\Model
   protected $rubricGroupsDataType = 'map';
 
   /**
-   * Optional. Data used for agent evaluation.
+   * Optional. Deprecated: Use `agent_eval_data` instead. Data used for agent
+   * evaluation.
    *
-   * @param GoogleCloudAiplatformV1EvaluationInstanceAgentData $agentData
+   * @deprecated
+   * @param GoogleCloudAiplatformV1EvaluationInstanceDeprecatedAgentData $agentData
    */
-  public function setAgentData(GoogleCloudAiplatformV1EvaluationInstanceAgentData $agentData)
+  public function setAgentData(GoogleCloudAiplatformV1EvaluationInstanceDeprecatedAgentData $agentData)
   {
     $this->agentData = $agentData;
   }
   /**
-   * @return GoogleCloudAiplatformV1EvaluationInstanceAgentData
+   * @deprecated
+   * @return GoogleCloudAiplatformV1EvaluationInstanceDeprecatedAgentData
    */
   public function getAgentData()
   {
     return $this->agentData;
   }
   /**
-   * Optional. Other data used to populate placeholders based on their key.
+   * Optional. Data used for agent evaluation.
+   *
+   * @param GoogleCloudAiplatformV1AgentData $agentEvalData
+   */
+  public function setAgentEvalData(GoogleCloudAiplatformV1AgentData $agentEvalData)
+  {
+    $this->agentEvalData = $agentEvalData;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1AgentData
+   */
+  public function getAgentEvalData()
+  {
+    return $this->agentEvalData;
+  }
+  /**
+   * Optional. Source for populating `AgentData` from an Interactions API
+   * interaction. If set, no other agent data source fields
+   * (`cloud_trace_agent_data_source`, `agent_eval_data`, `agent_data`) may be
+   * set. The request will be rejected with INVALID_ARGUMENT if multiple agent
+   * data sources are provided.
+   *
+   * @param GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource $interactionsDataSource
+   */
+  public function setInteractionsDataSource(GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource $interactionsDataSource)
+  {
+    $this->interactionsDataSource = $interactionsDataSource;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource
+   */
+  public function getInteractionsDataSource()
+  {
+    return $this->interactionsDataSource;
+  }
+  /**
+   * Optional. Other data used to populate placeholders based on their key. If a
+   * key conflicts with a field in the EvaluationInstance (e.g. `prompt`), the
+   * value of the field will take precedence over the value in other_data.
    *
    * @param GoogleCloudAiplatformV1EvaluationInstanceMapInstance $otherData
    */

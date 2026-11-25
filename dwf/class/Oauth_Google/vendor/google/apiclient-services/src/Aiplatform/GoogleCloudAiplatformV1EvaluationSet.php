@@ -20,6 +20,8 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1EvaluationSet extends \Google\Collection
 {
   protected $collection_key = 'evaluationItems';
+  protected $agentConfigsType = GoogleCloudAiplatformV1AgentConfig::class;
+  protected $agentConfigsDataType = 'map';
   /**
    * Output only. Timestamp when this item was created.
    *
@@ -32,12 +34,26 @@ class GoogleCloudAiplatformV1EvaluationSet extends \Google\Collection
    * @var string
    */
   public $displayName;
+  protected $encryptionSpecType = GoogleCloudAiplatformV1EncryptionSpec::class;
+  protected $encryptionSpecDataType = '';
   /**
    * Required. The EvaluationItems that are part of this dataset.
    *
    * @var string[]
    */
   public $evaluationItems;
+  /**
+   * Optional. The labels with user-defined metadata to organize your
+   * EvaluationSets. An EvaluationSet can have at most 64 labels. Label keys
+   * must be 1 to 63 characters (Unicode code points) long and must start with a
+   * lowercase letter. Label values can be empty and can be at most 63
+   * characters long. Keys and values can each be at most 128 bytes when encoded
+   * in UTF-8, and can only contain lowercase letters, numeric characters,
+   * underscores and dashes. International characters are allowed.
+   *
+   * @var string[]
+   */
+  public $labels;
   /**
    * Optional. Metadata for the EvaluationSet.
    *
@@ -58,6 +74,24 @@ class GoogleCloudAiplatformV1EvaluationSet extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * Optional. Static configurations for each agent associated with the items in
+   * this set. Key: `agent_id` (matches the `author` field in `events`). Value:
+   * The static configuration of the agent.
+   *
+   * @param GoogleCloudAiplatformV1AgentConfig[] $agentConfigs
+   */
+  public function setAgentConfigs($agentConfigs)
+  {
+    $this->agentConfigs = $agentConfigs;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1AgentConfig[]
+   */
+  public function getAgentConfigs()
+  {
+    return $this->agentConfigs;
+  }
   /**
    * Output only. Timestamp when this item was created.
    *
@@ -91,6 +125,23 @@ class GoogleCloudAiplatformV1EvaluationSet extends \Google\Collection
     return $this->displayName;
   }
   /**
+   * Optional. Customer-managed encryption key spec for this EvaluationSet. If
+   * set, this EvaluationSet and its sub-resources will be secured by this key.
+   *
+   * @param GoogleCloudAiplatformV1EncryptionSpec $encryptionSpec
+   */
+  public function setEncryptionSpec(GoogleCloudAiplatformV1EncryptionSpec $encryptionSpec)
+  {
+    $this->encryptionSpec = $encryptionSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1EncryptionSpec
+   */
+  public function getEncryptionSpec()
+  {
+    return $this->encryptionSpec;
+  }
+  /**
    * Required. The EvaluationItems that are part of this dataset.
    *
    * @param string[] $evaluationItems
@@ -105,6 +156,28 @@ class GoogleCloudAiplatformV1EvaluationSet extends \Google\Collection
   public function getEvaluationItems()
   {
     return $this->evaluationItems;
+  }
+  /**
+   * Optional. The labels with user-defined metadata to organize your
+   * EvaluationSets. An EvaluationSet can have at most 64 labels. Label keys
+   * must be 1 to 63 characters (Unicode code points) long and must start with a
+   * lowercase letter. Label values can be empty and can be at most 63
+   * characters long. Keys and values can each be at most 128 bytes when encoded
+   * in UTF-8, and can only contain lowercase letters, numeric characters,
+   * underscores and dashes. International characters are allowed.
+   *
+   * @param string[] $labels
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * Optional. Metadata for the EvaluationSet.

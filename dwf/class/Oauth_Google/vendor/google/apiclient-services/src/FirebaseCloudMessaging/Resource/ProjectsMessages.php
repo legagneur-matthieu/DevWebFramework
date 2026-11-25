@@ -31,8 +31,12 @@ use Google\Service\FirebaseCloudMessaging\SendMessageRequest;
 class ProjectsMessages extends \Google\Service\Resource
 {
   /**
-   * Send a message to specified target (a registration token, topic or
-   * condition). (messages.send)
+   * Send a message to specified target (a [Firebase Installation ID
+   * (FID)](/docs/cloud-messaging/android/get-started#access-firebase-
+   * installation-id), registration token, topic, or condition). If duplicate
+   * fields or parameters are provided in a request (such as repeated JSON keys in
+   * the request body or duplicate query parameters), the last occurrence takes
+   * precedence. (messages.send)
    *
    * @param string $parent Required. It contains the Firebase project id (i.e. the
    * unique identifier for your Firebase project), in the format of

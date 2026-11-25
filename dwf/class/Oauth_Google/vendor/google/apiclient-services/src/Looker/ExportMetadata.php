@@ -31,9 +31,41 @@ class ExportMetadata extends \Google\Collection
    * Source of export is Looker Original
    */
   public const SOURCE_LOOKER_ORIGINAL = 'LOOKER_ORIGINAL';
+  /**
+   * Source of export is Self-Hosted Looker
+   */
+  public const SOURCE_LOOKER_SELF_HOSTED = 'LOOKER_SELF_HOSTED';
   protected $collection_key = 'filePaths';
+  /**
+   * Opaque capability token for O2C Elite System Activity (ESA) direct dataset
+   * migration, encrypted by the exporter with the export encryption key
+   * (base64-encoded Cloud KMS ciphertext). It is minted by the exporter
+   * together with the cloned source dataset; Looker Core CLH decrypts it with
+   * the import's service account and presents the plaintext to Looker Original
+   * when the import requests access to that dataset.
+   *
+   * @var string
+   */
+  public $esaMigrationToken;
+  /**
+   * Source BigQuery dataset (formatted as `project_id:dataset_id`) for O2C
+   * Elite System Activity (ESA) direct dataset migration.
+   *
+   * @var string
+   */
+  public $esaSourceDatasetId;
   protected $exportEncryptionKeyType = ExportMetadataEncryptionKey::class;
   protected $exportEncryptionKeyDataType = '';
+  protected $exportMetricsType = ExportMetrics::class;
+  protected $exportMetricsDataType = '';
+  /**
+   * A string of digits representing the number of microseconds since the Unix
+   * epoch when the export was created. Used to identify the cloned source Elite
+   * System Activity (ESA) BigQuery dataset for O2C direct dataset migration.
+   *
+   * @var string
+   */
+  public $exportTime;
   /**
    * List of files created as part of export artifact (excluding the metadata).
    * The paths are relative to the folder containing the metadata.
@@ -76,6 +108,44 @@ class ExportMetadata extends \Google\Collection
   public $source;
 
   /**
+   * Opaque capability token for O2C Elite System Activity (ESA) direct dataset
+   * migration, encrypted by the exporter with the export encryption key
+   * (base64-encoded Cloud KMS ciphertext). It is minted by the exporter
+   * together with the cloned source dataset; Looker Core CLH decrypts it with
+   * the import's service account and presents the plaintext to Looker Original
+   * when the import requests access to that dataset.
+   *
+   * @param string $esaMigrationToken
+   */
+  public function setEsaMigrationToken($esaMigrationToken)
+  {
+    $this->esaMigrationToken = $esaMigrationToken;
+  }
+  /**
+   * @return string
+   */
+  public function getEsaMigrationToken()
+  {
+    return $this->esaMigrationToken;
+  }
+  /**
+   * Source BigQuery dataset (formatted as `project_id:dataset_id`) for O2C
+   * Elite System Activity (ESA) direct dataset migration.
+   *
+   * @param string $esaSourceDatasetId
+   */
+  public function setEsaSourceDatasetId($esaSourceDatasetId)
+  {
+    $this->esaSourceDatasetId = $esaSourceDatasetId;
+  }
+  /**
+   * @return string
+   */
+  public function getEsaSourceDatasetId()
+  {
+    return $this->esaSourceDatasetId;
+  }
+  /**
    * Encryption key that was used to encrypt the export artifacts.
    *
    * @param ExportMetadataEncryptionKey $exportEncryptionKey
@@ -90,6 +160,40 @@ class ExportMetadata extends \Google\Collection
   public function getExportEncryptionKey()
   {
     return $this->exportEncryptionKey;
+  }
+  /**
+   * Overall export metrics, timing, and component telemetry.
+   *
+   * @param ExportMetrics $exportMetrics
+   */
+  public function setExportMetrics(ExportMetrics $exportMetrics)
+  {
+    $this->exportMetrics = $exportMetrics;
+  }
+  /**
+   * @return ExportMetrics
+   */
+  public function getExportMetrics()
+  {
+    return $this->exportMetrics;
+  }
+  /**
+   * A string of digits representing the number of microseconds since the Unix
+   * epoch when the export was created. Used to identify the cloned source Elite
+   * System Activity (ESA) BigQuery dataset for O2C direct dataset migration.
+   *
+   * @param string $exportTime
+   */
+  public function setExportTime($exportTime)
+  {
+    $this->exportTime = $exportTime;
+  }
+  /**
+   * @return string
+   */
+  public function getExportTime()
+  {
+    return $this->exportTime;
   }
   /**
    * List of files created as part of export artifact (excluding the metadata).
@@ -178,7 +282,8 @@ class ExportMetadata extends \Google\Collection
   /**
    * The source type of the migration.
    *
-   * Accepted values: SOURCE_UNSPECIFIED, LOOKER_CORE, LOOKER_ORIGINAL
+   * Accepted values: SOURCE_UNSPECIFIED, LOOKER_CORE, LOOKER_ORIGINAL,
+   * LOOKER_SELF_HOSTED
    *
    * @param self::SOURCE_* $source
    */

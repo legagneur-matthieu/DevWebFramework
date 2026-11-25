@@ -20,7 +20,7 @@ namespace Google\Service\Document;
 class GoogleCloudDocumentaiV1DocumentProvenanceParent extends \Google\Model
 {
   /**
-   * The id of the parent provenance.
+   * The ID of the parent provenance.
    *
    * @deprecated
    * @var int
@@ -41,7 +41,7 @@ class GoogleCloudDocumentaiV1DocumentProvenanceParent extends \Google\Model
   public $revision;
 
   /**
-   * The id of the parent provenance.
+   * The ID of the parent provenance.
    *
    * @deprecated
    * @param int $id

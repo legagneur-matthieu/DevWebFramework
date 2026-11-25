@@ -160,6 +160,8 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public $name;
   protected $operationGroupType = GoogleCloudApigeeV1OperationGroup::class;
   protected $operationGroupDataType = '';
+  protected $payloadOperationGroupType = GoogleCloudApigeeV1PayloadOperationGroup::class;
+  protected $payloadOperationGroupDataType = '';
   /**
    * Comma-separated list of API proxy names to which this API product is bound.
    * By specifying API proxies, you can associate resources in the API product
@@ -549,6 +551,29 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public function getOperationGroup()
   {
     return $this->operationGroup;
+  }
+  /**
+   * Optional. Configuration used to group Apigee proxies with payload-based
+   * operations and quotas. Unlike `operation_group`, which matches on the URL
+   * path, this grouping matches on operation identifiers extracted from the
+   * request payload (for example, JSON-RPC method and tool names). This enables
+   * fine-grained authorization and quota enforcement for protocols such as MCP
+   * where multiple operations share a single endpoint. **Note:** The `proxies`
+   * and `api_resources` settings cannot be specified for both the API product
+   * and payload operation group; otherwise the call will fail.
+   *
+   * @param GoogleCloudApigeeV1PayloadOperationGroup $payloadOperationGroup
+   */
+  public function setPayloadOperationGroup(GoogleCloudApigeeV1PayloadOperationGroup $payloadOperationGroup)
+  {
+    $this->payloadOperationGroup = $payloadOperationGroup;
+  }
+  /**
+   * @return GoogleCloudApigeeV1PayloadOperationGroup
+   */
+  public function getPayloadOperationGroup()
+  {
+    return $this->payloadOperationGroup;
   }
   /**
    * Comma-separated list of API proxy names to which this API product is bound.

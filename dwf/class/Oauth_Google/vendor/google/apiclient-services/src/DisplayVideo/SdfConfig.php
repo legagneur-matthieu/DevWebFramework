@@ -100,15 +100,21 @@ class SdfConfig extends \Google\Model
    * SDF version 7.1. Read the [v7 migration guide](/display-
    * video/api/structured-data-file/v7-migration-guide) before migrating to this
    * version.
+   *
+   * @deprecated
    */
   public const VERSION_SDF_VERSION_7_1 = 'SDF_VERSION_7_1';
   /**
    * SDF version 8. Read the [v8 migration guide](/display-video/api/structured-
    * data-file/v8-migration-guide) before migrating to this version.
+   *
+   * @deprecated
    */
   public const VERSION_SDF_VERSION_8 = 'SDF_VERSION_8';
   /**
    * SDF version 8.1.
+   *
+   * @deprecated
    */
   public const VERSION_SDF_VERSION_8_1 = 'SDF_VERSION_8_1';
   /**
@@ -124,6 +130,14 @@ class SdfConfig extends \Google\Model
    * SDF version 9.2.
    */
   public const VERSION_SDF_VERSION_9_2 = 'SDF_VERSION_9_2';
+  /**
+   * SDF version 10.
+   */
+  public const VERSION_SDF_VERSION_10 = 'SDF_VERSION_10';
+  /**
+   * SDF version 10.1.
+   */
+  public const VERSION_SDF_VERSION_10_1 = 'SDF_VERSION_10_1';
   /**
    * An administrator email address to which the SDF processing status reports
    * will be sent.
@@ -162,7 +176,8 @@ class SdfConfig extends \Google\Model
    * SDF_VERSION_4_1, SDF_VERSION_4_2, SDF_VERSION_5, SDF_VERSION_5_1,
    * SDF_VERSION_5_2, SDF_VERSION_5_3, SDF_VERSION_5_4, SDF_VERSION_5_5,
    * SDF_VERSION_6, SDF_VERSION_7, SDF_VERSION_7_1, SDF_VERSION_8,
-   * SDF_VERSION_8_1, SDF_VERSION_9, SDF_VERSION_9_1, SDF_VERSION_9_2
+   * SDF_VERSION_8_1, SDF_VERSION_9, SDF_VERSION_9_1, SDF_VERSION_9_2,
+   * SDF_VERSION_10, SDF_VERSION_10_1
    *
    * @param self::VERSION_* $version
    */

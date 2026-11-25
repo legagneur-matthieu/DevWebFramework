@@ -61,6 +61,23 @@ class MigrationJob extends \Google\Model
    */
   public const PHASE_READY_FOR_PROMOTE = 'READY_FOR_PROMOTE';
   /**
+   * The migration job is in the failback phase. This phase is currently used
+   * only for SQL Server Distributed Availability Group (DAG) migrations.
+   */
+  public const PHASE_PHASE_FAILBACK = 'PHASE_FAILBACK';
+  /**
+   * Unknown purpose. Will be defaulted to MIGRATE.
+   */
+  public const PURPOSE_PURPOSE_UNSPECIFIED = 'PURPOSE_UNSPECIFIED';
+  /**
+   * Standard migration job.
+   */
+  public const PURPOSE_MIGRATE = 'MIGRATE';
+  /**
+   * Failback replication job.
+   */
+  public const PURPOSE_FAILBACK = 'FAILBACK';
+  /**
    * The state of the migration job is unknown.
    */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
@@ -225,6 +242,8 @@ class MigrationJob extends \Google\Model
    * @var string[]
    */
   public $labels;
+  protected $mysqlHomogeneousConfigType = MySqlHomogeneousConfig::class;
+  protected $mysqlHomogeneousConfigDataType = '';
   /**
    * The name (URI) of this migration job resource, in the form of:
    * projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
@@ -236,6 +255,13 @@ class MigrationJob extends \Google\Model
   protected $objectsConfigDataType = '';
   protected $oracleToPostgresConfigType = OracleToPostgresConfig::class;
   protected $oracleToPostgresConfigDataType = '';
+  /**
+   * Optional. A failback replication pointer to the resource name (URI) of the
+   * original migration job.
+   *
+   * @var string
+   */
+  public $originalMigrationName;
   protected $performanceConfigType = PerformanceConfig::class;
   protected $performanceConfigDataType = '';
   /**
@@ -244,6 +270,17 @@ class MigrationJob extends \Google\Model
    * @var string
    */
   public $phase;
+  protected $postgresHomogeneousConfigType = PostgresHomogeneousConfig::class;
+  protected $postgresHomogeneousConfigDataType = '';
+  protected $postgresToSqlserverConfigType = PostgresToSqlServerConfig::class;
+  protected $postgresToSqlserverConfigDataType = '';
+  /**
+   * Output only. Migration job mode. Migration jobs can be standard forward
+   * jobs or failback migration jobs.
+   *
+   * @var string
+   */
+  public $purpose;
   protected $reverseSshConnectivityType = ReverseSshConnectivity::class;
   protected $reverseSshConnectivityDataType = '';
   /**
@@ -544,6 +581,22 @@ class MigrationJob extends \Google\Model
     return $this->labels;
   }
   /**
+   * Optional. Configuration for MySQL homogeneous migration.
+   *
+   * @param MySqlHomogeneousConfig $mysqlHomogeneousConfig
+   */
+  public function setMysqlHomogeneousConfig(MySqlHomogeneousConfig $mysqlHomogeneousConfig)
+  {
+    $this->mysqlHomogeneousConfig = $mysqlHomogeneousConfig;
+  }
+  /**
+   * @return MySqlHomogeneousConfig
+   */
+  public function getMysqlHomogeneousConfig()
+  {
+    return $this->mysqlHomogeneousConfig;
+  }
+  /**
    * The name (URI) of this migration job resource, in the form of:
    * projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
    *
@@ -594,7 +647,24 @@ class MigrationJob extends \Google\Model
     return $this->oracleToPostgresConfig;
   }
   /**
-   * Optional. Data dump parallelism settings used by the migration.
+   * Optional. A failback replication pointer to the resource name (URI) of the
+   * original migration job.
+   *
+   * @param string $originalMigrationName
+   */
+  public function setOriginalMigrationName($originalMigrationName)
+  {
+    $this->originalMigrationName = $originalMigrationName;
+  }
+  /**
+   * @return string
+   */
+  public function getOriginalMigrationName()
+  {
+    return $this->originalMigrationName;
+  }
+  /**
+   * Optional. Data dump and load parallelism settings used by the migration.
    *
    * @param PerformanceConfig $performanceConfig
    */
@@ -613,7 +683,8 @@ class MigrationJob extends \Google\Model
    * Output only. The current migration job phase.
    *
    * Accepted values: PHASE_UNSPECIFIED, FULL_DUMP, CDC, PROMOTE_IN_PROGRESS,
-   * WAITING_FOR_SOURCE_WRITES_TO_STOP, PREPARING_THE_DUMP, READY_FOR_PROMOTE
+   * WAITING_FOR_SOURCE_WRITES_TO_STOP, PREPARING_THE_DUMP, READY_FOR_PROMOTE,
+   * PHASE_FAILBACK
    *
    * @param self::PHASE_* $phase
    */
@@ -627,6 +698,58 @@ class MigrationJob extends \Google\Model
   public function getPhase()
   {
     return $this->phase;
+  }
+  /**
+   * Optional. Configuration for PostgreSQL homogeneous migration.
+   *
+   * @param PostgresHomogeneousConfig $postgresHomogeneousConfig
+   */
+  public function setPostgresHomogeneousConfig(PostgresHomogeneousConfig $postgresHomogeneousConfig)
+  {
+    $this->postgresHomogeneousConfig = $postgresHomogeneousConfig;
+  }
+  /**
+   * @return PostgresHomogeneousConfig
+   */
+  public function getPostgresHomogeneousConfig()
+  {
+    return $this->postgresHomogeneousConfig;
+  }
+  /**
+   * Configuration for heterogeneous failback migrations from **PostgreSQL to
+   * SQL Server**.
+   *
+   * @param PostgresToSqlServerConfig $postgresToSqlserverConfig
+   */
+  public function setPostgresToSqlserverConfig(PostgresToSqlServerConfig $postgresToSqlserverConfig)
+  {
+    $this->postgresToSqlserverConfig = $postgresToSqlserverConfig;
+  }
+  /**
+   * @return PostgresToSqlServerConfig
+   */
+  public function getPostgresToSqlserverConfig()
+  {
+    return $this->postgresToSqlserverConfig;
+  }
+  /**
+   * Output only. Migration job mode. Migration jobs can be standard forward
+   * jobs or failback migration jobs.
+   *
+   * Accepted values: PURPOSE_UNSPECIFIED, MIGRATE, FAILBACK
+   *
+   * @param self::PURPOSE_* $purpose
+   */
+  public function setPurpose($purpose)
+  {
+    $this->purpose = $purpose;
+  }
+  /**
+   * @return self::PURPOSE_*
+   */
+  public function getPurpose()
+  {
+    return $this->purpose;
   }
   /**
    * The details needed to communicate to the source over Reverse SSH tunnel

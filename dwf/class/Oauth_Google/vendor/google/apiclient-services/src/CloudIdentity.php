@@ -34,6 +34,12 @@ use Google\Client;
  */
 class CloudIdentity extends \Google\Service
 {
+  /** See and edit allowlisted domains in your Cloud Identity Organization. */
+  const CLOUD_IDENTITY_ALLOWLISTEDDOMAINS =
+      "https://www.googleapis.com/auth/cloud-identity.allowlisteddomains";
+  /** See allowlisted domains in your Cloud Identity Organization. */
+  const CLOUD_IDENTITY_ALLOWLISTEDDOMAINS_READONLY =
+      "https://www.googleapis.com/auth/cloud-identity.allowlisteddomains.readonly";
   /** Private Service: https://www.googleapis.com/auth/cloud-identity.devices. */
   const CLOUD_IDENTITY_DEVICES =
       "https://www.googleapis.com/auth/cloud-identity.devices";
@@ -65,6 +71,7 @@ class CloudIdentity extends \Google\Service
   const CLOUD_PLATFORM =
       "https://www.googleapis.com/auth/cloud-platform";
 
+  public $allowlistedDomains;
   public $customers_userinvitations;
   public $devices;
   public $devices_deviceUsers;
@@ -95,6 +102,57 @@ class CloudIdentity extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'cloudidentity';
 
+    $this->allowlistedDomains = new CloudIdentity\Resource\AllowlistedDomains(
+        $this,
+        $this->serviceName,
+        'allowlistedDomains',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/allowlistedDomains',
+              'httpMethod' => 'POST',
+              'parameters' => [],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/allowlistedDomains',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->customers_userinvitations = new CloudIdentity\Resource\CustomersUserinvitations(
         $this,
         $this->serviceName,
@@ -1060,7 +1118,21 @@ class CloudIdentity extends \Google\Service
         'policies',
         [
           'methods' => [
-            'get' => [
+            'create' => [
+              'path' => 'v1/policies',
+              'httpMethod' => 'POST',
+              'parameters' => [],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -1085,6 +1157,16 @@ class CloudIdentity extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

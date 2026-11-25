@@ -27,7 +27,7 @@ class CreateSnapshotRequest extends \Google\Model
    */
   public $labels;
   /**
-   * Required. Identifier. The subscription whose backlog the snapshot retains.
+   * Required. The subscription whose backlog the snapshot retains.
    * Specifically, the created snapshot is guaranteed to retain: (a) The
    * existing backlog on the subscription. More precisely, this is defined as
    * the messages in the subscription's backlog that are unacknowledged upon the
@@ -42,7 +42,9 @@ class CreateSnapshotRequest extends \Google\Model
   /**
    * Optional. Input only. Immutable. Tag keys/values directly bound to this
    * resource. For example: "123/environment": "production", "123/costCenter":
-   * "marketing"
+   * "marketing" See
+   * https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+   * for more information on using tags with Pub/Sub resources.
    *
    * @var string[]
    */
@@ -66,7 +68,7 @@ class CreateSnapshotRequest extends \Google\Model
     return $this->labels;
   }
   /**
-   * Required. Identifier. The subscription whose backlog the snapshot retains.
+   * Required. The subscription whose backlog the snapshot retains.
    * Specifically, the created snapshot is guaranteed to retain: (a) The
    * existing backlog on the subscription. More precisely, this is defined as
    * the messages in the subscription's backlog that are unacknowledged upon the
@@ -91,7 +93,9 @@ class CreateSnapshotRequest extends \Google\Model
   /**
    * Optional. Input only. Immutable. Tag keys/values directly bound to this
    * resource. For example: "123/environment": "production", "123/costCenter":
-   * "marketing"
+   * "marketing" See
+   * https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+   * for more information on using tags with Pub/Sub resources.
    *
    * @param string[] $tags
    */

@@ -20,6 +20,19 @@ namespace Google\Service\DiscoveryEngine;
 class GoogleCloudDiscoveryengineV1AssistantGroundedContentTextGroundingMetadataReference extends \Google\Model
 {
   /**
+   * Output only. Generic structured chunk metadata from upstream data source
+   * connectors.
+   *
+   * @var array[]
+   */
+  public $chunkMetadata;
+  /**
+   * Chunk of code snippet from the referenced document.
+   *
+   * @var string
+   */
+  public $codeSnippet;
+  /**
    * Referenced text content.
    *
    * @var string
@@ -28,6 +41,39 @@ class GoogleCloudDiscoveryengineV1AssistantGroundedContentTextGroundingMetadataR
   protected $documentMetadataType = GoogleCloudDiscoveryengineV1AssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata::class;
   protected $documentMetadataDataType = '';
 
+  /**
+   * Output only. Generic structured chunk metadata from upstream data source
+   * connectors.
+   *
+   * @param array[] $chunkMetadata
+   */
+  public function setChunkMetadata($chunkMetadata)
+  {
+    $this->chunkMetadata = $chunkMetadata;
+  }
+  /**
+   * @return array[]
+   */
+  public function getChunkMetadata()
+  {
+    return $this->chunkMetadata;
+  }
+  /**
+   * Chunk of code snippet from the referenced document.
+   *
+   * @param string $codeSnippet
+   */
+  public function setCodeSnippet($codeSnippet)
+  {
+    $this->codeSnippet = $codeSnippet;
+  }
+  /**
+   * @return string
+   */
+  public function getCodeSnippet()
+  {
+    return $this->codeSnippet;
+  }
   /**
    * Referenced text content.
    *

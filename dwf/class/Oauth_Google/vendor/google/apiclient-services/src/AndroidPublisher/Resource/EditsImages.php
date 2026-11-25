@@ -102,6 +102,9 @@ class EditsImages extends \Google\Service\Resource
    * supported by the App is a no-op.
    * @param string $imageType Type of the Image.
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string aiGeneratedState Optional. Whether the image was generated
+   * by AI. Attested by the developer.
    * @return ImagesUploadResponse
    * @throws \Google\Service\Exception
    */

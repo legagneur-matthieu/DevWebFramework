@@ -37,9 +37,13 @@ class VoiceExportOptions extends \Google\Model
    */
   public const EXPORT_FORMAT_ICS = 'ICS';
   /**
-   * Export as XML. Only available for Gemini.
+   * Export as XML. Only available for Gemini app.
    */
   public const EXPORT_FORMAT_XML = 'XML';
+  /**
+   * Export as JSON. Only available for Gemini in Workspace.
+   */
+  public const EXPORT_FORMAT_JSON = 'JSON';
   /**
    * The file format for exported text messages.
    *
@@ -50,7 +54,7 @@ class VoiceExportOptions extends \Google\Model
   /**
    * The file format for exported text messages.
    *
-   * Accepted values: EXPORT_FORMAT_UNSPECIFIED, MBOX, PST, ICS, XML
+   * Accepted values: EXPORT_FORMAT_UNSPECIFIED, MBOX, PST, ICS, XML, JSON
    *
    * @param self::EXPORT_FORMAT_* $exportFormat
    */

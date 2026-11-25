@@ -39,6 +39,10 @@ class Job extends \Google\Collection
    * Terminated due to an unrecoverable failure.
    */
   public const STATE_FAILED = 'FAILED';
+  /**
+   * Queued but not yet started.
+   */
+  public const STATE_QUEUED = 'QUEUED';
   protected $collection_key = 'errorSummaries';
   protected $bucketListType = BucketList::class;
   protected $bucketListDataType = '';
@@ -59,33 +63,42 @@ class Job extends \Google\Collection
   protected $deleteObjectType = DeleteObject::class;
   protected $deleteObjectDataType = '';
   /**
-   * Optional. A description provided by the user for the job. Its max length is
-   * 1024 bytes when Unicode-encoded.
+   * Optional. A user-provided description for the job. Maximum length: 1024
+   * bytes when unicode-encoded.
    *
    * @var string
    */
   public $description;
   /**
-   * Optional. If true, the job will run in dry run mode, returning the total
-   * object count and, if the object configuration is a prefix list, the bytes
-   * found from source. No transformations will be performed.
+   * Optional. If true, the job runs in dry run mode, returning the total object
+   * count and, if the object configuration is a prefix list, the bytes found
+   * from source. No transformations are performed.
    *
    * @var bool
    */
   public $dryRun;
   protected $errorSummariesType = ErrorSummary::class;
   protected $errorSummariesDataType = 'array';
+  /**
+   * Output only. If true, this job operates on multiple buckets. Multi-bucket
+   * jobs are subject to different quota limits than single-bucket jobs.
+   *
+   * @var bool
+   */
+  public $isMultiBucketJob;
   protected $loggingConfigType = LoggingConfig::class;
   protected $loggingConfigDataType = '';
   /**
-   * Identifier. The resource name of the Job. job_id is unique within the
-   * project, that is either set by the customer or defined by the service.
-   * Format: projects/{project}/locations/global/jobs/{job_id} . For example:
-   * "projects/123456/locations/global/jobs/job01".
+   * Identifier. The resource name of the job. Format:
+   * `projects/{project_id}/locations/global/jobs/{job_id}`. For example:
+   * `projects/123456/locations/global/jobs/job01`. `job_id` is unique in a
+   * given project.
    *
    * @var string
    */
   public $name;
+  protected $projectSourceType = ProjectSource::class;
+  protected $projectSourceDataType = '';
   protected $putMetadataType = PutMetadata::class;
   protected $putMetadataDataType = '';
   protected $putObjectHoldType = PutObjectHold::class;
@@ -98,12 +111,16 @@ class Job extends \Google\Collection
    * @var string
    */
   public $scheduleTime;
+  protected $setObjectAclsType = SetObjectAcls::class;
+  protected $setObjectAclsDataType = '';
   /**
    * Output only. State of the job.
    *
    * @var string
    */
   public $state;
+  protected $updateObjectCustomContextType = UpdateObjectCustomContext::class;
+  protected $updateObjectCustomContextDataType = '';
 
   /**
    * Specifies a list of buckets and their objects to be transformed.
@@ -186,8 +203,8 @@ class Job extends \Google\Collection
     return $this->deleteObject;
   }
   /**
-   * Optional. A description provided by the user for the job. Its max length is
-   * 1024 bytes when Unicode-encoded.
+   * Optional. A user-provided description for the job. Maximum length: 1024
+   * bytes when unicode-encoded.
    *
    * @param string $description
    */
@@ -203,9 +220,9 @@ class Job extends \Google\Collection
     return $this->description;
   }
   /**
-   * Optional. If true, the job will run in dry run mode, returning the total
-   * object count and, if the object configuration is a prefix list, the bytes
-   * found from source. No transformations will be performed.
+   * Optional. If true, the job runs in dry run mode, returning the total object
+   * count and, if the object configuration is a prefix list, the bytes found
+   * from source. No transformations are performed.
    *
    * @param bool $dryRun
    */
@@ -237,6 +254,23 @@ class Job extends \Google\Collection
     return $this->errorSummaries;
   }
   /**
+   * Output only. If true, this job operates on multiple buckets. Multi-bucket
+   * jobs are subject to different quota limits than single-bucket jobs.
+   *
+   * @param bool $isMultiBucketJob
+   */
+  public function setIsMultiBucketJob($isMultiBucketJob)
+  {
+    $this->isMultiBucketJob = $isMultiBucketJob;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsMultiBucketJob()
+  {
+    return $this->isMultiBucketJob;
+  }
+  /**
    * Optional. Logging configuration.
    *
    * @param LoggingConfig $loggingConfig
@@ -253,10 +287,10 @@ class Job extends \Google\Collection
     return $this->loggingConfig;
   }
   /**
-   * Identifier. The resource name of the Job. job_id is unique within the
-   * project, that is either set by the customer or defined by the service.
-   * Format: projects/{project}/locations/global/jobs/{job_id} . For example:
-   * "projects/123456/locations/global/jobs/job01".
+   * Identifier. The resource name of the job. Format:
+   * `projects/{project_id}/locations/global/jobs/{job_id}`. For example:
+   * `projects/123456/locations/global/jobs/job01`. `job_id` is unique in a
+   * given project.
    *
    * @param string $name
    */
@@ -272,9 +306,27 @@ class Job extends \Google\Collection
     return $this->name;
   }
   /**
-   * Updates object metadata. Allows updating fixed-key and custom metadata and
-   * fixed-key metadata i.e. Cache-Control, Content-Disposition, Content-
-   * Encoding, Content-Language, Content-Type, Custom-Time.
+   * Specifies a project source and filters to identify objects to be
+   * transformed.
+   *
+   * @param ProjectSource $projectSource
+   */
+  public function setProjectSource(ProjectSource $projectSource)
+  {
+    $this->projectSource = $projectSource;
+  }
+  /**
+   * @return ProjectSource
+   */
+  public function getProjectSource()
+  {
+    return $this->projectSource;
+  }
+  /**
+   * Updates object metadata. Allows updating fixed-key and custom metadata. For
+   * example, `Cache-Control`, `Content-Disposition`, `Content-Encoding`,
+   * `Content-Language`, `Content-Type`, `Custom-Time`, and `Retention
+   * configuration`.
    *
    * @param PutMetadata $putMetadata
    */
@@ -338,9 +390,26 @@ class Job extends \Google\Collection
     return $this->scheduleTime;
   }
   /**
+   * Updates object ACLs.
+   *
+   * @param SetObjectAcls $setObjectAcls
+   */
+  public function setSetObjectAcls(SetObjectAcls $setObjectAcls)
+  {
+    $this->setObjectAcls = $setObjectAcls;
+  }
+  /**
+   * @return SetObjectAcls
+   */
+  public function getSetObjectAcls()
+  {
+    return $this->setObjectAcls;
+  }
+  /**
    * Output only. State of the job.
    *
-   * Accepted values: STATE_UNSPECIFIED, RUNNING, SUCCEEDED, CANCELED, FAILED
+   * Accepted values: STATE_UNSPECIFIED, RUNNING, SUCCEEDED, CANCELED, FAILED,
+   * QUEUED
    *
    * @param self::STATE_* $state
    */
@@ -354,6 +423,22 @@ class Job extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * Update object custom context.
+   *
+   * @param UpdateObjectCustomContext $updateObjectCustomContext
+   */
+  public function setUpdateObjectCustomContext(UpdateObjectCustomContext $updateObjectCustomContext)
+  {
+    $this->updateObjectCustomContext = $updateObjectCustomContext;
+  }
+  /**
+   * @return UpdateObjectCustomContext
+   */
+  public function getUpdateObjectCustomContext()
+  {
+    return $this->updateObjectCustomContext;
   }
 }
 

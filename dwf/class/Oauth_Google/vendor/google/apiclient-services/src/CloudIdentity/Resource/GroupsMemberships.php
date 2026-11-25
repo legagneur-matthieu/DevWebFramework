@@ -229,7 +229,9 @@ class GroupsMemberships extends \Google\Service\Resource
     return $this->call('modifyMembershipRoles', [$params], ModifyMembershipRolesResponse::class);
   }
   /**
-   * Searches direct groups of a member. (memberships.searchDirectGroups)
+   * Searches direct groups of a member. Groups for which the actor does not have
+   * the permission to view memberships are silently filtered out.
+   * (memberships.searchDirectGroups)
    *
    * @param string $parent [Resource
    * name](https://cloud.google.com/apis/design/resource_names) of the group to

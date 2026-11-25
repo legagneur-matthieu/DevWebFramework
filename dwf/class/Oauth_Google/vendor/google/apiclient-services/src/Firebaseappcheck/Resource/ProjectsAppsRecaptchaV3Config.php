@@ -75,7 +75,7 @@ class ProjectsAppsRecaptchaV3Config extends \Google\Service\Resource
   }
   /**
    * Updates the RecaptchaV3Config for the specified app. While this configuration
-   * is incomplete or invalid, the app will be unable to exchange reCAPTCHA V3
+   * is incomplete or invalid, the app will be unable to exchange reCAPTCHA v3
    * tokens for App Check tokens. For security reasons, the `site_secret` field is
    * never populated in the response. (recaptchaV3Config.patch)
    *

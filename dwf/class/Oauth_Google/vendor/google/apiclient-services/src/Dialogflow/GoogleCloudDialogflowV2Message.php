@@ -17,69 +17,42 @@
 
 namespace Google\Service\Dialogflow;
 
-class GoogleCloudDialogflowV2Message extends \Google\Model
+class GoogleCloudDialogflowV2Message extends \Google\Collection
 {
-  /**
-   * Participant role not set.
-   */
   public const PARTICIPANT_ROLE_ROLE_UNSPECIFIED = 'ROLE_UNSPECIFIED';
-  /**
-   * Participant is a human agent.
-   */
   public const PARTICIPANT_ROLE_HUMAN_AGENT = 'HUMAN_AGENT';
-  /**
-   * Participant is an automated agent, such as a Dialogflow agent.
-   */
   public const PARTICIPANT_ROLE_AUTOMATED_AGENT = 'AUTOMATED_AGENT';
-  /**
-   * Participant is an end user that has called or chatted with Dialogflow
-   * services.
-   */
   public const PARTICIPANT_ROLE_END_USER = 'END_USER';
+  protected $collection_key = 'responseMessages';
   /**
-   * Required. The message content.
-   *
    * @var string
    */
   public $content;
   /**
-   * Output only. The time when the message was created in Contact Center AI.
-   *
    * @var string
    */
   public $createTime;
   /**
-   * Optional. The message language. This should be a [BCP-47](https://www.rfc-
-   * editor.org/rfc/bcp/bcp47.txt) language tag. Example: "en-US".
-   *
    * @var string
    */
   public $languageCode;
   protected $messageAnnotationType = GoogleCloudDialogflowV2MessageAnnotation::class;
   protected $messageAnnotationDataType = '';
   /**
-   * Optional. The unique identifier of the message. Format:
-   * `projects//locations//conversations//messages/`.
-   *
    * @var string
    */
   public $name;
   /**
-   * Output only. The participant that sends this message.
-   *
    * @var string
    */
   public $participant;
   /**
-   * Output only. The role of the participant.
-   *
    * @var string
    */
   public $participantRole;
+  protected $responseMessagesType = GoogleCloudDialogflowV2ResponseMessage::class;
+  protected $responseMessagesDataType = 'array';
   /**
-   * Optional. The time when the message was sent. For voice messages, this is
-   * the time when an utterance started.
-   *
    * @var string
    */
   public $sendTime;
@@ -87,8 +60,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
   protected $sentimentAnalysisDataType = '';
 
   /**
-   * Required. The message content.
-   *
    * @param string $content
    */
   public function setContent($content)
@@ -103,8 +74,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->content;
   }
   /**
-   * Output only. The time when the message was created in Contact Center AI.
-   *
    * @param string $createTime
    */
   public function setCreateTime($createTime)
@@ -119,9 +88,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->createTime;
   }
   /**
-   * Optional. The message language. This should be a [BCP-47](https://www.rfc-
-   * editor.org/rfc/bcp/bcp47.txt) language tag. Example: "en-US".
-   *
    * @param string $languageCode
    */
   public function setLanguageCode($languageCode)
@@ -136,8 +102,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->languageCode;
   }
   /**
-   * Output only. The annotation for the message.
-   *
    * @param GoogleCloudDialogflowV2MessageAnnotation $messageAnnotation
    */
   public function setMessageAnnotation(GoogleCloudDialogflowV2MessageAnnotation $messageAnnotation)
@@ -152,9 +116,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->messageAnnotation;
   }
   /**
-   * Optional. The unique identifier of the message. Format:
-   * `projects//locations//conversations//messages/`.
-   *
    * @param string $name
    */
   public function setName($name)
@@ -169,8 +130,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->name;
   }
   /**
-   * Output only. The participant that sends this message.
-   *
    * @param string $participant
    */
   public function setParticipant($participant)
@@ -185,10 +144,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->participant;
   }
   /**
-   * Output only. The role of the participant.
-   *
-   * Accepted values: ROLE_UNSPECIFIED, HUMAN_AGENT, AUTOMATED_AGENT, END_USER
-   *
    * @param self::PARTICIPANT_ROLE_* $participantRole
    */
   public function setParticipantRole($participantRole)
@@ -203,9 +158,20 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->participantRole;
   }
   /**
-   * Optional. The time when the message was sent. For voice messages, this is
-   * the time when an utterance started.
-   *
+   * @param GoogleCloudDialogflowV2ResponseMessage[] $responseMessages
+   */
+  public function setResponseMessages($responseMessages)
+  {
+    $this->responseMessages = $responseMessages;
+  }
+  /**
+   * @return GoogleCloudDialogflowV2ResponseMessage[]
+   */
+  public function getResponseMessages()
+  {
+    return $this->responseMessages;
+  }
+  /**
    * @param string $sendTime
    */
   public function setSendTime($sendTime)
@@ -220,8 +186,6 @@ class GoogleCloudDialogflowV2Message extends \Google\Model
     return $this->sendTime;
   }
   /**
-   * Output only. The sentiment analysis result for the message.
-   *
    * @param GoogleCloudDialogflowV2SentimentAnalysisResult $sentimentAnalysis
    */
   public function setSentimentAnalysis(GoogleCloudDialogflowV2SentimentAnalysisResult $sentimentAnalysis)

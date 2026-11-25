@@ -49,6 +49,43 @@ class InternalRange extends \Google\Collection
    */
   public const PEERING_NOT_SHARED = 'NOT_SHARED';
   /**
+   * If purpose is left unspecified in CreateInternalRange or
+   * UpdateInternalRange, it will be defaulted to VPC_SUBNET.
+   */
+  public const PURPOSE_PURPOSE_UNSPECIFIED = 'PURPOSE_UNSPECIFIED';
+  /**
+   * The internal range is used for VPC subnetworks.
+   */
+  public const PURPOSE_VPC_SUBNET = 'VPC_SUBNET';
+  /**
+   * The internal range is used exclusively for allocating individual IP
+   * addresses (e.g., for global PSC endpoints). Child ranges or subnetworks
+   * cannot be created from a range with this purpose.
+   */
+  public const PURPOSE_INTERNAL_ADDRESS = 'INTERNAL_ADDRESS';
+  /**
+   * Unspecified status is the default value for an Internal Range.
+   */
+  public const RANGE_STATUS_RANGE_STATUS_UNSPECIFIED = 'RANGE_STATUS_UNSPECIFIED';
+  /**
+   * Ranges with ACTIVE status will reserve the CIDR block from the given VPC.
+   */
+  public const RANGE_STATUS_ACTIVE = 'ACTIVE';
+  /**
+   * A range becomes OBSOLETE if its VPC network is deleted. An OBSOLETE range
+   * is inactive, doesn't reserve any CIDR blocks, and can only be deleted or
+   * have its labels and description updated.
+   */
+  public const RANGE_STATUS_OBSOLETE = 'OBSOLETE';
+  /**
+   * The resource is being created.
+   */
+  public const RANGE_STATUS_CREATING = 'CREATING';
+  /**
+   * The resource is being deleted.
+   */
+  public const RANGE_STATUS_DELETING = 'DELETING';
+  /**
    * Unspecified usage is allowed in calls which identify the resource by other
    * fields and do not need Usage set to complete. These are, i.e.:
    * GetInternalRange and DeleteInternalRange. Usage needs to be specified
@@ -76,7 +113,7 @@ class InternalRange extends \Google\Collection
   protected $allocationOptionsType = AllocationOptions::class;
   protected $allocationOptionsDataType = '';
   /**
-   * Time when the internal range was created.
+   * Output only. Time when the internal range was created.
    *
    * @var string
    */
@@ -164,6 +201,20 @@ class InternalRange extends \Google\Collection
    */
   public $prefixLength;
   /**
+   * Optional. The purpose of this internal range. Defines the intended use of
+   * the range and any restrictions associated with it. If not specified, it
+   * defaults to VPC_SUBNET.
+   *
+   * @var string
+   */
+  public $purpose;
+  /**
+   * Output only. Status of the Internal Range.
+   *
+   * @var string
+   */
+  public $rangeStatus;
+  /**
    * Optional. Can be set to narrow down or pick a different address space while
    * searching for a free range. If not set, defaults to the ["10.0.0.0/8",
    * "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks,
@@ -175,7 +226,7 @@ class InternalRange extends \Google\Collection
    */
   public $targetCidrRange;
   /**
-   * Time when the internal range was updated.
+   * Output only. Time when the internal range was updated.
    *
    * @var string
    */
@@ -217,7 +268,7 @@ class InternalRange extends \Google\Collection
     return $this->allocationOptions;
   }
   /**
-   * Time when the internal range was created.
+   * Output only. Time when the internal range was created.
    *
    * @param string $createTime
    */
@@ -431,6 +482,45 @@ class InternalRange extends \Google\Collection
     return $this->prefixLength;
   }
   /**
+   * Optional. The purpose of this internal range. Defines the intended use of
+   * the range and any restrictions associated with it. If not specified, it
+   * defaults to VPC_SUBNET.
+   *
+   * Accepted values: PURPOSE_UNSPECIFIED, VPC_SUBNET, INTERNAL_ADDRESS
+   *
+   * @param self::PURPOSE_* $purpose
+   */
+  public function setPurpose($purpose)
+  {
+    $this->purpose = $purpose;
+  }
+  /**
+   * @return self::PURPOSE_*
+   */
+  public function getPurpose()
+  {
+    return $this->purpose;
+  }
+  /**
+   * Output only. Status of the Internal Range.
+   *
+   * Accepted values: RANGE_STATUS_UNSPECIFIED, ACTIVE, OBSOLETE, CREATING,
+   * DELETING
+   *
+   * @param self::RANGE_STATUS_* $rangeStatus
+   */
+  public function setRangeStatus($rangeStatus)
+  {
+    $this->rangeStatus = $rangeStatus;
+  }
+  /**
+   * @return self::RANGE_STATUS_*
+   */
+  public function getRangeStatus()
+  {
+    return $this->rangeStatus;
+  }
+  /**
    * Optional. Can be set to narrow down or pick a different address space while
    * searching for a free range. If not set, defaults to the ["10.0.0.0/8",
    * "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks,
@@ -452,7 +542,7 @@ class InternalRange extends \Google\Collection
     return $this->targetCidrRange;
   }
   /**
-   * Time when the internal range was updated.
+   * Output only. Time when the internal range was updated.
    *
    * @param string $updateTime
    */

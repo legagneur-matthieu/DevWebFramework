@@ -39,7 +39,7 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
   /**
    * Optional. The expected action for this type of event. This should be the
    * same action provided at token generation time on client-side platforms
-   * already integrated with recaptcha enterprise.
+   * already integrated with recaptcha enterprise. Required for Universal keys.
    *
    * @var string
    */
@@ -144,7 +144,7 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
   /**
    * Optional. The expected action for this type of event. This should be the
    * same action provided at token generation time on client-side platforms
-   * already integrated with recaptcha enterprise.
+   * already integrated with recaptcha enterprise. Required for Universal keys.
    *
    * @param string $expectedAction
    */

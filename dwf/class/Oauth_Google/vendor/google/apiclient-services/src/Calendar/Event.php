@@ -82,6 +82,18 @@ class Event extends \Google\Collection
    */
   public $etag;
   /**
+   * The ID of the event label assigned to the event. Optional. This refers to
+   * the ID of an entry in the labelProperties.eventLabels property of the
+   * calendar (see the Calendars.get endpoint.) This property supersedes the
+   * index-based colorId property. To set or change this property, you need to
+   * specify eventLabelVersion=1 in the parameters of the insert, import,
+   * update, and patch methods. Setting an empty string, or not setting this
+   * field at all, will remove the existing label from the event.
+   *
+   * @var string
+   */
+  public $eventLabelId;
+  /**
    * Specific type of the event. This cannot be modified after the event is
    * created. Possible values are: - "birthday" - A special all-day event with
    * an annual recurrence.  - "default" - A regular event or not further
@@ -286,7 +298,13 @@ class Event extends \Google\Collection
    * value.  - "public" - The event is public and event details are visible to
    * all readers of the calendar.  - "private" - The event is private and only
    * event attendees may view event details.  - "confidential" - The event is
-   * private. This value is provided for compatibility reasons.
+   * private. This value is provided for compatibility reasons.   Note on
+   * recurring events: Changing the visibility of a single instance of a
+   * recurring event can affect all instances of the series. If the new setting
+   * is more restrictive (e.g. from public to private), it is applied to all
+   * instances. If the new setting is less restrictive (e.g. from private to
+   * public), the change is ignored. To make a recurring event less restrictive,
+   * you must update the parent recurring event.
    *
    * @var string
    */
@@ -404,7 +422,11 @@ class Event extends \Google\Collection
    * The conference-related information, such as details of a Google Meet
    * conference. To create new conference details use the createRequest field.
    * To persist your changes, remember to set the conferenceDataVersion request
-   * parameter to 1 for all event modification requests.
+   * parameter to 1 for all event modification requests. Warning: Reusing Google
+   * Meet conference data across different events can cause access issues and
+   * expose meeting details to unintended users. To help ensure meeting privacy,
+   * always generate a unique conference for each event by using the
+   * createRequest field.
    *
    * @param ConferenceData $conferenceData
    */
@@ -517,6 +539,28 @@ class Event extends \Google\Collection
   public function getEtag()
   {
     return $this->etag;
+  }
+  /**
+   * The ID of the event label assigned to the event. Optional. This refers to
+   * the ID of an entry in the labelProperties.eventLabels property of the
+   * calendar (see the Calendars.get endpoint.) This property supersedes the
+   * index-based colorId property. To set or change this property, you need to
+   * specify eventLabelVersion=1 in the parameters of the insert, import,
+   * update, and patch methods. Setting an empty string, or not setting this
+   * field at all, will remove the existing label from the event.
+   *
+   * @param string $eventLabelId
+   */
+  public function setEventLabelId($eventLabelId)
+  {
+    $this->eventLabelId = $eventLabelId;
+  }
+  /**
+   * @return string
+   */
+  public function getEventLabelId()
+  {
+    return $this->eventLabelId;
   }
   /**
    * Specific type of the event. This cannot be modified after the event is
@@ -1052,7 +1096,13 @@ class Event extends \Google\Collection
    * value.  - "public" - The event is public and event details are visible to
    * all readers of the calendar.  - "private" - The event is private and only
    * event attendees may view event details.  - "confidential" - The event is
-   * private. This value is provided for compatibility reasons.
+   * private. This value is provided for compatibility reasons.   Note on
+   * recurring events: Changing the visibility of a single instance of a
+   * recurring event can affect all instances of the series. If the new setting
+   * is more restrictive (e.g. from public to private), it is applied to all
+   * instances. If the new setting is less restrictive (e.g. from private to
+   * public), the change is ignored. To make a recurring event less restrictive,
+   * you must update the parent recurring event.
    *
    * @param string $visibility
    */

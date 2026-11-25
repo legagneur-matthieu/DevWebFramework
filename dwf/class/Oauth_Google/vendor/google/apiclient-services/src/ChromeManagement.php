@@ -39,6 +39,18 @@ class ChromeManagement extends \Google\Service
   /** See detailed information about apps installed on Chrome browsers and devices managed by your organization. */
   const CHROME_MANAGEMENT_APPDETAILS_READONLY =
       "https://www.googleapis.com/auth/chrome.management.appdetails.readonly";
+  /** See, edit, delete, and take other necessary actions on Chrome browsers managed by your organization. */
+  const CHROME_MANAGEMENT_BROWSERS =
+      "https://www.googleapis.com/auth/chrome.management.browsers";
+  /** See Chrome browsers managed by your organization. */
+  const CHROME_MANAGEMENT_BROWSERS_READONLY =
+      "https://www.googleapis.com/auth/chrome.management.browsers.readonly";
+  /** See, edit, revoke, and take other necessary actions on Chrome enrollment tokens managed by your organization. */
+  const CHROME_MANAGEMENT_ENROLLMENTTOKENS =
+      "https://www.googleapis.com/auth/chrome.management.enrollmenttokens";
+  /** See Chrome enrollment tokens managed by your organization. */
+  const CHROME_MANAGEMENT_ENROLLMENTTOKENS_READONLY =
+      "https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly";
   /** See, edit, delete, and take other necessary actions on Chrome browser profiles managed by your organization. */
   const CHROME_MANAGEMENT_PROFILES =
       "https://www.googleapis.com/auth/chrome.management.profiles";
@@ -48,16 +60,27 @@ class ChromeManagement extends \Google\Service
   /** See reports about devices and Chrome browsers managed within your organization. */
   const CHROME_MANAGEMENT_REPORTS_READONLY =
       "https://www.googleapis.com/auth/chrome.management.reports.readonly";
+  /** Turn Chrome Security Insights on and off and view the data it generates. */
+  const CHROME_MANAGEMENT_SECURITYINSIGHTS =
+      "https://www.googleapis.com/auth/chrome.management.securityinsights";
+  /** See Chrome Security Insights reports. */
+  const CHROME_MANAGEMENT_SECURITYINSIGHTS_READONLY =
+      "https://www.googleapis.com/auth/chrome.management.securityinsights.readonly";
   /** See basic device and telemetry information collected from ChromeOS devices or users managed within your organization. */
   const CHROME_MANAGEMENT_TELEMETRY_READONLY =
       "https://www.googleapis.com/auth/chrome.management.telemetry.readonly";
 
+  public $customers;
   public $customers_apps;
   public $customers_apps_android;
   public $customers_apps_chrome;
   public $customers_apps_web;
   public $customers_certificateProvisioningProcesses;
   public $customers_certificateProvisioningProcesses_operations;
+  public $customers_chromeBrowsers;
+  public $customers_connectorConfigs;
+  public $customers_enrollmentTokens;
+  public $customers_enterprise_securityInsights;
   public $customers_profiles;
   public $customers_profiles_commands;
   public $customers_reports;
@@ -86,6 +109,26 @@ class ChromeManagement extends \Google\Service
     $this->version = 'v1';
     $this->serviceName = 'chromemanagement';
 
+    $this->customers = new ChromeManagement\Resource\Customers(
+        $this,
+        $this->serviceName,
+        'customers',
+        [
+          'methods' => [
+            'getSubscriptionInfo' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->customers_apps = new ChromeManagement\Resource\CustomersApps(
         $this,
         $this->serviceName,
@@ -308,6 +351,364 @@ class ChromeManagement extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_chromeBrowsers = new ChromeManagement\Resource\CustomersChromeBrowsers(
+        $this,
+        $this->serviceName,
+        'chromeBrowsers',
+        [
+          'methods' => [
+            'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/chromeBrowsers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'move' => [
+              'path' => 'v1/{+parent}/chromeBrowsers:move',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_connectorConfigs = new ChromeManagement\Resource\CustomersConnectorConfigs(
+        $this,
+        $this->serviceName,
+        'connectorConfigs',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/connectorConfigs',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'connectorConfigId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/connectorConfigs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'patch' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_enrollmentTokens = new ChromeManagement\Resource\CustomersEnrollmentTokens(
+        $this,
+        $this->serviceName,
+        'enrollmentTokens',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/enrollmentTokens',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'enrollmentTokenId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/enrollmentTokens',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'revoke' => [
+              'path' => 'v1/{+name}:revoke',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_enterprise_securityInsights = new ChromeManagement\Resource\CustomersEnterpriseSecurityInsights(
+        $this,
+        $this->serviceName,
+        'securityInsights',
+        [
+          'methods' => [
+            'checkEnablementStatus' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:checkEnablementStatus',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'disable' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:disable',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'enable' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:enable',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'queryContentTransfers' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:queryContentTransfers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'queryContentTransfersBreakdowns' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:queryContentTransfersBreakdowns',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'breakdown' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'fixedTimeRange' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'metric' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'queryUrlVisits' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:queryUrlVisits',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'queryUrlVisitsBreakdowns' => [
+              'path' => 'v1/{+customer}/enterprise/securityInsights:queryUrlVisitsBreakdowns',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'breakdown' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'fixedTimeRange' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'metric' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -540,6 +941,32 @@ class ChromeManagement extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'countChromeProfileVersions' => [
+              'path' => 'v1/{+customer}/reports:countChromeProfileVersions',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],'countChromeVersions' => [
               'path' => 'v1/{+customer}/reports:countChromeVersions',
               'httpMethod' => 'GET',
@@ -756,6 +1183,130 @@ class ChromeManagement extends \Google\Service
                   'type' => 'string',
                 ],
                 'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'findInstalledAppProfiles' => [
+              'path' => 'v1/{+customer}/reports:findInstalledAppProfiles',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'appId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'appType' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'findSaasUsage' => [
+              'path' => 'v1/{+customer}/reports:findSaasUsage',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'findSaasUsageBrowsers' => [
+              'path' => 'v1/{+customer}/reports:findSaasUsageBrowsers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'app' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'findSaasUsageProfiles' => [
+              'path' => 'v1/{+customer}/reports:findSaasUsageProfiles',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'app' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

@@ -63,8 +63,10 @@ class SalesforceProfile extends \Google\Model
     return $this->oauth2ClientCredentials;
   }
   /**
-   * User-password authentication.
+   * Deprecated: Salesforce is retiring Username-Password authentication. Use
+   * `oauth2_client_credentials` instead.
    *
+   * @deprecated
    * @param UserCredentials $userCredentials
    */
   public function setUserCredentials(UserCredentials $userCredentials)
@@ -72,6 +74,7 @@ class SalesforceProfile extends \Google\Model
     $this->userCredentials = $userCredentials;
   }
   /**
+   * @deprecated
    * @return UserCredentials
    */
   public function getUserCredentials()

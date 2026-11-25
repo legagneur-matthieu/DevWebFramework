@@ -41,7 +41,7 @@ class GooglePrivacyDlpV2InspectDataSourceDetails extends \Google\Model
     return $this->requestedOptions;
   }
   /**
-   * A summary of the outcome of this inspection job.
+   * Output only. A summary of the outcome of this inspection job.
    *
    * @param GooglePrivacyDlpV2Result $result
    */

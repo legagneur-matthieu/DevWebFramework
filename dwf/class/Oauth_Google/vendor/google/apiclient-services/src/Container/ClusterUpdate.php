@@ -34,6 +34,14 @@ class ClusterUpdate extends \Google\Collection
    */
   public const DESIRED_DATAPATH_PROVIDER_ADVANCED_DATAPATH = 'ADVANCED_DATAPATH';
   /**
+   * Cluster has some existing nodes but new nodes should use ADVANCED_DATAPATH.
+   */
+  public const DESIRED_DATAPATH_PROVIDER_MIGRATE_TO_ADVANCED_DATAPATH = 'MIGRATE_TO_ADVANCED_DATAPATH';
+  /**
+   * Cluster has some existing nodes but new nodes should use LEGACY_DATAPATH.
+   */
+  public const DESIRED_DATAPATH_PROVIDER_MIGRATE_TO_LEGACY_DATAPATH = 'MIGRATE_TO_LEGACY_DATAPATH';
+  /**
    * Unspecified, will be inferred as default -
    * IN_TRANSIT_ENCRYPTION_UNSPECIFIED.
    */
@@ -81,12 +89,16 @@ class ClusterUpdate extends \Google\Collection
   protected $desiredAdditionalIpRangesConfigDataType = '';
   protected $desiredAddonsConfigType = AddonsConfig::class;
   protected $desiredAddonsConfigDataType = '';
+  protected $desiredAmbientNetworkingConfigType = AmbientNetworkingConfig::class;
+  protected $desiredAmbientNetworkingConfigDataType = '';
   protected $desiredAnonymousAuthenticationConfigType = AnonymousAuthenticationConfig::class;
   protected $desiredAnonymousAuthenticationConfigDataType = '';
   protected $desiredAuthenticatorGroupsConfigType = AuthenticatorGroupsConfig::class;
   protected $desiredAuthenticatorGroupsConfigDataType = '';
   protected $desiredAutoIpamConfigType = AutoIpamConfig::class;
   protected $desiredAutoIpamConfigDataType = '';
+  protected $desiredAutopilotClusterPolicyConfigType = ClusterPolicyConfig::class;
+  protected $desiredAutopilotClusterPolicyConfigDataType = '';
   protected $desiredAutopilotWorkloadPolicyConfigType = WorkloadPolicyConfig::class;
   protected $desiredAutopilotWorkloadPolicyConfigDataType = '';
   protected $desiredBinaryAuthorizationType = BinaryAuthorization::class;
@@ -97,6 +109,8 @@ class ClusterUpdate extends \Google\Collection
   protected $desiredCompliancePostureConfigDataType = '';
   protected $desiredContainerdConfigType = ContainerdConfig::class;
   protected $desiredContainerdConfigDataType = '';
+  protected $desiredControlPlaneEgressType = ControlPlaneEgress::class;
+  protected $desiredControlPlaneEgressDataType = '';
   protected $desiredControlPlaneEndpointsConfigType = ControlPlaneEndpointsConfig::class;
   protected $desiredControlPlaneEndpointsConfigDataType = '';
   protected $desiredCostManagementConfigType = CostManagementConfig::class;
@@ -126,6 +140,12 @@ class ClusterUpdate extends \Google\Collection
   public $desiredDisableL4LbFirewallReconciliation;
   protected $desiredDnsConfigType = DNSConfig::class;
   protected $desiredDnsConfigDataType = '';
+  /**
+   * Optional. The desired emulated version for the cluster.
+   *
+   * @var string
+   */
+  public $desiredEmulatedVersion;
   /**
    * Enable/Disable Cilium Clusterwide Network Policy for the cluster.
    *
@@ -165,6 +185,22 @@ class ClusterUpdate extends \Google\Collection
   protected $desiredGcfsConfigDataType = '';
   protected $desiredIdentityServiceConfigType = IdentityServiceConfig::class;
   protected $desiredIdentityServiceConfigDataType = '';
+  /**
+   * The desired name of the image to use for this node. This is used to create
+   * clusters using a custom image. NOTE: Set the "desired_node_pool" field as
+   * well.
+   *
+   * @var string
+   */
+  public $desiredImage;
+  /**
+   * The project containing the desired image to use for this node. This is used
+   * to create clusters using a custom image. NOTE: Set the "desired_node_pool"
+   * field as well.
+   *
+   * @var string
+   */
+  public $desiredImageProject;
   /**
    * The desired image type for the node pool. NOTE: Set the "desired_node_pool"
    * field as well.
@@ -210,6 +246,8 @@ class ClusterUpdate extends \Google\Collection
    * @var string
    */
   public $desiredLoggingService;
+  protected $desiredManagedMachineLearningDiagnosticsConfigType = ManagedMachineLearningDiagnosticsConfig::class;
+  protected $desiredManagedMachineLearningDiagnosticsConfigDataType = '';
   protected $desiredManagedOpentelemetryConfigType = ManagedOpenTelemetryConfig::class;
   protected $desiredManagedOpentelemetryConfigDataType = '';
   protected $desiredMasterAuthorizedNetworksConfigType = MasterAuthorizedNetworksConfig::class;
@@ -247,6 +285,8 @@ class ClusterUpdate extends \Google\Collection
   protected $desiredNetworkPerformanceConfigDataType = '';
   protected $desiredNetworkTierConfigType = NetworkTierConfig::class;
   protected $desiredNetworkTierConfigDataType = '';
+  protected $desiredNodeCreationConfigType = NodeCreationConfig::class;
+  protected $desiredNodeCreationConfigDataType = '';
   protected $desiredNodeKubeletConfigType = NodeKubeletConfig::class;
   protected $desiredNodeKubeletConfigDataType = '';
   protected $desiredNodePoolAutoConfigKubeletConfigType = NodeKubeletConfig::class;
@@ -304,8 +344,12 @@ class ClusterUpdate extends \Google\Collection
   protected $desiredReleaseChannelDataType = '';
   protected $desiredResourceUsageExportConfigType = ResourceUsageExportConfig::class;
   protected $desiredResourceUsageExportConfigDataType = '';
+  protected $desiredRollbackSafeUpgradeType = RollbackSafeUpgrade::class;
+  protected $desiredRollbackSafeUpgradeDataType = '';
   protected $desiredSecretManagerConfigType = SecretManagerConfig::class;
   protected $desiredSecretManagerConfigDataType = '';
+  protected $desiredSecretSyncConfigType = SecretSyncConfig::class;
+  protected $desiredSecretSyncConfigDataType = '';
   protected $desiredSecurityPostureConfigType = SecurityPostureConfig::class;
   protected $desiredSecurityPostureConfigDataType = '';
   protected $desiredServiceExternalIpsConfigType = ServiceExternalIPsConfig::class;
@@ -393,6 +437,22 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredAddonsConfig;
   }
   /**
+   * Optional. The desired ambient networking configuration.
+   *
+   * @param AmbientNetworkingConfig $desiredAmbientNetworkingConfig
+   */
+  public function setDesiredAmbientNetworkingConfig(AmbientNetworkingConfig $desiredAmbientNetworkingConfig)
+  {
+    $this->desiredAmbientNetworkingConfig = $desiredAmbientNetworkingConfig;
+  }
+  /**
+   * @return AmbientNetworkingConfig
+   */
+  public function getDesiredAmbientNetworkingConfig()
+  {
+    return $this->desiredAmbientNetworkingConfig;
+  }
+  /**
    * Configuration for limiting anonymous access to all endpoints except the
    * health checks.
    *
@@ -440,6 +500,22 @@ class ClusterUpdate extends \Google\Collection
   public function getDesiredAutoIpamConfig()
   {
     return $this->desiredAutoIpamConfig;
+  }
+  /**
+   * The desired autopilot cluster policies that to be enforced in the cluster.
+   *
+   * @param ClusterPolicyConfig $desiredAutopilotClusterPolicyConfig
+   */
+  public function setDesiredAutopilotClusterPolicyConfig(ClusterPolicyConfig $desiredAutopilotClusterPolicyConfig)
+  {
+    $this->desiredAutopilotClusterPolicyConfig = $desiredAutopilotClusterPolicyConfig;
+  }
+  /**
+   * @return ClusterPolicyConfig
+   */
+  public function getDesiredAutopilotClusterPolicyConfig()
+  {
+    return $this->desiredAutopilotClusterPolicyConfig;
   }
   /**
    * WorkloadPolicyConfig is the configuration related to GCW workload policy
@@ -490,8 +566,12 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredClusterAutoscaling;
   }
   /**
-   * Enable/Disable Compliance Posture features for the cluster.
+   * Deprecated: Compliance Posture is no longer supported. For more details,
+   * see https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-
+   * management-deprecation. Enable/Disable Compliance Posture features for the
+   * cluster.
    *
+   * @deprecated
    * @param CompliancePostureConfig $desiredCompliancePostureConfig
    */
   public function setDesiredCompliancePostureConfig(CompliancePostureConfig $desiredCompliancePostureConfig)
@@ -499,6 +579,7 @@ class ClusterUpdate extends \Google\Collection
     $this->desiredCompliancePostureConfig = $desiredCompliancePostureConfig;
   }
   /**
+   * @deprecated
    * @return CompliancePostureConfig
    */
   public function getDesiredCompliancePostureConfig()
@@ -522,6 +603,22 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredContainerdConfig;
   }
   /**
+   * The desired control plane egress control config for the cluster.
+   *
+   * @param ControlPlaneEgress $desiredControlPlaneEgress
+   */
+  public function setDesiredControlPlaneEgress(ControlPlaneEgress $desiredControlPlaneEgress)
+  {
+    $this->desiredControlPlaneEgress = $desiredControlPlaneEgress;
+  }
+  /**
+   * @return ControlPlaneEgress
+   */
+  public function getDesiredControlPlaneEgress()
+  {
+    return $this->desiredControlPlaneEgress;
+  }
+  /**
    * Control plane endpoints configuration.
    *
    * @param ControlPlaneEndpointsConfig $desiredControlPlaneEndpointsConfig
@@ -538,7 +635,7 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredControlPlaneEndpointsConfig;
   }
   /**
-   * The desired configuration for the fine-grained cost management feature.
+   * The desired configuration for the fine-grained cost allocation feature.
    *
    * @param CostManagementConfig $desiredCostManagementConfig
    */
@@ -573,7 +670,7 @@ class ClusterUpdate extends \Google\Collection
    * The desired datapath provider for the cluster.
    *
    * Accepted values: DATAPATH_PROVIDER_UNSPECIFIED, LEGACY_DATAPATH,
-   * ADVANCED_DATAPATH
+   * ADVANCED_DATAPATH, MIGRATE_TO_ADVANCED_DATAPATH, MIGRATE_TO_LEGACY_DATAPATH
    *
    * @param self::DESIRED_DATAPATH_PROVIDER_* $desiredDatapathProvider
    */
@@ -652,6 +749,22 @@ class ClusterUpdate extends \Google\Collection
   public function getDesiredDnsConfig()
   {
     return $this->desiredDnsConfig;
+  }
+  /**
+   * Optional. The desired emulated version for the cluster.
+   *
+   * @param string $desiredEmulatedVersion
+   */
+  public function setDesiredEmulatedVersion($desiredEmulatedVersion)
+  {
+    $this->desiredEmulatedVersion = $desiredEmulatedVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getDesiredEmulatedVersion()
+  {
+    return $this->desiredEmulatedVersion;
   }
   /**
    * Enable/Disable Cilium Clusterwide Network Policy for the cluster.
@@ -807,6 +920,42 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredIdentityServiceConfig;
   }
   /**
+   * The desired name of the image to use for this node. This is used to create
+   * clusters using a custom image. NOTE: Set the "desired_node_pool" field as
+   * well.
+   *
+   * @param string $desiredImage
+   */
+  public function setDesiredImage($desiredImage)
+  {
+    $this->desiredImage = $desiredImage;
+  }
+  /**
+   * @return string
+   */
+  public function getDesiredImage()
+  {
+    return $this->desiredImage;
+  }
+  /**
+   * The project containing the desired image to use for this node. This is used
+   * to create clusters using a custom image. NOTE: Set the "desired_node_pool"
+   * field as well.
+   *
+   * @param string $desiredImageProject
+   */
+  public function setDesiredImageProject($desiredImageProject)
+  {
+    $this->desiredImageProject = $desiredImageProject;
+  }
+  /**
+   * @return string
+   */
+  public function getDesiredImageProject()
+  {
+    return $this->desiredImageProject;
+  }
+  /**
    * The desired image type for the node pool. NOTE: Set the "desired_node_pool"
    * field as well.
    *
@@ -950,6 +1099,22 @@ class ClusterUpdate extends \Google\Collection
   public function getDesiredLoggingService()
   {
     return $this->desiredLoggingService;
+  }
+  /**
+   * The desired managed machine learning diagnostics configuration.
+   *
+   * @param ManagedMachineLearningDiagnosticsConfig $desiredManagedMachineLearningDiagnosticsConfig
+   */
+  public function setDesiredManagedMachineLearningDiagnosticsConfig(ManagedMachineLearningDiagnosticsConfig $desiredManagedMachineLearningDiagnosticsConfig)
+  {
+    $this->desiredManagedMachineLearningDiagnosticsConfig = $desiredManagedMachineLearningDiagnosticsConfig;
+  }
+  /**
+   * @return ManagedMachineLearningDiagnosticsConfig
+   */
+  public function getDesiredManagedMachineLearningDiagnosticsConfig()
+  {
+    return $this->desiredManagedMachineLearningDiagnosticsConfig;
   }
   /**
    * The desired managed open telemetry configuration.
@@ -1096,6 +1261,22 @@ class ClusterUpdate extends \Google\Collection
   public function getDesiredNetworkTierConfig()
   {
     return $this->desiredNetworkTierConfig;
+  }
+  /**
+   * Optional. The desired NodeCreationConfig for the cluster.
+   *
+   * @param NodeCreationConfig $desiredNodeCreationConfig
+   */
+  public function setDesiredNodeCreationConfig(NodeCreationConfig $desiredNodeCreationConfig)
+  {
+    $this->desiredNodeCreationConfig = $desiredNodeCreationConfig;
+  }
+  /**
+   * @return NodeCreationConfig
+   */
+  public function getDesiredNodeCreationConfig()
+  {
+    return $this->desiredNodeCreationConfig;
   }
   /**
    * The desired node kubelet config for the cluster.
@@ -1415,6 +1596,22 @@ class ClusterUpdate extends \Google\Collection
     return $this->desiredResourceUsageExportConfig;
   }
   /**
+   * Optional. The desired rollback safe upgrade configuration.
+   *
+   * @param RollbackSafeUpgrade $desiredRollbackSafeUpgrade
+   */
+  public function setDesiredRollbackSafeUpgrade(RollbackSafeUpgrade $desiredRollbackSafeUpgrade)
+  {
+    $this->desiredRollbackSafeUpgrade = $desiredRollbackSafeUpgrade;
+  }
+  /**
+   * @return RollbackSafeUpgrade
+   */
+  public function getDesiredRollbackSafeUpgrade()
+  {
+    return $this->desiredRollbackSafeUpgrade;
+  }
+  /**
    * Enable/Disable Secret Manager Config.
    *
    * @param SecretManagerConfig $desiredSecretManagerConfig
@@ -1429,6 +1626,22 @@ class ClusterUpdate extends \Google\Collection
   public function getDesiredSecretManagerConfig()
   {
     return $this->desiredSecretManagerConfig;
+  }
+  /**
+   * Configuration for sync Secret Manager secrets as k8s secrets.
+   *
+   * @param SecretSyncConfig $desiredSecretSyncConfig
+   */
+  public function setDesiredSecretSyncConfig(SecretSyncConfig $desiredSecretSyncConfig)
+  {
+    $this->desiredSecretSyncConfig = $desiredSecretSyncConfig;
+  }
+  /**
+   * @return SecretSyncConfig
+   */
+  public function getDesiredSecretSyncConfig()
+  {
+    return $this->desiredSecretSyncConfig;
   }
   /**
    * Enable/Disable Security Posture API features for the cluster.

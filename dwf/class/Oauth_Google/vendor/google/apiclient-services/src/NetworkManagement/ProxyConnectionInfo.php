@@ -20,7 +20,8 @@ namespace Google\Service\NetworkManagement;
 class ProxyConnectionInfo extends \Google\Model
 {
   /**
-   * URI of the network where connection is proxied.
+   * URI of the VPC network where connection is proxied. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @var string
    */
@@ -83,14 +84,16 @@ class ProxyConnectionInfo extends \Google\Model
    */
   public $protocol;
   /**
-   * Uri of proxy subnet.
+   * URI of the proxy subnet. Format:
+   * `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
    *
    * @var string
    */
   public $subnetUri;
 
   /**
-   * URI of the network where connection is proxied.
+   * URI of the VPC network where connection is proxied. Format:
+   * `projects/{project}/global/networks/{network}`
    *
    * @param string $networkUri
    */
@@ -253,7 +256,8 @@ class ProxyConnectionInfo extends \Google\Model
     return $this->protocol;
   }
   /**
-   * Uri of proxy subnet.
+   * URI of the proxy subnet. Format:
+   * `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
    *
    * @param string $subnetUri
    */

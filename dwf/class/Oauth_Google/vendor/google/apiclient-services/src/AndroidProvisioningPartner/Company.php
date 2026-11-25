@@ -60,18 +60,10 @@ class Company extends \Google\Collection
   protected $googleWorkspaceAccountType = GoogleWorkspaceAccount::class;
   protected $googleWorkspaceAccountDataType = '';
   /**
-   * Input only. The preferred locale of the customer represented as a BCP47
-   * language code. This field is validated on input and requests containing
-   * unsupported language codes will be rejected. Supported language codes:
-   * Arabic (ar) Chinese (Hong Kong) (zh-HK) Chinese (Simplified) (zh-CN)
-   * Chinese (Traditional) (zh-TW) Czech (cs) Danish (da) Dutch (nl) English
-   * (UK) (en-GB) English (US) (en-US) Filipino (fil) Finnish (fi) French (fr)
-   * German (de) Hebrew (iw) Hindi (hi) Hungarian (hu) Indonesian (id) Italian
-   * (it) Japanese (ja) Korean (ko) Norwegian (Bokmal) (no) Polish (pl)
-   * Portuguese (Brazil) (pt-BR) Portuguese (Portugal) (pt-PT) Russian (ru)
-   * Spanish (es) Spanish (Latin America) (es-419) Swedish (sv) Thai (th)
-   * Turkish (tr) Ukrainian (uk) Vietnamese (vi)
+   * Input only. Deprecated: This field is no longer supported and is ignored by
+   * the server.
    *
+   * @deprecated
    * @var string
    */
   public $languageCode;
@@ -94,12 +86,10 @@ class Company extends \Google\Collection
    */
   public $ownerEmails;
   /**
-   * Input only. If set to true, welcome email will not be sent to the customer.
-   * It is recommended to skip the welcome email if devices will be claimed with
-   * additional DEVICE_PROTECTION service, as the customer will receive separate
-   * emails at device claim time. This field is ignored if this is not a Zero-
-   * touch customer.
+   * Input only. Deprecated: This field is no longer supported and is ignored by
+   * the server.
    *
+   * @deprecated
    * @var bool
    */
   public $skipWelcomeEmail;
@@ -179,18 +169,10 @@ class Company extends \Google\Collection
     return $this->googleWorkspaceAccount;
   }
   /**
-   * Input only. The preferred locale of the customer represented as a BCP47
-   * language code. This field is validated on input and requests containing
-   * unsupported language codes will be rejected. Supported language codes:
-   * Arabic (ar) Chinese (Hong Kong) (zh-HK) Chinese (Simplified) (zh-CN)
-   * Chinese (Traditional) (zh-TW) Czech (cs) Danish (da) Dutch (nl) English
-   * (UK) (en-GB) English (US) (en-US) Filipino (fil) Finnish (fi) French (fr)
-   * German (de) Hebrew (iw) Hindi (hi) Hungarian (hu) Indonesian (id) Italian
-   * (it) Japanese (ja) Korean (ko) Norwegian (Bokmal) (no) Polish (pl)
-   * Portuguese (Brazil) (pt-BR) Portuguese (Portugal) (pt-PT) Russian (ru)
-   * Spanish (es) Spanish (Latin America) (es-419) Swedish (sv) Thai (th)
-   * Turkish (tr) Ukrainian (uk) Vietnamese (vi)
+   * Input only. Deprecated: This field is no longer supported and is ignored by
+   * the server.
    *
+   * @deprecated
    * @param string $languageCode
    */
   public function setLanguageCode($languageCode)
@@ -198,6 +180,7 @@ class Company extends \Google\Collection
     $this->languageCode = $languageCode;
   }
   /**
+   * @deprecated
    * @return string
    */
   public function getLanguageCode()
@@ -243,12 +226,10 @@ class Company extends \Google\Collection
     return $this->ownerEmails;
   }
   /**
-   * Input only. If set to true, welcome email will not be sent to the customer.
-   * It is recommended to skip the welcome email if devices will be claimed with
-   * additional DEVICE_PROTECTION service, as the customer will receive separate
-   * emails at device claim time. This field is ignored if this is not a Zero-
-   * touch customer.
+   * Input only. Deprecated: This field is no longer supported and is ignored by
+   * the server.
    *
+   * @deprecated
    * @param bool $skipWelcomeEmail
    */
   public function setSkipWelcomeEmail($skipWelcomeEmail)
@@ -256,6 +237,7 @@ class Company extends \Google\Collection
     $this->skipWelcomeEmail = $skipWelcomeEmail;
   }
   /**
+   * @deprecated
    * @return bool
    */
   public function getSkipWelcomeEmail()

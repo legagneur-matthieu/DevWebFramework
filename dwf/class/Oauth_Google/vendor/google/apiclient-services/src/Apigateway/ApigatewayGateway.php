@@ -20,6 +20,20 @@ namespace Google\Service\Apigateway;
 class ApigatewayGateway extends \Google\Model
 {
   /**
+   * Indicates that the service has not resolved a mode. Every gateway returned
+   * by `GetGateway` and `ListGateways` carries a resolved mode, so this value
+   * should not be returned under normal circumstances.
+   */
+  public const EFFECTIVE_STREAMING_MODE_EFFECTIVE_STREAMING_MODE_UNSPECIFIED = 'EFFECTIVE_STREAMING_MODE_UNSPECIFIED';
+  /**
+   * Indicates that the gateway does not support streaming.
+   */
+  public const EFFECTIVE_STREAMING_MODE_EFFECTIVE_STREAMING_MODE_DISABLED = 'EFFECTIVE_STREAMING_MODE_DISABLED';
+  /**
+   * Indicates that the gateway supports streaming.
+   */
+  public const EFFECTIVE_STREAMING_MODE_EFFECTIVE_STREAMING_MODE_ENABLED = 'EFFECTIVE_STREAMING_MODE_ENABLED';
+  /**
    * Gateway does not have a state yet.
    */
   public const STATE_STATE_UNSPECIFIED = 'STATE_UNSPECIFIED';
@@ -44,6 +58,26 @@ class ApigatewayGateway extends \Google\Model
    */
   public const STATE_UPDATING = 'UPDATING';
   /**
+   * Lets the service select the streaming mode.
+   */
+  public const STREAMING_MODE_STREAMING_MODE_UNSPECIFIED = 'STREAMING_MODE_UNSPECIFIED';
+  /**
+   * Enables streaming. The gateway supports Server-Sent Events (SSE), HTTP/2
+   * streaming, HTTP chunked transfer, WebSockets, and gRPC bidirectional
+   * streaming. The API config's backend `deadline` field governs how long a
+   * request (unary or streaming) may run. Enabling streaming on a gateway does
+   * not change how the `deadline` field behaves on an SSE or chunked-transfer
+   * path. The deadline remains a wall-clock bound on the complete response, so
+   * a stream is cut once the deadline elapses regardless of how much data it is
+   * sending. The default is 15 seconds and the maximum is 3,600 seconds. On
+   * gRPC streaming and WebSockets, `deadline` bounds the gap between messages
+   * instead: default 300 seconds; set `deadline` to change it, up to 3,600
+   * seconds. On WebSockets, a `deadline` of less than 300 seconds is ignored
+   * and a 300-second minimum applies. The maximum total request duration is
+   * always 3,600 seconds, not configurable.
+   */
+  public const STREAMING_MODE_STREAMING_MODE_ENABLED = 'STREAMING_MODE_ENABLED';
+  /**
    * Required. Resource name of the API Config for this Gateway. Format:
    * projects/{project}/locations/global/apis/{api}/configs/{apiConfig}
    *
@@ -57,8 +91,7 @@ class ApigatewayGateway extends \Google\Model
    */
   public $createTime;
   /**
-   * Output only. The default API Gateway host name of the form
-   * `{gateway_id}-{hash}.{region_code}.gateway.dev`.
+   * Output only. The default hostname that serves traffic for this Gateway.
    *
    * @var string
    */
@@ -70,6 +103,15 @@ class ApigatewayGateway extends \Google\Model
    */
   public $displayName;
   /**
+   * Output only. The streaming mode this gateway is actually served with, which
+   * the service resolves at creation from `streaming_mode`, the referenced API
+   * Config, and the platform default at the time. Read this rather than
+   * `streaming_mode` to determine whether a gateway supports streaming.
+   *
+   * @var string
+   */
+  public $effectiveStreamingMode;
+  /**
    * Optional. Resource labels to represent user-provided metadata. Refer to
    * cloud documentation on labels for more details.
    * https://cloud.google.com/compute/docs/labeling-resources
@@ -78,7 +120,7 @@ class ApigatewayGateway extends \Google\Model
    */
   public $labels;
   /**
-   * Output only. Resource name of the Gateway. Format:
+   * Identifier. Resource name of the Gateway. Format:
    * projects/{project}/locations/{location}/gateways/{gateway}
    *
    * @var string
@@ -90,6 +132,16 @@ class ApigatewayGateway extends \Google\Model
    * @var string
    */
   public $state;
+  /**
+   * Optional. Immutable. Requests streaming for a new gateway. An attempt to
+   * change it on update is rejected. If unset, the service selects the mode.
+   * This field records only what was requested and is never modified by the
+   * service; read `effective_streaming_mode` for the mode the gateway is served
+   * with.
+   *
+   * @var string
+   */
+  public $streamingMode;
   /**
    * Output only. Updated time.
    *
@@ -131,8 +183,7 @@ class ApigatewayGateway extends \Google\Model
     return $this->createTime;
   }
   /**
-   * Output only. The default API Gateway host name of the form
-   * `{gateway_id}-{hash}.{region_code}.gateway.dev`.
+   * Output only. The default hostname that serves traffic for this Gateway.
    *
    * @param string $defaultHostname
    */
@@ -164,6 +215,28 @@ class ApigatewayGateway extends \Google\Model
     return $this->displayName;
   }
   /**
+   * Output only. The streaming mode this gateway is actually served with, which
+   * the service resolves at creation from `streaming_mode`, the referenced API
+   * Config, and the platform default at the time. Read this rather than
+   * `streaming_mode` to determine whether a gateway supports streaming.
+   *
+   * Accepted values: EFFECTIVE_STREAMING_MODE_UNSPECIFIED,
+   * EFFECTIVE_STREAMING_MODE_DISABLED, EFFECTIVE_STREAMING_MODE_ENABLED
+   *
+   * @param self::EFFECTIVE_STREAMING_MODE_* $effectiveStreamingMode
+   */
+  public function setEffectiveStreamingMode($effectiveStreamingMode)
+  {
+    $this->effectiveStreamingMode = $effectiveStreamingMode;
+  }
+  /**
+   * @return self::EFFECTIVE_STREAMING_MODE_*
+   */
+  public function getEffectiveStreamingMode()
+  {
+    return $this->effectiveStreamingMode;
+  }
+  /**
    * Optional. Resource labels to represent user-provided metadata. Refer to
    * cloud documentation on labels for more details.
    * https://cloud.google.com/compute/docs/labeling-resources
@@ -182,7 +255,7 @@ class ApigatewayGateway extends \Google\Model
     return $this->labels;
   }
   /**
-   * Output only. Resource name of the Gateway. Format:
+   * Identifier. Resource name of the Gateway. Format:
    * projects/{project}/locations/{location}/gateways/{gateway}
    *
    * @param string $name
@@ -216,6 +289,28 @@ class ApigatewayGateway extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * Optional. Immutable. Requests streaming for a new gateway. An attempt to
+   * change it on update is rejected. If unset, the service selects the mode.
+   * This field records only what was requested and is never modified by the
+   * service; read `effective_streaming_mode` for the mode the gateway is served
+   * with.
+   *
+   * Accepted values: STREAMING_MODE_UNSPECIFIED, STREAMING_MODE_ENABLED
+   *
+   * @param self::STREAMING_MODE_* $streamingMode
+   */
+  public function setStreamingMode($streamingMode)
+  {
+    $this->streamingMode = $streamingMode;
+  }
+  /**
+   * @return self::STREAMING_MODE_*
+   */
+  public function getStreamingMode()
+  {
+    return $this->streamingMode;
   }
   /**
    * Output only. Updated time.

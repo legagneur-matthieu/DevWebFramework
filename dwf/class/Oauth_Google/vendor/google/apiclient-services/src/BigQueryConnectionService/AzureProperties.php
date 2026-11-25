@@ -31,6 +31,8 @@ class AzureProperties extends \Google\Model
    * @var string
    */
   public $clientId;
+  protected $crossCloudCacheOptionsType = CrossCloudCacheOptions::class;
+  protected $crossCloudCacheOptionsDataType = '';
   /**
    * The id of customer's directory that host the data.
    *
@@ -65,6 +67,24 @@ class AzureProperties extends \Google\Model
    * @var string
    */
   public $redirectUri;
+  /**
+   * Output only. The email address of the Google-owned service account that
+   * represents the connection's identity. Grant IAM roles to this service
+   * account, for example, to let the connection resolve the Service Directory
+   * service in `AzureProperties.service_directory_service`.
+   *
+   * @var string
+   */
+  public $serviceAccountId;
+  /**
+   * Optional. The service directory resource name for routing traffic over a
+   * private network connection through Cross-Cloud Interconnect, in the format
+   * `projects/{project_id}/locations/{location}/namespaces/{namespace_id}/servi
+   * ces/{service_id}`.
+   *
+   * @var string
+   */
+  public $serviceDirectoryService;
 
   /**
    * Output only. The name of the Azure Active Directory Application.
@@ -97,6 +117,23 @@ class AzureProperties extends \Google\Model
   public function getClientId()
   {
     return $this->clientId;
+  }
+  /**
+   * Optional. Configuration options for cross-cloud caching of data and
+   * metadata files.
+   *
+   * @param CrossCloudCacheOptions $crossCloudCacheOptions
+   */
+  public function setCrossCloudCacheOptions(CrossCloudCacheOptions $crossCloudCacheOptions)
+  {
+    $this->crossCloudCacheOptions = $crossCloudCacheOptions;
+  }
+  /**
+   * @return CrossCloudCacheOptions
+   */
+  public function getCrossCloudCacheOptions()
+  {
+    return $this->crossCloudCacheOptions;
   }
   /**
    * The id of customer's directory that host the data.
@@ -181,6 +218,44 @@ class AzureProperties extends \Google\Model
   public function getRedirectUri()
   {
     return $this->redirectUri;
+  }
+  /**
+   * Output only. The email address of the Google-owned service account that
+   * represents the connection's identity. Grant IAM roles to this service
+   * account, for example, to let the connection resolve the Service Directory
+   * service in `AzureProperties.service_directory_service`.
+   *
+   * @param string $serviceAccountId
+   */
+  public function setServiceAccountId($serviceAccountId)
+  {
+    $this->serviceAccountId = $serviceAccountId;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceAccountId()
+  {
+    return $this->serviceAccountId;
+  }
+  /**
+   * Optional. The service directory resource name for routing traffic over a
+   * private network connection through Cross-Cloud Interconnect, in the format
+   * `projects/{project_id}/locations/{location}/namespaces/{namespace_id}/servi
+   * ces/{service_id}`.
+   *
+   * @param string $serviceDirectoryService
+   */
+  public function setServiceDirectoryService($serviceDirectoryService)
+  {
+    $this->serviceDirectoryService = $serviceDirectoryService;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceDirectoryService()
+  {
+    return $this->serviceDirectoryService;
   }
 }
 

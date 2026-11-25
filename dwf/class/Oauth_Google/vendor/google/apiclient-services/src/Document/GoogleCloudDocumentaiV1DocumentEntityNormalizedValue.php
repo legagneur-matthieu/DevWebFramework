@@ -47,8 +47,8 @@ class GoogleCloudDocumentaiV1DocumentEntityNormalizedValue extends \Google\Model
   protected $moneyValueType = GoogleTypeMoney::class;
   protected $moneyValueDataType = '';
   /**
-   * A signature - a graphical representation of a person's name, often used to
-   * sign a document.
+   * A signature, which is a graphical representation of a person's name, often
+   * used to sign a document.
    *
    * @var bool
    */
@@ -185,8 +185,8 @@ class GoogleCloudDocumentaiV1DocumentEntityNormalizedValue extends \Google\Model
     return $this->moneyValue;
   }
   /**
-   * A signature - a graphical representation of a person's name, often used to
-   * sign a document.
+   * A signature, which is a graphical representation of a person's name, often
+   * used to sign a document.
    *
    * @param bool $signatureValue
    */

@@ -48,6 +48,8 @@ class DailyMetricTimeSeries extends \Google\Model
   public const DAILY_METRIC_BUSINESS_IMPRESSIONS_MOBILE_SEARCH = 'BUSINESS_IMPRESSIONS_MOBILE_SEARCH';
   /**
    * The number of message conversations received on the business profile.
+   *
+   * @deprecated
    */
   public const DAILY_METRIC_BUSINESS_CONVERSATIONS = 'BUSINESS_CONVERSATIONS';
   /**
@@ -63,6 +65,11 @@ class DailyMetricTimeSeries extends \Google\Model
    * The number of times the business profile website was clicked.
    */
   public const DAILY_METRIC_WEBSITE_CLICKS = 'WEBSITE_CLICKS';
+  /**
+   * The number of times the business profile messaging (e.g. WhatsApp) button
+   * was clicked.
+   */
+  public const DAILY_METRIC_MESSAGING_CLICKS = 'MESSAGING_CLICKS';
   /**
    * The number of bookings made from the business profile via Reserve with
    * Google.
@@ -97,7 +104,7 @@ class DailyMetricTimeSeries extends \Google\Model
    * Accepted values: DAILY_METRIC_UNKNOWN, BUSINESS_IMPRESSIONS_DESKTOP_MAPS,
    * BUSINESS_IMPRESSIONS_DESKTOP_SEARCH, BUSINESS_IMPRESSIONS_MOBILE_MAPS,
    * BUSINESS_IMPRESSIONS_MOBILE_SEARCH, BUSINESS_CONVERSATIONS,
-   * BUSINESS_DIRECTION_REQUESTS, CALL_CLICKS, WEBSITE_CLICKS,
+   * BUSINESS_DIRECTION_REQUESTS, CALL_CLICKS, WEBSITE_CLICKS, MESSAGING_CLICKS,
    * BUSINESS_BOOKINGS, BUSINESS_FOOD_ORDERS, BUSINESS_FOOD_MENU_CLICKS
    *
    * @param self::DAILY_METRIC_* $dailyMetric

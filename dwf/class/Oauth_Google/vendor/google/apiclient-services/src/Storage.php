@@ -53,7 +53,6 @@ class Storage extends \Google\Service
   public $anywhereCaches;
   public $bucketAccessControls;
   public $buckets;
-  public $channels;
   public $defaultObjectAccessControls;
   public $folders;
   public $managedFolders;
@@ -63,6 +62,7 @@ class Storage extends \Google\Service
   public $operations;
   public $projects_hmacKeys;
   public $projects_serviceAccount;
+  public $rapidCaches;
   public $rootUrlTemplate;
 
   /**
@@ -144,21 +144,6 @@ class Storage extends \Google\Service
                 'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-              ],
-            ],'pause' => [
-              'path' => 'b/{bucket}/anywhereCaches/{anywhereCacheId}/pause',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'bucket' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-                'anywhereCacheId' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
                 ],
               ],
             ],'resume' => [
@@ -629,20 +614,6 @@ class Storage extends \Google\Service
           ]
         ]
     );
-    $this->channels = new Storage\Resource\Channels(
-        $this,
-        $this->serviceName,
-        'channels',
-        [
-          'methods' => [
-            'stop' => [
-              'path' => 'channels/stop',
-              'httpMethod' => 'POST',
-              'parameters' => [],
-            ],
-          ]
-        ]
-    );
     $this->defaultObjectAccessControls = new Storage\Resource\DefaultObjectAccessControls(
         $this,
         $this->serviceName,
@@ -774,6 +745,29 @@ class Storage extends \Google\Service
             'delete' => [
               'path' => 'b/{bucket}/folders/{folder}',
               'httpMethod' => 'DELETE',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'folder' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'ifMetagenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifMetagenerationNotMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'deleteRecursive' => [
+              'path' => 'b/{bucket}/folders/{folder}/deleteRecursive',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'bucket' => [
                   'location' => 'path',
@@ -1048,6 +1042,29 @@ class Storage extends \Google\Service
                   'required' => true,
                 ],
                 'userProject' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'update' => [
+              'path' => 'b/{bucket}/managedFolders/{managedFolder}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'managedFolder' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'ifMetagenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifMetagenerationNotMatch' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -1333,6 +1350,11 @@ class Storage extends \Google\Service
                 'destinationPredefinedAcl' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'dropContextGroups' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
                 'ifGenerationMatch' => [
                   'location' => 'query',
@@ -1852,6 +1874,11 @@ class Storage extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'dropContextGroups' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
                 'ifGenerationMatch' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -2008,54 +2035,32 @@ class Storage extends \Google\Service
                   'type' => 'string',
                 ],
               ],
-            ],'watchAll' => [
-              'path' => 'b/{bucket}/o/watch',
-              'httpMethod' => 'POST',
+            ],'viewFullContext' => [
+              'path' => 'b/{bucket}/o/{object}/viewFullContext',
+              'httpMethod' => 'GET',
               'parameters' => [
                 'bucket' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
                 ],
-                'delimiter' => [
+                'object' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'contextKey' => [
                   'location' => 'query',
                   'type' => 'string',
+                  'required' => true,
                 ],
-                'endOffset' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'includeTrailingDelimiter' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
-                ],
-                'maxResults' => [
-                  'location' => 'query',
-                  'type' => 'integer',
-                ],
-                'pageToken' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'prefix' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'projection' => [
-                  'location' => 'query',
-                  'type' => 'string',
-                ],
-                'startOffset' => [
+                'generation' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
                 'userProject' => [
                   'location' => 'query',
                   'type' => 'string',
-                ],
-                'versions' => [
-                  'location' => 'query',
-                  'type' => 'boolean',
                 ],
               ],
             ],
@@ -2273,6 +2278,89 @@ class Storage extends \Google\Service
                 'userProject' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->rapidCaches = new Storage\Resource\RapidCaches(
+        $this,
+        $this->serviceName,
+        'rapidCaches',
+        [
+          'methods' => [
+            'disable' => [
+              'path' => 'b/{bucket}/rapidCaches/{rapidCacheId}/disable',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rapidCacheId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'b/{bucket}/rapidCaches/{rapidCacheId}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rapidCacheId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'insert' => [
+              'path' => 'b/{bucket}/rapidCaches',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'b/{bucket}/rapidCaches',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'update' => [
+              'path' => 'b/{bucket}/rapidCaches/{rapidCacheId}',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'rapidCacheId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

@@ -30,7 +30,7 @@ use Google\Service\PaymentsResellerSubscription\SubscriptionLineItem;
 class PartnersSubscriptionsLineItems extends \Google\Service\Resource
 {
   /**
-   * Updates a line item of a subscription. It should be autenticated with a
+   * Updates a line item of a subscription. It should be authenticated with a
    * service account. (lineItems.patch)
    *
    * @param string $name Identifier. Resource name of the line item. Format:
@@ -38,6 +38,8 @@ class PartnersSubscriptionsLineItems extends \Google\Service\Resource
    * @param SubscriptionLineItem $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string requestId Optional. An idempotency ID for the request. A
+   * random UUID is recommended. Restricted to 36 ASCII characters.
    * @opt_param string updateMask Required. The list of fields to update. Only a
    * limited set of fields can be updated. The allowed fields are the following: -
    * `product_payload.googleHomePayload.googleStructureId`

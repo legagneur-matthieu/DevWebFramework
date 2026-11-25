@@ -17,6 +17,9 @@
 
 namespace Google\Service\Aiplatform\Resource;
 
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1AskContextsRequest;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1AskContextsResponse;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1AsyncRetrieveContextsRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1AugmentPromptRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1AugmentPromptResponse;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1CorroborateContentRequest;
@@ -27,11 +30,15 @@ use Google\Service\Aiplatform\GoogleCloudAiplatformV1EvaluateInstancesRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1EvaluateInstancesResponse;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateInstanceRubricsRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateInstanceRubricsResponse;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateLossClustersRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateSyntheticDataRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateSyntheticDataResponse;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateUserScenariosRequest;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1GenerateUserScenariosResponse;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1RagEngineConfig;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1RetrieveContextsRequest;
 use Google\Service\Aiplatform\GoogleCloudAiplatformV1RetrieveContextsResponse;
+use Google\Service\Aiplatform\GoogleCloudAiplatformV1SemanticGovernancePolicyEngine;
 use Google\Service\Aiplatform\GoogleCloudLocationListLocationsResponse;
 use Google\Service\Aiplatform\GoogleCloudLocationLocation;
 use Google\Service\Aiplatform\GoogleLongrunningOperation;
@@ -46,6 +53,41 @@ use Google\Service\Aiplatform\GoogleLongrunningOperation;
  */
 class ProjectsLocations extends \Google\Service\Resource
 {
+  /**
+   * Agentic Retrieval Ask API for RAG. (locations.askContexts)
+   *
+   * @param string $parent Required. The resource name of the Location from which
+   * to retrieve RagContexts. The users must have permission to make a call in the
+   * project. Format: `projects/{project}/locations/{location}`.
+   * @param GoogleCloudAiplatformV1AskContextsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleCloudAiplatformV1AskContextsResponse
+   * @throws \Google\Service\Exception
+   */
+  public function askContexts($parent, GoogleCloudAiplatformV1AskContextsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('askContexts', [$params], GoogleCloudAiplatformV1AskContextsResponse::class);
+  }
+  /**
+   * Asynchronous API to retrieves relevant contexts for a query.
+   * (locations.asyncRetrieveContexts)
+   *
+   * @param string $parent Required. The resource name of the Location from which
+   * to retrieve RagContexts. The users must have permission to make a call in the
+   * project. Format: `projects/{project}/locations/{location}`.
+   * @param GoogleCloudAiplatformV1AsyncRetrieveContextsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function asyncRetrieveContexts($parent, GoogleCloudAiplatformV1AsyncRetrieveContextsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('asyncRetrieveContexts', [$params], GoogleLongrunningOperation::class);
+  }
   /**
    * Given an input prompt, it returns augmented prompt from vertex rag store to
    * guide LLM towards generating grounded responses. (locations.augmentPrompt)
@@ -153,11 +195,31 @@ class ProjectsLocations extends \Google\Service\Resource
     return $this->call('generateInstanceRubrics', [$params], GoogleCloudAiplatformV1GenerateInstanceRubricsResponse::class);
   }
   /**
-   * Generates synthetic data based on the provided configuration.
+   * Generates loss clusters from evaluation results. This is a statelss API
+   * method that would not modify the EvaluationSet resource.
+   * (locations.generateLossClusters)
+   *
+   * @param string $location Required. The resource name of the Location. Format:
+   * `projects/{project}/locations/{location}`
+   * @param GoogleCloudAiplatformV1GenerateLossClustersRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function generateLossClusters($location, GoogleCloudAiplatformV1GenerateLossClustersRequest $postBody, $optParams = [])
+  {
+    $params = ['location' => $location, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('generateLossClusters', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
+   * Generates synthetic (artificial) data based on a description
    * (locations.generateSyntheticData)
    *
-   * @param string $location Required. The resource name of the Location to run
-   * the job. Format: `projects/{project}/locations/{location}`
+   * @param string $location Required. The geographic location where the synthetic
+   * data generation request is processed. This should be in the format
+   * `projects/{project}/locations/{location}`. For example, `projects/my-
+   * project/locations/us-central1`.
    * @param GoogleCloudAiplatformV1GenerateSyntheticDataRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudAiplatformV1GenerateSyntheticDataResponse
@@ -168,6 +230,23 @@ class ProjectsLocations extends \Google\Service\Resource
     $params = ['location' => $location, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('generateSyntheticData', [$params], GoogleCloudAiplatformV1GenerateSyntheticDataResponse::class);
+  }
+  /**
+   * Generates user scenarios for agent evaluation.
+   * (locations.generateUserScenarios)
+   *
+   * @param string $location Required. The resource name of the Location to run
+   * the job. Format: `projects/{project}/locations/{location}`
+   * @param GoogleCloudAiplatformV1GenerateUserScenariosRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return GoogleCloudAiplatformV1GenerateUserScenariosResponse
+   * @throws \Google\Service\Exception
+   */
+  public function generateUserScenarios($location, GoogleCloudAiplatformV1GenerateUserScenariosRequest $postBody, $optParams = [])
+  {
+    $params = ['location' => $location, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('generateUserScenarios', [$params], GoogleCloudAiplatformV1GenerateUserScenariosResponse::class);
   }
   /**
    * Gets information about a location. (locations.get)
@@ -199,16 +278,44 @@ class ProjectsLocations extends \Google\Service\Resource
     return $this->call('getRagEngineConfig', [$params], GoogleCloudAiplatformV1RagEngineConfig::class);
   }
   /**
-   * Lists information about the supported locations for this service.
-   * (locations.listProjectsLocations)
+   * Gets a SemanticGovernancePolicyEngine. A SemanticGovernancePolicyEngine is a
+   * singleton resource that is created when its parent is created, and deleted
+   * when its parent is deleted. This method retrieves the current state of the
+   * Semantic Governance Policy Engine.
+   * (locations.getSemanticGovernancePolicyEngine)
+   *
+   * @param string $name Required. The resource name of the
+   * SemanticGovernancePolicyEngine to retrieve. Format:
+   * projects/{project}/locations/{location}/semanticGovernancePolicyEngine
+   * @param array $optParams Optional parameters.
+   * @return GoogleCloudAiplatformV1SemanticGovernancePolicyEngine
+   * @throws \Google\Service\Exception
+   */
+  public function getSemanticGovernancePolicyEngine($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getSemanticGovernancePolicyEngine', [$params], GoogleCloudAiplatformV1SemanticGovernancePolicyEngine::class);
+  }
+  /**
+   * Lists information about the supported locations for this service. This method
+   * lists locations based on the resource scope provided in the
+   * ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+   * the method lists the public locations available to all projects. * **Project-
+   * specific locations**: If `name` follows the format `projects/{project}`, the
+   * method lists locations visible to that specific project. This includes
+   * public, private, or other project-specific locations enabled for the project.
+   * For gRPC and client library implementations, the resource name is passed as
+   * the `name` field. For direct service calls, the resource name is incorporated
+   * into the request path based on the specific service implementation and
+   * version. (locations.listProjectsLocations)
    *
    * @param string $name The resource that owns the locations collection, if
    * applicable.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string extraLocationTypes Optional. Do not use this field. It is
-   * unsupported and is ignored unless explicitly documented otherwise. This is
-   * primarily for internal usage.
+   * @opt_param string extraLocationTypes Optional. Do not use this field unless
+   * explicitly documented otherwise. This is primarily for internal usage.
    * @opt_param string filter A filter to narrow down results to a preferred
    * subset. The filtering language accepts strings like `"displayName=tokyo"`,
    * and is documented in more detail in [AIP-160](https://google.aip.dev/160).
@@ -257,6 +364,31 @@ class ProjectsLocations extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('updateRagEngineConfig', [$params], GoogleLongrunningOperation::class);
+  }
+  /**
+   * Updates a SemanticGovernancePolicyEngine. This method performs an upsert
+   * operation. If the SemanticGovernancePolicyEngine resource does not exist, it
+   * will be created. Otherwise, it will be updated.
+   * (locations.updateSemanticGovernancePolicyEngine)
+   *
+   * @param string $name Identifier. The resource name of the
+   * SemanticGovernancePolicyEngine. Format:
+   * projects/{project}/locations/{location}/semanticGovernancePolicyEngine
+   * @param GoogleCloudAiplatformV1SemanticGovernancePolicyEngine $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Optional. Specifies the fields to be overwritten
+   * in the SemanticGovernancePolicyEngine resource by the update. The fields
+   * specified in the update_mask are relative to the resource itself. If no
+   * update_mask is provided, all fields are overwritten.
+   * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
+   */
+  public function updateSemanticGovernancePolicyEngine($name, GoogleCloudAiplatformV1SemanticGovernancePolicyEngine $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updateSemanticGovernancePolicyEngine', [$params], GoogleLongrunningOperation::class);
   }
 }
 

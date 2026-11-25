@@ -29,6 +29,8 @@ class AllocateIdsRequest extends \Google\Collection
   public $databaseId;
   protected $keysType = Key::class;
   protected $keysDataType = 'array';
+  protected $requestOptionsType = RequestOptions::class;
+  protected $requestOptionsDataType = '';
 
   /**
    * The ID of the database against which to make the request. '(default)' is
@@ -63,6 +65,22 @@ class AllocateIdsRequest extends \Google\Collection
   public function getKeys()
   {
     return $this->keys;
+  }
+  /**
+   * Optional. The options for this request.
+   *
+   * @param RequestOptions $requestOptions
+   */
+  public function setRequestOptions(RequestOptions $requestOptions)
+  {
+    $this->requestOptions = $requestOptions;
+  }
+  /**
+   * @return RequestOptions
+   */
+  public function getRequestOptions()
+  {
+    return $this->requestOptions;
   }
 }
 

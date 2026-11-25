@@ -39,8 +39,8 @@ use Google\Service\Pubsub\UpdateTopicRequest;
 class ProjectsTopics extends \Google\Service\Resource
 {
   /**
-   * Creates the given topic with the given name. See the [resource name rules]
-   * (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+   * Creates the given topic with the given name. See the [resource name rules](
+   * https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
    * (topics.create)
    *
    * @param string $name Required. Identifier. The name of the topic. It must have
@@ -67,8 +67,8 @@ class ProjectsTopics extends \Google\Service\Resource
    * subscriptions. Existing subscriptions to this topic are not deleted, but
    * their `topic` field is set to `_deleted-topic_`. (topics.delete)
    *
-   * @param string $topic Required. Identifier. Name of the topic to delete.
-   * Format is `projects/{project}/topics/{topic}`.
+   * @param string $topic Required. Name of the topic to delete. Format is
+   * `projects/{project}/topics/{topic}`.
    * @param array $optParams Optional parameters.
    * @return PubsubEmpty
    * @throws \Google\Service\Exception
@@ -82,8 +82,8 @@ class ProjectsTopics extends \Google\Service\Resource
   /**
    * Gets the configuration of a topic. (topics.get)
    *
-   * @param string $topic Required. Identifier. The name of the topic to get.
-   * Format is `projects/{project}/topics/{topic}`.
+   * @param string $topic Required. The name of the topic to get. Format is
+   * `projects/{project}/topics/{topic}`.
    * @param array $optParams Optional parameters.
    * @return Topic
    * @throws \Google\Service\Exception
@@ -128,8 +128,8 @@ class ProjectsTopics extends \Google\Service\Resource
   /**
    * Lists matching topics. (topics.listProjectsTopics)
    *
-   * @param string $project Required. Identifier. The name of the project in which
-   * to list topics. Format is `projects/{project-id}`.
+   * @param string $project Required. The name of the project in which to list
+   * topics. Format is `projects/{project-id}`.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int pageSize Optional. Maximum number of topics to return.
@@ -171,8 +171,8 @@ class ProjectsTopics extends \Google\Service\Resource
    * Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does
    * not exist. (topics.publish)
    *
-   * @param string $topic Required. Identifier. The messages in the request will
-   * be published on this topic. Format is `projects/{project}/topics/{topic}`.
+   * @param string $topic Required. The messages in the request will be published
+   * on this topic. Format is `projects/{project}/topics/{topic}`.
    * @param PublishRequest $postBody
    * @param array $optParams Optional parameters.
    * @return PublishResponse

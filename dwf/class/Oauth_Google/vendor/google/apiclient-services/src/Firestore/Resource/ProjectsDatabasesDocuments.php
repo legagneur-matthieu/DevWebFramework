@@ -141,6 +141,28 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * document. Optional. If not specified, an ID will be assigned by the service.
    * @opt_param string mask.fieldPaths The list of field paths in the mask. See
    * Document.fields for a field path syntax reference.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @return Document
    * @throws \Google\Service\Exception
    */
@@ -163,6 +185,28 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * @opt_param string currentDocument.updateTime When set, the target document
    * must exist and have been last updated at that time. Timestamp must be
    * microsecond aligned.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @return FirestoreEmpty
    * @throws \Google\Service\Exception
    */
@@ -202,6 +246,28 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * time. This must be a microsecond precision timestamp within the past one
    * hour, or if Point-in-Time Recovery is enabled, can additionally be a whole
    * minute timestamp within the past 7 days.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @opt_param string transaction Reads the document in a transaction.
    * @return Document
    * @throws \Google\Service\Exception
@@ -242,6 +308,34 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * be a microsecond precision timestamp within the past one hour, or if Point-
    * in-Time Recovery is enabled, can additionally be a whole minute timestamp
    * within the past 7 days.
+   * @opt_param bool recursive Optional. If the list should recursively include
+   * all documents nested under the parent at any level. If the request specifies
+   * a `collection_id`, then the list will include all nested documents in the
+   * collection under the parent. This is optional, and when not provided,
+   * Firestore will only list documents nested immediately under the parent.
+   * Requests with `recursive` may not specify `show_missing`.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @opt_param bool showMissing If the list should show missing documents. A
    * document is missing if it does not exist, but there are sub-documents nested
    * underneath it. When true, such missing documents will be returned with a key
@@ -265,7 +359,9 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * @param string $parent Required. The parent document. In the format:
    * `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
    * For example: `projects/my-project/databases/my-
-   * database/documents/chatrooms/my-chatroom`
+   * database/documents/chatrooms/my-chatroom` Use
+   * `projects/{project_id}/databases/{database_id}/documents` to list top-level
+   * collections.
    * @param ListCollectionIdsRequest $postBody
    * @param array $optParams Optional parameters.
    * @return ListCollectionIdsResponse
@@ -307,6 +403,34 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * be a microsecond precision timestamp within the past one hour, or if Point-
    * in-Time Recovery is enabled, can additionally be a whole minute timestamp
    * within the past 7 days.
+   * @opt_param bool recursive Optional. If the list should recursively include
+   * all documents nested under the parent at any level. If the request specifies
+   * a `collection_id`, then the list will include all nested documents in the
+   * collection under the parent. This is optional, and when not provided,
+   * Firestore will only list documents nested immediately under the parent.
+   * Requests with `recursive` may not specify `show_missing`.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @opt_param bool showMissing If the list should show missing documents. A
    * document is missing if it does not exist, but there are sub-documents nested
    * underneath it. When true, such missing documents will be returned with a key
@@ -375,6 +499,28 @@ class ProjectsDatabasesDocuments extends \Google\Service\Resource
    * microsecond aligned.
    * @opt_param string mask.fieldPaths The list of field paths in the mask. See
    * Document.fields for a field path syntax reference.
+   * @opt_param string requestOptions.requestTags Optional. The request tags for
+   * the request. Request tags are user-provided strings used for usage
+   * monitoring, cost management, and observability. Callers can associate custom
+   * application context (such as component, microservice, feature name, or
+   * operation type) with database requests. These tags are collected and
+   * aggregated in usage and monitoring reports, allowing billable operations and
+   * usage metrics to be sliced and analyzed by tag. These tags *only* show up in
+   * monitoring and are visible in administrative operations (such as usage
+   * reports). They do not affect data storage, query semantics, or request
+   * execution. Cardinality and Best Practices: - Request tags are most effective
+   * when using a bounded set of distinct values (e.g., fewer than 100 distinct
+   * tags across an entire database). Using a large number of distinct tags may
+   * result in tags being omitted from top usage dashboards. - Use structured
+   * identifiers (for example: `app=cart`, `env=prod`, `service=checkout`) and
+   * avoid high-cardinality values such as UUIDs, request IDs, timestamps, user
+   * IDs, or document keys. - Do not include sensitive data or personally
+   * identifiable information (PII) in request tags, as they show up in
+   * administrative monitoring. The tags are processed as follows: - Leading and
+   * trailing whitespace is trimmed. - Empty tags (after trimming) are filtered
+   * out. - Truncated to a maximum of 510 characters. - Deduplicated within the
+   * same request. - Limited to a maximum of 50 tags per request (excess tags are
+   * silently discarded).
    * @opt_param string updateMask.fieldPaths The list of field paths in the mask.
    * See Document.fields for a field path syntax reference.
    * @return Document

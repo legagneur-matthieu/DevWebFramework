@@ -20,6 +20,7 @@ namespace Google\Service\BigtableAdmin\Resource;
 use Google\Service\BigtableAdmin\BigtableadminEmpty;
 use Google\Service\BigtableAdmin\Cluster;
 use Google\Service\BigtableAdmin\ListClustersResponse;
+use Google\Service\BigtableAdmin\MemoryLayer;
 use Google\Service\BigtableAdmin\Operation;
 
 /**
@@ -90,6 +91,23 @@ class ProjectsInstancesClusters extends \Google\Service\Resource
     return $this->call('get', [$params], Cluster::class);
   }
   /**
+   * Gets information about the memory layer of a cluster.
+   * (clusters.getMemoryLayer)
+   *
+   * @param string $name Required. The unique name of the requested cluster's
+   * memory layer. Values are of the form
+   * `projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer`.
+   * @param array $optParams Optional parameters.
+   * @return MemoryLayer
+   * @throws \Google\Service\Exception
+   */
+  public function getMemoryLayer($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getMemoryLayer', [$params], MemoryLayer::class);
+  }
+  /**
    * Lists information about clusters in an instance.
    * (clusters.listProjectsInstancesClusters)
    *
@@ -138,9 +156,11 @@ class ProjectsInstancesClusters extends \Google\Service\Resource
     return $this->call('partialUpdateCluster', [$params], Operation::class);
   }
   /**
-   * Updates a cluster within an instance. Note that UpdateCluster does not
-   * support updating cluster_config.cluster_autoscaling_config. In order to
-   * update it, you must use PartialUpdateCluster. (clusters.update)
+   * Updates a cluster within an instance. This method updates only the
+   * serve_nodes for a Cluster, and can only be used on manually scaled clusters.
+   * To update autoscaled clusters or enable autoscaling via
+   * cluster_config.cluster_autoscaling_config, use PartialUpdateCluster.
+   * (clusters.update)
    *
    * @param string $name The unique name of the cluster. Values are of the form
    * `projects/{project}/instances/{instance}/clusters/a-z*`.
@@ -154,6 +174,26 @@ class ProjectsInstancesClusters extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('update', [$params], Operation::class);
+  }
+  /**
+   * Updates the memory layer of a cluster. To enable the memory layer, set the
+   * memory_config. To disable the memory layer, unset the memory_config.
+   * (clusters.updateMemoryLayer)
+   *
+   * @param string $name Identifier. Name of the memory layer. This is always:
+   * "projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer".
+   * @param MemoryLayer $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Optional. The list of fields to update.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function updateMemoryLayer($name, MemoryLayer $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updateMemoryLayer', [$params], Operation::class);
   }
 }
 

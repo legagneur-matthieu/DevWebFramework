@@ -89,6 +89,42 @@ class CloudVmClusterProperties extends \Google\Collection
    * Indicates that the resource is in maintenance in progress state.
    */
   public const STATE_MAINTENANCE_IN_PROGRESS = 'MAINTENANCE_IN_PROGRESS';
+  /**
+   * Unspecified storage management type.
+   */
+  public const STORAGE_MANAGEMENT_TYPE_STORAGE_MANAGEMENT_TYPE_UNSPECIFIED = 'STORAGE_MANAGEMENT_TYPE_UNSPECIFIED';
+  /**
+   * Automatic Storage Management.
+   */
+  public const STORAGE_MANAGEMENT_TYPE_ASM = 'ASM';
+  /**
+   * Exascale storage management.
+   */
+  public const STORAGE_MANAGEMENT_TYPE_EXASCALE = 'EXASCALE';
+  /**
+   * Unspecified storage type.
+   */
+  public const VM_BACKUP_STORAGE_TYPE_VM_BACKUP_STORAGE_TYPE_UNSPECIFIED = 'VM_BACKUP_STORAGE_TYPE_UNSPECIFIED';
+  /**
+   * Local DB server storage.
+   */
+  public const VM_BACKUP_STORAGE_TYPE_VM_BACKUP_STORAGE_TYPE_LOCAL = 'VM_BACKUP_STORAGE_TYPE_LOCAL';
+  /**
+   * Exascale storage.
+   */
+  public const VM_BACKUP_STORAGE_TYPE_VM_BACKUP_STORAGE_TYPE_EXASCALE = 'VM_BACKUP_STORAGE_TYPE_EXASCALE';
+  /**
+   * Unspecified storage type.
+   */
+  public const VM_FILE_SYSTEM_STORAGE_TYPE_VM_FILE_SYSTEM_STORAGE_TYPE_UNSPECIFIED = 'VM_FILE_SYSTEM_STORAGE_TYPE_UNSPECIFIED';
+  /**
+   * Local DB server storage.
+   */
+  public const VM_FILE_SYSTEM_STORAGE_TYPE_VM_FILE_SYSTEM_STORAGE_TYPE_LOCAL = 'VM_FILE_SYSTEM_STORAGE_TYPE_LOCAL';
+  /**
+   * Exascale storage.
+   */
+  public const VM_FILE_SYSTEM_STORAGE_TYPE_VM_FILE_SYSTEM_STORAGE_TYPE_EXASCALE = 'VM_FILE_SYSTEM_STORAGE_TYPE_EXASCALE';
   protected $collection_key = 'sshPublicKeys';
   /**
    * Optional. OCI Cluster name.
@@ -234,13 +270,13 @@ class CloudVmClusterProperties extends \Google\Collection
    */
   public $scanIpIds;
   /**
-   * Output only. SCAN listener port - TCP
+   * Optional. SCAN listener port - TCP
    *
    * @var int
    */
   public $scanListenerPortTcp;
   /**
-   * Output only. SCAN listener port - TLS
+   * Optional. SCAN listener port - TLS
    *
    * @var int
    */
@@ -270,6 +306,12 @@ class CloudVmClusterProperties extends \Google\Collection
    */
   public $state;
   /**
+   * Output only. The storage management type of the VM Cluster.
+   *
+   * @var string
+   */
+  public $storageManagementType;
+  /**
    * Output only. The storage allocation for the disk group, in gigabytes (GB).
    *
    * @var int
@@ -283,6 +325,20 @@ class CloudVmClusterProperties extends \Google\Collection
   public $systemVersion;
   protected $timeZoneType = TimeZone::class;
   protected $timeZoneDataType = '';
+  /**
+   * Optional. Specifies whether VM backups are stored on local DB server
+   * storage or Exascale storage.
+   *
+   * @var string
+   */
+  public $vmBackupStorageType;
+  /**
+   * Optional. Specifies whether VM file system storage / VM images are stored
+   * on local DB server storage or Exascale storage.
+   *
+   * @var string
+   */
+  public $vmFileSystemStorageType;
 
   /**
    * Optional. OCI Cluster name.
@@ -672,7 +728,7 @@ class CloudVmClusterProperties extends \Google\Collection
     return $this->scanIpIds;
   }
   /**
-   * Output only. SCAN listener port - TCP
+   * Optional. SCAN listener port - TCP
    *
    * @param int $scanListenerPortTcp
    */
@@ -688,7 +744,7 @@ class CloudVmClusterProperties extends \Google\Collection
     return $this->scanListenerPortTcp;
   }
   /**
-   * Output only. SCAN listener port - TLS
+   * Optional. SCAN listener port - TLS
    *
    * @param int $scanListenerPortTcpSsl
    */
@@ -771,6 +827,24 @@ class CloudVmClusterProperties extends \Google\Collection
     return $this->state;
   }
   /**
+   * Output only. The storage management type of the VM Cluster.
+   *
+   * Accepted values: STORAGE_MANAGEMENT_TYPE_UNSPECIFIED, ASM, EXASCALE
+   *
+   * @param self::STORAGE_MANAGEMENT_TYPE_* $storageManagementType
+   */
+  public function setStorageManagementType($storageManagementType)
+  {
+    $this->storageManagementType = $storageManagementType;
+  }
+  /**
+   * @return self::STORAGE_MANAGEMENT_TYPE_*
+   */
+  public function getStorageManagementType()
+  {
+    return $this->storageManagementType;
+  }
+  /**
    * Output only. The storage allocation for the disk group, in gigabytes (GB).
    *
    * @param int $storageSizeGb
@@ -817,6 +891,46 @@ class CloudVmClusterProperties extends \Google\Collection
   public function getTimeZone()
   {
     return $this->timeZone;
+  }
+  /**
+   * Optional. Specifies whether VM backups are stored on local DB server
+   * storage or Exascale storage.
+   *
+   * Accepted values: VM_BACKUP_STORAGE_TYPE_UNSPECIFIED,
+   * VM_BACKUP_STORAGE_TYPE_LOCAL, VM_BACKUP_STORAGE_TYPE_EXASCALE
+   *
+   * @param self::VM_BACKUP_STORAGE_TYPE_* $vmBackupStorageType
+   */
+  public function setVmBackupStorageType($vmBackupStorageType)
+  {
+    $this->vmBackupStorageType = $vmBackupStorageType;
+  }
+  /**
+   * @return self::VM_BACKUP_STORAGE_TYPE_*
+   */
+  public function getVmBackupStorageType()
+  {
+    return $this->vmBackupStorageType;
+  }
+  /**
+   * Optional. Specifies whether VM file system storage / VM images are stored
+   * on local DB server storage or Exascale storage.
+   *
+   * Accepted values: VM_FILE_SYSTEM_STORAGE_TYPE_UNSPECIFIED,
+   * VM_FILE_SYSTEM_STORAGE_TYPE_LOCAL, VM_FILE_SYSTEM_STORAGE_TYPE_EXASCALE
+   *
+   * @param self::VM_FILE_SYSTEM_STORAGE_TYPE_* $vmFileSystemStorageType
+   */
+  public function setVmFileSystemStorageType($vmFileSystemStorageType)
+  {
+    $this->vmFileSystemStorageType = $vmFileSystemStorageType;
+  }
+  /**
+   * @return self::VM_FILE_SYSTEM_STORAGE_TYPE_*
+   */
+  public function getVmFileSystemStorageType()
+  {
+    return $this->vmFileSystemStorageType;
   }
 }
 

@@ -27,6 +27,16 @@ class SignSshPublicKeyRequest extends \Google\Model
    */
   public $appEngineInstance;
   /**
+   * Optional. The Cloud Run resource to sign the SSH public key for. Expected
+   * formats: - `projects/{project}/locations/{location}/services/{service}` -
+   * `projects/{project}/locations/{location}/workerPools/{worker_pool}` -
+   * `projects/{project}/locations/{location}/jobs/{job}` -
+   * `projects/{project}/locations/{location}/instances/{instance}`
+   *
+   * @var string
+   */
+  public $cloudRunResource;
+  /**
    * The Compute instance to sign the SSH public key for. Expected format:
    * projects/{project}/zones/{zone}/instances/{numeric_instance_id}
    *
@@ -65,6 +75,26 @@ class SignSshPublicKeyRequest extends \Google\Model
   public function getAppEngineInstance()
   {
     return $this->appEngineInstance;
+  }
+  /**
+   * Optional. The Cloud Run resource to sign the SSH public key for. Expected
+   * formats: - `projects/{project}/locations/{location}/services/{service}` -
+   * `projects/{project}/locations/{location}/workerPools/{worker_pool}` -
+   * `projects/{project}/locations/{location}/jobs/{job}` -
+   * `projects/{project}/locations/{location}/instances/{instance}`
+   *
+   * @param string $cloudRunResource
+   */
+  public function setCloudRunResource($cloudRunResource)
+  {
+    $this->cloudRunResource = $cloudRunResource;
+  }
+  /**
+   * @return string
+   */
+  public function getCloudRunResource()
+  {
+    return $this->cloudRunResource;
   }
   /**
    * The Compute instance to sign the SSH public key for. Expected format:

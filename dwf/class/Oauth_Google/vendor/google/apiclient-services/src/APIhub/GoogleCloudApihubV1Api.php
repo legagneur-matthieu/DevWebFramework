@@ -80,6 +80,8 @@ class GoogleCloudApihubV1Api extends \Google\Collection
    * @var string
    */
   public $selectedVersion;
+  protected $serviceTypeType = GoogleCloudApihubV1AttributeValues::class;
+  protected $serviceTypeDataType = '';
   protected $sourceMetadataType = GoogleCloudApihubV1SourceMetadata::class;
   protected $sourceMetadataDataType = 'array';
   protected $targetUserType = GoogleCloudApihubV1AttributeValues::class;
@@ -103,7 +105,7 @@ class GoogleCloudApihubV1Api extends \Google\Collection
 
   /**
    * Optional. The api functional requirements associated with the API resource.
-   * Carinality is 1 for this attribute. This maps to the following system
+   * Cardinality is 1 for this attribute. This maps to the following system
    * defined attribute:
    * `projects/{project}/locations/{location}/attributes/system-api-functional-
    * requirements` attribute. The value of the attribute should be a proper URI,
@@ -125,7 +127,7 @@ class GoogleCloudApihubV1Api extends \Google\Collection
   }
   /**
    * Optional. The api requirement doc associated with the API resource.
-   * Carinality is 1 for this attribute. This maps to the following system
+   * Cardinality is 1 for this attribute. This maps to the following system
    * defined attribute:
    * `projects/{project}/locations/{location}/attributes/system-api-
    * requirements` attribute. The value of the attribute should be a proper URI,
@@ -168,7 +170,7 @@ class GoogleCloudApihubV1Api extends \Google\Collection
   }
   /**
    * Optional. The api technical requirements associated with the API resource.
-   * Carinality is 1 for this attribute. This maps to the following system
+   * Cardinality is 1 for this attribute. This maps to the following system
    * defined attribute:
    * `projects/{project}/locations/{location}/attributes/system-api-technical-
    * requirements` attribute. The value of the attribute should be a proper URI,
@@ -384,6 +386,26 @@ class GoogleCloudApihubV1Api extends \Google\Collection
   public function getSelectedVersion()
   {
     return $this->selectedVersion;
+  }
+  /**
+   * Optional. The type of the service. This maps to the following system
+   * defined attribute:
+   * `projects/{project}/locations/{location}/attributes/system-service-type`
+   * attribute. The cardinality of this attribute is 1. All values should be
+   * from the list of allowed values defined for the attribute.
+   *
+   * @param GoogleCloudApihubV1AttributeValues $serviceType
+   */
+  public function setServiceType(GoogleCloudApihubV1AttributeValues $serviceType)
+  {
+    $this->serviceType = $serviceType;
+  }
+  /**
+   * @return GoogleCloudApihubV1AttributeValues
+   */
+  public function getServiceType()
+  {
+    return $this->serviceType;
   }
   /**
    * Output only. The list of sources and metadata from the sources of the API

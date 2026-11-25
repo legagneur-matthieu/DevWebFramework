@@ -27,7 +27,7 @@ class GoogleCloudDocumentaiV1beta3DocumentId extends \Google\Model
   protected $unmanagedDocIdDataType = '';
 
   /**
-   * A document id within user-managed Cloud Storage.
+   * A document ID within user-managed Cloud Storage.
    *
    * @param GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId $gcsManagedDocId
    */
@@ -59,7 +59,7 @@ class GoogleCloudDocumentaiV1beta3DocumentId extends \Google\Model
     return $this->revisionRef;
   }
   /**
-   * A document id within unmanaged dataset.
+   * A document ID within unmanaged dataset.
    *
    * @param GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId $unmanagedDocId
    */

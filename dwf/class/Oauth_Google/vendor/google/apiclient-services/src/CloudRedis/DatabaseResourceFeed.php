@@ -19,6 +19,9 @@ namespace Google\Service\CloudRedis;
 
 class DatabaseResourceFeed extends \Google\Model
 {
+  /**
+   * Unspecified feed type. Not expected to be used.
+   */
   public const FEED_TYPE_FEEDTYPE_UNSPECIFIED = 'FEEDTYPE_UNSPECIFIED';
   /**
    * Database resource metadata feed from control plane
@@ -174,6 +177,8 @@ class DatabaseResourceFeed extends \Google\Model
     return $this->feedType;
   }
   /**
+   * Observability metric data.
+   *
    * @param ObservabilityMetricData $observabilityMetricData
    */
   public function setObservabilityMetricData(ObservabilityMetricData $observabilityMetricData)
@@ -188,6 +193,8 @@ class DatabaseResourceFeed extends \Google\Model
     return $this->observabilityMetricData;
   }
   /**
+   * Database resource recommendation signal data.
+   *
    * @param DatabaseResourceRecommendationSignalData $recommendationSignalData
    */
   public function setRecommendationSignalData(DatabaseResourceRecommendationSignalData $recommendationSignalData)
@@ -202,6 +209,8 @@ class DatabaseResourceFeed extends \Google\Model
     return $this->recommendationSignalData;
   }
   /**
+   * Database resource health signal data.
+   *
    * @param DatabaseResourceHealthSignalData $resourceHealthSignalData
    */
   public function setResourceHealthSignalData(DatabaseResourceHealthSignalData $resourceHealthSignalData)
@@ -235,6 +244,8 @@ class DatabaseResourceFeed extends \Google\Model
     return $this->resourceId;
   }
   /**
+   * Database resource metadata.
+   *
    * @param DatabaseResourceMetadata $resourceMetadata
    */
   public function setResourceMetadata(DatabaseResourceMetadata $resourceMetadata)

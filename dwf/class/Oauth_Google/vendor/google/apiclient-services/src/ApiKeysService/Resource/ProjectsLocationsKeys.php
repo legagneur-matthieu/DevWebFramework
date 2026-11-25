@@ -34,10 +34,13 @@ use Google\Service\ApiKeysService\V2UndeleteKeyRequest;
 class ProjectsLocationsKeys extends \Google\Service\Resource
 {
   /**
-   * Creates a new API key. NOTE: Key is a global resource; hence the only
-   * supported value for location is `global`. (keys.create)
+   * Creates a new API key. The key string of the API key is included in the
+   * response and can afterward only be retrieved through the `GetKeyString`
+   * method. NOTE: Key is a global resource; hence the only supported value for
+   * location is `global`. (keys.create)
    *
    * @param string $parent Required. The project in which the API key is created.
+   * The parent field must be in format of "projects//locations/global".
    * @param V2Key $postBody
    * @param array $optParams Optional parameters.
    *
@@ -58,13 +61,16 @@ class ProjectsLocationsKeys extends \Google\Service\Resource
   }
   /**
    * Deletes an API key. Deleted key can be retrieved within 30 days of deletion.
-   * Afterward, key will be purged from the project. NOTE: Key is a global
-   * resource; hence the only supported value for location is `global`.
-   * (keys.delete)
+   * Afterward, key will be purged from the project. The key string of the API key
+   * isn't included in the response and can only be retrieved through the
+   * `GetKeyString` method. NOTE: Key is a global resource; hence the only
+   * supported value for location is `global`. (keys.delete)
    *
    * @param string $name Required. The resource name of the API key to be deleted.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string checkExistingUsage Optional. Defines the behavior for
+   * checking existing usage when deleting a key.
    * @opt_param string etag Optional. The etag known to the client for the
    * expected state of the key. This is to be used for optimistic concurrency.
    * @return Operation
@@ -114,7 +120,7 @@ class ProjectsLocationsKeys extends \Google\Service\Resource
    * supported value for location is `global`. (keys.listProjectsLocationsKeys)
    *
    * @param string $parent Required. Lists all API keys associated with this
-   * project.
+   * project. The parent field must be in format of "projects//locations/global".
    * @param array $optParams Optional parameters.
    *
    * @opt_param int pageSize Optional. Specifies the maximum number of results to
@@ -133,16 +139,19 @@ class ProjectsLocationsKeys extends \Google\Service\Resource
   }
   /**
    * Patches the modifiable fields of an API key. The key string of the API key
-   * isn't included in the response. NOTE: Key is a global resource; hence the
-   * only supported value for location is `global`. (keys.patch)
+   * isn't included in the response and can only be retrieved through the
+   * `GetKeyString` method. NOTE: Key is a global resource; hence the only
+   * supported value for location is `global`. (keys.patch)
    *
-   * @param string $name Output only. The resource name of the key. The `name` has
+   * @param string $name Identifier. The resource name of the key. The `name` has
    * the form: `projects//locations/global/keys/`. For example: `projects/12345686
    * 7718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is
    * a global resource; hence the only supported value for location is `global`.
    * @param V2Key $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string checkExistingUsage Optional. Defines the behavior for
+   * checking existing usage when updating a key.
    * @opt_param string updateMask The field mask specifies which fields to be
    * updated as part of this request. All other fields are ignored. Mutable fields
    * are: `display_name`, `restrictions`, and `annotations`. If an update mask is
@@ -160,9 +169,10 @@ class ProjectsLocationsKeys extends \Google\Service\Resource
     return $this->call('patch', [$params], Operation::class);
   }
   /**
-   * Undeletes an API key which was deleted within 30 days. NOTE: Key is a global
-   * resource; hence the only supported value for location is `global`.
-   * (keys.undelete)
+   * Undeletes an API key which was deleted within 30 days. The key string of the
+   * API key isn't included in the response and can only be retrieved through the
+   * `GetKeyString` method. NOTE: Key is a global resource; hence the only
+   * supported value for location is `global`. (keys.undelete)
    *
    * @param string $name Required. The resource name of the API key to be
    * undeleted.

@@ -1,37 +1,40 @@
 /* Kazakh (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Dmitriy Karasyov (dmitriy.karasyov@gmail.com). */
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
+( function( factory ) {
+	"use strict";
 
-        // AMD. Register as an anonymous module.
-        define(["../widgets/datepicker"], factory);
-    } else {
+	if ( typeof define === "function" && define.amd ) {
 
-        // Browser globals
-        factory(jQuery.datepicker);
-    }
-}(function (datepicker) {
+		// AMD. Register as an anonymous module.
+		define( [ "../widgets/datepicker" ], factory );
+	} else {
 
-    datepicker.regional.kk = {
-        closeText: "Жабу",
-        prevText: "&#x3C;Алдыңғы",
-        nextText: "Келесі&#x3E;",
-        currentText: "Бүгін",
-        monthNames: ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым",
-            "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"],
-        monthNamesShort: ["Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау",
-            "Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел"],
-        dayNames: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
-        dayNamesShort: ["жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб"],
-        dayNamesMin: ["Жк", "Дс", "Сс", "Ср", "Бс", "Жм", "Сн"],
-        weekHeader: "Не",
-        dateFormat: "dd.mm.yy",
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ""};
-    datepicker.setDefaults(datepicker.regional.kk);
+		// Browser globals
+		factory( jQuery.datepicker );
+	}
+} )( function( datepicker ) {
+"use strict";
 
-    return datepicker.regional.kk;
+datepicker.regional.kk = {
+	closeText: "Жабу",
+	prevText: "Алдыңғы",
+	nextText: "Келесі",
+	currentText: "Бүгін",
+	monthNames: [ "Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым",
+	"Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан" ],
+	monthNamesShort: [ "Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау",
+	"Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел" ],
+	dayNames: [ "Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі" ],
+	dayNamesShort: [ "жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб" ],
+	dayNamesMin: [ "Жк", "Дс", "Сс", "Ср", "Бс", "Жм", "Сн" ],
+	weekHeader: "Не",
+	dateFormat: "dd.mm.yy",
+	firstDay: 1,
+	isRTL: false,
+	showMonthAfterYear: false,
+	yearSuffix: "" };
+datepicker.setDefaults( datepicker.regional.kk );
 
-}));
+return datepicker.regional.kk;
+
+} );

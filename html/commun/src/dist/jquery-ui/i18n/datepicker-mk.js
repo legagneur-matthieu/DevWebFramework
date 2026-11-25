@@ -1,37 +1,40 @@
 /* Macedonian i18n for the jQuery UI date picker plugin. */
 /* Written by Stojce Slavkovski. */
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
+( function( factory ) {
+	"use strict";
 
-        // AMD. Register as an anonymous module.
-        define(["../widgets/datepicker"], factory);
-    } else {
+	if ( typeof define === "function" && define.amd ) {
 
-        // Browser globals
-        factory(jQuery.datepicker);
-    }
-}(function (datepicker) {
+		// AMD. Register as an anonymous module.
+		define( [ "../widgets/datepicker" ], factory );
+	} else {
 
-    datepicker.regional.mk = {
-        closeText: "Затвори",
-        prevText: "&#x3C;",
-        nextText: "&#x3E;",
-        currentText: "Денес",
-        monthNames: ["Јануари", "Февруари", "Март", "Април", "Мај", "Јуни",
-            "Јули", "Август", "Септември", "Октомври", "Ноември", "Декември"],
-        monthNamesShort: ["Јан", "Фев", "Мар", "Апр", "Мај", "Јун",
-            "Јул", "Авг", "Сеп", "Окт", "Ное", "Дек"],
-        dayNames: ["Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота"],
-        dayNamesShort: ["Нед", "Пон", "Вто", "Сре", "Чет", "Пет", "Саб"],
-        dayNamesMin: ["Не", "По", "Вт", "Ср", "Че", "Пе", "Са"],
-        weekHeader: "Сед",
-        dateFormat: "dd.mm.yy",
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ""};
-    datepicker.setDefaults(datepicker.regional.mk);
+		// Browser globals
+		factory( jQuery.datepicker );
+	}
+} )( function( datepicker ) {
+"use strict";
 
-    return datepicker.regional.mk;
+datepicker.regional.mk = {
+	closeText: "Затвори",
+	prevText: "Претходна",
+	nextText: "Следно",
+	currentText: "Денес",
+	monthNames: [ "Јануари", "Февруари", "Март", "Април", "Мај", "Јуни",
+	"Јули", "Август", "Септември", "Октомври", "Ноември", "Декември" ],
+	monthNamesShort: [ "Јан", "Фев", "Мар", "Апр", "Мај", "Јун",
+	"Јул", "Авг", "Сеп", "Окт", "Ное", "Дек" ],
+	dayNames: [ "Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота" ],
+	dayNamesShort: [ "Нед", "Пон", "Вто", "Сре", "Чет", "Пет", "Саб" ],
+	dayNamesMin: [ "Не", "По", "Вт", "Ср", "Че", "Пе", "Са" ],
+	weekHeader: "Сед",
+	dateFormat: "dd.mm.yy",
+	firstDay: 1,
+	isRTL: false,
+	showMonthAfterYear: false,
+	yearSuffix: "" };
+datepicker.setDefaults( datepicker.regional.mk );
 
-}));
+return datepicker.regional.mk;
+
+} );

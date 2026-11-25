@@ -1,37 +1,40 @@
 /* Turkish initialisation for the jQuery UI date picker plugin. */
 /* Written by Izzet Emre Erkan (kara@karalamalar.net). */
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
+( function( factory ) {
+	"use strict";
 
-        // AMD. Register as an anonymous module.
-        define(["../widgets/datepicker"], factory);
-    } else {
+	if ( typeof define === "function" && define.amd ) {
 
-        // Browser globals
-        factory(jQuery.datepicker);
-    }
-}(function (datepicker) {
+		// AMD. Register as an anonymous module.
+		define( [ "../widgets/datepicker" ], factory );
+	} else {
 
-    datepicker.regional.tr = {
-        closeText: "kapat",
-        prevText: "&#x3C;geri",
-        nextText: "ileri&#x3e",
-        currentText: "bugün",
-        monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
-        monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz",
-            "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
-        dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
-        dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
-        dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
-        weekHeader: "Hf",
-        dateFormat: "dd.mm.yy",
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ""};
-    datepicker.setDefaults(datepicker.regional.tr);
+		// Browser globals
+		factory( jQuery.datepicker );
+	}
+} )( function( datepicker ) {
+"use strict";
 
-    return datepicker.regional.tr;
+datepicker.regional.tr = {
+	closeText: "kapat",
+	prevText: "geri",
+	nextText: "ileri",
+	currentText: "bugün",
+	monthNames: [ "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+	"Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık" ],
+	monthNamesShort: [ "Oca", "Şub", "Mar", "Nis", "May", "Haz",
+	"Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara" ],
+	dayNames: [ "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi" ],
+	dayNamesShort: [ "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct" ],
+	dayNamesMin: [ "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct" ],
+	weekHeader: "Hf",
+	dateFormat: "dd.mm.yy",
+	firstDay: 1,
+	isRTL: false,
+	showMonthAfterYear: false,
+	yearSuffix: "" };
+datepicker.setDefaults( datepicker.regional.tr );
 
-}));
+return datepicker.regional.tr;
+
+} );

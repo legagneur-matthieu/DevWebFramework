@@ -1,37 +1,40 @@
 /* Tajiki (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Abdurahmon Saidov (saidovab@gmail.com). */
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
+( function( factory ) {
+	"use strict";
 
-        // AMD. Register as an anonymous module.
-        define(["../widgets/datepicker"], factory);
-    } else {
+	if ( typeof define === "function" && define.amd ) {
 
-        // Browser globals
-        factory(jQuery.datepicker);
-    }
-}(function (datepicker) {
+		// AMD. Register as an anonymous module.
+		define( [ "../widgets/datepicker" ], factory );
+	} else {
 
-    datepicker.regional.tj = {
-        closeText: "Идома",
-        prevText: "&#x3c;Қафо",
-        nextText: "Пеш&#x3e;",
-        currentText: "Имрӯз",
-        monthNames: ["Январ", "Феврал", "Март", "Апрел", "Май", "Июн",
-            "Июл", "Август", "Сентябр", "Октябр", "Ноябр", "Декабр"],
-        monthNamesShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн",
-            "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-        dayNames: ["якшанбе", "душанбе", "сешанбе", "чоршанбе", "панҷшанбе", "ҷумъа", "шанбе"],
-        dayNamesShort: ["якш", "душ", "сеш", "чор", "пан", "ҷум", "шан"],
-        dayNamesMin: ["Як", "Дш", "Сш", "Чш", "Пш", "Ҷм", "Шн"],
-        weekHeader: "Хф",
-        dateFormat: "dd.mm.yy",
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ""};
-    datepicker.setDefaults(datepicker.regional.tj);
+		// Browser globals
+		factory( jQuery.datepicker );
+	}
+} )( function( datepicker ) {
+"use strict";
 
-    return datepicker.regional.tj;
+datepicker.regional.tj = {
+	closeText: "Идома",
+	prevText: "Қафо",
+	nextText: "Пеш",
+	currentText: "Имрӯз",
+	monthNames: [ "Январ", "Феврал", "Март", "Апрел", "Май", "Июн",
+	"Июл", "Август", "Сентябр", "Октябр", "Ноябр", "Декабр" ],
+	monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн",
+	"Июл", "Авг", "Сен", "Окт", "Ноя", "Дек" ],
+	dayNames: [ "якшанбе", "душанбе", "сешанбе", "чоршанбе", "панҷшанбе", "ҷумъа", "шанбе" ],
+	dayNamesShort: [ "якш", "душ", "сеш", "чор", "пан", "ҷум", "шан" ],
+	dayNamesMin: [ "Як", "Дш", "Сш", "Чш", "Пш", "Ҷм", "Шн" ],
+	weekHeader: "Хф",
+	dateFormat: "dd.mm.yy",
+	firstDay: 1,
+	isRTL: false,
+	showMonthAfterYear: false,
+	yearSuffix: "" };
+datepicker.setDefaults( datepicker.regional.tj );
 
-}));
+return datepicker.regional.tj;
+
+} );

@@ -2706,6 +2706,9 @@ var elesfn$s = {
         if (tempScore < gScore[wid]) {
           gScore[wid] = tempScore;
           fScore[wid] = tempScore + heuristic(w);
+
+          // the heap is ordered by fScore, so it must be resorted for the new value
+          openSet.updateItem(w);
           cameFrom[wid] = cMin;
           cameFromEdge[wid] = e;
         }
@@ -3318,6 +3321,33 @@ var median = function median(arr) {
   } else {
     return (arr[mid - 1 + off] + arr[mid + off]) / 2;
   }
+};
+
+// https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclidean_algorithm
+var _gcd = function gcd(a, b) {
+  if (b === 0) {
+    return a;
+  }
+  return _gcd(b, a % b);
+};
+var gcdMultipleZeroIfNonInt = function gcdMultipleZeroIfNonInt(arr) {
+  var out = arr[0];
+  for (var i = 0; i < arr.length; i++) {
+    if (!integer(arr[i])) {
+      return 0;
+    } else if (i > 0) {
+      out = _gcd(out, arr[i]);
+    }
+  }
+  return out;
+};
+
+// whether a is a positive integer multiple of b, tolerating floating-point error
+// (e.g. summed deltas: 90.9090909090909 * 3 / 90.9090909090909 can be 3.0000000000000004)
+var isIntegerMultiple = function isIntegerMultiple(a, b) {
+  var ratio = a / b;
+  var nearest = Math.round(ratio);
+  return nearest >= 1 && Math.abs(ratio - nearest) < 1e-6;
 };
 var deg2rad = function deg2rad(deg) {
   return Math.PI * deg / 180;
@@ -4381,8 +4411,41 @@ var getBarrelCurveConstants = function getBarrelCurveConstants(width, height) {
     ctrlPtOffsetPct: 0.05
   };
 };
+var getRotatedLabelBox$1 = function getRotatedLabelBox(bb, lx, ly, theta, ox, oy, th) {
+  var lx1 = bb.x1 - th - ox;
+  var lx2 = bb.x2 + th - ox;
+  var ly1 = bb.y1 - th - oy;
+  var ly2 = bb.y2 + th - oy;
+  if (theta) {
+    var cos = Math.cos(theta);
+    var sin = Math.sin(theta);
+    var rotate = function rotate(x, y) {
+      x = x - lx;
+      y = y - ly;
+      return {
+        x: x * cos - y * sin + lx + ox,
+        y: x * sin + y * cos + ly + oy
+      };
+    };
+    return [rotate(lx1, ly1), rotate(lx2, ly1), rotate(lx2, ly2), rotate(lx1, ly2)];
+  } else {
+    return [{
+      x: lx1 + ox,
+      y: ly1 + oy
+    }, {
+      x: lx2 + ox,
+      y: ly1 + oy
+    }, {
+      x: lx2 + ox,
+      y: ly2 + oy
+    }, {
+      x: lx1 + ox,
+      y: ly2 + oy
+    }];
+  }
+};
 
-// Separating Axis Theorem (SAT) to determine if two polygons intersect. 
+// Separating Axis Theorem (SAT) to determine if two polygons intersect.
 // The function takes two polygons as input and returns a boolean value indicating 
 // whether the two polygons intersect.
 function satPolygonIntersection(poly1, poly2) {
@@ -4451,6 +4514,39 @@ function satPolygonIntersection(poly1, poly2) {
   }
   return true; // polygons intersect
 }
+function doLinesIntersect(p1, p2, q1, q2) {
+  function ccw(a, b, c) {
+    return (c.y - a.y) * (b.x - a.x) > (b.y - a.y) * (c.x - a.x);
+  }
+  return ccw(p1, q1, q2) !== ccw(p2, q1, q2) && ccw(p1, p2, q1) !== ccw(p1, p2, q2);
+}
+function pointInPolygon(point, polygon) {
+  var inside = false;
+  for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    var pi = polygon[i];
+    var pj = polygon[j];
+    var intersects = pi.y > point.y !== pj.y > point.y && point.x < (pj.x - pi.x) * (point.y - pi.y) / (pj.y - pi.y) + pi.x;
+    if (intersects) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+// Whether the line segment p1-p2 intersects, or is contained by, the given polygon.
+function segmentIntersectsPolygon(p1, p2, polygon) {
+  if (pointInPolygon(p1, polygon)) {
+    return true;
+  }
+  for (var i = 0; i < polygon.length; i++) {
+    var q1 = polygon[i];
+    var q2 = polygon[(i + 1) % polygon.length];
+    if (doLinesIntersect(p1, p2, q1, q2)) {
+      return true;
+    }
+  }
+  return false;
+}
 
 var pageRankDefaults = defaults$g({
   dampingFactor: 0.8,
@@ -4515,7 +4611,7 @@ var elesfn$o = {
 
     // Add additional probability based on damping factor
     // Also, take into account columns that have sum = 0
-    var p = 1.0 / numNodes + additionalProb; // Shorthand
+    var p = dampingFactor / numNodes + additionalProb; // Shorthand
 
     // Traverse matrix, column by column
     for (var _j = 0; _j < numNodes; _j++) {
@@ -4529,7 +4625,7 @@ var elesfn$o = {
         // Node jth has outgoing link, compute normalized probabilities
         for (var _i3 = 0; _i3 < numNodes; _i3++) {
           var _n3 = _i3 * numNodes + _j;
-          matrix[_n3] = matrix[_n3] / columnSum[_j] + additionalProb;
+          matrix[_n3] = dampingFactor * matrix[_n3] / columnSum[_j] + additionalProb;
         }
       }
     }
@@ -5444,6 +5540,13 @@ var kMedoids = function kMedoids(options) {
   var node = null;
   var opts = setOptions$2(options);
 
+  // k distinct medoids are required, so k cannot exceed the number of nodes.
+  // Otherwise randomMedoids() can never pick k unique nodes and loops forever
+  // (e.g. an empty collection, where it also reads from an empty node list).
+  if (opts.k > nodes.length) {
+    error("kMedoids: k (".concat(opts.k, ") cannot exceed the number of nodes (").concat(nodes.length, ")."));
+  }
+
   // Begin k-medoids algorithm
   var clusters = new Array(opts.k);
   var medoids;
@@ -5703,12 +5806,14 @@ var mergeClosest = function mergeClosest(clusters, index, dists, mins, opts) {
     merged = {
       left: c1,
       right: c2,
-      key: c1.key
+      key: c1.key,
+      size: c1.size + c2.size
     };
   } else {
     merged = {
       value: c1.value.concat(c2.value),
-      key: c1.key
+      key: c1.key,
+      size: c1.size + c2.size
     };
   }
   clusters[c1.index] = merged;
@@ -5834,6 +5939,13 @@ var hierarchicalClustering = function hierarchicalClustering(options) {
   var cy = this.cy();
   var nodes = this.nodes();
 
+  // Nothing to cluster: return no clusters and add no dendrogram. Handles the
+  // empty case locally so dendrogram mode never indexes into empty `clusters`
+  // (which previously threw a TypeError), and keeps both modes consistent.
+  if (nodes.length === 0) {
+    return [];
+  }
+
   // Set parameters of algorithm: linkage type, distance metric, etc.
   var opts = setOptions$1(options);
   var attrs = opts.attributes;
@@ -5856,7 +5968,8 @@ var hierarchicalClustering = function hierarchicalClustering(options) {
     var cluster = {
       value: opts.mode === 'dendrogram' ? nodes[n] : [nodes[n]],
       key: n,
-      index: n
+      index: n,
+      size: 1
     };
     clusters[n] = cluster;
     index[n] = cluster;
@@ -6218,12 +6331,17 @@ var elesfn$k = {
     if (root) startVertex = string(root) ? this.filter(root)[0].id() : root[0].id();
     var nodes = {};
     var edges = {};
+    var subgraphEdges = eles.edges().filter(function (e) {
+      return eles.has(e.source()) && eles.has(e.target());
+    });
     if (directed) {
       eles.forEach(function (ele) {
         var id = ele.id();
         if (ele.isNode()) {
-          var ind = ele.indegree(true);
-          var outd = ele.outdegree(true);
+          var incoming = ele.incomers().edges().intersection(subgraphEdges);
+          var outgoing = ele.outgoers().edges().intersection(subgraphEdges);
+          var ind = incoming.length;
+          var outd = outgoing.length;
           var d1 = ind - outd;
           var d2 = outd - ind;
           if (d1 == 1) {
@@ -6234,8 +6352,8 @@ var elesfn$k = {
             dflag = true;
           }
           nodes[id] = [];
-          ele.outgoers().forEach(function (e) {
-            if (e.isEdge()) nodes[id].push(e.id());
+          outgoing.forEach(function (e) {
+            return nodes[id].push(e.id());
           });
         } else {
           edges[id] = [undefined, ele.target().id()];
@@ -6245,12 +6363,15 @@ var elesfn$k = {
       eles.forEach(function (ele) {
         var id = ele.id();
         if (ele.isNode()) {
-          var d = ele.degree(true);
+          var connected = ele.connectedEdges().intersection(subgraphEdges);
+          var d = connected.length + connected.filter(function (e) {
+            return e.isLoop();
+          }).length;
           if (d % 2) {
             if (!oddIn) oddIn = id;else if (!oddOut) oddOut = id;else dflag = true;
           }
           nodes[id] = [];
-          ele.connectedEdges().forEach(function (e) {
+          connected.forEach(function (e) {
             return nodes[id].push(e.id());
           });
         } else {
@@ -10147,7 +10268,10 @@ var valCmp = function valCmp(fieldVal, operator, value) {
     operator = operator.replace('@', '');
     caseInsensitive = true;
   }
-  if (isFieldStr || isValStr || caseInsensitive) {
+
+  // substring operators always compare string representations, even for numbers
+  var isSubstrCmp = operator === '*=' || operator === '^=' || operator === '$=';
+  if (isFieldStr || isValStr || caseInsensitive || isSubstrCmp) {
     fieldStr = !isFieldStr && !isFieldNum ? '' : '' + fieldVal;
     valStr = '' + value;
   }
@@ -10876,6 +11000,9 @@ var beforePositionSet = function beforePositionSet(eles, newPos, silent) {
         ele.children().shift(delta, silent);
       }
       ele.dirtyBoundingBoxCache();
+      if (ele.isNode()) {
+        ele.connectedEdges().dirtyBoundingBoxCache();
+      }
     }
   }
 };
@@ -11163,6 +11290,30 @@ elesfn$b.renderedBoundingBox = function (options) {
     h: y2 - y1
   };
 };
+var getLabelPolygon = function getLabelPolygon(ele) {
+  var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'main';
+  if (!ele || !ele.cy().styleEnabled()) {
+    return null;
+  }
+  var prefix = label === 'main' ? undefined : label; // 'source' | 'target' | undefined
+
+  var _p = ele._private;
+  var cache = _p.labelPolygonCache;
+  var posKey = getLabelPolygonPosKey(ele);
+  var isDirty = cache == null || cache[label] == null || _p.styleDirty || _p.labelPolygonPosKey !== posKey;
+  if (!isDirty) {
+    return cache[label];
+  }
+  ele.recalculateRenderedStyle();
+  posKey = getLabelPolygonPosKey(ele);
+  if (_p.labelPolygonCache == null || _p.labelPolygonPosKey !== posKey) {
+    _p.labelPolygonCache = {};
+    _p.labelPolygonPosKey = posKey;
+  }
+  var polygon = getRotatedLabelBox(ele, prefix);
+  _p.labelPolygonCache[label] = polygon;
+  return polygon;
+};
 elesfn$b.dirtyCompoundBoundsCache = function () {
   var silent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var cy = this.cy();
@@ -11341,13 +11492,39 @@ var updateBoundsFromBox = function updateBoundsFromBox(b, b2) {
 var prefixedProperty = function prefixedProperty(obj, field, prefix) {
   return getPrefixedProperty(obj, field, prefix);
 };
+var getRotatedLabelBox = function getRotatedLabelBox(ele, prefix) {
+  if (ele.cy().headless()) {
+    return;
+  }
+  var _p = ele._private;
+  var prefixDash = prefix ? prefix + '-' : '';
+  var label = ele.pstyle(prefixDash + 'label').strValue;
+  if (!label) {
+    return null;
+  }
+  ele.boundingBox({
+    includeLabels: true
+  });
+  var bbPrefix = prefix || 'main';
+  var bb = _p.labelBounds[bbPrefix];
+  if (!bb) {
+    return null;
+  }
+  var lx = prefixedProperty(_p.rscratch, 'labelX', prefix);
+  var ly = prefixedProperty(_p.rscratch, 'labelY', prefix);
+  var theta = prefixedProperty(_p.rscratch, 'labelAngle', prefix);
+  var ox = ele.pstyle(prefixDash + 'text-margin-x').pfValue;
+  var oy = ele.pstyle(prefixDash + 'text-margin-y').pfValue;
+  return getRotatedLabelBox$1(bb, lx, ly, theta, ox, oy, 0);
+};
 var updateBoundsFromArrow = function updateBoundsFromArrow(bounds, ele, prefix) {
   if (ele.cy().headless()) {
     return;
   }
   var _p = ele._private;
   var rstyle = _p.rstyle;
-  var halfArW = rstyle.arrowWidth / 2;
+  var arW = rstyle.arrowWidths != null && rstyle.arrowWidths[prefix] != null ? rstyle.arrowWidths[prefix] : rstyle.arrowWidth;
+  var halfArW = arW / 2;
   var arrowType = ele.pstyle(prefix + '-arrow-shape').value;
   var x;
   var y;
@@ -11905,6 +12082,17 @@ var cachedBoundingBoxImpl = function cachedBoundingBoxImpl(ele, opts) {
   }
   return bb;
 };
+var getLabelPolygonPosKey = function getLabelPolygonPosKey(ele) {
+  var angle = ele.pstyle('text-rotation').pfValue || 0;
+  if (ele.isEdge()) {
+    var p1 = ele.source().position();
+    var p2 = ele.target().position();
+    return hashIntsArray([Math.round(p1.x), Math.round(p1.y), Math.round(p2.x), Math.round(p2.y), Math.round(angle * 1000)]);
+  } else {
+    var pos = ele.position();
+    return hashIntsArray([Math.round(pos.x), Math.round(pos.y), Math.round(angle * 1000)]);
+  }
+};
 var defBbOpts = {
   includeNodes: true,
   includeEdges: true,
@@ -11988,6 +12176,8 @@ elesfn$b.dirtyBoundingBoxCache = function () {
     _p.arrowBounds.target = null;
     _p.arrowBounds['mid-source'] = null;
     _p.arrowBounds['mid-target'] = null;
+    _p.labelPolygonCache = {};
+    _p.labelPolygonPosKey = null;
   }
   this.emitAndNotify('bounds');
   return this;
@@ -12950,6 +13140,122 @@ var elesfn$8 = {
       value: min,
       ele: minEle
     };
+  },
+  withinBox: function withinBox(box) {
+    var cy = this.cy();
+    var r = cy.renderer();
+    if (cy.styleEnabled()) {
+      this.recalculateRenderedStyle();
+    }
+    var x2 = box.x2 != null ? box.x2 : box.x1 + box.w;
+    var y2 = box.y2 != null ? box.y2 : box.y1 + box.h;
+    var bb = makeBoundingBox({
+      x1: Math.min(box.x1, x2),
+      x2: Math.max(box.x1, x2),
+      y1: Math.min(box.y1, y2),
+      y2: Math.max(box.y1, y2)
+    });
+    var allInBox = r.getAllInBox(bb.x1, bb.y1, bb.x2, bb.y2);
+    var col = this;
+    return this.spawn(allInBox.filter(function (ele) {
+      return col.has(ele);
+    }));
+  },
+  hit: function hit(pos, options) {
+    var cy = this.cy();
+    var r = cy.renderer();
+    if (cy.styleEnabled()) {
+      this.recalculateRenderedStyle();
+    }
+    return this.spawn(r.hitTestAt(pos.x, pos.y, this, options));
+  },
+  polygonIntersection: function polygonIntersection(polygon) {
+    var eles = this;
+    var cy = eles.cy();
+    if (cy.styleEnabled()) {
+      this.recalculateRenderedStyle();
+    }
+    var matches = [];
+    for (var i = 0; i < eles.length; i++) {
+      var ele = eles[i];
+      ele.boundingBox();
+      if (ele.isEdge()) {
+        var rs = ele._private.rscratch;
+        var rstyle = ele._private.rstyle;
+        var pts = rstyle.bezierPts || rstyle.linePts || rstyle.haystackPts;
+        if (rstyle.bezierPts && rs.allpts && rs.allpts.length >= 6) {
+          // Cached Bezier samples omit t = 0 and t = 1. Include each
+          // span's endpoints without changing the renderer's sample cache.
+          var spans = (rs.allpts.length - 2) / 4;
+          var samplesPerSpan = rstyle.bezierPts.length / spans;
+          pts = [{
+            x: rs.allpts[0],
+            y: rs.allpts[1]
+          }];
+          for (var k = 0; k < spans; k++) {
+            for (var j = 0; j < samplesPerSpan; j++) {
+              pts.push(rstyle.bezierPts[k * samplesPerSpan + j]);
+            }
+            pts.push({
+              x: rs.allpts[k * 4 + 4],
+              y: rs.allpts[k * 4 + 5]
+            });
+          }
+        }
+        if ((!pts || pts.length < 2) && rs.startX != null && rs.startY != null && rs.endX != null && rs.endY != null) {
+          pts = [{
+            x: rs.startX,
+            y: rs.startY
+          }, {
+            x: rs.endX,
+            y: rs.endY
+          }];
+        }
+        if (pts && pts.length > 1) {
+          var bodyMatched = false;
+          for (var _k = 0; _k < pts.length - 1 && !bodyMatched; _k++) {
+            if (segmentIntersectsPolygon(pts[_k], pts[_k + 1], polygon)) {
+              matches.push(ele);
+              bodyMatched = true;
+            }
+          }
+          if (bodyMatched) {
+            continue;
+          }
+        }
+      } else {
+        var bb = ele._private.bodyBounds;
+        if (bb) {
+          var bodyPoly = [{
+            x: bb.x1,
+            y: bb.y1
+          }, {
+            x: bb.x2,
+            y: bb.y1
+          }, {
+            x: bb.x2,
+            y: bb.y2
+          }, {
+            x: bb.x1,
+            y: bb.y2
+          }];
+          if (satPolygonIntersection(bodyPoly, polygon)) {
+            matches.push(ele);
+            continue;
+          }
+        }
+      }
+      var labels = ele.isEdge() ? ['main', 'source', 'target'] : ['main'];
+      var labelMatched = false;
+      for (var _j = 0; _j < labels.length && !labelMatched; _j++) {
+        var labelPoly = getLabelPolygon(ele, labels[_j]);
+        if (labelPoly && labelPoly.length && satPolygonIntersection(labelPoly, polygon)) {
+          matches.push(ele);
+          labelMatched = true;
+        }
+      }
+    }
+    return this.spawn(matches);
   }
 };
 
@@ -14711,7 +15017,7 @@ elesfn$1.remove = function () {
   var removeFromPool = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var self = this;
   var elesToRemove = [];
-  var elesToRemoveIds = {};
+  var elesToRemoveIds = new Set$1();
   var cy = self._private.cy;
 
   // add connected edges
@@ -14730,11 +15036,11 @@ elesfn$1.remove = function () {
     }
   }
   function add(ele) {
-    var alreadyAdded = elesToRemoveIds[ele.id()];
+    var alreadyAdded = elesToRemoveIds.has(ele.id());
     if (removeFromPool && ele.removed() || alreadyAdded) {
       return;
     } else {
-      elesToRemoveIds[ele.id()] = true;
+      elesToRemoveIds.add(ele.id());
     }
     if (ele.isNode()) {
       elesToRemove.push(ele); // nodes are removed last
@@ -14765,7 +15071,7 @@ elesfn$1.remove = function () {
     pllEdge.clearTraversalCache();
   }
   var alteredParents = [];
-  alteredParents.ids = {};
+  alteredParents.ids = new Set$1();
   function removeChildRef(parent, ele) {
     ele = ele[0];
     parent = parent[0];
@@ -14775,8 +15081,8 @@ elesfn$1.remove = function () {
 
     ele._private.parent = null; // remove child => parent ref
 
-    if (!alteredParents.ids[pid]) {
-      alteredParents.ids[pid] = true;
+    if (!alteredParents.ids.has(pid)) {
+      alteredParents.ids.add(pid);
       alteredParents.push(parent);
     }
   }
@@ -14973,18 +15279,38 @@ var corefn$9 = {
   }
 };
 
-/* global Float32Array */
+/*! Bezier curve function generator. Copyright 2014-2026 Gaetan Renaudeau. MIT License: http://en.wikipedia.org/wiki/MIT_License
+ * https://github.com/gre/bezier-easing */
 
-/*! Bezier curve function generator. Copyright Gaetan Renaudeau. MIT License: http://en.wikipedia.org/wiki/MIT_License */
+// Fallback for environments without Math.cbrt
+var cbrt = Math.cbrt || function (x) {
+  return x < 0 ? -Math.pow(-x, 1 / 3) : Math.pow(x, 1 / 3);
+};
+
+// Solves x(t) = ((2a * t + 3b) * t + 3c) * t = x for t, with x in (0, 1):
+// u = 1/t is the largest real root of x*u^3 - 3c*u^2 - 3b*u - 2a = 0
+function solveTForX(x, a, b, c) {
+  var j = 1 / Math.max(c, Math.sqrt(x)),
+    k = x * j,
+    l = k * j,
+    s = c * j,
+    q = b * l,
+    m = s * s + q,
+    h = -s * (s * s + 1.5 * q) - a * k * l,
+    D = h * h - m * m * m,
+    v;
+  if (m === 0 || D > 1e-12 * h * h) {
+    // one real root (Cardano)
+    var U = -cbrt(h < 0 ? h - Math.sqrt(D) : h + Math.sqrt(D));
+    v = U + m / U || 0;
+  } else {
+    // three real roots, take the largest
+    var r = Math.sqrt(m);
+    v = 2 * r * Math.cos(Math.acos(Math.max(-1, Math.min(1, -h / (m * r)))) / 3);
+  }
+  return Math.min(1, k / (v + s));
+}
 function generateCubicBezier(mX1, mY1, mX2, mY2) {
-  var NEWTON_ITERATIONS = 4,
-    NEWTON_MIN_SLOPE = 0.001,
-    SUBDIVISION_PRECISION = 0.0000001,
-    SUBDIVISION_MAX_ITERATIONS = 10,
-    kSplineTableSize = 11,
-    kSampleStepSize = 1.0 / (kSplineTableSize - 1.0),
-    float32ArraySupported = typeof Float32Array !== 'undefined';
-
   /* Must contain four arguments. */
   if (arguments.length !== 4) {
     return false;
@@ -15002,93 +15328,28 @@ function generateCubicBezier(mX1, mY1, mX2, mY2) {
   mX2 = Math.min(mX2, 1);
   mX1 = Math.max(mX1, 0);
   mX2 = Math.max(mX2, 0);
-  var mSampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
-  function A(aA1, aA2) {
-    return 1.0 - 3.0 * aA2 + 3.0 * aA1;
-  }
-  function B(aA1, aA2) {
-    return 3.0 * aA2 - 6.0 * aA1;
-  }
-  function C(aA1) {
-    return 3.0 * aA1;
-  }
-  function calcBezier(aT, aA1, aA2) {
-    return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT;
-  }
-  function getSlope(aT, aA1, aA2) {
-    return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1);
-  }
-  function newtonRaphsonIterate(aX, aGuessT) {
-    for (var _i = 0; _i < NEWTON_ITERATIONS; ++_i) {
-      var currentSlope = getSlope(aGuessT, mX1, mX2);
-      if (currentSlope === 0.0) {
-        return aGuessT;
-      }
-      var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-      aGuessT -= currentX / currentSlope;
-    }
-    return aGuessT;
-  }
-  function calcSampleValues() {
-    for (var _i2 = 0; _i2 < kSplineTableSize; ++_i2) {
-      mSampleValues[_i2] = calcBezier(_i2 * kSampleStepSize, mX1, mX2);
-    }
-  }
-  function binarySubdivide(aX, aA, aB) {
-    var currentX,
-      currentT,
-      i = 0;
-    do {
-      currentT = aA + (aB - aA) / 2.0;
-      currentX = calcBezier(currentT, mX1, mX2) - aX;
-      if (currentX > 0.0) {
-        aB = currentT;
-      } else {
-        aA = currentT;
-      }
-    } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
-    return currentT;
-  }
-  function getTForX(aX) {
-    var intervalStart = 0.0,
-      currentSample = 1,
-      lastSample = kSplineTableSize - 1;
-    for (; currentSample !== lastSample && mSampleValues[currentSample] <= aX; ++currentSample) {
-      intervalStart += kSampleStepSize;
-    }
-    --currentSample;
-    var dist = (aX - mSampleValues[currentSample]) / (mSampleValues[currentSample + 1] - mSampleValues[currentSample]),
-      guessForT = intervalStart + dist * kSampleStepSize,
-      initialSlope = getSlope(guessForT, mX1, mX2);
-    if (initialSlope >= NEWTON_MIN_SLOPE) {
-      return newtonRaphsonIterate(aX, guessForT);
-    } else if (initialSlope === 0.0) {
-      return guessForT;
-    } else {
-      return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize);
-    }
-  }
-  var _precomputed = false;
-  function precompute() {
-    _precomputed = true;
-    if (mX1 !== mY1 || mX2 !== mY2) {
-      calcSampleValues();
-    }
-  }
+
+  // x(t) = ((2a * t + 3b) * t + 3c) * t, y(t) = ((ay * t + by) * t + cy) * t
+  var isLinear = mX1 === mY1 && mX2 === mY2,
+    a = (3 * mX1 - 3 * mX2 + 1) / 2,
+    b = mX2 - 2 * mX1,
+    c = mX1,
+    ay = 3 * mY1 - 3 * mY2 + 1,
+    by = 3 * (mY2 - 2 * mY1),
+    cy = 3 * mY1;
   var f = function f(aX) {
-    if (!_precomputed) {
-      precompute();
-    }
-    if (mX1 === mY1 && mX2 === mY2) {
+    if (isLinear) {
       return aX;
     }
-    if (aX === 0) {
+    // aX outside (0, 1) saturates to 0 / 1
+    if (aX <= 0) {
       return 0;
     }
-    if (aX === 1) {
+    if (aX >= 1) {
       return 1;
     }
-    return calcBezier(getTForX(aX), mY1, mY2);
+    var t = solveTForX(aX, a, b, c);
+    return ((ay * t + by) * t + cy) * t;
   };
   f.getControlPoints = function () {
     return [{
@@ -16441,14 +16702,14 @@ styfn$8.applyParsedProperty = function (ele, parsedProp) {
           var b2 = prop.valueMax[2];
           var a1 = prop.valueMin[3] == null ? 1 : prop.valueMin[3];
           var a2 = prop.valueMax[3] == null ? 1 : prop.valueMax[3];
-          var clr = [Math.round(r1 + (r2 - r1) * percent), Math.round(g1 + (g2 - g1) * percent), Math.round(b1 + (b2 - b1) * percent), Math.round(a1 + (a2 - a1) * percent)];
+          var clr = [Math.round(r1 + (r2 - r1) * percent), Math.round(g1 + (g2 - g1) * percent), Math.round(b1 + (b2 - b1) * percent), a1 + (a2 - a1) * percent];
           flatProp = {
             // colours are simple, so just create the flat property instead of expensive string parsing
             bypass: prop.bypass,
             // we're a bypass if the mapping property is a bypass
             name: prop.name,
             value: clr,
-            strValue: 'rgb(' + clr[0] + ', ' + clr[1] + ', ' + clr[2] + ')'
+            strValue: 'rgba(' + clr[0] + ', ' + clr[1] + ', ' + clr[2] + ', ' + clr[3] + ')'
           };
         } else if (type.number) {
           var calcValue = prop.valueMin + (prop.valueMax - prop.valueMin) * percent;
@@ -16823,7 +17084,7 @@ styfn$7.overrideBypass = function (eles, name, value) {
         prop.pfValue = value;
       }
       if (isColor) {
-        prop.strValue = 'rgb(' + value.join(',') + ')';
+        prop.strValue = value[3] == null ? 'rgb(' + value[0] + ',' + value[1] + ',' + value[2] + ')' : 'rgba(' + value[0] + ',' + value[1] + ',' + value[2] + ',' + value[3] + ')';
       } else if (isMulti) {
         prop.strValue = value.join(' ');
       } else {
@@ -17198,6 +17459,20 @@ styfn$3.fromString = function (string) {
   return style;
 };
 
+var arrowPrefixes = ['source', 'mid-source', 'target', 'mid-target'];
+
+// per-arrow `<pos>-arrow-scale` properties default to the `inherit` enum rather than
+// to a number, so that "never set" is distinguishable from "set to 1"
+var getArrowScale = function getArrowScale(edge, prefix) {
+  if (prefix != null) {
+    var prefixed = edge.pstyle(prefix + '-arrow-scale');
+    if (prefixed != null && prefixed.value !== 'inherit') {
+      return prefixed.value;
+    }
+  }
+  return edge.pstyle('arrow-scale').value;
+};
+
 var styfn$2 = {};
 (function () {
   var number$1 = number;
@@ -17289,6 +17564,13 @@ var styfn$2 = {};
       unitless: true,
       min: 0,
       strictMin: true
+    },
+    arrowScale: {
+      number: true,
+      unitless: true,
+      min: 0,
+      strictMin: true,
+      enums: ['inherit']
     },
     size: {
       number: true,
@@ -17830,6 +18112,18 @@ var styfn$2 = {};
     name: 'overlay-color',
     type: t.color
   }, {
+    name: 'overlay-fill',
+    type: t.fill
+  }, {
+    name: 'overlay-gradient-stop-colors',
+    type: t.colors
+  }, {
+    name: 'overlay-gradient-stop-positions',
+    type: t.percentages
+  }, {
+    name: 'overlay-gradient-direction',
+    type: t.gradientDirection
+  }, {
     name: 'overlay-opacity',
     type: t.zeroOneNumber,
     triggersBounds: diff.zeroNonZero
@@ -17848,6 +18142,18 @@ var styfn$2 = {};
   }, {
     name: 'underlay-color',
     type: t.color
+  }, {
+    name: 'underlay-fill',
+    type: t.fill
+  }, {
+    name: 'underlay-gradient-stop-colors',
+    type: t.colors
+  }, {
+    name: 'underlay-gradient-stop-positions',
+    type: t.percentages
+  }, {
+    name: 'underlay-gradient-direction',
+    type: t.gradientDirection
   }, {
     name: 'underlay-opacity',
     type: t.zeroOneNumber,
@@ -18294,7 +18600,7 @@ var styfn$2 = {};
 
   // edge arrows
   var edgeArrow = [];
-  var arrowPrefixes = styfn$2.arrowPrefixes = ['source', 'mid-source', 'target', 'mid-target'];
+  styfn$2.arrowPrefixes = arrowPrefixes;
   [{
     name: 'arrow-shape',
     type: t.arrowShape,
@@ -18308,6 +18614,10 @@ var styfn$2 = {};
   }, {
     name: 'arrow-width',
     type: t.arrowWidth
+  }, {
+    name: 'arrow-scale',
+    type: t.arrowScale,
+    triggersBounds: diff.any
   }].forEach(function (prop) {
     arrowPrefixes.forEach(function (prefix) {
       var name = prefix + '-' + prop.name;
@@ -18493,11 +18803,19 @@ styfn$2.getDefaultProperties = function () {
     'target-text-margin-y': 0,
     'overlay-opacity': 0,
     'overlay-color': '#000',
+    'overlay-fill': 'solid',
+    'overlay-gradient-stop-colors': '#999',
+    'overlay-gradient-stop-positions': '0%',
+    'overlay-gradient-direction': 'to-bottom',
     'overlay-padding': 10,
     'overlay-shape': 'round-rectangle',
     'overlay-corner-radius': 'auto',
     'underlay-opacity': 0,
     'underlay-color': '#000',
+    'underlay-fill': 'solid',
+    'underlay-gradient-stop-colors': '#999',
+    'underlay-gradient-stop-positions': '0%',
+    'underlay-gradient-direction': 'to-bottom',
     'underlay-padding': 10,
     'underlay-shape': 'round-rectangle',
     'underlay-corner-radius': 'auto',
@@ -18654,6 +18972,9 @@ styfn$2.getDefaultProperties = function () {
   }, {
     name: 'arrow-width',
     value: 1
+  }, {
+    name: 'arrow-scale',
+    value: 'inherit'
   }].reduce(function (css, prop) {
     styfn$2.arrowPrefixes.forEach(function (prefix) {
       var name = prefix + '-' + prop.name;
@@ -19061,8 +19382,8 @@ styfn$1.parseImpl = function (name, value, propIsBypass, propIsFlat) {
       name: name,
       value: tuple,
       pfValue: tuple,
-      strValue: 'rgb(' + tuple[0] + ',' + tuple[1] + ',' + tuple[2] + ')',
-      // n.b. no spaces b/c of multiple support
+      strValue: tuple[3] == null // n.b. no spaces b/c of multiple support
+      ? 'rgb(' + tuple[0] + ',' + tuple[1] + ',' + tuple[2] + ')' : 'rgba(' + tuple[0] + ',' + tuple[1] + ',' + tuple[2] + ',' + tuple[3] + ')',
       bypass: propIsBypass
     };
   } else if (type.regex || type.regexes) {
@@ -21053,12 +21374,8 @@ function CoseLayout(options) {
   var notEdges = edges.filter(function (e) {
     var sourceId = e.source().data('id');
     var targetId = e.target().data('id');
-    var hasSource = nodes.some(function (n) {
-      return n.data('id') === sourceId;
-    });
-    var hasTarget = nodes.some(function (n) {
-      return n.data('id') === targetId;
-    });
+    var hasSource = nodes.hasElementWithId(sourceId);
+    var hasTarget = nodes.hasElementWithId(targetId);
     return !hasSource || !hasTarget;
   });
   this.options.eles = this.options.eles.not(notEdges);
@@ -22595,6 +22912,12 @@ NullRenderer.prototype = {
   isHeadless: function isHeadless() {
     return true;
   },
+  getAllInBox: function getAllInBox() {
+    return [];
+  },
+  hitTestAt: function hitTestAt() {
+    return [];
+  },
   png: throwImgErr,
   jpg: throwImgErr
 };
@@ -22654,8 +22977,8 @@ BRp$f.registerArrowShapes = function () {
     }
     return ret;
   };
-  var standardGap = function standardGap(edge) {
-    return edge.pstyle('width').pfValue * edge.pstyle('arrow-scale').pfValue * 2;
+  var standardGap = function standardGap(edge, prefix) {
+    return edge.pstyle('width').pfValue * getArrowScale(edge, prefix) * 2;
   };
   var defineArrowShape = function defineArrowShape(name, defn) {
     if (string(defn)) {
@@ -22674,7 +22997,7 @@ BRp$f.registerArrowShapes = function () {
         var points = transformPoints(this.points, size, angle, translation);
         renderer.arrowShapeImpl('polygon')(context, points);
       },
-      spacing: function spacing(edge) {
+      spacing: function spacing(edge, prefix) {
         return 0;
       },
       gap: standardGap
@@ -22701,8 +23024,8 @@ BRp$f.registerArrowShapes = function () {
       var ctrlPtTrans = transform(ctrlPt[0], ctrlPt[1], size, angle, translation);
       renderer.arrowShapeImpl(this.name)(context, ptsTrans, ctrlPtTrans);
     },
-    gap: function gap(edge) {
-      return standardGap(edge) * 0.8;
+    gap: function gap(edge, prefix) {
+      return standardGap(edge, prefix) * 0.8;
     }
   });
   defineArrowShape('triangle-tee', {
@@ -22733,8 +23056,8 @@ BRp$f.registerArrowShapes = function () {
       var triPts = transformPoints(this.pointsTr, size, angle, translation);
       renderer.arrowShapeImpl(this.name)(context, triPts, translation.x, translation.y, this.radius * size);
     },
-    spacing: function spacing(edge) {
-      return renderer.getArrowWidth(edge.pstyle('width').pfValue, edge.pstyle('arrow-scale').value) * this.radius;
+    spacing: function spacing(edge, prefix) {
+      return renderer.getArrowWidth(edge.pstyle('width').pfValue, getArrowScale(edge, prefix)) * this.radius;
     }
   });
   defineArrowShape('triangle-cross', {
@@ -22768,8 +23091,8 @@ BRp$f.registerArrowShapes = function () {
   });
   defineArrowShape('vee', {
     points: [-0.15, -0.3, 0, 0, 0.15, -0.3, 0, -0.15],
-    gap: function gap(edge) {
-      return standardGap(edge) * 0.525;
+    gap: function gap(edge, prefix) {
+      return standardGap(edge, prefix) * 0.525;
     }
   });
   defineArrowShape('circle', {
@@ -22782,16 +23105,16 @@ BRp$f.registerArrowShapes = function () {
     draw: function draw(context, size, angle, translation, edgeWidth) {
       renderer.arrowShapeImpl(this.name)(context, translation.x, translation.y, this.radius * size);
     },
-    spacing: function spacing(edge) {
-      return renderer.getArrowWidth(edge.pstyle('width').pfValue, edge.pstyle('arrow-scale').value) * this.radius;
+    spacing: function spacing(edge, prefix) {
+      return renderer.getArrowWidth(edge.pstyle('width').pfValue, getArrowScale(edge, prefix)) * this.radius;
     }
   });
   defineArrowShape('tee', {
     points: [-0.15, 0, -0.15, -0.1, 0.15, -0.1, 0.15, 0],
-    spacing: function spacing(edge) {
+    spacing: function spacing(edge, prefix) {
       return 1;
     },
-    gap: function gap(edge) {
+    gap: function gap(edge, prefix) {
       return 1;
     }
   });
@@ -22800,14 +23123,14 @@ BRp$f.registerArrowShapes = function () {
   });
   defineArrowShape('diamond', {
     points: [-0.15, -0.15, 0, -0.3, 0.15, -0.15, 0, 0],
-    gap: function gap(edge) {
-      return edge.pstyle('width').pfValue * edge.pstyle('arrow-scale').value;
+    gap: function gap(edge, prefix) {
+      return edge.pstyle('width').pfValue * getArrowScale(edge, prefix);
     }
   });
   defineArrowShape('chevron', {
     points: [0, 0, -0.15, -0.15, -0.1, -0.2, 0, -0.1, 0.1, -0.2, 0.15, -0.15],
-    gap: function gap(edge) {
-      return 0.95 * edge.pstyle('width').pfValue * edge.pstyle('arrow-scale').value;
+    gap: function gap(edge, prefix) {
+      return 0.95 * edge.pstyle('width').pfValue * getArrowScale(edge, prefix);
     }
   });
 };
@@ -22864,6 +23187,185 @@ BRp$e.findContainerClientCoords = function () {
 BRp$e.invalidateContainerClientCoordsCache = function () {
   this.containerBB = null;
 };
+
+// Returns the label's hit/selection polygon for ele, or null if unavailable.
+BRp$e.getLabelHitPolygon = function (ele, prefix, th) {
+  var _p = ele._private;
+  var prefixDash = prefix ? prefix + '-' : '';
+  ele.boundingBox();
+  var bb = _p.labelBounds[prefix || 'main'];
+  if (!bb) {
+    return null;
+  }
+  var lx = getPrefixedProperty(_p.rscratch, 'labelX', prefix);
+  var ly = getPrefixedProperty(_p.rscratch, 'labelY', prefix);
+  var theta = getPrefixedProperty(_p.rscratch, 'labelAngle', prefix);
+  var ox = ele.pstyle(prefixDash + 'text-margin-x').pfValue;
+  var oy = ele.pstyle(prefixDash + 'text-margin-y').pfValue;
+  return getRotatedLabelBox$1(bb, lx, ly, theta, ox, oy, th);
+};
+
+// Returns true if (x, y) is inside the label of ele.
+BRp$e.checkLabelHitAt = function (ele, x, y, prefix, th) {
+  var prefixDash = prefix ? prefix + '-' : '';
+  var text = ele.pstyle(prefixDash + 'label').value;
+  var eventsEnabled = ele.pstyle('text-events').strValue === 'yes';
+  if (!eventsEnabled || !text) {
+    return false;
+  }
+  var polygon = this.getLabelHitPolygon(ele, prefix, th);
+  if (!polygon) {
+    return false;
+  }
+  var points = [];
+  for (var i = 0; i < polygon.length; i++) {
+    points.push(polygon[i].x, polygon[i].y);
+  }
+  return pointInsidePolygonPoints(x, y, points);
+};
+
+// Returns true if (x, y) hits the body of node, using its shape's hit test.
+BRp$e.checkNodeHitAt = function (node, x, y, threshold) {
+  var r = this;
+  var width = node.outerWidth() + 2 * threshold;
+  var height = node.outerHeight() + 2 * threshold;
+  var pos = node.position();
+  if (pos.x - width / 2 <= x && x <= pos.x + width / 2 && pos.y - height / 2 <= y && y <= pos.y + height / 2) {
+    var cornerRadius = node.pstyle('corner-radius').value === 'auto' ? 'auto' : node.pstyle('corner-radius').pfValue;
+    var shape = r.nodeShapes[r.getNodeShape(node)];
+    return shape.checkPoint(x, y, 0, width, height, pos.x, pos.y, cornerRadius, node._private.rscratch);
+  }
+  return false;
+};
+
+// Returns { sqDist } if (x, y) hits the line/curve or arrows of edge, else null.
+BRp$e.checkEdgeHitAt = function (edge, x, y, threshold) {
+  var r = this;
+  var _p = edge._private;
+  var rs = _p.rscratch;
+  var styleWidth = edge.pstyle('width').pfValue;
+  var width = styleWidth / 2 + threshold; // more like a distance radius from centre
+  var widthSq = width * width;
+  var width2 = width * 2;
+  var sqDist;
+  if (rs.edgeType === 'segments' || rs.edgeType === 'straight' || rs.edgeType === 'haystack') {
+    var linePts = rs.allpts;
+    for (var i = 0; i + 3 < linePts.length; i += 2) {
+      if (inLineVicinity(x, y, linePts[i], linePts[i + 1], linePts[i + 2], linePts[i + 3], width2) && widthSq > (sqDist = sqdistToFiniteLine(x, y, linePts[i], linePts[i + 1], linePts[i + 2], linePts[i + 3]))) {
+        return {
+          sqDist: sqDist
+        };
+      }
+    }
+  } else if (rs.edgeType === 'bezier' || rs.edgeType === 'multibezier' || rs.edgeType === 'self' || rs.edgeType === 'compound') {
+    var bezierPts = rs.allpts;
+    for (var k = 0; k + 5 < bezierPts.length; k += 4) {
+      if (inBezierVicinity(x, y, bezierPts[k], bezierPts[k + 1], bezierPts[k + 2], bezierPts[k + 3], bezierPts[k + 4], bezierPts[k + 5], width2) && widthSq > (sqDist = sqdistToQuadraticBezier(x, y, bezierPts[k], bezierPts[k + 1], bezierPts[k + 2], bezierPts[k + 3], bezierPts[k + 4], bezierPts[k + 5]))) {
+        return {
+          sqDist: sqDist
+        };
+      }
+    }
+  }
+
+  // if we're close to the edge but didn't hit it, maybe we hit its arrows
+
+  var arrows = [{
+    name: 'source',
+    x: rs.arrowStartX,
+    y: rs.arrowStartY,
+    angle: rs.srcArrowAngle
+  }, {
+    name: 'target',
+    x: rs.arrowEndX,
+    y: rs.arrowEndY,
+    angle: rs.tgtArrowAngle
+  }, {
+    name: 'mid-source',
+    x: rs.midX,
+    y: rs.midY,
+    angle: rs.midsrcArrowAngle
+  }, {
+    name: 'mid-target',
+    x: rs.midX,
+    y: rs.midY,
+    angle: rs.midtgtArrowAngle
+  }];
+  for (var j = 0; j < arrows.length; j++) {
+    var ar = arrows[j];
+    var shape = r.arrowShapes[edge.pstyle(ar.name + '-arrow-shape').value];
+    var edgeWidth = styleWidth;
+    var arSize = r.getArrowWidth(styleWidth, getArrowScale(edge, ar.name));
+    if (shape.roughCollide(x, y, arSize, ar.angle, {
+      x: ar.x,
+      y: ar.y
+    }, edgeWidth, threshold) && shape.collide(x, y, arSize, ar.angle, {
+      x: ar.x,
+      y: ar.y
+    }, edgeWidth, threshold)) {
+      return {
+        sqDist: null
+      };
+    }
+  }
+  return null;
+};
+
+// Returns all interactive elements from eles that are hit by (x, y), sorted topmost first.
+// options: { includeBody, includeMainLabels, includeSourceLabels, includeTargetLabels, isTouch }
+BRp$e.hitTestAt = function (x, y, eles, options) {
+  var r = this;
+  var zoom = r.cy.zoom();
+  var opts = options || {};
+  var isTouch = opts.isTouch;
+  var includeBody = opts.includeBody !== false;
+  var includeMainLabels = opts.includeMainLabels !== false;
+  var includeSourceLabels = opts.includeSourceLabels !== false;
+  var includeTargetLabels = opts.includeTargetLabels !== false;
+  var nodeThreshold = (isTouch ? 8 : 2) / zoom;
+  var labelThreshold = (isTouch ? 8 : 2) / zoom;
+  var edgeThreshold = (isTouch ? 24 : 8) / zoom;
+  var eleIds = new Set();
+  for (var i = 0; i < eles.length; i++) {
+    eleIds.add(eles[i]._private.data.id);
+  }
+  var zSorted = r.getCachedZSortedEles().interactive;
+  var matches = [];
+  for (var j = zSorted.length - 1; j >= 0; j--) {
+    // reverse = topmost first
+    var ele = zSorted[j];
+    if (!eleIds.has(ele._private.data.id)) {
+      continue;
+    }
+    var hit = false;
+    if (ele.isNode()) {
+      if (includeBody) {
+        hit = r.checkNodeHitAt(ele, x, y, nodeThreshold);
+      }
+      if (!hit && includeMainLabels) {
+        hit = r.checkLabelHitAt(ele, x, y, null, labelThreshold);
+      }
+    } else {
+      // edge
+      if (includeBody) {
+        hit = r.checkEdgeHitAt(ele, x, y, edgeThreshold) != null;
+      }
+      if (!hit && includeMainLabels) {
+        hit = r.checkLabelHitAt(ele, x, y, null, labelThreshold);
+      }
+      if (!hit && includeSourceLabels) {
+        hit = r.checkLabelHitAt(ele, x, y, 'source', labelThreshold);
+      }
+      if (!hit && includeTargetLabels) {
+        hit = r.checkLabelHitAt(ele, x, y, 'target', labelThreshold);
+      }
+    }
+    if (hit) {
+      matches.push(ele);
+    }
+  }
+  return matches;
+};
 BRp$e.findNearestElement = function (x, y, interactiveElementsOnly, isTouch) {
   return this.findNearestElements(x, y, interactiveElementsOnly, isTouch)[0];
 };
@@ -22914,28 +23416,15 @@ BRp$e.findNearestElements = function (x, y, interactiveElementsOnly, isTouch) {
     }
   }
   function checkNode(node) {
-    var width = node.outerWidth() + 2 * nodeThreshold;
-    var height = node.outerHeight() + 2 * nodeThreshold;
-    var hw = width / 2;
-    var hh = height / 2;
-    var pos = node.position();
-    var cornerRadius = node.pstyle('corner-radius').value === 'auto' ? 'auto' : node.pstyle('corner-radius').pfValue;
-    var rs = node._private.rscratch;
-    if (pos.x - hw <= x && x <= pos.x + hw // bb check x
-    && pos.y - hh <= y && y <= pos.y + hh // bb check y
-    ) {
-      var shape = r.nodeShapes[self.getNodeShape(node)];
-      if (shape.checkPoint(x, y, 0, width, height, pos.x, pos.y, cornerRadius, rs)) {
-        addEle(node, 0);
-        return true;
-      }
+    if (r.checkNodeHitAt(node, x, y, nodeThreshold)) {
+      addEle(node, 0);
+      return true;
     }
   }
   function checkEdge(edge) {
     var _p = edge._private;
     var rs = _p.rscratch;
     var styleWidth = edge.pstyle('width').pfValue;
-    var scale = edge.pstyle('arrow-scale').value;
     var width = styleWidth / 2 + edgeThreshold; // more like a distance radius from centre
     var widthSq = width * width;
     var width2 = width * 2;
@@ -22964,7 +23453,6 @@ BRp$e.findNearestElements = function (x, y, interactiveElementsOnly, isTouch) {
 
     var src = src || _p.source;
     var tgt = tgt || _p.target;
-    var arSize = self.getArrowWidth(styleWidth, scale);
     var arrows = [{
       name: 'source',
       x: rs.arrowStartX,
@@ -22990,6 +23478,7 @@ BRp$e.findNearestElements = function (x, y, interactiveElementsOnly, isTouch) {
       var ar = arrows[i];
       var shape = r.arrowShapes[edge.pstyle(ar.name + '-arrow-shape').value];
       var edgeWidth = edge.pstyle('width').pfValue;
+      var arSize = self.getArrowWidth(styleWidth, getArrowScale(edge, ar.name));
       if (shape.roughCollide(x, y, arSize, ar.angle, {
         x: ar.x,
         y: ar.y
@@ -23008,62 +23497,10 @@ BRp$e.findNearestElements = function (x, y, interactiveElementsOnly, isTouch) {
       checkNode(tgt);
     }
   }
-  function preprop(obj, name, pre) {
-    return getPrefixedProperty(obj, name, pre);
-  }
   function checkLabel(ele, prefix) {
-    var _p = ele._private;
-    var th = labelThreshold;
-    var prefixDash;
-    if (prefix) {
-      prefixDash = prefix + '-';
-    } else {
-      prefixDash = '';
-    }
-    ele.boundingBox();
-    var bb = _p.labelBounds[prefix || 'main'];
-    var text = ele.pstyle(prefixDash + 'label').value;
-    var eventsEnabled = ele.pstyle('text-events').strValue === 'yes';
-    if (!eventsEnabled || !text) {
-      return;
-    }
-    var lx = preprop(_p.rscratch, 'labelX', prefix);
-    var ly = preprop(_p.rscratch, 'labelY', prefix);
-    var theta = preprop(_p.rscratch, 'labelAngle', prefix);
-    var ox = ele.pstyle(prefixDash + 'text-margin-x').pfValue;
-    var oy = ele.pstyle(prefixDash + 'text-margin-y').pfValue;
-    var lx1 = bb.x1 - th - ox; // (-ox, -oy) as bb already includes margin
-    var lx2 = bb.x2 + th - ox; // and rotation is about (lx, ly)
-    var ly1 = bb.y1 - th - oy;
-    var ly2 = bb.y2 + th - oy;
-    if (theta) {
-      var cos = Math.cos(theta);
-      var sin = Math.sin(theta);
-      var rotate = function rotate(x, y) {
-        x = x - lx;
-        y = y - ly;
-        return {
-          x: x * cos - y * sin + lx,
-          y: x * sin + y * cos + ly
-        };
-      };
-      var px1y1 = rotate(lx1, ly1);
-      var px1y2 = rotate(lx1, ly2);
-      var px2y1 = rotate(lx2, ly1);
-      var px2y2 = rotate(lx2, ly2);
-      var points = [
-      // with the margin added after the rotation is applied
-      px1y1.x + ox, px1y1.y + oy, px2y1.x + ox, px2y1.y + oy, px2y2.x + ox, px2y2.y + oy, px1y2.x + ox, px1y2.y + oy];
-      if (pointInsidePolygonPoints(x, y, points)) {
-        addEle(ele);
-        return true;
-      }
-    } else {
-      // do a cheaper bb check
-      if (inBoundingBox(bb, x, y)) {
-        addEle(ele);
-        return true;
-      }
+    if (self.checkLabelHitAt(ele, x, y, prefix, labelThreshold)) {
+      addEle(ele);
+      return true;
     }
   }
   for (var i = eles.length - 1; i >= 0; i--) {
@@ -23081,6 +23518,7 @@ BRp$e.findNearestElements = function (x, y, interactiveElementsOnly, isTouch) {
 
 // 'Give me everything from this box'
 BRp$e.getAllInBox = function (x1, y1, x2, y2) {
+  var r = this;
   var eles = this.getCachedZSortedEles().interactive;
   var zoom = this.cy.zoom();
   var labelThreshold = 2 / zoom;
@@ -23113,59 +23551,8 @@ BRp$e.getAllInBox = function (x1, y1, x2, y2) {
     y: boxBb.y2
   }];
   var boxEdges = [[selectionBox[0], selectionBox[1]], [selectionBox[1], selectionBox[2]], [selectionBox[2], selectionBox[3]], [selectionBox[3], selectionBox[0]]];
-  function preprop(obj, name, pre) {
-    return getPrefixedProperty(obj, name, pre);
-  }
   function getRotatedLabelBox(ele, prefix) {
-    var _p = ele._private;
-    var th = labelThreshold;
-    var prefixDash = '';
-    ele.boundingBox();
-    var bb = _p.labelBounds['main'];
-
-    // If the bounding box is not available, return null.
-    // This indicates that the label box cannot be calculated, which is consistent
-    // with the expected behavior of this function. Returning null allows the caller
-    // to handle the absence of a bounding box explicitly.
-    if (!bb) {
-      return null;
-    }
-    var lx = preprop(_p.rscratch, 'labelX', prefix);
-    var ly = preprop(_p.rscratch, 'labelY', prefix);
-    var theta = preprop(_p.rscratch, 'labelAngle', prefix);
-    var ox = ele.pstyle(prefixDash + 'text-margin-x').pfValue;
-    var oy = ele.pstyle(prefixDash + 'text-margin-y').pfValue;
-    var lx1 = bb.x1 - th - ox;
-    var lx2 = bb.x2 + th - ox;
-    var ly1 = bb.y1 - th - oy;
-    var ly2 = bb.y2 + th - oy;
-    if (theta) {
-      var cos = Math.cos(theta);
-      var sin = Math.sin(theta);
-      var rotate = function rotate(x, y) {
-        x = x - lx;
-        y = y - ly;
-        return {
-          x: x * cos - y * sin + lx,
-          y: x * sin + y * cos + ly
-        };
-      };
-      return [rotate(lx1, ly1), rotate(lx2, ly1), rotate(lx2, ly2), rotate(lx1, ly2)];
-    } else {
-      return [{
-        x: lx1,
-        y: ly1
-      }, {
-        x: lx2,
-        y: ly1
-      }, {
-        x: lx2,
-        y: ly2
-      }, {
-        x: lx1,
-        y: ly2
-      }];
-    }
+    return r.getLabelHitPolygon(ele, prefix, labelThreshold);
   }
   function doLinesIntersect(p1, p2, q1, q2) {
     function ccw(a, b, c) {
@@ -23933,6 +24320,18 @@ BRp$c.findTaxiPoints = function (edge, pairInfo) {
   };
   var dx = subDWH(pdx, dw);
   var dy = subDWH(pdy, dh);
+
+  // the middle of the gap between the facing sides of the nodes on one axis,
+  // or the middle between the centres if the nodes overlap on that axis
+  var midBetween = function midBetween(c1, c2, size1, size2) {
+    if (!dIncludesNodeBody) {
+      return (c1 + c2) / 2;
+    }
+    var sgn = signum(c2 - c1);
+    var side1 = c1 + sgn * size1 / 2;
+    var side2 = c2 - sgn * size2 / 2;
+    return sgn * (side2 - side1) >= 0 ? (side1 + side2) / 2 : (c1 + c2) / 2;
+  };
   var isExplicitDir = false;
   if (rawTaxiDir === AUTO) {
     taxiDir = Math.abs(dx) > Math.abs(dy) ? HORIZONTAL : VERTICAL;
@@ -23976,13 +24375,13 @@ BRp$c.findTaxiPoints = function (edge, pairInfo) {
       var lShapeInsideTgt = Math.abs(pdx) <= tgtW / 2;
       if (lShapeInsideSrc) {
         // horizontal Z-shape (direction not respected)
-        var x = (posPts.x1 + posPts.x2) / 2;
+        var x = midBetween(posPts.x1, posPts.x2, srcW, tgtW);
         var y1 = posPts.y1,
           y2 = posPts.y2;
         rs.segpts = [x, y1, x, y2];
       } else if (lShapeInsideTgt) {
         // vertical Z-shape (distance not respected)
-        var y = (posPts.y1 + posPts.y2) / 2;
+        var y = midBetween(posPts.y1, posPts.y2, srcH, tgtH);
         var x1 = posPts.x1,
           x2 = posPts.x2;
         rs.segpts = [x1, y, x2, y];
@@ -23996,13 +24395,13 @@ BRp$c.findTaxiPoints = function (edge, pairInfo) {
       var _lShapeInsideTgt = Math.abs(pdy) <= tgtH / 2;
       if (_lShapeInsideSrc) {
         // vertical Z-shape (direction not respected)
-        var _y = (posPts.y1 + posPts.y2) / 2;
+        var _y = midBetween(posPts.y1, posPts.y2, srcH, tgtH);
         var _x = posPts.x1,
           _x2 = posPts.x2;
         rs.segpts = [_x, _y, _x2, _y];
       } else if (_lShapeInsideTgt) {
         // horizontal Z-shape (turn distance not respected)
-        var _x3 = (posPts.x1 + posPts.x2) / 2;
+        var _x3 = midBetween(posPts.x1, posPts.x2, srcW, tgtW);
         var _y2 = posPts.y1,
           _y3 = posPts.y2;
         rs.segpts = [_x3, _y2, _x3, _y3];
@@ -24055,8 +24454,10 @@ BRp$c.tryToCorrectInvalidPoints = function (edge, pairInfo) {
     var badEnd = !number$1(rs.endX) || !number$1(rs.endY);
     var badAEnd = !number$1(rs.arrowEndX) || !number$1(rs.arrowEndY);
     var minCpADistFactor = 3;
-    var arrowW = this.getArrowWidth(edge.pstyle('width').pfValue, edge.pstyle('arrow-scale').value) * this.arrowShapeWidth;
-    var minCpADist = minCpADistFactor * arrowW;
+    var edgeWidth = edge.pstyle('width').pfValue;
+    // each end only needs to keep clear of its own arrow, so mid arrows don't factor in
+    var minCpASrcDist = minCpADistFactor * this.getArrowWidth(edgeWidth, getArrowScale(edge, 'source')) * this.arrowShapeWidth;
+    var minCpATgtDist = minCpADistFactor * this.getArrowWidth(edgeWidth, getArrowScale(edge, 'target')) * this.arrowShapeWidth;
     var startACpDist = dist({
       x: rs.ctrlpts[0],
       y: rs.ctrlpts[1]
@@ -24064,15 +24465,7 @@ BRp$c.tryToCorrectInvalidPoints = function (edge, pairInfo) {
       x: rs.startX,
       y: rs.startY
     });
-    var closeStartACp = startACpDist < minCpADist;
-    var endACpDist = dist({
-      x: rs.ctrlpts[0],
-      y: rs.ctrlpts[1]
-    }, {
-      x: rs.endX,
-      y: rs.endY
-    });
-    var closeEndACp = endACpDist < minCpADist;
+    var closeStartACp = startACpDist < minCpASrcDist;
     var overlapping = false;
     if (badStart || badAStart || closeStartACp) {
       overlapping = true;
@@ -24098,13 +24491,23 @@ BRp$c.tryToCorrectInvalidPoints = function (edge, pairInfo) {
       };
       var srcCtrlPtIntn = srcShape.intersectLine(srcPos.x, srcPos.y, srcW, srcH, cpProj.x, cpProj.y, 0, srcCornerRadius, srcRs);
       if (closeStartACp) {
-        rs.ctrlpts[0] = rs.ctrlpts[0] + cpM.x * (minCpADist - startACpDist);
-        rs.ctrlpts[1] = rs.ctrlpts[1] + cpM.y * (minCpADist - startACpDist);
+        rs.ctrlpts[0] = rs.ctrlpts[0] + cpM.x * (minCpASrcDist - startACpDist);
+        rs.ctrlpts[1] = rs.ctrlpts[1] + cpM.y * (minCpASrcDist - startACpDist);
       } else {
-        rs.ctrlpts[0] = srcCtrlPtIntn[0] + cpM.x * minCpADist;
-        rs.ctrlpts[1] = srcCtrlPtIntn[1] + cpM.y * minCpADist;
+        rs.ctrlpts[0] = srcCtrlPtIntn[0] + cpM.x * minCpASrcDist;
+        rs.ctrlpts[1] = srcCtrlPtIntn[1] + cpM.y * minCpASrcDist;
       }
     }
+
+    // measured after the source correction, which can push the control point towards the target
+    var endACpDist = dist({
+      x: rs.ctrlpts[0],
+      y: rs.ctrlpts[1]
+    }, {
+      x: rs.endX,
+      y: rs.endY
+    });
+    var closeEndACp = endACpDist < minCpATgtDist;
     if (badEnd || badAEnd || closeEndACp) {
       overlapping = true;
 
@@ -24129,11 +24532,11 @@ BRp$c.tryToCorrectInvalidPoints = function (edge, pairInfo) {
       };
       var tgtCtrlPtIntn = tgtShape.intersectLine(tgtPos.x, tgtPos.y, tgtW, tgtH, _cpProj.x, _cpProj.y, 0, tgtCornerRadius, tgtRs);
       if (closeEndACp) {
-        rs.ctrlpts[0] = rs.ctrlpts[0] + _cpM.x * (minCpADist - endACpDist);
-        rs.ctrlpts[1] = rs.ctrlpts[1] + _cpM.y * (minCpADist - endACpDist);
+        rs.ctrlpts[0] = rs.ctrlpts[0] + _cpM.x * (minCpATgtDist - endACpDist);
+        rs.ctrlpts[1] = rs.ctrlpts[1] + _cpM.y * (minCpATgtDist - endACpDist);
       } else {
-        rs.ctrlpts[0] = tgtCtrlPtIntn[0] + _cpM.x * minCpADist;
-        rs.ctrlpts[1] = tgtCtrlPtIntn[1] + _cpM.y * minCpADist;
+        rs.ctrlpts[0] = tgtCtrlPtIntn[0] + _cpM.x * minCpATgtDist;
+        rs.ctrlpts[1] = tgtCtrlPtIntn[1] + _cpM.y * minCpATgtDist;
       }
     }
     if (overlapping) {
@@ -24670,8 +25073,8 @@ BRp$b.findEndpoints = function (edge) {
       }
     }
   }
-  var arrowEnd = shortenIntersection(intersect, p1, r.arrowShapes[tgtArShape].spacing(edge) + tgtDist);
-  var edgeEnd = shortenIntersection(intersect, p1, r.arrowShapes[tgtArShape].gap(edge) + tgtDist);
+  var arrowEnd = shortenIntersection(intersect, p1, r.arrowShapes[tgtArShape].spacing(edge, 'target') + tgtDist);
+  var edgeEnd = shortenIntersection(intersect, p1, r.arrowShapes[tgtArShape].gap(edge, 'target') + tgtDist);
   rs.endX = edgeEnd[0];
   rs.endY = edgeEnd[1];
   rs.arrowEndX = arrowEnd[0];
@@ -24733,8 +25136,8 @@ BRp$b.findEndpoints = function (edge) {
       }
     }
   }
-  var arrowStart = shortenIntersection(intersect, p2, r.arrowShapes[srcArShape].spacing(edge) + srcDist);
-  var edgeStart = shortenIntersection(intersect, p2, r.arrowShapes[srcArShape].gap(edge) + srcDist);
+  var arrowStart = shortenIntersection(intersect, p2, r.arrowShapes[srcArShape].spacing(edge, 'source') + srcDist);
+  var edgeStart = shortenIntersection(intersect, p2, r.arrowShapes[srcArShape].gap(edge, 'source') + srcDist);
   rs.startX = edgeStart[0];
   rs.startY = edgeStart[1];
   rs.arrowStartX = arrowStart[0];
@@ -24827,7 +25230,20 @@ BRp$a.storeEdgeProjections = function (edge) {
       y: hpts[3]
     }];
   }
-  _p.rstyle.arrowWidth = this.getArrowWidth(edge.pstyle('width').pfValue, edge.pstyle('arrow-scale').value) * this.arrowShapeWidth;
+  var edgeWidth = edge.pstyle('width').pfValue;
+  var arrowWidths = _p.rstyle.arrowWidths = _p.rstyle.arrowWidths || {};
+  var maxScale = 0;
+  for (var _i = 0; _i < arrowPrefixes.length; _i++) {
+    var prefix = arrowPrefixes[_i];
+    var scale = getArrowScale(edge, prefix);
+    arrowWidths[prefix] = this.getArrowWidth(edgeWidth, scale) * this.arrowShapeWidth;
+    if (scale > maxScale) {
+      maxScale = scale;
+    }
+  }
+
+  // kept for callers that want one width covering every arrow on the edge
+  _p.rstyle.arrowWidth = this.getArrowWidth(edgeWidth, maxScale) * this.arrowShapeWidth;
 };
 BRp$a.recalculateEdgeProjections = function (edges) {
   this.findEdgeControlPoints(edges);
@@ -26516,19 +26932,16 @@ BRp$3.load = function () {
     r.hoverData.mdownGPos = null;
     r.hoverData.which = null;
   }, false);
-  var wheelDeltas = []; // log of first N wheel deltas
+  var wheelDeltas = []; // log of first N wheel deltas' magnitudes
   var wheelDeltaN = 4; // how many events to log
   var inaccurateScrollDevice;
   var inaccurateScrollFactor = 100000; // base of inaccurate wheel deltas (e.g. base 5 could yield wheels of 10, 25, 50, etc.)
+  var sampledScrollFactor; // value of inaccurateScrollFactor right after sampling
+  var wheelFactorMaxReduction = 4; // a new factor below this reduction of sampledScrollFactor is replaced by the notch itself
+  var wheelNotchMaxReduction = 8; // relative cutoff for small precise deltas
+  var wheelSmallDeltaMax = 15; // cap the cutoff so a heavily coalesced sample can't exclude ordinary mouse notches
+  var unconfirmedMagnitude = null; // delta magnitude that didn't fit inaccurateScrollFactor, notches of the factor since then aside
 
-  var allAreDivisibleBy = function allAreDivisibleBy(list, factor) {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i] % factor !== 0) {
-        return false;
-      }
-    }
-    return true;
-  };
   var allAreSameMagnitude = function allAreSameMagnitude(list) {
     var firstMag = Math.abs(list[0]);
     for (var i = 1; i < list.length; i++) {
@@ -26555,32 +26968,65 @@ BRp$3.load = function () {
     if (inaccurateScrollDevice == null) {
       if (wheelDeltas.length >= wheelDeltaN) {
         // use log to determine if inaccurate
+        inaccurateScrollDevice = false;
         var wds = wheelDeltas;
-        inaccurateScrollDevice = allAreDivisibleBy(wds, 5);
-        if (!inaccurateScrollDevice) {
-          // check for all large values of exact same magnitude
-          var firstMag = Math.abs(wds[0]);
-          inaccurateScrollDevice = allAreSameMagnitude(wds) && firstMag > 5;
-        }
-        if (inaccurateScrollDevice) {
-          for (var i = 0; i < wds.length; i++) {
-            inaccurateScrollFactor = Math.min(Math.abs(wds[i]), inaccurateScrollFactor);
+        if (wds[0] >= 5) {
+          var factor;
+          // an array of equal integers "x" will have a GCD of x, so in that
+          // case there is no need to have a separate "allAreSameMagnitude"
+          // check. but the GCD function only supports integers, so keeping
+          // both checks allows arrays of equal floating-point numbers
+          if (allAreSameMagnitude(wds)) {
+            factor = wds[0];
+          } else {
+            factor = gcdMultipleZeroIfNonInt(wds);
+          }
+          if (factor > 1) {
+            inaccurateScrollDevice = true;
+            inaccurateScrollFactor = factor;
+            sampledScrollFactor = factor;
           }
         }
-
         // console.log('Sampled wheel deltas:', wds);
         // console.log('inaccurateScrollDevice:', inaccurateScrollDevice);
         // console.log('inaccurateScrollFactor:', inaccurateScrollFactor);
       } else {
         // clamp and log until we reach N
-        wheelDeltas.push(delta);
+        wheelDeltas.push(Math.abs(delta));
         clamp = true;
         // console.log('Clamping initial wheel events until we get a good sample');
       }
-    } else if (inaccurateScrollDevice) {
-      // keep updating
-      inaccurateScrollFactor = Math.min(Math.abs(delta), inaccurateScrollFactor);
-      // console.log('Keep updating inaccurateScrollFactor beyond sample in case we did not get the smallest possible val:', inaccurateScrollFactor);
+    }
+
+    // only multiples of the factor are wheel notches: the same page can also get
+    // precise deltas (e.g. from a trackpad), which must not affect the factor
+    var isWheelNotch = false;
+    if (inaccurateScrollDevice) {
+      var magnitude = Math.abs(delta);
+      isWheelNotch = isIntegerMultiple(magnitude, inaccurateScrollFactor);
+      if (isWheelNotch) ; else if (magnitude < Math.min(sampledScrollFactor / wheelNotchMaxReduction, wheelSmallDeltaMax)) {
+        unconfirmedMagnitude = null;
+      } else if (!integer(magnitude) && isIntegerMultiple(inaccurateScrollFactor, magnitude)) {
+        // Fractional mouse notches can divide a coalesced sample exactly, e.g.
+        // at non-default page zoom. Recover immediately instead of zooming by
+        // the raw pixel delta while waiting for an identical notch.
+        inaccurateScrollFactor = magnitude;
+        unconfirmedMagnitude = null;
+        isWheelNotch = true;
+      } else if (magnitude === unconfirmedMagnitude) {
+        // the same magnitude twice in a row is a notch that the factor doesn't fit,
+        // e.g. after an unlucky sample (only coalesced notches) or from another mouse
+        var commonFactor = gcdMultipleZeroIfNonInt([inaccurateScrollFactor, magnitude]);
+        inaccurateScrollFactor = commonFactor * wheelFactorMaxReduction >= sampledScrollFactor ? commonFactor : magnitude;
+        unconfirmedMagnitude = null;
+        isWheelNotch = true;
+        // console.log('Updated inaccurateScrollFactor beyond sample:', inaccurateScrollFactor);
+      } else {
+        // Might be a notch, but could also be a precise delta. Bound large
+        // fractional deltas too: they may be coalesced mouse notches.
+        unconfirmedMagnitude = magnitude;
+        clamp = integer(magnitude) || magnitude > inaccurateScrollFactor;
+      }
     }
     if (r.scrollingPage) {
       return;
@@ -26610,7 +27056,7 @@ BRp$3.load = function () {
         delta = signum(delta) * 5;
       }
       diff = delta / -250;
-      if (inaccurateScrollDevice) {
+      if (isWheelNotch) {
         diff /= inaccurateScrollFactor;
         diff *= 3;
       }
@@ -27072,10 +27518,14 @@ BRp$3.load = function () {
           r.redrawHint('drag', true);
           r.redrawHint('eles', true);
           _start.unactivate().emit(makeEvent('freeon'));
-          draggedEles.emit(makeEvent('free'));
+          if (draggedEles) {
+            draggedEles.emit(makeEvent('free'));
+          }
           if (r.dragData.didDrag) {
             _start.emit(makeEvent('dragfreeon'));
-            draggedEles.emit(makeEvent('dragfree'));
+            if (draggedEles) {
+              draggedEles.emit(makeEvent('dragfree'));
+            }
           }
         }
         cy.viewport({
@@ -27591,12 +28041,15 @@ BRp$2.generateRoundPolygon = function (name, points) {
     name: name,
     points: points,
     getOrCreateCorners: function getOrCreateCorners(centerX, centerY, width, height, cornerRadius, rs, field) {
-      if (rs[field] !== undefined && rs[field + '-cx'] === centerX && rs[field + '-cy'] === centerY) {
+      if (rs[field] !== undefined && rs[field + '-cx'] === centerX && rs[field + '-cy'] === centerY && rs[field + '-w'] === width && rs[field + '-h'] === height && rs[field + '-corner-radius'] === cornerRadius) {
         return rs[field];
       }
       rs[field] = new Array(points.length / 2);
       rs[field + '-cx'] = centerX;
       rs[field + '-cy'] = centerY;
+      rs[field + '-w'] = width;
+      rs[field + '-h'] = height;
+      rs[field + '-corner-radius'] = cornerRadius;
       var halfW = width / 2;
       var halfH = height / 2;
       cornerRadius = cornerRadius === 'auto' ? getRoundPolygonRadius(width, height) : cornerRadius;
@@ -28052,6 +28505,8 @@ BRp$1.startRenderLoop = function () {
       return;
     }
     if (cy.batching()) ; else if (r.requestedFrame && !r.skipFrame) {
+      r.requestedFrame = false; // preserve redraw requests made by callbacks or rendering
+
       beforeRenderCallbacks(r, true, requestTime);
       var startTime = performanceNow();
       r.render(r.renderOptions);
@@ -28072,7 +28527,6 @@ BRp$1.startRenderLoop = function () {
 
       // use a weighted average with a bias from the previous average so we don't spike so easily
       r.averageRedrawTime = r.averageRedrawTime / 2 + duration / 2;
-      r.requestedFrame = false;
     } else {
       beforeRenderCallbacks(r, false, requestTime);
     }
@@ -29818,7 +30272,7 @@ CRp$9.drawEdge = function (context, edge, shiftToOriginWithBb) {
     context.lineWidth = edgeWidth + lineOutlineWidth;
     context.lineCap = lineCap;
     if (lineOutlineWidth > 0) {
-      r.colorStrokeStyle(context, lineOutlineColor[0], lineOutlineColor[1], lineOutlineColor[2], strokeOpacity);
+      r.colorStrokeStyle(context, lineOutlineColor, strokeOpacity);
     } else {
       // do not draw any lineOutline
       context.lineCap = 'butt'; // reset for other drawing functions
@@ -29878,6 +30332,7 @@ var drawEdgeOverlayUnderlay = function drawEdgeOverlayUnderlay(overlayOrUnderlay
     throw new Error('Invalid state');
   }
   return function (context, edge) {
+    var _edge$pstyle;
     if (!edge.visible()) {
       return;
     }
@@ -29890,14 +30345,26 @@ var drawEdgeOverlayUnderlay = function drawEdgeOverlayUnderlay(overlayOrUnderlay
     var rs = edge._private.rscratch;
     var padding = edge.pstyle("".concat(overlayOrUnderlay, "-padding")).pfValue;
     var width = 2 * padding;
-    var color = edge.pstyle("".concat(overlayOrUnderlay, "-color")).value;
     context.lineWidth = width;
     if (rs.edgeType === 'self' && !usePaths) {
       context.lineCap = 'butt';
     } else {
       context.lineCap = 'round';
     }
-    r.colorStrokeStyle(context, color[0], color[1], color[2], opacity);
+    var fillStyle = (_edge$pstyle = edge.pstyle("".concat(overlayOrUnderlay, "-fill"))) === null || _edge$pstyle === void 0 ? void 0 : _edge$pstyle.value;
+    if (fillStyle === 'linear-gradient' || fillStyle === 'radial-gradient') {
+      var gradient = r.createGradientStyleFor(context, overlayOrUnderlay, edge, fillStyle, opacity);
+      if (gradient) {
+        context.strokeStyle = gradient;
+      } else {
+        // fallback to single‑color if gradient config is invalid
+        var color = edge.pstyle("".concat(overlayOrUnderlay, "-color")).value;
+        r.colorStrokeStyle(context, color, opacity);
+      }
+    } else {
+      var _color = edge.pstyle("".concat(overlayOrUnderlay, "-color")).value;
+      r.colorStrokeStyle(context, _color, opacity);
+    }
     r.drawEdgePath(edge, context, rs.allpts, 'solid');
   };
 };
@@ -30046,18 +30513,18 @@ CRp$9.drawArrowhead = function (context, edge, prefix, x, y, angle, opacity) {
   if (opacity !== 1 || arrowFill === 'hollow') {
     // then extra clear is needed
     context.globalCompositeOperation = 'destination-out';
-    self.colorFillStyle(context, 255, 255, 255, 1);
-    self.colorStrokeStyle(context, 255, 255, 255, 1);
-    self.drawArrowShape(edge, context, arrowClearFill, edgeWidth, arrowShape, arrowWidth, x, y, angle);
+    self.colorFillStyle(context, [255, 255, 255], 1);
+    self.colorStrokeStyle(context, [255, 255, 255], 1);
+    self.drawArrowShape(edge, context, arrowClearFill, edgeWidth, arrowShape, arrowWidth, x, y, angle, prefix);
     context.globalCompositeOperation = gco;
   } // otherwise, the opaque arrow clears it for free :)
 
   var color = edge.pstyle(prefix + '-arrow-color').value;
-  self.colorFillStyle(context, color[0], color[1], color[2], opacity);
-  self.colorStrokeStyle(context, color[0], color[1], color[2], opacity);
-  self.drawArrowShape(edge, context, arrowFill, edgeWidth, arrowShape, arrowWidth, x, y, angle);
+  self.colorFillStyle(context, color, opacity);
+  self.colorStrokeStyle(context, color, opacity);
+  self.drawArrowShape(edge, context, arrowFill, edgeWidth, arrowShape, arrowWidth, x, y, angle, prefix);
 };
-CRp$9.drawArrowShape = function (edge, context, fill, edgeWidth, shape, shapeWidth, x, y, angle) {
+CRp$9.drawArrowShape = function (edge, context, fill, edgeWidth, shape, shapeWidth, x, y, angle, prefix) {
   var r = this;
   var usePaths = this.usePaths() && shape !== 'triangle-cross';
   var pathCacheHit = false;
@@ -30067,9 +30534,9 @@ CRp$9.drawArrowShape = function (edge, context, fill, edgeWidth, shape, shapeWid
     x: x,
     y: y
   };
-  var scale = edge.pstyle('arrow-scale').value;
-  var size = this.getArrowWidth(edgeWidth, scale);
   var shapeImpl = r.arrowShapes[shape];
+  var scale = getArrowScale(edge, prefix);
+  var size = this.getArrowWidth(edgeWidth, scale);
   if (usePaths) {
     var cache = r.arrowPathCache = r.arrowPathCache || [];
     var key = hashString(shape);
@@ -30374,8 +30841,8 @@ CRp$7.setupTextStyle = function (context, ele) {
   context.font = labelStyle + ' ' + labelWeight + ' ' + labelSize + ' ' + labelFamily;
   context.lineJoin = 'round'; // so text outlines aren't jagged
 
-  this.colorFillStyle(context, color[0], color[1], color[2], opacity);
-  this.colorStrokeStyle(context, outlineColor[0], outlineColor[1], outlineColor[2], outlineOpacity);
+  this.colorFillStyle(context, color, opacity);
+  this.colorStrokeStyle(context, outlineColor, outlineOpacity);
 };
 function circle(ctx, x, y, width, height) {
   var diameter = Math.min(width, height);
@@ -30508,10 +30975,10 @@ CRp$7.drawText = function (context, ele, prefix) {
       var bgW = textW + 2 * backgroundPadding;
       var bgH = textH + 2 * backgroundPadding;
       if (doFill) {
-        context.fillStyle = "rgba(".concat(textBackgroundColor[0], ",").concat(textBackgroundColor[1], ",").concat(textBackgroundColor[2], ",").concat(backgroundOpacity * parentOpacity, ")");
+        this.colorFillStyle(context, textBackgroundColor, backgroundOpacity * parentOpacity);
       }
       if (doStroke) {
-        context.strokeStyle = "rgba(".concat(textBorderColor[0], ",").concat(textBorderColor[1], ",").concat(textBorderColor[2], ",").concat(borderOpacity * parentOpacity, ")");
+        this.colorStrokeStyle(context, textBorderColor, borderOpacity * parentOpacity);
         context.lineWidth = textBorderWidth;
         if (context.setLineDash) {
           switch (textBorderStyle) {
@@ -30708,11 +31175,11 @@ CRp$6.drawNode = function (context, node, shiftToOriginWithBb) {
   };
   var setupBorderColor = function setupBorderColor() {
     var bdrOpy = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : borderOpacity;
-    r.colorStrokeStyle(context, borderColor[0], borderColor[1], borderColor[2], bdrOpy);
+    r.colorStrokeStyle(context, borderColor, bdrOpy);
   };
   var setupOutlineColor = function setupOutlineColor() {
     var otlnOpy = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : outlineOpacity;
-    r.colorStrokeStyle(context, outlineColor[0], outlineColor[1], outlineColor[2], otlnOpy);
+    r.colorStrokeStyle(context, outlineColor, otlnOpy);
   };
 
   //
@@ -30768,6 +31235,9 @@ CRp$6.drawNode = function (context, node, shiftToOriginWithBb) {
     var prevBging = _p.backgrounding;
     var totalCompleted = 0;
     for (var _i = 0; _i < image.length; _i++) {
+      if (!urlDefined[_i]) {
+        continue;
+      }
       var bgContainment = node.cy().style().getIndexedStyle(node, 'background-image-containment', 'value', _i);
       if (inside && bgContainment === 'over' || !inside && bgContainment === 'inside') {
         totalCompleted++;
@@ -30825,7 +31295,7 @@ CRp$6.drawNode = function (context, node, shiftToOriginWithBb) {
     var opacity = (darkness > 0 ? darkness : -darkness) * darkenOpacity;
     var c = darkness > 0 ? 0 : 255;
     if (darkness !== 0) {
-      r.colorFillStyle(context, c, c, c, opacity);
+      r.colorFillStyle(context, [c, c, c], opacity);
       if (usePaths) {
         context.fill(path);
       } else {
@@ -31109,17 +31579,30 @@ var drawNodeOverlayUnderlay = function drawNodeOverlayUnderlay(overlayOrUnderlay
     }
     var padding = node.pstyle("".concat(overlayOrUnderlay, "-padding")).pfValue;
     var opacity = node.pstyle("".concat(overlayOrUnderlay, "-opacity")).value;
-    var color = node.pstyle("".concat(overlayOrUnderlay, "-color")).value;
     var shape = node.pstyle("".concat(overlayOrUnderlay, "-shape")).value;
     var radius = node.pstyle("".concat(overlayOrUnderlay, "-corner-radius")).value;
     if (opacity > 0) {
+      var _node$pstyle;
       pos = pos || node.position();
       if (nodeWidth == null || nodeHeight == null) {
         var _padding = node.padding();
         nodeWidth = node.width() + 2 * _padding;
         nodeHeight = node.height() + 2 * _padding;
       }
-      r.colorFillStyle(context, color[0], color[1], color[2], opacity);
+      var fillStyle = (_node$pstyle = node.pstyle("".concat(overlayOrUnderlay, "-fill"))) === null || _node$pstyle === void 0 ? void 0 : _node$pstyle.value;
+      if (fillStyle === 'linear-gradient' || fillStyle === 'radial-gradient') {
+        var gradient = r.createGradientStyleFor(context, overlayOrUnderlay, node, fillStyle, opacity);
+        if (gradient) {
+          context.fillStyle = gradient;
+        } else {
+          // fallback to single-color if gradient config is invalid
+          var color = node.pstyle("".concat(overlayOrUnderlay, "-color")).value;
+          r.colorFillStyle(context, color, opacity);
+        }
+      } else {
+        var _color = node.pstyle("".concat(overlayOrUnderlay, "-color")).value;
+        r.colorFillStyle(context, _color, opacity);
+      }
       r.nodeShapes[shape].draw(context, pos.x, pos.y, nodeWidth + padding * 2, nodeHeight + padding * 2, radius);
       context.fill();
     }
@@ -31207,7 +31690,7 @@ CRp$6.drawPie = function (context, node, nodeOpacity, pos) {
       context.arc(x, y, holeRadius, angleEnd, angleStart, true); // true for anticlockwise
       context.closePath();
     }
-    this.colorFillStyle(context, color[0], color[1], color[2], opacity);
+    this.colorFillStyle(context, color, opacity);
     context.fill();
     lastPercent += percent;
   }
@@ -31274,7 +31757,7 @@ CRp$6.drawStripe = function (context, node, nodeOpacity, pos) {
     context.beginPath();
     context.rect(x, y + stripeH * lastPercent, stripeW, stripeH * percent);
     context.closePath();
-    this.colorFillStyle(context, color[0], color[1], color[2], opacity);
+    this.colorFillStyle(context, color, opacity);
     context.fill();
     lastPercent += percent;
   }
@@ -31286,6 +31769,12 @@ var motionBlurDelay = 100;
 
 // var isFirefox = typeof InstallTrigger !== 'undefined';
 
+var colorAlpha = function colorAlpha(color) {
+  return color[3] == null ? 1 : color[3];
+};
+var effectiveAlpha = function effectiveAlpha(color, opacity) {
+  return colorAlpha(color) * opacity;
+};
 CRp$5.getPixelRatio = function () {
   var context = this.data.contexts[0];
   if (this.forcedPixelRatio != null) {
@@ -31328,7 +31817,7 @@ CRp$5.createGradientStyleFor = function (context, shapeStyleName, ele, fill, opa
       var d2 = dist(end, mid);
       gradientStyle = context.createRadialGradient(mid.x, mid.y, 0, mid.x, mid.y, Math.max(d1, d2));
     } else {
-      var pos = usePaths ? {
+      var pos = usePaths && shapeStyleName === 'background' ? {
           x: 0,
           y: 0
         } : ele.position(),
@@ -31342,7 +31831,7 @@ CRp$5.createGradientStyleFor = function (context, shapeStyleName, ele, fill, opa
         _end = ele.targetEndpoint();
       gradientStyle = context.createLinearGradient(_start.x, _start.y, _end.x, _end.y);
     } else {
-      var _pos = usePaths ? {
+      var _pos = usePaths && shapeStyleName === 'background' ? {
           x: 0,
           y: 0
         } : ele.position(),
@@ -31350,7 +31839,7 @@ CRp$5.createGradientStyleFor = function (context, shapeStyleName, ele, fill, opa
         _height = ele.paddedHeight(),
         halfWidth = _width / 2,
         halfHeight = _height / 2;
-      var direction = ele.pstyle('background-gradient-direction').value;
+      var direction = ele.pstyle(shapeStyleName + '-gradient-direction').value;
       switch (direction) {
         case 'to-bottom':
           gradientStyle = context.createLinearGradient(_pos.x, _pos.y - halfHeight, _pos.x, _pos.y + halfHeight);
@@ -31388,7 +31877,8 @@ CRp$5.createGradientStyleFor = function (context, shapeStyleName, ele, fill, opa
   var hasPositions = positions.length === colors.length;
   var length = colors.length;
   for (var i = 0; i < length; i++) {
-    gradientStyle.addColorStop(hasPositions ? positions[i] : i / (length - 1), 'rgba(' + colors[i][0] + ',' + colors[i][1] + ',' + colors[i][2] + ',' + opacity + ')');
+    var stopAlpha = effectiveAlpha(colors[i], opacity);
+    gradientStyle.addColorStop(hasPositions ? positions[i] : i / (length - 1), 'rgba(' + colors[i][0] + ',' + colors[i][1] + ',' + colors[i][2] + ',' + stopAlpha + ')');
   }
   return gradientStyle;
 };
@@ -31397,8 +31887,8 @@ CRp$5.gradientFillStyle = function (context, ele, fill, opacity) {
   if (!gradientStyle) return null; // error
   context.fillStyle = gradientStyle;
 };
-CRp$5.colorFillStyle = function (context, r, g, b, a) {
-  context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+CRp$5.colorFillStyle = function (context, color, opacity) {
+  context.fillStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + effectiveAlpha(color, opacity) + ')';
   // turn off for now, seems context does its own caching
 
   // var cache = this.paintCache(context);
@@ -31415,7 +31905,7 @@ CRp$5.eleFillStyle = function (context, ele, opacity) {
     this.gradientFillStyle(context, ele, backgroundFill, opacity);
   } else {
     var backgroundColor = ele.pstyle('background-color').value;
-    this.colorFillStyle(context, backgroundColor[0], backgroundColor[1], backgroundColor[2], opacity);
+    this.colorFillStyle(context, backgroundColor, opacity);
   }
 };
 CRp$5.gradientStrokeStyle = function (context, ele, fill, opacity) {
@@ -31423,8 +31913,8 @@ CRp$5.gradientStrokeStyle = function (context, ele, fill, opacity) {
   if (!gradientStyle) return null; // error
   context.strokeStyle = gradientStyle;
 };
-CRp$5.colorStrokeStyle = function (context, r, g, b, a) {
-  context.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+CRp$5.colorStrokeStyle = function (context, color, opacity) {
+  context.strokeStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + effectiveAlpha(color, opacity) + ')';
   // turn off for now, seems context does its own caching
 
   // var cache = this.paintCache(context);
@@ -31441,7 +31931,7 @@ CRp$5.eleStrokeStyle = function (context, ele, opacity) {
     this.gradientStrokeStyle(context, ele, lineFill, opacity);
   } else {
     var lineColor = ele.pstyle('line-color').value;
-    this.colorStrokeStyle(context, lineColor[0], lineColor[1], lineColor[2], opacity);
+    this.colorStrokeStyle(context, lineColor, opacity);
   }
 };
 
@@ -31604,7 +32094,7 @@ CRp$5.render = function (options) {
   function mbclear(context, x, y, w, h) {
     var gco = context.globalCompositeOperation;
     context.globalCompositeOperation = 'destination-out';
-    r.colorFillStyle(context, 255, 255, 255, r.motionBlurTransparency);
+    r.colorFillStyle(context, [255, 255, 255], r.motionBlurTransparency);
     context.fillRect(x, y, w, h);
     context.globalCompositeOperation = gco;
   }
@@ -31682,7 +32172,7 @@ CRp$5.render = function (options) {
     }
     var outsideBgColor = style.core('outside-texture-bg-color').value;
     var outsideBgOpacity = style.core('outside-texture-bg-opacity').value;
-    r.colorFillStyle(context, outsideBgColor[0], outsideBgColor[1], outsideBgColor[2], outsideBgOpacity);
+    r.colorFillStyle(context, outsideBgColor, outsideBgOpacity);
     context.fillRect(0, 0, vp.width, vp.height);
     var zoom = cy.zoom();
     setContextTransform(context, false);
@@ -31966,7 +32456,7 @@ function toWebGLColor(color, opacity, outArray) {
   var r = color[0] / 255;
   var g = color[1] / 255;
   var b = color[2] / 255;
-  var a = opacity;
+  var a = (color[3] == null ? 1 : color[3]) * opacity;
   var arr = outArray || new Array(4);
   arr[0] = r * a;
   arr[1] = g * a;
@@ -33809,7 +34299,7 @@ var ElementDrawingWebGL = /*#__PURE__*/function () {
       var lineOpacity = edge.pstyle('line-opacity').value;
       var opacity = baseOpacity * lineOpacity;
       var lineWidth = edge.pstyle('width').pfValue;
-      var scale$1 = edge.pstyle('arrow-scale').value;
+      var scale$1 = getArrowScale(edge, prefix);
       var size = this.r.getArrowWidth(lineWidth, scale$1);
       var instance = this.instanceCount;
       var transform = this.transformBuffer.getMatrixView(instance);
@@ -34581,7 +35071,11 @@ function drawEle(r, index, ele) {
 }
 
 /**
- * Render one frame.
+ * Render one frame to the screen or to an offscreen picking framebuffer.
+ *
+ * @param {object} r The renderer instance.
+ * @param {object} [options] Render options.
+ * @param {object} renderTarget The render target (RENDER_TARGET.SCREEN or RENDER_TARGET.PICKING).
  */
 function renderWebgl(r, options, renderTarget) {
   var start;
@@ -34629,8 +35123,13 @@ function renderWebgl(r, options, renderTarget) {
       drawAxes(r);
       drawAtlases(r);
     }
-    r.data.canvasNeedsRedraw[r.NODE] = false;
-    r.data.canvasNeedsRedraw[r.DRAG] = false;
+
+    // Only clear screen canvas redraw flags when rendering to the screen.
+    // Offscreen picking passes should not clear screen redraw flags (#3536).
+    if (renderTarget.screen) {
+      r.data.canvasNeedsRedraw[r.NODE] = false;
+      r.data.canvasNeedsRedraw[r.DRAG] = false;
+    }
   }
   if (r.webglDebug) {
     // eslint-disable-next-line no-undef
@@ -34865,8 +35364,6 @@ CRp$2.bufferCanvasImage = function (options) {
       buffCxt.translate(-bb.x1 * scale, -bb.y1 * scale);
       buffCxt.scale(scale, scale);
       this.drawElements(buffCxt, zsortedEles);
-      buffCxt.scale(1 / scale, 1 / scale);
-      buffCxt.translate(bb.x1 * scale, bb.y1 * scale);
     } else {
       // draw the current view
       var pan = cy.pan();
@@ -34878,16 +35375,16 @@ CRp$2.bufferCanvasImage = function (options) {
       buffCxt.translate(translation.x, translation.y);
       buffCxt.scale(scale, scale);
       this.drawElements(buffCxt, zsortedEles);
-      buffCxt.scale(1 / scale, 1 / scale);
-      buffCxt.translate(-translation.x, -translation.y);
     }
+
+    // Inverse transforms can leave rounding errors that make the background edges translucent.
+    buffCxt.setTransform(1, 0, 0, 1, 0, 0);
 
     // need to fill bg at end like this in order to fill cleared transparent pixels in jpgs
     if (options.bg) {
       buffCxt.globalCompositeOperation = 'destination-over';
       buffCxt.fillStyle = options.bg;
-      buffCxt.rect(0, 0, width, height);
-      buffCxt.fill();
+      buffCxt.fillRect(0, 0, width, height);
     }
   }
   return buffCanvas;
@@ -35639,7 +36136,7 @@ sheetfn.appendToStyle = function (style) {
   return style;
 };
 
-var version = "3.34.0";
+var version = "3.35.0";
 
 var cytoscape = function cytoscape(options) {
   // if no options specified, use default

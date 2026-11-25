@@ -1,3 +1,288 @@
+//#region node_modules/@hediet/json-rpc/dist/JsonRpcTypes.d.ts
+type JSONObject = {
+  [key: string]: JSONValue | undefined;
+};
+interface JSONArray extends Array<JSONValue> {}
+type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
+type Message = IRequestMessage | IResponseMessage;
+/**
+ * Represents a request or a notification.
+ */
+interface IRequestMessage {
+  jsonrpc: "2.0";
+  /**  must not match `rpc\..*` */
+  method: string;
+  params?: JSONArray | JSONObject;
+  /** Is not set if and only if the request is a notification. */
+  id?: RequestId;
+  /** Requests don't have a result. */
+  result?: never;
+}
+type RequestId = number | string;
+/**
+ * Either result or error is set.
+ */
+interface IResponseMessage {
+  jsonrpc: "2.0";
+  /**
+   * This member is REQUIRED on success.
+   * This member MUST NOT exist if there was an error invoking the method.
+   * The value of this member is determined by the method invoked on the Server.
+   */
+  result?: JSONValue;
+  /**
+   * This member is REQUIRED on error.
+   * This member MUST NOT exist if there was no error triggered during invocation.
+   */
+  error?: ErrorObject;
+  /**
+   * If there was an error in detecting the id in the Request object
+   * (e.g. Parse error/Invalid Request), it MUST be Null.
+   */
+  id: RequestId | null;
+  method?: never;
+}
+interface ErrorObject {
+  /** A Number that indicates the error type that occurred. */
+  code: ErrorCode;
+  /** The message SHOULD be limited to a concise single sentence. */
+  message: string;
+  /**
+   * A Primitive or Structured value that contains additional information about the error.
+   * This may be omitted.
+   * The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.).
+   */
+  data?: JSONValue;
+}
+declare namespace ErrorObject {
+  function create(obj: ErrorObject): ErrorObject;
+}
+interface ErrorCode extends Number {}
+declare namespace ErrorCode {
+  /**
+   * Invalid JSON was received by the server.
+   * An error occurred on the server while parsing the JSON text.
+   */
+  const parseError: ErrorCode;
+  /**
+   * The JSON sent is not a valid Request object.
+   */
+  const invalidRequest: ErrorCode;
+  /**
+   * The method does not exist/is not available.
+   */
+  const methodNotFound: ErrorCode;
+  /**
+   * Invalid method parameter(s).
+   */
+  const invalidParams: ErrorCode;
+  /**
+   * 	Internal JSON-RPC error.
+   */
+  const internalError: ErrorCode;
+  /**
+   * implementation-defined server-errors.
+   */
+  function isServerError(code: number): boolean;
+  /**
+   * implementation-defined server-errors.
+   */
+  function serverError(code: number): ErrorCode;
+  /**
+   * Non-spec.
+   */
+  const unexpectedServerError: ErrorCode;
+  function isApplicationError(code: number): boolean;
+  function applicationError(code: number): ErrorCode;
+  /**
+   * Non-spec.
+   */
+  const genericApplicationError: ErrorCode;
+}
+//#endregion
+//#region node_modules/@hediet/json-rpc/dist/common.d.ts
+interface IDisposable$1 {
+  dispose(): void;
+}
+type IEvent$1<T> = (listener: (e: T) => void) => IDisposable$1;
+declare class EventEmitter<T> {
+  private listeners;
+  readonly event: IEvent$1<T>;
+  fire(args: T): void;
+}
+interface IValueWithChangeEvent<T> {
+  get value(): T;
+  get onChange(): IEvent$1<T>;
+}
+declare class ValueWithChangeEvent<T> implements IValueWithChangeEvent<T> {
+  private _value;
+  private eventEmitter;
+  constructor(initialValue: T);
+  get value(): T;
+  set value(newValue: T);
+  get onChange(): IEvent$1<T>;
+}
+//#endregion
+//#region node_modules/@hediet/json-rpc/dist/MessageTransport.d.ts
+/**
+ * Represents a mechanism to send and receive messages.
+ */
+interface IMessageTransport {
+  get state(): IValueWithChangeEvent<ConnectionState>;
+  send(message: Message): Promise<void>;
+  /**
+   * Sets a listener for received messages.
+   * The listener might be called multiple times before this function returns.
+   * The method allows reentrancy.
+   */
+  setListener(listener: MessageListener | undefined): void;
+  /**
+   * Returns a human readable representation of this stream.
+   */
+  toString(): string;
+}
+type ConnectionState = {
+  state: "connecting";
+} | {
+  state: "open";
+} | {
+  state: "closed";
+  error: Error | undefined;
+};
+type MessageListener = (message: Message) => void;
+/**
+ * Base class for implementing a MessageStream.
+ * Provides an unreadMessage queue.
+ */
+declare abstract class BaseMessageTransport implements IMessageTransport {
+  private static id;
+  private readonly _unprocessedMessages;
+  private _messageListener;
+  protected readonly id: number;
+  private readonly _state;
+  readonly state: ValueWithChangeEvent<ConnectionState>;
+  /**
+   * Sets a callback for incoming messages.
+   */
+  setListener(listener: MessageListener | undefined): void;
+  /**
+   * Writes a message to the stream.
+   */
+  send(message: Message): Promise<void>;
+  protected abstract _sendImpl(message: Message): Promise<void>;
+  /**
+   * Returns human readable information of this message stream.
+   */
+  abstract toString(): string;
+  /**
+   * Call this in derived classes to signal a new message.
+   */
+  protected _dispatchReceivedMessage(message: Message): void;
+  /**
+   * Call this in derived classes to signal that the connection closed.
+   */
+  protected _onConnectionClosed(): void;
+  log(logger?: IMessageLogger): IMessageTransport;
+}
+/**
+ * Used by `StreamLogger` to log messages.
+ */
+interface IMessageLogger {
+  log(stream: IMessageTransport, type: "incoming" | "outgoing", message: Message): void;
+}
+//#endregion
+//#region node_modules/@hediet/json-rpc/dist/typedChannel/serializerMapping.d.ts
+declare global {
+  interface JsonRpcSerializerMapper<T> {}
+}
+//#endregion
+//#region src/utils.d.ts
+interface IDisposable$2 {
+  dispose(): void;
+}
+//#endregion
+//#region src/adapters/LspClient.d.ts
+interface MonacoLspClientOptions {
+  /**
+   * Local editor commands (in addition to a small set of safe defaults) that the language server
+   * may trigger, e.g. from completion items, code lenses, code actions or inlay hints.
+   *
+   * Language servers are untrusted: only add commands that are safe to run with arbitrary arguments.
+   * Commands that the server advertises in `executeCommandProvider` are always sent back to the server
+   * via `workspace/executeCommand` and do not need to be listed here.
+   */
+  allowedLocalCommands?: readonly string[];
+}
+declare class MonacoLspClient {
+  private _connection;
+  private readonly _capabilitiesRegistry;
+  private readonly _bridge;
+  private _initPromise;
+  constructor(transport: IMessageTransport, options?: MonacoLspClientOptions);
+  private _init;
+  protected createFeatures(): IDisposable$2;
+}
+//#endregion
+//#region node_modules/@hediet/json-rpc-websocket/dist/index.d.ts
+type NormalizedWebSocketOptions = {
+  address: string;
+};
+type WebSocketOptions = NormalizedWebSocketOptions | {
+  host: string;
+  port: number;
+  forceTls?: boolean;
+};
+/**
+ * Represents a stream through a web socket.
+ * Use the static `connectTo` method to get a stream to a web socket server.
+ */
+declare class WebSocketTransport extends BaseMessageTransport {
+  private readonly socket;
+  static connectTo(options: WebSocketOptions): Promise<WebSocketTransport>;
+  static fromWebSocket(socket: unknown): WebSocketTransport;
+  private readonly errorEmitter;
+  readonly onError: EventEmitter<{
+    error: unknown;
+  }>;
+  private constructor();
+  /**
+   * Closes the underlying socket.
+   */
+  close(): void;
+  /**
+   * Same as `close`.
+   */
+  dispose(): void;
+  _sendImpl(message: Message): Promise<void>;
+  toString(): string;
+}
+//#endregion
+//#region node_modules/@hediet/json-rpc-browser/dist/worker.d.ts
+/**
+ * Gets a stream that uses `worker.postMessage` to write
+ * and `worker.addEventListener` to read messages.
+ */
+declare function createTransportToWorker(worker: Worker): BaseMessageTransport;
+//#endregion
+//#region node_modules/@hediet/json-rpc-browser/dist/iframe.d.ts
+/**
+ * Gets a stream that uses `worker.postMessage` to write
+ * and `worker.addEventListener` to read messages.
+ */
+declare function createTransportToIFrame(iframe: HTMLIFrameElement): BaseMessageTransport;
+
+type index_d_MonacoLspClient = MonacoLspClient;
+declare const index_d_MonacoLspClient: typeof MonacoLspClient;
+type index_d_MonacoLspClientOptions = MonacoLspClientOptions;
+type index_d_WebSocketTransport = WebSocketTransport;
+declare const index_d_WebSocketTransport: typeof WebSocketTransport;
+declare const index_d_createTransportToIFrame: typeof createTransportToIFrame;
+declare const index_d_createTransportToWorker: typeof createTransportToWorker;
+declare namespace index_d {
+  export { index_d_MonacoLspClient as MonacoLspClient, index_d_WebSocketTransport as WebSocketTransport, index_d_createTransportToIFrame as createTransportToIFrame, index_d_createTransportToWorker as createTransportToWorker };
+  export type { index_d_MonacoLspClientOptions as MonacoLspClientOptions };
+}
+
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
@@ -52,12 +337,12 @@ interface ITrustedTypePolicy {
 	createScriptURL?(input: string): any;
 }
 
-interface IDisposable$2 {
+interface IDisposable {
 	dispose(): void;
 }
 
-interface IEvent$1<T> {
-	(listener: (e: T) => any, thisArg?: any): IDisposable$2;
+interface IEvent<T> {
+	(listener: (e: T) => any, thisArg?: any): IDisposable;
 }
 
 /**
@@ -65,7 +350,7 @@ interface IEvent$1<T> {
  */
 declare class Emitter<T> {
 	constructor();
-	readonly event: IEvent$1<T>;
+	readonly event: IEvent<T>;
 	fire(event: T): void;
 	dispose(): void;
 }
@@ -102,7 +387,7 @@ interface CancellationToken {
 	 *
 	 * @event
 	 */
-	readonly onCancellationRequested: (listener: (e: any) => any, thisArgs?: any, disposables?: IDisposable$2[]) => IDisposable$2;
+	readonly onCancellationRequested: (listener: (e: void) => unknown, thisArgs?: unknown, disposables?: IDisposable[]) => IDisposable;
 }
 /**
  * Uniform Resource Identifier (Uri) http://tools.ietf.org/html/rfc3986.
@@ -770,6 +1055,9 @@ declare class Range {
 	 * Moves the range by the given amount of lines.
 	 */
 	delta(lineCount: number): Range;
+	/**
+	 * Test if this range starts and ends on the same line.
+	 */
 	isSingleLine(): boolean;
 	static fromPositions(start: IPosition, end?: IPosition): Range;
 	/**
@@ -951,13 +1239,13 @@ declare namespace editor {
 	 * Creating a diff editor might cause this listener to be invoked with the two editors.
 	 * @event
 	 */
-	export function onDidCreateEditor(listener: (codeEditor: ICodeEditor) => void): IDisposable$2;
+	export function onDidCreateEditor(listener: (codeEditor: ICodeEditor) => void): IDisposable;
 
 	/**
 	 * Emitted when an diff editor is created.
 	 * @event
 	 */
-	export function onDidCreateDiffEditor(listener: (diffEditor: IDiffEditor) => void): IDisposable$2;
+	export function onDidCreateDiffEditor(listener: (diffEditor: IDiffEditor) => void): IDisposable;
 
 	/**
 	 * Get all the created editors.
@@ -995,12 +1283,12 @@ declare namespace editor {
 	/**
 	 * Add a command.
 	 */
-	export function addCommand(descriptor: ICommandDescriptor): IDisposable$2;
+	export function addCommand(descriptor: ICommandDescriptor): IDisposable;
 
 	/**
 	 * Add an action to all editors.
 	 */
-	export function addEditorAction(descriptor: IActionDescriptor): IDisposable$2;
+	export function addEditorAction(descriptor: IActionDescriptor): IDisposable;
 
 	/**
 	 * A keybinding rule.
@@ -1015,12 +1303,12 @@ declare namespace editor {
 	/**
 	 * Add a keybinding rule.
 	 */
-	export function addKeybindingRule(rule: IKeybindingRule): IDisposable$2;
+	export function addKeybindingRule(rule: IKeybindingRule): IDisposable;
 
 	/**
 	 * Add keybinding rules.
 	 */
-	export function addKeybindingRules(rules: IKeybindingRule[]): IDisposable$2;
+	export function addKeybindingRules(rules: IKeybindingRule[]): IDisposable;
 
 	/**
 	 * Create a new editor model.
@@ -1058,7 +1346,7 @@ declare namespace editor {
 	 * Emitted when markers change for a model.
 	 * @event
 	 */
-	export function onDidChangeMarkers(listener: (e: readonly Uri[]) => void): IDisposable$2;
+	export function onDidChangeMarkers(listener: (e: readonly Uri[]) => void): IDisposable;
 
 	/**
 	 * Get the model that has `uri` if it exists.
@@ -1074,13 +1362,13 @@ declare namespace editor {
 	 * Emitted when a model is created.
 	 * @event
 	 */
-	export function onDidCreateModel(listener: (model: ITextModel) => void): IDisposable$2;
+	export function onDidCreateModel(listener: (model: ITextModel) => void): IDisposable;
 
 	/**
 	 * Emitted right before a model is disposed.
 	 * @event
 	 */
-	export function onWillDisposeModel(listener: (model: ITextModel) => void): IDisposable$2;
+	export function onWillDisposeModel(listener: (model: ITextModel) => void): IDisposable;
 
 	/**
 	 * Emitted when a different language is set to a model.
@@ -1089,7 +1377,7 @@ declare namespace editor {
 	export function onDidChangeModelLanguage(listener: (e: {
 		readonly model: ITextModel;
 		readonly oldLanguage: string;
-	}) => void): IDisposable$2;
+	}) => void): IDisposable;
 
 	/**
 	 * Create a new web worker that has model syncing capabilities built in.
@@ -1135,7 +1423,7 @@ declare namespace editor {
 	/**
 	 * Register a command.
 	 */
-	export function registerCommand(id: string, handler: (accessor: any, ...args: any[]) => void): IDisposable$2;
+	export function registerCommand(id: string, handler: (accessor: any, ...args: any[]) => void): IDisposable;
 
 	export interface ILinkOpener {
 		open(resource: Uri): boolean | Promise<boolean>;
@@ -1147,7 +1435,7 @@ declare namespace editor {
 	 *
 	 * Returns a disposable that can unregister the opener again.
 	 */
-	export function registerLinkOpener(opener: ILinkOpener): IDisposable$2;
+	export function registerLinkOpener(opener: ILinkOpener): IDisposable;
 
 	/**
 	 * Represents an object that can handle editor open operations (e.g. when "go to definition" is called
@@ -1172,7 +1460,7 @@ declare namespace editor {
 	 *
 	 * If no handler is registered the default behavior is to do nothing for models other than the currently attached one.
 	 */
-	export function registerEditorOpener(opener: ICodeEditorOpener): IDisposable$2;
+	export function registerEditorOpener(opener: ICodeEditorOpener): IDisposable;
 
 	export type BuiltinTheme = 'vs' | 'vs-dark' | 'hc-black' | 'hc-light';
 
@@ -1416,13 +1704,13 @@ declare namespace editor {
 		updateOptions(newOptions: IEditorOptions & IGlobalEditorOptions): void;
 		addCommand(keybinding: number, handler: ICommandHandler, context?: string): string | null;
 		createContextKey<T extends ContextKeyValue = ContextKeyValue>(key: string, defaultValue: T): IContextKey<T>;
-		addAction(descriptor: IActionDescriptor): IDisposable$2;
+		addAction(descriptor: IActionDescriptor): IDisposable;
 	}
 
 	export interface IStandaloneDiffEditor extends IDiffEditor {
 		addCommand(keybinding: number, handler: ICommandHandler, context?: string): string | null;
 		createContextKey<T extends ContextKeyValue = ContextKeyValue>(key: string, defaultValue: T): IContextKey<T>;
-		addAction(descriptor: IActionDescriptor): IDisposable$2;
+		addAction(descriptor: IActionDescriptor): IDisposable;
 		getOriginalEditor(): IStandaloneCodeEditor;
 		getModifiedEditor(): IStandaloneCodeEditor;
 	}
@@ -1742,7 +2030,7 @@ declare namespace editor {
 		 */
 		glyphMargin?: IModelDecorationGlyphMarginOptions | null;
 		/**
-		 * If set, the decoration will override the line height of the lines it spans. Maximum value is 300px.
+		 * If set, the decoration will override the line height of the lines it spans. This value is a multiplier to the default line height.
 		 */
 		lineHeight?: number | null;
 		/**
@@ -2318,6 +2606,12 @@ declare namespace editor {
 		 */
 		getCustomLineHeightsDecorations(ownerId?: number): IModelDecoration[];
 		/**
+		 * Gets all the decorations that contain custom line heights.
+		 * @param range The range to search in
+		 * @param ownerId If set, it will ignore decorations belonging to other owners.
+		 */
+		getCustomLineHeightsDecorationsInRange(range: Range, ownerId?: number): IModelDecoration[];
+		/**
 		 * Normalize a string containing whitespace according to indentation rules (converts to spaces or to tabs).
 		 */
 		normalizeIndentation(str: string): string;
@@ -2389,37 +2683,37 @@ declare namespace editor {
 		 * An event emitted when the contents of the model have changed.
 		 * @event
 		 */
-		onDidChangeContent(listener: (e: IModelContentChangedEvent) => void): IDisposable$2;
+		onDidChangeContent(listener: (e: IModelContentChangedEvent) => void): IDisposable;
 		/**
 		 * An event emitted when decorations of the model have changed.
 		 * @event
 		 */
-		readonly onDidChangeDecorations: IEvent$1<IModelDecorationsChangedEvent>;
+		readonly onDidChangeDecorations: IEvent<IModelDecorationsChangedEvent>;
 		/**
 		 * An event emitted when the model options have changed.
 		 * @event
 		 */
-		readonly onDidChangeOptions: IEvent$1<IModelOptionsChangedEvent>;
+		readonly onDidChangeOptions: IEvent<IModelOptionsChangedEvent>;
 		/**
 		 * An event emitted when the language associated with the model has changed.
 		 * @event
 		 */
-		readonly onDidChangeLanguage: IEvent$1<IModelLanguageChangedEvent>;
+		readonly onDidChangeLanguage: IEvent<IModelLanguageChangedEvent>;
 		/**
 		 * An event emitted when the language configuration associated with the model has changed.
 		 * @event
 		 */
-		readonly onDidChangeLanguageConfiguration: IEvent$1<IModelLanguageConfigurationChangedEvent>;
+		readonly onDidChangeLanguageConfiguration: IEvent<IModelLanguageConfigurationChangedEvent>;
 		/**
 		 * An event emitted when the model has been attached to the first editor or detached from the last editor.
 		 * @event
 		 */
-		readonly onDidChangeAttached: IEvent$1<void>;
+		readonly onDidChangeAttached: IEvent<void>;
 		/**
 		 * An event emitted right before disposing the model.
 		 * @event
 		 */
-		readonly onWillDispose: IEvent$1<void>;
+		readonly onWillDispose: IEvent<void>;
 		/**
 		 * Destroy this model.
 		 */
@@ -2562,7 +2856,7 @@ declare namespace editor {
 		modified: ITextModel;
 	}
 
-	export interface IDiffEditorViewModel extends IDisposable$2 {
+	export interface IDiffEditorViewModel extends IDisposable {
 		readonly model: IDiffEditorModel;
 		waitForDiff(): Promise<void>;
 	}
@@ -2664,7 +2958,7 @@ declare namespace editor {
 		 * An event emitted when the editor has been disposed.
 		 * @event
 		 */
-		onDidDispose(listener: () => void): IDisposable$2;
+		onDidDispose(listener: () => void): IDisposable;
 		/**
 		 * Dispose the editor.
 		 */
@@ -2878,7 +3172,7 @@ declare namespace editor {
 		 * An event emitted when decorations change in the editor,
 		 * but the change is not caused by us setting or clearing the collection.
 		 */
-		readonly onDidChange: IEvent$1<IModelDecorationsChangedEvent>;
+		readonly onDidChange: IEvent<IModelDecorationsChangedEvent>;
 		/**
 		 * Get the decorations count.
 		 */
@@ -3118,7 +3412,7 @@ declare namespace editor {
 		 */
 		readonly reason: CursorChangeReason;
 		/**
-		 * Source of the call that caused the event.
+		 * Source of the call that caused the event. Possible sources include `'mouse'`, `'keyboard'`, and `'api'`.
 		 */
 		readonly source: string;
 	}
@@ -3148,7 +3442,7 @@ declare namespace editor {
 		 */
 		readonly oldModelVersionId: number;
 		/**
-		 * Source of the call that caused the event.
+		 * Source of the call that caused the event. Possible sources include `'mouse'`, `'keyboard'`, and `'api'`.
 		 */
 		readonly source: string;
 		/**
@@ -3486,6 +3780,11 @@ declare namespace editor {
 		 */
 		wordWrap?: 'off' | 'on' | 'wordWrapColumn' | 'bounded';
 		/**
+		 * Control whether an indicator is rendered at the wrapping column of soft wrapped lines.
+		 * Defaults to false.
+		 */
+		wordWrapIndicator?: boolean;
+		/**
 		 * Override the `wordWrap` setting.
 		 */
 		wordWrapOverride1?: 'off' | 'on' | 'inherit';
@@ -3541,6 +3840,11 @@ declare namespace editor {
 		 * Configure the editor's hover.
 		 */
 		hover?: IEditorHoverOptions;
+		/**
+		 * Controls which remote images Markdown rendered by the editor may load,
+		 * for example in hovers, suggestion details and parameter hints.
+		 */
+		markdownImages?: IEditorMarkdownImagesOptions;
 		/**
 		 * Enable detecting links and making them clickable.
 		 * Defaults to true.
@@ -3602,7 +3906,7 @@ declare namespace editor {
 		 */
 		multiCursorMergeOverlapping?: boolean;
 		/**
-		 * Configure the behaviour when pasting a text with the line count equal to the cursor count.
+		 * Configure the behaviour when pasting text with a line count equal to the cursor count or when pasting column selections into a single cursor.
 		 * Defaults to 'spread'.
 		 */
 		multiCursorPaste?: 'spread' | 'full';
@@ -3640,7 +3944,7 @@ declare namespace editor {
 		 * Enable quick suggestions (shadow suggestions)
 		 * Defaults to true.
 		 */
-		quickSuggestions?: boolean | IQuickSuggestionsOptions;
+		quickSuggestions?: boolean | QuickSuggestionsValue | IQuickSuggestionsOptions;
 		/**
 		 * Quick suggestions show delay (in ms)
 		 * Defaults to 10 (ms)
@@ -3711,6 +4015,16 @@ declare namespace editor {
 		 */
 		formatOnPaste?: boolean;
 		/**
+		 * Controls the width used to render full-width characters.
+		 * Defaults to 'font'.
+		 */
+		fullwidthCharacterWidth?: 'font' | 'twoCells';
+		/**
+		 * Controls whether double-clicking next to a bracket or quote selects the content inside.
+		 * Defaults to true.
+		 */
+		doubleClickSelectsBlock?: boolean;
+		/**
 		 * Controls if the editor should allow to move selections via drag and drop.
 		 * Defaults to false.
 		 */
@@ -3776,6 +4090,11 @@ declare namespace editor {
 		 */
 		selectionHighlightMaxLength?: number;
 		/**
+		 * Controls how occurrences of selected text are matched for occurrence selection and highlighting.
+		 * Defaults to 'findOptions', which uses the Find widget's match case and whole word settings.
+		 */
+		selectedTextMatchMode?: 'findOptions' | 'caseSensitive' | 'caseInsensitive';
+		/**
 		 * Enable semantic occurrences highlight.
 		 * Defaults to 'singleFile'.
 		 * 'off' disables occurrence highlighting
@@ -3790,6 +4109,11 @@ declare namespace editor {
 		 * Maximum value is 2000
 		 */
 		occurrencesHighlightDelay?: number;
+		/**
+		 * Merge single-document highlights from all matching providers.
+		 * Defaults to false.
+		 */
+		occurrencesHighlightFromAllProviders?: boolean;
 		/**
 		 * Show code lens
 		 * Defaults to true.
@@ -3986,6 +4310,8 @@ declare namespace editor {
 		inlineCompletionsAccessibilityVerbose?: boolean;
 	}
 
+	export type DiffEditorViewMode = 'inline' | 'sideBySide' | 'automatic';
+
 	export interface IDiffEditorBaseOptions {
 		/**
 		 * Allow the user to resize the diff editor split view.
@@ -4069,7 +4395,7 @@ declare namespace editor {
 		/**
 		 * Diff Algorithm
 		*/
-		diffAlgorithm?: 'legacy' | 'advanced';
+		diffAlgorithm?: 'legacy' | 'advanced' | 'advanced-external' | 'advanced-wasm';
 		/**
 		 * Whether the diff editor aria label should be verbose.
 		 */
@@ -4239,6 +4565,10 @@ declare namespace editor {
 		 * Controls whether the search result and diff result automatically restarts from the beginning (or the end) when no further matches can be found
 		 */
 		loop?: boolean;
+		/**
+		 * Controls whether to close the Find Widget after an explicit find navigation command lands on a match.
+		 */
+		closeOnResult?: boolean;
 	}
 
 	export type GoToLocationValues = 'peek' | 'gotoAndPeek' | 'goto';
@@ -4268,9 +4598,9 @@ declare namespace editor {
 	export interface IEditorHoverOptions {
 		/**
 		 * Enable the hover.
-		 * Defaults to true.
+		 * Defaults to 'on'.
 		 */
-		enabled?: boolean;
+		enabled?: 'on' | 'off' | 'onKeyboardModifier';
 		/**
 		 * Delay for showing the hover.
 		 * Defaults to 300.
@@ -4291,6 +4621,24 @@ declare namespace editor {
 		 * Defaults to false.
 		 */
 		above?: boolean;
+		/**
+		 * Should long line warning hovers be shown (tokenization skipped, rendering paused)?
+		 * Defaults to true.
+		 */
+		showLongLineWarning?: boolean;
+	}
+
+	/**
+	 * Configuration options for images in Markdown rendered by the editor
+	 */
+	export interface IEditorMarkdownImagesOptions {
+		/**
+		 * Origins from which remote images may be loaded, for example `['https://img.shields.io']`,
+		 * or `true` to allow images from all origins. An origin consists of scheme, host and port.
+		 * `data:` images are always allowed.
+		 * Defaults to `true`, except in the standalone editor, where it defaults to `[]`.
+		 */
+		allowedOrigins?: true | string[];
 	}
 
 	/**
@@ -4582,7 +4930,7 @@ declare namespace editor {
 		cycle?: boolean;
 	}
 
-	export type QuickSuggestionsValue = 'on' | 'inline' | 'off';
+	export type QuickSuggestionsValue = 'on' | 'inline' | 'off' | 'offWhenInlineCompletions';
 
 	/**
 	 * Configuration options for quick suggestions
@@ -5139,105 +5487,112 @@ declare namespace editor {
 		lineNumbersMinChars = 77,
 		linkedEditing = 78,
 		links = 79,
-		matchBrackets = 80,
-		minimap = 81,
-		mouseStyle = 82,
-		mouseWheelScrollSensitivity = 83,
-		mouseWheelZoom = 84,
-		multiCursorMergeOverlapping = 85,
-		multiCursorModifier = 86,
-		mouseMiddleClickAction = 87,
-		multiCursorPaste = 88,
-		multiCursorLimit = 89,
-		occurrencesHighlight = 90,
-		occurrencesHighlightDelay = 91,
-		overtypeCursorStyle = 92,
-		overtypeOnPaste = 93,
-		overviewRulerBorder = 94,
-		overviewRulerLanes = 95,
-		padding = 96,
-		pasteAs = 97,
-		parameterHints = 98,
-		peekWidgetDefaultFocus = 99,
-		placeholder = 100,
-		definitionLinkOpensInPeek = 101,
-		quickSuggestions = 102,
-		quickSuggestionsDelay = 103,
-		readOnly = 104,
-		readOnlyMessage = 105,
-		renameOnType = 106,
-		renderRichScreenReaderContent = 107,
-		renderControlCharacters = 108,
-		renderFinalNewline = 109,
-		renderLineHighlight = 110,
-		renderLineHighlightOnlyWhenFocus = 111,
-		renderValidationDecorations = 112,
-		renderWhitespace = 113,
-		revealHorizontalRightPadding = 114,
-		roundedSelection = 115,
-		rulers = 116,
-		scrollbar = 117,
-		scrollBeyondLastColumn = 118,
-		scrollBeyondLastLine = 119,
-		scrollPredominantAxis = 120,
-		selectionClipboard = 121,
-		selectionHighlight = 122,
-		selectionHighlightMaxLength = 123,
-		selectionHighlightMultiline = 124,
-		selectOnLineNumbers = 125,
-		showFoldingControls = 126,
-		showUnused = 127,
-		snippetSuggestions = 128,
-		smartSelect = 129,
-		smoothScrolling = 130,
-		stickyScroll = 131,
-		stickyTabStops = 132,
-		stopRenderingLineAfter = 133,
-		suggest = 134,
-		suggestFontSize = 135,
-		suggestLineHeight = 136,
-		suggestOnTriggerCharacters = 137,
-		suggestSelection = 138,
-		tabCompletion = 139,
-		tabIndex = 140,
-		trimWhitespaceOnDelete = 141,
-		unicodeHighlighting = 142,
-		unusualLineTerminators = 143,
-		useShadowDOM = 144,
-		useTabStops = 145,
-		wordBreak = 146,
-		wordSegmenterLocales = 147,
-		wordSeparators = 148,
-		wordWrap = 149,
-		wordWrapBreakAfterCharacters = 150,
-		wordWrapBreakBeforeCharacters = 151,
-		wordWrapColumn = 152,
-		wordWrapOverride1 = 153,
-		wordWrapOverride2 = 154,
-		wrappingIndent = 155,
-		wrappingStrategy = 156,
-		showDeprecated = 157,
-		inertialScroll = 158,
-		inlayHints = 159,
-		wrapOnEscapedLineFeeds = 160,
-		effectiveCursorStyle = 161,
-		editorClassName = 162,
-		pixelRatio = 163,
-		tabFocusMode = 164,
-		layoutInfo = 165,
-		wrappingInfo = 166,
-		defaultColorDecorators = 167,
-		colorDecoratorsActivatedOn = 168,
-		inlineCompletionsAccessibilityVerbose = 169,
-		effectiveEditContext = 170,
-		scrollOnMiddleClick = 171,
-		effectiveAllowVariableFonts = 172
+		markdownImages = 80,
+		matchBrackets = 81,
+		minimap = 82,
+		mouseStyle = 83,
+		mouseWheelScrollSensitivity = 84,
+		mouseWheelZoom = 85,
+		multiCursorMergeOverlapping = 86,
+		multiCursorModifier = 87,
+		mouseMiddleClickAction = 88,
+		multiCursorPaste = 89,
+		multiCursorLimit = 90,
+		occurrencesHighlight = 91,
+		occurrencesHighlightDelay = 92,
+		occurrencesHighlightFromAllProviders = 93,
+		overtypeCursorStyle = 94,
+		overtypeOnPaste = 95,
+		overviewRulerBorder = 96,
+		overviewRulerLanes = 97,
+		padding = 98,
+		pasteAs = 99,
+		parameterHints = 100,
+		peekWidgetDefaultFocus = 101,
+		placeholder = 102,
+		definitionLinkOpensInPeek = 103,
+		quickSuggestions = 104,
+		quickSuggestionsDelay = 105,
+		readOnly = 106,
+		readOnlyMessage = 107,
+		renameOnType = 108,
+		renderRichScreenReaderContent = 109,
+		renderControlCharacters = 110,
+		renderFinalNewline = 111,
+		renderLineHighlight = 112,
+		renderLineHighlightOnlyWhenFocus = 113,
+		renderValidationDecorations = 114,
+		renderWhitespace = 115,
+		revealHorizontalRightPadding = 116,
+		roundedSelection = 117,
+		rulers = 118,
+		scrollbar = 119,
+		scrollBeyondLastColumn = 120,
+		scrollBeyondLastLine = 121,
+		scrollPredominantAxis = 122,
+		selectionClipboard = 123,
+		selectionHighlight = 124,
+		selectionHighlightMaxLength = 125,
+		selectionHighlightMultiline = 126,
+		selectedTextMatchMode = 127,
+		selectOnLineNumbers = 128,
+		showFoldingControls = 129,
+		showUnused = 130,
+		snippetSuggestions = 131,
+		smartSelect = 132,
+		smoothScrolling = 133,
+		stickyScroll = 134,
+		stickyTabStops = 135,
+		stopRenderingLineAfter = 136,
+		suggest = 137,
+		suggestFontSize = 138,
+		suggestLineHeight = 139,
+		suggestOnTriggerCharacters = 140,
+		suggestSelection = 141,
+		tabCompletion = 142,
+		tabIndex = 143,
+		trimWhitespaceOnDelete = 144,
+		unicodeHighlighting = 145,
+		unusualLineTerminators = 146,
+		useShadowDOM = 147,
+		useTabStops = 148,
+		wordBreak = 149,
+		wordSegmenterLocales = 150,
+		wordSeparators = 151,
+		wordWrap = 152,
+		wordWrapBreakAfterCharacters = 153,
+		wordWrapBreakBeforeCharacters = 154,
+		wordWrapColumn = 155,
+		wordWrapOverride1 = 156,
+		wordWrapOverride2 = 157,
+		wrappingIndent = 158,
+		wrappingStrategy = 159,
+		showDeprecated = 160,
+		inertialScroll = 161,
+		inlayHints = 162,
+		wrapOnEscapedLineFeeds = 163,
+		wordWrapIndicator = 164,
+		effectiveCursorStyle = 165,
+		editorClassName = 166,
+		pixelRatio = 167,
+		tabFocusMode = 168,
+		layoutInfo = 169,
+		wrappingInfo = 170,
+		defaultColorDecorators = 171,
+		colorDecoratorsActivatedOn = 172,
+		inlineCompletionsAccessibilityVerbose = 173,
+		effectiveEditContext = 174,
+		scrollOnMiddleClick = 175,
+		effectiveAllowVariableFonts = 176,
+		doubleClickSelectsBlock = 177,
+		fullwidthCharacterWidth = 178,
+		effectiveFullwidthCharacterWidth = 179
 	}
 
 	export const EditorOptions: {
 		acceptSuggestionOnCommitCharacter: IEditorOption<EditorOption.acceptSuggestionOnCommitCharacter, boolean>;
 		acceptSuggestionOnEnter: IEditorOption<EditorOption.acceptSuggestionOnEnter, 'on' | 'off' | 'smart'>;
-		accessibilitySupport: IEditorOption<EditorOption.accessibilitySupport, AccessibilitySupport>;
+		accessibilitySupport: IEditorOption<EditorOption.accessibilitySupport, any>;
 		accessibilityPageSize: IEditorOption<EditorOption.accessibilityPageSize, number>;
 		allowOverflow: IEditorOption<EditorOption.allowOverflow, boolean>;
 		allowVariableLineHeights: IEditorOption<EditorOption.allowVariableLineHeights, boolean>;
@@ -5280,6 +5635,7 @@ declare namespace editor {
 		disableLayerHinting: IEditorOption<EditorOption.disableLayerHinting, boolean>;
 		disableMonospaceOptimizations: IEditorOption<EditorOption.disableMonospaceOptimizations, boolean>;
 		domReadOnly: IEditorOption<EditorOption.domReadOnly, boolean>;
+		doubleClickSelectsBlock: IEditorOption<EditorOption.doubleClickSelectsBlock, boolean>;
 		dragAndDrop: IEditorOption<EditorOption.dragAndDrop, boolean>;
 		emptySelectionClipboard: IEditorOption<EditorOption.emptySelectionClipboard, boolean>;
 		dropIntoEditor: IEditorOption<EditorOption.dropIntoEditor, Readonly<Required<IDropIntoEditorOptions>>>;
@@ -5287,7 +5643,7 @@ declare namespace editor {
 		renderRichScreenReaderContent: IEditorOption<EditorOption.renderRichScreenReaderContent, boolean>;
 		stickyScroll: IEditorOption<EditorOption.stickyScroll, Readonly<Required<IEditorStickyScrollOptions>>>;
 		experimentalGpuAcceleration: IEditorOption<EditorOption.experimentalGpuAcceleration, 'on' | 'off'>;
-		experimentalWhitespaceRendering: IEditorOption<EditorOption.experimentalWhitespaceRendering, 'off' | 'svg' | 'font'>;
+		experimentalWhitespaceRendering: IEditorOption<EditorOption.experimentalWhitespaceRendering, 'off' | 'font' | 'svg'>;
 		extraEditorClassName: IEditorOption<EditorOption.extraEditorClassName, string>;
 		fastScrollSensitivity: IEditorOption<EditorOption.fastScrollSensitivity, number>;
 		find: IEditorOption<EditorOption.find, Readonly<Required<IEditorFindOptions>>>;
@@ -5299,13 +5655,14 @@ declare namespace editor {
 		foldingMaximumRegions: IEditorOption<EditorOption.foldingMaximumRegions, number>;
 		unfoldOnClickAfterEndOfLine: IEditorOption<EditorOption.unfoldOnClickAfterEndOfLine, boolean>;
 		fontFamily: IEditorOption<EditorOption.fontFamily, string>;
-		fontInfo: IEditorOption<EditorOption.fontInfo, FontInfo>;
+		fontInfo: IEditorOption<EditorOption.fontInfo, any>;
 		fontLigatures2: IEditorOption<EditorOption.fontLigatures, string>;
 		fontSize: IEditorOption<EditorOption.fontSize, number>;
 		fontWeight: IEditorOption<EditorOption.fontWeight, string>;
 		fontVariations: IEditorOption<EditorOption.fontVariations, string>;
 		formatOnPaste: IEditorOption<EditorOption.formatOnPaste, boolean>;
 		formatOnType: IEditorOption<EditorOption.formatOnType, boolean>;
+		fullwidthCharacterWidth: IEditorOption<EditorOption.fullwidthCharacterWidth, 'font' | 'twoCells'>;
 		glyphMargin: IEditorOption<EditorOption.glyphMargin, boolean>;
 		gotoLocation: IEditorOption<EditorOption.gotoLocation, Readonly<Required<IGotoLocationOptions>>>;
 		hideCursorInOverviewRuler: IEditorOption<EditorOption.hideCursorInOverviewRuler, boolean>;
@@ -5320,6 +5677,7 @@ declare namespace editor {
 		lineNumbersMinChars: IEditorOption<EditorOption.lineNumbersMinChars, number>;
 		linkedEditing: IEditorOption<EditorOption.linkedEditing, boolean>;
 		links: IEditorOption<EditorOption.links, boolean>;
+		markdownImages: IEditorOption<EditorOption.markdownImages, Readonly<Required<IEditorMarkdownImagesOptions>>>;
 		matchBrackets: IEditorOption<EditorOption.matchBrackets, 'always' | 'never' | 'near'>;
 		minimap: IEditorOption<EditorOption.minimap, Readonly<Required<IEditorMinimapOptions>>>;
 		mouseStyle: IEditorOption<EditorOption.mouseStyle, 'default' | 'text' | 'copy'>;
@@ -5332,6 +5690,7 @@ declare namespace editor {
 		multiCursorLimit: IEditorOption<EditorOption.multiCursorLimit, number>;
 		occurrencesHighlight: IEditorOption<EditorOption.occurrencesHighlight, 'off' | 'singleFile' | 'multiFile'>;
 		occurrencesHighlightDelay: IEditorOption<EditorOption.occurrencesHighlightDelay, number>;
+		occurrencesHighlightFromAllProviders: IEditorOption<EditorOption.occurrencesHighlightFromAllProviders, boolean>;
 		overtypeOnPaste: IEditorOption<EditorOption.overtypeOnPaste, boolean>;
 		overviewRulerBorder: IEditorOption<EditorOption.overviewRulerBorder, boolean>;
 		overviewRulerLanes: IEditorOption<EditorOption.overviewRulerLanes, number>;
@@ -5339,7 +5698,7 @@ declare namespace editor {
 		pasteAs: IEditorOption<EditorOption.pasteAs, Readonly<Required<IPasteAsOptions>>>;
 		parameterHints: IEditorOption<EditorOption.parameterHints, Readonly<Required<IEditorParameterHintOptions>>>;
 		peekWidgetDefaultFocus: IEditorOption<EditorOption.peekWidgetDefaultFocus, 'tree' | 'editor'>;
-		placeholder: IEditorOption<EditorOption.placeholder, string>;
+		placeholder: IEditorOption<EditorOption.placeholder, string | undefined>;
 		definitionLinkOpensInPeek: IEditorOption<EditorOption.definitionLinkOpensInPeek, boolean>;
 		quickSuggestions: IEditorOption<EditorOption.quickSuggestions, InternalQuickSuggestionsOptions>;
 		quickSuggestionsDelay: IEditorOption<EditorOption.quickSuggestionsDelay, number>;
@@ -5364,12 +5723,13 @@ declare namespace editor {
 		selectionHighlight: IEditorOption<EditorOption.selectionHighlight, boolean>;
 		selectionHighlightMaxLength: IEditorOption<EditorOption.selectionHighlightMaxLength, number>;
 		selectionHighlightMultiline: IEditorOption<EditorOption.selectionHighlightMultiline, boolean>;
+		selectedTextMatchMode: IEditorOption<EditorOption.selectedTextMatchMode, 'findOptions' | 'caseSensitive' | 'caseInsensitive'>;
 		selectOnLineNumbers: IEditorOption<EditorOption.selectOnLineNumbers, boolean>;
 		showFoldingControls: IEditorOption<EditorOption.showFoldingControls, 'always' | 'never' | 'mouseover'>;
 		showUnused: IEditorOption<EditorOption.showUnused, boolean>;
 		showDeprecated: IEditorOption<EditorOption.showDeprecated, boolean>;
 		inlayHints: IEditorOption<EditorOption.inlayHints, Readonly<Required<IEditorInlayHintsOptions>>>;
-		snippetSuggestions: IEditorOption<EditorOption.snippetSuggestions, 'none' | 'top' | 'bottom' | 'inline'>;
+		snippetSuggestions: IEditorOption<EditorOption.snippetSuggestions, 'none' | 'inline' | 'top' | 'bottom'>;
 		smartSelect: IEditorOption<EditorOption.smartSelect, Readonly<Required<ISmartSelectOptions>>>;
 		smoothScrolling: IEditorOption<EditorOption.smoothScrolling, boolean>;
 		stopRenderingLineAfter: IEditorOption<EditorOption.stopRenderingLineAfter, number>;
@@ -5391,6 +5751,7 @@ declare namespace editor {
 		wordSegmenterLocales: IEditorOption<EditorOption.wordSegmenterLocales, string[]>;
 		wordSeparators: IEditorOption<EditorOption.wordSeparators, string>;
 		wordWrap: IEditorOption<EditorOption.wordWrap, 'wordWrapColumn' | 'on' | 'off' | 'bounded'>;
+		wordWrapIndicator: IEditorOption<EditorOption.wordWrapIndicator, boolean>;
 		wordWrapBreakAfterCharacters: IEditorOption<EditorOption.wordWrapBreakAfterCharacters, string>;
 		wordWrapBreakBeforeCharacters: IEditorOption<EditorOption.wordWrapBreakBeforeCharacters, string>;
 		wordWrapColumn: IEditorOption<EditorOption.wordWrapColumn, number>;
@@ -5408,6 +5769,7 @@ declare namespace editor {
 		wrappingStrategy: IEditorOption<EditorOption.wrappingStrategy, 'simple' | 'advanced'>;
 		effectiveEditContextEnabled: IEditorOption<EditorOption.effectiveEditContext, boolean>;
 		effectiveAllowVariableFonts: IEditorOption<EditorOption.effectiveAllowVariableFonts, boolean>;
+		effectiveFullwidthCharacterWidth: IEditorOption<EditorOption.effectiveFullwidthCharacterWidth, 'font' | 'twoCells'>;
 	};
 
 	type EditorOptionsType = typeof EditorOptions;
@@ -5587,6 +5949,11 @@ declare namespace editor {
 		 */
 		allowEditorOverflow?: boolean;
 		/**
+		 * If true, this widget doesn't have a visual representation.
+		 * The element will have display set to 'none'.
+		*/
+		useDisplayNone?: boolean;
+		/**
 		 * Call preventDefault() on mousedown events that target the content widget.
 		 */
 		suppressMouseDown?: boolean;
@@ -5675,7 +6042,7 @@ declare namespace editor {
 		 * When set, stacks with other overlay widgets with the same preference,
 		 * in an order determined by the ordinal value.
 		 */
-		stackOridinal?: number;
+		stackOrdinal?: number;
 	}
 
 	/**
@@ -5685,7 +6052,7 @@ declare namespace editor {
 		/**
 		 * Event fired when the widget layout changes.
 		 */
-		readonly onDidLayout?: IEvent$1<void>;
+		readonly onDidLayout?: IEvent<void>;
 		/**
 		 * Render this overlay widget in a location where it could overflow the editor's view dom node.
 		 */
@@ -5972,72 +6339,72 @@ declare namespace editor {
 		 * An event emitted when the content of the current model has changed.
 		 * @event
 		 */
-		readonly onDidChangeModelContent: IEvent$1<IModelContentChangedEvent>;
+		readonly onDidChangeModelContent: IEvent<IModelContentChangedEvent>;
 		/**
 		 * An event emitted when the language of the current model has changed.
 		 * @event
 		 */
-		readonly onDidChangeModelLanguage: IEvent$1<IModelLanguageChangedEvent>;
+		readonly onDidChangeModelLanguage: IEvent<IModelLanguageChangedEvent>;
 		/**
 		 * An event emitted when the language configuration of the current model has changed.
 		 * @event
 		 */
-		readonly onDidChangeModelLanguageConfiguration: IEvent$1<IModelLanguageConfigurationChangedEvent>;
+		readonly onDidChangeModelLanguageConfiguration: IEvent<IModelLanguageConfigurationChangedEvent>;
 		/**
 		 * An event emitted when the options of the current model has changed.
 		 * @event
 		 */
-		readonly onDidChangeModelOptions: IEvent$1<IModelOptionsChangedEvent>;
+		readonly onDidChangeModelOptions: IEvent<IModelOptionsChangedEvent>;
 		/**
 		 * An event emitted when the configuration of the editor has changed. (e.g. `editor.updateOptions()`)
 		 * @event
 		 */
-		readonly onDidChangeConfiguration: IEvent$1<ConfigurationChangedEvent>;
+		readonly onDidChangeConfiguration: IEvent<ConfigurationChangedEvent>;
 		/**
 		 * An event emitted when the cursor position has changed.
 		 * @event
 		 */
-		readonly onDidChangeCursorPosition: IEvent$1<ICursorPositionChangedEvent>;
+		readonly onDidChangeCursorPosition: IEvent<ICursorPositionChangedEvent>;
 		/**
 		 * An event emitted when the cursor selection has changed.
 		 * @event
 		 */
-		readonly onDidChangeCursorSelection: IEvent$1<ICursorSelectionChangedEvent>;
+		readonly onDidChangeCursorSelection: IEvent<ICursorSelectionChangedEvent>;
 		/**
 		 * An event emitted when the model of this editor is about to change (e.g. from `editor.setModel()`).
 		 * @event
 		 */
-		readonly onWillChangeModel: IEvent$1<IModelChangedEvent>;
+		readonly onWillChangeModel: IEvent<IModelChangedEvent>;
 		/**
 		 * An event emitted when the model of this editor has changed (e.g. `editor.setModel()`).
 		 * @event
 		 */
-		readonly onDidChangeModel: IEvent$1<IModelChangedEvent>;
+		readonly onDidChangeModel: IEvent<IModelChangedEvent>;
 		/**
 		 * An event emitted when the decorations of the current model have changed.
 		 * @event
 		 */
-		readonly onDidChangeModelDecorations: IEvent$1<IModelDecorationsChangedEvent>;
+		readonly onDidChangeModelDecorations: IEvent<IModelDecorationsChangedEvent>;
 		/**
 		 * An event emitted when the text inside this editor gained focus (i.e. cursor starts blinking).
 		 * @event
 		 */
-		readonly onDidFocusEditorText: IEvent$1<void>;
+		readonly onDidFocusEditorText: IEvent<void>;
 		/**
 		 * An event emitted when the text inside this editor lost focus (i.e. cursor stops blinking).
 		 * @event
 		 */
-		readonly onDidBlurEditorText: IEvent$1<void>;
+		readonly onDidBlurEditorText: IEvent<void>;
 		/**
 		 * An event emitted when the text inside this editor or an editor widget gained focus.
 		 * @event
 		 */
-		readonly onDidFocusEditorWidget: IEvent$1<void>;
+		readonly onDidFocusEditorWidget: IEvent<void>;
 		/**
 		 * An event emitted when the text inside this editor or an editor widget lost focus.
 		 * @event
 		 */
-		readonly onDidBlurEditorWidget: IEvent$1<void>;
+		readonly onDidBlurEditorWidget: IEvent<void>;
 		/**
 		 * Boolean indicating whether input is in composition
 		 */
@@ -6045,76 +6412,76 @@ declare namespace editor {
 		/**
 		 * An event emitted after composition has started.
 		 */
-		readonly onDidCompositionStart: IEvent$1<void>;
+		readonly onDidCompositionStart: IEvent<void>;
 		/**
 		 * An event emitted after composition has ended.
 		 */
-		readonly onDidCompositionEnd: IEvent$1<void>;
+		readonly onDidCompositionEnd: IEvent<void>;
 		/**
 		 * An event emitted when editing failed because the editor is read-only.
 		 * @event
 		 */
-		readonly onDidAttemptReadOnlyEdit: IEvent$1<void>;
+		readonly onDidAttemptReadOnlyEdit: IEvent<void>;
 		/**
 		 * An event emitted when users paste text in the editor.
 		 * @event
 		 */
-		readonly onDidPaste: IEvent$1<IPasteEvent>;
+		readonly onDidPaste: IEvent<IPasteEvent>;
 		/**
 		 * An event emitted on a "mouseup".
 		 * @event
 		 */
-		readonly onMouseUp: IEvent$1<IEditorMouseEvent>;
+		readonly onMouseUp: IEvent<IEditorMouseEvent>;
 		/**
 		 * An event emitted on a "mousedown".
 		 * @event
 		 */
-		readonly onMouseDown: IEvent$1<IEditorMouseEvent>;
+		readonly onMouseDown: IEvent<IEditorMouseEvent>;
 		/**
 		 * An event emitted on a "contextmenu".
 		 * @event
 		 */
-		readonly onContextMenu: IEvent$1<IEditorMouseEvent>;
+		readonly onContextMenu: IEvent<IEditorMouseEvent>;
 		/**
 		 * An event emitted on a "mousemove".
 		 * @event
 		 */
-		readonly onMouseMove: IEvent$1<IEditorMouseEvent>;
+		readonly onMouseMove: IEvent<IEditorMouseEvent>;
 		/**
 		 * An event emitted on a "mouseleave".
 		 * @event
 		 */
-		readonly onMouseLeave: IEvent$1<IPartialEditorMouseEvent>;
+		readonly onMouseLeave: IEvent<IPartialEditorMouseEvent>;
 		/**
 		 * An event emitted on a "keyup".
 		 * @event
 		 */
-		readonly onKeyUp: IEvent$1<IKeyboardEvent>;
+		readonly onKeyUp: IEvent<IKeyboardEvent>;
 		/**
 		 * An event emitted on a "keydown".
 		 * @event
 		 */
-		readonly onKeyDown: IEvent$1<IKeyboardEvent>;
+		readonly onKeyDown: IEvent<IKeyboardEvent>;
 		/**
 		 * An event emitted when the layout of the editor has changed.
 		 * @event
 		 */
-		readonly onDidLayoutChange: IEvent$1<EditorLayoutInfo>;
+		readonly onDidLayoutChange: IEvent<EditorLayoutInfo>;
 		/**
 		 * An event emitted when the content width or content height in the editor has changed.
 		 * @event
 		 */
-		readonly onDidContentSizeChange: IEvent$1<IContentSizeChangedEvent>;
+		readonly onDidContentSizeChange: IEvent<IContentSizeChangedEvent>;
 		/**
 		 * An event emitted when the scroll in the editor has changed.
 		 * @event
 		 */
-		readonly onDidScrollChange: IEvent$1<IScrollEvent>;
+		readonly onDidScrollChange: IEvent<IScrollEvent>;
 		/**
 		 * An event emitted when hidden areas change in the editor (e.g. due to folding).
 		 * @event
 		 */
-		readonly onDidChangeHiddenAreas: IEvent$1<void>;
+		readonly onDidChangeHiddenAreas: IEvent<void>;
 		/**
 		 * Some editor operations fire multiple events at once.
 		 * To allow users to react to multiple events fired by a single operation,
@@ -6122,11 +6489,12 @@ declare namespace editor {
 		 * Whenever the editor fires `onBeginUpdate`, it will also fire `onEndUpdate` once the operation finishes.
 		 * Note that not all operations are bracketed by `onBeginUpdate` and `onEndUpdate`.
 		*/
-		readonly onBeginUpdate: IEvent$1<void>;
+		readonly onBeginUpdate: IEvent<void>;
 		/**
 		 * Fires after the editor completes the operation it fired `onBeginUpdate` for.
 		*/
-		readonly onEndUpdate: IEvent$1<void>;
+		readonly onEndUpdate: IEvent<void>;
+		readonly onDidChangeViewZones: IEvent<void>;
 		/**
 		 * Saves current view state of the editor in a serializable object.
 		 */
@@ -6261,6 +6629,10 @@ declare namespace editor {
 		 */
 		executeCommands(source: string | null | undefined, commands: (ICommand | null)[]): void;
 		/**
+		 * Scroll vertically or horizontally as necessary and reveal the current cursors.
+		 */
+		revealAllCursors(revealHorizontal: boolean, minimalReveal?: boolean): void;
+		/**
 		 * Get all the decorations on a line (filtering out decorations from other editors).
 		 */
 		getLineDecorations(lineNumber: number): IModelDecoration[] | null;
@@ -6369,10 +6741,15 @@ declare namespace editor {
 		 * Use this method with caution.
 		 */
 		getOffsetForColumn(lineNumber: number, column: number): number;
+		getWidthOfLine(lineNumber: number): number;
 		/**
 		 * Force an editor render now.
 		 */
 		render(forceRedraw?: boolean): void;
+		/**
+		 * Render the editor at the next animation frame.
+		 */
+		renderAsync(forceRedraw?: boolean): void;
 		/**
 		 * Get the hit test target at coordinates `clientX` and `clientY`.
 		 * The coordinates are relative to the top-left of the viewport.
@@ -6416,12 +6793,12 @@ declare namespace editor {
 		 * An event emitted when the diff information computed by this diff editor has been updated.
 		 * @event
 		 */
-		readonly onDidUpdateDiff: IEvent$1<void>;
+		readonly onDidUpdateDiff: IEvent<void>;
 		/**
 		 * An event emitted when the diff model is changed (i.e. the diff editor shows new content).
 		 * @event
 		 */
-		readonly onDidChangeModel: IEvent$1<void>;
+		readonly onDidChangeModel: IEvent<void>;
 		/**
 		 * Saves current view state of the editor in a serializable object.
 		 */
@@ -6503,7 +6880,7 @@ declare namespace editor {
 	export const EditorZoom: IEditorZoom;
 
 	export interface IEditorZoom {
-		readonly onDidChangeZoomLevel: IEvent$1<number>;
+		readonly onDidChangeZoomLevel: IEvent<number>;
 		getZoomLevel(): number;
 		setZoomLevel(zoomLevel: number): void;
 	}
@@ -6570,22 +6947,27 @@ declare namespace languages {
 	export function getEncodedLanguageId(languageId: string): number;
 
 	/**
+	 * Compute the score of a language selector against a candidate Uri and language.
+	 */
+	export function score(selector: LanguageSelector | undefined, candidateUri: Uri, candidateLanguage: string): number;
+
+	/**
 	 * An event emitted when a language is associated for the first time with a text model.
 	 * @event
 	 */
-	export function onLanguage(languageId: string, callback: () => void): IDisposable$2;
+	export function onLanguage(languageId: string, callback: () => void): IDisposable;
 
 	/**
 	 * An event emitted when a language is associated for the first time with a text model or
 	 * when a language is encountered during the tokenization of another language.
 	 * @event
 	 */
-	export function onLanguageEncountered(languageId: string, callback: () => void): IDisposable$2;
+	export function onLanguageEncountered(languageId: string, callback: () => void): IDisposable;
 
 	/**
 	 * Set the editing configuration for a language.
 	 */
-	export function setLanguageConfiguration(languageId: string, configuration: LanguageConfiguration): IDisposable$2;
+	export function setLanguageConfiguration(languageId: string, configuration: LanguageConfiguration): IDisposable;
 
 	/**
 	 * A token.
@@ -6692,7 +7074,7 @@ declare namespace languages {
 	 * set using `setTokensProvider` or one created using `setMonarchTokensProvider`, but will work together
 	 * with a tokens provider set using `registerDocumentSemanticTokensProvider` or `registerDocumentRangeSemanticTokensProvider`.
 	 */
-	export function registerTokensProviderFactory(languageId: string, factory: TokensProviderFactory): IDisposable$2;
+	export function registerTokensProviderFactory(languageId: string, factory: TokensProviderFactory): IDisposable;
 
 	/**
 	 * Set the tokens provider for a language (manual implementation). This tokenizer will be exclusive
@@ -6700,7 +7082,7 @@ declare namespace languages {
 	 * but will work together with a tokens provider set using `registerDocumentSemanticTokensProvider`
 	 * or `registerDocumentRangeSemanticTokensProvider`.
 	 */
-	export function setTokensProvider(languageId: string, provider: TokensProvider | EncodedTokensProvider | Thenable<TokensProvider | EncodedTokensProvider>): IDisposable$2;
+	export function setTokensProvider(languageId: string, provider: TokensProvider | EncodedTokensProvider | Thenable<TokensProvider | EncodedTokensProvider>): IDisposable;
 
 	/**
 	 * Set the tokens provider for a language (monarch implementation). This tokenizer will be exclusive
@@ -6708,117 +7090,117 @@ declare namespace languages {
 	 * work together with a tokens provider set using `registerDocumentSemanticTokensProvider` or
 	 * `registerDocumentRangeSemanticTokensProvider`.
 	 */
-	export function setMonarchTokensProvider(languageId: string, languageDef: IMonarchLanguage | Thenable<IMonarchLanguage>): IDisposable$2;
+	export function setMonarchTokensProvider(languageId: string, languageDef: IMonarchLanguage | Thenable<IMonarchLanguage>): IDisposable;
 
 	/**
 	 * Register a reference provider (used by e.g. reference search).
 	 */
-	export function registerReferenceProvider(languageSelector: LanguageSelector, provider: ReferenceProvider): IDisposable$2;
+	export function registerReferenceProvider(languageSelector: LanguageSelector, provider: ReferenceProvider): IDisposable;
 
 	/**
 	 * Register a rename provider (used by e.g. rename symbol).
 	 */
-	export function registerRenameProvider(languageSelector: LanguageSelector, provider: RenameProvider): IDisposable$2;
+	export function registerRenameProvider(languageSelector: LanguageSelector, provider: RenameProvider): IDisposable;
 
 	/**
 	 * Register a new symbol-name provider (e.g., when a symbol is being renamed, show new possible symbol-names)
 	 */
-	export function registerNewSymbolNameProvider(languageSelector: LanguageSelector, provider: NewSymbolNamesProvider): IDisposable$2;
+	export function registerNewSymbolNameProvider(languageSelector: LanguageSelector, provider: NewSymbolNamesProvider): IDisposable;
 
 	/**
 	 * Register a signature help provider (used by e.g. parameter hints).
 	 */
-	export function registerSignatureHelpProvider(languageSelector: LanguageSelector, provider: SignatureHelpProvider): IDisposable$2;
+	export function registerSignatureHelpProvider(languageSelector: LanguageSelector, provider: SignatureHelpProvider): IDisposable;
 
 	/**
 	 * Register a hover provider (used by e.g. editor hover).
 	 */
-	export function registerHoverProvider(languageSelector: LanguageSelector, provider: HoverProvider): IDisposable$2;
+	export function registerHoverProvider(languageSelector: LanguageSelector, provider: HoverProvider): IDisposable;
 
 	/**
 	 * Register a document symbol provider (used by e.g. outline).
 	 */
-	export function registerDocumentSymbolProvider(languageSelector: LanguageSelector, provider: DocumentSymbolProvider): IDisposable$2;
+	export function registerDocumentSymbolProvider(languageSelector: LanguageSelector, provider: DocumentSymbolProvider): IDisposable;
 
 	/**
 	 * Register a document highlight provider (used by e.g. highlight occurrences).
 	 */
-	export function registerDocumentHighlightProvider(languageSelector: LanguageSelector, provider: DocumentHighlightProvider): IDisposable$2;
+	export function registerDocumentHighlightProvider(languageSelector: LanguageSelector, provider: DocumentHighlightProvider): IDisposable;
 
 	/**
 	 * Register an linked editing range provider.
 	 */
-	export function registerLinkedEditingRangeProvider(languageSelector: LanguageSelector, provider: LinkedEditingRangeProvider): IDisposable$2;
+	export function registerLinkedEditingRangeProvider(languageSelector: LanguageSelector, provider: LinkedEditingRangeProvider): IDisposable;
 
 	/**
 	 * Register a definition provider (used by e.g. go to definition).
 	 */
-	export function registerDefinitionProvider(languageSelector: LanguageSelector, provider: DefinitionProvider): IDisposable$2;
+	export function registerDefinitionProvider(languageSelector: LanguageSelector, provider: DefinitionProvider): IDisposable;
 
 	/**
 	 * Register a implementation provider (used by e.g. go to implementation).
 	 */
-	export function registerImplementationProvider(languageSelector: LanguageSelector, provider: ImplementationProvider): IDisposable$2;
+	export function registerImplementationProvider(languageSelector: LanguageSelector, provider: ImplementationProvider): IDisposable;
 
 	/**
 	 * Register a type definition provider (used by e.g. go to type definition).
 	 */
-	export function registerTypeDefinitionProvider(languageSelector: LanguageSelector, provider: TypeDefinitionProvider): IDisposable$2;
+	export function registerTypeDefinitionProvider(languageSelector: LanguageSelector, provider: TypeDefinitionProvider): IDisposable;
 
 	/**
 	 * Register a code lens provider (used by e.g. inline code lenses).
 	 */
-	export function registerCodeLensProvider(languageSelector: LanguageSelector, provider: CodeLensProvider): IDisposable$2;
+	export function registerCodeLensProvider(languageSelector: LanguageSelector, provider: CodeLensProvider): IDisposable;
 
 	/**
 	 * Register a code action provider (used by e.g. quick fix).
 	 */
-	export function registerCodeActionProvider(languageSelector: LanguageSelector, provider: CodeActionProvider, metadata?: CodeActionProviderMetadata): IDisposable$2;
+	export function registerCodeActionProvider(languageSelector: LanguageSelector, provider: CodeActionProvider, metadata?: CodeActionProviderMetadata): IDisposable;
 
 	/**
 	 * Register a formatter that can handle only entire models.
 	 */
-	export function registerDocumentFormattingEditProvider(languageSelector: LanguageSelector, provider: DocumentFormattingEditProvider): IDisposable$2;
+	export function registerDocumentFormattingEditProvider(languageSelector: LanguageSelector, provider: DocumentFormattingEditProvider): IDisposable;
 
 	/**
 	 * Register a formatter that can handle a range inside a model.
 	 */
-	export function registerDocumentRangeFormattingEditProvider(languageSelector: LanguageSelector, provider: DocumentRangeFormattingEditProvider): IDisposable$2;
+	export function registerDocumentRangeFormattingEditProvider(languageSelector: LanguageSelector, provider: DocumentRangeFormattingEditProvider): IDisposable;
 
 	/**
 	 * Register a formatter than can do formatting as the user types.
 	 */
-	export function registerOnTypeFormattingEditProvider(languageSelector: LanguageSelector, provider: OnTypeFormattingEditProvider): IDisposable$2;
+	export function registerOnTypeFormattingEditProvider(languageSelector: LanguageSelector, provider: OnTypeFormattingEditProvider): IDisposable;
 
 	/**
 	 * Register a link provider that can find links in text.
 	 */
-	export function registerLinkProvider(languageSelector: LanguageSelector, provider: LinkProvider): IDisposable$2;
+	export function registerLinkProvider(languageSelector: LanguageSelector, provider: LinkProvider): IDisposable;
 
 	/**
 	 * Register a completion item provider (use by e.g. suggestions).
 	 */
-	export function registerCompletionItemProvider(languageSelector: LanguageSelector, provider: CompletionItemProvider): IDisposable$2;
+	export function registerCompletionItemProvider(languageSelector: LanguageSelector, provider: CompletionItemProvider): IDisposable;
 
 	/**
 	 * Register a document color provider (used by Color Picker, Color Decorator).
 	 */
-	export function registerColorProvider(languageSelector: LanguageSelector, provider: DocumentColorProvider): IDisposable$2;
+	export function registerColorProvider(languageSelector: LanguageSelector, provider: DocumentColorProvider): IDisposable;
 
 	/**
 	 * Register a folding range provider
 	 */
-	export function registerFoldingRangeProvider(languageSelector: LanguageSelector, provider: FoldingRangeProvider): IDisposable$2;
+	export function registerFoldingRangeProvider(languageSelector: LanguageSelector, provider: FoldingRangeProvider): IDisposable;
 
 	/**
 	 * Register a declaration provider
 	 */
-	export function registerDeclarationProvider(languageSelector: LanguageSelector, provider: DeclarationProvider): IDisposable$2;
+	export function registerDeclarationProvider(languageSelector: LanguageSelector, provider: DeclarationProvider): IDisposable;
 
 	/**
 	 * Register a selection range provider
 	 */
-	export function registerSelectionRangeProvider(languageSelector: LanguageSelector, provider: SelectionRangeProvider): IDisposable$2;
+	export function registerSelectionRangeProvider(languageSelector: LanguageSelector, provider: SelectionRangeProvider): IDisposable;
 
 	/**
 	 * Register a document semantic tokens provider. A semantic tokens provider will complement and enhance a
@@ -6827,7 +7209,7 @@ declare namespace languages {
 	 *
 	 * For the best user experience, register both a semantic tokens provider and a top-down tokenizer.
 	 */
-	export function registerDocumentSemanticTokensProvider(languageSelector: LanguageSelector, provider: DocumentSemanticTokensProvider): IDisposable$2;
+	export function registerDocumentSemanticTokensProvider(languageSelector: LanguageSelector, provider: DocumentSemanticTokensProvider): IDisposable;
 
 	/**
 	 * Register a document range semantic tokens provider. A semantic tokens provider will complement and enhance a
@@ -6836,17 +7218,17 @@ declare namespace languages {
 	 *
 	 * For the best user experience, register both a semantic tokens provider and a top-down tokenizer.
 	 */
-	export function registerDocumentRangeSemanticTokensProvider(languageSelector: LanguageSelector, provider: DocumentRangeSemanticTokensProvider): IDisposable$2;
+	export function registerDocumentRangeSemanticTokensProvider(languageSelector: LanguageSelector, provider: DocumentRangeSemanticTokensProvider): IDisposable;
 
 	/**
 	 * Register an inline completions provider.
 	 */
-	export function registerInlineCompletionsProvider(languageSelector: LanguageSelector, provider: InlineCompletionsProvider): IDisposable$2;
+	export function registerInlineCompletionsProvider(languageSelector: LanguageSelector, provider: InlineCompletionsProvider): IDisposable;
 
 	/**
 	 * Register an inlay hints provider.
 	 */
-	export function registerInlayHintsProvider(languageSelector: LanguageSelector, provider: InlayHintsProvider): IDisposable$2;
+	export function registerInlayHintsProvider(languageSelector: LanguageSelector, provider: InlayHintsProvider): IDisposable;
 
 	/**
 	 * Contains additional diagnostic information about the context in which
@@ -7023,7 +7405,6 @@ declare namespace languages {
 	 * Describes language specific folding markers such as '#region' and '#endregion'.
 	 * The start and end regexes will be tested against the contents of all lines and must be designed efficiently:
 	 * - the regex should start with '^'
-	 * - regexp flags (i, g) are ignored
 	 */
 	export interface FoldingMarkers {
 		start: RegExp;
@@ -7096,6 +7477,7 @@ declare namespace languages {
 
 	export interface IAutoClosingPairConditional extends IAutoClosingPair {
 		notIn?: string[];
+		beforeText?: RegExp;
 	}
 
 	/**
@@ -7477,6 +7859,18 @@ declare namespace languages {
 		Explicit = 1
 	}
 
+	/**
+	 * Arbitrary data that the provider can pass when firing {@link InlineCompletionsProvider.onDidChangeInlineCompletions}.
+	 * This data is passed back to the provider in {@link InlineCompletionContext.changeHint}.
+	 */
+	export interface IInlineCompletionChangeHint {
+		/**
+		 * Arbitrary data that the provider can use to identify what triggered the change.
+		 * This data must be JSON serializable.
+		 */
+		readonly data?: unknown;
+	}
+
 	export interface InlineCompletionContext {
 		/**
 		 * How the completion was triggered.
@@ -7487,6 +7881,33 @@ declare namespace languages {
 		readonly includeInlineCompletions: boolean;
 		readonly requestIssuedDateTime: number;
 		readonly earliestShownDateTime: number;
+		/**
+		 * The change hint that was passed to {@link InlineCompletionsProvider.onDidChangeInlineCompletions}.
+		 * Only set if this request was triggered by such an event.
+		 */
+		readonly changeHint?: IInlineCompletionChangeHint;
+	}
+
+	export interface IInlineCompletionModelInfo {
+		models: IInlineCompletionModel[];
+		currentModelId: string;
+	}
+
+	export interface IInlineCompletionModel {
+		name: string;
+		id: string;
+	}
+
+	export interface IInlineCompletionProviderOption {
+		readonly id: string;
+		readonly label: string;
+		readonly values: readonly IInlineCompletionProviderOptionValue[];
+		readonly currentValueId: string;
+	}
+
+	export interface IInlineCompletionProviderOptionValue {
+		readonly id: string;
+		readonly label: string;
 	}
 
 	export class SelectedSuggestionInfo {
@@ -7547,11 +7968,14 @@ declare namespace languages {
 		/** Only show the inline suggestion when the cursor is in the showRange. */
 		readonly showRange?: IRange;
 		readonly warning?: InlineCompletionWarning;
-		readonly hint?: InlineCompletionHint;
+		readonly hint?: IInlineCompletionHint;
+		readonly supportsRename?: boolean;
 		/**
 		 * Used for telemetry.
 		 */
 		readonly correlationId?: string | undefined;
+		readonly jumpToPosition?: IPosition;
+		readonly doNotLog?: boolean;
 	}
 
 	export interface InlineCompletionWarning {
@@ -7564,12 +7988,11 @@ declare namespace languages {
 		Label = 2
 	}
 
-	export interface InlineCompletionHint {
+	export interface IInlineCompletionHint {
 		/** Refers to the current document. */
 		range: IRange;
 		style: InlineCompletionHintStyle;
 		content: string;
-		jumpToEdit: boolean;
 	}
 
 	export type IconPath = editor.ThemeIcon;
@@ -7619,7 +8042,12 @@ declare namespace languages {
 		 * Will be called when a completions list is no longer in use and can be garbage-collected.
 		*/
 		disposeInlineCompletions(completions: T, reason: InlineCompletionsDisposeReason): void;
-		onDidChangeInlineCompletions?: IEvent$1<void>;
+		/**
+		 * Fired when the provider wants to trigger a new completion request.
+		 * The event can pass a {@link IInlineCompletionChangeHint} which will be
+		 * included in the {@link InlineCompletionContext} of the subsequent request.
+		 */
+		onDidChangeInlineCompletions?: IEvent<IInlineCompletionChangeHint | void>;
 		/**
 		 * Only used for {@link yieldsToGroupIds}.
 		 * Multiple providers can have the same group id.
@@ -7633,6 +8061,12 @@ declare namespace languages {
 		excludesGroupIds?: InlineCompletionProviderGroupId[];
 		displayName?: string;
 		debounceDelayMs?: number;
+		modelInfo?: IInlineCompletionModelInfo;
+		onDidModelInfoChange?: IEvent<void>;
+		setModelId?(modelId: string): Promise<void>;
+		providerOptions?: readonly IInlineCompletionProviderOption[];
+		onDidProviderOptionsChange?: IEvent<void>;
+		setProviderOption?(optionId: string, valueId: string): Promise<void>;
 		toString?(): string;
 	}
 
@@ -7648,6 +8082,7 @@ declare namespace languages {
 
 	export type InlineCompletionEndOfLifeReason<TInlineCompletion = InlineCompletion> = {
 		kind: InlineCompletionEndOfLifeReasonKind.Accepted;
+		alternativeAction: boolean;
 	} | {
 		kind: InlineCompletionEndOfLifeReasonKind.Rejected;
 	} | {
@@ -7667,6 +8102,7 @@ declare namespace languages {
 		shownDuration: number;
 		shownDurationUncollapsed: number;
 		timeUntilShown: number | undefined;
+		timeUntilActuallyShown: number | undefined;
 		timeUntilProviderRequest: number;
 		timeUntilProviderResponse: number;
 		notShownReason: string | undefined;
@@ -7675,6 +8111,7 @@ declare namespace languages {
 		preceeded: boolean;
 		languageId: string;
 		requestReason: string;
+		performanceMarkers?: string;
 		cursorColumnDistance?: number;
 		cursorLineDistance?: number;
 		lineCountOriginal?: number;
@@ -7687,6 +8124,17 @@ declare namespace languages {
 		typingIntervalCharacterCount: number;
 		selectedSuggestionInfo: boolean;
 		availableProviders: string;
+		skuPlan: string | undefined;
+		skuType: string | undefined;
+		renameCreated: boolean | undefined;
+		renameDuration: number | undefined;
+		renameTimedOut: boolean | undefined;
+		renameDroppedOtherEdits: number | undefined;
+		renameDroppedRenameEdits: number | undefined;
+		editKind: string | undefined;
+		longDistanceHintVisible?: boolean;
+		longDistanceHintDistance?: number;
+		isForAnotherDocument?: boolean;
 	};
 
 	export interface CodeAction {
@@ -7706,7 +8154,7 @@ declare namespace languages {
 		Auto = 2
 	}
 
-	export interface CodeActionList extends IDisposable$2 {
+	export interface CodeActionList extends IDisposable {
 		readonly actions: ReadonlyArray<CodeAction>;
 	}
 
@@ -7775,7 +8223,7 @@ declare namespace languages {
 		activeParameter: number;
 	}
 
-	export interface SignatureHelpResult extends IDisposable$2 {
+	export interface SignatureHelpResult extends IDisposable {
 		value: SignatureHelp;
 	}
 
@@ -8257,7 +8705,7 @@ declare namespace languages {
 		/**
 		 * An optional event to signal that the folding ranges from this provider have changed.
 		 */
-		onDidChange?: IEvent$1<this>;
+		onDidChange?: IEvent<this>;
 		/**
 		 * Provides the folding ranges for a specific model.
 		 */
@@ -8431,7 +8879,7 @@ declare namespace languages {
 	}
 
 	export interface CodeLensProvider {
-		onDidChange?: IEvent$1<this>;
+		onDidChange?: IEvent<this>;
 		provideCodeLenses(model: editor.ITextModel, token: CancellationToken): ProviderResult<CodeLensList>;
 		resolveCodeLens?(model: editor.ITextModel, codeLens: CodeLens, token: CancellationToken): ProviderResult<CodeLens>;
 	}
@@ -8465,7 +8913,7 @@ declare namespace languages {
 
 	export interface InlayHintsProvider {
 		displayName?: string;
-		onDidChangeInlayHints?: IEvent$1<void>;
+		onDidChangeInlayHints?: IEvent<void>;
 		provideInlayHints(model: editor.ITextModel, range: Range, token: CancellationToken): ProviderResult<InlayHintList>;
 		resolveInlayHint?(hint: InlayHint, token: CancellationToken): ProviderResult<InlayHint>;
 	}
@@ -8492,14 +8940,14 @@ declare namespace languages {
 	}
 
 	export interface DocumentSemanticTokensProvider {
-		readonly onDidChange?: IEvent$1<void>;
+		readonly onDidChange?: IEvent<void>;
 		getLegend(): SemanticTokensLegend;
 		provideDocumentSemanticTokens(model: editor.ITextModel, lastResultId: string | null, token: CancellationToken): ProviderResult<SemanticTokens | SemanticTokensEdits>;
 		releaseDocumentSemanticTokens(resultId: string | undefined): void;
 	}
 
 	export interface DocumentRangeSemanticTokensProvider {
-		readonly onDidChange?: IEvent$1<void>;
+		readonly onDidChange?: IEvent<void>;
 		getLegend(): SemanticTokensLegend;
 		provideDocumentRangeSemanticTokens(model: editor.ITextModel, range: Range, token: CancellationToken): ProviderResult<SemanticTokens>;
 	}
@@ -8779,7 +9227,7 @@ interface ModeConfiguration$3 {
 }
 interface LanguageServiceDefaults$3 {
     readonly languageId: string;
-    readonly onDidChange: IEvent$1<LanguageServiceDefaults$3>;
+    readonly onDidChange: IEvent<LanguageServiceDefaults$3>;
     readonly modeConfiguration: ModeConfiguration$3;
     readonly options: Options$1;
     setOptions(options: Options$1): void;
@@ -8867,20 +9315,20 @@ interface MarkupContent$1 {
 }
 declare type MarkupKind$1 = 'plaintext' | 'markdown';
 
-type monaco_contribution$3_CSSDataConfiguration = CSSDataConfiguration;
-type monaco_contribution$3_CSSDataV1 = CSSDataV1;
-type monaco_contribution$3_CSSFormatConfiguration = CSSFormatConfiguration;
-type monaco_contribution$3_EntryStatus = EntryStatus;
-type monaco_contribution$3_IAtDirectiveData = IAtDirectiveData;
-type monaco_contribution$3_IPropertyData = IPropertyData;
-type monaco_contribution$3_IPseudoClassData = IPseudoClassData;
-type monaco_contribution$3_IPseudoElementData = IPseudoElementData;
-declare const monaco_contribution$3_cssDefaults: typeof cssDefaults;
-declare const monaco_contribution$3_lessDefaults: typeof lessDefaults;
-declare const monaco_contribution$3_scssDefaults: typeof scssDefaults;
-declare namespace monaco_contribution$3 {
-  export { monaco_contribution$3_cssDefaults as cssDefaults, monaco_contribution$3_lessDefaults as lessDefaults, monaco_contribution$3_scssDefaults as scssDefaults };
-  export type { monaco_contribution$3_CSSDataConfiguration as CSSDataConfiguration, monaco_contribution$3_CSSDataV1 as CSSDataV1, monaco_contribution$3_CSSFormatConfiguration as CSSFormatConfiguration, DiagnosticsOptions$2 as DiagnosticsOptions, monaco_contribution$3_EntryStatus as EntryStatus, monaco_contribution$3_IAtDirectiveData as IAtDirectiveData, monaco_contribution$3_IPropertyData as IPropertyData, monaco_contribution$3_IPseudoClassData as IPseudoClassData, monaco_contribution$3_IPseudoElementData as IPseudoElementData, IReference$1 as IReference, IValueData$1 as IValueData, LanguageServiceDefaults$3 as LanguageServiceDefaults, MarkupContent$1 as MarkupContent, MarkupKind$1 as MarkupKind, ModeConfiguration$3 as ModeConfiguration, Options$1 as Options };
+type register$3_CSSDataConfiguration = CSSDataConfiguration;
+type register$3_CSSDataV1 = CSSDataV1;
+type register$3_CSSFormatConfiguration = CSSFormatConfiguration;
+type register$3_EntryStatus = EntryStatus;
+type register$3_IAtDirectiveData = IAtDirectiveData;
+type register$3_IPropertyData = IPropertyData;
+type register$3_IPseudoClassData = IPseudoClassData;
+type register$3_IPseudoElementData = IPseudoElementData;
+declare const register$3_cssDefaults: typeof cssDefaults;
+declare const register$3_lessDefaults: typeof lessDefaults;
+declare const register$3_scssDefaults: typeof scssDefaults;
+declare namespace register$3 {
+  export { register$3_cssDefaults as cssDefaults, register$3_lessDefaults as lessDefaults, register$3_scssDefaults as scssDefaults };
+  export type { register$3_CSSDataConfiguration as CSSDataConfiguration, register$3_CSSDataV1 as CSSDataV1, register$3_CSSFormatConfiguration as CSSFormatConfiguration, DiagnosticsOptions$2 as DiagnosticsOptions, register$3_EntryStatus as EntryStatus, register$3_IAtDirectiveData as IAtDirectiveData, register$3_IPropertyData as IPropertyData, register$3_IPseudoClassData as IPseudoClassData, register$3_IPseudoElementData as IPseudoElementData, IReference$1 as IReference, IValueData$1 as IValueData, LanguageServiceDefaults$3 as LanguageServiceDefaults, MarkupContent$1 as MarkupContent, MarkupKind$1 as MarkupKind, ModeConfiguration$3 as ModeConfiguration, Options$1 as Options };
 }
 
 interface HTMLFormatConfiguration {
@@ -8967,7 +9415,7 @@ interface ModeConfiguration$2 {
 interface LanguageServiceDefaults$2 {
     readonly languageId: string;
     readonly modeConfiguration: ModeConfiguration$2;
-    readonly onDidChange: IEvent$1<LanguageServiceDefaults$2>;
+    readonly onDidChange: IEvent<LanguageServiceDefaults$2>;
     readonly options: Options;
     setOptions(options: Options): void;
     setModeConfiguration(modeConfiguration: ModeConfiguration$2): void;
@@ -8978,7 +9426,7 @@ declare const handlebarLanguageService: LanguageServiceRegistration;
 declare const handlebarDefaults: LanguageServiceDefaults$2;
 declare const razorLanguageService: LanguageServiceRegistration;
 declare const razorDefaults: LanguageServiceDefaults$2;
-interface LanguageServiceRegistration extends IDisposable$2 {
+interface LanguageServiceRegistration extends IDisposable {
     readonly defaults: LanguageServiceDefaults$2;
 }
 /**
@@ -9043,29 +9491,29 @@ interface MarkupContent {
 }
 declare type MarkupKind = 'plaintext' | 'markdown';
 
-type monaco_contribution$2_CompletionConfiguration = CompletionConfiguration;
-type monaco_contribution$2_HTMLDataConfiguration = HTMLDataConfiguration;
-type monaco_contribution$2_HTMLDataV1 = HTMLDataV1;
-type monaco_contribution$2_HTMLFormatConfiguration = HTMLFormatConfiguration;
-type monaco_contribution$2_IAttributeData = IAttributeData;
-type monaco_contribution$2_IReference = IReference;
-type monaco_contribution$2_ITagData = ITagData;
-type monaco_contribution$2_IValueData = IValueData;
-type monaco_contribution$2_IValueSet = IValueSet;
-type monaco_contribution$2_LanguageServiceRegistration = LanguageServiceRegistration;
-type monaco_contribution$2_MarkupContent = MarkupContent;
-type monaco_contribution$2_MarkupKind = MarkupKind;
-type monaco_contribution$2_Options = Options;
-declare const monaco_contribution$2_handlebarDefaults: typeof handlebarDefaults;
-declare const monaco_contribution$2_handlebarLanguageService: typeof handlebarLanguageService;
-declare const monaco_contribution$2_htmlDefaults: typeof htmlDefaults;
-declare const monaco_contribution$2_htmlLanguageService: typeof htmlLanguageService;
-declare const monaco_contribution$2_razorDefaults: typeof razorDefaults;
-declare const monaco_contribution$2_razorLanguageService: typeof razorLanguageService;
-declare const monaco_contribution$2_registerHTMLLanguageService: typeof registerHTMLLanguageService;
-declare namespace monaco_contribution$2 {
-  export { monaco_contribution$2_handlebarDefaults as handlebarDefaults, monaco_contribution$2_handlebarLanguageService as handlebarLanguageService, monaco_contribution$2_htmlDefaults as htmlDefaults, monaco_contribution$2_htmlLanguageService as htmlLanguageService, monaco_contribution$2_razorDefaults as razorDefaults, monaco_contribution$2_razorLanguageService as razorLanguageService, monaco_contribution$2_registerHTMLLanguageService as registerHTMLLanguageService };
-  export type { monaco_contribution$2_CompletionConfiguration as CompletionConfiguration, monaco_contribution$2_HTMLDataConfiguration as HTMLDataConfiguration, monaco_contribution$2_HTMLDataV1 as HTMLDataV1, monaco_contribution$2_HTMLFormatConfiguration as HTMLFormatConfiguration, monaco_contribution$2_IAttributeData as IAttributeData, monaco_contribution$2_IReference as IReference, monaco_contribution$2_ITagData as ITagData, monaco_contribution$2_IValueData as IValueData, monaco_contribution$2_IValueSet as IValueSet, LanguageServiceDefaults$2 as LanguageServiceDefaults, monaco_contribution$2_LanguageServiceRegistration as LanguageServiceRegistration, monaco_contribution$2_MarkupContent as MarkupContent, monaco_contribution$2_MarkupKind as MarkupKind, ModeConfiguration$2 as ModeConfiguration, monaco_contribution$2_Options as Options };
+type register$2_CompletionConfiguration = CompletionConfiguration;
+type register$2_HTMLDataConfiguration = HTMLDataConfiguration;
+type register$2_HTMLDataV1 = HTMLDataV1;
+type register$2_HTMLFormatConfiguration = HTMLFormatConfiguration;
+type register$2_IAttributeData = IAttributeData;
+type register$2_IReference = IReference;
+type register$2_ITagData = ITagData;
+type register$2_IValueData = IValueData;
+type register$2_IValueSet = IValueSet;
+type register$2_LanguageServiceRegistration = LanguageServiceRegistration;
+type register$2_MarkupContent = MarkupContent;
+type register$2_MarkupKind = MarkupKind;
+type register$2_Options = Options;
+declare const register$2_handlebarDefaults: typeof handlebarDefaults;
+declare const register$2_handlebarLanguageService: typeof handlebarLanguageService;
+declare const register$2_htmlDefaults: typeof htmlDefaults;
+declare const register$2_htmlLanguageService: typeof htmlLanguageService;
+declare const register$2_razorDefaults: typeof razorDefaults;
+declare const register$2_razorLanguageService: typeof razorLanguageService;
+declare const register$2_registerHTMLLanguageService: typeof registerHTMLLanguageService;
+declare namespace register$2 {
+  export { register$2_handlebarDefaults as handlebarDefaults, register$2_handlebarLanguageService as handlebarLanguageService, register$2_htmlDefaults as htmlDefaults, register$2_htmlLanguageService as htmlLanguageService, register$2_razorDefaults as razorDefaults, register$2_razorLanguageService as razorLanguageService, register$2_registerHTMLLanguageService as registerHTMLLanguageService };
+  export type { register$2_CompletionConfiguration as CompletionConfiguration, register$2_HTMLDataConfiguration as HTMLDataConfiguration, register$2_HTMLDataV1 as HTMLDataV1, register$2_HTMLFormatConfiguration as HTMLFormatConfiguration, register$2_IAttributeData as IAttributeData, register$2_IReference as IReference, register$2_ITagData as ITagData, register$2_IValueData as IValueData, register$2_IValueSet as IValueSet, LanguageServiceDefaults$2 as LanguageServiceDefaults, register$2_LanguageServiceRegistration as LanguageServiceRegistration, register$2_MarkupContent as MarkupContent, register$2_MarkupKind as MarkupKind, ModeConfiguration$2 as ModeConfiguration, register$2_Options as Options };
 }
 
 interface BaseASTNode {
@@ -9286,7 +9734,7 @@ interface ModeConfiguration$1 {
 }
 interface LanguageServiceDefaults$1 {
     readonly languageId: string;
-    readonly onDidChange: IEvent$1<LanguageServiceDefaults$1>;
+    readonly onDidChange: IEvent<LanguageServiceDefaults$1>;
     readonly diagnosticsOptions: DiagnosticsOptions$1;
     readonly modeConfiguration: ModeConfiguration$1;
     setDiagnosticsOptions(options: DiagnosticsOptions$1): void;
@@ -9299,27 +9747,27 @@ interface IJSONWorker {
 }
 declare const getWorker: () => Promise<(...uris: Uri[]) => Promise<IJSONWorker>>;
 
-type monaco_contribution$1_ASTNode = ASTNode;
-type monaco_contribution$1_ArrayASTNode = ArrayASTNode;
-type monaco_contribution$1_BaseASTNode = BaseASTNode;
-type monaco_contribution$1_BooleanASTNode = BooleanASTNode;
-type monaco_contribution$1_IJSONWorker = IJSONWorker;
-type monaco_contribution$1_JSONDocument = JSONDocument;
-type monaco_contribution$1_JSONSchema = JSONSchema;
-type monaco_contribution$1_JSONSchemaMap = JSONSchemaMap;
-type monaco_contribution$1_JSONSchemaRef = JSONSchemaRef;
-type monaco_contribution$1_MatchingSchema = MatchingSchema;
-type monaco_contribution$1_NullASTNode = NullASTNode;
-type monaco_contribution$1_NumberASTNode = NumberASTNode;
-type monaco_contribution$1_ObjectASTNode = ObjectASTNode;
-type monaco_contribution$1_PropertyASTNode = PropertyASTNode;
-type monaco_contribution$1_SeverityLevel = SeverityLevel;
-type monaco_contribution$1_StringASTNode = StringASTNode;
-declare const monaco_contribution$1_getWorker: typeof getWorker;
-declare const monaco_contribution$1_jsonDefaults: typeof jsonDefaults;
-declare namespace monaco_contribution$1 {
-  export { monaco_contribution$1_getWorker as getWorker, monaco_contribution$1_jsonDefaults as jsonDefaults };
-  export type { monaco_contribution$1_ASTNode as ASTNode, monaco_contribution$1_ArrayASTNode as ArrayASTNode, monaco_contribution$1_BaseASTNode as BaseASTNode, monaco_contribution$1_BooleanASTNode as BooleanASTNode, DiagnosticsOptions$1 as DiagnosticsOptions, monaco_contribution$1_IJSONWorker as IJSONWorker, monaco_contribution$1_JSONDocument as JSONDocument, monaco_contribution$1_JSONSchema as JSONSchema, monaco_contribution$1_JSONSchemaMap as JSONSchemaMap, monaco_contribution$1_JSONSchemaRef as JSONSchemaRef, LanguageServiceDefaults$1 as LanguageServiceDefaults, monaco_contribution$1_MatchingSchema as MatchingSchema, ModeConfiguration$1 as ModeConfiguration, monaco_contribution$1_NullASTNode as NullASTNode, monaco_contribution$1_NumberASTNode as NumberASTNode, monaco_contribution$1_ObjectASTNode as ObjectASTNode, monaco_contribution$1_PropertyASTNode as PropertyASTNode, monaco_contribution$1_SeverityLevel as SeverityLevel, monaco_contribution$1_StringASTNode as StringASTNode };
+type register$1_ASTNode = ASTNode;
+type register$1_ArrayASTNode = ArrayASTNode;
+type register$1_BaseASTNode = BaseASTNode;
+type register$1_BooleanASTNode = BooleanASTNode;
+type register$1_IJSONWorker = IJSONWorker;
+type register$1_JSONDocument = JSONDocument;
+type register$1_JSONSchema = JSONSchema;
+type register$1_JSONSchemaMap = JSONSchemaMap;
+type register$1_JSONSchemaRef = JSONSchemaRef;
+type register$1_MatchingSchema = MatchingSchema;
+type register$1_NullASTNode = NullASTNode;
+type register$1_NumberASTNode = NumberASTNode;
+type register$1_ObjectASTNode = ObjectASTNode;
+type register$1_PropertyASTNode = PropertyASTNode;
+type register$1_SeverityLevel = SeverityLevel;
+type register$1_StringASTNode = StringASTNode;
+declare const register$1_getWorker: typeof getWorker;
+declare const register$1_jsonDefaults: typeof jsonDefaults;
+declare namespace register$1 {
+  export { register$1_getWorker as getWorker, register$1_jsonDefaults as jsonDefaults };
+  export type { register$1_ASTNode as ASTNode, register$1_ArrayASTNode as ArrayASTNode, register$1_BaseASTNode as BaseASTNode, register$1_BooleanASTNode as BooleanASTNode, DiagnosticsOptions$1 as DiagnosticsOptions, register$1_IJSONWorker as IJSONWorker, register$1_JSONDocument as JSONDocument, register$1_JSONSchema as JSONSchema, register$1_JSONSchemaMap as JSONSchemaMap, register$1_JSONSchemaRef as JSONSchemaRef, LanguageServiceDefaults$1 as LanguageServiceDefaults, register$1_MatchingSchema as MatchingSchema, ModeConfiguration$1 as ModeConfiguration, register$1_NullASTNode as NullASTNode, register$1_NumberASTNode as NumberASTNode, register$1_ObjectASTNode as ObjectASTNode, register$1_PropertyASTNode as PropertyASTNode, register$1_SeverityLevel as SeverityLevel, register$1_StringASTNode as StringASTNode };
 }
 
 declare enum ModuleKind {
@@ -9459,7 +9907,12 @@ interface DiagnosticsOptions {
     diagnosticCodesToIgnore?: number[];
 }
 interface WorkerOptions {
-    /** A full HTTP path to a JavaScript file which adds a function `customTSWorkerFactory` to the self inside a web-worker */
+    /**
+     * A full HTTP path to a JavaScript file which adds a function `customTSWorkerFactory` to the self inside a web-worker.
+     *
+     * The script runs with full privileges inside the TypeScript worker.
+     * Never derive this value from untrusted input, such as URL parameters or user settings.
+     */
     customWorkerPath?: string;
 }
 interface InlayHintsOptions {
@@ -9576,11 +10029,11 @@ interface LanguageServiceDefaults {
     /**
      * Event fired when compiler options or diagnostics options are changed.
      */
-    readonly onDidChange: IEvent$1<void>;
+    readonly onDidChange: IEvent<void>;
     /**
      * Event fired when extra libraries registered with the language service change.
      */
-    readonly onDidExtraLibsChange: IEvent$1<void>;
+    readonly onDidExtraLibsChange: IEvent<void>;
     readonly workerOptions: WorkerOptions;
     readonly inlayHintsOptions: InlayHintsOptions;
     readonly modeConfiguration: ModeConfiguration;
@@ -9599,7 +10052,7 @@ interface LanguageServiceDefaults {
      * @returns A disposable which will remove the file from the
      * language service upon disposal.
      */
-    addExtraLib(content: string, filePath?: string): IDisposable$2;
+    addExtraLib(content: string, filePath?: string): IDisposable;
     /**
      * Remove all existing extra libs and set the additional source
      * files to the language service. Use this for typescript definition
@@ -9761,338 +10214,34 @@ declare const javascriptDefaults: LanguageServiceDefaults;
 declare const getTypeScriptWorker: () => Promise<(...uris: Uri[]) => Promise<TypeScriptWorker>>;
 declare const getJavaScriptWorker: () => Promise<(...uris: Uri[]) => Promise<TypeScriptWorker>>;
 
-type monaco_contribution_CompilerOptions = CompilerOptions;
-type monaco_contribution_Diagnostic = Diagnostic;
-type monaco_contribution_DiagnosticRelatedInformation = DiagnosticRelatedInformation;
-type monaco_contribution_DiagnosticsOptions = DiagnosticsOptions;
-type monaco_contribution_EmitOutput = EmitOutput;
-type monaco_contribution_IExtraLibs = IExtraLibs;
-type monaco_contribution_JsxEmit = JsxEmit;
-declare const monaco_contribution_JsxEmit: typeof JsxEmit;
-type monaco_contribution_LanguageServiceDefaults = LanguageServiceDefaults;
-type monaco_contribution_ModeConfiguration = ModeConfiguration;
-type monaco_contribution_ModuleKind = ModuleKind;
-declare const monaco_contribution_ModuleKind: typeof ModuleKind;
-type monaco_contribution_ModuleResolutionKind = ModuleResolutionKind;
-declare const monaco_contribution_ModuleResolutionKind: typeof ModuleResolutionKind;
-type monaco_contribution_NewLineKind = NewLineKind;
-declare const monaco_contribution_NewLineKind: typeof NewLineKind;
-type monaco_contribution_ScriptTarget = ScriptTarget;
-declare const monaco_contribution_ScriptTarget: typeof ScriptTarget;
-type monaco_contribution_TypeScriptWorker = TypeScriptWorker;
-type monaco_contribution_WorkerOptions = WorkerOptions;
-declare const monaco_contribution_getJavaScriptWorker: typeof getJavaScriptWorker;
-declare const monaco_contribution_getTypeScriptWorker: typeof getTypeScriptWorker;
-declare const monaco_contribution_javascriptDefaults: typeof javascriptDefaults;
-declare const monaco_contribution_typescriptDefaults: typeof typescriptDefaults;
-declare const monaco_contribution_typescriptVersion: typeof typescriptVersion;
-declare namespace monaco_contribution {
-  export { monaco_contribution_JsxEmit as JsxEmit, monaco_contribution_ModuleKind as ModuleKind, monaco_contribution_ModuleResolutionKind as ModuleResolutionKind, monaco_contribution_NewLineKind as NewLineKind, monaco_contribution_ScriptTarget as ScriptTarget, monaco_contribution_getJavaScriptWorker as getJavaScriptWorker, monaco_contribution_getTypeScriptWorker as getTypeScriptWorker, monaco_contribution_javascriptDefaults as javascriptDefaults, monaco_contribution_typescriptDefaults as typescriptDefaults, monaco_contribution_typescriptVersion as typescriptVersion };
-  export type { monaco_contribution_CompilerOptions as CompilerOptions, monaco_contribution_Diagnostic as Diagnostic, monaco_contribution_DiagnosticRelatedInformation as DiagnosticRelatedInformation, monaco_contribution_DiagnosticsOptions as DiagnosticsOptions, monaco_contribution_EmitOutput as EmitOutput, monaco_contribution_IExtraLibs as IExtraLibs, monaco_contribution_LanguageServiceDefaults as LanguageServiceDefaults, monaco_contribution_ModeConfiguration as ModeConfiguration, monaco_contribution_TypeScriptWorker as TypeScriptWorker, monaco_contribution_WorkerOptions as WorkerOptions };
-}
-
-//#region node_modules/@hediet/json-rpc/dist/JsonRpcTypes.d.ts
-type JSONObject = {
-  [key: string]: JSONValue | undefined;
-};
-interface JSONArray extends Array<JSONValue> {}
-type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
-type Message = IRequestMessage | IResponseMessage;
-/**
- * Represents a request or a notification.
- */
-interface IRequestMessage {
-  jsonrpc: "2.0";
-  /**  must not match `rpc\..*` */
-  method: string;
-  params?: JSONArray | JSONObject;
-  /** Is not set if and only if the request is a notification. */
-  id?: RequestId;
-  /** Requests don't have a result. */
-  result?: never;
-}
-type RequestId = number | string;
-/**
- * Either result or error is set.
- */
-interface IResponseMessage {
-  jsonrpc: "2.0";
-  /**
-   * This member is REQUIRED on success.
-   * This member MUST NOT exist if there was an error invoking the method.
-   * The value of this member is determined by the method invoked on the Server.
-   */
-  result?: JSONValue;
-  /**
-   * This member is REQUIRED on error.
-   * This member MUST NOT exist if there was no error triggered during invocation.
-   */
-  error?: ErrorObject;
-  /**
-   * If there was an error in detecting the id in the Request object
-   * (e.g. Parse error/Invalid Request), it MUST be Null.
-   */
-  id: RequestId | null;
-  method?: never;
-}
-interface ErrorObject {
-  /** A Number that indicates the error type that occurred. */
-  code: ErrorCode;
-  /** The message SHOULD be limited to a concise single sentence. */
-  message: string;
-  /**
-   * A Primitive or Structured value that contains additional information about the error.
-   * This may be omitted.
-   * The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.).
-   */
-  data?: JSONValue;
-}
-declare namespace ErrorObject {
-  function create(obj: ErrorObject): ErrorObject;
-}
-interface ErrorCode extends Number {}
-declare namespace ErrorCode {
-  /**
-   * Invalid JSON was received by the server.
-   * An error occurred on the server while parsing the JSON text.
-   */
-  const parseError: ErrorCode;
-  /**
-   * The JSON sent is not a valid Request object.
-   */
-  const invalidRequest: ErrorCode;
-  /**
-   * The method does not exist/is not available.
-   */
-  const methodNotFound: ErrorCode;
-  /**
-   * Invalid method parameter(s).
-   */
-  const invalidParams: ErrorCode;
-  /**
-   * 	Internal JSON-RPC error.
-   */
-  const internalError: ErrorCode;
-  /**
-   * implementation-defined server-errors.
-   */
-  function isServerError(code: number): boolean;
-  /**
-   * implementation-defined server-errors.
-   */
-  function serverError(code: number): ErrorCode;
-  /**
-   * Non-spec.
-   */
-  const unexpectedServerError: ErrorCode;
-  function isApplicationError(code: number): boolean;
-  function applicationError(code: number): ErrorCode;
-  /**
-   * Non-spec.
-   */
-  const genericApplicationError: ErrorCode;
-}
-//#endregion
-//#region node_modules/@hediet/json-rpc/dist/common.d.ts
-interface IDisposable$1 {
-  dispose(): void;
-}
-type IEvent<T> = (listener: (e: T) => void) => IDisposable$1;
-declare class EventEmitter<T> {
-  private listeners;
-  readonly event: IEvent<T>;
-  fire(args: T): void;
-}
-interface IValueWithChangeEvent<T> {
-  get value(): T;
-  get onChange(): IEvent<T>;
-}
-declare class ValueWithChangeEvent<T> implements IValueWithChangeEvent<T> {
-  private _value;
-  private eventEmitter;
-  constructor(initialValue: T);
-  get value(): T;
-  set value(newValue: T);
-  get onChange(): IEvent<T>;
-}
-//#endregion
-//#region node_modules/@hediet/json-rpc/dist/MessageTransport.d.ts
-/**
- * Represents a mechanism to send and receive messages.
- */
-interface IMessageTransport {
-  get state(): IValueWithChangeEvent<ConnectionState>;
-  send(message: Message): Promise<void>;
-  /**
-   * Sets a listener for received messages.
-   * The listener might be called multiple times before this function returns.
-   * The method allows reentrancy.
-   */
-  setListener(listener: MessageListener | undefined): void;
-  /**
-   * Returns a human readable representation of this stream.
-   */
-  toString(): string;
-}
-type ConnectionState = {
-  state: "connecting";
-} | {
-  state: "open";
-} | {
-  state: "closed";
-  error: Error | undefined;
-};
-type MessageListener = (message: Message) => void;
-/**
- * Base class for implementing a MessageStream.
- * Provides an unreadMessage queue.
- */
-declare abstract class BaseMessageTransport implements IMessageTransport {
-  private static id;
-  private readonly _unprocessedMessages;
-  private _messageListener;
-  protected readonly id: number;
-  private readonly _state;
-  readonly state: ValueWithChangeEvent<ConnectionState>;
-  /**
-   * Sets a callback for incoming messages.
-   */
-  setListener(listener: MessageListener | undefined): void;
-  /**
-   * Writes a message to the stream.
-   */
-  send(message: Message): Promise<void>;
-  protected abstract _sendImpl(message: Message): Promise<void>;
-  /**
-   * Returns human readable information of this message stream.
-   */
-  abstract toString(): string;
-  /**
-   * Call this in derived classes to signal a new message.
-   */
-  protected _dispatchReceivedMessage(message: Message): void;
-  /**
-   * Call this in derived classes to signal that the connection closed.
-   */
-  protected _onConnectionClosed(): void;
-  log(logger?: IMessageLogger): IMessageTransport;
-}
-/**
- * Used by `StreamLogger` to log messages.
- */
-interface IMessageLogger {
-  log(stream: IMessageTransport, type: "incoming" | "outgoing", message: Message): void;
-}
-//#endregion
-//#region node_modules/@hediet/json-rpc/dist/typedChannel/serializerMapping.d.ts
-declare global {
-  interface JsonRpcSerializerMapper<T> {}
-}
-//#endregion
-//#region src/utils.d.ts
-interface IDisposable {
-  dispose(): void;
-}
-//#endregion
-//#region src/adapters/LspClient.d.ts
-declare class MonacoLspClient {
-  private _connection;
-  private readonly _capabilitiesRegistry;
-  private readonly _bridge;
-  private _initPromise;
-  constructor(transport: IMessageTransport);
-  private _init;
-  protected createFeatures(): IDisposable;
-}
-//#endregion
-//#region node_modules/@hediet/json-rpc-websocket/dist/index.d.ts
-type NormalizedWebSocketOptions = {
-  address: string;
-};
-type WebSocketOptions = NormalizedWebSocketOptions | {
-  host: string;
-  port: number;
-  forceTls?: boolean;
-};
-/**
- * Represents a stream through a web socket.
- * Use the static `connectTo` method to get a stream to a web socket server.
- */
-declare class WebSocketTransport extends BaseMessageTransport {
-  private readonly socket;
-  static connectTo(options: WebSocketOptions): Promise<WebSocketTransport>;
-  static fromWebSocket(socket: unknown): WebSocketTransport;
-  private readonly errorEmitter;
-  readonly onError: EventEmitter<{
-    error: unknown;
-  }>;
-  private constructor();
-  /**
-   * Closes the underlying socket.
-   */
-  close(): void;
-  /**
-   * Same as `close`.
-   */
-  dispose(): void;
-  _sendImpl(message: Message): Promise<void>;
-  toString(): string;
-}
-//#endregion
-//#region node_modules/@hediet/json-rpc-browser/dist/worker.d.ts
-/**
- * Gets a stream that uses `worker.postMessage` to write
- * and `worker.addEventListener` to read messages.
- */
-declare function createTransportToWorker(worker: Worker): BaseMessageTransport;
-//#endregion
-//#region node_modules/@hediet/json-rpc-browser/dist/iframe.d.ts
-/**
- * Gets a stream that uses `worker.postMessage` to write
- * and `worker.addEventListener` to read messages.
- */
-declare function createTransportToIFrame(iframe: HTMLIFrameElement): BaseMessageTransport;
-
-type index_d_MonacoLspClient = MonacoLspClient;
-declare const index_d_MonacoLspClient: typeof MonacoLspClient;
-type index_d_WebSocketTransport = WebSocketTransport;
-declare const index_d_WebSocketTransport: typeof WebSocketTransport;
-declare const index_d_createTransportToIFrame: typeof createTransportToIFrame;
-declare const index_d_createTransportToWorker: typeof createTransportToWorker;
-declare namespace index_d {
-  export {
-    index_d_MonacoLspClient as MonacoLspClient,
-    index_d_WebSocketTransport as WebSocketTransport,
-    index_d_createTransportToIFrame as createTransportToIFrame,
-    index_d_createTransportToWorker as createTransportToWorker,
-  };
-}
-
-declare function createWebWorker<T extends object>(opts: IWebWorkerOptions): editor.MonacoWebWorker<T>;
-interface IWebWorkerOptions {
-    /**
-     * The AMD moduleId to load.
-     * It should export a function `create` that should return the exported proxy.
-     */
-    moduleId: string;
-    createWorker?: () => Worker;
-    /**
-     * The data to send over when calling create on the module.
-     */
-    createData?: any;
-    /**
-     * A label to be used to identify the web worker for debugging purposes.
-     */
-    label?: string;
-    /**
-     * An object that can be used by the web worker to make calls back to the main thread.
-     */
-    host?: any;
-    /**
-     * Keep idle models.
-     * Defaults to false, which means that idle models will stop syncing after a while.
-     */
-    keepIdleModels?: boolean;
+type register_CompilerOptions = CompilerOptions;
+type register_Diagnostic = Diagnostic;
+type register_DiagnosticRelatedInformation = DiagnosticRelatedInformation;
+type register_DiagnosticsOptions = DiagnosticsOptions;
+type register_EmitOutput = EmitOutput;
+type register_IExtraLibs = IExtraLibs;
+type register_JsxEmit = JsxEmit;
+declare const register_JsxEmit: typeof JsxEmit;
+type register_LanguageServiceDefaults = LanguageServiceDefaults;
+type register_ModeConfiguration = ModeConfiguration;
+type register_ModuleKind = ModuleKind;
+declare const register_ModuleKind: typeof ModuleKind;
+type register_ModuleResolutionKind = ModuleResolutionKind;
+declare const register_ModuleResolutionKind: typeof ModuleResolutionKind;
+type register_NewLineKind = NewLineKind;
+declare const register_NewLineKind: typeof NewLineKind;
+type register_ScriptTarget = ScriptTarget;
+declare const register_ScriptTarget: typeof ScriptTarget;
+type register_TypeScriptWorker = TypeScriptWorker;
+type register_WorkerOptions = WorkerOptions;
+declare const register_getJavaScriptWorker: typeof getJavaScriptWorker;
+declare const register_getTypeScriptWorker: typeof getTypeScriptWorker;
+declare const register_javascriptDefaults: typeof javascriptDefaults;
+declare const register_typescriptDefaults: typeof typescriptDefaults;
+declare const register_typescriptVersion: typeof typescriptVersion;
+declare namespace register {
+  export { register_JsxEmit as JsxEmit, register_ModuleKind as ModuleKind, register_ModuleResolutionKind as ModuleResolutionKind, register_NewLineKind as NewLineKind, register_ScriptTarget as ScriptTarget, register_getJavaScriptWorker as getJavaScriptWorker, register_getTypeScriptWorker as getTypeScriptWorker, register_javascriptDefaults as javascriptDefaults, register_typescriptDefaults as typescriptDefaults, register_typescriptVersion as typescriptVersion };
+  export type { register_CompilerOptions as CompilerOptions, register_Diagnostic as Diagnostic, register_DiagnosticRelatedInformation as DiagnosticRelatedInformation, register_DiagnosticsOptions as DiagnosticsOptions, register_EmitOutput as EmitOutput, register_IExtraLibs as IExtraLibs, register_LanguageServiceDefaults as LanguageServiceDefaults, register_ModeConfiguration as ModeConfiguration, register_TypeScriptWorker as TypeScriptWorker, register_WorkerOptions as WorkerOptions };
 }
 
 type editor_main_CancellationToken = CancellationToken;
@@ -10101,6 +10250,8 @@ declare const editor_main_CancellationTokenSource: typeof CancellationTokenSourc
 type editor_main_Emitter<T> = Emitter<T>;
 declare const editor_main_Emitter: typeof Emitter;
 type editor_main_Environment = Environment;
+type editor_main_IDisposable = IDisposable;
+type editor_main_IEvent<T> = IEvent<T>;
 type editor_main_IKeyboardEvent = IKeyboardEvent;
 type editor_main_IMarkdownString = IMarkdownString;
 type editor_main_IMouseEvent = IMouseEvent;
@@ -10110,7 +10261,6 @@ type editor_main_IScrollEvent = IScrollEvent;
 type editor_main_ISelection = ISelection;
 type editor_main_ITrustedTypePolicy = ITrustedTypePolicy;
 type editor_main_ITrustedTypePolicyOptions = ITrustedTypePolicyOptions;
-type editor_main_IWebWorkerOptions = IWebWorkerOptions;
 type editor_main_KeyCode = KeyCode;
 declare const editor_main_KeyCode: typeof KeyCode;
 type editor_main_KeyMod = KeyMod;
@@ -10134,13 +10284,12 @@ declare const editor_main_Token: typeof Token;
 type editor_main_Uri = Uri;
 declare const editor_main_Uri: typeof Uri;
 type editor_main_UriComponents = UriComponents;
-declare const editor_main_createWebWorker: typeof createWebWorker;
 import editor_main_editor = editor;
 import editor_main_languages = languages;
 import editor_main_worker = worker;
 declare namespace editor_main {
-  export { editor_main_CancellationTokenSource as CancellationTokenSource, editor_main_Emitter as Emitter, editor_main_KeyCode as KeyCode, editor_main_KeyMod as KeyMod, editor_main_MarkerSeverity as MarkerSeverity, editor_main_MarkerTag as MarkerTag, editor_main_Position as Position, editor_main_Range as Range, editor_main_Selection as Selection, editor_main_SelectionDirection as SelectionDirection, editor_main_Token as Token, editor_main_Uri as Uri, editor_main_createWebWorker as createWebWorker, monaco_contribution$3 as css, editor_main_editor as editor, monaco_contribution$2 as html, monaco_contribution$1 as json, editor_main_languages as languages, index_d as lsp, monaco_contribution as typescript, editor_main_worker as worker };
-  export type { editor_main_CancellationToken as CancellationToken, editor_main_Environment as Environment, IDisposable$2 as IDisposable, IEvent$1 as IEvent, editor_main_IKeyboardEvent as IKeyboardEvent, editor_main_IMarkdownString as IMarkdownString, editor_main_IMouseEvent as IMouseEvent, editor_main_IPosition as IPosition, editor_main_IRange as IRange, editor_main_IScrollEvent as IScrollEvent, editor_main_ISelection as ISelection, editor_main_ITrustedTypePolicy as ITrustedTypePolicy, editor_main_ITrustedTypePolicyOptions as ITrustedTypePolicyOptions, editor_main_IWebWorkerOptions as IWebWorkerOptions, editor_main_MarkdownStringTrustedOptions as MarkdownStringTrustedOptions, editor_main_Thenable as Thenable, editor_main_UriComponents as UriComponents };
+  export { editor_main_CancellationTokenSource as CancellationTokenSource, editor_main_Emitter as Emitter, editor_main_KeyCode as KeyCode, editor_main_KeyMod as KeyMod, editor_main_MarkerSeverity as MarkerSeverity, editor_main_MarkerTag as MarkerTag, editor_main_Position as Position, editor_main_Range as Range, editor_main_Selection as Selection, editor_main_SelectionDirection as SelectionDirection, editor_main_Token as Token, editor_main_Uri as Uri, register$3 as css, editor_main_editor as editor, register$2 as html, register$1 as json, editor_main_languages as languages, index_d as lsp, register as typescript, editor_main_worker as worker };
+  export type { editor_main_CancellationToken as CancellationToken, editor_main_Environment as Environment, editor_main_IDisposable as IDisposable, editor_main_IEvent as IEvent, editor_main_IKeyboardEvent as IKeyboardEvent, editor_main_IMarkdownString as IMarkdownString, editor_main_IMouseEvent as IMouseEvent, editor_main_IPosition as IPosition, editor_main_IRange as IRange, editor_main_IScrollEvent as IScrollEvent, editor_main_ISelection as ISelection, editor_main_ITrustedTypePolicy as ITrustedTypePolicy, editor_main_ITrustedTypePolicyOptions as ITrustedTypePolicyOptions, editor_main_MarkdownStringTrustedOptions as MarkdownStringTrustedOptions, editor_main_Thenable as Thenable, editor_main_UriComponents as UriComponents };
 }
 
 export { editor_main as m };
@@ -10158,6 +10307,6 @@ declare namespace languages {
 	/** @deprecated Use the new top level "typescript" namespace instead. */
 	export const typescript: { deprecated: true };
 }
-
+					
 
 declare global { export import monaco = editor_main; }

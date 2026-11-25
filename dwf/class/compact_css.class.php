@@ -41,7 +41,7 @@ class compact_css extends singleton {
      */
     public function add_css_file($href) {
         $this->_files[] = $href;
-        export_dwf::add_files([realpath($href)]);
+        export_dwf::add_files([realpath($this->get_base() . $href)]);
         return $this;
     }
 
@@ -86,7 +86,7 @@ class compact_css extends singleton {
         $regen = !file_exists($filename);
         $mt_gen = (($regen) ? 0 : filemtime($filename));
         foreach ($this->_files as $file) {
-            $mt_file = (int) filemtime($file);
+            $mt_file = (int) filemtime($this->get_base() . $file);
             if (($mt_file and $mt_gen < $mt_file) or $regen) {
                 $regen = true;
                 break;
@@ -95,7 +95,7 @@ class compact_css extends singleton {
         if ($regen) {
             $content = "";
             foreach ($this->_files as $file) {
-                $content .= file_get_contents($file) . PHP_EOL;
+                $content .= file_get_contents($this->get_base() . $file) . PHP_EOL;
             }
             $content = self::css_minify($content);
             $content = strtr($content, ['/}' => "}"]);

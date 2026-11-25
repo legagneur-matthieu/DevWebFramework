@@ -1339,19 +1339,19 @@ declare class Player extends Component {
     usingNativeControls(bool?: boolean): boolean | undefined;
     usingNativeControls_: any;
     /**
-     * Set or get the current MediaError
+     * Set, clear, or get the current MediaError
      *
      * @fires Player#error
      *
-     * @param  {MediaError|string|number} [err]
+     * @param  {MediaError|string|number|null} [err]
      *         A MediaError or a string/number to be turned
-     *         into a MediaError
+     *         into a MediaError. Pass `null` to clear the current error state.
      *
      * @return {MediaError|null|undefined}
      *         - The current MediaError when getting (or null)
      *         - Nothing when setting
      */
-    error(err?: MediaError | string | number): MediaError | null | undefined;
+    error(err?: MediaError | string | number | null): MediaError | null | undefined;
     error_: MediaError;
     /**
      * Report user activity

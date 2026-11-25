@@ -15,7 +15,7 @@ declare class VolumePanel extends Component {
      * @param {Object} [options={}]
      *        The key/value store of player options.
      */
-    constructor(player: document, options?: any);
+    constructor(player: Player, options?: any);
     handleKeyPressHandler_: (e: any) => void;
     /**
      * Add vjs-slider-active class to the VolumePanel
@@ -94,4 +94,5 @@ declare class VolumePanel extends Component {
     handleKeyPress(event: Event): void;
 }
 import Component from '../component.js';
+import type Player from '../player';
 //# sourceMappingURL=volume-panel.d.ts.map

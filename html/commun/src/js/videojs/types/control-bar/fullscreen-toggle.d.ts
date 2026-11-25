@@ -1,5 +1,5 @@
 export default FullscreenToggle;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * Toggle fullscreen video
  *
@@ -15,7 +15,7 @@ declare class FullscreenToggle extends Button {
      * @param {Object} [options]
      *        The key/value store of player options.
      */
-    constructor(player: document, options?: any);
+    constructor(player: Player, options?: any);
     /**
      * Handles fullscreenchange on the player and change control text accordingly.
      *
@@ -40,4 +40,5 @@ declare class FullscreenToggle extends Button {
     handleClick(event?: Event): void;
 }
 import Button from '../button.js';
+import type Player from '../player';
 //# sourceMappingURL=fullscreen-toggle.d.ts.map

@@ -1,5 +1,5 @@
 export default TextTrackFieldset;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from '../utils/dom' */
 /**
  * Creates fieldset section of 'TextTrackSettings'.
@@ -70,5 +70,6 @@ declare class TextTrackFieldset extends Component {
     createEl(): Element;
 }
 import Component from '../component';
+import type Player from '../player';
 import * as Dom from '../utils/dom';
 //# sourceMappingURL=text-track-fieldset.d.ts.map

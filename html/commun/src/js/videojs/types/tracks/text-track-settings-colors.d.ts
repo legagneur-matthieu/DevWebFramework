@@ -1,5 +1,5 @@
 export default TextTrackSettingsColors;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 /**
  * The component 'TextTrackSettingsColors' displays a set of 'fieldsets'
@@ -43,5 +43,6 @@ declare class TextTrackSettingsColors extends Component {
     createEl(): Element;
 }
 import Component from '../component';
+import type Player from '../player';
 import * as Dom from '../utils/dom';
 //# sourceMappingURL=text-track-settings-colors.d.ts.map

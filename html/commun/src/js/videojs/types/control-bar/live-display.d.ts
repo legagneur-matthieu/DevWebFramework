@@ -1,5 +1,5 @@
 export default LiveDisplay;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * Displays the live indicator when duration is Infinity.
  *
@@ -15,7 +15,7 @@ declare class LiveDisplay extends Component {
      * @param {Object} [options]
      *        The key/value store of player options.
      */
-    constructor(player: document, options?: any);
+    constructor(player: Player, options?: any);
     /**
      * Create the `Component`'s DOM element
      *
@@ -37,4 +37,5 @@ declare class LiveDisplay extends Component {
     updateShowing(event?: Event): void;
 }
 import Component from '../component';
+import type Player from '../player';
 //# sourceMappingURL=live-display.d.ts.map

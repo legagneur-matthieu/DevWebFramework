@@ -1,7 +1,7 @@
 /**
  * @license
- * Video.js 8.23.4 <http://videojs.com/>
- * Copyright Brightcove, Inc. <https://www.brightcove.com/>
+ * Video.js 8.24.1 <http://videojs.com/>
+ * Copyright 2010-present Video.js contributors
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>
  *
@@ -26,7 +26,7 @@ import { getId3Offset } from '@videojs/vhs-utils/es/id3-helpers';
 import { detectContainerForBytes, isLikelyFmp4MediaSegment } from '@videojs/vhs-utils/es/containers';
 import { ONE_SECOND_IN_TS } from 'mux.js/lib/utils/clock';
 
-var version$6 = "8.23.4";
+var version$6 = "8.24.1";
 
 /**
  * An Object that contains lifecycle hooks as keys which point to an array
@@ -6575,21 +6575,18 @@ class TrackList extends EventTarget$2 {
   constructor(tracks = []) {
     super();
     this.tracks_ = [];
-
-    /**
-     * @memberof TrackList
-     * @member {number} length
-     *         The current number of `Track`s in the this Trackist.
-     * @instance
-     */
-    Object.defineProperty(this, 'length', {
-      get() {
-        return this.tracks_.length;
-      }
-    });
     for (let i = 0; i < tracks.length; i++) {
       this.addTrack(tracks[i]);
     }
+  }
+
+  /**
+   * The current number of `Track`s in this TrackList.
+   *
+   * @type {number}
+   */
+  get length() {
+    return this.tracks_.length;
   }
 
   /**
@@ -6631,10 +6628,10 @@ class TrackList extends EventTarget$2 {
     /**
      * Triggered when a track label is changed.
      *
-     * @event TrackList#addtrack
+     * @event TrackList#labelchange
      * @type {Event}
      * @property {Track} track
-     *           A reference to track that was added.
+     *           A reference to track whose label was changed.
      */
     track.labelchange_ = () => {
       this.trigger({
@@ -10990,6 +10987,10 @@ class PosterImage extends ClickableComponent {
    */
   constructor(player, options) {
     super(player, options);
+    const {
+      mainContent
+    } = options && options.playerOptions || {};
+    this.isMainContent = mainContent;
     this.update();
     this.update_ = e => this.update(e);
     player.on('posterchange', this.update_);
@@ -11092,7 +11093,8 @@ class PosterImage extends ClickableComponent {
         // Don't want poster to be tabbable.
         tabIndex: -1
       }, {}, createEl('img', {
-        loading: 'lazy',
+        loading: this.isMainContent ? 'eager' : 'lazy',
+        fetchPriority: this.isMainContent ? 'high' : 'auto',
         crossOrigin: this.crossOrigin()
       }, {
         alt: ''
@@ -11117,7 +11119,17 @@ class PosterImage extends ClickableComponent {
     if (!this.player_.controls()) {
       return;
     }
-    if (this.player_.tech(true)) {
+
+    // On Microsoft Edge, moving focus to the <video> (tech) element as playback
+    // starts prevents a protected (DRM/EME) video surface from being presented:
+    // audio plays but the frame stays black until a later repaint or focus change.
+    // Focus the control-bar play toggle instead of the tech on Edge. See
+    // https://github.com/videojs/video.js/issues/6270.
+    const cb = this.player_.getChild('controlBar');
+    const playToggle = cb && cb.getChild('playToggle');
+    if (IS_EDGE) {
+      (playToggle || this.player_).focus();
+    } else if (this.player_.tech(true)) {
       this.player_.tech(true).focus();
     }
     if (this.player_.paused()) {
@@ -11440,7 +11452,7 @@ class TextTrackDisplay extends Component$1 {
       }
       this.updateForTrack(descriptionsTrack);
     }
-    if (!window$1.CSS.supports('inset', '10px')) {
+    if (!(window$1.CSS !== undefined && window$1.CSS.supports('inset', '10px'))) {
       const textTrackDisplay = this.el_;
       const vjsTextTrackCues = textTrackDisplay.querySelectorAll('.vjs-text-track-cue');
       const controlBarHeight = this.player_.controlBar.el_.getBoundingClientRect().height;
@@ -11488,7 +11500,7 @@ class TextTrackDisplay extends Component$1 {
   updateDisplayOverlay() {
     // inset-inline and inset-block are not supprted on old chrome, but these are
     // only likely to be used on TV devices
-    if (!this.player_.videoHeight() || !window$1.CSS.supports('inset-inline: 10px')) {
+    if (!this.player_.videoHeight() || !(window$1.CSS !== undefined && window$1.CSS.supports('inset-inline: 10px'))) {
       return;
     }
     const playerWidth = this.player_.currentWidth();
@@ -11814,17 +11826,28 @@ class BigPlayButton extends Button {
    */
   handleClick(event) {
     const playPromise = this.player_.play();
+    const cb = this.player_.getChild('controlBar');
+    const playToggle = cb && cb.getChild('playToggle');
 
     // exit early if tapped or clicked via the mouse
     if (event.type === 'tap' || this.mouseused_ && 'clientX' in event && 'clientY' in event) {
       silencePromise(playPromise);
-      if (this.player_.tech(true)) {
+
+      // On Microsoft Edge, moving focus to the <video> (tech) element as playback
+      // starts prevents a protected (DRM/EME) video surface from being presented:
+      // audio plays but the frame stays black until a later repaint or focus change.
+      // Focus the control-bar play toggle instead of the tech on Edge, mirroring the
+      // keyboard branch below. This is the pointer-path counterpart to the fix for
+      // https://github.com/videojs/video.js/issues/6270 (#6318/#6508 redirected only
+      // the keyboard path; the mouse/tap tech.focus() survived and regressed on
+      // Chromium Edge with hardware-accelerated DRM).
+      if (IS_EDGE) {
+        (playToggle || this.player_).focus();
+      } else if (this.player_.tech(true)) {
         this.player_.tech(true).focus();
       }
       return;
     }
-    const cb = this.player_.getChild('controlBar');
-    const playToggle = cb && cb.getChild('playToggle');
     if (!playToggle) {
       this.player_.tech(true).focus();
       return;
@@ -11969,7 +11992,7 @@ Component$1.registerComponent('CloseButton', CloseButton);
  * @file play-toggle.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * Button to toggle between play and pause.
@@ -12281,7 +12304,7 @@ class CurrentTimeDisplay extends TimeDisplay {
     let time;
     if (this.player_.ended()) {
       time = this.player_.duration();
-    } else if (event && event.target && typeof event.target.pendingSeekTime === 'function') {
+    } else if (event && event.target && typeof event.target.pendingSeekTime === 'function' && event.target.pendingSeekTime() !== null) {
       time = event.target.pendingSeekTime();
     } else {
       time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
@@ -12536,7 +12559,7 @@ Component$1.registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
  * @file live-display.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 // TODO - Future make it click to snap to live
 
@@ -12612,7 +12635,7 @@ Component$1.registerComponent('LiveDisplay', LiveDisplay);
  * @file seek-to-live.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * Displays the live indicator when duration is Infinity.
@@ -14269,7 +14292,7 @@ Component$1.registerComponent('ProgressControl', ProgressControl);
  * @file picture-in-picture-toggle.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * Toggle Picture-in-Picture mode
@@ -14411,7 +14434,7 @@ Component$1.registerComponent('PictureInPictureToggle', PictureInPictureToggle);
  * @file fullscreen-toggle.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * Toggle fullscreen video
@@ -15103,7 +15126,7 @@ const checkMuteSupport = function (self, player) {
  * @file mute-toggle.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * A button component for muting the audio.
@@ -15952,9 +15975,12 @@ class MenuButton extends Component$1 {
    *
    * @param {string} name
    *         The icon name to be added.
+   *
+   * @return {Element}
+   *         The element that gets created.
    */
   setIcon(name) {
-    super.setIcon(name, this.menuButton_.el_);
+    return super.setIcon(name, this.menuButton_.el_);
   }
 
   /**
@@ -16208,7 +16234,7 @@ Component$1.registerComponent('MenuButton', MenuButton);
  * @file track-button.js
  */
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 
 /**
  * The base class for buttons that toggle specific  track types (e.g. subtitles).
@@ -16234,16 +16260,47 @@ class TrackButton extends MenuButton {
     if (!tracks) {
       return;
     }
-    const updateHandler = bind_(this, this.update);
-    tracks.addEventListener('removetrack', updateHandler);
-    tracks.addEventListener('addtrack', updateHandler);
-    tracks.addEventListener('labelchange', updateHandler);
-    this.player_.on('ready', updateHandler);
-    this.player_.on('dispose', function () {
-      tracks.removeEventListener('removetrack', updateHandler);
-      tracks.removeEventListener('addtrack', updateHandler);
-      tracks.removeEventListener('labelchange', updateHandler);
-    });
+    this.updateHandler_ = bind_(this, this.update);
+    this.cleanupHandler_ = bind_(this, this.cleanupTrackListeners_);
+    tracks.addEventListener('removetrack', this.updateHandler_);
+    tracks.addEventListener('addtrack', this.updateHandler_);
+    tracks.addEventListener('labelchange', this.updateHandler_);
+    this.player_.on('ready', this.updateHandler_);
+    this.player_.on('dispose', this.cleanupHandler_);
+  }
+
+  /**
+   * Remove all track list event listeners without triggering a full dispose.
+   * Used as the player 'dispose' handler and called by dispose() before super.
+   *
+   * @private
+   */
+  cleanupTrackListeners_() {
+    if (!this.updateHandler_) {
+      return;
+    }
+    const tracks = this.options_.tracks;
+    if (tracks) {
+      tracks.removeEventListener('removetrack', this.updateHandler_);
+      tracks.removeEventListener('addtrack', this.updateHandler_);
+      tracks.removeEventListener('labelchange', this.updateHandler_);
+    }
+    if (this.player_) {
+      this.player_.off('ready', this.updateHandler_);
+      this.player_.off('dispose', this.cleanupHandler_);
+    }
+    this.updateHandler_ = null;
+    this.cleanupHandler_ = null;
+  }
+
+  /**
+   * Dispose of the Component and remove all event listeners.
+   *
+   * @override
+   */
+  dispose() {
+    this.cleanupTrackListeners_();
+    super.dispose();
   }
 }
 Component$1.registerComponent('TrackButton', TrackButton);
@@ -17433,7 +17490,7 @@ class AudioTrackMenuItem extends MenuItem {
   createEl(type, props, attrs) {
     const el = super.createEl(type, props, attrs);
     const parentSpan = el.querySelector('.vjs-menu-item-text');
-    if (['main-desc', 'descriptions'].indexOf(this.options_.track.kind) >= 0) {
+    if (['main-desc', 'descriptions', 'description'].indexOf(this.options_.track.kind) >= 0) {
       parentSpan.appendChild(createEl('span', {
         className: 'vjs-icon-placeholder'
       }, {
@@ -17970,7 +18027,7 @@ ErrorDisplay.prototype.options_ = Object.assign({}, ModalDialog.prototype.option
 });
 Component$1.registerComponent('ErrorDisplay', ErrorDisplay);
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 
 /**
@@ -18036,7 +18093,7 @@ class TextTrackSelect extends Component$1 {
 }
 Component$1.registerComponent('TextTrackSelect', TextTrackSelect);
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from '../utils/dom' */
 
 /**
@@ -18154,7 +18211,7 @@ class TextTrackFieldset extends Component$1 {
 }
 Component$1.registerComponent('TextTrackFieldset', TextTrackFieldset);
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 
 /**
@@ -18241,7 +18298,7 @@ class TextTrackSettingsColors extends Component$1 {
 }
 Component$1.registerComponent('TextTrackSettingsColors', TextTrackSettingsColors);
 
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 
 /**
@@ -25577,13 +25634,13 @@ class Player extends Component$1 {
   }
 
   /**
-   * Set or get the current MediaError
+   * Set, clear, or get the current MediaError
    *
    * @fires Player#error
    *
-   * @param  {MediaError|string|number} [err]
+   * @param  {MediaError|string|number|null} [err]
    *         A MediaError or a string/number to be turned
-   *         into a MediaError
+   *         into a MediaError. Pass `null` to clear the current error state.
    *
    * @return {MediaError|null|undefined}
    *         - The current MediaError when getting (or null)
@@ -26318,7 +26375,7 @@ class Player extends Component$1 {
     if (breakpoints === undefined) {
       return Object.assign(this.breakpoints_);
     }
-    this.breakpoint_ = '';
+    this.removeCurrentBreakpoint_();
     this.breakpoints_ = Object.assign({}, DEFAULT_BREAKPOINTS, breakpoints);
 
     // When breakpoint definitions change, we need to update the currently
@@ -28238,7 +28295,7 @@ videojs.registerPlugin('qualityLevels', qualityLevels);
 // Include the version number.
 qualityLevels.VERSION = version$5;
 
-/*! @name @videojs/http-streaming @version 3.17.2 @license Apache-2.0 */
+/*! @name @videojs/http-streaming @version 3.17.5 @license Apache-2.0 */
 
 /**
  * @file resolve-url.js - Handling how URLs are resolved and manipulated
@@ -32657,7 +32714,7 @@ const getWorkerString = function (fn) {
   return fn.toString().replace(/^function.+?{/, '').slice(0, -1);
 };
 
-/* rollup-plugin-worker-factory start for worker!/home/runner/work/http-streaming/http-streaming/src/transmuxer-worker.js */
+/* rollup-plugin-worker-factory start for worker!/Users/srimron-soutter/repos/github/vjs/http-streaming/src/transmuxer-worker.js */
 const workerCode$1 = transform(getWorkerString(function () {
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
   /**
@@ -42107,7 +42164,7 @@ const workerCode$1 = transform(getWorkerString(function () {
   };
 }));
 var TransmuxWorker = factory(workerCode$1);
-/* rollup-plugin-worker-factory end for worker!/home/runner/work/http-streaming/http-streaming/src/transmuxer-worker.js */
+/* rollup-plugin-worker-factory end for worker!/Users/srimron-soutter/repos/github/vjs/http-streaming/src/transmuxer-worker.js */
 
 const handleData_ = (event, transmuxedData, callback) => {
   const {
@@ -49919,7 +49976,7 @@ class TimelineChangeController extends videojs.EventTarget {
   }
 }
 
-/* rollup-plugin-worker-factory start for worker!/home/runner/work/http-streaming/http-streaming/src/decrypter-worker.js */
+/* rollup-plugin-worker-factory start for worker!/Users/srimron-soutter/repos/github/vjs/http-streaming/src/decrypter-worker.js */
 const workerCode = transform(getWorkerString(function () {
   /**
    * @file stream.js
@@ -50511,7 +50568,7 @@ const workerCode = transform(getWorkerString(function () {
   };
 }));
 var Decrypter = factory(workerCode);
-/* rollup-plugin-worker-factory end for worker!/home/runner/work/http-streaming/http-streaming/src/decrypter-worker.js */
+/* rollup-plugin-worker-factory end for worker!/Users/srimron-soutter/repos/github/vjs/http-streaming/src/decrypter-worker.js */
 
 /**
  * Convert the properties of an HLS track into an audioTrackKind.
@@ -52835,7 +52892,14 @@ class PlaylistController extends videojs.EventTarget {
       if (media.start) {
         const offset = media.start.timeOffset;
         if (offset < 0) {
-          startPoint = Math.max(seekableEnd + offset, seekable.start(0));
+          // Per HLS spec, negative TIME-OFFSET is from the end of the last Media Segment.
+          // For live streams, seekableEnd already has liveEdgeDelay subtracted,
+          // so we need to add it back to get the actual playlist end.
+          // Clamp to seekableEnd to avoid seeking into the unsafe live edge zone.
+          const main = this.mainPlaylistLoader_.main;
+          const liveEdgeDelay = Vhs$1.Playlist.liveEdgeDelay(main, media);
+          const actualPlaylistEnd = seekableEnd + liveEdgeDelay;
+          startPoint = Math.max(Math.min(actualPlaylistEnd + offset, seekableEnd), seekable.start(0));
         } else {
           startPoint = Math.min(seekableEnd, offset);
         }
@@ -54833,9 +54897,9 @@ const initPlugin = function (player, options) {
 const reloadSourceOnError = function (options) {
   initPlugin(this, options);
 };
-var version$4 = "3.17.2";
+var version$4 = "3.17.5";
 var version$3 = "7.1.0";
-var version$2 = "1.3.1";
+var version$2 = "1.4.0";
 var version$1 = "7.2.0";
 var version = "4.0.2";
 const Vhs = {

@@ -1,5 +1,5 @@
 export default TextTrackSettingsFont;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 /**
  * The component 'TextTrackSettingsFont' displays a set of 'fieldsets'
@@ -43,5 +43,6 @@ declare class TextTrackSettingsFont extends Component {
     createEl(): Element;
 }
 import Component from '../component';
+import type Player from '../player';
 import * as Dom from '../utils/dom';
 //# sourceMappingURL=text-track-settings-font.d.ts.map

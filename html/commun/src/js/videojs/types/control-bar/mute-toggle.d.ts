@@ -1,5 +1,5 @@
 export default MuteToggle;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * A button component for muting the audio.
  *
@@ -62,4 +62,5 @@ declare class MuteToggle extends Button {
     private updateControlText_;
 }
 import Button from '../button';
+import type Player from '../player';
 //# sourceMappingURL=mute-toggle.d.ts.map

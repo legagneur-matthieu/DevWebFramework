@@ -1,1 +1,1 @@
-{"version":3,"file":"track-button.d.ts","sourceRoot":"","sources":["../../../src/js/control-bar/track-button.js"],"names":[],"mappings":";AAOA,qCAAqC;AAErC;;;;GAIG;AACH;IAEE;;;;;;;;OAQG;IACH,2CAyBC;CAEF;uBAjDsB,wBAAwB"}
+{"version":3,"file":"track-button.d.ts","sourceRoot":"","sources":["../../../src/js/control-bar/track-button.js"],"names":[],"mappings":";AAOA,sCAAsC;AAEtC;;;;GAIG;AACH;IAwBI,yBAAiD;IACjD,0BAAkE;IAUpE;;;;;OAKG;IACH,+BAoBC;CAYF;uBApFsB,wBAAwB"}

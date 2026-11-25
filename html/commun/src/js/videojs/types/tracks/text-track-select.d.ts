@@ -1,5 +1,5 @@
 export default TextTrackSelect;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /** @import { ContentDescriptor } from  '../utils/dom' */
 /**
  * Creates DOM element of 'select' & its options.
@@ -45,5 +45,6 @@ declare class TextTrackSelect extends Component {
     selectLabelledbyIds: string;
 }
 import Component from '../component';
+import type Player from '../player';
 import * as Dom from '../utils/dom';
 //# sourceMappingURL=text-track-select.d.ts.map

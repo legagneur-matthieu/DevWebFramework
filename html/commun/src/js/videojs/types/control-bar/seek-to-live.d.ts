@@ -1,5 +1,5 @@
 export default SeekToLive;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * Displays the live indicator when duration is Infinity.
  *
@@ -49,4 +49,5 @@ declare class SeekToLive extends Component {
     protected controlText_: string;
 }
 import Component from '../component';
+import type Player from '../player';
 //# sourceMappingURL=seek-to-live.d.ts.map

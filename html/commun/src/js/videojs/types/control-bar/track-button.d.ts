@@ -1,21 +1,20 @@
 export default TrackButton;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * The base class for buttons that toggle specific  track types (e.g. subtitles).
  *
  * @extends MenuButton
  */
 declare class TrackButton extends MenuButton {
+    updateHandler_: Function;
+    cleanupHandler_: Function;
     /**
-     * Creates an instance of this class.
+     * Remove all track list event listeners without triggering a full dispose.
+     * Used as the player 'dispose' handler and called by dispose() before super.
      *
-     * @param {Player} player
-     *        The `Player` that this class should be attached to.
-     *
-     * @param {Object} [options]
-     *        The key/value store of player options.
+     * @private
      */
-    constructor(player: Player, options?: any);
+    private cleanupTrackListeners_;
 }
 import MenuButton from '../menu/menu-button.js';
 //# sourceMappingURL=track-button.d.ts.map

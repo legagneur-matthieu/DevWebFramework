@@ -16,6 +16,7 @@ declare class PosterImage extends ClickableComponent {
      *        The key/value store of player options.
      */
     constructor(player: Player, options?: any);
+    isMainContent: any;
     update_: (e: any) => void;
     /**
      * Create the `PosterImage`s DOM element.

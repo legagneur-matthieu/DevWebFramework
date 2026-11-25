@@ -1,5 +1,5 @@
 export default PlayToggle;
-/** @import Player from './player' */
+/** @import Player from '../player' */
 /**
  * Button to toggle between play and pause.
  *
@@ -67,4 +67,5 @@ declare class PlayToggle extends Button {
     handleEnded(event?: Event): void;
 }
 import Button from '../button.js';
+import type Player from '../player';
 //# sourceMappingURL=play-toggle.d.ts.map

@@ -8,7 +8,7 @@
 class printer_csv {
 
     public function __construct($content, $filename) {
-        header("Content-Disposition: attachment; filename=$filename;");
+        header("Content-Disposition: attachment; filename=\"" . preg_replace('/[^\w.-]/', "_", (string) $filename) . "\"");
         header("Content-type:text/csv; charset=UTF-8");
         $csv = "";
         foreach ($content as $row) {
